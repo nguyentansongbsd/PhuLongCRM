@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:converters="clr-namespace:PhuLongCRM.Converters"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             x:Class="PhuLongCRM.Views.LeadsContentView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:LeadQualityCodeConverter x:Key="LeadQualityCodeConverter"/>
+            <converters:LeadQualityCodeColorConverter x:Key="LeadQualityCodeColorConverter"/>
+            <converters:StatusCodeConverter x:Key="StatusCodeConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <AbsoluteLayout>
+            <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <controls:SearchBarFrame x:Name="searchBar" Grid.Row="0" Margin="10,5">
+                    <controls:SearchBar  Text="{Binding Keyword}" SearchButtonPressed="Search_Pressed" TextChanged="Search_TextChanged"/>
+                </controls:SearchBarFrame>
+                <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped" BackgroundColor="#F3f3f3">
+                    <controls:BsdListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+                                        <Label Text="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" BackgroundColor="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Padding="3,0" Margin="0,2" FontSize="11" FontAttributes="Bold" TextColor="White" Grid.Column="0" VerticalTextAlignment="Center"/>
+                                        <Label Text="{Binding lastname}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                                        <Label Text="Tiêu đề: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding subject}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
+                                        <Label Text="Số điện thoại: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding mobilephone}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
+                                        <Label Text="Trạng thái: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding statuscode,Converter={StaticResource StatusCodeConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    </Grid>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </controls:BsdListView.ItemTemplate>
+                </controls:BsdListView>
+            </Grid>
+        </AbsoluteLayout>
+    </ContentView.Content>
+</ContentView>

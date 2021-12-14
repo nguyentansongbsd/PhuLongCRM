@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls" 
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             Title="Thêm Người Ủy Quyền"
+             x:Class="PhuLongCRM.Views.MandatorySecondaryForm">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
+                <Setter Property="IndicatorText" Value="&#xf105;"/>
+                <Setter Property="IndicatorLocation" Value="End"/>
+                <Setter Property="IndicatorFontSize" Value="18"/>
+                <Setter Property="IndicatorColor" Value="#939393"/>
+                <Setter Property="BackgroundColor" Value="#30F1F1F1"/>
+                <Setter Property="BorderColor" Value="#F1F1F1"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="17,8"/>
+                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
+            </Style>
+            <Style x:Key="ExpanderHeadingText" TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="#444444"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="0,10,0,60">
+                <StackLayout BackgroundColor="White" Padding="10">
+                    <controls:FormLabelRequired Text="Tiêu đề"/>
+                    <controls:MainEntry Placeholder="Nhập tiêu đề" Text="{Binding mandatorySecondary.bsd_name}" FontSize="15"/>
+
+                    <controls:FormLabelRequired Text="Công ty" Margin="0,10,0,0"/>
+                    <controls:MainEntry Text="{Binding mandatorySecondary.bsd_developeraccount}" FontSize="15" IsEnabled="False"/>
+
+                    <controls:FormLabelRequired Text="Người ủy quyền" Margin="0,10,0,0"/>
+                    <controls:LookUp x:Name="Lookup_Account" Placeholder="Chọn người ủy quyền" ItemsSource="{Binding list_contact_lookup}" SelectedItem="{Binding Contact}" BottomModal="{x:Reference BottomModal}" NameDisplay="Name"/>
+
+                    <controls:FormLabelRequired Text="Thời gian hiệu lực" Margin="0,10,0,0"/>
+                    <Grid ColumnDefinitions="*,*">
+                        <Grid ColumnDefinitions="Auto,*" Grid.Column="0">
+                            <controls:FormLabel Text="Từ" FontSize="15" Grid.Column="0"/>
+                            <controls:DatePickerControl x:Name="datePickerNgayHieuLucTu" Date="{Binding mandatorySecondary.bsd_effectivedateto}" Placeholder="Chọn ngày" Grid.Column="1" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy" DateSelected="Effectivedateto_DateSelected"/> 
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Column="1">
+                            <controls:FormLabel Text="Đến" FontSize="15" Grid.Column="0"/>
+                            <controls:DatePickerControl x:Name="datePickerNgayHieuLucDen" Date="{Binding mandatorySecondary.bsd_effectivedatefrom}" Placeholder="Chọn ngày" Grid.Column="1" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy" DateSelected="Effectivedatefrom_DateSelected"/>
+                        </Grid>
+                    </Grid>
+
+                    <controls:FormLabel Text="Chức vụ (VN)" FontSize="15" Margin="0,10,0,0"/>
+                    <controls:MainEntry Placeholder="Nhập chức vụ (VN)" Text="{Binding mandatorySecondary.bsd_jobtitlevn}" FontSize="15"/>
+
+                    <controls:FormLabel Text="Chức vụ (EN)" FontSize="15" Margin="0,10,0,0"/>
+                    <controls:MainEntry Placeholder="Nhập chức vụ (EN)" Text="{Binding mandatorySecondary.bsd_jobtitleen}" FontSize="15"/>
+
+                    <controls:FormLabelRequired Text="Mô tả (VN)" Margin="0,10,0,0"/>
+                    <controls:MainEntry Placeholder="Nhập mô tả (VN)" Text="{Binding mandatorySecondary.bsd_descriptionsvn}" FontSize="15"/>
+
+                    <controls:FormLabelRequired Text="Mô tả (EN)" Margin="0,10,0,0"/>
+                    <controls:MainEntry Placeholder="Nhập mô tả (EN)" Text="{Binding mandatorySecondary.bsd_descriptionsen}" FontSize="15"/>
+                </StackLayout>
+            </ScrollView>
+            <Grid Padding="20,10" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" VerticalOptions="EndAndExpand" BackgroundColor="White">
+                <Button Text="Lưu" Clicked="AddMandatorySecondary_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
+            </Grid>
+            <controls:BottomModal x:Name="BottomModal"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             x:Class="PhuLongCRM.Views.AccountsContentView">
+  <ContentView.Content>
+        <AbsoluteLayout>
+            <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <controls:SearchBarFrame x:Name="searchBar" Grid.Row="0" Margin="10,5">
+                    <controls:SearchBar  Text="{Binding Keyword}" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
+                </controls:SearchBarFrame>
+                <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped" BackgroundColor="#F3f3f3">
+                    <controls:BsdListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                    <Label Text="{Binding bsd_name}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Row="0"/>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                                        <Label Text="Đại diện: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding primarycontact_name}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
+                                        <Label Text="Số điện thoại: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding telephone1}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
+                                        <Label Text="Địa chỉ: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding bsd_address}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
+                                    </Grid>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </controls:BsdListView.ItemTemplate>
+                </controls:BsdListView>
+            </Grid>
+        </AbsoluteLayout>
+    </ContentView.Content>
+</ContentView>

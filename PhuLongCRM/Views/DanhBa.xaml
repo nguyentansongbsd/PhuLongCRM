@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:converters="clr-namespace:PhuLongCRM.Converters"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             BackgroundColor="White"
+             Title="Danh Bạ"
+             x:Class="PhuLongCRM.Views.DanhBa">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <controls:NullToBooleanConvert x:Key="NullToBool" />
+            <controls:NotNullToBoolean x:Key="NotNullToBool" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                <Frame CornerRadius="0" BackgroundColor="#eeeeee" HasShadow="False" Padding="0" BorderColor="#eeeeee" Grid.Row="0">
+                    <SearchBar x:Name="searchBarText" BackgroundColor="White" TextChanged="SearchBar_TextChanged" Placeholder="Nhập tên hoặc số điện thoại..." />
+                </Frame>
+                <Grid Padding="20,5" ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Label x:Name="total_choosed" 
+                           Text="{Binding totalChecked}" Grid.Column="0" 
+                           VerticalTextAlignment="Center"
+                           TextColor="Gray"
+                           FontSize="15"/>
+                    <telerikPrimitives:RadCheckBox x:Name="checkAll" 
+                                                 IsCheckedChanged="checkAll_IsCheckedChanged" 
+                                                 CheckedColor="DarkGreen"
+                                                 IsChecked="{Binding isCheckedAll, Mode=TwoWay}"
+                                                 HorizontalOptions="End" VerticalOptions="Center"
+                                                 Grid.Column="1"/>
+                </Grid>
+                <Grid>
+                    <ListView x:Name="listView" ItemsSource="{Binding Contacts}" SelectionMode="None" HasUnevenRows="true" SeparatorColor="Transparent">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="20,5" ColumnSpacing="20" ColumnDefinitions="*,Auto" IsEnabled="{Binding numberFormated, Converter={StaticResource NotNullToBool}}">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"
+                                                  CommandParameter="{Binding}"/>
+                                        </Grid.GestureRecognizers>
+                                        <StackLayout Margin="0" Grid.Column="0" VerticalOptions="Center">
+                                            <Label FontSize="18" TextColor="Black" Text="{Binding Name}" />
+                                            <Label FontSize="15" Text="{Binding numberFormated}" TextColor="#999999" />
+                                        </StackLayout>
+                                        <Grid HorizontalOptions="End" Grid.Column="1">
+                                            <telerikPrimitives:RadCheckBox
+                                                        CheckedColor="DarkGreen"
+                                                       IsEnabled="False"
+                                                       VerticalOptions="Center"
+                                                       IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                                       IsVisible="{Binding numberFormated, Converter={StaticResource NotNullToBool}}" HorizontalOptions="Center"/>
+                                            <Label Text="Đã Chuyển" FontSize="15" TextColor="#444444" BackgroundColor="White" HorizontalOptions="Center" IsVisible="{Binding IsConvertToLead}" VerticalOptions="Center" Padding="5"/>
+                                        </Grid>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            
+                <!--<StackLayout VerticalOptions="EndAndExpand">
+                    <telerikInput:RadButton x:Name="btn_contact_to_lead"
+                                            HorizontalOptions="FillAndExpand" 
+                                            VerticalOptions="FillAndExpand"
+                                            TextColor="Black"
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            Clicked="ConvertToLead_Clicked"
+                                            Text="Chuyển Thành Khách Hàng Tiềm Năng"
+                                            CornerRadius="0"
+                                            BackgroundColor="#646566"/>
+                </StackLayout>-->
+            </StackLayout>
+
+            <controls:MyButtonPopup x:Name="button_toLead" OnClicked="ConvertToLead_Clicked" SourceImage="btn_send.png" BackgroundContentColor="#7898ce"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

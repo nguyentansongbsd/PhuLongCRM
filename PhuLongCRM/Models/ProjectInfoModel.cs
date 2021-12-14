@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace PhuLongCRM.Models
+{
+    public class ProjectInfoModel
+    {
+        public string bsd_projectcode { get; set; }
+        public string bsd_name { get; set; } // tên dự án
+
+        public Guid bsd_investor_id { get; set; }
+        public string bsd_investor_name { get; set; } // chủ dự án
+
+        public string bsd_address { get; set; } // địa chỉ vn
+
+        public decimal bsd_depositpercentda { get; set; } // phần trăm cọc
+
+        public DateTime? bsd_esttopdate { get; set; } // ngày dự kiến có top
+        public DateTime? bsd_estimatehandoverdate { get; set; } // ngày dự kiến bàn giao
+
+        public decimal? bsd_landvalueofproject { get; set; } // giá đất dự án
+        public decimal? bsd_maintenancefeespercent { get; set; }// phí bảo trì
+
+        public int? bsd_numberofmonthspaidmf { get; set; } // số tháng tính phí quản lý
+        public decimal? bsd_managementamount { get; set; } // đơn giá phí quản lý
+
+        public decimal? bsd_bookingfee { get; set; } // phí đặt chỗ
+        public decimal? bsd_depositamount { get; set; } // tiền đặt cọc
+
+        public string bsd_description { get; set; } // mô tả dự án nghiên cứu r&d
+
+        public string bsd_projecttype { get; set; }
+        public int bsd_propertyusagetype { get; set; }
+
+        public int? bsd_handoverconditionminimum { get; set; }
+    }
+}

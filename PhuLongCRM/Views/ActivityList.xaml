@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:helper="clr-namespace:PhuLongCRM.Helper"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:views="clr-namespace:PhuLongCRM.Views" xmlns:converters="clr-namespace:PhuLongCRM.Converters"
+             x:Class="PhuLongCRM.Views.ActivityList"
+             Title="Hoạt Động">
+    <ContentPage.Resources>
+        <Style TargetType="telerikPrimitives:RadBorder" x:Key="radBorder">
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Padding" Value="0,5"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Active">
+                            <VisualState.Setters>
+                                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                                <Setter Property="BorderColor" Value="#026294"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="InActive">
+                            <VisualState.Setters>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="BorderColor" Value="#808080"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style TargetType="Label" x:Key="labelTap">
+            <Setter Property="Margin" Value="15,10"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="LineBreakMode" Value="TailTruncation"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Active">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="#026294"/>
+                                <Setter Property="FontAttributes" Value="Bold"/>
+                                <Setter Property="FontSize" Value="16"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="InActive">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="#808080"/>
+                                <Setter Property="FontAttributes" Value="None"/>
+                                <Setter Property="FontSize" Value="15"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <converters:NullToHideConverter x:Key="NullToHideConverter" />
+        <!--<ResourceDictionary> chưa dùng 
+            <DataTemplate x:Key="Task">
+                <ViewCell>
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                        <Label Text="{Binding activitytypecode_format}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Row="0"/>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                            <Label Text="Khách hàng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding regarding_name}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
+                            <Label Text="Thời gian bắt đầu: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
+                            <Label Text="Thời gian kết thúc: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding scheduledend_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="Meet">
+                <ViewCell>
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                        <Label Text="{Binding activitytypecode_format}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Row="0"/>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                            <Label Text="Khách hàng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding regarding_name}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
+                            <Label Text="Thời gian bắt đầu: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
+                            <Label Text="Thời gian kết thúc: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding scheduledend_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
+                            <Label Text="Địa điểm: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding bsd_address}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
+                        </Grid>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="Phone">
+                <ViewCell>
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                        <Label Text="{Binding activitytypecode_format}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Row="0"/>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                            <Label Text="Khách hàng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding regarding_name}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
+                            <Label Text="Thời gian: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
+                            <Label Text="Ngày: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                            <Label Text="{Binding scheduledend_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <helper:ActivityDataTemplateSelector x:Key="ItemTemplate" Phone="{StaticResource Phone}" Task="{StaticResource Task}" Meet="{StaticResource Meet}"/>
+        </ResourceDictionary>-->
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid RowDefinitions="Auto,Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <Grid Grid.Row="0" ColumnDefinitions="*,*,*" ColumnSpacing="0" VerticalOptions="Center" >
+                    <telerikPrimitives:RadBorder x:Name="radBorderTask" Grid.Column="0" Style="{StaticResource radBorder}">
+                        <telerikPrimitives:RadBorder.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Task_Tapped"/>
+                        </telerikPrimitives:RadBorder.GestureRecognizers>
+                        <Label x:Name="lblTask" Text="Công Việc" Style="{StaticResource labelTap}"/>
+                    </telerikPrimitives:RadBorder>
+                    <telerikPrimitives:RadBorder x:Name="radBorderMeeting" Grid.Column="1" Style="{StaticResource radBorder}">
+                        <telerikPrimitives:RadBorder.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Meeting_Tapped"/>
+                        </telerikPrimitives:RadBorder.GestureRecognizers>
+                        <Label x:Name="lblMeeting" Text="Cuộc Họp" Style="{StaticResource labelTap}"/>
+                    </telerikPrimitives:RadBorder>
+                    <telerikPrimitives:RadBorder x:Name="radBorderPhoneCall" Grid.Column="2" Style="{StaticResource radBorder}">
+                        <telerikPrimitives:RadBorder.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PhoneCall_Tapped"/>
+                        </telerikPrimitives:RadBorder.GestureRecognizers>
+                        <Label x:Name="lblPhoneCall" Text="Cuộc Gọi" Style="{StaticResource labelTap}"/>
+                    </telerikPrimitives:RadBorder>
+                </Grid>
+
+                <controls:SearchBarFrame x:Name="searchBar" Grid.Row="1" Margin="10,10,10,5">
+                    <controls:SearchBar  Text="{Binding Keyword}" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
+                </controls:SearchBarFrame>
+                <controls:BsdListView x:Name="listView" Grid.Row="2" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped">
+                    <controls:BsdListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statecode_color}" VerticalOptions="Start">
+                                            <Label Grid.Column="0" Text="{Binding statecode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                        </telerikPrimitives:RadBorder>
+                                        <Label Grid.Column="1" Text="{Binding subject}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                                        <Label Text="Khách hàng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding regarding_name}" IsVisible="{Binding regarding_name,Converter={StaticResource NullToHideConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                        <Label Text="{Binding customer}" IsVisible="{Binding customer,Converter={StaticResource NullToHideConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
+                                        <Label Text="Thời gian bắt đầu: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
+                                        <Label Text="Thời gian kết thúc: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding scheduledend_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    </Grid>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </controls:BsdListView.ItemTemplate>
+                </controls:BsdListView>
+            </Grid>
+
+            <controls:ExtendedFrame AbsoluteLayout.LayoutBounds="0,1,1,59" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="#1399D5" Padding="0" HorizontalOptions="End" Margin="0,0,15,15" HeightRequest="44" WidthRequest="44" CornerRadius="22">
+                <Button Text="&#xf067;" Clicked="NewActivity_Clicked"  TextColor="White" FontSize="18" FontFamily="FontAwesomeSolid" WidthRequest="44" HeightRequest="44" CornerRadius="22" BackgroundColor="#1399D5"/>
+            </controls:ExtendedFrame>
+
+            <views:ActivityPopupContentView x:Name="ActivityPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

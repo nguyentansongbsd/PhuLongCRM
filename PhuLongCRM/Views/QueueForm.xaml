@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:converter ="clr-namespace:PhuLongCRM.Converters"                    
+             x:Class="PhuLongCRM.Views.QueueForm">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--header-->
+            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
+                <Setter Property="IndicatorText" Value="&#xf105;"/>
+                <Setter Property="IndicatorLocation" Value="End"/>
+                <Setter Property="IndicatorFontSize" Value="18"/>
+                <Setter Property="IndicatorColor" Value="#939393"/>
+                <Setter Property="BackgroundColor" Value="#F1F1F1"/>
+                <Setter Property="BorderColor" Value="#F1F1F1"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="17,8"/>
+                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
+            </Style>
+            <Style x:Key="ExpanderHeadingText" TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="#444444"/>
+            </Style>
+            <converter:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+            <converter:DecimalFormatConverter x:Key="DecimalFormatConverter" />
+            <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />
+            <converter:QueueStatusConverter x:Key="QueueStatusConverter" />
+            <!--centermodal-->
+            <Style x:Key="rabBorder_Tab" TargetType="telerikPrimitives:RadBorder">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="#939393"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="#2196F3"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="Lb_Tab" TargetType="Label">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="0,10"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="#939393"/>
+                                    <Setter Property="FontAttributes" Value="None"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="#2196F3"/>
+                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="0,10,0,60">
+                <StackLayout>
+                    <telerikPrimitives:RadExpander IsExpanded="True">
+                        <telerikPrimitives:RadExpander.Header>
+                            <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                <Label Style="{StaticResource ExpanderHeadingText}" Text="Thông tin sản phẩm"/>
+                            </telerikPrimitives:ExpanderHeader>
+                        </telerikPrimitives:RadExpander.Header>
+                        <telerikPrimitives:RadExpander.Content>
+                            <StackLayout BackgroundColor="White" Padding="10">
+                                <controls:FormLabelRequired Text="Dự án"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_project_name}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="Đợt mở bán" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_phaseslaunch_name}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="Sản phẩm" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_units_name}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="Phí giữ chỗ" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_queuingfee, StringFormat='{0:#,0}'}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                            </StackLayout>
+                        </telerikPrimitives:RadExpander.Content>
+                    </telerikPrimitives:RadExpander>
+                    <telerikPrimitives:RadExpander IsExpanded="True">
+                        <telerikPrimitives:RadExpander.Header>
+                            <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                <Label Style="{StaticResource ExpanderHeadingText}" Text="Thông tin giữ chỗ"/>
+                            </telerikPrimitives:ExpanderHeader>
+                        </telerikPrimitives:RadExpander.Header>
+                        <telerikPrimitives:RadExpander.Content>
+                            <StackLayout BackgroundColor="White" Padding="10">
+                                <controls:FormLabelRequired Text="Tiêu đề"/>
+                                <controls:MainEntry x:Name="topic" Placeholder="Nhập tiêu đề của giữ chỗ" Text="{Binding QueueFormModel.name}" FontSize="15" />
+
+                                <controls:FormLabelRequired Text="Khách hàng" Margin="0,10,0,0"/>
+                                <Grid>
+                                    <controls:MainEntry Text="{Binding QueueFormModel.customer_name}" Placeholder="Chọn khách hàng" FontSize="15"/>
+                                    <StackLayout>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="KhachHangTiemNang_Tapped"/>
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                </Grid>
+
+                                <controls:FormLabel Text="Ngân sách" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="Nhập ngân sách" Text="{Binding QueueFormModel.budgetamount, StringFormat='{0:#,##0}'}" FontSize="15"/>
+
+                                <controls:FormLabel Text="Mô tả" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="Nhập mô tả" Text="{Binding QueueFormModel.description}" FontSize="15" />
+
+                                <controls:FormLabelRequired Text="Đại lý bán hàng" Margin="0,10,0,0"/>
+                                <controls:LookUp x:Name="lookUpDaiLy" Grid.Column="1" Grid.Row="3" Placeholder="Chọn đại lý" ItemsSource="{Binding DaiLyOptions}" SelectedItem="{Binding DailyOption}" NameDisplay="Name" BottomModal="{x:Reference LookUpModal}" />
+
+                                <controls:FormLabel Text="Nhân viên đại lý" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="Nhập nhân viên đại lý" Text="{Binding QueueFormModel.bsd_nameofstaffagent}" FontSize="15" />
+                            </StackLayout>
+                        </telerikPrimitives:RadExpander.Content>
+                    </telerikPrimitives:RadExpander>
+                </StackLayout>
+            </ScrollView>
+            <Grid AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="White" VerticalOptions="EndAndExpand">
+                <Button x:Name="btnSave" Margin="10,5,10,10" Padding="10,5" HeightRequest="40" TextColor="White" FontAttributes="Bold" CornerRadius="10" FontSize="16" BackgroundColor="#2196F3" BorderWidth="1" BorderColor="#2196F3">
+                    <Button.Triggers>
+                        <Trigger TargetType="Button" Property="Text" Value="Đang Tạo Giữ Chỗ...">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </Trigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+            <controls:CenterModal x:Name="centerModalKHTN" Title="Chọn khách hàng tiềm năng">
+                <controls:CenterModal.Body>
+                    <Grid RowDefinitions="Auto,*" Padding="0,0,0,10">
+                        <Grid ColumnDefinitions="*,*" Grid.Row="0" ColumnSpacing="0">
+                            <telerikPrimitives:RadBorder x:Name="radBorderContact" Grid.Column="0" Style="{StaticResource rabBorder_Tab}">
+                                <telerikPrimitives:RadBorder.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Contact_Tapped"/>
+                                </telerikPrimitives:RadBorder.GestureRecognizers>
+                                <Label x:Name="lbContact" Text="KH Cá Nhân" Style="{StaticResource Lb_Tab}"/>
+                            </telerikPrimitives:RadBorder>
+                            <telerikPrimitives:RadBorder x:Name="radBorderAccount" Grid.Column="1" Style="{StaticResource rabBorder_Tab}">
+                                <telerikPrimitives:RadBorder.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Account_Tapped"/>
+                                </telerikPrimitives:RadBorder.GestureRecognizers>
+                                <Label x:Name="lbAccount" Text="KH Doanh Nghiệp" Style="{StaticResource Lb_Tab}"/>
+                            </telerikPrimitives:RadBorder>
+                        </Grid>
+                        <ListView x:Name="LookUpContact" Grid.Row="1" ItemsSource="{Binding ContactsLookUp}" HasUnevenRows="True" SelectionMode="None" SeparatorVisibility="None" Margin="0,10,0,0" BackgroundColor="White">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Padding="0" BackgroundColor="#eeeeee">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="LookUpContact_ItemTapped" CommandParameter="{Binding}"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <Label Text="{Binding Name}" TextColor="#444444" FontSize="15" BackgroundColor="White" Padding="10" Margin="0,0.5"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <ListView x:Name="LookUpAccount" Grid.Row="1" ItemsSource="{Binding AccountsLookUp}" IsVisible="false" HasUnevenRows="True" SelectionMode="None" SeparatorVisibility="None" Margin="0,10,0,0" BackgroundColor="White">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Padding="0" BackgroundColor="#eeeeee">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="LookUpAccount_ItemTapped" CommandParameter="{Binding}"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <Label Text="{Binding Name}" TextColor="#444444" FontSize="15" BackgroundColor="White" Padding="10" Margin="0,0.5"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </controls:CenterModal.Body>
+                <controls:CenterModal.Footer>
+                    <Grid ColumnDefinitions="*,*" BackgroundColor="White" Padding="10">
+                        <Button Grid.Column="0" Text="Thêm KH cá nhân" Clicked="AddContact_Tapped" BackgroundColor="#1399D5" FontAttributes="Bold" HeightRequest="40" TextColor="White" FontSize="15" CornerRadius="10" Padding="5,0"/>
+                        <Button Grid.Column="1" Text="Thêm KH doanh nghiệp" Clicked="AddAccount_Tapped" BackgroundColor="#1399D5" FontAttributes="Bold" HeightRequest="40" TextColor="White" FontSize="15" CornerRadius="10" Padding="5,0"/>
+                    </Grid>
+                </controls:CenterModal.Footer>
+            </controls:CenterModal>
+            <controls:BottomModal x:Name="LookUpModal"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

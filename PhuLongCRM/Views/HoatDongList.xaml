@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"           
+             xmlns:converter ="clr-namespace:PhuLongCRM.Converters"
+             Title="Hoạt động"
+             x:Class="PhuLongCRM.Views.HoatDongList">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MeetingMenu" Order="Default" Clicked="MeetingMenu_Clicked" Priority="0">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid" Color="White" Glyph="&#xf073;" Size="Large"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Name="PhoneMenu" Order="Default" Clicked="PhoneMenu_Clicked" Priority="0">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid" Color="White" Glyph="&#xf095;" Size="Large"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Name="TaskMenu" Order="Default" Clicked="NewTaskMenu_Clicked" Priority="0">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid" Color="White" Glyph="&#xf0ae;" Size="Large"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:InformationLabelConverter x:Key="InformationLabelConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <SearchBar Grid.Row="0" Text="{Binding Keyword}" Placeholder="Từ khoá" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
+                <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped">
+                    <controls:BsdListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" BackgroundColor ="White" Padding="15,10" Margin="0,1">
+                                    <Label Grid.Row="0" Grid.Column="0" LineBreakMode="TailTruncation" MaxLines="2">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding subject}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                                                <Span Text="{Binding statecode_format,Converter={StaticResource InformationLabelConverter}}" FontSize="18"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding createdon_format}" FontSize="16" VerticalTextAlignment="Start"/>
+                                    <Label FontSize="16" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" LineBreakMode="TailTruncation">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Loại Hoạt Động: "/>
+                                                <Span Text="{Binding activitytypecode_format}" TextColor="Black"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label FontSize="16" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" LineBreakMode="TailTruncation">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Ưu Tiên: "/>
+                                                <Span Text="{Binding prioritycode_format}" TextColor="Black"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Grid.Row="3" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2" LineBreakMode="TailTruncation">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Thời gian bắt đầu: "/>
+                                                <Span Text="{Binding scheduledstart_format}" TextColor="Black"/>
+                                                <Span Text=" đến "/>
+                                                <Span Text="{Binding scheduledend_format}" TextColor="Black"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </controls:BsdListView.ItemTemplate>
+                </controls:BsdListView>
+            </Grid>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Trang chủ"
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:convertes ="clr-namespace:PhuLongCRM.Converters"
+             x:Class="PhuLongCRM.Views.Dashboard">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <convertes:CurrencyFormatConverter x:Key="CurrencyFormat"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <RefreshView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+                <ScrollView Padding="0,0,0,20">
+                    <StackLayout Spacing="0">
+                        <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="HOA HỒNG -"/>
+                                    <Span Text="{Binding dateBefor,StringFormat=' {0:MM/yyyy}'}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Grid ColumnDefinitions="*,*" Margin="14,6">
+                            <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center">
+                                <StackLayout Spacing="12">
+                                    <Label Text="{Binding TotalCommissionAMonth,Converter={StaticResource CurrencyFormat}}" FontSize="18" TextColor="#7C0617" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="Tổng tiền" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </controls:ExtendedFrame>
+                            <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center">
+                                <StackLayout Spacing="12">
+                                    <Label Text="{Binding TotalPaidCommissionAMonth,Converter={StaticResource CurrencyFormat}}" FontSize="18" TextColor="#017914" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="Đã nhận" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </controls:ExtendedFrame>
+                        </Grid>
+                        <controls:ExtendedFrame Margin="14,6" Padding="8">
+                            <telerikChart:RadCartesianChart HeightRequest="250" >
+                                <telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:CategoricalAxis LabelFitMode="MultiLine" PlotMode="BetweenTicks" ShowLabels="True" MajorTickThickness="1" MajorTickBackgroundColor="#A9A9A9"/>
+                                </telerikChart:RadCartesianChart.HorizontalAxis>
+                                <telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:NumericalAxis Minimum="0" Maximum="300" MajorStep="50" LabelFormat="#,0 tr" LineColor="#A9A9A9"/>
+                                </telerikChart:RadCartesianChart.VerticalAxis>
+                                <telerikChart:RadCartesianChart.Grid>
+                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
+                                </telerikChart:RadCartesianChart.Grid>
+                                <telerikChart:RadCartesianChart.Series>
+                                    <telerikChart:BarSeries ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding CommissionTransactionChart}" />
+                                </telerikChart:RadCartesianChart.Series>
+                            </telerikChart:RadCartesianChart>
+                        </controls:ExtendedFrame>
+
+                        <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="GIAO DỊCH -"/>
+                                    <Span Text="{Binding dateBefor,StringFormat=' {0:MM/yyyy}'}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Grid ColumnDefinitions="*,*,*,*" Margin="14,6" ColumnSpacing="8">
+                            <controls:ExtendedFrame Grid.Column="0" Padding="0">
+                                <StackLayout Margin="6,18" VerticalOptions="Center" >
+                                    <Label Text="{Binding numQueue}" FontSize="18" FontAttributes="Bold" TextColor="#2196F3" HorizontalTextAlignment="Center"/>
+                                    <Label Text="Giữ chỗ" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </controls:ExtendedFrame>
+                            <controls:ExtendedFrame Grid.Column="1" Padding="0">
+                                <StackLayout Margin="6,18" VerticalOptions="Center" >
+                                    <Label Text="{Binding numQuote}" FontSize="18" FontAttributes="Bold" TextColor="#FA7803" HorizontalTextAlignment="Center"/>
+                                    <Label Text="Đặt cọc" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </controls:ExtendedFrame>
+                            <controls:ExtendedFrame Grid.Column="2" Padding="0">
+                                <StackLayout Margin="2,18" VerticalOptions="Center" >
+                                    <Label Text="{Binding numOptionEntry}" FontSize="18" FontAttributes="Bold" TextColor="#0DB302" HorizontalTextAlignment="Center"/>
+                                    <Label Text="Hợp đồng" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </controls:ExtendedFrame>
+                            <controls:ExtendedFrame Grid.Column="3" Padding="0">
+                                <StackLayout Margin="6,18" VerticalOptions="Center" >
+                                    <Label Text="{Binding numUnit}" FontSize="18" FontAttributes="Bold" TextColor="#D42A16" HorizontalTextAlignment="Center"/>
+                                    <Label Text="Đã bán" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </controls:ExtendedFrame>
+                        </Grid>
+                        <controls:ExtendedFrame Padding="8" Margin="14,6">
+                            <telerikChart:RadCartesianChart  HeightRequest="250">
+                                <telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:CategoricalAxis LineColor="#A9A9A9" MajorTickThickness="2" PlotMode="BetweenTicks" LabelFitMode="MultiLine" ShowLabels="True" MajorTickBackgroundColor="#A9A9A9" />
+                                </telerikChart:RadCartesianChart.HorizontalAxis>
+                                <telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:NumericalAxis Minimum="0" Maximum="30" MajorStep="5" LineColor="#A9A9A9" />
+                                </telerikChart:RadCartesianChart.VerticalAxis>
+                                <telerikChart:RadCartesianChart.Grid>
+                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
+                                </telerikChart:RadCartesianChart.Grid>
+                                <telerikChart:RadCartesianChart.Series>
+                                    <telerikChart:LineSeries Stroke="#2196F3" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQueue}" />
+                                    <telerikChart:LineSeries Stroke="#FA7803" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQuote}" />
+                                    <telerikChart:LineSeries Stroke="#0DB302" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthOptionEntry}" />
+                                    <telerikChart:LineSeries Stroke="#D42A16" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthUnit}" />
+                                </telerikChart:RadCartesianChart.Series>
+                            </telerikChart:RadCartesianChart>
+                        </controls:ExtendedFrame>
+
+                        <Label Text="KHÁCH HÀNG TIỀM NĂNG" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>
+                        <controls:ExtendedFrame Padding="0" Margin="14,6">
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="200" Padding="8">
+                                <telerikChart:RadPieChart Grid.Column="0">
+                                    <telerikChart:RadPieChart.Series>
+                                        <telerikChart:DonutSeries InnerRadiusFactor="0.7" ValueBinding="Value" ItemsSource="{Binding LeadsChart}" />
+                                    </telerikChart:RadPieChart.Series>
+                                    <telerikChart:RadPieChart.Palette>
+                                        <telerikChart:ChartPalette>
+                                            <telerikChart:ChartPalette.Entries>
+                                                <telerikChart:PaletteEntry FillColor="#2C95F6" StrokeColor="Transparent" />
+                                                <telerikChart:PaletteEntry FillColor="#F6E22D" StrokeColor="Transparent" />
+                                                <telerikChart:PaletteEntry FillColor="#932CF6" StrokeColor="Transparent" />
+                                            </telerikChart:ChartPalette.Entries>
+                                        </telerikChart:ChartPalette>
+                                    </telerikChart:RadPieChart.Palette>
+                                </telerikChart:RadPieChart>
+                                <StackLayout Grid.Column="1" Spacing="28" VerticalOptions="Center">
+                                    <StackLayout Orientation="Horizontal" Spacing="8" Padding="0,4">
+                                        <Label Text="{Binding numKHMoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#2C95F6" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        <Label Text="Khách hàng mới" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Spacing="8" >
+                                        <Label Text="{Binding numKHDaChuyenDoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#F6E22D" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        <Label Text="Đã chuyển đổi" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Spacing="8">
+                                        <Label Text="{Binding numKHKhongChuyenDoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#932CF6" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        <Label Text="Không chuyển đổi" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </controls:ExtendedFrame>
+
+                        <StackLayout Orientation="Horizontal" Padding="14,14,14,8">
+                            <Label Text="CÔNG VIỆC HÔM NAY" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
+                            <Label  TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ShowMore_Tapped"/>
+                                </Label.GestureRecognizers>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Xem thêm  " FontSize="15"/>
+                                        <Span Text="&#xf054;" FontSize="13" FontFamily="FontAwesomeSolid"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout x:Name="stTaskList" BindableLayout.ItemsSource="{Binding Activities}" Padding="14" Spacing="8">
+                            <BindableLayout.EmptyView>
+                                <Label Text="Hôm nay không có công việc" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
+                            </BindableLayout.EmptyView>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <controls:ExtendedFrame Padding="12,16" BackgroundColor="White">
+                                        <controls:ExtendedFrame.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ActivitiItem_Tapped" CommandParameter="{Binding .}"/>
+                                        </controls:ExtendedFrame.GestureRecognizers>
+                                        <StackLayout Spacing="8">
+                                            <Label Text="{Binding subject}" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource NavigationPrimary}"/>
+                                            <Label FontSize="15" TextColor="#333333">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Khách hàng: " />
+                                                        <Span Text="{Binding customer}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label FontSize="15" TextColor="#333333">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="Thời gian: {0:h:mm tt} - {1:h:mm tt}">
+                                                        <Binding Path="scheduledstart" />
+                                                        <Binding Path="scheduledend" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                        </StackLayout>
+                                    </controls:ExtendedFrame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </RefreshView>
+
+            <ContentView x:Name="ContentActivity" IsVisible="false" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentActivity_Tapped"/>
+                </ContentView.GestureRecognizers>
+                <telerikPrimitives:RadBorder VerticalOptions="FillAndExpand" CornerRadius="10" BackgroundColor="White" Margin="15,30">
+                    <telerikPrimitives:RadBorder.GestureRecognizers>
+                        <TapGestureRecognizer/>
+                    </telerikPrimitives:RadBorder.GestureRecognizers>
+                    <Grid Grid.Row="0" Margin="10,10,10,0" RowDefinitions="Auto,*,Auto">
+                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding ActivityStatusCode.Background}">
+                                <Label Grid.Column="0" Text="{Binding ActivityStatusCode.Name}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                            </telerikPrimitives:RadBorder>
+                            <Label Grid.Column="1" Text="{Binding ActivityType}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Label Grid.Column="2" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="20" Padding="5" TextColor="#666666">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentActivity_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+
+                        <ScrollView Grid.Row="1">
+                            <Grid>
+                                <Grid x:Name="ContentPhoneCall" IsVisible="false" RowSpacing="10" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+                                    <Label Text="{Binding PhoneCall.subject}" FontSize="16" FontAttributes="Bold" TextColor="#03ACF5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
+
+                                    <controls:FormLabel Text="Gọi từ" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="1"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding PhoneCall.call_from}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Gọi đến" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="2"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="2" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding PhoneCall.call_to}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Số điện thoại" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="3"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="3" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding PhoneCall.phonenumber}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Người liên quan" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="4" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding PhoneCall.Customer.Name}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Thời gian bắt đầu" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="5"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="5" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding PhoneCall.scheduledstart,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Thời gian kết thúc" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="6"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="6" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding PhoneCall.scheduledend,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+
+                                    <controls:FormLabel Text="Mô tả:" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="7"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="0" Grid.Row="8" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Grid.ColumnSpan="2">
+                                        <Label Text="{Binding PhoneCall.description}" Grid.Column="1" FontSize="14" TextColor="#444444"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+
+                                <Grid x:Name="ContentTask" IsVisible="false" RowSpacing="10" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*" >
+                                    <Label Text="{Binding TaskDetail.subject}" FontSize="16" FontAttributes="Bold" TextColor="#03ACF5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
+
+                                    <controls:FormLabel Text="Người liên quan" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="1"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding TaskDetail.Customer.Name}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Thời gian bắt đầu" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="2"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="2" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding ScheduledStartTask,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Thời gian kết thúc" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="3"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="3" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding ScheduledEndTask,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Mô tả:" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="0" Grid.Row="5" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Grid.ColumnSpan="2">
+                                        <Label Text="{Binding TaskDetail.description}" Grid.Column="1" FontSize="14" TextColor="#444444"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+
+                                <Grid x:Name="ContentMeet" IsVisible="false" RowSpacing="10" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="4*,6*">
+                                    <Label Text="{Binding Meet.subject}" FontSize="16" FontAttributes="Bold" TextColor="#03ACF5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
+
+                                    <controls:FormLabel Text="Người tham dự bắt buộc" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="1" LineHeight="1.2"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Meet.required}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalTextAlignment="Center" LineHeight="1.2"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Người tham dự không bắt buộc" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="2" LineHeight="1.2"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="2" BorderColor="#f3f3f3" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Meet.optional}" FontSize="14" TextColor="#444444" Margin="5" LineHeight="1.2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Người liên quan" Grid.Column="0" FontSize="15" TextColor="#444444" Grid.Row="3"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="3" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Meet.Customer.Name}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Địa điểm" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="4" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Meet.location}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Thời gian bắt đầu" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="5"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="5" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Meet.scheduledstart,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Thời gian kết thúc" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="6"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="6" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Meet.scheduledend,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel Text="Sự kiện cả ngày" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="7"/>
+                                    <CheckBox HorizontalOptions="Start" Grid.Column="1" Grid.Row="7" IsChecked="{Binding Meet.isalldayevent}" Margin="10,0,0,0" IsEnabled="False"/>
+
+                                    <controls:FormLabel Text="Mô tả:" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="8"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="0" Grid.Row="9" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Grid.ColumnSpan="2">
+                                        <Label Text="{Binding Meet.description}" Grid.Column="1" FontSize="14" TextColor="#444444"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+                            </Grid>
+                        </ScrollView>
+
+                        <Grid IsVisible="{Binding ShowGridButton}" Grid.Row="2" ColumnDefinitions="*,*" BackgroundColor="White" Padding="10,0,10,10">
+                            <Button Text="Cập Nhật" Grid.Column="0" Clicked="Update_Clicked" TextColor="White" FontSize="16" FontAttributes="Bold" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" TextTransform="None" VerticalOptions="Center"/>
+                            <Button Text="Hoàn Thành" Grid.Column="1" Clicked="Completed_Clicked" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" HeightRequest="40" BackgroundColor="White" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" BorderWidth="1" TextTransform="None" VerticalOptions="Center"/>
+                        </Grid>
+                    </Grid>
+                </telerikPrimitives:RadBorder>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

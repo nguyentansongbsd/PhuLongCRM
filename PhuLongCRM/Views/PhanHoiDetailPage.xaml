@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" xmlns:converters="clr-namespace:PhuLongCRM.Converters" xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             x:Class="PhuLongCRM.Views.PhanHoiDetailPage"
+             x:Name="this"
+             Title="Chi Tiết Phản Hồi">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PhanHoiStatusCodeConvert x:Key="StatucToColor"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,60">
+                <StackLayout>
+                    <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Margin="10,20,10,0">
+                        <StackLayout Padding="15,10" Spacing="10">
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                                <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding Case.statuscode,Converter={StaticResource StatucToColor}}">
+                                    <Label Grid.Column="0" Text="{Binding StatusCode.Label}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                </telerikPrimitives:RadBorder>
+                                <Label Grid.Column="1" Text="{Binding Case.title}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="Loại:" FontSize="15" TextColor="#444444"/>
+                                <Label Grid.Column="1" Text="{Binding CaseType.Label}" TextColor="#444444" FontSize="15"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="Khách hàng:" FontSize="15" TextColor="#444444"/>
+                                <Label Grid.Column="1" Text="{Binding CustomerName}" TextColor="{StaticResource NavigationPrimary}" FontSize="15">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Customer_Tapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="Đối tượng:" FontSize="15" TextColor="#444444"/>
+                                <Label Grid.Column="1" Text="{Binding Case.unitName}" TextColor="#444444" FontSize="15"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="Sản phẩm:" FontSize="15" TextColor="#444444"/>
+                                <Label Grid.Column="1" Text="{Binding Case.unitName}" TextColor="#444444" FontSize="15"/>
+                            </Grid>
+                        </StackLayout>
+                    </telerikPrimitives:RadBorder>
+                    <Grid ColumnDefinitions="*,*">
+                        <BoxView HeightRequest="0.5" BackgroundColor="#939393" Grid.ColumnSpan="2" VerticalOptions="End" />
+                        <telerikPrimitives:RadBorder x:Name="radBorderThongTin" Grid.Column="0" Style="{StaticResource rabBorder_Tab}">
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ThongTin_Tapped"/>
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                            <Label x:Name="lbThongTin" Text="Thông Tin" Style="{StaticResource Lb_Tab}"/>
+                        </telerikPrimitives:RadBorder>
+                        <telerikPrimitives:RadBorder x:Name="radBorderPhanHoiLienQuan" Grid.Column="1" Style="{StaticResource rabBorder_Tab}">
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PhanHoiLienQuan_Tapped"/>
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                            <Label x:Name="lbPhanHoiLienQuan" Text="Phản Hồi Liên Quan" Style="{StaticResource Lb_Tab}"/>
+                        </telerikPrimitives:RadBorder>
+                    </Grid>
+                    <Grid>
+                        <!--tab thông tin-->
+                        <StackLayout x:Name="TabThongTin" IsVisible="true" Margin="0,5,0,0" Spacing="1" BackgroundColor="#F1F1F1">
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                <controls:FormLabel Text="Chủ đề" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" />
+                                <controls:FormLabelValue Text="{Binding Case.subjectTitle}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                <controls:FormLabel Text="Phản hồi chính" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" />
+                                <controls:FormLabelValue Text="{Binding Case.parentCaseTitle}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                <controls:FormLabel Text="Nguồn" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" />
+                                <controls:FormLabelValue Text="{Binding Origin.Label}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                <controls:FormLabel Text="Nội dung" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" />
+                                <controls:FormLabelValue Text="{Binding Case.description}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                        </StackLayout>
+                        <!--tab phản hồi liên quan-->
+                        <StackLayout x:Name="TabPhanHoiLienQuan" IsVisible="false" Margin="0,5,0,0">
+                            <StackLayout  BindableLayout.ItemsSource="{Binding ListCase}" BindableLayout.EmptyView="Không có dữ liệu" BackgroundColor="#eeeeee" Spacing="1">
+                                <BindableLayout.EmptyViewTemplate>
+                                    <DataTemplate>
+                                        <Label Text="Không có dữ liệu" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                    </DataTemplate>
+                                </BindableLayout.EmptyViewTemplate>
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout BackgroundColor ="White" Padding="15,10" Margin="0,1" Spacing="10">
+
+                                            <Label Text="{Binding title}" TextColor="#1C78C2" FontSize="15" FontAttributes="Bold" VerticalOptions="Center"/>
+
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <Label Grid.Column="0" Text="Loại:" FontSize="15" TextColor="#444444"/>
+                                                <Label Grid.Column="1" Text="{Binding casetypecodevalue}" TextColor="#444444" FontSize="15"/>
+                                            </Grid>
+
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <Label Grid.Column="0" Text="Khách hàng:" FontSize="15" TextColor="#444444"/>
+                                                <Label Grid.Column="1" Text="{Binding contactname}" TextColor="#444444" FontSize="15"/>
+                                            </Grid>
+
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <Label Grid.Column="0" Text="Nguồn:" FontSize="15" TextColor="#444444"/>
+                                                <Label Grid.Column="1" Text="{Binding caseorigincodevalue}" TextColor="#444444" FontSize="15"/>
+                                            </Grid>
+
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                            <Button Clicked="ShowMoreCase_Clicked" IsVisible="{Binding ShowMoreCase}" BorderColor="#1399D5" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="Xem Thêm" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+            <controls:FloatingButtonGroup x:Name="floatingButtonGroup" IsVisible="{Binding ShowFloatingButtonGroup}" ItemsSource="{Binding BindingContext.ButtonCommandList,Source={x:Reference this}}"/>
+            <Grid IsVisible="{Binding ShowButton}" Padding="10,15,10,10" VerticalOptions="EndAndExpand" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="White">
+                <Button Clicked="MoLaiPhanHoi_Clicked" Text="Mở lại phản hồi" BackgroundColor="#1399D5" TextColor="White" FontAttributes="Bold" HeightRequest="35" Padding="10,5" FontSize="16" CornerRadius="5"/>
+            </Grid>
+            <controls:CenterModal x:Name="centerModalUpdateCase" Title="Cập nhật phản hồi">
+                <controls:CenterModal.Body>
+                    <ScrollView>
+                        <StackLayout Spacing="5" Padding="10">
+                            <controls:FormLabelRequired Text="Hướng giải quyết" Margin="0,10,0,0"/>
+                            <controls:LookUp x:Name="Lookup_ResolutionType" Placeholder="Chọn hướng giải quyết" ItemsSource="{Binding ResolutionTypes}" SelectedItem="{Binding ResolutionType}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label"/>
+
+                            <controls:FormLabelRequired Text="Phương án" Margin="0,10,0,0"/>
+                            <controls:MainEntry Placeholder="Nhập phướng án" Text="{Binding subject}" FontSize="15"/>
+
+                            <controls:FormLabel Text="Tổng thời gian" Margin="0,10,0,0"/>
+                            <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                <Label TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0" Text="{Binding BillableTime.Label}"/>
+                            </telerikPrimitives:RadBorder>
+
+                            <controls:FormLabelRequired Text="Billable time" Margin="0,10,0,0"/>
+                            <controls:LookUp x:Name="Lookup_BillableTime" Placeholder="Chọn billable time" ItemsSource="{Binding BillableTimes}" SelectedItem="{Binding BillableTime}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label"/>
+
+                            <controls:FormLabel Text="Nhận xét" Margin="0,10,0,0"/>
+                            <controls:MainEntry Placeholder="Nhập nhận xét" Text="{Binding description}" FontSize="15"/>
+                        </StackLayout>
+                    </ScrollView>
+                </controls:CenterModal.Body>
+                <controls:CenterModal.Footer>
+                    <Grid ColumnDefinitions="*,*" Margin="10">
+                        <Button Grid.Column="0" Text="Đóng" Clicked="Close_Clicked" HeightRequest="40" BackgroundColor="White" TextColor="{StaticResource NavigationPrimary}" BorderColor="{StaticResource NavigationPrimary}" BorderWidth="1" CornerRadius="10"/>
+                        <Button Grid.Column="1" Text="Xác nhận" Clicked="Confirm_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
+                    </Grid>
+                </controls:CenterModal.Footer>
+            </controls:CenterModal>
+            <controls:BottomModal x:Name="BottomModal"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

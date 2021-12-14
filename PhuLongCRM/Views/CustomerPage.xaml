@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+    xmlns:contentViews="clr-namespace:PhuLongCRM.Views"
+    Title="KHÁCH HÀNG" BackgroundColor="White"
+    x:Class="PhuLongCRM.Views.CustomerPage">
+    <ContentPage.Resources>
+        <Style TargetType="telerikPrimitives:RadBorder" x:Key="radBorder">
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Padding" Value="0,5"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Active">
+                            <VisualState.Setters>
+                                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                                <Setter Property="BorderColor" Value="#026294"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="InActive">
+                            <VisualState.Setters>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="BorderColor" Value="#808080"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style TargetType="Label" x:Key="labelTap">
+            <Setter Property="Margin" Value="15,10"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="LineBreakMode" Value="TailTruncation"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Active">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="#026294"/>
+                                <Setter Property="FontAttributes" Value="Bold"/>
+                                <Setter Property="FontSize" Value="16"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="InActive">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="#808080"/>
+                                <Setter Property="FontAttributes" Value="None"/>
+                                <Setter Property="FontSize" Value="15"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" RowDefinitions="Auto,*">
+                <Grid Grid.Row="0" ColumnDefinitions="*,*,*" ColumnSpacing="0" VerticalOptions="Center" >
+                    <telerikPrimitives:RadBorder x:Name="radBorderLead" Grid.Column="0" Style="{StaticResource radBorder}">
+                        <telerikPrimitives:RadBorder.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Lead_Tapped"/>
+                        </telerikPrimitives:RadBorder.GestureRecognizers>
+                        <Label x:Name="lblLead" Text="Tiềm năng" Style="{StaticResource labelTap}"/>
+                    </telerikPrimitives:RadBorder>
+                    <telerikPrimitives:RadBorder x:Name="radBorderContact" Grid.Column="1" Style="{StaticResource radBorder}">
+                        <telerikPrimitives:RadBorder.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Contact_Tapped"/>
+                        </telerikPrimitives:RadBorder.GestureRecognizers>
+                        <Label x:Name="lblContact" Text="Cá nhân" Style="{StaticResource labelTap}"/>
+                    </telerikPrimitives:RadBorder>
+                    <telerikPrimitives:RadBorder x:Name="radBorderAccount" Grid.Column="2" Style="{StaticResource radBorder}">
+                        <telerikPrimitives:RadBorder.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Account_Tapped"/>
+                        </telerikPrimitives:RadBorder.GestureRecognizers>
+                        <Label x:Name="lblAccount" Text="Doanh nghiệp" Style="{StaticResource labelTap}"/>
+                    </telerikPrimitives:RadBorder>
+                </Grid>
+                
+                <Grid x:Name="CustomerContentView" Grid.Row="1"/>
+            </Grid>
+            <controls:ExtendedFrame AbsoluteLayout.LayoutBounds="0,1,1,59" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="#1399D5" Padding="0" HorizontalOptions="End" Margin="0,0,15,15" HeightRequest="44" WidthRequest="44" CornerRadius="22">
+                <Button Text="&#xf067;" Clicked="NewCustomer_Clicked"  TextColor="White" FontSize="18" FontFamily="FontAwesomeSolid" WidthRequest="44" HeightRequest="44" CornerRadius="22" BackgroundColor="#1399D5"/>
+            </controls:ExtendedFrame>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

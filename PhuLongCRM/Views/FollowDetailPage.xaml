@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhuLongCRM.Views.FollowDetailPage"
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:converters="clr-namespace:PhuLongCRM.Converters"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" 
+             xmlns:viewmodels="clr-namespace:PhuLongCRM.ViewModels" x:DataType="viewmodels:FollowDetailPageViewModel"
+             Title="Danh Sách Theo Dõi">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:GroupConverter x:Key="groupConverter"/>
+            <converters:NullToHideConverter x:Key="NullToHideConverter" />
+            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
+                <Setter Property="IndicatorText" Value="&#xf105;"/>
+                <Setter Property="IndicatorLocation" Value="End"/>
+                <Setter Property="IndicatorFontSize" Value="18"/>
+                <Setter Property="IndicatorColor" Value="#939393"/>
+                <Setter Property="BackgroundColor" Value="#F2F2F2"/>
+                <Setter Property="BorderColor" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="17,8"/>
+                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
+            </Style>
+            <Style x:Key="ExpanderHeadingText" TargetType="Label">
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="#444444"/>
+            </Style>
+            <Style x:Key="Lb_Title_ThongTin" TargetType="controls:FormLabel">
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="Padding" Value="25,10"/>
+            </Style>
+            <Style  x:Key="Lb_Title_Content" TargetType="controls:FormLabelValue">
+                <Setter Property="Padding" Value="25,10"/>
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="White" Padding="0,0,0,60">
+                <StackLayout>
+                    <telerikPrimitives:RadBorder BorderColor="#808080" CornerRadius="10" BorderThickness="1" BackgroundColor="White" Margin="10">
+                        <StackLayout Margin="15">
+                            <Grid ColumnDefinitions="*,Auto" Grid.Row="0">
+                                <Grid ColumnDefinitions="Auto,*" HorizontalOptions="Start" Grid.Column="0">
+                                    <Label Text="Mã:" TextColor="Gray" FontSize="14" Grid.Column="0"/>
+                                    <Label Text="{Binding FollowDetail.bsd_followuplistcode}" TextColor="Gray" FontSize="14" Grid.Column="1" LineBreakMode="TailTruncation" />
+                                </Grid>
+                                <Label Text="{Binding FollowDetail.bsd_expiredate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="14" TextColor="Gray"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto">
+                                <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding FollowDetail.statuscode_color}" VerticalOptions="StartAndExpand">
+                                    <Label Grid.Column="0" Text="{Binding FollowDetail.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                </telerikPrimitives:RadBorder>
+                                <Label Grid.Column="1" Text="{Binding FollowDetail.bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Text="Khách hàng:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                <Label Text="{Binding FollowDetail.customer}" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Customer_Tapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Text="Sản phẩm:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                <Label Text="{Binding FollowDetail.bsd_units}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Text="Đặt cọc:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                <Label Text="{Binding FollowDetail.name_reservation}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
+                            </Grid>
+                        </StackLayout>
+                    </telerikPrimitives:RadBorder>
+                    <Grid>
+                        <!--tab thông tin-->
+                        <StackLayout>
+                            <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Text="Chi Tiết" Style="{StaticResource ExpanderHeadingText}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BackgroundColor="#eeeeee" Spacing="1">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Loại" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_type_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Loại thanh lý" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_terminationtype_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Nhóm" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_group_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Dự án" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.project_name}" Grid.Column="1" FontSize="15" FontAttributes="Bold" TextColor="#1C78C2" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End">
+                                                <controls:FormLabelValue.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Project_Tapped"/>
+                                                </controls:FormLabelValue.GestureRecognizers>
+                                            </controls:FormLabelValue>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Sản phẩm" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_units}" Grid.Column="1" FontSize="15" FontAttributes="Bold" TextColor="#1C78C2" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End">
+                                                <controls:FormLabelValue.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Unit_Tapped"/>
+                                                </controls:FormLabelValue.GestureRecognizers>
+                                            </controls:FormLabelValue>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Giá bán" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_sellingprice, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Đặt cọc" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.name_reservation}" Grid.Column="1" FontSize="15" FontAttributes="Bold" TextColor="#1C78C2" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End">
+                                                <controls:FormLabelValue.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Reservation_Tapped"/>
+                                                </controls:FormLabelValue.GestureRecognizers>
+                                            </controls:FormLabelValue>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+
+                            <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Text="Giá Trị Thanh Lý" Style="{StaticResource ExpanderHeadingText}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BackgroundColor="#eeeeee" Spacing="1">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Tổng tiền" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_totalamount, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Tổng tiền thanh toán" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_totalamountpaid, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Phương thức phạt TL" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_takeoutmoney_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" IsVisible="{Binding FollowDetail.isRefund}">
+                                            <controls:FormLabel Text="Hoàn tiền" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_forfeitureamount, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" IsVisible="{Binding FollowDetail.isForfeiture}">
+                                            <controls:FormLabel Text="Hoàn tiền" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_forfeiturepercent, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Tổng tiền phạt" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_totalforfeitureamount, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+
+                            <telerikPrimitives:RadExpander IsExpanded="False" AutomationId="masterCardExpander" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Text="Thanh Lý" Style="{StaticResource ExpanderHeadingText}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BackgroundColor="#eeeeee" Spacing="1">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Thư thanh lý" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_terminateletter_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Thanh lý" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_termination_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Bán lại" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_resell_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" IsVisible="{Binding FollowDetail.bsd_resell}">
+                                            <controls:FormLabel Text="Đợt mở bán" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.phaseslaunch_name}" Grid.Column="1" FontSize="15" FontAttributes="Bold" TextColor="#1C78C2" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+
+                            <telerikPrimitives:RadExpander IsExpanded="False" AutomationId="masterCardExpander" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Text="Bình Luận - Quyết Định" Style="{StaticResource ExpanderHeadingText}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BackgroundColor="#eeeeee" Spacing="1">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Họp định kỳ" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_collectionmeeting_subject}" Grid.Column="1" FontAttributes="Bold" FontSize="15" TextColor="#1C78C2" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End">
+                                                <controls:FormLabelValue.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CollectionMeeting_Tapped"/>
+                                                </controls:FormLabelValue.GestureRecognizers>
+                                            </controls:FormLabelValue>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Nội dung" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_description}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

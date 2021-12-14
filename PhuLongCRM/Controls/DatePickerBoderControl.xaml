@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+      x:Class="PhuLongCRM.Controls.DatePickerBoderControl">
+    <controls:DatePickerBorder x:Name="datePicker" />
+    <controls:MainEntry x:Name="entry" PlaceholderColor="Gray" IsEnabled="False" ShowClearButton="False" FontSize="15"/>
+</Grid>
