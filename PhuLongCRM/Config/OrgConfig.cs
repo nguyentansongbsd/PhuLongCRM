@@ -6,7 +6,7 @@ namespace PhuLongCRM.Config
 {
     public class OrgConfig
     {
-        public const string VerApp = "PL.CRM - VerDemo - Ver 1.4";
+        public const string VerApp = "PL.CRM - VerDemo - Ver 1.5";
 
         //public const string GraphApi = "https://graph.microsoft.com/v1.0/sites/";
         //public const string GraphReSource = "https://graph.microsoft.com";
