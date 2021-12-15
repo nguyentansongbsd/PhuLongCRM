@@ -107,6 +107,9 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_placeofissue' />
                                 <attribute name='bsd_dategrant' />
                                 <attribute name='bsd_registrationcode' />
+                                <attribute name='bsd_accountaddressvn' />
+                                <attribute name='bsd_permanentaddress1' />
+                                <attribute name='bsd_contactaddress' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='leadid' operator='eq' value='{" + leadid + @"}' />

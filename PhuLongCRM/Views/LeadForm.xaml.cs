@@ -430,7 +430,7 @@ namespace PhuLongCRM.Views
 
         private async void StateProvinceAddress1_Changed(object sender, LookUpChangeEvent e)
         {
-            await viewModel.LoadProvincesForLookup(viewModel.StateProvinceAddress1);
+            await viewModel.LoadDistrictForLookup(viewModel.StateProvinceAddress1);
         }
 
         private async void CloseAddress1_Clicked(object sender, EventArgs e)

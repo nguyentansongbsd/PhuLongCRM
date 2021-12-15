@@ -218,10 +218,14 @@
                                             <controls:FormLabel Text="Nguồn khách hàng: " Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding LeadSource.Label}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <!--<Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="6">
-                                            <controls:FormLabel Text="Địa chỉ (VN): " Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="11">
+                                            <controls:FormLabel Text="Địa chỉ liên lạc: " Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleLead.bsd_contactaddress}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
-                                        </Grid>-->
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="12">
+                                            <controls:FormLabel Text="Địa chỉ thường trú: " Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabelValue Text="{Binding singleLead.bsd_permanentaddress1}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
+                                        </Grid>
                                     </Grid>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -243,7 +247,7 @@
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="2">
                                             <controls:FormLabel Text="Địa chỉ: " Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <Label Text="{Binding Address}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <Label Text="{Binding singleLead.bsd_accountaddressvn}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="3">
                                             <controls:FormLabel Text="Mô tả: " Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
