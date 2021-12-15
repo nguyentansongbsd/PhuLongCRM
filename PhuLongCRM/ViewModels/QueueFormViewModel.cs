@@ -40,7 +40,18 @@ namespace PhuLongCRM.ViewModels
         private LookUp _daiLyOption;
         public LookUp DailyOption { get => _daiLyOption; set { _daiLyOption = value; OnPropertyChanged(nameof(DailyOption)); } }
 
-        public Guid idQueueDraft { get; set; }
+        private List<LookUp> _listCollaborator;
+        public List<LookUp> ListCollaborator { get => _listCollaborator; set { _listCollaborator = value; OnPropertyChanged(nameof(ListCollaborator)); } }
+
+        private LookUp _collaborator;
+        public LookUp Collaborator { get => _collaborator; set { _collaborator = value; OnPropertyChanged(nameof(Collaborator)); } }
+
+        private List<LookUp> _listCustomerReferral;
+        public List<LookUp> ListCustomerReferral { get => _listCustomerReferral; set { _listCustomerReferral = value; OnPropertyChanged(nameof(ListCustomerReferral)); } }
+
+        private LookUp _customerReferral;
+        public LookUp CustomerReferral { get => _customerReferral; set { _customerReferral = value; OnPropertyChanged(nameof(CustomerReferral)); } }
+        public Guid idQueueDraft { get; set; } //StatusReason
 
         public Guid UnitId { get; set; }
 
@@ -48,6 +59,8 @@ namespace PhuLongCRM.ViewModels
         {
             QueueFormModel = new QueueFormModel();
             DaiLyOptions = new List<LookUp>();
+            ListCollaborator = new List<LookUp>();
+            ListCustomerReferral = new List<LookUp>();
         }
 
         public async Task LoadFromProject(Guid ProjectId)
@@ -606,7 +619,10 @@ namespace PhuLongCRM.ViewModels
                         {
                             var itemformat = item.Replace("content", "").Replace(":", "").Replace("'", "").Replace("}", "").Replace('"', ' ').Trim();
                             if (Guid.Parse(itemformat) != Guid.Empty)
+                            {
                                 this.idQueueDraft = Guid.Parse(itemformat);
+                                await LoadQueueDraft(idQueueDraft);
+                            }
                             else
                                 this.idQueueDraft = Guid.Empty;
                         }
@@ -636,7 +652,10 @@ namespace PhuLongCRM.ViewModels
                         {
                             var itemformat = item.Replace("content", "").Replace(":", "").Replace("'", "").Replace("}", "").Replace('"', ' ').Trim();
                             if (Guid.Parse(itemformat) != Guid.Empty)
+                            {
                                 this.idQueueDraft = Guid.Parse(itemformat);
+                                await LoadQueueDraft(idQueueDraft);
+                            }
                             else
                                 this.idQueueDraft = Guid.Empty;
                         }
@@ -704,6 +723,24 @@ namespace PhuLongCRM.ViewModels
             else
             {
                 data["bsd_salesagentcompany@odata.bind"] = $"/accounts({DailyOption.Id})";
+            }
+
+            if (Collaborator == null || Collaborator.Id == Guid.Empty)
+            {
+                await DeletLookup("bsd_collaborator", QueueFormModel.opportunityid);
+            }
+            else
+            {
+                data["bsd_collaborator@odata.bind"] = $"/contacts({Collaborator.Id})";
+            }
+
+            if (CustomerReferral == null || CustomerReferral.Id == Guid.Empty)
+            {
+                await DeletLookup("bsd_customerreferral_contact", QueueFormModel.opportunityid);
+            }
+            else
+            {
+                data["bsd_customerreferral_contact@odata.bind"] = $"/contacts({CustomerReferral.Id})";
             }
 
             data["bsd_nameofstaffagent"] = QueueFormModel.bsd_nameofstaffagent;
@@ -832,6 +869,82 @@ namespace PhuLongCRM.ViewModels
                 }
             }   
             return list;
+        }
+
+        public async Task LoadCollaboratorLookUp()
+        {
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='contactid' alias='Id' />
+                    <attribute name='fullname' alias='Name' />
+                    <order attribute='createdon' descending='true' />                   
+                    <filter type='and'>
+                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='bsd_type' operator='eq' value='100000001' />
+                    </filter>
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("contacts", fetch);
+            if (result == null || result.value.Count == 0)
+                return;
+            var data = result.value;
+            foreach (var item in data)
+            {
+                ListCollaborator.Add(item);
+            }
+        }
+
+        public async Task LoadCustomerReferralLookUp()
+        {
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='contactid' alias='Id' />
+                    <attribute name='fullname' alias='Name' />
+                    <order attribute='createdon' descending='true' />                   
+                    <filter type='and'>
+                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='bsd_type' operator='eq' value='100000000' />
+                    </filter>
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("contacts", fetch);
+            if (result == null || result.value.Count == 0)
+                return;
+            var data = result.value;
+            foreach (var item in data)
+            {
+                ListCustomerReferral.Add(item);
+            }
+        }      
+
+        public async Task LoadQueueDraft(Guid queueID)
+        {
+            string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='opportunity'>
+                                    <attribute name='opportunityid' />
+                                    <attribute name='bsd_priorityqueue' />
+                                    <attribute name='bsd_prioritynumber' />
+                                    <attribute name='bsd_ordernumber' />
+                                    <attribute name='bsd_dateorder' />
+                                    <attribute name='statuscode' />
+                                    <attribute name='statecode' />
+                                    <attribute name='bsd_expired' />
+                                    <order attribute='bsd_priorityqueue' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='opportunityid' operator='eq' value='{" + queueID + @"}' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueueFormModel>>("opportunities", fetchXml);
+            if (result == null || result.value.Count == 0)
+                return;
+            var tmp = result.value.FirstOrDefault();
+            QueueFormModel.bsd_priorityqueue = tmp.bsd_priorityqueue;
+            QueueFormModel.bsd_prioritynumber = tmp.bsd_prioritynumber;
+            QueueFormModel.bsd_ordernumber = tmp.bsd_ordernumber;
+            QueueFormModel.bsd_dateorder = tmp.bsd_dateorder;
+            QueueFormModel.bsd_expired = tmp.bsd_expired;
+            QueueFormModel.statuscode = tmp.statuscode;
         }
     }
 }

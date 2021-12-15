@@ -112,7 +112,10 @@ namespace PhuLongCRM.ViewModels
         public ObservableCollection<LookUp> list_country_lookup { get; set; }
         public ObservableCollection<LookUp> list_province_lookup { get; set; }
         public ObservableCollection<LookUp> list_district_lookup { get; set; }
-        
+
+        private bool _isOfficial;
+        public bool IsOfficial { get => _isOfficial; set { _isOfficial = value; OnPropertyChanged(nameof(IsOfficial)); } }
+
         public AccountFormViewModel()
         {
             singleAccount = new AccountFormModel();                   
@@ -198,6 +201,11 @@ namespace PhuLongCRM.ViewModels
                 return;
             var tmp = result.value.FirstOrDefault();
             this.singleAccount = tmp;
+
+            if (singleAccount.statuscode == "100000000")
+                IsOfficial = false;
+            else
+                IsOfficial = true;
         }
 
         public void GetPrimaryContactByID()

@@ -139,6 +139,9 @@ namespace PhuLongCRM.ViewModels
 
         private string checkCMND;
 
+        private bool _isOfficial;
+        public bool IsOfficial { get => _isOfficial; set { _isOfficial = value; OnPropertyChanged(nameof(IsOfficial)); } }
+
         public ContactFormViewModel()
         {
             singleContact = new ContactFormModel();
@@ -231,6 +234,11 @@ namespace PhuLongCRM.ViewModels
             this.singleContact = tmp;
 
             checkCMND = tmp.bsd_identitycardnumber;
+
+            if (singleContact.statuscode == "100000000")
+                IsOfficial = false;
+            else
+                IsOfficial = true;
         }
 
         public async Task<Boolean> updateContact(ContactFormModel contact)

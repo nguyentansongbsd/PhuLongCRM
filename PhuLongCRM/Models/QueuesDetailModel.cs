@@ -45,5 +45,24 @@ namespace PhuLongCRM.Models
 
         public DateTime _bsd_queuingexpired;
         public DateTime bsd_queuingexpired { get => _bsd_queuingexpired.AddHours(7); set { _bsd_queuingexpired = value; OnPropertyChanged(nameof(bsd_queuingexpired)); } }
+
+        private int _bsd_ordernumber;
+        public int bsd_ordernumber { get => _bsd_ordernumber; set { _bsd_ordernumber = value; OnPropertyChanged(nameof(bsd_ordernumber)); } }
+
+        private int _bsd_priorityqueue;
+        public int bsd_priorityqueue { get => _bsd_priorityqueue; set { _bsd_priorityqueue = value; OnPropertyChanged(nameof(bsd_priorityqueue)); } }
+
+        private int _bsd_prioritynumber;
+        public int bsd_prioritynumber { get => _bsd_prioritynumber; set { _bsd_prioritynumber = value; OnPropertyChanged(nameof(bsd_prioritynumber)); } }
+
+        private DateTime _bsd_dateorder;
+        public DateTime bsd_dateorder { get => _bsd_dateorder; set { _bsd_dateorder = value; OnPropertyChanged(nameof(bsd_dateorder)); } }
+
+        private bool _bsd_expired;
+        public bool bsd_expired { get => _bsd_expired; set { _bsd_expired = value; OnPropertyChanged(nameof(bsd_expired)); } }
+
+        public string bsd_expired_format { get { return BoolToStringData.GetStringByBool(bsd_expired); } }
+
+        public string statuscode_format { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString()).Name; } }
     }
 }

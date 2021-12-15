@@ -204,6 +204,39 @@
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout BackgroundColor="#dddddd" Spacing="1">
+
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Số thứ tự" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.bsd_ordernumber}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Số ưu tiên" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.bsd_priorityqueue}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Độ ưu tiên" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.bsd_prioritynumber}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Ngày thứ tự" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Queue.bsd_dateorder,StringFormat='{0:dd/MM/yyyy} - '}" />
+                                                        <Span Text="{Binding Queue.bsd_dateorder,StringFormat=' {0:hh:mm tt}'}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Đã hết hạn" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.bsd_expired_format}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
+                                        </Grid>
+
                                         <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
                                             <Label Grid.Column="0" Text="Đại lý bán hàng" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                                             <Label Grid.Column="1" Text="{Binding Queue.salesagentcompany_name}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#2196F3" FontAttributes="Bold" FontSize="14">

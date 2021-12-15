@@ -66,6 +66,18 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadSalesAgentCompany();
                 LoadingHelper.Hide();
             };
+            lookUpCollaborator.PreOpenAsync = async () =>
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadCollaboratorLookUp();
+                LoadingHelper.Hide();
+            };
+            lookUpCustomerReferral.PreOpenAsync = async () =>
+             {
+                 LoadingHelper.Show();
+                 await viewModel.LoadCustomerReferralLookUp();
+                 LoadingHelper.Hide();
+             };
             if (viewModel.AccountsLookUp.Count <= 0)
             {
                // LoadingHelper.Show();
@@ -130,13 +142,6 @@ namespace PhuLongCRM.Views
                 btnSave.Text = "Tạo Giữ Chỗ";
                 return;
             }
-            if (viewModel.DailyOption == null || viewModel.DailyOption.Id == null || viewModel.DailyOption.Id == Guid.Empty)
-            {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn đại lý bán hàng");
-                LoadingHelper.Hide();
-                btnSave.Text = "Tạo Giữ Chỗ";
-                return;
-            }
             if (from)
             {
                 if (!await viewModel.SetQueueTime())
@@ -150,6 +155,20 @@ namespace PhuLongCRM.Views
             if (viewModel.Customer != null && viewModel.Customer.Id != Guid.Empty && viewModel.DailyOption != null && viewModel.DailyOption.Id != Guid.Empty && viewModel.DailyOption.Id == viewModel.Customer.Id)
             {
                 ToastMessageHelper.ShortMessage("Khách hàng phải khác Đại lý bán hàng");
+                LoadingHelper.Hide();
+                btnSave.Text = "Tạo Giữ Chỗ";
+                return;
+            }
+            if (viewModel.Customer != null && viewModel.Customer.Id != Guid.Empty && viewModel.Collaborator != null && viewModel.Collaborator.Id != Guid.Empty && viewModel.Collaborator.Id == viewModel.Customer.Id)
+            {
+                ToastMessageHelper.ShortMessage("Khách hàng phải khác Cộng tác viên");
+                LoadingHelper.Hide();
+                btnSave.Text = "Tạo Giữ Chỗ";
+                return;
+            }
+            if (viewModel.Customer != null && viewModel.Customer.Id != Guid.Empty && viewModel.CustomerReferral != null && viewModel.CustomerReferral.Id != Guid.Empty && viewModel.CustomerReferral.Id == viewModel.Customer.Id)
+            {
+                ToastMessageHelper.ShortMessage("Khách hàng phải khác Khách hàng giới thiệu");
                 LoadingHelper.Hide();
                 btnSave.Text = "Tạo Giữ Chỗ";
                 return;
@@ -264,6 +283,33 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             await Navigation.PushAsync(new AccountForm());
             LoadingHelper.Hide();
+        }
+
+        private void lookUpDaiLy_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if(viewModel.DailyOption != null && viewModel.DailyOption.Id != Guid.Empty)
+            {
+                viewModel.Collaborator = null;
+                viewModel.CustomerReferral = null;
+            }    
+        }
+
+        private void lookUpCollaborator_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if (viewModel.Collaborator != null && viewModel.Collaborator.Id != Guid.Empty)
+            {
+                viewModel.DailyOption = null;
+                viewModel.CustomerReferral = null;
+            }
+        }
+
+        private void lookUpCustomerReferral_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if (viewModel.CustomerReferral != null && viewModel.CustomerReferral.Id != Guid.Empty)
+            {
+                viewModel.DailyOption = null;
+                viewModel.Collaborator = null;
+            }
         }
     }
 }

@@ -34,6 +34,9 @@ namespace PhuLongCRM.Models
                 new QueuesStatusCodeModel("100000002","Đang đợi","#FDC206"),
                 new QueuesStatusCodeModel("100000003","Hết hạn","#B3B3B3"),
                 new QueuesStatusCodeModel("100000004","Hoàn thành","#C50147"),
+                new QueuesStatusCodeModel("100000008","Xác nhận hủy","#808080"), // Draft
+                new QueuesStatusCodeModel("100000009","Hủy GC chưa hoàn tiền","#808080"), //?????
+                new QueuesStatusCodeModel("100000010","Hủy GC đã hoàn tiền","#808080"), //?????
                 new QueuesStatusCodeModel("0","","#808080")
             };
         }
