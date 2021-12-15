@@ -9,6 +9,7 @@ using PhuLongCRM.Helper;
 using System.Linq;
 using System.Threading.Tasks;
 using PhuLongCRM.Settings;
+using Newtonsoft.Json;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -34,20 +35,29 @@ namespace PhuLongCRM.ViewModels
         public string WaiverManaFee { get => _waiverManaFee; set { _waiverManaFee = value; OnPropertyChanged(nameof(WaiverManaFee)); } }
 
         public ObservableCollection<DiscountChildOptionSet> DiscountChilds { get; set; } = new ObservableCollection<DiscountChildOptionSet>();
+        public ObservableCollection<DiscountChildOptionSet> DiscountChildsInternel { get; set; } = new ObservableCollection<DiscountChildOptionSet>();
         public ObservableCollection<OptionSet> PromotionsSelected { get; set; } = new ObservableCollection<OptionSet>();
         public ObservableCollection<OptionSet> Promotions { get; set; } = new ObservableCollection<OptionSet>();
 
         private List<OptionSet> _paymentSchemes;
         public List<OptionSet> PaymentSchemes { get => _paymentSchemes; set { _paymentSchemes = value; OnPropertyChanged(nameof(PaymentSchemes)); } }
+        private List<OptionSet> _paymentSchemeTypes;
+        public List<OptionSet> PaymentSchemeTypes { get => _paymentSchemeTypes; set { _paymentSchemeTypes = value; OnPropertyChanged(nameof(PaymentSchemeTypes)); } }
         private List<OptionSet> _discountLists;
         public List<OptionSet> DiscountLists { get => _discountLists; set { _discountLists = value; OnPropertyChanged(nameof(DiscountLists)); } }
+        private List<OptionSet> _discountInternelLists;
+        public List<OptionSet> DiscountInternelLists { get => _discountInternelLists; set { _discountInternelLists = value; OnPropertyChanged(nameof(DiscountInternelLists)); } }
         private List<HandoverConditionModel> _handoverConditions;
         public List<HandoverConditionModel> HandoverConditions { get => _handoverConditions; set { _handoverConditions = value; OnPropertyChanged(nameof(HandoverConditions)); } }
 
         private OptionSet _paymentScheme;
         public OptionSet PaymentScheme { get => _paymentScheme; set { _paymentScheme = value; OnPropertyChanged(nameof(PaymentScheme)); } }
+        private OptionSet _paymentSchemeType;
+        public OptionSet PaymentSchemeType { get => _paymentSchemeType; set { _paymentSchemeType = value; OnPropertyChanged(nameof(PaymentSchemeType)); } }
         private OptionSet _discountList;
         public OptionSet DiscountList { get => _discountList; set { _discountList = value; OnPropertyChanged(nameof(DiscountList)); } }
+        private OptionSet _discountInternelList;
+        public OptionSet DiscountInternelList { get => _discountInternelList; set { _discountInternelList = value; OnPropertyChanged(nameof(DiscountInternelList)); } }
         private HandoverConditionModel _handoverCondition;
         public HandoverConditionModel HandoverCondition { get => _handoverCondition; set { _handoverCondition = value; OnPropertyChanged(nameof(HandoverCondition)); } }
         public HandoverConditionModel HandoverCondition_Update { get; set; }
@@ -135,6 +145,9 @@ namespace PhuLongCRM.ViewModels
         private decimal _totalAmount = 0;
         public decimal TotalAmount { get => Math.Round(_totalAmount,2); set { _totalAmount = value; OnPropertyChanged(nameof(TotalAmount)); } }
         #endregion
+
+        private TotalReservationModel _totalReservation;
+        public TotalReservationModel TotalReservation { get => _totalReservation; set { _totalReservation = value;OnPropertyChanged(nameof(TotalReservation)); } }
 
         public OptionSet QuoteDetail { get; set; }
         private decimal UnitPrice { get; set; }
@@ -275,6 +288,8 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_actualarea' />
                                     <attribute name='bsd_netusablearea' />
                                     <attribute name='bsd_unitstatus' />
+                                    <attribute name='bsd_paymentschemestype' />
+                                    <attribute name='bsd_startingdatecalculateofps' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='quoteid' operator='eq' uitype='quote' value='{this.QuoteId}' />
@@ -387,6 +402,35 @@ namespace PhuLongCRM.ViewModels
             this.MaintenanceFee = this.Quote.bsd_freightamount;
             this.TotalAmount = this.Quote.totalamount;
 
+        }
+
+        // Tinh tien
+        public async Task GetTotal(string quoteId)
+        {
+            CalualteReservationModel model = new CalualteReservationModel();
+            model.DKBG = this.HandoverCondition.Val;
+
+            List<string> ckChungIds = new List<string>();
+            var ckChung = this.DiscountChilds.Where(x => x.Selected == true);
+            foreach (var item in ckChung)
+            {
+                ckChungIds.Add(item.Val);
+            }
+            model.CKChung = string.Join(",", ckChungIds);
+
+            string path = $"/quotes({quoteId})//Microsoft.Dynamics.CRM.bsd_Action_CalculateReservation_ForApp";
+
+            string json = JsonConvert.SerializeObject(model);
+            var input = new
+            {
+                input = json
+            };
+            string body = JsonConvert.SerializeObject(input);
+            CrmApiResponse result = await CrmHelper.PostData(path, body);
+            if (result.IsSuccess == false && result.Content == null) return;
+            string content = result.Content;
+            ResponseAction responseActions = JsonConvert.DeserializeObject<ResponseAction>(content);
+            var a = JsonConvert.DeserializeObject<TotalReservationModel>(responseActions.output);
         }
 
         // Load thong tin san pham
@@ -511,7 +555,7 @@ namespace PhuLongCRM.ViewModels
                                     <order attribute='createdon' descending='false' />
                                     <filter type='and'>
                                       <condition attribute='statuscode' operator='eq' value='100000000' />
-                                      <condition attribute='bsd_project' operator='eq' uitype='bsd_project' value='{unitId}' />
+                                      <condition attribute='bsd_phaseslaunch' operator='eq' uitype='bsd_phaseslaunch' value='{this.PhasesLaunchId}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -595,6 +639,24 @@ namespace PhuLongCRM.ViewModels
             this.DiscountLists = result.value;
         }
 
+        // Load Chieu khau noi bo
+        public async Task LoadDiscountInternelList()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_interneldiscount'>
+                                    <attribute name='bsd_name' alias='Label' />
+                                    <attribute name='bsd_interneldiscountid' alias='Val'/>
+                                    <filter type='and'>
+                                      <condition attribute='bsd_phaselaunch' operator='eq'  uitype='bsd_phaseslaunch' value='{PhasesLaunchId}' />
+                                      <condition attribute='statuscode' operator='eq' value='100000001' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_interneldiscounts", fetchXml);
+            if (result == null || result.value.Any() == false) return;
+            this.DiscountInternelLists = result.value;
+        }
+
         // Load Chieu khau con
         public async Task LoadDiscountChilds()
         {
@@ -630,25 +692,66 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        // Load Khuyen mai
-        public async Task LoadPromotions()
+        // Load Chieu khau con
+        public async Task LoadDiscountChildsInternel()
         {
+            // new_type -> loai cua discounts (precent:100000000 or amount:100000001)
+            if (DiscountInternelList == null) return;
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='bsd_promotion'>
+                                  <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
                                     <attribute name='bsd_name' alias='Label'/>
-                                    <attribute name='bsd_promotionid' alias='Val' />
-                                    <order attribute='createdon' descending='true' />
-                                    <filter type='and'>
-                                      <condition attribute='bsd_phaselaunch' operator='eq' uitype='bsd_phaseslaunch' value='{this.PhasesLaunchId}' />
-                                    </filter>
+                                    <attribute name='bsd_amount'/>
+                                    <attribute name='bsd_percentage'/>
+                                    <attribute name='new_type'/>
+                                    <attribute name='bsd_startdate'/>
+                                    <attribute name='bsd_enddate'/>
+                                    <attribute name='createdon'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <link-entity name='bsd_bsd_interneldiscount_bsd_discount' from='bsd_discountid' to='bsd_discountid' intersect='true'>
+                                      <filter>
+                                        <condition attribute='bsd_interneldiscountid' operator='eq' value='{this.DiscountInternelList.Val}' uitype='bsd_bsd_interneldiscount_bsd_discount' />
+                                      </filter>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_promotions", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
             if (result == null || result.value.Any() == false) return;
 
             foreach (var item in result.value)
             {
-                this.Promotions.Add(item);
+                item.IsEnableChecked = (this.IsHadLichThanhToan == true || item.IsExpired == true || item.IsNotApplied == true) ? false : true;
+                this.DiscountChildsInternel.Add(item);
+            }
+        }
+
+        // Load Khuyen mai
+        public async Task LoadPromotions()
+        {
+            // load KM theo dk: Type = No codition , Status = Approved , theo Dot mo ban va con thoi gian hieu luc
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_promotion'>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <attribute name='bsd_promotionid' alias='Val' />
+                                    <attribute name='bsd_startdate' />
+                                    <attribute name='bsd_enddate' />
+                                    <order attribute='createdon' descending='true' />
+                                    <filter type='and'>
+                                        <condition attribute='bsd_type' operator='eq' value='100000000' />
+                                        <condition attribute='statuscode' operator='eq' value='100000001' />
+                                        <condition attribute='bsd_phaselaunch' operator='eq' uitype='bsd_phaseslaunch' value='{this.PhasesLaunchId}' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PromotionModel>>("bsd_promotions", fetchXml);
+            if (result == null || result.value.Any() == false) return;
+
+            foreach (var item in result.value)
+            {
+                if (item.bsd_startdate.Date < DateTime.Now.Date && item.bsd_enddate.Date > DateTime.Now.Date)
+                {
+                    this.Promotions.Add(item);
+                }
             }
         }
 
@@ -891,7 +994,10 @@ namespace PhuLongCRM.ViewModels
 
         public async Task<object> GetContent()
         {
+            Dictionary<string, object> data = new Dictionary<string, object>();
             List<string> discounts = new List<string>();
+            List<string> discountsInternel = new List<string>();
+
             foreach (var item in this.DiscountChilds)
             {
                 if (item.Selected == true)
@@ -899,11 +1005,19 @@ namespace PhuLongCRM.ViewModels
                     discounts.Add(item.Val);
                 }
             }
+            foreach (var item in this.DiscountChildsInternel)
+            {
+                if (item.Selected == true)
+                {
+                    discountsInternel.Add(item.Val);
+                }
+            }
 
-            Dictionary<string, object> data = new Dictionary<string, object>();
+
             data["quoteid"] = this.Quote.quoteid;
             data["name"] = this.Quote.name;
             data["bsd_discounts"] = string.Join(",", discounts);
+            data["bsd_interneldiscount"] = string.Join(",", discountsInternel);
 
             data["bsd_unitstatus"] = this.Quote.bsd_unitstatus;
             data["bsd_constructionarea"] = this.Quote.bsd_constructionarea;
@@ -911,26 +1025,33 @@ namespace PhuLongCRM.ViewModels
             data["bsd_actualarea"] = this.Quote.bsd_actualarea;
             data["bsd_depositfee"] = this.Quote.bsd_depositfee;
             data["bsd_bookingfee"] = this.Quote.bsd_bookingfee;
-            data["bsd_contracttypedescripton"] = this.ContractType.Val;
+            //data["bsd_contracttypedescripton"] = this.ContractType.Val;
             data["bsd_nameofstaffagent"] = this.Quote.bsd_nameofstaffagent;// this.StaffAgentQuote;
             //data["bsd_referral"] = this.Quote.bsd_referral;// this.DescriptionQuote;
+            data["bsd_paymentschemestype"] = this.PaymentSchemeType?.Val;
 
-            data["bsd_detailamount"] = this.Quote.bsd_detailamount; ;//this.UnitInfor.price;
-            data["bsd_discount"] = this.TotalDiscount;
-            data["bsd_packagesellingamount"] = this.TotalHandoverCondition;
-            data["bsd_totalamountlessfreight"] = this.NetSellingPrice;
-            data["bsd_landvaluededuction"] = this.LandValueDeduction;
-            data["bsd_freightamount"] = this.MaintenanceFee;
+            //data["bsd_detailamount"] = this.Quote.bsd_detailamount; ;//this.UnitInfor.price;
+            //data["bsd_discount"] = this.TotalDiscount;
+            //data["bsd_packagesellingamount"] = this.TotalHandoverCondition;
+            //data["bsd_totalamountlessfreight"] = this.NetSellingPrice;
+            //data["bsd_landvaluededuction"] = this.LandValueDeduction;
+            //data["bsd_freightamount"] = this.MaintenanceFee;totalamount
+            data["totalamount"] = 335432000;
 
-            data["bsd_numberofmonthspaidmf"] = this.Quote.bsd_numberofmonthspaidmf;//this.UnitInfor.bsd_numberofmonthspaidmf;
+             data["bsd_numberofmonthspaidmf"] = this.Quote.bsd_numberofmonthspaidmf;//this.UnitInfor.bsd_numberofmonthspaidmf;
             data["bsd_managementfee"] = this.Quote.bsd_managementfee; //this.UnitInfor.bsd_managementamountmonth;
-            data["bsd_waivermanafeemonth"] = this.Quote.bsd_waivermanafeemonth;//this.WaiverManaFee;
+            //data["bsd_waivermanafeemonth"] = this.Quote.bsd_waivermanafeemonth;//this.WaiverManaFee;
 
             data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
             data["bsd_unitno@odata.bind"] = $"/products({this.Quote.unit_id})";//{this.UnitInfor.productid}
             data["bsd_projectid@odata.bind"] = $"/bsd_projects({this.Quote._bsd_projectcode_value})";//this.UnitInfor._bsd_projectcode_value
             data["bsd_salessgentcompany@odata.bind"] = $"/accounts({this.SalesAgent.Val})";
             data["bsd_taxcode@odata.bind"] = $"/bsd_taxcodes({this.TaxCode.bsd_taxcodeid})";
+
+            if (this.Quote.bsd_startingdatecalculateofps.HasValue)
+            {
+                data["bsd_startingdatecalculateofps"] = this.Quote.bsd_startingdatecalculateofps.Value.Date;
+            }
 
             if (this.Quote._bsd_phaseslaunchid_value != Guid.Empty)//this.UnitInfor._bsd_phaseslaunchid_value != Guid.Empty
             {
@@ -942,10 +1063,10 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_pricelistphaselaunch@odata.bind"] = $"/pricelevels({this.Quote.pricelist_phaselaunch_id})";
             }
 
-            if (this.Quote.pricelist_apply_id != Guid.Empty)
-            {
-                data["pricelevelid@odata.bind"] = $"/pricelevels({this.Quote.pricelist_apply_id})";
-            }
+            //if (this.Quote.pricelist_apply_id != Guid.Empty)
+            //{
+            //    data["pricelevelid@odata.bind"] = $"/pricelevels({this.Quote.pricelist_apply_id})";
+            //}
 
             if (this.DiscountList != null)
             {
@@ -956,14 +1077,23 @@ namespace PhuLongCRM.ViewModels
                 await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_discountlist");
             }
 
-            if (this.Queue != null)
+            if (this.DiscountInternelList != null)
             {
-                data["opportunityid@odata.bind"] = $"/opportunities({this.Queue.Val})";
+                data["bsd_interneldiscountlist@odata.bind"] = $"/bsd_interneldiscounts({this.DiscountInternelList.Val})";
             }
             else
             {
-                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "opportunityid");
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_interneldiscountlist");
             }
+
+            //if (this.Queue != null)
+            //{
+            //    data["opportunityid@odata.bind"] = $"/opportunities({this.Queue.Val})";
+            //}
+            //else
+            //{
+            //    await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "opportunityid");
+            //}
 
             if (this.Buyer.Title == "2")
             {
@@ -1005,6 +1135,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task<object> GetContentQuoteProduct()
         {
+            var a = 439432000;
             Dictionary<string, object> data = new Dictionary<string, object>();
             data["quotedetailid"] = Guid.NewGuid();
             data["isproductoverridden"] = false;
@@ -1012,13 +1143,15 @@ namespace PhuLongCRM.ViewModels
             data["priceperunit"] = this.UnitInfor.price;
             data["quantity"] = 1;
             data["quotedetailname"] = this.Quote.name;
-            data["tax"] = this.TotalVATTax;
-            data["manualdiscountamount"] = this.TotalDiscount;
-            data["extendedamount"] = this.UnitInfor.price + this.TotalVATTax - this.TotalDiscount;
+            data["tax"] = a;
+            //data["baseamount"] = this.UnitInfor.price;
+            data["manualdiscountamount_base"] = a;
+            data["extendedamount"] = a;
 
             data["quoteid@odata.bind"] = $"/quotes({this.Quote.quoteid})";
             data["uomid@odata.bind"] = $"/products({this.UnitInfor._defaultuomid_value})";
             data["productid@odata.bind"] = $"/products({this.UnitInfor.productid})";
+            data["createdby@odata.bind"] = $"/systemusers({UserLogged.ManagerId})";
 
             return data;
         }

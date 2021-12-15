@@ -16,11 +16,15 @@ namespace PhuLongCRM.Models
 
         public string NumChuanBiInFloor { get; set; }
         public string NumSanSangInFloor { get; set; }
+        public string NumBookingInFloor { get; set; }
         public string NumGiuChoInFloor { get; set; }
         public string NumDatCocInFloor { get; set; }
         public string NumDongYChuyenCoInFloor { get; set; }
         public string NumDaDuTienCocInFloor { get; set; }
+        public string NumOptionInFloor { get; set; }
         public string NumThanhToanDot1InFloor { get; set; }
+        public string NumSignedDAInFloor { get; set; }
+        public string NumQualifiedInFloor { get; set; }
         public string NumDaBanInFloor { get; set; }
     }
 }

@@ -103,15 +103,64 @@
                     <ScrollView x:Name="contentChinhSach" Padding="0,0,0,60">
                         <StackLayout Padding="10">
 
+                            <controls:FormLabel Text="Đồng sở hữu" Margin="0,10,0,0"/>
+                            <telerikPrimitives:RadBorder CornerRadius="10" >
+                                <telerikPrimitives:RadBorder.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CoOwner_Tapped"/>
+                                </telerikPrimitives:RadBorder.GestureRecognizers>
+                                <Grid>
+                                    <Rectangle Fill="white"
+                                       Stroke="#B2B2B2"
+                                       StrokeThickness="1"
+                                       StrokeDashArray="8,8"
+                                       StrokeDashOffset="1"
+                                       HeightRequest="40"
+                                       HorizontalOptions="FillAndExpand" />
+                                    <Label TextColor="#B2B2B2" HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="&#xf067;" FontSize="14" FontFamily="FontAwesomeSolid"/>
+                                                <Span Text="  "/>
+                                                <Span Text="Thêm người đồng sở hữu" FontSize="15" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </Grid>
+                            </telerikPrimitives:RadBorder>
+                            <StackLayout Margin="0,10,0,0" BindableLayout.ItemsSource="{Binding CoOwnerList}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#B3B3B3" BorderThickness="1" HeightRequest="40">
+                                            <Grid ColumnDefinitions="*,Auto">
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UpdateCoOwner_Tapped" CommandParameter="{Binding .}"/>
+                                                </Grid.GestureRecognizers>
+                                                <Label Grid.Column="0" Text="{Binding bsd_name}" FontSize="15" TextColor="#444444" VerticalOptions="Center" Margin="10,0"/>
+                                                <Label Grid.Column="1" Text="&#xf00d;" FontFamily="FontAwesomeSolid" FontSize="15" TextColor="#808080" VerticalTextAlignment="Center" Padding="5,0,10,0">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnSelectCoOwner_Clicked" CommandParameter="{Binding .}"/>
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </Grid>
+                                        </telerikPrimitives:RadBorder>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+
                             <controls:FormLabelRequired Text="Điều kiện bàn giao"/>
                             <controls:LookUp x:Name="lookupDieuKienBanGiao" Placeholder="Chọn điều kiện bàn giao" NameDisplay="Label" BottomModal="{Reference lookUpModal}" SelectedItem="{Binding HandoverCondition}" ItemsSource="{Binding HandoverConditions}" SelectedItemChange="HandoverCondition_SelectedItemChange"/>
 
                             <controls:FormLabelRequired Text="Phương thức thanh toán"  Margin="0,10,0,0"/>
                             <controls:LookUp x:Name="lookupPhuongThucThanhToan" Placeholder="Chọn phương thức thanh toán" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentScheme}" ItemsSource="{Binding PaymentSchemes}" />
 
+                            <controls:FormLabel Text="Loại Gộp Đợt"  Margin="0,10,0,0"/>
+                            <controls:LookUp x:Name="lookupLoaiGopDot" Placeholder="Chọn loại Gộp Đợt" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentSchemeType}" ItemsSource="{Binding PaymentSchemeTypes}" SelectedItemChange="LoaiGopDot_SelectedItemChange"/>
+
+                            <controls:FormLabelRequired Text="Ngày bắt đầu tính LTT" IsVisible="{Binding Path=IsVisible, Source={Reference datePickerNgayBatDauTinhLTT}}"/>
+                            <controls:DatePickerControl x:Name="datePickerNgayBatDauTinhLTT" IsVisible="false" Date="{Binding Quote.bsd_startingdatecalculateofps}" Placeholder="Chọn ngày bắt đầu tính LTT" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+
                             <controls:FormLabel Text="Chiếu khấu" Margin="0,10,0,0"/>
                             <controls:LookUp x:Name="lookupChieuKhau" Placeholder="Chọn chiếu khấu" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" SelectedItemChange="DiscountListItem_Changed"/>
-
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChilds}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -120,6 +169,26 @@
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiscountChildItem_Tapped" CommandParameter="{Binding .}" />
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildItem_CheckedChanged"/>
+                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
+                                                <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="(Hết hạn)" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="(Không áp dụng)" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+
+                            <controls:FormLabel Text="Chiết khấu nội bộ" Margin="0,10,0,0"/>
+                            <controls:LookUp x:Name="lookupChieuKhauNoiBo" Placeholder="Chọn chiết khấu nội bộ" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountInternelLists}" SelectedItem="{Binding DiscountInternelList}" SelectedItemChange="DiscountInternelListItem_Changed"/>
+                            <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChildsInternel}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiscountChildInternelItem_Tapped" CommandParameter="{Binding .}" />
+                                            </StackLayout.GestureRecognizers>
+                                            <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildInternelItem_CheckedChanged"/>
                                             <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
                                                 <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="(Hết hạn)" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
@@ -172,49 +241,6 @@
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
 
-                            <controls:FormLabel Text="Đồng sở hữu" Margin="0,10,0,0"/>
-                            <telerikPrimitives:RadBorder CornerRadius="10" >
-                                <telerikPrimitives:RadBorder.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CoOwner_Tapped"/>
-                                </telerikPrimitives:RadBorder.GestureRecognizers>
-                                <Grid>
-                                    <Rectangle Fill="white"
-                                       Stroke="#B2B2B2"
-                                       StrokeThickness="1"
-                                       StrokeDashArray="8,8"
-                                       StrokeDashOffset="1"
-                                       HeightRequest="40"
-                                       HorizontalOptions="FillAndExpand" />
-                                    <Label TextColor="#B2B2B2" HorizontalOptions="Center" VerticalOptions="Center">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="&#xf067;" FontSize="14" FontFamily="FontAwesomeSolid"/>
-                                                <Span Text="  "/>
-                                                <Span Text="Thêm người đồng sở hữu" FontSize="15" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                </Grid>
-                            </telerikPrimitives:RadBorder>
-                            <StackLayout Margin="0,10,0,0" BindableLayout.ItemsSource="{Binding CoOwnerList}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
-                                        <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#B3B3B3" BorderThickness="1" HeightRequest="40">
-                                            <Grid ColumnDefinitions="*,Auto">
-                                                <Grid.GestureRecognizers>
-                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UpdateCoOwner_Tapped" CommandParameter="{Binding .}"/>
-                                                </Grid.GestureRecognizers>
-                                                <Label Grid.Column="0" Text="{Binding bsd_name}" FontSize="15" TextColor="#444444" VerticalOptions="Center" Margin="10,0"/>
-                                                <Label Grid.Column="1" Text="&#xf00d;" FontFamily="FontAwesomeSolid" FontSize="15" TextColor="#808080" VerticalTextAlignment="Center" Padding="5,0,10,0">
-                                                    <Label.GestureRecognizers>
-                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnSelectCoOwner_Clicked" CommandParameter="{Binding .}"/>
-                                                    </Label.GestureRecognizers>
-                                                </Label>
-                                            </Grid>
-                                        </telerikPrimitives:RadBorder>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </StackLayout>
                         </StackLayout>
                     </ScrollView>
 
@@ -236,8 +262,8 @@
                                         <controls:FormLabelRequired Text="Khách hàng" Margin="0,10,0,0"/>
                                         <controls:LookUpMultipleTabs x:Name="lookupNguoiMua" SelectedItemChange="Buyer_SelectedItemChange" Placeholder="Chọn khách hàng" ShowContact="True" ShowAccount="True" SelectedItem="{Binding Buyer}" CenterModal="{Reference centerModal}" />
 
-                                        <controls:FormLabelRequired Text="Loại hợp đồng" Margin="0,10,0,0"/>
-                                        <controls:LookUp x:Name="lookupLoaiHopDong" Placeholder="Chọn loại hợp đồng" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding ContractType}" ItemsSource="{Binding ContractTypes}"/>
+                                        <!--<controls:FormLabelRequired Text="Loại hợp đồng" Margin="0,10,0,0"/>
+                                        <controls:LookUp x:Name="lookupLoaiHopDong" Placeholder="Chọn loại hợp đồng" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding ContractType}" ItemsSource="{Binding ContractTypes}"/>-->
 
                                         <controls:FormLabelRequired Text="Tiêu đề" Margin="0,10,0,0"/>
                                         <controls:MainEntry Placeholder="Nhập tiêu đề" Text="{Binding Quote.name}"/>
@@ -428,8 +454,8 @@
                                             <Label Text="{Binding Quote.bsd_managementfee,StringFormat='{0:#,0.##} đ'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
                                         </telerikPrimitives:RadBorder>
 
-                                        <controls:FormLabelRequired Text="Miễn giảm (Tháng)"/>
-                                        <controls:MainEntry Placeholder="Điền số tháng miễn giảm phí quản lý" Text="{Binding Quote.bsd_waivermanafeemonth}" Keyboard="Numeric"/>
+                                        <!--<controls:FormLabelRequired Text="Miễn giảm (Tháng)"/>
+                                        <controls:MainEntry Placeholder="Điền số tháng miễn giảm phí quản lý" Text="{Binding Quote.bsd_waivermanafeemonth}" Keyboard="Numeric"/>-->
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>

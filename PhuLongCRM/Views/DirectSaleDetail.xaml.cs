@@ -101,6 +101,10 @@ namespace PhuLongCRM.Views
                     item.bsd_blockid = viewModel.Block.bsd_blockid;
                     item.NumChuanBiInBlock = viewModel.Block.NumChuanBiInBlock;
                     item.NumDaBanInBlock = viewModel.Block.NumDaBanInBlock;
+                    item.NumBookingInBlock = viewModel.Block.NumBookingInBlock;
+                    item.NumOptionInBlock = viewModel.Block.NumOptionInBlock;
+                    item.NumSignedDAInBlock = viewModel.Block.NumSignedDAInBlock;
+                    item.NumQualifiedInBlock = viewModel.Block.NumQualifiedInBlock;
                     item.NumDaDuTienCocInBlock = viewModel.Block.NumDaDuTienCocInBlock;
                     item.NumDatCocInBlock = viewModel.Block.NumDatCocInBlock;
                     item.NumDongYChuyenCoInBlock = viewModel.Block.NumDongYChuyenCoInBlock;
