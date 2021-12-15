@@ -97,7 +97,8 @@ namespace PhuLongCRM.Views
             btnSave.Text = "Tạo Giữ Chỗ";
             btnSave.Clicked += Create_Clicked; ;
             this.Title = "Tạo Giữ Chỗ";
-            if(from)
+            viewModel.isUpdate = false;
+            if (from)
             {
                 await viewModel.LoadFromUnit(viewModel.UnitId);
                 viewModel.createQueueDraft(false, viewModel.UnitId);

@@ -118,7 +118,8 @@ namespace PhuLongCRM.ViewModels
 
         public AccountFormViewModel()
         {
-            singleAccount = new AccountFormModel();                   
+            singleAccount = new AccountFormModel();
+            IsOfficial = true;
             list_country_lookup = new ObservableCollection<LookUp>();
             list_province_lookup = new ObservableCollection<LookUp>();
             list_district_lookup = new ObservableCollection<LookUp>();

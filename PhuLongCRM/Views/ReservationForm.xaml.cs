@@ -1001,6 +1001,7 @@ namespace PhuLongCRM.Views
             }
             else
             {
+                await viewModel.GetTotal(viewModel.Quote.quoteid.ToString());
                 //await SetTotal();
                 if (viewModel.HandoverCondition_Update != null && (viewModel.HandoverCondition_Update?.Val != viewModel.HandoverCondition.Val))
                 {

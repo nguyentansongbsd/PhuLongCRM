@@ -356,17 +356,18 @@ namespace PhuLongCRM.Views
                 return ;
             }
 
-            if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 9)// CMND
+            if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
             {
                 ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Giới hạn 09 ký tự).");
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 12)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 12 ||
+                viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
             {
                 ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Giới hạn 12 ký tự).");
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000003" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 8)// Passport
+            if (viewModel.TypeIdCard?.Val == "100000003" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
             {
                 ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Giới hạn 08 ký tự).");
                 return;

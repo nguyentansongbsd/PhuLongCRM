@@ -271,7 +271,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_projectcode' alias='_bsd_projectcode_value'/>
                                     <attribute name='price' />
                                     <attribute name='productid' />
-                                    <attribute name='bsd_view' />
+                                    <attribute name='bsd_viewphulong' />
                                     <attribute name='bsd_direction' />
                                     <attribute name='bsd_constructionarea' />
                                     <attribute name='bsd_floor' alias='floorid'/>

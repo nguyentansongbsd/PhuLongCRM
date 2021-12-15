@@ -53,6 +53,9 @@ namespace PhuLongCRM.ViewModels
         public LookUp CustomerReferral { get => _customerReferral; set { _customerReferral = value; OnPropertyChanged(nameof(CustomerReferral)); } }
         public Guid idQueueDraft { get; set; } //StatusReason
 
+        private bool _isUpdate;
+        public bool isUpdate { get => _isUpdate; set { _isUpdate = value; OnPropertyChanged(nameof(isUpdate)); } }
+
         public Guid UnitId { get; set; }
 
         public QueueFormViewModel()

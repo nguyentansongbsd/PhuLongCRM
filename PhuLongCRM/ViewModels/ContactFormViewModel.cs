@@ -145,7 +145,7 @@ namespace PhuLongCRM.ViewModels
         public ContactFormViewModel()
         {
             singleContact = new ContactFormModel();
-            
+            IsOfficial = true;
             list_lookup = new ObservableCollection<LookUp>();
             list_account_lookup = new ObservableCollection<LookUp>();
             list_country_lookup = new ObservableCollection<LookUp>();
