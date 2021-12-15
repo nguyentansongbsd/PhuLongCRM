@@ -213,6 +213,12 @@ namespace PhuLongCRM.Views
                 };
             }
 
+            lookupChieuKhauQuyDoi.PreOpenAsync = async () => {
+                LoadingHelper.Show();
+                await viewModel.LoadDiscountExchangeList();
+                LoadingHelper.Hide();
+            };
+
             lookupChieuKhauNoiBo.PreOpenAsync = async () => {
                 LoadingHelper.Show();
                 await viewModel.LoadDiscountInternelList();
@@ -239,10 +245,10 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             };
 
-            lookupLoaiHopDong.PreOpenAsync = async () =>
-            {
-                viewModel.ContractTypes = ContractTypeData.ContractTypes();
-            };
+            //lookupLoaiHopDong.PreOpenAsync = async () =>
+            //{
+            //    viewModel.ContractTypes = ContractTypeData.ContractTypes();
+            //};
 
             lookupDaiLySanGiaoDich.PreOpenAsync = async () =>
             {
@@ -322,6 +328,35 @@ namespace PhuLongCRM.Views
         #endregion
 
         #region PaymentScheme
+        private async void PTTT_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            LoadingHelper.Show();
+            viewModel.DiscountChildsPaymentSchemes.Clear();
+            var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
+            await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
+
+            LoadingHelper.Hide();
+        }
+
+        private void DiscountChildPaymentSchemeItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        {
+            if (_isEnableCheck) return;
+            if (viewModel.IsHadLichThanhToan == true)
+            {
+                ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, không được chỉnh sửa");
+                return;
+            }
+            isSetTotal = false;
+        }
+
+        private void DiscountChildPaymentSchemeItem_Tapped(object sender, EventArgs e)
+        {
+            var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.IsExpired == true || item.IsNotApplied == true) return;
+
+            item.Selected = !item.Selected;
+        }
+
         private void LoaiGopDot_SelectedItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
         {
             if (viewModel.PaymentSchemeType?.Val == "100000001") // Type = Gop dau
@@ -405,7 +440,10 @@ namespace PhuLongCRM.Views
 
         private void DiscountChildInternelItem_Tapped(object sender, EventArgs e)
         {
+            var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.IsExpired == true || item.IsNotApplied == true) return;
 
+            item.Selected = !item.Selected;
         }
         #endregion
 
@@ -611,6 +649,43 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadPromotions();
                 LoadingHelper.Hide();
             }
+        }
+        #endregion
+
+        #region CK quy doi
+        private async void DiscountListExchangeItem_Changed(object sende, EventArgs e)
+        {
+            LoadingHelper.Show();
+
+            if (viewModel.DiscountExchangeList == null)
+            {
+                viewModel.DiscountChildsExchanges.Clear();
+                isSetTotal = false;
+            }
+            if (viewModel.DiscountChildsExchanges.Count == 0)
+            {
+                viewModel.DiscountChildsExchanges.Clear();
+                await viewModel.LoadDiscountChildsExchange();
+            }
+            LoadingHelper.Hide();
+        }
+
+        private async void DiscountChildExchangeItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        {
+            if (_isEnableCheck) return;
+            if (viewModel.IsHadLichThanhToan == true)
+            {
+                ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, không được chỉnh sửa");
+                return;
+            }
+        }
+
+        private void DiscountChildExchangeItem_Tapped(object sender, EventArgs e)
+        {
+            var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.IsExpired == true || item.IsNotApplied == true) return;
+
+            item.Selected = !item.Selected;
         }
         #endregion
 
@@ -914,7 +989,7 @@ namespace PhuLongCRM.Views
                     if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                     if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                     //await Navigation.PopAsync();
-                    //SaveQuote_Clicked(null, null);
+                    SaveQuote_Clicked(null, null);
                     ToastMessageHelper.ShortMessage("Tạo bảng tính giá thành công");
                     LoadingHelper.Hide();
                 }
@@ -956,7 +1031,9 @@ namespace PhuLongCRM.Views
                     if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                     if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                     if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
-                    await Navigation.PopAsync();
+                    //await Navigation.PopAsync();
+                    await viewModel.UpdateQuoteProduct();
+                    this.Title = buttonSave.Text = "CẬP NHẬT BẢNG TÍNH GIÁ";
                     ToastMessageHelper.ShortMessage("Cập nhật bảng tính giá thành công");
                     LoadingHelper.Hide();
                 }
@@ -967,5 +1044,6 @@ namespace PhuLongCRM.Views
                 }
             }
         }
+
     }
 }

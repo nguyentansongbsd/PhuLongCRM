@@ -151,13 +151,31 @@
                             <controls:LookUp x:Name="lookupDieuKienBanGiao" Placeholder="Chọn điều kiện bàn giao" NameDisplay="Label" BottomModal="{Reference lookUpModal}" SelectedItem="{Binding HandoverCondition}" ItemsSource="{Binding HandoverConditions}" SelectedItemChange="HandoverCondition_SelectedItemChange"/>
 
                             <controls:FormLabelRequired Text="Phương thức thanh toán"  Margin="0,10,0,0"/>
-                            <controls:LookUp x:Name="lookupPhuongThucThanhToan" Placeholder="Chọn phương thức thanh toán" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentScheme}" ItemsSource="{Binding PaymentSchemes}" />
+                            <controls:LookUp x:Name="lookupPhuongThucThanhToan" Placeholder="Chọn phương thức thanh toán" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentScheme}" ItemsSource="{Binding PaymentSchemes}" SelectedItemChange="PTTT_SelectedItemChange"/>
 
                             <controls:FormLabel Text="Loại Gộp Đợt"  Margin="0,10,0,0"/>
                             <controls:LookUp x:Name="lookupLoaiGopDot" Placeholder="Chọn loại Gộp Đợt" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentSchemeType}" ItemsSource="{Binding PaymentSchemeTypes}" SelectedItemChange="LoaiGopDot_SelectedItemChange"/>
 
                             <controls:FormLabelRequired Text="Ngày bắt đầu tính LTT" IsVisible="{Binding Path=IsVisible, Source={Reference datePickerNgayBatDauTinhLTT}}"/>
                             <controls:DatePickerControl x:Name="datePickerNgayBatDauTinhLTT" IsVisible="false" Date="{Binding Quote.bsd_startingdatecalculateofps}" Placeholder="Chọn ngày bắt đầu tính LTT" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+                            <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChildsPaymentSchemes}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiscountChildPaymentSchemeItem_Tapped" CommandParameter="{Binding .}" />
+                                            </StackLayout.GestureRecognizers>
+                                            <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildPaymentSchemeItem_CheckedChanged"/>
+                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
+                                                <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="(Hết hạn)" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="(Không áp dụng)" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+
 
                             <controls:FormLabel Text="Chiếu khấu" Margin="0,10,0,0"/>
                             <controls:LookUp x:Name="lookupChieuKhau" Placeholder="Chọn chiếu khấu" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" SelectedItemChange="DiscountListItem_Changed"/>
@@ -223,7 +241,6 @@
                                     </Label>
                                 </Grid>
                             </telerikPrimitives:RadBorder>
-
                             <StackLayout Margin="0,10,0,0" BindableLayout.ItemsSource="{Binding PromotionsSelected}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -237,6 +254,26 @@
                                                 </Label>
                                             </Grid>
                                         </telerikPrimitives:RadBorder>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+
+                            <controls:FormLabel Text="Chiết khấu quy đổi " Margin="0,10,0,0"/>
+                            <controls:LookUp x:Name="lookupChieuKhauQuyDoi" Placeholder="Chọn chiếu khấu quy đổi" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountExchangeLists}" SelectedItem="{Binding DiscountExchangeList}" SelectedItemChange="DiscountListExchangeItem_Changed"/>
+                            <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChildsExchanges}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiscountChildExchangeItem_Tapped" CommandParameter="{Binding .}" />
+                                            </StackLayout.GestureRecognizers>
+                                            <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildExchangeItem_CheckedChanged"/>
+                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
+                                                <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="(Hết hạn)" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="(Không áp dụng)" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
+                                            </StackLayout>
+                                        </StackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
@@ -394,42 +431,47 @@
                                     <StackLayout BackgroundColor="#eeeeee" Spacing="1">
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="Giá bán gốc" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding Quote.bsd_detailamount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.ListedPrice,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="(-) Chiếu khấu" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalDiscount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.Discount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="(+) Tổng tiền ĐKBG" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalHandoverCondition,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.HandoverAmount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="Giá bán trước thuế" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding NetSellingPrice,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.NetSellingPrice,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="(-) Tổng giá trị QSDĐ" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding LandValueDeduction,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.LandValue,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="(+) Tổng tiền thuế VAT" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalVATTax,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.TotalTax,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="(+) Phí bảo trì" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding MaintenanceFee,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.MaintenanceFee,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
+                                            <Label Text="Net Selling Price (After VAT)" FontSize="15" TextColor="#333333"/>
+                                            <Label Text="{Binding TotalReservation.NetSellingPriceAfterVAT,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="Tổng tiền" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalAmount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="Red" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.TotalAmount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="Red" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
