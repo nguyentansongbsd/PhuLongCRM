@@ -116,7 +116,7 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='bsd_handovercondition' />
                 <attribute name='bsd_direction' />
                 <attribute name='bsd_vippriority' />
-                <attribute name='bsd_view' />
+                <attribute name='bsd_viewphulong' />
                 <filter type='and'>
                   <condition attribute='productid' operator='eq' uitype='product' value='" + UnitId.ToString() + @"' />
                 </filter>

@@ -21,6 +21,7 @@ namespace PhuLongCRM.ViewModels
         public string KeywordHandoverCondition { get; set; }
         public string KeywordPromotion { get; set; }
         public List<string> SelectedPromotionIds { get; set; }
+        public Guid quotedetailid { get; set; }
 
         private QuoteModel _quote;
         public QuoteModel Quote { get => _quote; set { _quote = value; OnPropertyChanged(nameof(Quote)); } }
@@ -364,12 +365,16 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='bsd_name' alias='saleagentcompany_name'/>
                                         <attribute name='accountid' alias='saleagentcompany_id'/>
                                     </link-entity>
+                                    <link-entity name='quotedetail' from='quoteid' to='quoteid' link-type='outer' alias='af' >
+                                        <attribute name='quotedetailid' alias='quotedetail_id' />
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
             var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QuoteModel>>("quotes", fetchXml2);
             if (result2 == null || result2.value.Any() == false) return;
 
             var data = result2.value.SingleOrDefault();
+            this.quotedetailid = Guid.Parse(data.quotedetail_id);
             this.Quote.tax_id = data.tax_id;
             this.Quote.tax_value = data.tax_value;
             this.Quote.saleagentcompany_id = data.saleagentcompany_id;
@@ -539,7 +544,7 @@ namespace PhuLongCRM.ViewModels
             this.Quote.pricelist_phaselaunch_id = Guid.Parse(PriceListPhasesLaunch.Val);
             this.Quote.pricelist_apply_id = Guid.Parse(PriceListApply.Val);
             
-            this.Quote.bsd_managementfee = this.UnitInfor.bsd_managementamountmonth * this.UnitInfor.bsd_actualarea * this.UnitInfor.bsd_numberofmonthspaidmf * (decimal)1.1;
+            this.Quote.bsd_managementfee = this.UnitInfor.bsd_managementamountmonth * this.UnitInfor.bsd_netsaleablearea * this.UnitInfor.bsd_numberofmonthspaidmf * (decimal)1.1;
 
             this.UnitType = UnitInfor._bsd_unittype_value;
 
@@ -1165,6 +1170,11 @@ namespace PhuLongCRM.ViewModels
                 data["totaltax"] = this.TotalReservation.TotalTax;
                 data["bsd_netsellingpriceaftervat"] = this.TotalReservation.NetSellingPriceAfterVAT;
                 data["totalamount"] = this.TotalReservation.TotalAmount;
+
+                if (this.Queue != null)
+                {
+                    data["opportunityid@odata.bind"] = $"/opportunities({this.Queue.Val})";
+                }
             }
             else
             {
@@ -1272,7 +1282,7 @@ namespace PhuLongCRM.ViewModels
         }
 
 
-        public Guid quotedetailid { get; set; }
+        
         public async Task<bool> CreateQuoteProduct()
         {
             string path = "/quotedetails";
@@ -1309,8 +1319,8 @@ namespace PhuLongCRM.ViewModels
 
             if (quotedetailid != Guid.Empty)
             {
-                data["baseamount"] = this.UnitInfor.price;
-                data["volumediscountamount"] = this.UnitInfor.price;
+                data["baseamount"] = this.TotalReservation.ListedPrice;
+                data["volumediscountamount"] = this.TotalReservation.ListedPrice;
                 data["tax"] = this.TotalReservation.TotalTax;
                 data["manualdiscountamount"] = this.TotalReservation.Discount;
                 data["extendedamount"] = this.TotalReservation.ListedPrice + TotalReservation.TotalTax;
