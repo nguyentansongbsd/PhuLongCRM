@@ -65,14 +65,12 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_quotationnumber' />
                                     <attribute name='quotenumber' />
                                     <attribute name='bsd_numberofmonthspaidmf' />
-                                    <attribute name='bsd_waivermanafeemonth' />
                                     <attribute name='bsd_managementfee' />
                                     <attribute name='bsd_rejectdate' />
                                     <attribute name='bsd_rejectreason' />
                                     <attribute name='bsd_salesdepartmentreceiveddeposit' />
                                     <attribute name='bsd_receiptdate' />
                                     <attribute name='bsd_depositfeereceived' />
-                                    <attribute name='bsd_calculatedforsalesreport' />
                                     <attribute name='bsd_detailamount' />
                                     <attribute name='bsd_discount' />
                                     <attribute name='bsd_packagesellingamount' />
@@ -88,7 +86,6 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_actualarea'/>
                                     <attribute name='bsd_bookingfee' />
                                     <attribute name='bsd_depositfee' />
-                                    <attribute name='bsd_contracttypedescripton' />
                                     <attribute name='bsd_totalamountpaid' />
                                     <attribute name='bsd_quotationprinteddate' />
                                     <attribute name='bsd_expireddateofsigningqf' />
