@@ -36,7 +36,7 @@ namespace PhuLongCRM.Views
             {
                 viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
                 viewModel.Area = AreaData.GetAreaById(viewModel.singleLead.bsd_area);
-                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard))
+                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard ))
                 {
                     viewModel.TypeIdCard = TypeIdCardData.GetTypeIdCardById(viewModel.singleLead.bsd_typeofidcard);
                 }
