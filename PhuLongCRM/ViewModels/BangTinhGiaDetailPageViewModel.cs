@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.Controls;
+﻿using Newtonsoft.Json;
+using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Views;
@@ -409,8 +410,20 @@ namespace PhuLongCRM.ViewModels
 
         public async Task<bool> SignQuotation()
         {
-            var data = new{};
-            var apiResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})//Microsoft.Dynamics.CRM.bsd_Action_QuotationReservation_ConvertToReservation", data);
+            var model = new
+            {
+                name = "datesign",
+                type = "string",
+                value = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year + " " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Millisecond
+            };
+
+            var json = JsonConvert.SerializeObject(model);
+
+            var data = new{
+                input = json
+            };
+            var content = JsonConvert.SerializeObject(data);
+            var apiResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})//Microsoft.Dynamics.CRM.bsd_Action_QuotationReservation_ConvertToReservation", json);
 
             if (apiResponse.IsSuccess)
             {
