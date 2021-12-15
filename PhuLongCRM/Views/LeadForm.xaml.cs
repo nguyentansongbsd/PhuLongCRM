@@ -39,7 +39,9 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             this.BindingContext = viewModel = new LeadFormViewModel();
-            centerModalAddress.Body.BindingContext = viewModel;
+            centerModalAddress1.Body.BindingContext = viewModel;
+            centerModalAddress2.Body.BindingContext = viewModel;
+            centerModalAddress3.Body.BindingContext = viewModel;
             SetPreOpen();
             lookUpDanhGia.HideClearButton();
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone))
@@ -61,8 +63,14 @@ namespace PhuLongCRM.Views
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
                 customerCode.IsVisible = true;
-                viewModel.AddressComposite = viewModel.singleLead.address1_composite;
-                viewModel.AddressLine1 = viewModel.singleLead.address1_line1;
+                viewModel.CompositeAddress3 = viewModel.singleLead.bsd_accountaddressvn;
+                viewModel.LineAddress3 = viewModel.singleLead.bsd_account_housenumberstreetwardvn;
+
+                viewModel.CompositeAddress2 = viewModel.singleLead.bsd_permanentaddress1;
+                viewModel.LineAddress2 = viewModel.singleLead.bsd_permanentaddress;
+
+                viewModel.CompositeAddress1 = viewModel.singleLead.bsd_contactaddress;
+                viewModel.LineAddress1 = viewModel.singleLead.bsd_housenumberstreet;
 
                 viewModel.IndustryCode = viewModel.list_industrycode_optionset.SingleOrDefault(x => x.Val == viewModel.singleLead.industrycode);
                 viewModel.Rating = RatingData.GetRatingById(viewModel.singleLead.leadqualitycode.ToString());
@@ -174,7 +182,7 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             };
 
-            lookUpCountry.PreOpenAsync = async () =>
+            lookUpCountryAddress1.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
                 await viewModel.LoadCountryForLookup();
@@ -185,24 +193,24 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             };
 
-            lookUpProvince.PreOpenAsync = async () =>
+            lookUpCountryAddress2.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                await viewModel.loadProvincesForLookup();
-                if (viewModel.list_province_lookup.Count == 0)
+                await viewModel.LoadCountryForLookup();
+                if (viewModel.list_country_lookup.Count == 0)
                 {
-                    ToastMessageHelper.ShortMessage("Không load được tỉnh thành");
+                    ToastMessageHelper.ShortMessage("Không load được quốc gia");
                 }
                 LoadingHelper.Hide();
             };
 
-            lookUpDistrict.PreOpenAsync = async () =>
+            lookUpCountryAddress3.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                await viewModel.loadDistrictForLookup();
-                if (viewModel.list_district_lookup.Count == 0)
+                await viewModel.LoadCountryForLookup();
+                if (viewModel.list_country_lookup.Count == 0)
                 {
-                    ToastMessageHelper.ShortMessage("Không load được quận/huyện");
+                    ToastMessageHelper.ShortMessage("Không load được quốc gia");
                 }
                 LoadingHelper.Hide();
             };
@@ -293,96 +301,6 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void Address_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            if (viewModel.AddressCountry == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.address1_country))
-            {
-                viewModel.AddressCountry = await viewModel.LoadCountryByName();
-            }
-
-            if (viewModel.AddressStateProvince == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.address1_stateorprovince))
-            {
-                viewModel.AddressStateProvince = await viewModel.LoadProvinceByName(); ;
-            }
-
-            if (viewModel.AddressCity == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.address1_city))
-            {
-                viewModel.AddressCity = await viewModel.LoadDistrictByName();
-            }
-
-            await centerModalAddress.Show();
-            LoadingHelper.Hide();
-        }
-
-        private async void CloseAddress_Clicked(object sender, EventArgs e)
-        {
-            await centerModalAddress.Hide();
-        }
-
-        private async void Country_Changed(object sender, EventArgs e)
-        {
-            await viewModel.loadProvincesForLookup();
-        }
-
-        private async void Province_Changed(object sender, EventArgs e)
-        {
-            await viewModel.loadDistrictForLookup();
-        }
-
-        private async void District_Changed(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void ConfirmAddress_Clicked(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(viewModel.AddressLine1))
-            {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số nhà/đường/phường");
-                return;
-            }
-
-            List<string> address = new List<string>();
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressLine1))
-            {
-                address.Add(viewModel.AddressLine1);
-            }
-
-            if (viewModel.AddressCity != null)
-            {
-                address.Add(viewModel.AddressCity.Name);
-            }
-
-            if (viewModel.AddressStateProvince != null)
-            {
-                address.Add(viewModel.AddressStateProvince.Name);
-            }           
-
-            if (viewModel.AddressCountry != null)
-            {
-                address.Add(viewModel.AddressCountry.Name);
-            }
-
-            viewModel.AddressComposite = string.Join(",", address);
-            await centerModalAddress.Hide();
-        }
-
-        private void ClearAddress_Tapped(object sender, EventArgs e)
-        {
-            viewModel.AddressComposite = null;
-            viewModel.AddressLine1 = null;
-            viewModel.AddressCity = null;
-            viewModel.AddressStateProvince = null;
-            viewModel.AddressCountry = null;
-
-            viewModel.singleLead.address1_line1 = null;
-            viewModel.singleLead.address1_city = null;
-            viewModel.singleLead.address1_stateorprovince = null;
-            viewModel.singleLead.address1_country = null;
-            viewModel.singleLead.address1_composite = null;
-        }
-
         private async void SaveLead_Clicked(object sender, EventArgs e)
         {
             if (viewModel.Topic == null)
@@ -456,12 +374,12 @@ namespace PhuLongCRM.Views
 
             LoadingHelper.Show();
 
-            viewModel.singleLead.address1_city = viewModel.AddressCity != null ? viewModel.AddressCity.Name : null;
-            viewModel.singleLead.address1_stateorprovince = viewModel.AddressStateProvince != null ? viewModel.AddressStateProvince.Name : null;
-            viewModel.singleLead.address1_country = viewModel.AddressCountry != null ? viewModel.AddressCountry.Name : null;
+            //viewModel.singleLead.address1_city = viewModel.AddressCity != null ? viewModel.AddressCity.Name : null;
+            //viewModel.singleLead.address1_stateorprovince = viewModel.AddressStateProvince != null ? viewModel.AddressStateProvince.Name : null;
+            //viewModel.singleLead.address1_country = viewModel.AddressCountry != null ? viewModel.AddressCountry.Name : null;
 
-            viewModel.singleLead.address1_line1 = viewModel.AddressLine1;
-            viewModel.singleLead.address1_composite = viewModel.AddressComposite;
+            //viewModel.singleLead.address1_line1 = viewModel.AddressLine1;
+            //viewModel.singleLead.address1_composite = viewModel.AddressComposite;
 
             viewModel.singleLead.industrycode = viewModel.IndustryCode != null ? viewModel.IndustryCode.Val : null;
             viewModel.singleLead._transactioncurrencyid_value = viewModel.SelectedCurrency != null ? viewModel.SelectedCurrency.Val : null;
@@ -501,6 +419,327 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage("Không cập nhật được khách hàng. Vui lòng thử lại");
                 }
             }
+        }
+
+        // địa chỉ liên lạc
+
+        private async void CountryAddress1_Changed(object sender, LookUpChangeEvent e)
+        {
+            await viewModel.LoadProvincesForLookup(viewModel.CountryAddress1);
+        }
+
+        private async void StateProvinceAddress1_Changed(object sender, LookUpChangeEvent e)
+        {
+            await viewModel.LoadProvincesForLookup(viewModel.StateProvinceAddress1);
+        }
+
+        private async void CloseAddress1_Clicked(object sender, EventArgs e)
+        {
+            await centerModalAddress1.Hide();
+        }
+        private async void ConfirmAddress1_Clicked(object sender, EventArgs e)
+        {
+            //bsd_country
+            //bsd_province
+            //bsd_district
+
+            //bsd_housenumberstreet
+            //bsd_contactaddress
+            if (string.IsNullOrWhiteSpace(viewModel.LineAddress1))
+            {
+                ToastMessageHelper.ShortMessage("Vui lòng nhập số nhà/đường/phường");
+                return;
+            }
+
+            List<string> address = new List<string>();
+            if (!string.IsNullOrWhiteSpace(viewModel.LineAddress1))
+            {
+                viewModel.singleLead.bsd_housenumberstreet = viewModel.LineAddress1;
+                address.Add(viewModel.LineAddress1);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_housenumberstreet = null;
+            }
+
+            if (viewModel.CityAddress1 != null)
+            {
+                viewModel.singleLead.bsd_district = viewModel.CityAddress1.Id.ToString();
+                address.Add(viewModel.CityAddress1.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_district = null;
+            }
+            if (viewModel.StateProvinceAddress1 != null)
+            {
+                viewModel.singleLead.bsd_province = viewModel.StateProvinceAddress1.Id.ToString();
+                address.Add(viewModel.StateProvinceAddress1.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_province = null;
+            }
+            if (viewModel.CountryAddress1 != null)
+            {
+                viewModel.singleLead.bsd_country = viewModel.CountryAddress1.Id.ToString();
+                address.Add(viewModel.CountryAddress1.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_country = null;
+            }
+            viewModel.singleLead.bsd_contactaddress = viewModel.CompositeAddress1 = string.Join(", ", address);
+            await centerModalAddress1.Hide();
+        }
+
+        private async void DiaChiLienLac_Tapped(object sender, EventArgs e)
+        {   //bsd_country
+            //bsd_province
+            //bsd_district
+
+            //bsd_housenumberstreet
+            //bsd_contactaddress
+            LoadingHelper.Show();
+            if (viewModel.LineAddress1 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_permanentaddress))
+            {
+                viewModel.LineAddress1 = viewModel.singleLead.bsd_permanentaddress;
+            }
+
+            if (viewModel.CountryAddress1 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_country_name))
+            {
+                viewModel.CountryAddress1 = await viewModel.LoadCountryByName(viewModel.singleLead.bsd_country_name);
+                await viewModel.LoadProvincesForLookup(viewModel.CountryAddress1);
+            }
+
+            if (viewModel.StateProvinceAddress1 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_province_name))
+            {
+                viewModel.StateProvinceAddress1 = await viewModel.LoadProvinceByName(viewModel.singleLead.bsd_country, viewModel.singleLead.bsd_province_name); ;
+                await viewModel.LoadDistrictForLookup(viewModel.StateProvinceAddress1);
+            }
+
+            if (viewModel.CityAddress1 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_district_name))
+            {
+                viewModel.CityAddress1 = await viewModel.LoadDistrictByName(viewModel.singleLead.bsd_province, viewModel.singleLead.bsd_district_name);
+            }
+
+            LoadingHelper.Hide();
+            await centerModalAddress1.Show();
+        }
+
+        // địa chỉ thương trú
+        private async void CountryAddress2_Changed(object sender, LookUpChangeEvent e)
+        {
+            await viewModel.LoadProvincesForLookup(viewModel.CountryAddress2);
+        }
+
+        private async void StateProvinceAddress2_Changed(object sender, LookUpChangeEvent e)
+        {
+            await viewModel.LoadDistrictForLookup(viewModel.StateProvinceAddress2);
+        }
+
+        private async void CloseAddress2_Clicked(object sender, EventArgs e)
+        {
+            await centerModalAddress2.Hide();
+        }
+
+        private async void ConfirmAddress2_Clicked(object sender, EventArgs e)
+        {
+            //bsd_permanentcountry
+            //bsd_permanentprovince
+            //bsd_permanentdistrict
+
+            //bsd_permanentaddress
+            //bsd_permanentaddress1
+            if (string.IsNullOrWhiteSpace(viewModel.LineAddress2))
+            {
+                ToastMessageHelper.ShortMessage("Vui lòng nhập số nhà/đường/phường");
+                return;
+            }
+
+            List<string> address = new List<string>();
+            if (!string.IsNullOrWhiteSpace(viewModel.LineAddress2))
+            {
+                viewModel.singleLead.bsd_permanentaddress = viewModel.LineAddress2;
+                address.Add(viewModel.LineAddress2);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_permanentaddress = null;
+            }
+
+            if (viewModel.CityAddress2 != null)
+            {
+                viewModel.singleLead.bsd_permanentdistrict = viewModel.CityAddress2.Id.ToString();
+                address.Add(viewModel.CityAddress2.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_permanentdistrict = null;
+            }
+            if (viewModel.StateProvinceAddress2 != null)
+            {
+                viewModel.singleLead.bsd_permanentprovince = viewModel.StateProvinceAddress2.Id.ToString();
+                address.Add(viewModel.StateProvinceAddress2.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_permanentprovince = null;
+            }
+            if (viewModel.CountryAddress2 != null)
+            {
+                viewModel.singleLead.bsd_permanentcountry = viewModel.CountryAddress2.Id.ToString();
+                address.Add(viewModel.CountryAddress2.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_permanentcountry = null;
+            }
+            viewModel.singleLead.bsd_permanentaddress1 = viewModel.CompositeAddress2 = string.Join(", ", address);
+            await centerModalAddress2.Hide();
+        }
+
+        private async void DiaChiThuongTru_Tapped(object sender, EventArgs e)
+        {
+            //bsd_permanentcountry
+            //bsd_permanentprovince
+            //bsd_permanentdistrict
+
+            //bsd_permanentaddress
+            //bsd_permanentaddress1
+            LoadingHelper.Show();
+            if (viewModel.LineAddress2 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_permanentaddress))
+            {
+                viewModel.LineAddress2 = viewModel.singleLead.bsd_permanentaddress;
+            }
+
+            if (viewModel.CountryAddress2 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_permanentcountry_name))
+            {
+                viewModel.CountryAddress2 = await viewModel.LoadCountryByName(viewModel.singleLead.bsd_permanentcountry_name);
+                await viewModel.LoadProvincesForLookup(viewModel.CountryAddress2);
+            }
+
+            if (viewModel.StateProvinceAddress2 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_permanentprovince_name))
+            {
+                viewModel.StateProvinceAddress2 = await viewModel.LoadProvinceByName(viewModel.singleLead.bsd_permanentcountry, viewModel.singleLead.bsd_permanentprovince_name); ;
+                await viewModel.LoadDistrictForLookup(viewModel.StateProvinceAddress2);
+            }
+
+            if (viewModel.CityAddress2 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_permanentdistrict_name))
+            {
+                viewModel.CityAddress2 = await viewModel.LoadDistrictByName(viewModel.singleLead.bsd_permanentprovince, viewModel.singleLead.bsd_permanentdistrict_name);
+            }
+
+            LoadingHelper.Hide();
+            await centerModalAddress2.Show();
+        }
+
+        // địa chỉ công ty
+        private async void CountryAddress3_Changed(object sender, LookUpChangeEvent e)
+        {
+            await viewModel.LoadProvincesForLookup(viewModel.CountryAddress3);
+        }
+
+        private async void StateProvinceAddress3_Changed(object sender, LookUpChangeEvent e)
+        {
+            await viewModel.LoadDistrictForLookup(viewModel.StateProvinceAddress3);
+        }
+
+        private async void CloseAddress3_Clicked(object sender, EventArgs e)
+        {
+            await centerModalAddress3.Hide();
+        }
+
+        private async void ConfirmAddress3_Clicked(object sender, EventArgs e)
+        {
+            //bsd_accountcountry 
+            //bsd_accountprovince
+            //bsd_accountdistrict
+
+            //bsd_account_housenumberstreetwardvn
+            //bsd_accountaddressvn
+
+            if (string.IsNullOrWhiteSpace(viewModel.LineAddress3))
+            {
+                ToastMessageHelper.ShortMessage("Vui lòng nhập số nhà/đường/phường");
+                return;
+            }
+
+            List<string> address = new List<string>();
+            if (!string.IsNullOrWhiteSpace(viewModel.LineAddress3))
+            {
+                viewModel.singleLead.bsd_account_housenumberstreetwardvn = viewModel.LineAddress3;
+                address.Add(viewModel.LineAddress3);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_account_housenumberstreetwardvn = null;
+            }
+
+            if (viewModel.CityAddress3 != null)
+            {
+                viewModel.singleLead.bsd_accountdistrict = viewModel.CityAddress3.Id.ToString();
+                address.Add(viewModel.CityAddress3.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_accountdistrict = null;
+            }
+            if (viewModel.StateProvinceAddress3 != null)
+            {
+                viewModel.singleLead.bsd_accountprovince = viewModel.StateProvinceAddress3.Id.ToString();
+                address.Add(viewModel.StateProvinceAddress3.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_accountprovince = null;
+            }
+            if (viewModel.CountryAddress3 != null)
+            {
+                viewModel.singleLead.bsd_accountcountry = viewModel.CountryAddress3.Id.ToString();
+                address.Add(viewModel.CountryAddress3.Name);
+            }
+            else
+            {
+                viewModel.singleLead.bsd_accountcountry = null;
+            }
+            viewModel.singleLead.bsd_accountaddressvn = viewModel.CompositeAddress3 = string.Join(", ", address);
+            await centerModalAddress3.Hide();
+        }
+
+        private async void DiaChiCongTy_Tapped(object sender, EventArgs e)
+        {
+            //bsd_accountcountry 
+            //bsd_accountprovince
+            //bsd_accountdistrict
+
+            //bsd_account_housenumberstreetwardvn
+            //bsd_accountaddressvn
+            LoadingHelper.Show();
+            if (viewModel.LineAddress3 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_account_housenumberstreetwardvn))
+            {
+                viewModel.LineAddress3 = viewModel.singleLead.bsd_account_housenumberstreetwardvn;
+            }
+
+            if (viewModel.CountryAddress3 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountcountry_name))
+            {
+                viewModel.CountryAddress3 = await viewModel.LoadCountryByName(viewModel.singleLead.bsd_accountcountry_name);
+                await viewModel.LoadProvincesForLookup(viewModel.CountryAddress3);
+            }
+
+            if (viewModel.StateProvinceAddress3 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountprovince_name))
+            {
+                viewModel.StateProvinceAddress3 = await viewModel.LoadProvinceByName(viewModel.singleLead.bsd_accountcountry, viewModel.singleLead.bsd_accountprovince_name); ;
+                await viewModel.LoadDistrictForLookup(viewModel.StateProvinceAddress3);
+            }
+
+            if (viewModel.CityAddress3 == null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountdistrict_name))
+            {
+                viewModel.CityAddress3 = await viewModel.LoadDistrictByName(viewModel.singleLead.bsd_accountprovince, viewModel.singleLead.bsd_accountdistrict_name);
+            }
+
+            LoadingHelper.Hide();
+            await centerModalAddress3.Show();
         }
     }
 }

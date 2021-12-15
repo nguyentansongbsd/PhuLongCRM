@@ -120,6 +120,37 @@
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
                             <StackLayout BackgroundColor="White" Padding="10">
+
+                                <controls:FormLabel Text="Số thứ tự" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_ordernumber}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="Số ưu tiên" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_priorityqueue}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="Độ ưu tiên" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_prioritynumber}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="Ngày thứ tự" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_dateorder,StringFormat='{0:dd/MM/yyyy - h:mm tt}'}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="Đã hết hạn" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.bsd_expired_format}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="Tình trạng" FontSize="15" Margin="0,10,0,0"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding QueueFormModel.statuscode_format}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
                                 <controls:FormLabelRequired Text="Tiêu đề"/>
                                 <controls:MainEntry x:Name="topic" Placeholder="Nhập tiêu đề của giữ chỗ" Text="{Binding QueueFormModel.name}" FontSize="15" />
 
@@ -139,11 +170,18 @@
                                 <controls:FormLabel Text="Mô tả" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Placeholder="Nhập mô tả" Text="{Binding QueueFormModel.description}" FontSize="15" />
 
-                                <controls:FormLabelRequired Text="Đại lý bán hàng" Margin="0,10,0,0"/>
-                                <controls:LookUp x:Name="lookUpDaiLy" Grid.Column="1" Grid.Row="3" Placeholder="Chọn đại lý" ItemsSource="{Binding DaiLyOptions}" SelectedItem="{Binding DailyOption}" NameDisplay="Name" BottomModal="{x:Reference LookUpModal}" />
+                                <controls:FormLabel Text="Đại lý bán hàng" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:LookUp x:Name="lookUpDaiLy" Grid.Column="1" Grid.Row="3" Placeholder="Chọn đại lý" ItemsSource="{Binding DaiLyOptions}" SelectedItem="{Binding DailyOption}" NameDisplay="Name" BottomModal="{x:Reference LookUpModal}" SelectedItemChange="lookUpDaiLy_SelectedItemChange"/>
 
                                 <controls:FormLabel Text="Nhân viên đại lý" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Placeholder="Nhập nhân viên đại lý" Text="{Binding QueueFormModel.bsd_nameofstaffagent}" FontSize="15" />
+
+                                <controls:FormLabel Text="Cộng tác viên" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:LookUp x:Name="lookUpCollaborator" Grid.Column="1" Grid.Row="3" Placeholder="Chọn cộng tác viên" ItemsSource="{Binding ListCollaborator}" SelectedItem="{Binding Collaborator}" NameDisplay="Name" BottomModal="{x:Reference LookUpModal}" SelectedItemChange="lookUpCollaborator_SelectedItemChange"/>
+
+                                <controls:FormLabel Text="Khách hàng giới thiệu" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:LookUp x:Name="lookUpCustomerReferral" Grid.Column="1" Grid.Row="3" Placeholder="Chọn khách hàng giới thiệu" ItemsSource="{Binding ListCustomerReferral}" SelectedItem="{Binding CustomerReferral}" NameDisplay="Name" BottomModal="{x:Reference LookUpModal}" SelectedItemChange="lookUpCustomerReferral_SelectedItemChange"/>
+                                
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
                     </telerikPrimitives:RadExpander>
