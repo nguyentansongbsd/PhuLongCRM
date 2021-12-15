@@ -90,7 +90,7 @@
 
                                 <controls:FormLabelRequired Text="Địa chỉ liên lạc" Margin="0,10,0,0"/>
                                 <Grid>
-                                    <controls:MainEntry Text="{Binding singleContact.bsd_contactaddress}" Placeholder="Chọn địa chỉ liên lạc" FontSize="15"/>
+                                    <controls:MainEntry Text="{Binding CompositeAddress1}" Placeholder="Chọn địa chỉ liên lạc" FontSize="15"/>
                                     <StackLayout>
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiaChiLienLac_Tapped" />
@@ -100,7 +100,7 @@
 
                                 <controls:FormLabelRequired Text="Địa chỉ thường trú" Margin="0,10,0,0"/>
                                 <Grid>
-                                    <controls:MainEntry Text="{Binding singleContact.bsd_permanentaddress1}" Placeholder="Chọn địa chỉ thường trú" FontSize="15"/>
+                                    <controls:MainEntry Text="{Binding CompositeAddress2}" Placeholder="Chọn địa chỉ thường trú" FontSize="15"/>
                                     <StackLayout>
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiaChiThuongTru_Tapped"/>
@@ -130,7 +130,7 @@
 
                                 <controls:FormLabel VerticalOptions="Center" HorizontalOptions="Start" Text="Địa chỉ công ty" FontSize="15" />
                                 <Grid>
-                                    <controls:MainEntry Text="{Binding singleContact.bsd_accountaddressvn}" Placeholder="Chọn địa chỉ thường trú" FontSize="15"/>
+                                    <controls:MainEntry Text="{Binding CompositeAddress3}" Placeholder="Chọn địa chỉ công ty" FontSize="15"/>
                                     <StackLayout>
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiaChiCongTy_Tapped"/>

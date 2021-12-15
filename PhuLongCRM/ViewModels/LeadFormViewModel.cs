@@ -501,37 +501,37 @@ namespace PhuLongCRM.ViewModels
             data["bsd_account_housenumberstreetwardvn"] = singleLead.bsd_account_housenumberstreetwardvn;
             data["bsd_accountaddressvn"] = singleLead.bsd_accountaddressvn;
 
-            //bsd_permanentcountry
-            //bsd_permanentprovince
-            //bsd_permanentdistrict
+            ////bsd_permanentcountry
+            ////bsd_permanentprovince
+            ////bsd_permanentdistrict
 
-            //bsd_permanentaddress
-            //bsd_permanentaddress1
+            ////bsd_permanentaddress
+            ////bsd_permanentaddress1
             if (string.IsNullOrWhiteSpace(singleLead.bsd_permanentcountry))
             {
-                await DeletLookup("bsd_permanentcountry", singleLead.leadid);
+                await DeletLookup("bsd_PermanentCountry", singleLead.leadid);
             }
             else
             {
-                data["bsd_permanentcountry@odata.bind"] = "/bsd_countries(" + singleLead.bsd_permanentcountry + ")"; /////Lookup Field
+                data["bsd_PermanentCountry@odata.bind"] = "/bsd_countries(" + singleLead.bsd_permanentcountry + ")"; /////Lookup Field
             }
 
             if (string.IsNullOrWhiteSpace(singleLead.bsd_permanentprovince))
             {
-                await DeletLookup("bsd_permanentprovince", singleLead.leadid);
+                await DeletLookup("bsd_PermanentProvince", singleLead.leadid);
             }
             else
             {
-                data["bsd_permanentprovince@odata.bind"] = "/new_provinces(" + singleLead.bsd_permanentprovince + ")"; /////Lookup Field
+                data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + singleLead.bsd_permanentprovince + ")"; /////Lookup Field
             }
 
             if (string.IsNullOrWhiteSpace(singleLead.bsd_permanentdistrict))
             {
-                await DeletLookup("bsd_permanentdistrict", singleLead.leadid);
+                await DeletLookup("bsd_PermanentDistrict", singleLead.leadid);
             }
             else
             {
-                data["bsd_permanentdistrict@odata.bind"] = "/new_districts(" + singleLead.bsd_permanentdistrict + ")"; /////Lookup Field
+                data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + singleLead.bsd_permanentdistrict + ")"; /////Lookup Field
             }
             data["bsd_permanentaddress"] = singleLead.bsd_permanentaddress;
             data["bsd_permanentaddress1"] = singleLead.bsd_permanentaddress1;
@@ -544,11 +544,11 @@ namespace PhuLongCRM.ViewModels
             //bsd_contactaddress
             if (string.IsNullOrWhiteSpace(singleLead.bsd_country))
             {
-                await DeletLookup("bsd_country", singleLead.leadid);
+                await DeletLookup("bsd_Country", singleLead.leadid);
             }
             else
             {
-                data["bsd_country@odata.bind"] = "/bsd_countries(" + singleLead.bsd_country + ")"; /////Lookup Field
+                data["bsd_Country@odata.bind"] = "/bsd_countries(" + singleLead.bsd_country + ")"; /////Lookup Field
             }
 
             if (string.IsNullOrWhiteSpace(singleLead.bsd_province))
@@ -562,11 +562,11 @@ namespace PhuLongCRM.ViewModels
 
             if (string.IsNullOrWhiteSpace(singleLead.bsd_district))
             {
-                await DeletLookup("bsd_district", singleLead.leadid);
+                await DeletLookup("bsd_District", singleLead.leadid);
             }
             else
             {
-                data["bsd_district@odata.bind"] = "/new_districts(" + singleLead.bsd_district + ")"; /////Lookup Field
+                data["bsd_District@odata.bind"] = "/new_districts(" + singleLead.bsd_district + ")"; /////Lookup Field
             }
             data["bsd_housenumberstreet"] = singleLead.bsd_housenumberstreet;
             data["bsd_contactaddress"] = singleLead.bsd_contactaddress;
