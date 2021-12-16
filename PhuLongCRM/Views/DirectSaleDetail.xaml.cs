@@ -101,6 +101,10 @@ namespace PhuLongCRM.Views
                     item.bsd_blockid = viewModel.Block.bsd_blockid;
                     item.NumChuanBiInBlock = viewModel.Block.NumChuanBiInBlock;
                     item.NumDaBanInBlock = viewModel.Block.NumDaBanInBlock;
+                    item.NumBookingInBlock = viewModel.Block.NumBookingInBlock;
+                    item.NumOptionInBlock = viewModel.Block.NumOptionInBlock;
+                    item.NumSignedDAInBlock = viewModel.Block.NumSignedDAInBlock;
+                    item.NumQualifiedInBlock = viewModel.Block.NumQualifiedInBlock;
                     item.NumDaDuTienCocInBlock = viewModel.Block.NumDaDuTienCocInBlock;
                     item.NumDatCocInBlock = viewModel.Block.NumDatCocInBlock;
                     item.NumDongYChuyenCoInBlock = viewModel.Block.NumDongYChuyenCoInBlock;
@@ -227,9 +231,9 @@ namespace PhuLongCRM.Views
             {
                 viewModel.UnitDirection = DirectionData.GetDiretionById(viewModel.Unit.bsd_direction);
             }
-            if (!string.IsNullOrWhiteSpace(viewModel.Unit.bsd_view))
+            if (!string.IsNullOrWhiteSpace(viewModel.Unit.bsd_viewphulong))
             {
-                viewModel.UnitView = ViewData.GetViewById(viewModel.Unit.bsd_view);
+                viewModel.UnitView = ViewData.GetViewById(viewModel.Unit.bsd_viewphulong);
             }
 
             if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004")

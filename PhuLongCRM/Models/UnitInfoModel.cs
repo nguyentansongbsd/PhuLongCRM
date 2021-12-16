@@ -72,7 +72,7 @@ namespace PhuLongCRM.Models
         public decimal bsd_totalprice { get; set; } // tiền tuế
 
         public string bsd_direction { get; set; }
-        public string bsd_view { get; set; }
+        public string bsd_viewphulong { get; set; }
 
 
         // bàn giao

@@ -146,7 +146,7 @@ namespace PhuLongCRM.ViewModels
                     {
                         tmp += "<value>" + i + "</value>";
                     }
-                    View_Condition = @"<condition attribute='bsd_viewphulong' operator='in'>" + tmp + "</condition>";
+                    View_Condition = @"<condition attribute='bsd_viewphulong' operator='contain-values'>" + tmp + "</condition>";
                 }
             }
 
@@ -271,11 +271,12 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_projectcode' alias='_bsd_projectcode_value'/>
                                     <attribute name='price' />
                                     <attribute name='productid' />
-                                    <attribute name='bsd_view' />
+                                    <attribute name='bsd_viewphulong' />
                                     <attribute name='bsd_direction' />
                                     <attribute name='bsd_constructionarea' />
                                     <attribute name='bsd_floor' alias='floorid'/>
                                     <attribute name='bsd_blocknumber' alias='blockid'/>
+                                    <attribute name='bsd_phaseslaunchid' alias='_bsd_phaseslaunchid_value' />
                                     <attribute name='bsd_phaseslaunchid' />
                                     <attribute name='bsd_vippriority' />
                                     <order attribute='bsd_constructionarea' descending='true' />
@@ -331,7 +332,7 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var x in data)
             {
-                x.statuscode_label = QueuesStatusCodeData.GetQueuesById(x.statuscode.ToString()).Name;
+                //x.statuscode_label = QueuesStatusCodeData.GetQueuesById(x.statuscode.ToString()).Name;
                 QueueList.Add(x);
             }
             //if (QueueList.Any(x=>x.statuscode == 100000000))  // chỗ này đang bị lỗi khi có 2 giữ chỗ queue
@@ -384,12 +385,16 @@ namespace PhuLongCRM.ViewModels
             var arrStatus = directSaleModel.stringQty.Split(',');
             this.Block.NumChuanBiInBlock = arrStatus[0];
             this.Block.NumSanSangInBlock = arrStatus[1];
-            this.Block.NumGiuChoInBlock = arrStatus[2];
-            this.Block.NumDatCocInBlock = arrStatus[3];
-            this.Block.NumDongYChuyenCoInBlock = arrStatus[4];
-            this.Block.NumDaDuTienCocInBlock = arrStatus[5];
-            this.Block.NumThanhToanDot1InBlock = arrStatus[6];
-            this.Block.NumDaBanInBlock = arrStatus[7];
+            this.Block.NumBookingInBlock = arrStatus[2];
+            this.Block.NumGiuChoInBlock = arrStatus[3];
+            this.Block.NumDatCocInBlock = arrStatus[4];
+            this.Block.NumDongYChuyenCoInBlock = arrStatus[5];
+            this.Block.NumDaDuTienCocInBlock = arrStatus[6];
+            this.Block.NumOptionInBlock = arrStatus[7];
+            this.Block.NumThanhToanDot1InBlock = arrStatus[8];
+            this.Block.NumSignedDAInBlock = arrStatus[9];
+            this.Block.NumQualifiedInBlock = arrStatus[10];
+            this.Block.NumDaBanInBlock = arrStatus[11];
 
             foreach (var item in directSaleModel.listFloor)
             {
@@ -399,12 +404,16 @@ namespace PhuLongCRM.ViewModels
                 var arrStatusInFloor = item.stringQty.Split(',');
                 floor.NumChuanBiInFloor = arrStatusInFloor[0];
                 floor.NumSanSangInFloor = arrStatusInFloor[1];
-                floor.NumGiuChoInFloor = arrStatusInFloor[2];
-                floor.NumDatCocInFloor = arrStatusInFloor[3];
-                floor.NumDongYChuyenCoInFloor = arrStatusInFloor[4];
-                floor.NumDaDuTienCocInFloor = arrStatusInFloor[5];
-                floor.NumThanhToanDot1InFloor = arrStatusInFloor[6];
-                floor.NumDaBanInFloor = arrStatusInFloor[7];
+                floor.NumBookingInFloor = arrStatusInFloor[2];
+                floor.NumGiuChoInFloor = arrStatusInFloor[3];
+                floor.NumDatCocInFloor = arrStatusInFloor[4];
+                floor.NumDongYChuyenCoInFloor = arrStatusInFloor[5];
+                floor.NumDaDuTienCocInFloor = arrStatusInFloor[6];
+                floor.NumOptionInFloor = arrStatusInFloor[7];
+                floor.NumThanhToanDot1InFloor = arrStatusInFloor[8];
+                floor.NumSignedDAInFloor = arrStatusInFloor[9];
+                floor.NumQualifiedInFloor = arrStatusInFloor[10];
+                floor.NumDaBanInFloor = arrStatusInFloor[11];
                 this.Block.Floors.Add(floor);
             };
         }

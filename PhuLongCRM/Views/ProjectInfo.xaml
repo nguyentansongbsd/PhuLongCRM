@@ -222,7 +222,7 @@
                                     </StackLayout>
                                     <StackLayout Grid.Row="0" Grid.Column="2" Spacing="10">
                                         <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#00CED1"/>
-                                        <Label Text="Booking" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
+                                        <Label Text="Đặt chỗ" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="0" Grid.Column="3" Spacing="10">
                                         <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#04A8F4"/>
@@ -242,7 +242,7 @@
                                     </StackLayout>
                                     <StackLayout Grid.Row="1" Grid.Column="3" Spacing="10">
                                         <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#808080"/>
-                                        <Label Text="Option" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
+                                        <Label Text="Hoàn tất đặt cọc" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Grid.Column="0" Spacing="10">
                                         <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#808080"/>
@@ -250,11 +250,11 @@
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Grid.Column="1" Spacing="10">
                                         <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#A0DB8E"/>
-                                        <Label Text="Signed D.A" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
+                                        <Label Text="Đã ký TTĐC/HĐĐC" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Grid.Column="2" Spacing="10">
                                         <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#6897BB"/>
-                                        <Label Text="Qualified" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
+                                        <Label Text="Đủ điều kiện" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Grid.Column="3" Spacing="10">
                                         <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#BF3A2B"/>

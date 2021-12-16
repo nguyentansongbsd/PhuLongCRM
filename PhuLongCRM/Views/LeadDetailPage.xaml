@@ -273,22 +273,22 @@
                                             <controls:FormLabel Text="Mã SIC" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleLead.sic}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="9">
+                                        <!--<Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="9">
                                             <controls:FormLabel Text="Đơn vị tiền tệ" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleLead.transactioncurrencyid_label}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="10">
+                                        </Grid>-->
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="9">
                                             <controls:FormLabel Text="Chiến dịch" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleLead.campaignid_label}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="11">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="10">
                                             <controls:FormLabel Text="Gửi tài liệu tiếp thị" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleLead.donotsendmmValue}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="12">
+                                        <!--<Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="12">
                                             <controls:FormLabel Text="Ngày cuối" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleLead.lastusedincampaign,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
-                                        </Grid>
+                                        </Grid>-->
                                     </Grid>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>

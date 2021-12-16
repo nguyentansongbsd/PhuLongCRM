@@ -23,7 +23,7 @@ namespace PhuLongCRM.Models
         public decimal bsd_constructionarea { get; set; }
         public string bsd_unittype_name { get; set; }
         public string bsd_direction { get; set; }
-        public string bsd_view { get; set; }
+        public string bsd_viewphulong { get; set; }
 
         public Guid _bsd_employee_value { get; set; }
         public Guid _bsd_projectcode_value { get; set; }
