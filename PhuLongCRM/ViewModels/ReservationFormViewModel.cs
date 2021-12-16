@@ -26,6 +26,11 @@ namespace PhuLongCRM.ViewModels
         private QuoteModel _quote;
         public QuoteModel Quote { get => _quote; set { _quote = value; OnPropertyChanged(nameof(Quote)); } }
 
+        private List<string> ckChungIds { get; set; }
+        private List<string> ckPTTTIds { get; set; }
+        private List<string> ckNoiBoIds { get; set; }
+        private List<string> ckQuyDoiIds { get; set; }
+
         private string _titleQuote;
         public string TitleQuote { get => _titleQuote; set { _titleQuote = value; OnPropertyChanged(nameof(TitleQuote)); } }
         private string _staffAgentQuote;
@@ -54,6 +59,16 @@ namespace PhuLongCRM.ViewModels
         public List<OptionSet> DiscountExchangeLists { get => _discountExchangeLists; set { _discountExchangeLists = value; OnPropertyChanged(nameof(DiscountExchangeLists)); } }
         private List<HandoverConditionModel> _handoverConditions;
         public List<HandoverConditionModel> HandoverConditions { get => _handoverConditions; set { _handoverConditions = value; OnPropertyChanged(nameof(HandoverConditions)); } }
+
+        private List<LookUp> _listCollaborator;
+        public List<LookUp> ListCollaborator { get => _listCollaborator; set { _listCollaborator = value; OnPropertyChanged(nameof(ListCollaborator)); } }
+        private List<LookUp> _listCustomerReferral;
+        public List<LookUp> ListCustomerReferral { get => _listCustomerReferral; set { _listCustomerReferral = value; OnPropertyChanged(nameof(ListCustomerReferral)); } }
+
+        private LookUp _collaborator;
+        public LookUp Collaborator { get => _collaborator; set { _collaborator = value; OnPropertyChanged(nameof(Collaborator)); } }
+        private LookUp _customerReferral;
+        public LookUp CustomerReferral { get => _customerReferral; set { _customerReferral = value; OnPropertyChanged(nameof(CustomerReferral)); } }
 
         private OptionSet _paymentScheme;
         public OptionSet PaymentScheme { get => _paymentScheme; set { _paymentScheme = value; OnPropertyChanged(nameof(PaymentScheme)); } }
@@ -245,6 +260,9 @@ namespace PhuLongCRM.ViewModels
         {
             SelectedPromotionIds = new List<string>();
             this.Quote = new QuoteModel();
+
+            ListCollaborator = new List<LookUp>();
+            ListCustomerReferral = new List<LookUp>();
         }
 
         public async Task CheckTaoLichThanhToan()
@@ -414,36 +432,43 @@ namespace PhuLongCRM.ViewModels
         }
 
         // Tinh tien
-        public async Task GetTotal(string quoteId)
+        public async Task<CrmApiResponse> GetTotal(string quoteId)
         {
             CalualteReservationModel model = new CalualteReservationModel();
-            List<string> ckChungIds = new List<string>();
-            List<string> ckPTTTIds = new List<string>();
-            List<string> ckNoiBoIds = new List<string>();
-            List<string> ckQuyDoiIds = new List<string>();
-
             model.DKBG = this.HandoverCondition.Val;
 
+            ckChungIds = new List<string>();
+            ckPTTTIds = new List<string>();
+            ckNoiBoIds = new List<string>();
+            ckQuyDoiIds = new List<string>();
             
-            var ckChung = this.DiscountChilds.Where(x => x.Selected == true);
-            foreach (var item in ckChung)
+            foreach (var item in DiscountChilds)
             {
-                ckChungIds.Add(item.Val);
+                if (item.Selected == true)
+                {
+                    ckChungIds.Add(item.Val);
+                }
+            }            
+            foreach (var item in DiscountChildsPaymentSchemes)
+            {
+                if (item.Selected == true)
+                {
+                    ckPTTTIds.Add(item.Val);
+                }
             }
-            var ckPTTT = this.DiscountChildsPaymentSchemes.Where(x => x.Selected == true);
-            foreach (var item in ckPTTT)
+            foreach (var item in DiscountChildsInternel)
             {
-                ckPTTTIds.Add(item.Val);
+                if (item.Selected == true)
+                {
+                    ckNoiBoIds.Add(item.Val);
+                }
             }
-            var ckNoiBo = this.DiscountChildsInternel.Where(x => x.Selected == true);
-            foreach (var item in ckNoiBo)
+            foreach (var item in DiscountChildsExchanges)
             {
-                ckNoiBoIds.Add(item.Val);
-            }
-            var ckQuyDoi = this.DiscountChildsExchanges.Where(x => x.Selected == true);
-            foreach (var item in ckQuyDoi)
-            {
-                ckQuyDoiIds.Add(item.Val);
+                if (item.Selected == true)
+                {
+                    ckQuyDoiIds.Add(item.Val);
+                }
             }
             model.CKChung = ckChungIds.Count > 0 ? string.Join(",", ckChungIds) : null;
             model.CKPTTT = ckPTTTIds.Count > 0 ? string.Join(",", ckPTTTIds) : null;
@@ -459,10 +484,17 @@ namespace PhuLongCRM.ViewModels
             };
             string body = JsonConvert.SerializeObject(input);
             CrmApiResponse result = await CrmHelper.PostData(path, body);
-            if (result.IsSuccess == false && result.Content == null) return;
-            string content = result.Content;
-            ResponseAction responseActions = JsonConvert.DeserializeObject<ResponseAction>(content);
-            TotalReservation = JsonConvert.DeserializeObject<TotalReservationModel>(responseActions.output);
+            if (result.IsSuccess == true)
+            {
+                string content = result.Content;
+                ResponseAction responseActions = JsonConvert.DeserializeObject<ResponseAction>(content);
+                if (responseActions.output != null)
+                {
+                    result.Content = responseActions.output;
+                }
+                
+            }
+            return result;
         }
 
         // Load thong tin san pham
@@ -943,7 +975,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='accountid' alias='Val' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_businesstypesys' operator='contain-values'>
+                                      <condition attribute='bsd_businesstype' operator='contain-values'>
                                         <value>100000002</value>
                                       </condition>
                                     </filter>
@@ -952,6 +984,54 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("accounts", fetchXml);
             if (result == null || result.value.Any() == false) return;
             this.SalesAgents = result.value;
+        }
+
+        // Load cong tac vien
+        public async Task LoadCollaboratorLookUp()
+        {
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='contactid' alias='Id' />
+                    <attribute name='fullname' alias='Name' />
+                    <order attribute='createdon' descending='true' />                   
+                    <filter type='and'>
+                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='bsd_type' operator='eq' value='100000001' />
+                    </filter>
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("contacts", fetch);
+            if (result == null || result.value.Count == 0)
+                return;
+            var data = result.value;
+            foreach (var item in data)
+            {
+                ListCollaborator.Add(item);
+            }
+        }
+
+        // Load khach hang gioi thieu
+        public async Task LoadCustomerReferralLookUp()
+        {
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='contactid' alias='Id' />
+                    <attribute name='fullname' alias='Name' />
+                    <order attribute='createdon' descending='true' />                   
+                    <filter type='and'>
+                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='bsd_type' operator='eq' value='100000000' />
+                    </filter>
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("contacts", fetch);
+            if (result == null || result.value.Count == 0)
+                return;
+            var data = result.value;
+            foreach (var item in data)
+            {
+                ListCustomerReferral.Add(item);
+            }
         }
 
         public async Task LoadCoOwners()
@@ -984,6 +1064,29 @@ namespace PhuLongCRM.ViewModels
                 item.bsd_relationship = RelationshipCoOwnerData.GetRelationshipById(item.bsd_relationshipId).Label;
                 this.CoOwnerList.Add(item);
             }
+        }
+
+        public async Task<CrmApiResponse> DeletePromotion(string promotionId)
+        {
+            string path = $"/quotes({this.Quote.quoteid})//Microsoft.Dynamics.CRM.bsd_Action_Quote_Check_Promotion";
+            List<string> CKTPTTTIds = new List<string>();
+            foreach (var item in this.DiscountChildsPaymentSchemes)
+            {
+                if (item.Selected == true)
+                {
+                    CKTPTTTIds.Add(item.Val);
+                }
+            }
+            string CKIds = CKTPTTTIds.Count > 0 ? string.Join(",", CKTPTTTIds): null;
+
+            var json = new
+            {
+                input = promotionId,
+                input2 = CKIds
+            };
+            var data = JsonConvert.SerializeObject(json);
+            CrmApiResponse apiResponse = await CrmHelper.PostData(path,data);
+            return apiResponse;
         }
 
         public async Task<bool> AddPromotion(List<string> Ids)
@@ -1095,222 +1198,212 @@ namespace PhuLongCRM.ViewModels
             return data;
         }
 
-        public async Task<bool> CreateQuote()
+        public async Task<CrmApiResponse> CreateQuote()
         {
             string path = "/quotes";
-            
-            var content = await GetContent();
+            var content = await GetContentCreateQuote();
             CrmApiResponse response = await CrmHelper.PostData(path, content);
-            if (response.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return response;
         }
 
-        public async Task<bool> UpdateQuote()
+        public async Task<CrmApiResponse> UpdateQuote()
         {
             string path = $"/quotes({this.Quote.quoteid})";
-            var content = await GetContent();
+            var content = await GetContentUpdateQuote();
             CrmApiResponse response = await CrmHelper.PatchData(path, content);
-            if (response.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return response;
         }
 
-        public async Task<object> GetContent()
+        public async Task<object> GetContentCreateQuote()
         {
             Dictionary<string, object> data = new Dictionary<string, object>();
-            List<string> discounts = new List<string>();
-            List<string> discountsInternel = new List<string>();
-            List<string> discountsPaymentScheme = new List<string>();
 
-            foreach (var item in this.DiscountChilds)
-            {
-                if (item.Selected == true)
-                {
-                    discounts.Add(item.Val);
-                }
-            }
-            foreach (var item in this.DiscountChildsInternel)
-            {
-                if (item.Selected == true)
-                {
-                    discountsInternel.Add(item.Val);
-                }
-            }
+            Quote.quoteid = Guid.NewGuid();
+            data["quoteid"] = this.Quote.quoteid;
+            data["name"] = this.Quote.name;
 
-            foreach (var item in this.DiscountChildsPaymentSchemes)
+            data["bsd_depositfee"] = this.Quote.bsd_depositfee;
+            data["bsd_unitstatus"] = this.Quote.bsd_unitstatus;
+            data["bsd_constructionarea"] = this.Quote.bsd_constructionarea;
+            data["bsd_netusablearea"] = this.Quote.bsd_netusablearea;
+            data["bsd_actualarea"] = this.Quote.bsd_actualarea;
+
+            data["bsd_projectid@odata.bind"] = $"/bsd_projects({this.Quote._bsd_projectcode_value})";
+            data["bsd_taxcode@odata.bind"] = $"/bsd_taxcodes({this.TaxCode.bsd_taxcodeid})";
+            data["bsd_unitno@odata.bind"] = $"/products({this.Quote.unit_id})";
+
+            if (this.Quote._bsd_phaseslaunchid_value != Guid.Empty)//this.UnitInfor._bsd_phaseslaunchid_value != Guid.Empty
             {
-                if (item.Selected == true)
-                {
-                    discountsPaymentScheme.Add(item.Val);
-                }
+                data["bsd_phaseslaunchid@odata.bind"] = $"/bsd_phaseslaunchs({this.Quote._bsd_phaseslaunchid_value})";
             }
 
-            if (this.Quote.quoteid != Guid.Empty)
+            if (this.Quote.bsd_startingdatecalculateofps.HasValue)
             {
-                data["bsd_discounts"] = string.Join(",", discounts);
-                data["bsd_interneldiscount"] = string.Join(",", discountsInternel);
+                data["bsd_startingdatecalculateofps"] = this.Quote.bsd_startingdatecalculateofps.Value.Date;
+            }
 
-                data["bsd_detailamount"] = decimal.Round(this.TotalReservation.ListedPrice,0); ;//this.UnitInfor.price;
-                data["bsd_discount"] = this.TotalReservation.Discount;
-                data["bsd_packagesellingamount"] = this.TotalReservation.HandoverAmount;
-                data["bsd_totalamountlessfreight"] = this.TotalReservation.NetSellingPrice;
-                data["bsd_landvaluededuction"] = this.TotalReservation.LandValue;
-                data["bsd_freightamount"] = this.TotalReservation.MaintenanceFee;
-                data["totaltax"] = this.TotalReservation.TotalTax;
-                data["bsd_netsellingpriceaftervat"] = this.TotalReservation.NetSellingPriceAfterVAT;
-                data["totalamount"] = this.TotalReservation.TotalAmount;
-
-                if (this.Queue != null)
-                {
-                    data["opportunityid@odata.bind"] = $"/opportunities({this.Queue.Val})";
-                }
+            if (this.PaymentScheme != null)
+            {
+                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
             }
             else
             {
-                Quote.quoteid = Guid.NewGuid();
-                data["quoteid"] = this.Quote.quoteid;
-                data["name"] = this.Quote.name;
-                data["bsd_discounts"] = string.Join(",", discounts);
-                data["bsd_interneldiscount"] = string.Join(",", discountsInternel);
-                data["bsd_selectedchietkhaupttt"] = string.Join(",", discountsPaymentScheme);
-
-                data["bsd_unitstatus"] = this.Quote.bsd_unitstatus;
-                data["bsd_constructionarea"] = this.Quote.bsd_constructionarea;
-                data["bsd_netusablearea"] = this.Quote.bsd_netusablearea;
-                data["bsd_actualarea"] = this.Quote.bsd_actualarea;
-                data["bsd_depositfee"] = this.Quote.bsd_depositfee;
-                data["bsd_bookingfee"] = this.Quote.bsd_bookingfee;
-                //data["bsd_contracttypedescripton"] = this.ContractType.Val;
-                data["bsd_nameofstaffagent"] = this.Quote.bsd_nameofstaffagent;// this.StaffAgentQuote;
-                                                                               //data["bsd_referral"] = this.Quote.bsd_referral;// this.DescriptionQuote;
-                data["bsd_paymentschemestype"] = this.PaymentSchemeType?.Val;
-
-
-
-                data["bsd_numberofmonthspaidmf"] = this.Quote.bsd_numberofmonthspaidmf;//this.UnitInfor.bsd_numberofmonthspaidmf;
-                data["bsd_managementfee"] = this.Quote.bsd_managementfee; //this.UnitInfor.bsd_managementamountmonth;
-                                                                          //data["bsd_waivermanafeemonth"] = this.Quote.bsd_waivermanafeemonth;//this.WaiverManaFee;
-
-                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
-                data["bsd_unitno@odata.bind"] = $"/products({this.Quote.unit_id})";//{this.UnitInfor.productid}
-                data["bsd_projectid@odata.bind"] = $"/bsd_projects({this.Quote._bsd_projectcode_value})";//this.UnitInfor._bsd_projectcode_value
-                data["bsd_salessgentcompany@odata.bind"] = $"/accounts({this.SalesAgent.Val})";
-                data["bsd_taxcode@odata.bind"] = $"/bsd_taxcodes({this.TaxCode.bsd_taxcodeid})";
-
-                if (this.Quote.bsd_startingdatecalculateofps.HasValue)
-                {
-                    data["bsd_startingdatecalculateofps"] = this.Quote.bsd_startingdatecalculateofps.Value.Date;
-                }
-
-                if (this.Quote._bsd_phaseslaunchid_value != Guid.Empty)//this.UnitInfor._bsd_phaseslaunchid_value != Guid.Empty
-                {
-                    data["bsd_phaseslaunchid@odata.bind"] = $"/bsd_phaseslaunchs({this.Quote._bsd_phaseslaunchid_value})";
-                }
-
-                if (this.Quote.pricelist_phaselaunch_id != Guid.Empty)//this.UnitInfor.pricelist_id_phaseslaunch != Guid.Empty
-                {
-                    data["bsd_pricelistphaselaunch@odata.bind"] = $"/pricelevels({this.Quote.pricelist_phaselaunch_id})";
-                }
-
-                //if (this.Quote.pricelist_apply_id != Guid.Empty)
-                //{
-                //    data["pricelevelid@odata.bind"] = $"/pricelevels({this.Quote.pricelist_apply_id})";
-                //}
-
-                if (this.DiscountList != null)
-                {
-                    data["bsd_discountlist@odata.bind"] = $"/bsd_discounttypes({this.DiscountList.Val})";
-                }
-                else
-                {
-                    await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_discountlist");
-                }
-
-                if (this.DiscountInternelList != null)
-                {
-                    data["bsd_interneldiscountlist@odata.bind"] = $"/bsd_interneldiscounts({this.DiscountInternelList.Val})";
-                }
-                else
-                {
-                    await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_interneldiscountlist");
-                }
-
-                //if (this.Queue != null)
-                //{
-                //    data["opportunityid@odata.bind"] = $"/opportunities({this.Queue.Val})";
-                //}
-                //else
-                //{
-                //    await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "opportunityid");
-                //}
-
-                if (this.Buyer.Title == "2")
-                {
-                    data["customerid_contact@odata.bind"] = $"/contacts({this.Buyer.Val})";
-                    //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_account");
-                }
-                else if (this.Buyer.Title == "3")
-                {
-                    data["customerid_account@odata.bind"] = $"/accounts({this.Buyer.Val})";
-                    //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_contact");
-                }
-
-                if (UserLogged.Id != Guid.Empty)
-                {
-                    data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
-                }
-                if (UserLogged.ManagerId != Guid.Empty)
-                {
-                    data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
-                }
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_paymentscheme");
+            }
+            if (this.Buyer.Title == "2")
+            {
+                data["customerid_contact@odata.bind"] = $"/contacts({this.Buyer.Val})";
+                //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_account");
+            }
+            else if (this.Buyer.Title == "3")
+            {
+                data["customerid_account@odata.bind"] = $"/accounts({this.Buyer.Val})";
+                //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_contact");
             }
 
-            
+            if (UserLogged.Id != Guid.Empty)
+            {
+                data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
+            }
+            if (UserLogged.ManagerId != Guid.Empty)
+            {
+                data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
+            }
+
+            return data;
+        }
+
+        public async Task<object> GetContentUpdateQuote()
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+
+            data["name"] = this.Quote.name;
+            data["bsd_discounts"] = string.Join(",", ckChungIds);
+            data["bsd_interneldiscount"] = string.Join(",", ckNoiBoIds);
+            data["bsd_selectedchietkhaupttt"] = string.Join(",", ckPTTTIds);
+            data["bsd_exchangediscount"] = string.Join(",", ckQuyDoiIds);
+
+            data["bsd_paymentschemestype"] = this.PaymentSchemeType?.Val;
+            data["bsd_bookingfee"] = this.Quote.bsd_bookingfee;
+            data["bsd_depositfee"] = this.Quote.bsd_depositfee;
+            data["bsd_nameofstaffagent"] = this.Quote.bsd_nameofstaffagent;
+            data["bsd_numberofmonthspaidmf"] = this.Quote.bsd_numberofmonthspaidmf;
+            data["bsd_managementfee"] = this.Quote.bsd_managementfee; 
+
+            data["bsd_detailamount"] = decimal.Round(this.TotalReservation.ListedPrice, 0); 
+            data["bsd_discount"] = this.TotalReservation.Discount;
+            data["bsd_packagesellingamount"] = this.TotalReservation.HandoverAmount;
+            data["bsd_totalamountlessfreight"] = this.TotalReservation.NetSellingPrice;
+            data["bsd_landvaluededuction"] = this.TotalReservation.LandValue;
+            data["bsd_freightamount"] = this.TotalReservation.MaintenanceFee;
+            data["totaltax"] = this.TotalReservation.TotalTax;
+            data["bsd_netsellingpriceaftervat"] = this.TotalReservation.NetSellingPriceAfterVAT;
+            data["totalamount"] = this.TotalReservation.TotalAmount;
+
+
+            if (this.Quote.bsd_startingdatecalculateofps.HasValue)
+            {
+                data["bsd_startingdatecalculateofps"] = this.Quote.bsd_startingdatecalculateofps.Value.Date;
+            }
+            if (this.Quote.pricelist_apply_id != Guid.Empty)
+            {
+                data["pricelevelid@odata.bind"] = $"/pricelevels({this.Quote.pricelist_apply_id})";
+            }
+
+            if (this.PaymentScheme != null)
+            {
+                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_paymentscheme");
+            }
+            if (this.DiscountList != null)
+            {
+                data["bsd_discountlist@odata.bind"] = $"/bsd_discounttypes({this.DiscountList.Val})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_discountlist");
+            }
+            if (this.DiscountInternelList != null)
+            {
+                data["bsd_interneldiscountlist@odata.bind"] = $"/bsd_interneldiscounts({this.DiscountInternelList.Val})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_interneldiscountlist");
+            }
+            if (this.DiscountExchangeList != null)
+            {
+                data["bsd_exchangediscountlist@odata.bind"] = $"/bsd_discountpromotions({this.DiscountExchangeList.Val})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_exchangediscountlist");
+            }
+            if (this.Queue != null)
+            {
+                data["opportunityid@odata.bind"] = $"/opportunities({this.Queue.Val})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "opportunityid");
+            }
+            if (this.Buyer.Title == "2")
+            {
+                data["customerid_contact@odata.bind"] = $"/contacts({this.Buyer.Val})";
+                //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_account");
+            }
+            else if (this.Buyer.Title == "3")
+            {
+                data["customerid_account@odata.bind"] = $"/accounts({this.Buyer.Val})";
+                //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_contact");
+            }
+            if (this.SalesAgent != null)
+            {
+                data["bsd_salessgentcompany@odata.bind"] = $"/accounts({this.SalesAgent.Val})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_salessgentcompany");
+            }
+            if (this.Collaborator != null)
+            {
+                data["bsd_collaborator@odata.bind"] = $"/contacts({this.Collaborator.Id})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_collaborator");
+            }
+            if (this.CustomerReferral != null)
+            {
+                data["bsd_customerreferral@odata.bind"] = $"/contacts({this.CustomerReferral.Id})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_customerreferral");
+            }
 
             return data;
         }
 
 
-        
-        public async Task<bool> CreateQuoteProduct()
+
+        public async Task<CrmApiResponse> CreateQuoteProduct()
         {
             string path = "/quotedetails";
             var content = await GetContentQuoteProduct();
             CrmApiResponse apiResponse = await CrmHelper.PostData(path, content);
-            if (apiResponse.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return apiResponse;
         }
 
-        public async Task<bool> UpdateQuoteProduct()
+        public async Task<CrmApiResponse> UpdateQuoteProduct()
         {
             string path = $"/quotedetails({quotedetailid})";
             var content = await GetContentQuoteProduct();
             CrmApiResponse response = await CrmHelper.PatchData(path, content);
-            if (response.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return response;
         }
 
         public async Task<object> GetContentQuoteProduct()
