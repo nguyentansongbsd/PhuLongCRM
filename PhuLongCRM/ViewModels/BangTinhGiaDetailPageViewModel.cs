@@ -30,13 +30,13 @@ namespace PhuLongCRM.ViewModels
         public bool ShowInstallmentList { get => _showInstallmentList; set { _showInstallmentList = value; OnPropertyChanged(nameof(ShowInstallmentList)); } }
 
         private StatusCodeModel _quoteStatus;
-        public StatusCodeModel QuoteStatus { get=> _quoteStatus; set { _quoteStatus = value;OnPropertyChanged(nameof(QuoteStatus)); } }
+        public StatusCodeModel QuoteStatus { get => _quoteStatus; set { _quoteStatus = value; OnPropertyChanged(nameof(QuoteStatus)); } }
 
         public ObservableCollection<OptionSet> ListDiscount { get; set; } = new ObservableCollection<OptionSet>();
         public ObservableCollection<OptionSet> ListPromotion { get; set; } = new ObservableCollection<OptionSet>();
         public List<OptionSet> ListSpecialDiscount { get; set; }
-        
-        
+
+
         public string UpdateQuote = "1";
         public string UpdateQuotation = "2";
         public string ConfirmReservation = "3";
@@ -185,8 +185,8 @@ namespace PhuLongCRM.ViewModels
                 Reservation.paymentscheme_name = data.paymentscheme_name;
                 Reservation.discountlist_name = data.discountlist_name;
             }
-           
-            if(!string.IsNullOrEmpty(Reservation.purchaser_account_name))
+
+            if (!string.IsNullOrEmpty(Reservation.purchaser_account_name))
             {
                 Customer.Val = Reservation.purchaser_accountid.ToString();
                 Customer.Label = Reservation.purchaser_account_name;
@@ -199,7 +199,7 @@ namespace PhuLongCRM.ViewModels
                 Customer.Label = Reservation.purchaser_contact_name;
                 Customer.Title = CodeContact;
             }
-            
+
             this.QuoteStatus = QuoteStatusCodeData.GetQuoteStatusCodeById(this.Reservation.statuscode.ToString());
         }
 
@@ -224,7 +224,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Count == 0) return;
 
             Reservation.handovercondition_id = Guid.Parse(result.value.FirstOrDefault().Val);
-            Reservation.handovercondition_name = result.value.FirstOrDefault().Label ;
+            Reservation.handovercondition_name = result.value.FirstOrDefault().Label;
         }
 
         public async Task LoadSpecialDiscount(Guid ReservationId)
@@ -297,7 +297,7 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                 </entity>
                             </fetch>";
-            
+
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_discounts", fetchXml);
             if (result == null || result.value.Count == 0) return;
             foreach (var item in result.value)
@@ -378,14 +378,14 @@ namespace PhuLongCRM.ViewModels
                 InstallmentList.Add(x);
             }
             NumberInstallment = InstallmentList.Count();
-            if(NumberInstallment>0)
+            if (NumberInstallment > 0)
             {
                 ShowInstallmentList = true;
-            }    
+            }
             else
             {
                 ShowInstallmentList = false;
-            }    
+            }
         }
         #endregion
 
@@ -412,17 +412,11 @@ namespace PhuLongCRM.ViewModels
         {
             var model = new
             {
-                name = "datesign",
-                type = "string",
-                value = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year + " " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Millisecond
+                datesign = DateTime.Now.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") // DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year + " " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second,
             };
 
             var json = JsonConvert.SerializeObject(model);
 
-            var data = new{
-                input = json
-            };
-            var content = JsonConvert.SerializeObject(data);
             var apiResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})//Microsoft.Dynamics.CRM.bsd_Action_QuotationReservation_ConvertToReservation", json);
 
             if (apiResponse.IsSuccess)
@@ -445,7 +439,7 @@ namespace PhuLongCRM.ViewModels
                 data["statecode"] = Reservation.statecode;
                 data["statuscode"] = Reservation.statuscode;
             }
-            
+
             if (option == ConfirmReservation)
             {
                 data["bsd_reservationuploadeddate"] = Reservation.bsd_reservationuploadeddate.Value.ToUniversalTime(); ;
@@ -488,7 +482,7 @@ namespace PhuLongCRM.ViewModels
                     {
                         return updateResponse.IsSuccess.ToString();
                     }
-                    
+
                 }
             }
             else
@@ -514,11 +508,11 @@ namespace PhuLongCRM.ViewModels
                     return true;
                 else
                     return false;
-            } 
+            }
             else
             {
                 return false;
-            }    
+            }
         }
 
         public async Task<bool> Deactive(Guid installmentid)
