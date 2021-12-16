@@ -66,6 +66,7 @@ namespace PhuLongCRM.Views
                 );
                 viewModel.ButtonCommandList.Clear();
                 SetUpButtonGroup();
+                if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                 NeedToRefresh = false;
 
                 LoadingHelper.Hide();
@@ -213,6 +214,11 @@ namespace PhuLongCRM.Views
 
         private void SetUpButtonGroup()
         {
+            if (viewModel.Reservation.statuscode == 100000007 || viewModel.Reservation.statuscode == 100000000)
+            {
+                viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy Đặt Cọc", "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
+            }
+
             if (viewModel.Reservation.statuscode == 100000007)
             {
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Cập Nhật Bảng Tính Giá", "FontAwesomeRegular", "\uf044", null, EditQuotes));
@@ -547,6 +553,27 @@ namespace PhuLongCRM.Views
                             ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
                         }
                     };
+                }
+            }
+        }
+
+        private async void CancelDeposit(object sender, EventArgs e)
+        {
+            if (viewModel.Reservation.quoteid != Guid.Empty)
+            {
+                if (await viewModel.CancelDeposit())
+                {
+                    NeedToRefresh = true;
+                    OnAppearing();
+                    if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
+                    if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage("Đã hủy đặt cọc");
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage("Hủy đặt cọc thất bại. Vui lòng thử lại");
                 }
             }
         }

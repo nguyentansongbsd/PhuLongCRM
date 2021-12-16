@@ -52,8 +52,24 @@ namespace PhuLongCRM.Controls
             }
             else
             {
-                listView.ItemsSource = viewModel.Data.Where(x => x.Label.ToLower().Contains(text.ToLower()));
+                var list = from Item in viewModel.Data
+                           where Item.Label.ToString().ToLower().Contains(text.ToLower()) ||
+                           Item.SDT != null && Item.SDT.ToString().ToLower().Contains(text.ToLower()) ||
+                           Item.CMND != null && Item.CMND.ToString().ToLower().Contains(text.ToLower()) ||
+                           Item.CCCD != null && Item.CCCD.ToString().ToLower().Contains(text.ToLower()) ||
+                           Item.HC != null && Item.HC.ToString().ToLower().Contains(text.ToLower()) ||
+                           Item.SoGPKD != null && Item.SoGPKD.ToString().ToLower().Contains(text.ToLower())
+                           select Item;
+                listView.ItemsSource = list;
+                //listView.ItemsSource = viewModel.Data.Where(x => x.Label.ToLower().Contains(text.ToLower()));
             }
+        }
+
+        public async void Refresh()
+        {
+            LoadingHelper.Show();
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
         }
     }
 }

@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
-    public class ListViewMultiTabsViewModel : ListViewBaseViewModel2<Models.OptionSet>
+    public class ListViewMultiTabsViewModel : ListViewBaseViewModel2<Models.OptionSetFilter>
     {
         public ListViewMultiTabsViewModel(string fetch, string entity)
         {

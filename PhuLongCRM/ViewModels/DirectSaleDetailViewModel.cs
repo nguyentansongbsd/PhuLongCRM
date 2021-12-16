@@ -276,6 +276,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_constructionarea' />
                                     <attribute name='bsd_floor' alias='floorid'/>
                                     <attribute name='bsd_blocknumber' alias='blockid'/>
+                                    <attribute name='bsd_phaseslaunchid' alias='_bsd_phaseslaunchid_value' />
                                     <attribute name='bsd_phaseslaunchid' />
                                     <attribute name='bsd_vippriority' />
                                     <order attribute='bsd_constructionarea' descending='true' />
@@ -331,7 +332,7 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var x in data)
             {
-                x.statuscode_label = QueuesStatusCodeData.GetQueuesById(x.statuscode.ToString()).Name;
+                //x.statuscode_label = QueuesStatusCodeData.GetQueuesById(x.statuscode.ToString()).Name;
                 QueueList.Add(x);
             }
             //if (QueueList.Any(x=>x.statuscode == 100000000))  // chỗ này đang bị lỗi khi có 2 giữ chỗ queue

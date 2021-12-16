@@ -16,13 +16,28 @@ namespace PhuLongCRM.Views
     public partial class DatCocList : ContentPage
     {
         private readonly DatCocListViewModel viewModel;
+        public static bool? NeedToRefresh;
         public DatCocList()
         {
             InitializeComponent();
             BindingContext = viewModel = new DatCocListViewModel();
+            NeedToRefresh = false;
             LoadingHelper.Show();
             Init();
         }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadOnRefreshCommandAsync();
+                LoadingHelper.Hide();
+                NeedToRefresh = false;
+            }
+        }
+
         public async void Init()
         {
             await viewModel.LoadData();

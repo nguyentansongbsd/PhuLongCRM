@@ -214,7 +214,7 @@ namespace PhuLongCRM.Views
                 if (created != new Guid())
                 {
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
-                    //if (QueueForm.NeedToRefreshContactList.HasValue) QueueForm.NeedToRefreshContactList = true;
+                    if (QueueForm.NeedToRefresh.HasValue) QueueForm.NeedToRefresh = true;
 
                     await Navigation.PopAsync();
                     ToastMessageHelper.ShortMessage("Đã tạo khách hàng cá nhân thành công");

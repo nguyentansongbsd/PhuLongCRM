@@ -213,7 +213,7 @@
                                     </Label.GestureRecognizers>
                                 </Label>
                             </Grid>
-                            <Grid ColumnDefinitions="*,Auto">
+                            <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding Unit._bsd_phaseslaunchid_value, Converter={StaticResource HidePriceOnDirectSaleConverter}}">
                                 <Label Grid.Column="0" Text="{Binding Unit.price,Converter={StaticResource DecimalToVndConverter}}" FontSize="16" FontAttributes="Bold" TextColor="#790311"/>
                                 <StackLayout Grid.Column="1" IsVisible="{Binding Unit.bsd_vippriority}" HorizontalOptions="End" Orientation="Horizontal">
                                     <Label Text="VIP" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" TextColor="#FEC93D"/>
@@ -279,8 +279,14 @@
                                                     <StackLayout.GestureRecognizers>
                                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiuChoItem_Tapped" CommandParameter="{Binding opportunityid}"/>
                                                     </StackLayout.GestureRecognizers>
-                                                    <Label Text="{Binding name}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}"/>
-                                                    <Label Text="{Binding statuscode_label}" FontAttributes="Bold" FontSize="15" TextColor="#333333"/>
+                                                    <Grid ColumnDefinitions="Auto,*">
+                                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
+                                                            <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                                        </telerikPrimitives:RadBorder>
+                                                        <Label Grid.Column="1" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                    </Grid>
+                                                    <!--<Label Text="{Binding name}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}"/>
+                                                    <Label Text="{Binding statuscode_label}" FontAttributes="Bold" FontSize="15" TextColor="#333333"/>-->
                                                     <Label FontSize="15" TextColor="#333333">
                                                         <Label.FormattedText>
                                                             <FormattedString>

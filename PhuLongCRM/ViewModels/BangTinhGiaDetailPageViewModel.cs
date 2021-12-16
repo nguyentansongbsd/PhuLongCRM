@@ -498,16 +498,7 @@ namespace PhuLongCRM.ViewModels
 
             if (InstallmentList != null && InstallmentList.Count > 0)
             {
-                int count = 0;
-                foreach (var item in InstallmentList)
-                {
-                    if (item.bsd_paymentschemedetailid != Guid.Empty && await Deactive(item.bsd_paymentschemedetailid))
-                        count++;
-                }
-                if (count == InstallmentList.Count)
-                    return true;
-                else
-                    return false;
+                return await Deactive();
             }
             else
             {
@@ -515,15 +506,33 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<bool> Deactive(Guid installmentid)
+        public async Task<bool> Deactive()
         {
-            string path = $"/bsd_paymentschemedetails({installmentid})";
+           if (Reservation.paymentscheme_id != Guid.Empty)
+            {
+                IDictionary<string, object> data = new Dictionary<string, object>();
+                CrmApiResponse updateResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})/Microsoft.Dynamics.CRM.bsd_Action_Clear_Installment", data);
+                if (updateResponse.IsSuccess)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
 
-            IDictionary<string, object> data = new Dictionary<string, object>();
-            data["statecode"] = 1;
-            data["statuscode"] = 2;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-            CrmApiResponse apiResponse = await CrmHelper.PatchData(path, data);
+        public async Task<bool> CancelDeposit()
+        {
+            var data = new { };
+            var apiResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})//Microsoft.Dynamics.CRM.bsd_Action_Reservation_Cancel", data);
+
             if (apiResponse.IsSuccess)
             {
                 return true;
