@@ -181,81 +181,6 @@ namespace PhuLongCRM.ViewModels
 
         public bool IsHadLichThanhToan { get; set; }
 
-        #region Tinh toan gia tien o bang chi tiet
-        //Tinh (-)Chiet khau
-        public async Task SetTotalDiscount()
-        {
-            this.TotalDiscount = 0;
-            foreach (var item in this.DiscountChilds)
-            {
-                if (item.Selected == true && item.new_type == "100000000") // percent
-                {
-                    this.TotalDiscount += (item.bsd_percentage * UnitPrice) / 100;
-                }
-                if (item.Selected == true && item.new_type == "100000001") // amount
-                {
-                    this.TotalDiscount += item.bsd_amount;
-                }
-            }
-            this.TotalDiscount = Math.Round(this.TotalDiscount, 0);
-        }
-
-        public async Task SetTotalHandoverCondition()
-        {
-            if (this.HandoverCondition.bsd_method == "100000000")// Price per sqm
-            {
-                this.TotalHandoverCondition = this.HandoverCondition.bsd_priceperm2 * UnitNetSaleAbleArea;
-            }
-            else if (this.HandoverCondition.bsd_method == "100000001") //Amount
-            {
-                this.TotalHandoverCondition = this.HandoverCondition.bsd_amount;
-            }
-            else //Percent (%)
-            {
-                this.TotalHandoverCondition = (this.HandoverCondition.bsd_percent * UnitPrice) / 100;
-            }
-            this.TotalHandoverCondition = Math.Round(this.TotalHandoverCondition, 0);
-        }
-
-        public async Task SetNetSellingPrice()
-        {
-            // Gia ban truoc thue = Gia ban san pham - Tong chiet khau + Tong dieu kien ban gia
-            this.NetSellingPrice = 0;
-            this.NetSellingPrice = UnitPrice - this.TotalDiscount + this.TotalHandoverCondition;
-            this.NetSellingPrice = Math.Round(this.NetSellingPrice, 0);
-        }
-
-        public async Task SetLandValueDeduction()
-        {
-            // Tổng giá trị QSDĐ = = Land value of unit (sqm) * Net Usable Area
-            this.LandValueDeduction = UnitLandValue * UnitNetSaleAbleArea;
-            this.LandValueDeduction = Math.Round(this.LandValueDeduction, 0);
-        }
-
-        public async Task SetTotalVatTax()
-        {
-            //Tổng tiền thuế VAT = ((Gia ban truoc thue - Tổng giá trị QSDĐ) * Ma so thue) // ma so thue fix cung la 10%
-            this.TotalVATTax = 0;
-            this.TotalVATTax = ((this.NetSellingPrice - this.LandValueDeduction) * 10) / 100;
-            this.TotalVATTax = Math.Round(this.TotalVATTax, 0);
-        }
-
-        public async Task SetMaintenanceFee()
-        {
-            //Phí bảo trì = (Gia ban truoc thue * Maintenance fee% )/100
-            this.MaintenanceFee = 0;
-            this.MaintenanceFee = (this.NetSellingPrice * UnitMaintenanceFee) / 100;
-            this.MaintenanceFee = Math.Round(this.MaintenanceFee, 0);
-        }
-
-        public async Task SetTotalAmount()
-        {
-            this.TotalAmount = 0;
-            this.TotalAmount = this.NetSellingPrice + this.TotalVATTax + this.MaintenanceFee;
-            this.TotalAmount = Math.Round(this.TotalAmount, 0);
-        }
-        #endregion
-
         public ReservationFormViewModel()
         {
             SelectedPromotionIds = new List<string>();
@@ -428,7 +353,6 @@ namespace PhuLongCRM.ViewModels
             this.TotalVATTax = this.Quote.totaltax;
             this.MaintenanceFee = this.Quote.bsd_freightamount;
             this.TotalAmount = this.Quote.totalamount;
-
         }
 
         // Tinh tien

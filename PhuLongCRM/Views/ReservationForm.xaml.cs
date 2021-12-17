@@ -309,7 +309,6 @@ namespace PhuLongCRM.Views
             contentChinhSach.IsVisible = false;
             contentTongHop.IsVisible = false;
             contentChiTiet.IsVisible = true;
-            await SetTotal();
         }
 
         #region Handover Condition // Dieu kien ban giao
@@ -335,8 +334,6 @@ namespace PhuLongCRM.Views
                 viewModel.HandoverCondition = null;
                 return;
             }
-
-            await viewModel.SetTotalHandoverCondition();
             isSetTotal = false;
         }
         #endregion
@@ -411,7 +408,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, không được chỉnh sửa");
                 return;
             }
-            await viewModel.SetTotalDiscount();
             isSetTotal = false;
         }
 
@@ -589,20 +585,28 @@ namespace PhuLongCRM.Views
         private async void UnSelect_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
+            var conform = await DisplayAlert("Xác nhận", "Bạn có muốn xóa khuyến mãi không ?", "Đồng ý", "Hủy");
+            if (conform == false)
+            {
+                LoadingHelper.Hide();
+                return;
+            }
             var item = (OptionSet)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (viewModel.QuoteId != Guid.Empty)
             {
-                //DeletedPromotion(item);
                 CrmApiResponse apiResponse = await viewModel.DeletePromotion(item.Val);
                 if (apiResponse.IsSuccess)
                 {
+                    if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
+                    viewModel.PromotionsSelected.Remove(item);
+                    viewModel.SelectedPromotionIds.Remove(item.Val);
                     ToastMessageHelper.ShortMessage("Xoá khuyễn mãi thành công");
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(apiResponse.ErrorResponse.error.message);
+                    ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
                 }
             }
             else
@@ -624,28 +628,6 @@ namespace PhuLongCRM.Views
                     viewModel.SelectedPromotionIds.Remove(item);
                 }
             }
-        }
-
-        private async void DeletedPromotion(OptionSet item)
-        {
-            var conform = await DisplayAlert("Xác nhận", "Bạn có muốn xóa khuyến mãi không ?", "Đồng ý", "Hủy");
-            if (conform == false) return;
-            LoadingHelper.Show();
-            var deleteResponse = await CrmHelper.DeleteRecord($"/quotes({viewModel.QuoteId})/bsd_quote_bsd_promotion({item.Val})/$ref");
-            if (deleteResponse.IsSuccess)
-            {
-                if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
-                viewModel.PromotionsSelected.Remove(item);
-                viewModel.SelectedPromotionIds.Remove(item.Val);
-                ToastMessageHelper.ShortMessage("Xóa khuyến mãi thành công");
-                LoadingHelper.Hide();
-            }
-            else
-            {
-                LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Xóa khuyến mãi thất bại");
-            }
-            LoadingHelper.Hide();
         }
 
         private void SearchPromotion_Pressed(object sender, EventArgs e)
@@ -959,28 +941,8 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private async Task SetTotal()
-        {
-            //if (this.isSetTotal == false)
-            //{
-            //    //await viewModel.SetNetSellingPrice();
-            //    //await viewModel.SetTotalVatTax();
-            //    //await viewModel.SetMaintenanceFee();
-            //    //await viewModel.SetTotalAmount();
-
-
-
-            //    isSetTotal = true;
-            //}
-        }
-
         private async void SaveQuote_Clicked(object sender, EventArgs e)
         {
-            //if (viewModel.IsHadLichThanhToan == true)
-            //{
-            //    ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, Vui lòng xoá lịch thanh toán để cập nhật");
-            //    return;
-            //}
             if (viewModel.HandoverCondition == null)
             {
                 ToastMessageHelper.ShortMessage("Vui lòng chọn điều kiện bàn giao");
@@ -1001,28 +963,12 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage("Vui lòng chọn khách hàng");
                 return;
             }
-            //if (viewModel.ContractType == null)
-            //{
-            //    ToastMessageHelper.ShortMessage("Vui lòng chọn loại hợp đồng");
-            //    return;
-            //}
-
             if (string.IsNullOrWhiteSpace(viewModel.Quote.name))
             {
                 ToastMessageHelper.ShortMessage("Vui lòng nhập tiêu đề");
                 return;
             }
-            //if (viewModel.SalesAgent == null)
-            //{
-            //    ToastMessageHelper.ShortMessage("Vui lòng chọn Đại lý/Sàn giao dịch");
-            //    return;
-            //}
-            //if (string.IsNullOrWhiteSpace(viewModel.Quote.bsd_waivermanafeemonth))
-            //{
-            //    ToastMessageHelper.ShortMessage("Vui lòng điền số tháng miễn giảm phí quản lý");
-            //    return;
-            //}
-
+            
             if (viewModel.CustomerCoOwner?.Val == viewModel.Buyer?.Val)
             {
                 ToastMessageHelper.ShortMessage("Khách hàng Co-Owner và khách hàng không được trùng.");
@@ -1034,7 +980,6 @@ namespace PhuLongCRM.Views
 
             if (viewModel.Quote.quoteid == Guid.Empty)
             {
-                await SetTotal();
                 CrmApiResponse response = await viewModel.CreateQuote();
                 if (response.IsSuccess)
                 {
