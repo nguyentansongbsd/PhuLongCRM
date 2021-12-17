@@ -151,7 +151,7 @@ namespace PhuLongCRM.ViewModels
 
             ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
             ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
-
+            ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true;
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
 
             this.Queue = data;
@@ -159,20 +159,6 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadDanhSachBangTinhGia()
         {
-            //<filter type='or'>
-            //                  <condition attribute='statuscode' operator='in'>
-            //                    <value>100000007</value>
-            //                  </condition>
-            //                  <filter type='and'>
-            //                     <condition attribute='statuscode' operator='in'>
-            //                        <value>100000009</value>
-            //                        <value>6</value>
-            //                      </condition>
-            //                      <condition attribute='bsd_quotationsigneddate' operator='null' />
-            //                  </filter>
-            //                </filter>
-            //
-
             string fetchXml = $@"<fetch version='1.0' count='5' page='{PageBangTinhGia}' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name='quote'>
                         <attribute name='name' />
@@ -185,7 +171,18 @@ namespace PhuLongCRM.ViewModels
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
                             <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
-                            
+                            <filter type='or'>
+                              <condition attribute='statuscode' operator='in'>
+                                <value>100000007</value>
+                              </condition>
+                              <filter type='and'>
+                                 <condition attribute='statuscode' operator='in'>
+                                    <value>100000009</value>
+                                    <value>6</value>
+                                  </condition>
+                                  <condition attribute='bsd_quotationsigneddate' operator='null' />
+                              </filter>
+                            </filter>
                         </filter>
                         <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectid' visible='false' link-type='outer' alias='a'>
                             <attribute name='bsd_name' alias='bsd_project_name' />
@@ -214,21 +211,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadDanhSachDatCoc()
         {
-            //<filter type='or'>
-            //                   <condition attribute='statuscode' operator='in'>
-            //                       <value>100000000</value>
-            //                       <value>100000001</value>
-            //                       <value>4</value>
-            //                   </condition>
-            //                   <filter type='and'>
-            //                       <condition attribute='statuscode' operator='in'>
-            //                           <value>100000009</value>
-            //                           <value>6</value>
-            //                       </condition>
-            //                       <condition attribute='bsd_quotationsigneddate' operator='not-null' />
-            //                   </filter>
-            //                 </filter>
-            //
+           
 
             string fetchXml = $@"<fetch version='1.0' count='5' page='{PageDatCoc}' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name='quote'>
@@ -242,7 +225,20 @@ namespace PhuLongCRM.ViewModels
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
                             <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
-                            
+                             <filter type='or'>
+                               <condition attribute='statuscode' operator='in'>
+                                   <value>100000000</value>
+                                   <value>100000001</value>
+                                   <value>4</value>
+                               </condition>
+                               <filter type='and'>
+                                   <condition attribute='statuscode' operator='in'>
+                                       <value>100000009</value>
+                                       <value>6</value>
+                                   </condition>
+                                   <condition attribute='bsd_quotationsigneddate' operator='not-null' />
+                               </filter>
+                             </filter>
                         </filter>
                         <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectid' visible='false' link-type='outer' alias='a'>
                             <attribute name='bsd_name' alias='bsd_project_name' />

@@ -123,9 +123,9 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.NewPassword.Length < 6)
+            if (viewModel.NewPassword.Length != 6)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập password nhiều hơn 6 ký tự");
+                ToastMessageHelper.ShortMessage("Vui lòng nhập password có 6 ký tự");
                 return;
             }
 
