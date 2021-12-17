@@ -3,11 +3,7 @@ using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
 using PhuLongCRM.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -100,9 +96,13 @@ namespace PhuLongCRM.Views
                     viewModel.LoadSpecialDiscount(ReservationId),
                     viewModel.LoadInstallmentList(ReservationId)
                     );
+                await Task.WhenAll(
+                    viewModel.LoadDiscounts(),
+                    viewModel.LoadDiscountsPaymentScheme(),
+                    viewModel.LoadDiscountsInternel(),
+                    viewModel.LoadDiscountsExChange()
+                    ) ;
                 await viewModel.LoadHandoverCondition(ReservationId);
-                await viewModel.LoadDiscounts();
-                SutUpSpecialDiscount();
             }
         }
 
@@ -193,31 +193,12 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private void SutUpSpecialDiscount()
-        {
-            if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
-            {
-                stackLayoutSpecialDiscount.IsVisible = true;
-                foreach (var item in viewModel.ListSpecialDiscount)
-                {
-                    if (!string.IsNullOrEmpty(item.Label))
-                    {
-                        stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
-                    }
-                }
-            }
-            else
-            {
-                stackLayoutSpecialDiscount.IsVisible = false;
-            }
-        }
-
         private void SetUpButtonGroup()
         {
-            if (viewModel.Reservation.statuscode == 100000007 || viewModel.Reservation.statuscode == 100000000)
-            {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy Đặt Cọc", "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
-            }
+            //if (viewModel.Reservation.statuscode == 100000007 || viewModel.Reservation.statuscode == 100000000)
+            //{
+            //    viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy Đặt Cọc", "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
+            //}
 
             if (viewModel.Reservation.statuscode == 100000007)
             {

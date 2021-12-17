@@ -20,28 +20,28 @@ namespace PhuLongCRM.Views
         public ListTaiLieuKinhDoanh()
         {
             InitializeComponent();
-            BindingContext = viewModel = new ListTaiLieuKinhDoanhViewModel();
+            //BindingContext = viewModel = new ListTaiLieuKinhDoanhViewModel();
             LoadingHelper.Show();
             Init();
         }
         public async void Init()
         {
-            await viewModel.LoadData();
+            //await viewModel.LoadData();
             LoadingHelper.Hide();
         }
         private void listView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            ListTaiLieuKinhDoanhModel val = e.Item as ListTaiLieuKinhDoanhModel;
-            LoadingHelper.Show();
-            TaiLieuKinhDoanhForm newPage = new TaiLieuKinhDoanhForm(val.salesliteratureid);
-            newPage.CheckTaiLieuKinhDoanh = async (CheckTaiLieuKinhDoanh) =>
-            {
-                if (CheckTaiLieuKinhDoanh == true)
-                {
-                    await Navigation.PushAsync(newPage);                 
-                }
-                LoadingHelper.Hide();
-            };
+            //ListTaiLieuKinhDoanhModel val = e.Item as ListTaiLieuKinhDoanhModel;
+            //LoadingHelper.Show();
+            //TaiLieuKinhDoanhForm newPage = new TaiLieuKinhDoanhForm(val.salesliteratureid);
+            //newPage.CheckTaiLieuKinhDoanh = async (CheckTaiLieuKinhDoanh) =>
+            //{
+            //    if (CheckTaiLieuKinhDoanh == true)
+            //    {
+            //        await Navigation.PushAsync(newPage);                 
+            //    }
+            //    LoadingHelper.Hide();
+            //};
         }
 
         private async void SearchBar_SearchButtonPressed(System.Object sender, System.EventArgs e)

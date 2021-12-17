@@ -8,8 +8,8 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                <SearchBar Grid.Row="0" Text="{Binding Keyword}" Placeholder="Từ khoá" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
-                <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped">
+                <!--<SearchBar Grid.Row="0" Text="{Binding Keyword}" Placeholder="Từ khoá" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>-->
+                <!--<controls:BsdListView x:Name="listView" Grid.Row="1"  HasUnevenRows="True" ItemTapped="listView_ItemTapped">
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -36,7 +36,7 @@
                             </ViewCell>
                         </DataTemplate>
                     </controls:BsdListView.ItemTemplate>
-                </controls:BsdListView>
+                </controls:BsdListView>-->
             </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>

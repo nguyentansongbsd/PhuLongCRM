@@ -114,7 +114,7 @@
         <ResourceDictionary>
             <converters:LeadQualityCodeConverter x:Key="LeadQualityCodeConverter"/>
             <converters:StatusCodeConverter x:Key="StatusCodeConverter"/>
-            <converters:NullToHideConverter x:Key="NullToBool"/>
+            <converters:NullToHideConverter x:Key="NullToHideConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -126,7 +126,7 @@
                             <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10" Padding="20,10,20,0" Grid.Row="0">
                                 <Grid ColumnDefinitions="Auto,1,Auto" Grid.Row="0" ColumnSpacing="5">
                                     <Label Text="{Binding singleLead.statuscode,Converter={StaticResource StatusCodeConverter}}" Grid.Column="0" TextColor="#939393" FontSize="15"/>
-                                    <BoxView  IsVisible="{Binding singleLead.statuscode,Converter={StaticResource NullToBool}}" WidthRequest="1" HeightRequest="15" BackgroundColor="#939393" Grid.Column="1" VerticalOptions="CenterAndExpand"/>
+                                    <BoxView IsVisible="{Binding singleLead.statuscode,Converter={StaticResource NullToHideConverter}}" WidthRequest="1" HeightRequest="15" BackgroundColor="#939393" Grid.Column="1" VerticalOptions="CenterAndExpand"/>
                                     <Label Text="{Binding singleLead.leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" Grid.Column="2" TextColor="#939393" FontSize="15"/>
                                 </Grid>
                                 <Label Text="{Binding singleLead.lastname}" FontAttributes="Bold" Grid.Row="1" FontSize="16" TextColor="#026294"/>
@@ -178,7 +178,7 @@
                                             <controls:FormLabel Text="Phân nhóm: " Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding CustomerGroup.Label}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="1">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="1" IsVisible="{Binding singleLead.bsd_identitycardnumberid,Converter={StaticResource NullToHideConverter}}">
                                             <controls:FormLabel Text="{Binding TypeIdCard.Label,StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleLead.bsd_identitycardnumberid}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>

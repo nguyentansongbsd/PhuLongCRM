@@ -118,8 +118,8 @@
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
                             <StackLayout BackgroundColor="White" Padding="10">
-                                <controls:FormLabel Text="Hình chụp CMND" FontSize="15"/>
-                                <Grid ColumnDefinitions="*,*">
+                                <controls:FormLabel Text="Hình chụp CMND" FontSize="15" IsVisible="false"/>
+                                <Grid ColumnDefinitions="*,*" IsVisible="false">
                                     <telerikPrimitives:RadBorder x:Name="MatTruocCMND" BorderThickness="1" BorderColor="#f1f1f1f1" CornerRadius="5" Grid.Column="0">
                                         <telerikPrimitives:RadBorder.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="MatTruocCMND_Tapped" NumberOfTapsRequired="1"/>

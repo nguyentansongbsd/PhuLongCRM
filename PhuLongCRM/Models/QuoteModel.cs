@@ -55,6 +55,7 @@ namespace PhuLongCRM.Models
         public decimal bsd_landvaluededuction { get; set; }
         public decimal totaltax { get; set; }
         public decimal bsd_freightamount { get; set; }
+        public decimal bsd_netsellingpriceaftervat { get; set; }
         public decimal totalamount { get; set; }
 
         public Guid queue_id { get; set; }
@@ -102,5 +103,21 @@ namespace PhuLongCRM.Models
         public DateTime? bsd_startingdatecalculateofps { get; set; }
 
         public string quotedetail_id { get; set; }
+
+        public string collaborator_id { get; set; }
+        public string collaborator_name { get; set; }
+        public string customerreferral_account_id { get; set; }
+        public string customerreferral_account_name { get; set; }
+        public string customerreferral_contact_id { get; set; }
+        public string customerreferral_contact_name { get; set; }
+
+        public string bsd_interneldiscount { get; set; }
+        public string bsd_selectedchietkhaupttt { get; set; }
+        public string bsd_exchangediscount { get; set; }
+
+        public string interneldiscount_id { get; set; }
+        public string interneldiscount_name { get; set; }
+        public string discountpromotion_id { get; set; }
+        public string discountpromotion_name { get; set; }
     }
 }
