@@ -191,7 +191,8 @@ namespace PhuLongCRM.Views
             if (confirm == false) return;
 
             LoadingHelper.Show();
-            string url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
+            // string url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
+            string url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Opportunity_HuyGiuChoCoTien";
             var content = new { };
             CrmApiResponse res = await CrmHelper.PostData(url_action, content);
             if (res.IsSuccess)
