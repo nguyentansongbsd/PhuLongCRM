@@ -107,14 +107,25 @@
                                             <controls:FormLabel Text="Điều kiện bàn giao" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.handovercondition_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="Phương thức thanh toán" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.paymentscheme_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                        <Grid RowDefinitions="Auto,Auto"  ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <controls:FormLabel Text="Chiết khấu theo PTTT" Grid.Row="0" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.paymentscheme_name}" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                            <ScrollView  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="25,0,25,10">
+                                                <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountPaymentScheme}" HorizontalOptions="End" Orientation="Horizontal">
+                                                    <BindableLayout.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
+                                                                <Label Text="{Binding Label}" FontSize="15" TextColor="#1399D5" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                                            </telerikPrimitives:RadBorder>
+                                                        </DataTemplate>
+                                                    </BindableLayout.ItemTemplate>
+                                                </StackLayout>
+                                            </ScrollView>
                                         </Grid>
                                         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="Chiết khấu" Grid.Row="0" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                            <controls:FormLabel Text="Chiết khấu chung" Grid.Row="0" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.discountlist_name}" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                            <ScrollView x:Name="scrolltDiscount" Orientation="Horizontal" HorizontalScrollBarVisibility="Always" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="25,0,25,10">
+                                            <ScrollView Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="25,0,25,10">
                                                 <StackLayout BindableLayout.ItemsSource="{Binding ListDiscount}" HorizontalOptions="End" Orientation="Horizontal">
                                                     <BindableLayout.ItemTemplate>
                                                         <DataTemplate>
@@ -126,9 +137,20 @@
                                                 </StackLayout>
                                             </ScrollView>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,Auto" BackgroundColor="White" >
-                                            <controls:FormLabel Text="Chiết khấu đặc biệt" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <StackLayout x:Name="stackLayoutSpecialDiscount" IsVisible="false" Grid.Column="2" HorizontalOptions="End" Orientation="Vertical" Padding="0,10,25,10" Spacing="10"/>
+                                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Chiết khấu nội bộ" Grid.Row="0" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.interneldiscount_name}" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                            <ScrollView Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="25,0,25,10">
+                                                <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountInternel}" HorizontalOptions="End" Orientation="Horizontal">
+                                                    <BindableLayout.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
+                                                                <Label Text="{Binding Label}" FontSize="15" TextColor="#1399D5" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                                            </telerikPrimitives:RadBorder>
+                                                        </DataTemplate>
+                                                    </BindableLayout.ItemTemplate>
+                                                </StackLayout>
+                                            </ScrollView>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,Auto" BackgroundColor="White" >
                                             <controls:FormLabel Text="Khuyến mại" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
@@ -139,6 +161,21 @@
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
                                             </StackLayout>
+                                        </Grid>
+                                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="Chiết khấu quy đổi" Grid.Row="0" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.discountpromotion_name}" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                            <ScrollView Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="25,0,25,10">
+                                                <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountExchange}" HorizontalOptions="End" Orientation="Horizontal">
+                                                    <BindableLayout.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
+                                                                <Label Text="{Binding Label}" FontSize="15" TextColor="#1399D5" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                                            </telerikPrimitives:RadBorder>
+                                                        </DataTemplate>
+                                                    </BindableLayout.ItemTemplate>
+                                                </StackLayout>
+                                            </ScrollView>
                                         </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -417,10 +454,10 @@
                                             <controls:FormLabel Text="Phí quản lý" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.bsd_managementfee, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                        <!--<Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="Miễn giảm (tháng)" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.bsd_waivermanafeemonth}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
+                                        </Grid>-->
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>

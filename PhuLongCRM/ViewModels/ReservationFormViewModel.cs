@@ -90,9 +90,6 @@ namespace PhuLongCRM.ViewModels
         private StatusCodeModel _statusUnit;
         public StatusCodeModel StatusUnit { get => _statusUnit; set { _statusUnit = value; OnPropertyChanged(nameof(StatusUnit)); } }
 
-        private OptionSet _priceListPhasesLaunch;
-        public OptionSet PriceListPhasesLaunch { get => _priceListPhasesLaunch; set { _priceListPhasesLaunch = value; OnPropertyChanged(nameof(PriceListPhasesLaunch)); } }
-
         private OptionSet _priceListApply;
         public OptionSet PriceListApply { get => _priceListApply; set { _priceListApply = value; OnPropertyChanged(nameof(PriceListApply)); } }
         
@@ -145,37 +142,10 @@ namespace PhuLongCRM.ViewModels
         public OptionSet SalesAgent { get => _salesAgent; set { _salesAgent = value; OnPropertyChanged(nameof(SalesAgent)); } }
         #endregion
 
-        #region Thong tin Gia
-        private decimal _totalDiscount = 0;
-        public decimal TotalDiscount { get => _totalDiscount; set { _totalDiscount = value; OnPropertyChanged(nameof(TotalDiscount)); } }
-
-        private decimal _totalHandoverCondition = 0;
-        public decimal TotalHandoverCondition { get => _totalHandoverCondition; set { _totalHandoverCondition = value; OnPropertyChanged(nameof(TotalHandoverCondition)); } }
-
-        private decimal _netSellingPrice = 0;
-        public decimal NetSellingPrice { get => _netSellingPrice; set { _netSellingPrice = value; OnPropertyChanged(nameof(NetSellingPrice));  } }
-
-        private decimal _landValueDeduction = 0;
-        public decimal LandValueDeduction { get => _landValueDeduction; set { _landValueDeduction = value; OnPropertyChanged(nameof(LandValueDeduction)); } }
-
-        private decimal _totalVATTax = 0;
-        public decimal TotalVATTax { get => _totalVATTax; set { _totalVATTax = value; OnPropertyChanged(nameof(TotalVATTax)); } }
-
-        private decimal _maintenanceFee = 0;
-        public decimal MaintenanceFee { get => _maintenanceFee; set { _maintenanceFee = value; OnPropertyChanged(nameof(MaintenanceFee)); } }
-
-        private decimal _totalAmount = 0;
-        public decimal TotalAmount { get => Math.Round(_totalAmount,2); set { _totalAmount = value; OnPropertyChanged(nameof(TotalAmount)); } }
-        #endregion
-
         private TotalReservationModel _totalReservation;
         public TotalReservationModel TotalReservation { get => _totalReservation; set { _totalReservation = value;OnPropertyChanged(nameof(TotalReservation)); } }
 
         public OptionSet QuoteDetail { get; set; }
-        private decimal UnitPrice { get; set; }
-        private decimal UnitNetSaleAbleArea { get; set; }
-        private decimal UnitLandValue { get; set; }
-        private decimal UnitMaintenanceFee { get; set; }
         private Guid PhasesLaunchId { get; set; }
         public Guid UnitType { get; set; }
 
@@ -216,7 +186,6 @@ namespace PhuLongCRM.ViewModels
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='quote'>
                                     <attribute name='name' />
-                                    <attribute name='bsd_discounts' />
                                     <attribute name='bsd_depositfee' />
                                     <attribute name='bsd_bookingfee' />
                                     <attribute name='bsd_nameofstaffagent' />
@@ -230,6 +199,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_landvaluededuction' />
                                     <attribute name='totaltax' />
                                     <attribute name='bsd_freightamount' />
+                                    <attribute name='bsd_netsellingpriceaftervat' />
                                     <attribute name='totalamount' />
                                     <attribute name='quoteid' />
                                     <attribute name='bsd_constructionarea' />
@@ -238,6 +208,10 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_unitstatus' />
                                     <attribute name='bsd_paymentschemestype' />
                                     <attribute name='bsd_startingdatecalculateofps' />
+                                    <attribute name='bsd_discounts' />
+                                    <attribute name='bsd_interneldiscount' />
+                                    <attribute name='bsd_selectedchietkhaupttt' />
+                                    <attribute name='bsd_exchangediscount' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='quoteid' operator='eq' uitype='quote' value='{this.QuoteId}' />
@@ -311,6 +285,26 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='quotedetail' from='quoteid' to='quoteid' link-type='outer' alias='af' >
                                         <attribute name='quotedetailid' alias='quotedetail_id' />
                                     </link-entity>
+                                    <link-entity name='contact' from='contactid' to='bsd_collaborator' visible='false' link-type='outer' alias='a_ceb0dc55ba81e911a83b000d3a07be23'>
+                                        <attribute name='bsd_fullname' alias='collaborator_name'/>
+                                        <attribute name='contactid' alias='collaborator_id' />
+                                    </link-entity>
+                                    <link-entity name='account' from='accountid' to='bsd_customerreferral' visible='false' link-type='outer' alias='a_ef3c042cba81e911a83b000d3a07be23'>
+                                        <attribute name='bsd_name' alias='customerreferral_account_name'/>
+                                        <attribute name='accountid' alias='customerreferral_account_id'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='contactid' to='bsd_customerreferral' visible='false' link-type='outer' alias='a_d6b0dc55ba81e911a83b000d3a07be23'>
+                                        <attribute name='bsd_fullname' alias='customerreferral_contact_name'/>
+                                        <attribute name='contactid' alias='customerreferral_contact_id' />
+                                    </link-entity>
+                                    <link-entity name='bsd_interneldiscount' from='bsd_interneldiscountid' to='bsd_interneldiscountlist' visible='false' link-type='outer' alias='a_c014fc37ba81e911a83b000d3a07be23'>
+                                        <attribute name='bsd_name' alias='interneldiscount_name'/>
+                                        <attribute name='bsd_interneldiscountid' alias='interneldiscount_id'/>
+                                    </link-entity>
+                                    <link-entity name='bsd_discountpromotion' from='bsd_discountpromotionid' to='bsd_exchangediscountlist' visible='false' link-type='outer' alias='a_2e80b433b075eb11a812000d3ac8b5f4'>
+                                        <attribute name='bsd_name' alias='discountpromotion_name'/>
+                                        <attribute name='bsd_discountpromotionid' alias='discountpromotion_id'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
             var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QuoteModel>>("quotes", fetchXml2);
@@ -322,37 +316,64 @@ namespace PhuLongCRM.ViewModels
             this.Quote.tax_value = data.tax_value;
             this.Quote.saleagentcompany_id = data.saleagentcompany_id;
             this.Quote.saleagentcompany_name = data.saleagentcompany_name;
+            this.Quote.collaborator_id = data.collaborator_id;
+            this.Quote.collaborator_name = data.collaborator_name;
+            this.Quote.customerreferral_contact_id = data.customerreferral_contact_id;
+            this.Quote.customerreferral_contact_name = data.customerreferral_contact_name;
+            this.Quote.customerreferral_account_id = data.customerreferral_account_id;
+            this.Quote.customerreferral_account_name = data.customerreferral_account_name;
+            this.Quote.interneldiscount_id = data.interneldiscount_id;
+            this.Quote.interneldiscount_name = data.interneldiscount_name;
+            this.Quote.discountpromotion_id = data.discountpromotion_id;
+            this.Quote.discountpromotion_name = data.discountpromotion_name;
 
             this.Buyer = this.Quote.contact_id != Guid.Empty ? new OptionSet(this.Quote.contact_id.ToString(), this.Quote.contact_name) { Title = "2" } : new OptionSet(this.Quote.account_id.ToString(), this.Quote.account_name) { Title = "3" };
-
             this.Queue = this.Quote.queue_id != Guid.Empty ? new OptionSet(this.Quote.queue_id.ToString(), this.Quote.queue_name) : null;
-
             this.ContractType = ContractTypeData.GetContractTypeById(this.Quote.bsd_contracttypedescripton);
-
             this.StatusUnit = StatusCodeUnit.GetStatusCodeById(this.Quote.bsd_unitstatus);
-
             this.PriceListApply = new OptionSet(this.Quote.pricelist_apply_id.ToString(), this.Quote.pricelist_apply_name);
-            this.PriceListPhasesLaunch = new OptionSet(this.Quote.pricelist_phaselaunch_id.ToString(), this.Quote.pricelist_phaselaunch_name);
             this.TaxCode = new TaxCodeModel() { bsd_taxcodeid = this.Quote.tax_id, bsd_value = this.Quote.tax_value };
 
-            this.SalesAgent = new OptionSet(this.Quote.saleagentcompany_id.ToString(), this.Quote.saleagentcompany_name);
+            if (this.Quote.saleagentcompany_id != Guid.Empty)
+            {
+                this.SalesAgent = new OptionSet(this.Quote.saleagentcompany_id.ToString(), this.Quote.saleagentcompany_name);
+            }
+            if (!string.IsNullOrWhiteSpace(this.Quote.collaborator_id))
+            {
+                this.Collaborator = new LookUp() { Id = Guid.Parse(this.Quote.collaborator_id), Name = this.Quote.collaborator_name };
+            }
+            if (!string.IsNullOrWhiteSpace(this.Quote.customerreferral_account_id))
+            {
+                this.CustomerReferral = new LookUp() { Id = Guid.Parse(this.Quote.customerreferral_account_id), Name = this.Quote.customerreferral_account_name };
+            }
+            else if (!string.IsNullOrWhiteSpace(this.Quote.customerreferral_contact_id))
+            {
+                this.CustomerReferral = new LookUp() { Id = Guid.Parse(this.Quote.customerreferral_contact_id), Name = this.Quote.customerreferral_contact_name };
+            }
+            if (!string.IsNullOrWhiteSpace(Quote.interneldiscount_id))
+            {
+                this.DiscountInternelList = new OptionSet(this.Quote.interneldiscount_id, this.Quote.interneldiscount_name);
+            }
+            if (!string.IsNullOrWhiteSpace(Quote.discountpromotion_id))
+            {
+                this.DiscountExchangeList = new OptionSet(this.Quote.discountpromotion_id, this.Quote.discountpromotion_name);
+            }
 
             this.PaymentScheme = new OptionSet(this.Quote.paymentscheme_id.ToString(), this.Quote.paymentscheme_name);
             this.DiscountList = this.Quote.discountlist_id != Guid.Empty ? new OptionSet(this.Quote.discountlist_id.ToString(), this.Quote.discountlist_name) : null;
-            this.UnitPrice = this.Quote.unit_price;
-            this.UnitNetSaleAbleArea = this.Quote.bsd_netusablearea;
-            this.UnitLandValue = this.Quote.bsd_landvalueofunit;
-            this.UnitMaintenanceFee = this.Quote.maintenancefreespercent;
             this.PhasesLaunchId = this.Quote._bsd_phaseslaunchid_value;
             this.UnitType = this.Quote._bsd_unittype_value;
 
-            this.TotalDiscount = this.Quote.bsd_discount;
-            this.TotalHandoverCondition = this.Quote.bsd_packagesellingamount;
-            this.NetSellingPrice = this.Quote.bsd_totalamountlessfreight;
-            this.LandValueDeduction = this.Quote.bsd_landvaluededuction;
-            this.TotalVATTax = this.Quote.totaltax;
-            this.MaintenanceFee = this.Quote.bsd_freightamount;
-            this.TotalAmount = this.Quote.totalamount;
+            this.TotalReservation = new TotalReservationModel();
+            this.TotalReservation.ListedPrice = this.Quote.bsd_detailamount;
+            this.TotalReservation.Discount = this.Quote.bsd_discount;
+            this.TotalReservation.HandoverAmount = this.Quote.bsd_packagesellingamount;
+            this.TotalReservation.NetSellingPrice = this.Quote.bsd_totalamountlessfreight;
+            this.TotalReservation.LandValue = this.Quote.bsd_landvaluededuction;
+            this.TotalReservation.TotalTax = this.Quote.totaltax;
+            this.TotalReservation.MaintenanceFee = this.Quote.bsd_freightamount;
+            this.TotalReservation.NetSellingPriceAfterVAT = this.Quote.bsd_netsellingpriceaftervat;
+            this.TotalReservation.TotalAmount = this.Quote.totalamount;
         }
 
         // Tinh tien
@@ -471,15 +492,7 @@ namespace PhuLongCRM.ViewModels
             this.UnitInfor = result.value.FirstOrDefault();
             this.StatusUnit = StatusCodeUnit.GetStatusCodeById(UnitInfor.statuscode);
 
-            if (UnitInfor._bsd_phaseslaunchid_value != Guid.Empty)
-            {
-                this.PriceListPhasesLaunch = new OptionSet(UnitInfor.pricelist_id_phaseslaunch.ToString(), UnitInfor.pricelist_name_phaseslaunch);
-            }
-            else
-            {
-                this.PriceListPhasesLaunch = new OptionSet(UnitInfor.pricelist_id_unit.ToString(), UnitInfor.pricelist_name_unit);
-            }
-            this.PriceListApply = this.PriceListPhasesLaunch;
+            this.PriceListApply = new OptionSet(UnitInfor.pricelist_id_unit.ToString(), UnitInfor.pricelist_name_unit);
 
             this.Quote.unit_id = UnitInfor.productid;
             this.Quote.name = this.Quote.unit_name = UnitInfor.name;
@@ -495,22 +508,11 @@ namespace PhuLongCRM.ViewModels
             this.Quote.phaseslaunch_name = UnitInfor.phaseslaunch_name;
             this.Quote.bsd_detailamount = UnitInfor.price;
             this.Quote.bsd_numberofmonthspaidmf = UnitInfor.bsd_numberofmonthspaidmf;
-            //this.Quote.bsd_managementfee = UnitInfor.bsd_managementamountmonth;
             this.Quote.bsd_unitstatus = UnitInfor.statuscode;
-            this.Quote.pricelist_phaselaunch_id = Guid.Parse(PriceListPhasesLaunch.Val);
             this.Quote.pricelist_apply_id = Guid.Parse(PriceListApply.Val);
-            
             this.Quote.bsd_managementfee = this.UnitInfor.bsd_managementamountmonth * this.UnitInfor.bsd_netsaleablearea * this.UnitInfor.bsd_numberofmonthspaidmf * (decimal)1.1;
-
             this.UnitType = UnitInfor._bsd_unittype_value;
-
-            this.UnitPrice = this.UnitInfor.price;
-            this.UnitNetSaleAbleArea = this.UnitInfor.bsd_netsaleablearea;
-            this.UnitLandValue = this.UnitInfor.bsd_landvalueofunit;
-            this.UnitMaintenanceFee = this.UnitInfor.bsd_maintenancefeespercent;
             this.PhasesLaunchId = this.UnitInfor._bsd_phaseslaunchid_value;
-
-            //SetLandValueDeduction();
         }
 
         // Load tax code
@@ -1081,21 +1083,18 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<bool> UpdateCoOwner()
+        public async Task<CrmApiResponse> UpdateCoOwner()
         {
-            if (this.CoOwnerList == null || this.CoOwnerList.Count == 0) return false;
-            string path = $"/bsd_coowners({this.CoOwnerList[0].bsd_coownerid})";
             CrmApiResponse apiResponse = new CrmApiResponse();
+            if (this.CoOwnerList == null || this.CoOwnerList.Count == 0)
+            {
+                apiResponse.IsSuccess = false;
+                return apiResponse;
+            }
+            string path = $"/bsd_coowners({this.CoOwnerList[0].bsd_coownerid})";
             var content = await GetContentCoOwer(this.CoOwner);
             apiResponse = await CrmHelper.PatchData(path, content);
-            if (apiResponse.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return apiResponse;
         }
 
         private async Task<object> GetContentCoOwer(CoOwnerFormModel coOwner)
@@ -1302,7 +1301,7 @@ namespace PhuLongCRM.ViewModels
             }
             if (this.CustomerReferral != null)
             {
-                data["bsd_customerreferral@odata.bind"] = $"/contacts({this.CustomerReferral.Id})";
+                data["bsd_customerreferral_contact@odata.bind"] = $"/contacts({this.CustomerReferral.Id})";
             }
             else
             {
