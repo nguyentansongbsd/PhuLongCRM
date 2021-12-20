@@ -36,7 +36,7 @@ namespace PhuLongCRM.Converters
             }
             else if ((string)value == "7")
             {
-                return "Không Quan Tâm"; // Canceled
+                return "Đã hủy"; // Canceled
             }
             else
             {

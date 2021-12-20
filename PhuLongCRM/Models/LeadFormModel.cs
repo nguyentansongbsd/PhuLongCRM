@@ -72,6 +72,9 @@ namespace PhuLongCRM.Models
         private string _lastname;
         public string lastname { get { return _lastname; } set { _lastname = value; OnPropertyChanged(nameof(lastname)); } }
 
+        private string _fullname;
+        public string fullname { get { return _fullname; } set { _fullname = value; OnPropertyChanged(nameof(fullname)); } }
+
         private string _firstname;
         public string firstname { get { return _firstname; } set { _firstname = value; OnPropertyChanged(nameof(firstname)); } }
 
