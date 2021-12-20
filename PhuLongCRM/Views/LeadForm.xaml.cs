@@ -71,6 +71,9 @@ namespace PhuLongCRM.Views
                 viewModel.CompositeAddress1 = viewModel.singleLead.bsd_contactaddress;
                 viewModel.LineAddress1 = viewModel.singleLead.bsd_housenumberstreet;
 
+                if (!string.IsNullOrWhiteSpace(viewModel.singleLead._campaignid_value))
+                    viewModel.Campaign = new OptionSet { Val = viewModel.singleLead._campaignid_value, Label = viewModel.singleLead.campaignid_label };
+
                 viewModel.IndustryCode = viewModel.list_industrycode_optionset.SingleOrDefault(x => x.Val == viewModel.singleLead.industrycode);
                 viewModel.Rating = RatingData.GetRatingById(viewModel.singleLead.leadqualitycode.ToString());
                 viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);

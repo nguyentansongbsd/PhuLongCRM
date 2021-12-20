@@ -105,7 +105,7 @@ namespace PhuLongCRM.Views
             if (NeedToRefreshActivity == true)
             {
                 LoadingHelper.Show();
-                viewModel.PageCase++;
+                viewModel.PageCase = 1;
                 viewModel.list_thongtincase.Clear();
                 await viewModel.LoadCaseForAccountForm();
                 ActivityPopup.Refresh();
@@ -545,7 +545,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleAccount != null)
             {
                 LoadingHelper.Show();
-                await Navigation.PushAsync(new MeetingForm(viewModel.singleAccount.accountid, viewModel.singleAccount.bsd_name, viewModel.CodeAccount));
+                await Navigation.PushAsync(new MeetingForm(viewModel.singleAccount.accountid,viewModel.singleAccount.bsd_name,viewModel.CodeAccount));
                 LoadingHelper.Hide();
             }
         }
