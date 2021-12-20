@@ -10,6 +10,7 @@
             <converters:LeadQualityCodeConverter x:Key="LeadQualityCodeConverter"/>
             <converters:LeadQualityCodeColorConverter x:Key="LeadQualityCodeColorConverter"/>
             <converters:StatusCodeConverter x:Key="StatusCodeConverter"/>
+            <converters:PhoneConverter x:Key="PhoneConverter"/>
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
@@ -33,7 +34,7 @@
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
                                         <Label Text="Số điện thoại: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding mobilephone}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                        <Label Text="{Binding mobilephone, Converter={StaticResource PhoneConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
                                         <Label Text="Tình trạng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>

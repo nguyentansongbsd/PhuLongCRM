@@ -44,7 +44,14 @@ namespace PhuLongCRM.Views
             centerModalAddress3.Body.BindingContext = viewModel;
             SetPreOpen();
             lookUpDanhGia.HideClearButton();
-            
+            if (string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone))
+            {
+                mobilephone_text.Text = "+84-";
+            }
+            if (string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1))
+            {
+                telephone1_text.Text = "+84-";
+            }
             CheckSingleLead?.Invoke(true);
         }
 
