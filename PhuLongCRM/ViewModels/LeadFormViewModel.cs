@@ -258,6 +258,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='currencyname'  alias='transactioncurrencyid_label'/>
                             </link-entity>
                             <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
+                                <attribute name='campaignid'  alias='_campaignid_value'/>
                                 <attribute name='name'  alias='campaignid_label'/>
                             </link-entity>
                             <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' visible='false' link-type='outer' alias='a_533be24fba81e911a83b000d3a07be23'>
