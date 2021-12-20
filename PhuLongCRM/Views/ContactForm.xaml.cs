@@ -680,7 +680,7 @@ namespace PhuLongCRM.Views
 
         private void CMND_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (viewModel.singleContact.bsd_identitycardnumber.Length > 9)
+            if (viewModel.singleContact.bsd_identitycardnumber.Length != 9)
             {
                 ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Giới hạn 09 ký tự).");
             }
@@ -688,7 +688,7 @@ namespace PhuLongCRM.Views
 
         private void PassPort_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (viewModel.singleContact.bsd_passport.Length > 8)
+            if (viewModel.singleContact.bsd_passport.Length != 8)
             {
                 ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Giới hạn 08 ký tự).");
             }
@@ -696,7 +696,7 @@ namespace PhuLongCRM.Views
 
         private void CCCD_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (viewModel.singleContact.bsd_idcard.Length > 12)
+            if (viewModel.singleContact.bsd_idcard.Length > 12 || viewModel.singleContact.bsd_idcard.Length < 9)
             {
                 ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Giới hạn 12 ký tự).");
             }
