@@ -44,14 +44,6 @@ namespace PhuLongCRM.Views
             centerModalAddress3.Body.BindingContext = viewModel;
             SetPreOpen();
             lookUpDanhGia.HideClearButton();
-            if (string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone))
-            {
-                mobilephone_text.Text = "+84-";
-            }
-            if (string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1))
-            {
-                telephone1_text.Text = "+84-";
-            }
             
             CheckSingleLead?.Invoke(true);
         }
@@ -269,19 +261,19 @@ namespace PhuLongCRM.Views
         //}
         #endregion
 
-        private void TypeIdCard_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
+        private void MainEntry_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.TypeIdCard?.Val == "100000000" && viewModel.singleLead.bsd_identitycardnumberid.Length > 9)// CMND
+            if (viewModel.TypeIdCard?.Val == "100000000" && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
             {
-                ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Giới hạn 09 ký tự).");
+                ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Gồm 09 ký tự).");
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length > 12)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length != 12)// CCCD
             {
-                ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Giới hạn 12 ký tự).");
+                ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Gồm 12 ký tự).");
             }
-            if (viewModel.TypeIdCard?.Val == "100000003" && viewModel.singleLead.bsd_identitycardnumberid.Length > 8)// Passport
+            if (viewModel.TypeIdCard?.Val == "100000003" && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
             {
-                ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Giới hạn 08 ký tự).");
+                ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Gồm 08 ký tự).");
             }
         }
 
@@ -289,7 +281,7 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.singleLead.mobilephone.Length != 14)
             {
-                ToastMessageHelper.ShortMessage("Số điện thoại không hợp lệ (Giới hạn 10 ký tự)");
+                ToastMessageHelper.ShortMessage("Số điện thoại không hợp lệ (Gồm 10 ký tự)");
             }
         }
 
@@ -323,13 +315,8 @@ namespace PhuLongCRM.Views
 
             if (!string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone) && viewModel.singleLead.mobilephone.Length != 14)
             {
-                ToastMessageHelper.ShortMessage("Số điện thoại không hợp lệ (Giới hạn 10 ký tự)");
+                ToastMessageHelper.ShortMessage("Số điện thoại không hợp lệ (Gồm 10 ký tự)");
                 return;
-            }
-
-            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1) && viewModel.singleLead.telephone1.Length != 14)
-            {
-                ToastMessageHelper.ShortMessage("Số điện thoại công ty không hợp lệ (Giới hạn 10 ký tự)");
             }
 
             if (viewModel.CustomerGroup == null)
@@ -358,18 +345,17 @@ namespace PhuLongCRM.Views
 
             if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
             {
-                ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Giới hạn 09 ký tự).");
+                ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Gồm 09 ký tự).");
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 12 ||
-                viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 12 )// CCCD
             {
-                ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Giới hạn 12 ký tự).");
+                ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Gồm 12 ký tự).");
                 return;
             }
             if (viewModel.TypeIdCard?.Val == "100000003" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
             {
-                ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Giới hạn 08 ký tự).");
+                ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Gồm 08 ký tự).");
                 return;
             }
 

@@ -18,15 +18,18 @@ namespace PhuLongCRM.ViewModels
             {
                 string filter_name = string.Empty;
                 string filter_phone = string.Empty;
+                string filter_subject = string.Empty;
                 if (!string.IsNullOrWhiteSpace(Keyword))
                 {
                     filter_name = $@"<condition attribute='lastname' operator='like' value='%25{Keyword}%25' />";
                     filter_phone = $@"<condition attribute='mobilephone' operator='like' value='%25{Keyword}%25' />";
+                    filter_subject = $@"<condition entityname='Topic' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />";
                 }
                 EntityName = "leads";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name='lead'>
                         <attribute name='lastname' />
+                        <attribute name='fullname' />
                         <attribute name='subject' />
                         <attribute name='statuscode' />
                         <attribute name='mobilephone'/>
@@ -39,9 +42,13 @@ namespace PhuLongCRM.ViewModels
                              <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                              <filter type='or'>
                                  '" + filter_name + @"'
-                                 '" + filter_phone + @"'   
+                                 '" + filter_phone + @"'
+                                 '" + filter_subject + @"'  
                              </filter>
                         </filter>
+                        <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' link-type='inner' alias='Topic'>
+                          <attribute name='bsd_name' />
+                        </link-entity>
                       </entity>
                     </fetch>";
             });

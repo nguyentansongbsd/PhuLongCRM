@@ -8,6 +8,7 @@ namespace PhuLongCRM.Models
     {
         public Guid leadid { get; set; }
         public string lastname { get; set; }
+        public string fullname { get; set; }
         public string mobilephone { get; set; }
         public string subject { get; set; }
         public string statuscode { get; set; }

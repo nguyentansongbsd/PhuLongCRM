@@ -72,6 +72,7 @@ namespace PhuLongCRM.ViewModels
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='lead'>
                                     <attribute name='lastname' />
+                                    <attribute name='fullname' />
                                     <attribute name='subject' alias='bsd_topic_label'/>
                                     <attribute name='statuscode' />
                                     <attribute name='statecode' />
@@ -99,17 +100,17 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='new_gender' />
                                     <attribute name='new_birthday' />
                                     <attribute name='leadsourcecode' />
-                                <attribute name='bsd_customercode' />
-                                <attribute name='bsd_customergroup' />
-                                <attribute name='bsd_typeofidcard' />
-                                <attribute name='bsd_identitycardnumberid' />
-                                <attribute name='bsd_area' />
-                                <attribute name='bsd_placeofissue' />
-                                <attribute name='bsd_dategrant' />
-                                <attribute name='bsd_registrationcode' />
-                                <attribute name='bsd_accountaddressvn' />
-                                <attribute name='bsd_permanentaddress1' />
-                                <attribute name='bsd_contactaddress' />
+                                    <attribute name='bsd_customercode' />
+                                    <attribute name='bsd_customergroup' />
+                                    <attribute name='bsd_typeofidcard' />
+                                    <attribute name='bsd_identitycardnumberid' />
+                                    <attribute name='bsd_area' />
+                                    <attribute name='bsd_placeofissue' />
+                                    <attribute name='bsd_dategrant' />
+                                    <attribute name='bsd_registrationcode' />
+                                    <attribute name='bsd_accountaddressvn' />
+                                    <attribute name='bsd_permanentaddress1' />
+                                    <attribute name='bsd_contactaddress' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='leadid' operator='eq' value='{" + leadid + @"}' />
@@ -138,20 +139,12 @@ namespace PhuLongCRM.ViewModels
             await LoadCountryByName();
         }
 
-        public async Task<bool> Qualify(Guid id)
+        public async Task<CrmApiResponse> Qualify(Guid id)
         {
             string path = "/leads(" + id + ")//Microsoft.Dynamics.CRM.bsd_Action_Lead_QualifyLead";
             var content = new { };
             CrmApiResponse result = await CrmHelper.PostData(path, content);
-
-            if (result.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return result;
         }
 
         public async Task<bool> UpdateStatusCodeLead()

@@ -70,9 +70,17 @@ namespace PhuLongCRM.Views
             }
             else
             {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Chuyển đổi khách hàng", "FontAwesomeSolid", "\uf542", null, LeadQualify));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Không chuyển đổi", "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, Update));
+                if (viewModel.singleLead.leadqualitycode == 3)
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Không chuyển đổi", "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, Update));
+                }
+                else
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chuyển đổi khách hàng", "FontAwesomeSolid", "\uf542", null, LeadQualify));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Không chuyển đổi", "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, Update));
+                }
             }
         }
 
@@ -99,8 +107,8 @@ namespace PhuLongCRM.Views
         private async void LeadQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            bool IsSuccessQualify = await viewModel.Qualify(viewModel.singleLead.leadid);
-            if (IsSuccessQualify == true)
+            CrmApiResponse apiResponse = await viewModel.Qualify(viewModel.singleLead.leadid);
+            if (apiResponse.IsSuccess == true)
             {
                 if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
                 if (CustomerPage.NeedToRefreshAccount.HasValue) CustomerPage.NeedToRefreshAccount = true;
@@ -112,9 +120,8 @@ namespace PhuLongCRM.Views
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Không thể qualify");
+                ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
             }
-
         }
 
         private async void LeadDisQualify(object sender, EventArgs e)

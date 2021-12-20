@@ -371,10 +371,21 @@ namespace PhuLongCRM.Views
         private async void PTTT_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
             LoadingHelper.Show();
-            viewModel.DiscountChildsPaymentSchemes.Clear();
-            var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
-            await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
-
+            if (viewModel.PaymentScheme.Val != viewModel.Quote.paymentscheme_id.ToString())
+            {
+                if (viewModel.DiscountChildsPaymentSchemes.Any(x => x.Selected))
+                {
+                    var answer = await DisplayAlert("", "Bạn đang tích chọn chiết khấu theo PTTT, bạn có chắc chắn muốn thay đổi PTTT này?", "Đồng ý", "Hủy");
+                    if (answer == false)
+                    {
+                        LoadingHelper.Hide();
+                        return;
+                    }
+                }
+                viewModel.DiscountChildsPaymentSchemes.Clear();
+                var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
+                await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
+            }
             LoadingHelper.Hide();
         }
 
@@ -1060,6 +1071,7 @@ namespace PhuLongCRM.Views
                             return;
                         }
                         if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
+                        if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                         if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                         this.Title = buttonSave.Text = "CẬP NHẬT BẢNG TÍNH GIÁ";
                         ToastMessageHelper.ShortMessage("Cập nhật bảng tính giá thành công");
