@@ -190,28 +190,33 @@ namespace PhuLongCRM.Views
             bool confirm = await DisplayAlert("Xác nhận", "Bạn có muốn hủy giữ chỗ này không ?", "Đồng ý", "Hủy");
             if (confirm == false) return;
 
+            string url_action = "";
+            if (viewModel.Queue != null)
+            {
+                if(viewModel.Queue.statuscode == 100000002)
+                {
+                    url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
+                }   
+                else if (viewModel.Queue.statuscode == 100000000)
+                {
+                    if (await viewModel.CheckQuote())
+                    {
+                        Message(false);
+                        return;
+                    }
+                    else
+                        url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
+                }   
+                else if (viewModel.Queue.statuscode == 100000008)
+                {
+                    url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Opportunity_HuyGiuChoCoTien";
+                }    
+            }
+
             LoadingHelper.Show();
-            // string url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
-            string url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Opportunity_HuyGiuChoCoTien";
             var content = new { };
             CrmApiResponse res = await CrmHelper.PostData(url_action, content);
-            if (res.IsSuccess)
-            {
-                await viewModel.LoadQueue();
-                SetButtons();
-                if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
-                if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
-                if (UnitInfo.NeedToRefreshQueue.HasValue) UnitInfo.NeedToRefreshQueue = true;
-                if (AccountDetailPage.NeedToRefreshQueues.HasValue) AccountDetailPage.NeedToRefreshQueues = true;
-                if (ContactDetailPage.NeedToRefreshQueues.HasValue) ContactDetailPage.NeedToRefreshQueues = true;
-                ToastMessageHelper.ShortMessage("Hủy giữ chỗ thành công");
-                LoadingHelper.Hide();
-            }
-            else
-            {
-                LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Hủy giữ chỗ thất bại");
-            }
+            Message(res.IsSuccess);
         }
 
         private void CreateQuotation_Clicked(object sender, EventArgs e)
@@ -377,6 +382,40 @@ namespace PhuLongCRM.Views
                         }
                     };
                 }
+            }
+        }
+
+        //private async void btnHuyGiuChoThuKy_Clicked(object sender, EventArgs e)
+        //{
+        //    bool confirm = await DisplayAlert("Xác nhận", "Bạn có muốn hủy giữ chỗ này không ?", "Đồng ý", "Hủy");
+        //    if (confirm == false) return;
+
+        //    LoadingHelper.Show();
+        //    // string url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
+        //    string url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Opportunity_HuyGiuChoCoTien";
+        //    var content = new { };
+        //    CrmApiResponse res = await CrmHelper.PostData(url_action, content);
+        //    Message(res.IsSuccess);            
+        //}
+
+        private async void Message(bool IsSuccess)
+        {
+            if (IsSuccess)
+            {
+                await viewModel.LoadQueue();
+                SetButtons();
+                if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
+                if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
+                if (UnitInfo.NeedToRefreshQueue.HasValue) UnitInfo.NeedToRefreshQueue = true;
+                if (AccountDetailPage.NeedToRefreshQueues.HasValue) AccountDetailPage.NeedToRefreshQueues = true;
+                if (ContactDetailPage.NeedToRefreshQueues.HasValue) ContactDetailPage.NeedToRefreshQueues = true;
+                ToastMessageHelper.ShortMessage("Hủy giữ chỗ thành công");
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage("Hủy giữ chỗ thất bại");
             }
         }
     }

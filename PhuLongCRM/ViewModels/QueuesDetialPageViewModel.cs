@@ -149,9 +149,10 @@ namespace PhuLongCRM.ViewModels
                 QueueProject = "Có";
             }
 
-            ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
+            ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002 || data.statuscode == 100000008) ? true : false;
             ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
-            ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true;
+            ShowButtons = (data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
+            
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
 
             this.Queue = data;
@@ -305,5 +306,31 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
+        public async Task<bool> CheckQuote()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='quote'>
+                                    <attribute name='statuscode' />
+                                    <attribute name='quoteid' />
+                                    <order attribute='createdon' descending='true' />
+                                    <filter type='and'>
+                                      <condition attribute='statuscode' operator='not-in'>
+                                        <value>2</value>
+                                        <value>6</value>
+                                      </condition>
+                                      <condition attribute='opportunityid' operator='eq' uitype='opportunity' value='{QueueId}' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueuesDetailModel>>("quotes", fetchXml);
+            if (result == null || result.value.Any() == false) return false;
+
+            var data = result.value.FirstOrDefault();
+            if (data.statuscode == 100000000 || data.statuscode == 100000006 || data.statuscode == 861450001 || data.statuscode == 861450002)
+                return true;
+            else
+                return false;
+        }
     }
 }
