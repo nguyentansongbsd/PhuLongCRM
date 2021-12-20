@@ -192,7 +192,7 @@ namespace PhuLongCRM.Views
 
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleLead.mobilephone.Replace(" ", ""); // thêm sdt ở đây
+            string phone = viewModel.singleLead.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84",""); // thêm sdt ở đây
             if (phone != string.Empty)
             {              
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
@@ -214,7 +214,7 @@ namespace PhuLongCRM.Views
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleLead.mobilephone.Replace(" ",""); // thêm sdt ở đây
+            string phone = viewModel.singleLead.mobilephone.Replace(" ","").Replace("+84-","").Replace("84", ""); // thêm sdt ở đây
             if (phone != string.Empty)
             {              
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);

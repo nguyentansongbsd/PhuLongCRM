@@ -354,7 +354,7 @@ namespace PhuLongCRM.Views
 
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {           
-            string phone = viewModel.singleContact.mobilephone.Replace(" ", "");
+            string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
                 LoadingHelper.Show();
@@ -380,7 +380,7 @@ namespace PhuLongCRM.Views
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {          
-            string phone = viewModel.singleContact.mobilephone.Replace(" ", "");
+            string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
                 LoadingHelper.Show();

@@ -50,10 +50,10 @@
                                 <controls:MainEntry Text="{Binding singleLead.lastname}" FontSize="15"  Placeholder="Nhập họ tên"/>
 
                                 <controls:FormLabelRequired Text="Số điện thoại"/>
-                                <controls:MainEntry x:Name="mobilephone_text" Text="{Binding singleLead.mobilephone,StringFormat='+84-{0}'}" Keyboard="Numeric" FontSize="15" Placeholder="Nhập số điện thoại" Unfocused="mobilephone_text_Unfocused"/>
+                                <controls:MainEntry x:Name="mobilephone_text" Text="{Binding singleLead.mobilephone}" Keyboard="Numeric" FontSize="15" Placeholder="Nhập số điện thoại" Unfocused="mobilephone_text_Unfocused"/>
 
                                 <controls:FormLabel Text="Số điện thoại công ty"/>
-                                <controls:MainEntry x:Name="telephone1_text" Text="{Binding singleLead.telephone1,StringFormat='+84-{0}'}" Keyboard="Numeric" FontSize="15"  Placeholder="Nhập số điện thoại công ty" Unfocused="telephone1_text_Unfocused"/>
+                                <controls:MainEntry x:Name="telephone1_text" Text="{Binding singleLead.telephone1}" Keyboard="Numeric" FontSize="15"  Placeholder="Nhập số điện thoại công ty" Unfocused="telephone1_text_Unfocused"/>
 
                                 <controls:FormLabelRequired Text="Phân nhóm"/>
                                 <controls:LookUp x:Name="lookUpPhanNhom" Placeholder="Chọn phân nhóm" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding CustomerGroup}" ItemsSource="{Binding CustomerGroups}"/>

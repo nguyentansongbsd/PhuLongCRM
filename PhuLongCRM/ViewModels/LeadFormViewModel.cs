@@ -274,22 +274,22 @@ namespace PhuLongCRM.ViewModels
             }
             var tmp = result.value.FirstOrDefault();
 
-            if (!string.IsNullOrWhiteSpace(tmp.mobilephone) && tmp.mobilephone.StartsWith("84"))
-            {
-                singleLead.mobilephone = tmp.mobilephone.Replace("84", "");
-            }
-            else if (!string.IsNullOrWhiteSpace(tmp.mobilephone) && tmp.mobilephone.StartsWith("+84-"))
-            {
-                singleLead.mobilephone = tmp.mobilephone.Replace("+84-", "");
-            }
-            if (!string.IsNullOrWhiteSpace(tmp.telephone1) && tmp.telephone1.StartsWith("84"))
-            {
-                singleLead.telephone1 = tmp.telephone1.Replace("84", "");
-            }
-            else if (!string.IsNullOrWhiteSpace(tmp.telephone1) && tmp.telephone1.StartsWith("+84-"))
-            {
-                singleLead.telephone1 = tmp.telephone1.Replace("+84-", "");
-            }
+            //if (!string.IsNullOrWhiteSpace(tmp.mobilephone) && tmp.mobilephone.StartsWith("84"))
+            //{
+            //    singleLead.mobilephone = tmp.mobilephone.Replace("84", "");
+            //}
+            //else if (!string.IsNullOrWhiteSpace(tmp.mobilephone) && tmp.mobilephone.StartsWith("+84-"))
+            //{
+            //    singleLead.mobilephone = tmp.mobilephone.Replace("+84-", "");
+            //}
+            //if (!string.IsNullOrWhiteSpace(tmp.telephone1) && tmp.telephone1.StartsWith("84"))
+            //{
+            //    singleLead.telephone1 = tmp.telephone1.Replace("84", "");
+            //}
+            //else if (!string.IsNullOrWhiteSpace(tmp.telephone1) && tmp.telephone1.StartsWith("+84-"))
+            //{
+            //    singleLead.telephone1 = tmp.telephone1.Replace("+84-", "");
+            //}
             this.singleLead = tmp;
 
             string fetch2 = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
