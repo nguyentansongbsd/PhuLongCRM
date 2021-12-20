@@ -102,15 +102,16 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadCommissionTransactions()
         {
+            //Phu long khong co file nay <attribute name='bsd_totalcommission' alias='CommissionTotal'/> <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_commissiontransaction'>
                                     <attribute name='bsd_commissiontransactionid' alias='Id'/>
                                     <attribute name='createdon' alias='Date'/>
-                                    <attribute name='bsd_totalcommission' alias='CommissionTotal'/>
+                                    
                                     <attribute name='statuscode' alias='CommissionStatus'/>
                                     <order attribute='createdon' descending='false' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                      
                                       <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                       <condition attribute='createdon' operator='on-or-before' value='{dateBefor.ToString("yyyy-MM-dd")}' />
                                       <condition attribute='statuscode' operator='in'>

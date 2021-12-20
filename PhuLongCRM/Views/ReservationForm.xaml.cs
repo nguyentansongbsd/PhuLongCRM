@@ -5,9 +5,9 @@ using System.Linq;
 using PhuLongCRM.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using PhuLongCRM.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PhuLongCRM.Views
 {
@@ -16,9 +16,7 @@ namespace PhuLongCRM.Views
     {
         public Action<int> CheckReservation;
         public ReservationFormViewModel viewModel;
-        private bool isSetTotal;
         private List<string> newSelectedPromotionIds;
-        private List<string> needDeletedPromotionIds;
         private bool _isEnableCheck { get; set; }
 
         public ReservationForm(Guid quoteId)
@@ -102,6 +100,8 @@ namespace PhuLongCRM.Views
                 lookupNguoiMua.IsEnabled = false;
                 lookupGiuCho.IsEnabled = false;
                 lookupDaiLySanGiaoDich.IsEnabled = false;
+                lookUpCollaborator.IsEnabled = false;
+                lookUpCustomerReferral.IsEnabled = false;
                 entryNhanVienDaiLy.IsEnabled = false;
                 _isEnableCheck = true;
 
@@ -111,15 +111,18 @@ namespace PhuLongCRM.Views
                     lookupGiuCho.IsVisible = false;
                 }
 
-                this.isSetTotal = true;// set = true de khong nhay vao ham SetTotal
                 await viewModel.CheckTaoLichThanhToan();
+                Guid id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
                 await Task.WhenAll(
                     viewModel.LoadDiscountChilds(),
+                    viewModel.LoadDiscountChildsPaymentSchemes(id.ToString()),
+                    viewModel.LoadDiscountChildsInternel(),
+                    viewModel.LoadDiscountChildsExchange(),
                     viewModel.LoadHandoverCondition(),
                     viewModel.LoadPromotionsSelected(),
                     viewModel.LoadPromotions(),
                     viewModel.LoadCoOwners()
-                    );
+                    ) ;
                 
                 SetPreOpen();
 
@@ -141,6 +144,48 @@ namespace PhuLongCRM.Views
                             if (viewModel.DiscountChilds[i].Val == arrDiscounts[j])
                             {
                                 viewModel.DiscountChilds[i].Selected = true;
+                            }
+                        }
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(viewModel.Quote.bsd_selectedchietkhaupttt))
+                {
+                    List<string> arrCKPTTT = viewModel.Quote.bsd_selectedchietkhaupttt.Split(',').ToList();
+                    for (int i = 0; i < viewModel.DiscountChildsPaymentSchemes.Count; i++)
+                    {
+                        for (int j = 0; j < arrCKPTTT.Count; j++)
+                        {
+                            if (viewModel.DiscountChildsPaymentSchemes[i].Val == arrCKPTTT[j])
+                            {
+                                viewModel.DiscountChildsPaymentSchemes[i].Selected = true;
+                            }
+                        }
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(viewModel.Quote.bsd_interneldiscount))
+                {
+                    List<string> arrCKNoiBo = viewModel.Quote.bsd_interneldiscount.Split(',').ToList();
+                    for (int i = 0; i < viewModel.DiscountChildsInternel.Count; i++)
+                    {
+                        for (int j = 0; j < arrCKNoiBo.Count; j++)
+                        {
+                            if (viewModel.DiscountChildsInternel[i].Val == arrCKNoiBo[j])
+                            {
+                                viewModel.DiscountChildsInternel[i].Selected = true;
+                            }
+                        }
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(viewModel.Quote.bsd_exchangediscount))
+                {
+                    List<string> arrCKQuyDoi = viewModel.Quote.bsd_exchangediscount.Split(',').ToList();
+                    for (int i = 0; i < viewModel.DiscountChildsExchanges.Count; i++)
+                    {
+                        for (int j = 0; j < arrCKQuyDoi.Count; j++)
+                        {
+                            if (viewModel.DiscountChildsExchanges[i].Val == arrCKQuyDoi[j])
+                            {
+                                viewModel.DiscountChildsExchanges[i].Selected = true;
                             }
                         }
                     }
@@ -245,15 +290,23 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             };
 
-            //lookupLoaiHopDong.PreOpenAsync = async () =>
-            //{
-            //    viewModel.ContractTypes = ContractTypeData.ContractTypes();
-            //};
-
             lookupDaiLySanGiaoDich.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
                 await viewModel.LoadSalesAgents();
+                LoadingHelper.Hide();
+            };
+
+            lookUpCollaborator.PreOpenAsync = async () =>
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadCollaboratorLookUp();
+                LoadingHelper.Hide();
+            };
+            lookUpCustomerReferral.PreOpenAsync = async () =>
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadCustomerReferralLookUp();
                 LoadingHelper.Hide();
             };
         }
@@ -284,7 +337,7 @@ namespace PhuLongCRM.Views
             contentChiTiet.IsVisible = false;
         }
 
-        private async void ChiTiet_Tapped(object sender, EventArgs e)
+        private void ChiTiet_Tapped(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(radBorderChinhSach, "InActive");
             VisualStateManager.GoToState(radBorderTongHop, "InActive");
@@ -295,24 +348,14 @@ namespace PhuLongCRM.Views
             contentChinhSach.IsVisible = false;
             contentTongHop.IsVisible = false;
             contentChiTiet.IsVisible = true;
-            await SetTotal();
         }
 
         #region Handover Condition // Dieu kien ban giao
-        private async void HandoverCondition_SelectedItemChange(object sender, EventArgs e)
+        private void HandoverCondition_SelectedItemChange(object sender, EventArgs e)
         {
             if (viewModel.IsHadLichThanhToan == true)
             {
                 ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, không được chỉnh sửa");
-                return;
-            }
-            if (viewModel.HandoverCondition == null)
-            {
-                viewModel.TotalHandoverCondition = 0;
-                viewModel.NetSellingPrice = 0;
-                viewModel.TotalVATTax = 0;
-                viewModel.MaintenanceFee = 0;
-                viewModel.TotalAmount = 0;
                 return;
             }
             if (viewModel.HandoverCondition.bsd_byunittype == true && (viewModel.HandoverCondition._bsd_unittype_value != viewModel.UnitType))
@@ -321,9 +364,6 @@ namespace PhuLongCRM.Views
                 viewModel.HandoverCondition = null;
                 return;
             }
-
-            await viewModel.SetTotalHandoverCondition();
-            isSetTotal = false;
         }
         #endregion
 
@@ -331,10 +371,21 @@ namespace PhuLongCRM.Views
         private async void PTTT_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
             LoadingHelper.Show();
-            viewModel.DiscountChildsPaymentSchemes.Clear();
-            var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
-            await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
-
+            if (viewModel.PaymentScheme.Val != viewModel.Quote.paymentscheme_id.ToString())
+            {
+                if (viewModel.DiscountChildsPaymentSchemes.Any(x => x.Selected))
+                {
+                    var answer = await DisplayAlert("", "Bạn đang tích chọn chiết khấu theo PTTT, bạn có chắc chắn muốn thay đổi PTTT này?", "Đồng ý", "Hủy");
+                    if (answer == false)
+                    {
+                        LoadingHelper.Hide();
+                        return;
+                    }
+                }
+                viewModel.DiscountChildsPaymentSchemes.Clear();
+                var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
+                await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
+            }
             LoadingHelper.Hide();
         }
 
@@ -346,7 +397,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, không được chỉnh sửa");
                 return;
             }
-            isSetTotal = false;
         }
 
         private void DiscountChildPaymentSchemeItem_Tapped(object sender, EventArgs e)
@@ -377,19 +427,16 @@ namespace PhuLongCRM.Views
             if (viewModel.DiscountList == null)
             {
                 viewModel.DiscountChilds.Clear();
-                isSetTotal = false;
             }
             if (viewModel.DiscountChilds.Count == 0)
             {
                 viewModel.DiscountChilds.Clear();
                 await viewModel.LoadDiscountChilds();
             }
-
-            viewModel.TotalDiscount = 0;
             LoadingHelper.Hide();
         }
 
-        private async void DiscountChildItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        private void DiscountChildItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
         {
             if (_isEnableCheck) return;
             if (viewModel.IsHadLichThanhToan == true)
@@ -397,8 +444,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, không được chỉnh sửa");
                 return;
             }
-            await viewModel.SetTotalDiscount();
-            isSetTotal = false;
         }
 
         private void DiscountChildItem_Tapped(object sender, EventArgs e)
@@ -418,7 +463,6 @@ namespace PhuLongCRM.Views
             if (viewModel.DiscountInternelList == null)
             {
                 viewModel.DiscountChildsInternel.Clear();
-                isSetTotal = false;
             }
             if (viewModel.DiscountChildsInternel.Count == 0)
             {
@@ -428,7 +472,7 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private async void DiscountChildInternelItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        private void DiscountChildInternelItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
         {
             if (_isEnableCheck) return;
             if (viewModel.IsHadLichThanhToan == true)
@@ -456,7 +500,6 @@ namespace PhuLongCRM.Views
             //    return;
             //}
             LoadingHelper.Show();
-            this.needDeletedPromotionIds = new List<string>();
             this.newSelectedPromotionIds = new List<string>();
             if (viewModel.Promotions.Count == 0)
             {
@@ -480,7 +523,7 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private async void PromotionItem_Tapped(object sender, EventArgs e)
+        private void PromotionItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var itemPromotion = (OptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
@@ -520,28 +563,6 @@ namespace PhuLongCRM.Views
                             this.newSelectedPromotionIds.Add(item.Val);
                         }
                     }
-                    else if (item.Selected == false)
-                    {
-                        if (viewModel.SelectedPromotionIds.Any(x => x == item.Val))
-                        {
-                            this.needDeletedPromotionIds.Add(item.Val);
-                        }
-                    }
-                }
-
-                if (this.needDeletedPromotionIds.Count != 0)
-                {
-                    await DeletedPromotions();
-                    if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
-                    viewModel.PromotionsSelected.Clear();
-
-                    foreach (var itemPromotion in viewModel.Promotions)
-                    {
-                        if (itemPromotion.Selected)
-                        {
-                            viewModel.PromotionsSelected.Add(itemPromotion);
-                        }
-                    }
                 }
 
                 if (this.newSelectedPromotionIds.Count != 0)
@@ -574,56 +595,35 @@ namespace PhuLongCRM.Views
 
         private async void UnSelect_Clicked(object sender, EventArgs e)
         {
-            //if (viewModel.IsHadLichThanhToan == true)
-            //{
-            //    ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, không được chỉnh sửa");
-            //    return;
-            //}
             LoadingHelper.Show();
+            var conform = await DisplayAlert("Xác nhận", "Bạn có muốn xóa khuyến mãi không ?", "Đồng ý", "Hủy");
+            if (conform == false)
+            {
+                LoadingHelper.Hide();
+                return;
+            }
             var item = (OptionSet)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (viewModel.QuoteId != Guid.Empty)
             {
-                DeletedPromotion(item);
-            }
-            else
-            {
-                viewModel.PromotionsSelected.Remove(item);
-                viewModel.SelectedPromotionIds.Remove(item.Val);
-            }
-            LoadingHelper.Hide();
-        }
-
-        private async Task DeletedPromotions()
-        {
-            foreach (var item in needDeletedPromotionIds)
-            {
-                var deleteResponse = await CrmHelper.DeleteRecord($"/quotes({viewModel.QuoteId})/bsd_quote_bsd_promotion({item})/$ref");
-                if (deleteResponse.IsSuccess)
+                CrmApiResponse apiResponse = await viewModel.DeletePromotion(item.Val);
+                if (apiResponse.IsSuccess)
                 {
-                    viewModel.PromotionsSelected.Remove(viewModel.PromotionsSelected.SingleOrDefault(x => x.Val == item));
-                    viewModel.SelectedPromotionIds.Remove(item);
+                    if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
+                    viewModel.PromotionsSelected.Remove(item);
+                    viewModel.SelectedPromotionIds.Remove(item.Val);
+                    ToastMessageHelper.ShortMessage("Xoá khuyễn mãi thành công");
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
                 }
             }
-        }
-
-        private async void DeletedPromotion(OptionSet item)
-        {
-            var conform = await DisplayAlert("Xác nhận", "Bạn có muốn xóa khuyến mãi không ?", "Đồng ý", "Hủy");
-            if (conform == false) return;
-            LoadingHelper.Show();
-            var deleteResponse = await CrmHelper.DeleteRecord($"/quotes({viewModel.QuoteId})/bsd_quote_bsd_promotion({item.Val})/$ref");
-            if (deleteResponse.IsSuccess)
-            {
-                if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
-                viewModel.PromotionsSelected.Remove(item);
-                viewModel.SelectedPromotionIds.Remove(item.Val);
-                ToastMessageHelper.ShortMessage("Xóa khuyến mãi thành công");
-                LoadingHelper.Hide();
-            }
             else
             {
-                LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Xóa khuyến mãi thất bại");
+                viewModel.PromotionsSelected.Remove(item);
+                viewModel.SelectedPromotionIds.Remove(item.Val);
             }
             LoadingHelper.Hide();
         }
@@ -660,7 +660,6 @@ namespace PhuLongCRM.Views
             if (viewModel.DiscountExchangeList == null)
             {
                 viewModel.DiscountChildsExchanges.Clear();
-                isSetTotal = false;
             }
             if (viewModel.DiscountChildsExchanges.Count == 0)
             {
@@ -670,7 +669,7 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private async void DiscountChildExchangeItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        private void DiscountChildExchangeItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
         {
             if (_isEnableCheck) return;
             if (viewModel.IsHadLichThanhToan == true)
@@ -858,8 +857,8 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    bool IsSuccess = await viewModel.UpdateCoOwner();
-                    if (IsSuccess)
+                    CrmApiResponse response = await viewModel.UpdateCoOwner();
+                    if (response.IsSuccess)
                     {
                         viewModel.CoOwnerList.Clear();
                         await viewModel.LoadCoOwners();
@@ -870,7 +869,7 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Cập nhật đồng sở hữu thất bại");
+                        ToastMessageHelper.LongMessage(response.ErrorResponse.error.message);
                     }
                 }
             }
@@ -880,9 +879,14 @@ namespace PhuLongCRM.Views
         private void Buyer_SelectedItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
         {
             LoadingHelper.Show();
-            if (viewModel.SalesAgent != null && (viewModel.SalesAgent == viewModel.Buyer))
+            if (viewModel.SalesAgent != null && (viewModel.SalesAgent.Val == viewModel.Buyer?.Val))
             {
                 ToastMessageHelper.LongMessage("Người mua không được trùng với Đại lý/Sàn giao dịch. Vui lòng chọn lại.");
+                viewModel.Buyer = null;
+            }
+            if (viewModel.CoOwnerList.Any(x => x.contact_id == Guid.Parse(viewModel.Buyer?.Val)) || viewModel.CoOwnerList.Any(x => x.account_id == Guid.Parse(viewModel.Buyer?.Val)))
+            {
+                ToastMessageHelper.ShortMessage("Khách hàng Co-Owner và khách hàng không được trùng.");
                 viewModel.Buyer = null;
             }
             LoadingHelper.Hide();
@@ -891,36 +895,56 @@ namespace PhuLongCRM.Views
         private void SalesAgent_SelectedItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
         {
             LoadingHelper.Show();
-            if (viewModel.SalesAgent == viewModel.Buyer)
+            if (viewModel.SalesAgent != null && viewModel.Buyer != null && viewModel.SalesAgent == viewModel.Buyer)
             {
                 ToastMessageHelper.LongMessage("Đại lý/Sàn giao dịch không được trùng với Người mua. Vui lòng chọn lại.");
                 viewModel.SalesAgent = null;
+                return;
+            }
+            if (viewModel.SalesAgent != null && !string.IsNullOrWhiteSpace(viewModel.SalesAgent?.Val))
+            {
+                viewModel.Collaborator = null;
+                viewModel.CustomerReferral = null;
             }
             LoadingHelper.Hide();
         }
 
-        private async Task SetTotal()
+        private void lookUpCollaborator_SelectedItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
         {
-            //if (this.isSetTotal == false)
-            //{
-            //    //await viewModel.SetNetSellingPrice();
-            //    //await viewModel.SetTotalVatTax();
-            //    //await viewModel.SetMaintenanceFee();
-            //    //await viewModel.SetTotalAmount();
+            LoadingHelper.Show();
+            if (viewModel.Collaborator != null && viewModel.Buyer != null && viewModel.Collaborator?.Id.ToString() == viewModel.Buyer?.Val)
+            {
+                ToastMessageHelper.LongMessage("Cộng tác viên không được trùng với Người mua. Vui lòng chọn lại.");
+                viewModel.Collaborator = null;
+                return;
+            }
+            if (viewModel.Collaborator != null && viewModel.Collaborator?.Id != Guid.Empty)
+            {
+                viewModel.SalesAgent = null;
+                viewModel.CustomerReferral = null;
+            }
+            LoadingHelper.Hide();
+        }
 
-
-
-            //    isSetTotal = true;
-            //}
+        private void lookUpCustomerReferral_SelectedItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
+        {
+            LoadingHelper.Show();
+            if (viewModel.CustomerReferral != null && viewModel.Buyer != null &&  viewModel.CustomerReferral?.Id.ToString() == viewModel.Buyer?.Val)
+            {
+                ToastMessageHelper.LongMessage("Khách hàng giới thiệu không được trùng với Người mua. Vui lòng chọn lại.");
+                viewModel.CustomerReferral = null;
+                return;
+            }
+            if (viewModel.CustomerReferral != null && viewModel.CustomerReferral?.Id != Guid.Empty)
+            {
+                viewModel.SalesAgent = null;
+                viewModel.Collaborator = null;
+            }
+            LoadingHelper.Hide();
         }
 
         private async void SaveQuote_Clicked(object sender, EventArgs e)
         {
-            //if (viewModel.IsHadLichThanhToan == true)
-            //{
-            //    ToastMessageHelper.ShortMessage("Đã có lịch thanh toán, Vui lòng xoá lịch thanh toán để cập nhật");
-            //    return;
-            //}
             if (viewModel.HandoverCondition == null)
             {
                 ToastMessageHelper.ShortMessage("Vui lòng chọn điều kiện bàn giao");
@@ -941,107 +965,128 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage("Vui lòng chọn khách hàng");
                 return;
             }
-            //if (viewModel.ContractType == null)
-            //{
-            //    ToastMessageHelper.ShortMessage("Vui lòng chọn loại hợp đồng");
-            //    return;
-            //}
-
             if (string.IsNullOrWhiteSpace(viewModel.Quote.name))
             {
                 ToastMessageHelper.ShortMessage("Vui lòng nhập tiêu đề");
                 return;
             }
-            if (viewModel.SalesAgent == null)
-            {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn Đại lý/Sàn giao dịch");
-                return;
-            }
-            //if (string.IsNullOrWhiteSpace(viewModel.Quote.bsd_waivermanafeemonth))
-            //{
-            //    ToastMessageHelper.ShortMessage("Vui lòng điền số tháng miễn giảm phí quản lý");
-            //    return;
-            //}
-
-            if (viewModel.CustomerCoOwner?.Val == viewModel.Buyer?.Val)
-            {
-                ToastMessageHelper.ShortMessage("Khách hàng Co-Owner và khách hàng không được trùng.");
-                return;
-            }
-
-
 
             LoadingHelper.Show();
 
             if (viewModel.Quote.quoteid == Guid.Empty)
             {
-                await SetTotal();
-                bool isSuccess = await viewModel.CreateQuote();
-                if (isSuccess)
+                CrmApiResponse response = await viewModel.CreateQuote();
+                if (response.IsSuccess)
                 {
-                    await Task.WhenAll(
-                        viewModel.AddCoOwer(),
-                        viewModel.AddPromotion(viewModel.SelectedPromotionIds),
-                        viewModel.AddHandoverCondition(),
-                        viewModel.CreateQuoteProduct()
-                        ) ;
-                    await viewModel.GetTotal(viewModel.Quote.quoteid.ToString());
-                    if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
-                    if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
-                    //await Navigation.PopAsync();
-                    SaveQuote_Clicked(null, null);
-                    ToastMessageHelper.ShortMessage("Tạo bảng tính giá thành công");
-                    LoadingHelper.Hide();
+                    CrmApiResponse responseQuoteProduct = await viewModel.CreateQuoteProduct();
+                    if (responseQuoteProduct.IsSuccess)
+                    {
+                        await Task.WhenAll(
+                            viewModel.AddCoOwer(),
+                            viewModel.AddPromotion(viewModel.SelectedPromotionIds),
+                            viewModel.AddHandoverCondition()
+                            );
+                        CrmApiResponse responseGetTotal = await viewModel.GetTotal(viewModel.Quote.quoteid.ToString());
+                        if (responseGetTotal.IsSuccess)
+                        {
+                            viewModel.TotalReservation = JsonConvert.DeserializeObject<TotalReservationModel>(responseGetTotal.Content);
+                            CrmApiResponse apiResponse = await viewModel.UpdateQuote();
+                            if (apiResponse.IsSuccess)
+                            {
+                                CrmApiResponse apiResponseQuoteProduct = await viewModel.UpdateQuoteProduct();
+                                if (apiResponseQuoteProduct.IsSuccess == false)
+                                {
+                                    ToastMessageHelper.LongMessage(apiResponseQuoteProduct.ErrorResponse.error.message);
+                                    LoadingHelper.Hide();
+                                    return;
+                                }
+                                if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
+                                if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
+                                this.Title = buttonSave.Text = "CẬP NHẬT BẢNG TÍNH GIÁ";
+                                ToastMessageHelper.ShortMessage("Tạo bảng tính giá thành công");
+                                LoadingHelper.Hide();
+                            }
+                            else
+                            {
+                                ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
+                                LoadingHelper.Hide();
+                            }
+                        }
+                        else
+                        {
+                            ToastMessageHelper.LongMessage(responseGetTotal.ErrorResponse.error.message);
+                            LoadingHelper.Hide();
+                        }
+
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.LongMessage(responseQuoteProduct.ErrorResponse.error.message);
+                    }
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Tạo bảng tính giá thất bại");
+                    ToastMessageHelper.LongMessage(response.ErrorResponse.error.message);
                 }
             }
             else
             {
-                await viewModel.GetTotal(viewModel.Quote.quoteid.ToString());
-                //await SetTotal();
-                if (viewModel.HandoverCondition_Update != null && (viewModel.HandoverCondition_Update?.Val != viewModel.HandoverCondition.Val))
+                CrmApiResponse responseGetTotal = await viewModel.GetTotal(viewModel.Quote.quoteid.ToString());
+                if (responseGetTotal.IsSuccess)
                 {
-                    var response = await CrmHelper.DeleteRecord($"/quotes({viewModel.QuoteId})/bsd_quote_bsd_packageselling({viewModel.HandoverCondition_Update.Val})/$ref");
-                    if (response.IsSuccess)
+                    viewModel.TotalReservation = JsonConvert.DeserializeObject<TotalReservationModel>(responseGetTotal.Content);
+                    if (viewModel.HandoverCondition_Update != null && (viewModel.HandoverCondition_Update?.Val != viewModel.HandoverCondition.Val))
                     {
-                        bool isSuccess_Update = await viewModel.AddHandoverCondition();
-                        if (isSuccess_Update)
+                        var response = await CrmHelper.DeleteRecord($"/quotes({viewModel.QuoteId})/bsd_quote_bsd_packageselling({viewModel.HandoverCondition_Update.Val})/$ref");
+                        if (response.IsSuccess)
                         {
-                            viewModel.HandoverCondition_Update = viewModel.HandoverCondition;
+                            bool isSuccess_Update = await viewModel.AddHandoverCondition();
+                            if (isSuccess_Update)
+                            {
+                                viewModel.HandoverCondition_Update = viewModel.HandoverCondition;
+                            }
+                            else
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage("Cập nhật điều kiện bàn giao thất bại");
+                                return;
+                            }
                         }
                         else
                         {
+                            viewModel.HandoverCondition = viewModel.HandoverCondition_Update;
+                        }
+                    }
+
+                    CrmApiResponse apiResponse = await viewModel.UpdateQuote();
+                    if (apiResponse.IsSuccess)
+                    {
+                        CrmApiResponse apiResponseQuoteProduct = await viewModel.UpdateQuoteProduct();
+                        if (apiResponseQuoteProduct.IsSuccess == false)
+                        {
+                            ToastMessageHelper.LongMessage(apiResponseQuoteProduct.ErrorResponse.error.message);
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage("Cập nhật điều kiện bàn giao thất bại");
                             return;
                         }
+                        if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
+                        if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
+                        if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
+                        this.Title = buttonSave.Text = "CẬP NHẬT BẢNG TÍNH GIÁ";
+                        ToastMessageHelper.ShortMessage("Cập nhật bảng tính giá thành công");
+                        LoadingHelper.Hide();
                     }
                     else
                     {
-                        viewModel.HandoverCondition = viewModel.HandoverCondition_Update;
+                        ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
+                        LoadingHelper.Hide();
                     }
-                }
-
-                bool isSuccess = await viewModel.UpdateQuote();
-                if (isSuccess)
-                {
-                    if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
-                    if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
-                    if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
-                    //await Navigation.PopAsync();
-                    await viewModel.UpdateQuoteProduct();
-                    this.Title = buttonSave.Text = "CẬP NHẬT BẢNG TÍNH GIÁ";
-                    ToastMessageHelper.ShortMessage("Cập nhật bảng tính giá thành công");
-                    LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Cập nhật bảng tính giá thất bại");
+                    ToastMessageHelper.LongMessage(responseGetTotal.ErrorResponse.error.message);
                 }
             }
         }

@@ -30,7 +30,17 @@ namespace PhuLongCRM.Models
 
         private string _discountlist_name;// name discount 
         public string discountlist_name { get => _discountlist_name; set { _discountlist_name = value; OnPropertyChanged(nameof(discountlist_name)); } }
-        public string bsd_discounts { get; set; } // id discounts 
+        public string bsd_discounts { get; set; } // id discounts
+        public string bsd_interneldiscount { get; set; }
+        public string bsd_selectedchietkhaupttt { get; set; }
+        public string bsd_exchangediscount { get; set; }
+
+        public Guid interneldiscount_id { get; set; }
+        private string _interneldiscount_name;
+        public string interneldiscount_name { get=> _interneldiscount_name; set { _interneldiscount_name = value;OnPropertyChanged(nameof(interneldiscount_name)); } }
+        public Guid discountpromotion_id { get; set; }
+        private string _discountpromotion_name;
+        public string discountpromotion_name { get => _discountpromotion_name; set { _discountpromotion_name = value; OnPropertyChanged(nameof(discountpromotion_name)); } }
 
         public Guid handovercondition_id; // id điều kiện bàn giao
 

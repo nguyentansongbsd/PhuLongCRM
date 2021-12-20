@@ -317,7 +317,7 @@ namespace PhuLongCRM.Views
 
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Replace(" ", "");
+            string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
@@ -339,7 +339,7 @@ namespace PhuLongCRM.Views
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Replace(" ", "");
+            string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);

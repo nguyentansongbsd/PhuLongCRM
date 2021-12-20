@@ -55,6 +55,9 @@ namespace PhuLongCRM.Helper
                 else
                 {
                     var a = response.RequestMessage;
+                    var body = await response.Content.ReadAsStringAsync();
+                    var api_Response = JsonConvert.DeserializeObject<ErrorResponse>(body);
+                    
                 }
             }
             catch (Exception ex)
