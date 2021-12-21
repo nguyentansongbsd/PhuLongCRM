@@ -12,6 +12,19 @@ namespace PhuLongCRM.Models
             return view;
         }
 
+        public static string GetViewByIds(string ids)
+        {
+            List<string> list = new List<string>();
+            string[] Ids = ids.Split(',');
+            foreach (var item in Ids)
+            {
+                var i = GetViewById(item);
+                if (i != null)
+                    list.Add(i.Label);
+            }
+            return string.Join(", ", list);
+        }
+
         public static List<OptionSetFilter> Views()
         {
             return new List<OptionSetFilter>() {

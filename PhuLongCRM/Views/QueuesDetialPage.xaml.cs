@@ -139,6 +139,50 @@ namespace PhuLongCRM.Views
             };
         }
 
+        private void GoToCollaborator_Tapped(System.Object sender, System.EventArgs e)
+        {
+            if (viewModel.Queue != null && viewModel.Queue.collaborator_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ContactDetailPage newpage = new ContactDetailPage(viewModel.Queue.collaborator_id);
+                newpage.OnCompleted = async (IsSuccess) =>
+                {
+                    if (IsSuccess)
+                    {
+                        await Navigation.PushAsync(newpage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage("Không tìm thấy đại lý bán hàng ");
+                    }
+                };
+            }
+        }
+
+        private void GoToCustomerReferral_Tapped(System.Object sender, System.EventArgs e)
+        {
+            if (viewModel.Queue != null && viewModel.Queue.customerreferral_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ContactDetailPage newpage = new ContactDetailPage(viewModel.Queue.customerreferral_id);
+                newpage.OnCompleted = async (IsSuccess) =>
+                {
+                    if (IsSuccess)
+                    {
+                        await Navigation.PushAsync(newpage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage("Không tìm thấy đại lý bán hàng ");
+                    }
+                };
+            }
+        }
+
         private async void NhanTin_Tapped(System.Object sender, System.EventArgs e)
         {
             LoadingHelper.Show();

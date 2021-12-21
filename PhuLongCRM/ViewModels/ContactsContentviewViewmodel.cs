@@ -23,6 +23,7 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='bsd_contactaddress' />
                     <attribute name='createdon' />
                     <attribute name='contactid' />
+                    <attribute name='statuscode' />
                     <order attribute='createdon' descending='true' />
                     <filter type='or'>
                       <condition attribute='bsd_fullname' operator='like' value='%25{Keyword}%25' />

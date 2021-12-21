@@ -236,16 +236,7 @@
                                             <Label Grid.Column="0" Text="Đã hết hạn" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                                             <Label Grid.Column="1" Text="{Binding Queue.bsd_expired_format}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
                                         </Grid>
-
-                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
-                                            <Label Grid.Column="0" Text="Đại lý bán hàng" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
-                                            <Label Grid.Column="1" Text="{Binding Queue.salesagentcompany_name}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#2196F3" FontAttributes="Bold" FontSize="14">
-                                                <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToAcount_Tapped"/>
-                                                </Label.GestureRecognizers>
-                                            </Label>
-                                        </Grid>
-
+                                        
                                         <StackLayout Orientation="Horizontal" Padding="16,10" BackgroundColor="White">
                                             <Label Text="Nhân viên đại lý" FontSize="15" TextColor="#333333"/>
                                             <Label Text="{Binding Queue.bsd_nameofstaffagent}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
@@ -292,6 +283,46 @@
                                             <Label Text="Mô tả" FontSize="15" TextColor="#333333"/>
                                             <Label Text="{Binding Queue.description}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
                                         </StackLayout>
+
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+
+                            <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Text="Thông tin người bán" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BackgroundColor="#dddddd" Spacing="1">
+
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Đại lý bán hàng" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.salesagentcompany_name}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" FontSize="14">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToAcount_Tapped"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Cộng tác viên" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.collaborator_name}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" FontSize="14">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToCollaborator_Tapped"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Nhân viên giới thiệu" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.customerreferral_name}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" FontSize="14">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToCustomerReferral_Tapped"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Grid>
 
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>

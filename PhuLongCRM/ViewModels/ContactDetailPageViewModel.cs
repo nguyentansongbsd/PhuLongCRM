@@ -60,10 +60,7 @@ namespace PhuLongCRM.ViewModels
         public string frontImage { get => _frontImage; set { _frontImage = value; OnPropertyChanged(nameof(frontImage)); } }
 
         private string _behindImage;
-        public string behindImage { get => _behindImage; set { _behindImage = value; OnPropertyChanged(nameof(behindImage)); } }
-
-        private OptionSet _customerType;
-        public OptionSet CustomerType { get => _customerType; set { _customerType = value; OnPropertyChanged(nameof(CustomerType)); } }
+        public string behindImage { get => _behindImage; set { _behindImage = value; OnPropertyChanged(nameof(behindImage)); } }        
 
         private bool _showCMND;
         public bool ShowCMND { get => _showCMND; set { _showCMND = value; OnPropertyChanged(nameof(ShowCMND)); } }

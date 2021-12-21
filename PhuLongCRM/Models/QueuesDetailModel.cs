@@ -64,5 +64,10 @@ namespace PhuLongCRM.Models
         public string bsd_expired_format { get { return BoolToStringData.GetStringByBool(bsd_expired); } }
 
         public string statuscode_format { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString()).Name; } }
+
+        public Guid collaborator_id { get; set; }
+        public string collaborator_name { get; set; }
+        public Guid customerreferral_id { get; set; }
+        public string customerreferral_name { get; set; }
     }
 }

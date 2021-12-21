@@ -44,15 +44,17 @@ namespace PhuLongCRM.Views
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Cuộc họp", "FontAwesomeRegular", "\uf274", null, NewMeet));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Cuộc gọi", "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Công việc", "FontAwesomeSolid", "\uf073", null, NewTask));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, EditContact));
+
+                if (viewModel.singleContact.statuscode != "100000000")
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, EditContact));
+
                 if (viewModel.singleContact.employee_id != UserLogged.Id)
                 {
                     floatingButtonGroup.IsVisible = false;
                 }
-                viewModel.CustomerType = CustomerStatusReasonData.GetCustomerStatusReasonById(viewModel.singleContact.statuscode);
                 OnCompleted(true);
             }
-                
+
             else
                 OnCompleted(false);
             LoadingHelper.Hide();

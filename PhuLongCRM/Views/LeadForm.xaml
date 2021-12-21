@@ -88,7 +88,7 @@
                                 <controls:FormLabelRequired Text="Nguồn khách hàng"/>
                                 <controls:LookUp x:Name="lookUpLeadSource" Placeholder="Chọn nguồn khách hàng" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding LeadSource}" ItemsSource="{Binding LeadSources}"/>
 
-                                <controls:FormLabelRequired Text="Địa chỉ liên lạc" Margin="0,10,0,0"/>
+                                <controls:FormLabel Text="Địa chỉ liên lạc" Margin="0,10,0,0"/>
                                 <Grid>
                                     <controls:MainEntry Text="{Binding CompositeAddress1}" Placeholder="Chọn địa chỉ liên lạc" FontSize="15"/>
                                     <StackLayout>
@@ -98,7 +98,7 @@
                                     </StackLayout>
                                 </Grid>
 
-                                <controls:FormLabelRequired Text="Địa chỉ thường trú" Margin="0,10,0,0"/>
+                                <controls:FormLabel Text="Địa chỉ thường trú" Margin="0,10,0,0"/>
                                 <Grid>
                                     <controls:MainEntry Text="{Binding CompositeAddress2}" Placeholder="Chọn địa chỉ thường trú" FontSize="15"/>
                                     <StackLayout>

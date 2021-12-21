@@ -41,7 +41,7 @@ namespace PhuLongCRM.Models
         }
 
         private string _mobilephone;
-        public string mobilephone { get { return _mobilephone; } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
+        public string mobilephone { get { return _mobilephone != null && _mobilephone.Contains("+84-")? _mobilephone : (_mobilephone != null && _mobilephone.Contains("+84") ? "+84-" : "+84-" + _mobilephone); } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
 
         private string _createdon;
         public string createdon { get { return _createdon; } set { _createdon = value; OnPropertyChanged(nameof(createdon)); } }
@@ -372,5 +372,7 @@ namespace PhuLongCRM.Models
 
         public Guid employee_id { get; set; }
         public string bsd_customercode { get; set; }
+        public string statuscode_format { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Name : null; } }
+        public string statuscode_color { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Background : null; } }
     }
 }

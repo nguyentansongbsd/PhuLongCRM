@@ -40,14 +40,14 @@ namespace PhuLongCRM.Views
                 VisualStateManager.GoToState(lblGiaoDich, "InActive");
 
                 viewModel.StatusCode = StatusCodeUnit.GetStatusCodeById(viewModel.UnitInfo.statuscode.ToString());
-                if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_direction))
+                if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_direction)) 
                 {
                     viewModel.Direction = DirectionData.GetDiretionById(viewModel.UnitInfo.bsd_direction);
                 }
 
                 if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_viewphulong))
                 {
-                    viewModel.View = ViewData.GetViewById(viewModel.UnitInfo.bsd_viewphulong);
+                    viewModel.View = ViewData.GetViewByIds(viewModel.UnitInfo.bsd_viewphulong);
                 }
 
                 if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004)

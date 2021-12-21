@@ -9,10 +9,10 @@ namespace PhuLongCRM.Models
         public static List<OptionSet> ContactTypes() {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","Customer"),
-                new OptionSet("100000001","Collaborator"),
-                new OptionSet("100000002","Authorized"),
-                new OptionSet("100000003","Legal Representative"),
+                new OptionSet("100000000","Khách hàng"), // khach hanfg Customer
+                new OptionSet("100000001","Cộng tác viên"), // cong tac vien Collaborator
+                new OptionSet("100000002","Người ủy quyền"), // người ủy quyền Authorized
+                new OptionSet("100000003","Người đại diện pháp lý"), //Legal Representative
             };
         }
 

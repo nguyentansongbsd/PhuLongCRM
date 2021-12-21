@@ -46,8 +46,8 @@ namespace PhuLongCRM.ViewModels
         private OptionSet _unitDirection;
         public OptionSet UnitDirection { get => _unitDirection; set { _unitDirection = value; OnPropertyChanged(nameof(UnitDirection)); } }
 
-        private OptionSet _unitView;
-        public OptionSet UnitView { get => _unitView; set { _unitView = value; OnPropertyChanged(nameof(UnitView)); } }
+        private string _unitView;
+        public string UnitView { get => _unitView; set { _unitView = value; OnPropertyChanged(nameof(UnitView)); } }
 
         private string _numChuanBiInBlock;
         public string NumChuanBiInBlock { get => _numChuanBiInBlock; set { _numChuanBiInBlock = value; OnPropertyChanged(nameof(NumChuanBiInBlock)); } }

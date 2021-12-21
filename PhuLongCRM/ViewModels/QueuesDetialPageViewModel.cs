@@ -115,6 +115,14 @@ namespace PhuLongCRM.ViewModels
                                 <link-entity name='account' from='accountid' to='bsd_salesagentcompany' visible='false' link-type='outer' alias='a_ab034cb219dbeb11bacb002248168cad'>
                                   <attribute name='bsd_name' alias='salesagentcompany_name'/>
                                 </link-entity>
+                                <link-entity name='contact' from='contactid' to='bsd_customerreferral' link-type='outer' alias='aa'>
+                                   <attribute name='bsd_fullname' alias='customerreferral_name' />
+                                   <attribute name='contactid' alias='customerreferral_id'/>
+                                </link-entity>
+                                <link-entity name='contact' from='contactid' to='bsd_collaborator' link-type='outer' alias='ab'>
+                                   <attribute name='bsd_fullname' alias='collaborator_name' />
+                                   <attribute name='contactid' alias='collaborator_id'/>
+                                </link-entity>
                               </entity>
                             </fetch>";
 
@@ -149,9 +157,9 @@ namespace PhuLongCRM.ViewModels
                 QueueProject = "Có";
             }
 
-            ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002 || data.statuscode == 100000008) ? true : false;
+            ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
             ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
-            ShowButtons = (data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
+            ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
             
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
 
