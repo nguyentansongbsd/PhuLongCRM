@@ -2,7 +2,8 @@
 <resources>
 
   <style name="MainTheme" parent="MainTheme.Base">
-    <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
   </style>
 
   <!-- Base theme applied no matter what API -->

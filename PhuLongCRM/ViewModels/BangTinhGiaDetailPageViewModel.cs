@@ -575,33 +575,11 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<string> UpdatePaymentScheme()
+        public async Task<CrmApiResponse> UpdatePaymentScheme()
         {
-            if (Reservation.paymentscheme_id != Guid.Empty)
-            {
-                IDictionary<string, object> data = new Dictionary<string, object>();
-                CrmApiResponse updateResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})/Microsoft.Dynamics.CRM.bsd_Action_Resv_Gene_PMS", data);
-                if (updateResponse.IsSuccess)
-                {
-                    return updateResponse.IsSuccess.ToString();
-                }
-                else
-                {
-                    if (updateResponse.GetErrorMessage().Contains("Localization") == true)
-                    {
-                        return "Localization";
-                    }
-                    else
-                    {
-                        return updateResponse.IsSuccess.ToString();
-                    }
-
-                }
-            }
-            else
-            {
-                return "False";
-            }
+            IDictionary<string, object> data = new Dictionary<string, object>();
+            CrmApiResponse  apiResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})/Microsoft.Dynamics.CRM.bsd_Action_Resv_Gene_PMS", data);
+            return apiResponse;
         }
 
         public async Task<bool> DeactiveInstallment()
