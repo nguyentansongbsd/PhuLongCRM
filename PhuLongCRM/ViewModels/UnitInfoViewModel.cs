@@ -49,8 +49,8 @@ namespace PhuLongCRM.ViewModels
         private OptionSet _diretion;
         public OptionSet Direction { get => _diretion; set { _diretion = value; OnPropertyChanged(nameof(Direction)); } }
 
-        private OptionSet _view;
-        public OptionSet View { get => _view; set { _view = value; OnPropertyChanged(nameof(View)); } }
+        private string _view;
+        public string View { get => _view; set { _view = value; OnPropertyChanged(nameof(View)); } }
 
         private StatusCodeModel _statusCode;
         public StatusCodeModel StatusCode { get => _statusCode; set { _statusCode = value; OnPropertyChanged(nameof(StatusCode)); } }

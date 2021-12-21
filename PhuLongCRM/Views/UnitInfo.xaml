@@ -4,7 +4,6 @@
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:converter ="clr-namespace:PhuLongCRM.Converters"
-             xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
              xmlns:helper ="clr-namespace:PhuLongCRM.Helper"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
@@ -159,7 +158,7 @@
                                                 <Span Text="{Binding Direction.Label}"/>
                                                 <Span Text=" - "/>
                                                 <Span Text="Hướng nhìn "/>
-                                                <Span Text="{Binding View.Label}"/>
+                                                <Span Text="{Binding View}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>

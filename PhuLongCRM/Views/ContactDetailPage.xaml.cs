@@ -44,15 +44,17 @@ namespace PhuLongCRM.Views
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Cuộc họp", "FontAwesomeRegular", "\uf274", null, NewMeet));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Cuộc gọi", "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Công việc", "FontAwesomeSolid", "\uf073", null, NewTask));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, EditContact));
+
+                if (viewModel.singleContact.statuscode != "100000000")
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, EditContact));
+
                 if (viewModel.singleContact.employee_id != UserLogged.Id)
                 {
                     floatingButtonGroup.IsVisible = false;
                 }
-                viewModel.CustomerType = CustomerStatusReasonData.GetCustomerStatusReasonById(viewModel.singleContact.statuscode);
                 OnCompleted(true);
             }
-                
+
             else
                 OnCompleted(false);
             LoadingHelper.Hide();
@@ -354,7 +356,7 @@ namespace PhuLongCRM.Views
 
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {           
-            string phone = viewModel.singleContact.mobilephone.Replace(" ", "");
+            string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
                 LoadingHelper.Show();
@@ -380,7 +382,7 @@ namespace PhuLongCRM.Views
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {          
-            string phone = viewModel.singleContact.mobilephone.Replace(" ", "");
+            string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
                 LoadingHelper.Show();

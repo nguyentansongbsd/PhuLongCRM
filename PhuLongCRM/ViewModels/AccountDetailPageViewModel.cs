@@ -20,9 +20,6 @@ namespace PhuLongCRM.ViewModels
         private string _businessTypes;
         public string BusinessTypes { get => _businessTypes; set { _businessTypes = value; OnPropertyChanged(nameof(BusinessTypes)); } }
 
-        private OptionSet _customerType;
-        public OptionSet CustomerType { get => _customerType; set { _customerType = value; OnPropertyChanged(nameof(CustomerType)); } }
-
         private OptionSet _localization;
         public OptionSet Localization { get => _localization; set { _localization = value; OnPropertyChanged(nameof(Localization)); } }
 

@@ -10,6 +10,7 @@
             <converters:LeadQualityCodeConverter x:Key="LeadQualityCodeConverter"/>
             <converters:LeadQualityCodeColorConverter x:Key="LeadQualityCodeColorConverter"/>
             <converters:StatusCodeConverter x:Key="StatusCodeConverter"/>
+            <converters:PhoneConverter x:Key="PhoneConverter"/>
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
@@ -25,7 +26,7 @@
                                 <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
                                     <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
                                         <Label Text="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" BackgroundColor="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Padding="3,0" Margin="0,2" FontSize="11" FontAttributes="Bold" TextColor="White" Grid.Column="0" VerticalTextAlignment="Center"/>
-                                        <Label Text="{Binding lastname}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Column="1"/>
+                                        <Label Text="{Binding fullname}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Column="1"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                         <Label Text="Tiêu đề: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
@@ -33,11 +34,11 @@
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
                                         <Label Text="Số điện thoại: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding mobilephone}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                        <Label Text="{Binding mobilephone, Converter={StaticResource PhoneConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                        <Label Text="Trạng thái: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding statuscode,Converter={StaticResource StatusCodeConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                        <Label Text="Tình trạng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding statuscode,Converter={StaticResource StatusCodeConverter}}" FontAttributes="Bold" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                 </Grid>
                             </ViewCell>

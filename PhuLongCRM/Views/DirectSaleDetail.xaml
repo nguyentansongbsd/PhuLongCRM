@@ -244,7 +244,7 @@
                                         <Span Text="{Binding UnitDirection.Label}"/>
                                         <Span Text=" - "/>
                                         <Span Text="Hướng nhìn "/>
-                                        <Span Text="{Binding UnitView.Label}"/>
+                                        <Span Text="{Binding UnitView}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -332,7 +332,7 @@
                         <Label Grid.Row="0" Grid.Column="3" Text="Sẵn sàng" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
                         <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="#00CED1" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="1" Grid.Column="1" Text="Booking" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="Đặt chỗ" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="1" Grid.Column="2" BackgroundColor="#04A8F4" HeightRequest="30" VerticalOptions="Center"/>
                         <Label Grid.Row="1" Grid.Column="3" Text="Giữ chỗ" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
@@ -344,15 +344,15 @@
                         <BoxView Grid.Row="3" Grid.Column="0" BackgroundColor="#e67e22" HeightRequest="30" VerticalOptions="Center"/>
                         <Label Grid.Row="3" Grid.Column="1" Text="Đã đủ tiền cọc" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="3" Grid.Column="2" BackgroundColor="#808080" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="3" Grid.Column="3" Text="Option" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="3" Grid.Column="3" Text="Hoàn tất đặt cọc" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
                         <BoxView Grid.Row="4" Grid.Column="0" BackgroundColor="#808080" HeightRequest="30" VerticalOptions="Center"/>
                         <Label Grid.Row="4" Grid.Column="1" Text="Thanh toán đợt 1" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="4" Grid.Column="2" BackgroundColor="#A0DB8E" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="4" Grid.Column="3" Text="Signed D.A" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="4" Grid.Column="3" Text="Đã ký TTĐC/HĐĐC" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
                         <BoxView Grid.Row="5" Grid.Column="0" BackgroundColor="#6897BB" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="5" Grid.Column="1" Text="Qualified" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="5" Grid.Column="1" Text="Đủ điều kiện" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="5" Grid.Column="2" BackgroundColor="#BF3A2B" HeightRequest="30" VerticalOptions="Center"/>
                         <Label Grid.Row="5" Grid.Column="3" Text="Đã bán" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                     </Grid>

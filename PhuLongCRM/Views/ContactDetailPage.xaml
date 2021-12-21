@@ -116,25 +116,26 @@
                 <StackLayout>
                     <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Margin="10,20,10,0">
                         <Grid RowDefinitions="Auto,1,Auto">
-                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10" Padding="20,10" Grid.Row="0">
-                                <Label Text="{Binding singleContact.bsd_fullname}" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" FontSize="16" TextColor="#2196F3" />
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="10" Padding="20,10" Grid.Row="0">
+                                <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">
+                                    <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding singleContact.statuscode_color}" VerticalOptions="StartAndExpand">
+                                        <Label Grid.Column="0" Text="{Binding singleContact.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                    </telerikPrimitives:RadBorder>
+                                    <Label Grid.Column="1" Text="{Binding singleContact.bsd_fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                     <Label Text="Mã khách hàng:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding singleContact.bsd_customercode}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                    <Label Text="Tình trạng:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                    <Label Text="{Binding CustomerType.Label}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
-                                </Grid>
-                                <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
                                     <Label Text="Email:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding singleContact.emailaddress1}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
-                                <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
+                                <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
                                     <Label Text="Số điện thoại:" Grid.Column="0" FontSize="15" TextColor="#444444" />
                                     <Label Text="{Binding singleContact.mobilephone}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                 </Grid>
-                                <Grid ColumnDefinitions="Auto,*" Grid.Row="5" IsVisible="{Binding singleContact.bsd_contactaddress,Converter={StaticResource NullToBool}}">
+                                <Grid ColumnDefinitions="Auto,*" Grid.Row="4" IsVisible="{Binding singleContact.bsd_contactaddress,Converter={StaticResource NullToBool}}">
                                     <Label Text="&#xf3c5;" TextColor="#939393" FontFamily="FontAwesomeSolid" FontSize="Large"/>
                                     <Label Text="{Binding singleContact.bsd_contactaddress}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
@@ -247,7 +248,7 @@
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
                                     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="1" BackgroundColor="#F1F1F1">
-                                        <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,*" BackgroundColor="White" Grid.Row="0" Padding="10,0,10,10" IsVisible="{Binding ShowCMND}">
+                                        <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,*" BackgroundColor="White" Grid.Row="0" Padding="10,0,10,10" IsVisible="false"><!--IsVisible="{Binding ShowCMND}"-->
                                             <controls:FormLabel Text="Hình chụp CMND" Grid.Row="0" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <telerikPrimitives:RadBorder BorderThickness="1" BorderColor="#f1f1f1" CornerRadius="5" Grid.Column="0" Grid.Row="1">
                                                 <ffimageloading:CachedImage Source="{Binding MyImage}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="300" HeightRequest="120">

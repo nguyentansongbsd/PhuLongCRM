@@ -53,6 +53,8 @@ namespace PhuLongCRM.Views
             datePickerNgayCapHoChieu.DefaultDisplay = DateTime.Now;
             datePikerNgayCapTheCanCuoc.DefaultDisplay = DateTime.Now;
             btn_save_contact.Clicked += CreateContact_Clicked;
+            viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById("1");
+            lookUpTinhTrang.IsEnabled = false;
         }
 
         private void CreateContact_Clicked(object sender, EventArgs e)

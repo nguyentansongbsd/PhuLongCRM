@@ -74,7 +74,7 @@
                                 <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="Chọn loại thẻ ID" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}"/>
 
                                 <controls:FormLabel Text="Số ID"/>
-                                <controls:MainEntry Text="{Binding singleLead.bsd_identitycardnumberid}" FontSize="15"  Placeholder="Nhập số ID" Margin="0,0,0,5" TextChanged="TypeIdCard_TextChanged" />
+                                <controls:MainEntry Text="{Binding singleLead.bsd_identitycardnumberid}" FontSize="15"  Placeholder="Nhập số ID" Margin="0,0,0,5" Unfocused="MainEntry_Unfocused" />
 
                                 <controls:FormLabelRequired Text="Khu vực"/>
                                 <controls:LookUp x:Name="lookUpKhuVuc" Placeholder="Chọn khu vực" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Area}" ItemsSource="{Binding Areas}"/>
@@ -88,7 +88,7 @@
                                 <controls:FormLabelRequired Text="Nguồn khách hàng"/>
                                 <controls:LookUp x:Name="lookUpLeadSource" Placeholder="Chọn nguồn khách hàng" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding LeadSource}" ItemsSource="{Binding LeadSources}"/>
 
-                                <controls:FormLabelRequired Text="Địa chỉ liên lạc" Margin="0,10,0,0"/>
+                                <controls:FormLabel Text="Địa chỉ liên lạc" Margin="0,10,0,0"/>
                                 <Grid>
                                     <controls:MainEntry Text="{Binding CompositeAddress1}" Placeholder="Chọn địa chỉ liên lạc" FontSize="15"/>
                                     <StackLayout>
@@ -98,7 +98,7 @@
                                     </StackLayout>
                                 </Grid>
 
-                                <controls:FormLabelRequired Text="Địa chỉ thường trú" Margin="0,10,0,0"/>
+                                <controls:FormLabel Text="Địa chỉ thường trú" Margin="0,10,0,0"/>
                                 <Grid>
                                     <controls:MainEntry Text="{Binding CompositeAddress2}" Placeholder="Chọn địa chỉ thường trú" FontSize="15"/>
                                     <StackLayout>

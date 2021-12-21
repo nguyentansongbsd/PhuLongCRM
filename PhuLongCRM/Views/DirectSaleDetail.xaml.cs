@@ -231,9 +231,17 @@ namespace PhuLongCRM.Views
             {
                 viewModel.UnitDirection = DirectionData.GetDiretionById(viewModel.Unit.bsd_direction);
             }
+            else
+            {
+                viewModel.UnitDirection = null;
+            }
             if (!string.IsNullOrWhiteSpace(viewModel.Unit.bsd_viewphulong))
             {
-                viewModel.UnitView = ViewData.GetViewById(viewModel.Unit.bsd_viewphulong);
+                viewModel.UnitView = ViewData.GetViewByIds(viewModel.Unit.bsd_viewphulong);
+            }
+            else
+            {
+                viewModel.UnitView = null;
             }
 
             if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004")

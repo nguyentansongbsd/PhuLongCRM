@@ -33,6 +33,9 @@ namespace PhuLongCRM.ViewModels
         public StatusCodeModel QuoteStatus { get => _quoteStatus; set { _quoteStatus = value; OnPropertyChanged(nameof(QuoteStatus)); } }
 
         public ObservableCollection<OptionSet> ListDiscount { get; set; } = new ObservableCollection<OptionSet>();
+        public ObservableCollection<OptionSet> ListDiscountPaymentScheme { get; set; } = new ObservableCollection<OptionSet>();
+        public ObservableCollection<OptionSet> ListDiscountInternel { get; set; } = new ObservableCollection<OptionSet>();
+        public ObservableCollection<OptionSet> ListDiscountExchange { get; set; } = new ObservableCollection<OptionSet>();
         public ObservableCollection<OptionSet> ListPromotion { get; set; } = new ObservableCollection<OptionSet>();
         public List<OptionSet> ListSpecialDiscount { get; set; }
 
@@ -74,6 +77,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_depositfeereceived' />
                                     <attribute name='bsd_detailamount' />
                                     <attribute name='bsd_discount' />
+                                    <attribute name='bsd_interneldiscount' />
+                                    <attribute name='bsd_selectedchietkhaupttt' />
+                                    <attribute name='bsd_exchangediscount' />
                                     <attribute name='bsd_packagesellingamount' />
                                     <attribute name='bsd_totalamountlessfreight' />
                                     <attribute name='bsd_landvaluededuction' />
@@ -171,6 +177,14 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='bsd_discounttype' from='bsd_discounttypeid' to='bsd_discountlist' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='discountlist_name' />
                                     </link-entity>
+                                    <link-entity name='bsd_interneldiscount' from='bsd_interneldiscountid' to='bsd_interneldiscountlist' visible='false' link-type='outer' alias='a_c014fc37ba81e911a83b000d3a07be23'>
+                                        <attribute name='bsd_name' alias='interneldiscount_name'/>
+                                        <attribute name='bsd_interneldiscountid' alias='interneldiscount_id'/>
+                                    </link-entity>
+                                    <link-entity name='bsd_discountpromotion' from='bsd_discountpromotionid' to='bsd_exchangediscountlist' visible='false' link-type='outer' alias='a_2e80b433b075eb11a812000d3ac8b5f4'>
+                                        <attribute name='bsd_name' alias='discountpromotion_name'/>
+                                        <attribute name='bsd_discountpromotionid' alias='discountpromotion_id'/>
+                                    </link-entity>
                                     <filter type='and'>
 	                                    <condition attribute='quoteid' operator='eq' uitype='quote' value='" + ReservationId + @"' />
 	                                </filter>
@@ -184,6 +198,10 @@ namespace PhuLongCRM.ViewModels
                 Reservation.paymentscheme_id = data.paymentscheme_id;
                 Reservation.paymentscheme_name = data.paymentscheme_name;
                 Reservation.discountlist_name = data.discountlist_name;
+                Reservation.interneldiscount_id = data.interneldiscount_id;
+                Reservation.interneldiscount_name = data.interneldiscount_name;
+                Reservation.discountpromotion_id = data.discountpromotion_id;
+                Reservation.discountpromotion_name = data.discountpromotion_name;
             }
 
             if (!string.IsNullOrEmpty(Reservation.purchaser_account_name))
@@ -303,6 +321,101 @@ namespace PhuLongCRM.ViewModels
             foreach (var item in result.value)
             {
                 this.ListDiscount.Add(item);
+            }
+        }
+
+        public async Task LoadDiscountsPaymentScheme()
+        {
+            if (string.IsNullOrWhiteSpace(this.Reservation.bsd_selectedchietkhaupttt)) return;
+            string[] arrDiscountsPaymentscheme = new string[] { };
+            string conditionValue = string.Empty;
+            arrDiscountsPaymentscheme = this.Reservation.bsd_selectedchietkhaupttt.Split(',');
+            for (int i = 0; i < arrDiscountsPaymentscheme.Count(); i++)
+            {
+                conditionValue += $"<value uitype='bsd_discount'>{arrDiscountsPaymentscheme[i]}</value>";
+            }
+
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
+                                <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_discountid' operator='in'>
+                                        {conditionValue}
+                                      </condition>
+                                    </filter>
+                                </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_discounts", fetchXml);
+            if (result == null || result.value.Count == 0) return;
+            foreach (var item in result.value)
+            {
+                this.ListDiscountPaymentScheme.Add(item);
+            }
+        }
+
+        public async Task LoadDiscountsInternel()
+        {
+            if (string.IsNullOrWhiteSpace(this.Reservation.bsd_interneldiscount)) return;
+            string[] arrDiscountsInternel = new string[] { };
+            string conditionValue = string.Empty;
+            arrDiscountsInternel = this.Reservation.bsd_interneldiscount.Split(',');
+            for (int i = 0; i < arrDiscountsInternel.Count(); i++)
+            {
+                conditionValue += $"<value uitype='bsd_discount'>{arrDiscountsInternel[i]}</value>";
+            }
+
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
+                                <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_discountid' operator='in'>
+                                        {conditionValue}
+                                      </condition>
+                                    </filter>
+                                </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_discounts", fetchXml);
+            if (result == null || result.value.Count == 0) return;
+            foreach (var item in result.value)
+            {
+                this.ListDiscountInternel.Add(item);
+            }
+        }
+        public async Task LoadDiscountsExChange()
+        {
+            if (string.IsNullOrWhiteSpace(this.Reservation.bsd_exchangediscount)) return;
+            string[] arrDiscountsExchange = new string[] { };
+            string conditionValue = string.Empty;
+            arrDiscountsExchange = this.Reservation.bsd_exchangediscount.Split(',');
+            for (int i = 0; i < arrDiscountsExchange.Count(); i++)
+            {
+                conditionValue += $"<value uitype='bsd_discount'>{arrDiscountsExchange[i]}</value>";
+            }
+
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
+                                <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_discountid' operator='in'>
+                                        {conditionValue}
+                                      </condition>
+                                    </filter>
+                                </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_discounts", fetchXml);
+            if (result == null || result.value.Count == 0) return;
+            foreach (var item in result.value)
+            {
+                this.ListDiscountExchange.Add(item);
             }
         }
 

@@ -90,8 +90,13 @@
                 <StackLayout>
                     <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Margin="10,20,10,0">
                         <Grid RowDefinitions="Auto,1,Auto">
-                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10" Padding="20,10" Grid.Row="0">
-                                <Label Text="{Binding singleAccount.bsd_name}" FontAttributes="Bold" Grid.Row="0" FontSize="16" TextColor="{StaticResource NavigationPrimary}"/>
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10" Padding="20,10" Grid.Row="0">
+                                <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">
+                                    <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding singleAccount.statuscode_color}" VerticalOptions="StartAndExpand">
+                                        <Label Grid.Column="0" Text="{Binding singleAccount.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                    </telerikPrimitives:RadBorder>
+                                    <Label Grid.Column="1" Text="{Binding singleAccount.bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                     <Label Text="Mã khách hàng:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding singleAccount.bsd_customercode}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
@@ -105,10 +110,6 @@
                                     <Label Text="{Binding BusinessTypes}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
-                                    <Label Text="Tình trạng:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                    <Label Text="{Binding CustomerType.Label}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
-                                </Grid>
-                                <Grid ColumnDefinitions="Auto,*" Grid.Row="5">
                                     <Label Text="Đại diện:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding PrimaryContact.bsd_fullname}" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}">
                                         <Label.GestureRecognizers>
@@ -117,11 +118,11 @@
                                     </Label>
                                 </Grid>
 
-                                <Grid ColumnDefinitions="Auto,*" Grid.Row="6">
+                                <Grid ColumnDefinitions="Auto,*" Grid.Row="5">
                                     <controls:FormLabel Text="Giấy phép kinh doanh:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <controls:FormLabelValue Text="{Binding singleAccount.bsd_registrationcode}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                 </Grid>
-                                <Grid ColumnDefinitions="Auto,*" Grid.Row="7">
+                                <Grid ColumnDefinitions="Auto,*" Grid.Row="6">
                                     <controls:FormLabel Text="Điện thoại:" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <controls:FormLabelValue Text="{Binding singleAccount.telephone1}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                 </Grid>

@@ -4,11 +4,7 @@
              Title="Tài Liệu Kinh Doanh"
              BackgroundColor="White"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
-             xmlns:telerikGrid="clr-namespace:Telerik.XamarinForms.DataGrid;assembly=Telerik.XamarinForms.DataGrid"
-             xmlns:telerikDataGrid="clr-namespace:Telerik.XamarinForms.DataGrid;assembly=Telerik.XamarinForms.DataGrid"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
-             xmlns:converter ="clr-namespace:PhuLongCRM.Converters"
-             xmlns:bsdGrid="clr-namespace:PhuLongCRM.Controls.BsdGrid"
              x:Class="PhuLongCRM.Views.TaiLieuKinhDoanhForm">
     <ContentPage.Resources>
         <ResourceDictionary>
