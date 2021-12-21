@@ -44,7 +44,7 @@ namespace PhuLongCRM.Views
                 lookupGiuCho.IsVisible = false;
             }
 
-            if (saleAgentCompany != null)
+            if (saleAgentCompany != null && Guid.Parse(saleAgentCompany.Val) != Guid.Empty)
             {
                 viewModel.SalesAgent = saleAgentCompany;
                 lookupDaiLySanGiaoDich.IsEnabled = false;
@@ -978,14 +978,15 @@ namespace PhuLongCRM.Views
                 CrmApiResponse response = await viewModel.CreateQuote();
                 if (response.IsSuccess)
                 {
-                    CrmApiResponse responseQuoteProduct = await viewModel.CreateQuoteProduct();
-                    if (responseQuoteProduct.IsSuccess)
-                    {
-                        await Task.WhenAll(
+                    await Task.WhenAll(
                             viewModel.AddCoOwer(),
                             viewModel.AddPromotion(viewModel.SelectedPromotionIds),
                             viewModel.AddHandoverCondition()
                             );
+                    viewModel.QuoteId = viewModel.Quote.quoteid;
+                    CrmApiResponse responseQuoteProduct = await viewModel.CreateQuoteProduct();
+                    if (responseQuoteProduct.IsSuccess)
+                    {
                         CrmApiResponse responseGetTotal = await viewModel.GetTotal(viewModel.Quote.quoteid.ToString());
                         if (responseGetTotal.IsSuccess)
                         {

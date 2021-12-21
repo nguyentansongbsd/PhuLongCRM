@@ -204,7 +204,6 @@ namespace PhuLongCRM.Views
             {
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Cập Nhật Bảng Tính Giá", "FontAwesomeRegular", "\uf044", null, EditQuotes));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy Bảng Tính Giá", "FontAwesomeRegular", "\uf273", null, CancelQuotes));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Xác nhận in", "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Xóa Lịch Thanh Toán", "FontAwesomeRegular", "\uf1c3", null, CancelInstallment));
             }
             if (viewModel.Reservation.statuscode == 100000007 && viewModel.InstallmentList.Count == 0)
@@ -214,6 +213,10 @@ namespace PhuLongCRM.Views
             if (viewModel.Reservation.statuscode == 100000007 && viewModel.InstallmentList.Count > 0 )
             {
                 viewModel.ButtonCommandList.Add(new FloatButtonItem("Ký Bảng Tính Giá", "FontAwesomeRegular", "\uf274", null, SignQuotationClicked));
+            }
+            if (viewModel.Reservation.statuscode == 100000007 && viewModel.Reservation.bsd_quotationprinteddate.HasValue == false)
+            {
+                viewModel.ButtonCommandList.Add(new FloatButtonItem("Xác nhận in", "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
             }
             if (viewModel.Reservation.bsd_reservationformstatus == 100000001 && viewModel.Reservation.bsd_reservationprinteddate != null && viewModel.Reservation.bsd_reservationuploadeddate == null && viewModel.Reservation.bsd_rfsigneddate == null)
             {
@@ -330,8 +333,8 @@ namespace PhuLongCRM.Views
         private async void CreatePaymentScheme(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string IsSuccess = await viewModel.UpdatePaymentScheme();
-            if (IsSuccess == "True")
+            CrmApiResponse response = await viewModel.UpdatePaymentScheme();
+            if (response.IsSuccess == true)
             {
                 NeedToRefreshInstallment = true;
                 OnAppearing();
@@ -340,27 +343,29 @@ namespace PhuLongCRM.Views
             }
             else
             {
-                if (IsSuccess == "Localization")
-                {
-                    string asw = await App.Current.MainPage.DisplayActionSheet("Khách hàng chưa chọn quốc tịch", "Hủy", "Thêm quốc tịch");
-                    if (asw == "Thêm quốc tịch")
-                    {
-                        if (!string.IsNullOrEmpty(viewModel.Reservation.purchaser_contact_name))
-                        {
-                            await App.Current.MainPage.Navigation.PushAsync(new ContactForm(Guid.Parse(viewModel.Customer.Val)));
-                        }
-                        else
-                        {
-                            await App.Current.MainPage.Navigation.PushAsync(new AccountForm(Guid.Parse(viewModel.Customer.Val)));
-                        }
-                    }
-                    LoadingHelper.Hide();
-                }
-                else
-                {
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Tạo lịch thanh toán thất bại. Vui lòng thử lại");
-                }    
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(response.ErrorResponse.error.message);
+                //if (IsSuccess == "Localization")
+                //{
+                //    string asw = await App.Current.MainPage.DisplayActionSheet("Khách hàng chưa chọn quốc tịch", "Hủy", "Thêm quốc tịch");
+                //    if (asw == "Thêm quốc tịch")
+                //    {
+                //        if (!string.IsNullOrEmpty(viewModel.Reservation.purchaser_contact_name))
+                //        {
+                //            await App.Current.MainPage.Navigation.PushAsync(new ContactForm(Guid.Parse(viewModel.Customer.Val)));
+                //        }
+                //        else
+                //        {
+                //            await App.Current.MainPage.Navigation.PushAsync(new AccountForm(Guid.Parse(viewModel.Customer.Val)));
+                //        }
+                //    }
+                //    LoadingHelper.Hide();
+                //}
+                //else
+                //{
+                //    LoadingHelper.Hide();
+                //    ToastMessageHelper.ShortMessage("Tạo lịch thanh toán thất bại. Vui lòng thử lại");
+                //}    
             }
         }
 

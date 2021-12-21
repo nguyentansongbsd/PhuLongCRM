@@ -1223,6 +1223,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_netsellingpriceaftervat"] = this.TotalReservation.NetSellingPriceAfterVAT;
             data["totalamount"] = this.TotalReservation.TotalAmount;
 
+            data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)"; // Don vi tien te mac dinh la "đ"
 
             if (this.Quote.bsd_startingdatecalculateofps.HasValue)
             {
@@ -1283,7 +1284,7 @@ namespace PhuLongCRM.ViewModels
                 data["customerid_account@odata.bind"] = $"/accounts({this.Buyer.Val})";
                 //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_contact");
             }
-            if (this.SalesAgent != null)
+            if (this.SalesAgent != null && Guid.Parse(this.SalesAgent?.Val) != Guid.Empty )
             {
                 data["bsd_salessgentcompany@odata.bind"] = $"/accounts({this.SalesAgent.Val})";
             }
@@ -1291,7 +1292,7 @@ namespace PhuLongCRM.ViewModels
             {
                 await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_salessgentcompany");
             }
-            if (this.Collaborator != null)
+            if (this.Collaborator !=null)
             {
                 data["bsd_collaborator@odata.bind"] = $"/contacts({this.Collaborator.Id})";
             }
@@ -1305,7 +1306,7 @@ namespace PhuLongCRM.ViewModels
             }
             else
             {
-                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_customerreferral");
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_customerreferral_contact");
             }
 
             return data;
