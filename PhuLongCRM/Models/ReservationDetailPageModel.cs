@@ -135,6 +135,12 @@ namespace PhuLongCRM.Models
         public string salescompany_account_name { get; set; } // tên đại lý/ sàn 
         public string bsd_nameofstaffagent { get; set; } // nhân viên đại lý/ sàn
         public string bsd_referral { get; set; } // giới thiệu
+        public Guid collaborator_id { get; set; }
+        public string collaborator_name { get; set; }
+        public Guid customerreferral_account_id { get; set; }
+        public string customerreferral_account_name { get; set; }
+        public Guid customerreferral_contact_id { get; set; }
+        public string customerreferral_contact_name { get; set; }
 
         // thông tin bảng tính giá
         public DateTime? _bsd_quotationprinteddate; // ngày in

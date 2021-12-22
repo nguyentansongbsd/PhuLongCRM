@@ -501,6 +501,62 @@ namespace PhuLongCRM.Views
             }
         }
 
+        private void Collaborator_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            ContactDetailPage contactDetailPage = new ContactDetailPage(viewModel.Reservation.collaborator_id);
+            contactDetailPage.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(contactDetailPage);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin cộng tác viên");
+                }
+            };
+            LoadingHelper.Hide();
+        }
+
+        private void CustomerReferral_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            if (viewModel.CustomerReferral.Title == "3")
+            {
+                ContactDetailPage contactDetailPage = new ContactDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
+                contactDetailPage.OnCompleted = async (isSuccess) => {
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(contactDetailPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin khách hàng giới thiệu");
+                    }
+                };
+            }
+            else if (viewModel.CustomerReferral.Title == "2")
+            {
+                AccountDetailPage accountDetailPage = new AccountDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
+                accountDetailPage.OnCompleted = async (isSuccess) => {
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(accountDetailPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin khách hàng giới thiệu");
+                    }
+                };
+            }
+        }
+
         private void Customer_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
