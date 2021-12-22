@@ -20,6 +20,8 @@ namespace PhuLongCRM.ViewModels
 
         public OptionSet _customer;
         public OptionSet Customer { get => _customer; set { _customer = value; OnPropertyChanged(nameof(Customer)); } }
+        public OptionSet _customerReferral;
+        public OptionSet CustomerReferral { get => _customerReferral; set { _customerReferral = value; OnPropertyChanged(nameof(CustomerReferral)); } }
         public ObservableCollection<ReservationCoownerModel> CoownerList { get; set; }
         public ObservableCollection<ReservationInstallmentDetailPageModel> InstallmentList { get; set; }
 
@@ -185,6 +187,18 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='bsd_name' alias='discountpromotion_name'/>
                                         <attribute name='bsd_discountpromotionid' alias='discountpromotion_id'/>
                                     </link-entity>
+                                    <link-entity name='contact' from='contactid' to='bsd_collaborator' visible='false' link-type='outer' alias='a_ceb0dc55ba81e911a83b000d3a07be23'>
+                                        <attribute name='bsd_fullname' alias='collaborator_name'/>
+                                        <attribute name='contactid' alias='collaborator_id' />
+                                    </link-entity>
+                                    <link-entity name='account' from='accountid' to='bsd_customerreferral' visible='false' link-type='outer' alias='a_ef3c042cba81e911a83b000d3a07be23'>
+                                        <attribute name='bsd_name' alias='customerreferral_account_name'/>
+                                        <attribute name='accountid' alias='customerreferral_account_id'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='contactid' to='bsd_customerreferral' visible='false' link-type='outer' alias='a_d6b0dc55ba81e911a83b000d3a07be23'>
+                                        <attribute name='bsd_fullname' alias='customerreferral_contact_name'/>
+                                        <attribute name='contactid' alias='customerreferral_contact_id' />
+                                    </link-entity>
                                     <filter type='and'>
 	                                    <condition attribute='quoteid' operator='eq' uitype='quote' value='" + ReservationId + @"' />
 	                                </filter>
@@ -202,6 +216,16 @@ namespace PhuLongCRM.ViewModels
                 Reservation.interneldiscount_name = data.interneldiscount_name;
                 Reservation.discountpromotion_id = data.discountpromotion_id;
                 Reservation.discountpromotion_name = data.discountpromotion_name;
+                Reservation.collaborator_id = data.collaborator_id;
+                Reservation.collaborator_name = data.collaborator_name;
+                if (data.customerreferral_account_id != Guid.Empty)
+                {
+                    this.CustomerReferral = new OptionSet() { Val = data.customerreferral_account_id.ToString(), Label = data.customerreferral_account_name, Title = "2" };
+                }
+                else if (data.customerreferral_contact_id != Guid.Empty)
+                {
+                    this.CustomerReferral = new OptionSet() { Val = data.customerreferral_contact_id.ToString(), Label = data.customerreferral_contact_name, Title = "3" };
+                }
             }
 
             if (!string.IsNullOrEmpty(Reservation.purchaser_account_name))

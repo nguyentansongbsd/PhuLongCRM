@@ -28,7 +28,6 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = viewModel = new ContactDetailPageViewModel();
-            LoadingHelper.Show();
             NeedToRefresh = false;
             NeedToRefreshActivity = false;
             Tab_Tapped(1);
@@ -57,7 +56,6 @@ namespace PhuLongCRM.Views
 
             else
                 OnCompleted(false);
-            LoadingHelper.Hide();
         }
 
         private async void NewMeet(object sender, EventArgs e)
@@ -148,7 +146,6 @@ namespace PhuLongCRM.Views
         {
             if (Id != null && viewModel.singleContact.contactid == Guid.Empty)
             {
-                LoadingHelper.Show();
                 await viewModel.loadOneContact(Id);
                 await viewModel.GetImageCMND();
                 if (viewModel.singleContact.gendercode != null)
@@ -164,7 +161,6 @@ namespace PhuLongCRM.Views
                     viewModel.SingleLocalization = null;
                 }
                 photoShow = new PhotoShow(viewModel.CollectionCMNDs);
-                LoadingHelper.Hide();
             }
         }
 
