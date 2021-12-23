@@ -194,6 +194,9 @@ namespace PhuLongCRM.ViewModels
         public int pageLookup_province = 1;
         public int pageLookup_district = 1;
 
+        //private AddressModel _test;
+        //public AddressModel Test { get => _test; set { _test = value; OnPropertyChanged(nameof(Test)); } }
+
         public LeadFormViewModel()
         {
             singleLead = new LeadFormModel();
@@ -456,14 +459,14 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_topic@odata.bind"] = "/bsd_topics(" + this.Topic.Val + ")";
             }
 
-            if (singleLead._transactioncurrencyid_value == null)
-            {
-                await DeletLookup("transactioncurrencyid", singleLead.leadid);
-            }
-            else
-            {
-                data["transactioncurrencyid@odata.bind"] = "/transactioncurrencies(" + singleLead._transactioncurrencyid_value + ")"; /////Lookup Field
-            }
+            //if (singleLead._transactioncurrencyid_value == null)
+            //{
+            //    await DeletLookup("transactioncurrencyid", singleLead.leadid);
+            //}
+            //else
+            //{
+            //    data["transactioncurrencyid@odata.bind"] = "/transactioncurrencies(" + singleLead._transactioncurrencyid_value + ")"; /////Lookup Field
+            //}
 
             if (singleLead._campaignid_value == null)
             {

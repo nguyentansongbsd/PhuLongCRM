@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -339,6 +340,96 @@ namespace PhuLongCRM.ViewModels
                 return true;
             else
                 return false;
+        }
+
+        public async Task updateStatusUnit()
+        {
+            IDictionary<string, object> data = new Dictionary<string, object>();
+
+            string fetchSalesorder = @"<fetch>
+                                  <entity name='salesorder'>
+                                    <attribute name='statecode' />
+                                    <attribute name='statuscode' />
+                                    <link-entity name='product' from='productid' to='bsd_unitnumber'>
+                                      <filter>
+                                        <condition attribute='productid' operator='eq' value='{" + Queue._bsd_units_value + @"}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var resultSalesorder = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContractModel>>("salesorders", fetchSalesorder);
+            if (resultSalesorder != null && resultSalesorder.value.Count > 0)
+                return;
+
+            string fetchQuote = @"<fetch>
+                                  <entity name='quote'>
+                                    <attribute name='statecode' />
+                                    <attribute name='statuscode' />
+                                    <link-entity name='product' from='productid' to='bsd_unitno'>
+                                      <filter>
+                                        <condition attribute='productid' operator='eq' value='{" + Queue._bsd_units_value + @"}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var resultQuote = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ReservationDetailPageModel>>("quotes", fetchQuote);
+            if (resultQuote != null && resultQuote.value.Count > 0)
+            {
+                if (resultQuote.value.FirstOrDefault(x => x.statuscode == 3 || x.statuscode == 861450000) != null)
+                {
+                    data["statecode"] = 0;
+                    data["statuscode"] = 100000003;
+                }
+                else if (resultQuote.value.FirstOrDefault(x => x.statuscode == 4) != null)
+                {
+                    data["statecode"] = 0;
+                    data["statuscode"] = 100000010;
+                }
+            }
+            else
+            {
+                string fetchQueue = @"<fetch>
+                                          <entity name='opportunity'>
+                                            <attribute name='name' />
+                                            <attribute name='statuscode' />
+                                            <attribute name='bsd_phaselaunch' alias='_bsd_phaselaunch_value' />
+                                            <filter type='and'>
+                                              <condition attribute='bsd_units' operator='eq' value='{" + Queue._bsd_units_value + @"}'/>
+                                            </filter>
+                                          </entity>
+                                        </fetch>";
+                var resultQueue = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueuesDetailModel>>("opportunities", fetchQueue);
+                if (resultQueue != null && resultQueue.value.Count > 0)
+                {
+                    if (resultQueue.value.FirstOrDefault(x => x.statuscode == 100000000 || x.statuscode == 100000008) != null)
+                    {
+                        data["statecode"] = 0;
+                        data["statuscode"] = 100000004;
+                    }
+                    else if (resultQueue.value.FirstOrDefault(x => x.statuscode == 100000002) != null)
+                    {
+                        data["statecode"] = 0;
+                        data["statuscode"] = 100000007;
+                    }
+                    else
+                    {
+                        var queue = resultQueue.value.FirstOrDefault(x => x.statuscode == 4 || x.statuscode == 100000007 || x.statuscode == 100000009);
+                        if (queue != null && queue._bsd_phaselaunch_value != Guid.Empty)
+                        {
+                            data["statecode"] = 0;
+                            data["statuscode"] = 100000000;
+                        }
+                        else if (resultQueue.value.FirstOrDefault(x => x.statuscode == 4 || x.statuscode == 100000007) != null)
+                        {
+                            data["statecode"] = 0;
+                            data["statuscode"] = 1;
+                        }
+                    }
+                }
+            }
+
+            string path = "/products(" + Queue._bsd_units_value + ")";
+            CrmApiResponse result = await CrmHelper.PatchData(path, data);
         }
     }
 }

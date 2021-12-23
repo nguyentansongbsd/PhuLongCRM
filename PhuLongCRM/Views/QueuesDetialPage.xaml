@@ -291,7 +291,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="Thông tin người bán" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                                        <Label Text="Thông tin Đại lý / Sàn" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>

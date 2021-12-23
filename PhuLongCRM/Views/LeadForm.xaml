@@ -34,6 +34,8 @@
                         <telerikPrimitives:RadExpander.Content>
                             <StackLayout BackgroundColor="White" Padding="10">
 
+                                <!--<controls:LookUpAddress Placeholder="Chọn địa chỉ liên lạc" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Test}" CenterModal="{Reference grid}"/>-->
+
                                 <controls:FormLabel x:Name="customerCode" Text="Mã khách hàng" FontSize="15" IsVisible="false"/>
                                 <telerikPrimitives:RadBorder BorderColor="#f1f1f1" IsVisible="{Binding Path=IsVisible,Source={Reference customerCode}}" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
                                     <Label Text="{Binding singleLead.bsd_customercode}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>

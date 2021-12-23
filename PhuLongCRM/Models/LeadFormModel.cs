@@ -22,7 +22,7 @@ namespace PhuLongCRM.Models
         public string statecode { get { return _statecode; } set { _statecode = value; OnPropertyChanged(nameof(statecode)); } }
 
         private string _mobilephone;
-        public string mobilephone { get { return _mobilephone; } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
+        public string mobilephone { get { return _mobilephone != null && _mobilephone.Contains("+84-") ? _mobilephone : (_mobilephone != null && _mobilephone.Contains("+84") ? "+84-" : "+84-" + _mobilephone); } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
 
         private string _new_gender;
         public string new_gender { get { return _new_gender; } set { _new_gender = value; OnPropertyChanged(nameof(new_gender)); } }
@@ -37,7 +37,7 @@ namespace PhuLongCRM.Models
         public Guid leadid { get { return _leadid; } set { _leadid = value; OnPropertyChanged(nameof(leadid)); } }
 
         private string _telephone1;
-        public string telephone1 { get { return _telephone1; } set { _telephone1 = value; OnPropertyChanged(nameof(telephone1)); } }
+        public string telephone1 { get { return _telephone1 != null && _telephone1.Contains("+84-") ? _telephone1 : (_telephone1 != null && _telephone1.Contains("+84") ? "+84-" : "+84-" + _telephone1); } set { _telephone1 = value; OnPropertyChanged(nameof(telephone1)); } }
 
         private DateTime? _new_birthday;
         public DateTime? new_birthday

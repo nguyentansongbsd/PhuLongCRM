@@ -44,14 +44,14 @@ namespace PhuLongCRM.Views
             centerModalAddress3.Body.BindingContext = viewModel;
             SetPreOpen();
             lookUpDanhGia.HideClearButton();
-            if (string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone))
-            {
-                mobilephone_text.Text = "+84-";
-            }
-            if (string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1))
-            {
-                telephone1_text.Text = "+84-";
-            }
+            //if (string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone))
+            //{
+            //    mobilephone_text.Text = "+84-";
+            //}
+            //if (string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1))
+            //{
+            //    telephone1_text.Text = "+84-";
+            //}
             CheckSingleLead?.Invoke(true);
         }
 
@@ -62,6 +62,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
                 customerCode.IsVisible = true;
+                lookUpLeadSource.IsEnabled = false;
                 viewModel.CompositeAddress3 = viewModel.singleLead.bsd_accountaddressvn;
                 viewModel.LineAddress3 = viewModel.singleLead.bsd_account_housenumberstreetwardvn;
 
@@ -277,7 +278,8 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Gồm 09 ký tự).");
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length != 12)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length > 12 ||
+                viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
             {
                 ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Gồm 12 ký tự).");
             }
@@ -329,6 +331,12 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1) && viewModel.singleLead.telephone1.Length != 14)
+            {
+                ToastMessageHelper.ShortMessage("Số điện thoại công ty không hợp lệ (Gồm 10 ký tự)");
+                return;
+            }
+
             if (viewModel.CustomerGroup == null)
             {
                 ToastMessageHelper.ShortMessage("Vui lòng chọn phân nhóm");
@@ -358,7 +366,8 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Gồm 09 ký tự).");
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 12 )// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 12
+                || viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
             {
                 ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Gồm 12 ký tự).");
                 return;

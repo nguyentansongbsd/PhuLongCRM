@@ -602,7 +602,7 @@ namespace PhuLongCRM.ViewModels
 
         //}
 
-        public async void createQueueDraft(bool isQueueProject, Guid id)
+        public async Task createQueueDraft(bool isQueueProject, Guid id)
         {
             if(isQueueProject)
             {
@@ -676,7 +676,6 @@ namespace PhuLongCRM.ViewModels
             if (id != Guid.Empty)
             {
                 string path = "/opportunities(" + id + ")";
-                QueueFormModel.opportunityid = Guid.NewGuid();
                 var content = await this.getContent2();
                 CrmApiResponse result = await CrmHelper.PatchData(path, content);
                 if (result.IsSuccess)
@@ -756,6 +755,7 @@ namespace PhuLongCRM.ViewModels
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
+            data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)";
             return data;
         }
 
@@ -948,6 +948,107 @@ namespace PhuLongCRM.ViewModels
             QueueFormModel.bsd_dateorder = tmp.bsd_dateorder;
             QueueFormModel.bsd_expired = tmp.bsd_expired;
             QueueFormModel.statuscode = tmp.statuscode;
+        }
+
+        public async Task updateStatusUnit()
+        {
+            IDictionary<string, object> data = new Dictionary<string, object>();
+
+            string fetchSalesorder = @"<fetch>
+                                  <entity name='salesorder'>
+                                    <attribute name='statecode' />
+                                    <attribute name='statuscode' />
+                                    <link-entity name='product' from='productid' to='bsd_unitnumber'>
+                                      <filter>
+                                        <condition attribute='productid' operator='eq' value='{" + QueueFormModel.bsd_units_id + @"}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var resultSalesorder = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContractModel>>("salesorders", fetchSalesorder);
+            if (resultSalesorder != null || resultSalesorder.value.Count > 0)
+                return;
+
+            string fetchQuote = @"<fetch>
+                                  <entity name='quote'>
+                                    <attribute name='statecode' />
+                                    <attribute name='statuscode' />
+                                    <link-entity name='product' from='productid' to='bsd_unitno'>
+                                      <filter>
+                                        <condition attribute='productid' operator='eq' value='{" + QueueFormModel.bsd_units_id + @"}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var resultQuote = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ReservationDetailPageModel>>("quotes", fetchQuote);
+            if (resultQuote != null || resultQuote.value.Count > 0)
+            {
+               if(resultQuote.value.FirstOrDefault(x => x.statuscode == 3 || x.statuscode == 861450000)!=null)
+                {
+                    data["statecode"] = 0;
+                    data["statuscode"] = 100000003;
+                }
+               else if (resultQuote.value.FirstOrDefault(x => x.statuscode == 4) != null)
+                {
+                    data["statecode"] = 0;
+                    data["statuscode"] = 100000010;
+                }
+            }
+            else
+            {
+                string fetchQueue = @"<fetch>
+                                          <entity name='opportunity'>
+                                            <attribute name='name' />
+                                            <attribute name='statuscode' />
+                                            <attribute name='bsd_phaselaunch' alias='_bsd_phaselaunch_value' />
+                                            <filter type='and'>
+                                              <condition attribute='bsd_units' operator='eq' value='{" + QueueFormModel.bsd_units_id + @"}'/>
+                                            </filter>
+                                          </entity>
+                                        </fetch>";
+                var resultQueue = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueuesDetailModel>>("opportunities", fetchQueue);
+                if (resultQueue != null || resultQueue.value.Count > 0)
+                {
+                    if (resultQueue.value.FirstOrDefault(x => x.statuscode == 100000000 || x.statuscode == 100000008) != null)
+                    {
+                        data["statecode"] = 0;
+                        data["statuscode"] = 100000004;
+                    }
+                    else if (resultQueue.value.FirstOrDefault(x => x.statuscode == 100000002) != null)
+                    {
+                        data["statecode"] = 0;
+                        data["statuscode"] = 100000007;
+                    }
+                    else
+                    {
+                        var queue = resultQueue.value.FirstOrDefault(x => x.statuscode == 4 || x.statuscode == 100000007 || x.statuscode == 100000009);
+                        if (queue != null && queue._bsd_phaselaunch_value != Guid.Empty)
+                        {
+                            data["statecode"] = 0;
+                            data["statuscode"] = 100000000;
+                        }
+                        else if (resultQueue.value.FirstOrDefault(x => x.statuscode == 4 || x.statuscode == 100000007) != null)
+                        {
+                            data["statecode"] = 0;
+                            data["statuscode"] = 1;
+                        }
+                    }
+                }
+            }
+
+            string path = "/products(" + QueueFormModel.bsd_units_id + ")";
+            CrmApiResponse result = await CrmHelper.PatchData(path, data);
+        }
+
+        public void test(string a)
+        {
+          if(a.Contains("_moblie"))
+            {
+                a.Replace("_moblie",null);
+                // theem don vi tien te
+            }
+          // chay book nhu binh thuong
+                
         }
     }
 }
