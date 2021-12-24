@@ -28,10 +28,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
     <Folder Include="Converters\" />
     <Folder Include="Settings\" />
-    <Folder Include="Controls\" />
     <Folder Include="IServices\" />
     <Folder Include="Helper\" />
     <Folder Include="Fonts\" />
@@ -58,5 +56,13 @@
     <EmbeddedResource Include="Fonts\Roboto-Bold.ttf" />
     <EmbeddedResource Include="Fonts\Roboto-Medium.ttf" />
     <EmbeddedResource Include="Fonts\Roboto-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\LookUpAddress.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\LookUpViewAddress.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

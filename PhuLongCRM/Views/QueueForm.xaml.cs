@@ -88,9 +88,9 @@ namespace PhuLongCRM.Views
             if (from)
             {
                 await viewModel.LoadFromUnit(viewModel.UnitId);
-                viewModel.createQueueDraft(false, viewModel.UnitId);
+                await viewModel.createQueueDraft(false, viewModel.UnitId);
                 topic.Text = viewModel.QueueFormModel.bsd_units_name;              
-                if (viewModel.QueueFormModel.bsd_units_id != Guid.Empty)
+                if (viewModel.QueueFormModel.bsd_units_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
                     OnCompleted?.Invoke(true);
                 else
                     OnCompleted?.Invoke(false);
@@ -98,9 +98,9 @@ namespace PhuLongCRM.Views
             else
             {
                 await viewModel.LoadFromProject(viewModel.UnitId);
-                viewModel.createQueueDraft(true, viewModel.UnitId);
+                await viewModel.createQueueDraft(true, viewModel.UnitId);
                 topic.Text = viewModel.QueueFormModel.bsd_project_name +" - "+ DateTime.Now.ToString("dd/MM/yyyyy");                
-                if (viewModel.QueueFormModel.bsd_project_id != Guid.Empty)
+                if (viewModel.QueueFormModel.bsd_project_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
                     OnCompleted?.Invoke(true);
                 else
                     OnCompleted?.Invoke(false);
@@ -206,5 +206,6 @@ namespace PhuLongCRM.Views
                 viewModel.Collaborator = null;
             }
         }
+
     }
 }

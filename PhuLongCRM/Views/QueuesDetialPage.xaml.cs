@@ -446,7 +446,12 @@ namespace PhuLongCRM.Views
         {
             if (IsSuccess)
             {
-                await viewModel.LoadQueue();
+                await Task.WhenAll(
+                    viewModel.updateStatusUnit(),
+                    viewModel.LoadQueue()
+               );
+                //await viewModel.updateStatusUnit();
+                //await viewModel.LoadQueue();
                 SetButtons();
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                 if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
