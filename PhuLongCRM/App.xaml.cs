@@ -10,7 +10,7 @@ namespace PhuLongCRM
         public App()
         {
             InitializeComponent();
-            MainPage = new Login();
+            MainPage = new BlankPage();
         }
 
         protected override void OnStart()
