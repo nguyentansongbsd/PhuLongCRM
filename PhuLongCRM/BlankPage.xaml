@@ -6,7 +6,7 @@
     x:Class="PhuLongCRM.BlankPage">
     <ContentPage.Content>
         <StackLayout Margin="10,50">
-            <controls:PhoneEntryControl Placeholder="asdf"/>
+            <controls:PhoneEntryControl Placeholder="phone"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
