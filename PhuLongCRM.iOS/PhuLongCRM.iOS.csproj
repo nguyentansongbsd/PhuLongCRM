@@ -38,8 +38,8 @@
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
-    <CodesignProvision>PhuLong Dev Profile</CodesignProvision>
-    <CodesignKey>Apple Development: Song Nguyen (HSWY559C8W)</CodesignKey>
+    <CodesignProvision>PhuLong Production Profile</CodesignProvision>
+    <CodesignKey>Apple Distribution: BUSINESS SOFTWARE DEVELOPMENT SOLUTIONS COMPANY LIMITED (F9S643CM8L)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -133,6 +133,7 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_152.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_167.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_1024.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
