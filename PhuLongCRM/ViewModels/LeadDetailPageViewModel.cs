@@ -132,14 +132,6 @@ namespace PhuLongCRM.ViewModels
                 return;
             }    
             var data = result.value.FirstOrDefault();
-            if (data.mobilephone.StartsWith("84"))
-            {
-                data.mobilephone = "+84-" + data.mobilephone.Replace("84", "");
-            }
-            if (data.telephone1.StartsWith("84"))
-            {
-                data.telephone1 = "+84-" + data.telephone1.Replace("84", "");
-            }
             this.singleLead = data;
             this.singleGender = list_gender_optionset.SingleOrDefault(x => x.Val == this.singleLead.new_gender);
             this.LeadSource = LeadSourcesData.GetLeadSourceById(this.singleLead.leadsourcecode);

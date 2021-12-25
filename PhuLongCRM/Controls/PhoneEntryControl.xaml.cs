@@ -12,16 +12,13 @@ namespace PhuLongCRM.Controls
         public PhoneEntryControl()
         {
             InitializeComponent();
-            entryPhone.SetBinding(MainEntry.TextProperty, new Binding("PhoneNum") { Source = this }) ;
-            if (!string.IsNullOrWhiteSpace(PhoneNum))
-            {
-                PhoneNum += "+84-";
-            }
+            Init();
         }
 
-        void entryPhone_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
+        public async void Init()
         {
-            
+            entryPhone.SetBinding(MainEntry.TextProperty, new Binding("PhoneNum") { Source = this });
         }
+
     }
 }
