@@ -9,6 +9,7 @@
     <Compile Remove="Services\**" />
     <EmbeddedResource Remove="Services\**" />
     <None Remove="Services\**" />
+    <None Remove="Behaviors\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +34,7 @@
     <Folder Include="IServices\" />
     <Folder Include="Helper\" />
     <Folder Include="Fonts\" />
+    <Folder Include="Behaviors\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\MyPage.xaml.cs">

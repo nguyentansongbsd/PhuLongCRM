@@ -8,6 +8,7 @@ namespace PhuLongCRM.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) return null;
             string phone = value.ToString();
             if (phone.StartsWith("84"))
             {
