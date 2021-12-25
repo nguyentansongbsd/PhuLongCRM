@@ -1,31 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-      xmlns:controls="clr-namespace:PhuLongCRM.Controls"
-      x:Class="PhuLongCRM.Controls.LookUpViewAddress">
-    <controls:CenterModal x:Name="centerModal">
-        <controls:CenterModal.Body>
-            <ScrollView>
-                <StackLayout Margin="10">
-                    <controls:FormLabel Text="Quốc gia"/>
-                    <controls:LookUp x:Name="lookUpCountry" Placeholder="Chọn quốc gia" NameDisplay="Name" SelectedItem="{Binding Country}" ItemsSource="{Binding list_country_lookup}" SelectedItemChange="CountryAddress_Changed"/>
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             x:Class="PhuLongCRM.Controls.LookUpViewAddress"
+             Padding="10"
+             x:Name="main">
+    <controls:FormLabel Text="Quốc gia"/>
+    <controls:LookUp x:Name="lookUpCountry" Placeholder="Chọn quốc gia" NameDisplay="Name" SelectedItemChange="CountryAddress_Changed"/> <!--SelectedItem="{Binding Country}" ItemsSource="{Binding list_country_lookup}"-->
 
-                    <controls:FormLabel Text="Tỉnh thành"/>
-                    <controls:LookUp x:Name="lookUpProvince" Placeholder="Chọn tỉnh thành" NameDisplay="Name" SelectedItem="{Binding Province}" ItemsSource="{Binding list_province_lookup}" SelectedItemChange="StateProvinceAddress_Changed"/>
+    <controls:FormLabel Text="Tỉnh thành"/>
+    <controls:LookUp x:Name="lookUpProvince" Placeholder="Chọn tỉnh thành" NameDisplay="Name" SelectedItem="{Binding Province}" ItemsSource="{Binding list_province_lookup}" SelectedItemChange="StateProvinceAddress_Changed"/>
 
-                    <controls:FormLabel Text="Quận/Huyện"/>
-                    <controls:LookUp x:Name="lookUpDistrict" Placeholder="Chọn quận/huyện" NameDisplay="Name" SelectedItem="{Binding District}" ItemsSource="{Binding list_district_lookup}"/>
+    <controls:FormLabel Text="Quận/Huyện"/>
+    <controls:LookUp x:Name="lookUpDistrict" Placeholder="Chọn quận/huyện" NameDisplay="Name"/> <!--SelectedItem="{Binding District}" ItemsSource="{Binding list_district_lookup}"-->
 
-                    <controls:FormLabelRequired Text="Số nhà/Đường/Phường"/>
-                    <controls:MainEntry Placeholder="Nhập số nhà/đường/phường" Text="{Binding addressModel.lineaddress}"/>
-                </StackLayout>
-            </ScrollView>
-        </controls:CenterModal.Body>
-        <controls:CenterModal.Footer>
-            <Grid ColumnDefinitions="*,*" Margin="10">
-                <Button Grid.Column="0" Text="Đóng" Clicked="CloseAddress_Clicked" HeightRequest="40" BackgroundColor="White" TextColor="{StaticResource NavigationPrimary}" BorderColor="{StaticResource NavigationPrimary}" BorderWidth="1" CornerRadius="10"/>
-                <Button Grid.Column="1" Text="Xác nhận" Clicked="ConfirmAddress_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
-            </Grid>
-        </controls:CenterModal.Footer>
-    </controls:CenterModal>
-</Grid>
+    <controls:FormLabelRequired Text="Số nhà/Đường/Phường"/>
+    <controls:LookUpEntry x:Name="lineAddress" Placeholder="Nhập số nhà/đường/phường"/>
+</StackLayout>

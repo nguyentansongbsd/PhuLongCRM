@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,17 +14,8 @@ namespace PhuLongCRM.Models
         public Guid district_id { get; set; }
         public string district_name { get; set; }
         public string lineaddress { get; set; }
-        public string address 
-        { 
-            get 
-            {
-                List<string> ad = new List<string>();
-                ad.Add(lineaddress);
-                ad.Add(district_name);
-                ad.Add(province_name);
-                ad.Add(country_name);
-                return string.Join(", ", ad);
-            } 
-        }
+        public string address { get; set; }
+        public string lineaddress_en { get; set; }
+        public string address_en { get; set; }
     }
 }
