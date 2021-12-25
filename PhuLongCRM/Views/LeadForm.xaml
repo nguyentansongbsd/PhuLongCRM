@@ -33,9 +33,7 @@
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
                             <StackLayout BackgroundColor="White" Padding="10">
-
-                                <!--<controls:LookUpAddress Placeholder="Chọn địa chỉ liên lạc" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Test}" CenterModal="{Reference grid}"/>-->
-
+                                
                                 <controls:FormLabel x:Name="customerCode" Text="Mã khách hàng" FontSize="15" IsVisible="false"/>
                                 <telerikPrimitives:RadBorder BorderColor="#f1f1f1" IsVisible="{Binding Path=IsVisible,Source={Reference customerCode}}" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
                                     <Label Text="{Binding singleLead.bsd_customercode}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
@@ -91,24 +89,10 @@
                                 <controls:LookUp x:Name="lookUpLeadSource" Placeholder="Chọn nguồn khách hàng" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding LeadSource}" ItemsSource="{Binding LeadSources}"/>
 
                                 <controls:FormLabel Text="Địa chỉ liên lạc" Margin="0,10,0,0"/>
-                                <Grid>
-                                    <controls:MainEntry Text="{Binding CompositeAddress1}" Placeholder="Chọn địa chỉ liên lạc" FontSize="15"/>
-                                    <StackLayout>
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiaChiLienLac_Tapped" />
-                                        </StackLayout.GestureRecognizers>
-                                    </StackLayout>
-                                </Grid>
+                                <controls:LookUpAddress Placeholder="Chọn địa chỉ liên lạc" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference centerModal}"/>
 
                                 <controls:FormLabel Text="Địa chỉ thường trú" Margin="0,10,0,0"/>
-                                <Grid>
-                                    <controls:MainEntry Text="{Binding CompositeAddress2}" Placeholder="Chọn địa chỉ thường trú" FontSize="15"/>
-                                    <StackLayout>
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiaChiThuongTru_Tapped"/>
-                                        </StackLayout.GestureRecognizers>
-                                    </StackLayout>
-                                </Grid>
+                                <controls:LookUpAddress Placeholder="Chọn địa chỉ thường trú" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference centerModal}"/>
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
                     </telerikPrimitives:RadExpander>
@@ -131,14 +115,7 @@
                                 <controls:MainEntry x:Name="websiteurl_text" Text="{Binding singleLead.websiteurl}" Placeholder="Nhập website công ty" FontSize="15"/>
 
                                 <controls:FormLabel VerticalOptions="Center" HorizontalOptions="Start" Text="Địa chỉ công ty" FontSize="15" />
-                                <Grid>
-                                    <controls:MainEntry Text="{Binding CompositeAddress3}" Placeholder="Chọn địa chỉ công ty" FontSize="15"/>
-                                    <StackLayout>
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiaChiCongTy_Tapped"/>
-                                        </StackLayout.GestureRecognizers>
-                                    </StackLayout>
-                                </Grid>
+                                <controls:LookUpAddress Placeholder="Chọn địa chỉ công ty" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address3}" CenterModal="{Reference centerModal}"/>
 
                                 <controls:FormLabel VerticalOptions="Center" Text="Mô tả" FontSize="15"/>
                                 <controls:MainEditor x:Name="description_text" Text="{Binding singleLead.description}" Placeholder="Nhập mô tả" FontSize="15" HeightRequest="100"/>
@@ -176,85 +153,7 @@
             <StackLayout AbsoluteLayout.LayoutBounds="0,1,1,60" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White">
                 <Button x:Name="btn_save_lead" Text="Tạo khách hàng" Clicked="SaveLead_Clicked" Margin="10" Padding="10,5" HeightRequest="40" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White"/>
             </StackLayout>
-
-            <controls:CenterModal x:Name="centerModalAddress1" Title="Địa chỉ liên lạc">
-                <controls:CenterModal.Body>
-                    <ScrollView>
-                        <StackLayout Margin="10">
-                            <controls:FormLabel Text="Quốc gia"/>
-                            <controls:LookUp x:Name="lookUpCountryAddress1" Placeholder="Chọn quốc gia" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding CountryAddress1}" ItemsSource="{Binding list_country_lookup}" SelectedItemChange="CountryAddress1_Changed"/>
-
-                            <controls:FormLabel Text="Tỉnh thành"/>
-                            <controls:LookUp Placeholder="Chọn tỉnh thành" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding StateProvinceAddress1}" ItemsSource="{Binding list_province_lookup}" SelectedItemChange="StateProvinceAddress1_Changed"/>
-
-                            <controls:FormLabel Text="Quận/Huyện"/>
-                            <controls:LookUp Placeholder="Chọn quận/huyện" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding CityAddress1}" ItemsSource="{Binding list_district_lookup}"/>
-
-                            <controls:FormLabelRequired Text="Số nhà/Đường/Phường"/>
-                            <controls:MainEntry Placeholder="Nhập số nhà/đường/phường" Text="{Binding LineAddress1}"/>
-                        </StackLayout>
-                    </ScrollView>
-                </controls:CenterModal.Body>
-                <controls:CenterModal.Footer>
-                    <Grid ColumnDefinitions="*,*" Margin="10">
-                        <Button Grid.Column="0" Text="Đóng" Clicked="CloseAddress1_Clicked" HeightRequest="40" BackgroundColor="White" TextColor="{StaticResource NavigationPrimary}" BorderColor="{StaticResource NavigationPrimary}" BorderWidth="1" CornerRadius="10"/>
-                        <Button Grid.Column="1" Text="Xác nhận" Clicked="ConfirmAddress1_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
-                    </Grid>
-                </controls:CenterModal.Footer>
-            </controls:CenterModal>
-
-            <controls:CenterModal x:Name="centerModalAddress2" Title="Địa chỉ thường trú">
-                <controls:CenterModal.Body>
-                    <ScrollView>
-                        <StackLayout Margin="10">
-                            <controls:FormLabel Text="Quốc gia"/>
-                            <controls:LookUp x:Name="lookUpCountryAddress2" Placeholder="Chọn quốc gia" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding CountryAddress2}" ItemsSource="{Binding list_country_lookup}" SelectedItemChange="CountryAddress2_Changed"/>
-
-                            <controls:FormLabel Text="Tỉnh thành"/>
-                            <controls:LookUp Placeholder="Chọn tỉnh thành" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding StateProvinceAddress2}" ItemsSource="{Binding list_province_lookup}" SelectedItemChange="StateProvinceAddress2_Changed"/>
-
-                            <controls:FormLabel Text="Quận/Huyện"/>
-                            <controls:LookUp Placeholder="Chọn quận/huyện" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding CityAddress2}" ItemsSource="{Binding list_district_lookup}"/>
-
-                            <controls:FormLabelRequired Text="Số nhà/Đường/Phường"/>
-                            <controls:MainEntry Placeholder="Nhập số nhà/đường/phường" Text="{Binding LineAddress2}"/>
-                        </StackLayout>
-                    </ScrollView>
-                </controls:CenterModal.Body>
-                <controls:CenterModal.Footer>
-                    <Grid ColumnDefinitions="*,*" Margin="10">
-                        <Button Grid.Column="0" Text="Đóng" Clicked="CloseAddress2_Clicked" HeightRequest="40" BackgroundColor="White" TextColor="{StaticResource NavigationPrimary}" BorderColor="{StaticResource NavigationPrimary}" BorderWidth="1" CornerRadius="10"/>
-                        <Button Grid.Column="1" Text="Xác nhận" Clicked="ConfirmAddress2_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
-                    </Grid>
-                </controls:CenterModal.Footer>
-            </controls:CenterModal>
-
-            <controls:CenterModal x:Name="centerModalAddress3" Title="Địa chỉ công ty">
-                <controls:CenterModal.Body>
-                    <ScrollView>
-                        <StackLayout Margin="10">
-                            <controls:FormLabel Text="Quốc gia"/>
-                            <controls:LookUp x:Name="lookUpCountryAddress3" Placeholder="Chọn quốc gia" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding CountryAddress3}" ItemsSource="{Binding list_country_lookup}" SelectedItemChange="CountryAddress3_Changed"/>
-
-                            <controls:FormLabel Text="Tỉnh thành"/>
-                            <controls:LookUp Placeholder="Chọn tỉnh thành" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding StateProvinceAddress3}" ItemsSource="{Binding list_province_lookup}" SelectedItemChange="StateProvinceAddress3_Changed"/>
-
-                            <controls:FormLabel Text="Quận/Huyện"/>
-                            <controls:LookUp Placeholder="Chọn quận/huyện" BottomModal="{Reference BottomModal}" NameDisplay="Name" SelectedItem="{Binding CityAddress3}" ItemsSource="{Binding list_district_lookup}"/>
-
-                            <controls:FormLabelRequired Text="Số nhà/Đường/Phường"/>
-                            <controls:MainEntry Placeholder="Nhập số nhà/đường/phường" Text="{Binding LineAddress3}"/>
-                        </StackLayout>
-                    </ScrollView>
-                </controls:CenterModal.Body>
-                <controls:CenterModal.Footer>
-                    <Grid ColumnDefinitions="*,*" Margin="10">
-                        <Button Grid.Column="0" Text="Đóng" Clicked="CloseAddress3_Clicked" HeightRequest="40" BackgroundColor="White" TextColor="{StaticResource NavigationPrimary}" BorderColor="{StaticResource NavigationPrimary}" BorderWidth="1" CornerRadius="10"/>
-                        <Button Grid.Column="1" Text="Xác nhận" Clicked="ConfirmAddress3_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
-                    </Grid>
-                </controls:CenterModal.Footer>
-            </controls:CenterModal>
-
+            <controls:CenterModal x:Name="centerModal"/>
             <controls:BottomModal x:Name="BottomModal"/>
             <controls:BottomModal x:Name="LookUpModal"/>
         </AbsoluteLayout>

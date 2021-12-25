@@ -120,38 +120,38 @@ namespace PhuLongCRM.Models
         private string _country_name;
         public string country_name { get { return _country_name; } set { _country_name = value; OnPropertyChanged(nameof(country_name)); } }
 
-        private string __bsd_country_value;
-        public string _bsd_country_value { get { return __bsd_country_value; } set { __bsd_country_value = value; OnPropertyChanged(nameof(_bsd_country_value)); } }
+        private Guid __bsd_country_value;
+        public Guid _bsd_country_value { get { return __bsd_country_value; } set { __bsd_country_value = value; OnPropertyChanged(nameof(_bsd_country_value)); } }
 
         private string _province_name;
         public string province_name { get { return _province_name; } set { _province_name = value; OnPropertyChanged(nameof(province_name)); } }
 
-        private string __bsd_province_value;
-        public string _bsd_province_value { get { return __bsd_province_value; } set { __bsd_province_value = value; OnPropertyChanged(nameof(_bsd_province_value)); } }
+        private Guid __bsd_province_value;
+        public Guid _bsd_province_value { get { return __bsd_province_value; } set { __bsd_province_value = value; OnPropertyChanged(nameof(_bsd_province_value)); } }
 
         private string _district_name;
         public string district_name { get { return _district_name; } set { _district_name = value; OnPropertyChanged(nameof(district_name)); } }
 
-        private string __bsd_district_value;
-        public string _bsd_district_value { get { return __bsd_district_value; } set { __bsd_district_value = value; OnPropertyChanged(nameof(_bsd_district_value)); } }
+        private Guid __bsd_district_value;
+        public Guid _bsd_district_value { get { return __bsd_district_value; } set { __bsd_district_value = value; OnPropertyChanged(nameof(_bsd_district_value)); } }
 
         private string _permanentnation_name;
         public string permanentnation_name { get { return _permanentnation_name; } set { _permanentnation_name = value; OnPropertyChanged(nameof(permanentnation_name)); } }
 
-        private string __bsd_permanentnation_value;
-        public string _bsd_permanentnation_value { get { return __bsd_permanentnation_value; } set { __bsd_permanentnation_value = value; OnPropertyChanged(nameof(_bsd_permanentnation_value)); } }
+        private Guid __bsd_permanentnation_value;
+        public Guid _bsd_permanentnation_value { get { return __bsd_permanentnation_value; } set { __bsd_permanentnation_value = value; OnPropertyChanged(nameof(_bsd_permanentnation_value)); } }
 
         private string _permanentprovince_name;
         public string permanentprovince_name { get { return _permanentprovince_name; } set { _permanentprovince_name = value; OnPropertyChanged(nameof(permanentprovince_name)); } }
 
-        private string __bsd_permanentprovince_value;
-        public string _bsd_permanentprovince_value { get { return __bsd_permanentprovince_value; } set { __bsd_permanentprovince_value = value; OnPropertyChanged(nameof(_bsd_permanentprovince_value)); } }
+        private Guid __bsd_permanentprovince_value;
+        public Guid _bsd_permanentprovince_value { get { return __bsd_permanentprovince_value; } set { __bsd_permanentprovince_value = value; OnPropertyChanged(nameof(_bsd_permanentprovince_value)); } }
 
         private string _permanentdistrict_name;
         public string permanentdistrict_name { get { return _permanentdistrict_name; } set { _permanentdistrict_name = value; OnPropertyChanged(nameof(permanentdistrict_name)); } }
 
-        private string __bsd_permanentdistrict_value;
-        public string _bsd_permanentdistrict_value { get { return __bsd_permanentdistrict_value; } set { __bsd_permanentdistrict_value = value; OnPropertyChanged(nameof(_bsd_permanentdistrict_value)); } }
+        private Guid __bsd_permanentdistrict_value;
+        public Guid _bsd_permanentdistrict_value { get { return __bsd_permanentdistrict_value; } set { __bsd_permanentdistrict_value = value; OnPropertyChanged(nameof(_bsd_permanentdistrict_value)); } }
 
         private bool _bsd_mandatorysecondary;
         public bool bsd_mandatorysecondary { get { return _bsd_mandatorysecondary; } set { _bsd_mandatorysecondary = value; OnPropertyChanged(nameof(bsd_mandatorysecondary)); } }

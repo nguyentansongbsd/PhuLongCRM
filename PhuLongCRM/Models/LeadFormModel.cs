@@ -273,9 +273,9 @@ namespace PhuLongCRM.Models
         public DateTime? bsd_dategrant { get => _bsd_dategrant; set { if (value.HasValue) _bsd_dategrant = value.Value.ToLocalTime(); else _bsd_dategrant = null; OnPropertyChanged(nameof(bsd_dategrant)); } }
 
         //địa chỉ liên ljac
-        public string bsd_country { get; set; }
-        public string bsd_province { get; set; }
-        public string bsd_district { get; set; }
+        public Guid bsd_country_id { get; set; }
+        public Guid bsd_province_id { get; set; }
+        public Guid bsd_district_id { get; set; }
         public string bsd_housenumberstreet { get; set; }
         public string bsd_contactaddress { get; set; }
         public string bsd_country_name { get; set; }
@@ -283,9 +283,9 @@ namespace PhuLongCRM.Models
         public string bsd_district_name { get; set; }
 
         //địa chỉ thường trú
-        public string bsd_permanentcountry { get; set; }
-        public string bsd_permanentprovince { get; set; }
-        public string bsd_permanentdistrict { get; set; }
+        public Guid bsd_permanentcountry_id { get; set; }
+        public Guid bsd_permanentprovince_id { get; set; }
+        public Guid bsd_permanentdistrict_id { get; set; }
         public string bsd_permanentaddress { get; set; }
         public string bsd_permanentaddress1 { get; set; }
         public string bsd_permanentcountry_name { get; set; }
@@ -293,9 +293,9 @@ namespace PhuLongCRM.Models
         public string bsd_permanentdistrict_name { get; set; }
 
         //địa chỉ công ty
-        public string bsd_accountcountry { get; set; }
-        public string bsd_accountprovince { get; set; }
-        public string bsd_accountdistrict { get; set; }
+        public Guid bsd_accountcountry_id { get; set; }
+        public Guid bsd_accountprovince_id { get; set; }
+        public Guid bsd_accountdistrict_id { get; set; }
         public string bsd_account_housenumberstreetwardvn { get; set; }
         public string bsd_accountaddressvn { get; set; }
         public string bsd_accountcountry_name { get; set; }

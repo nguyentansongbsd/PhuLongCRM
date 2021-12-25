@@ -172,27 +172,27 @@ namespace PhuLongCRM.Views
         private async void ChangeAddress_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            if (!string.IsNullOrWhiteSpace(viewModel.ContactModel._bsd_country_value))
+            if (viewModel.ContactModel._bsd_country_value != Guid.Empty)
             {
-                viewModel.AddressCountryContact = new LookUp() { Id = Guid.Parse(viewModel.ContactModel._bsd_country_value), Name = viewModel.ContactModel.bsd_country_label };
+                viewModel.AddressCountryContact = new LookUp() { Id = viewModel.ContactModel._bsd_country_value, Name = viewModel.ContactModel.bsd_country_label };
             }
             else
             {
                 viewModel.AddressCountryContact = null;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.ContactModel._bsd_province_value))
+            if (viewModel.ContactModel._bsd_province_value != Guid.Empty)
             {
-                viewModel.AddressStateProvinceContact = new LookUp() { Id = Guid.Parse(viewModel.ContactModel._bsd_province_value), Name = viewModel.ContactModel.bsd_province_label };
+                viewModel.AddressStateProvinceContact = new LookUp() { Id = viewModel.ContactModel._bsd_province_value, Name = viewModel.ContactModel.bsd_province_label };
             }
             else
             {
                 viewModel.AddressStateProvinceContact = null;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.ContactModel._bsd_district_value))
+            if (viewModel.ContactModel._bsd_district_value != Guid.Empty)
             {
-                viewModel.AddressCityContact = new LookUp() { Id = Guid.Parse(viewModel.ContactModel._bsd_district_value), Name = viewModel.ContactModel.bsd_district_label };
+                viewModel.AddressCityContact = new LookUp() { Id = viewModel.ContactModel._bsd_district_value, Name = viewModel.ContactModel.bsd_district_label };
             }
             else
             {
@@ -228,11 +228,11 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             viewModel.ContactModel.bsd_housenumberstreet = viewModel.AddressLine1Contact;
             viewModel.ContactModel.bsd_postalcode = viewModel.AddressPostalCodeContact;
-            viewModel.ContactModel._bsd_country_value = viewModel.AddressCountryContact?.Id.ToString();
+            viewModel.ContactModel._bsd_country_value = viewModel.AddressCountryContact.Id;
             viewModel.ContactModel.bsd_country_label = viewModel.AddressCountryContact?.Name;
-            viewModel.ContactModel._bsd_province_value = viewModel.AddressStateProvinceContact?.Id.ToString();
+            viewModel.ContactModel._bsd_province_value = viewModel.AddressStateProvinceContact.Id;
             viewModel.ContactModel.bsd_province_label = viewModel.AddressStateProvinceContact?.Name;
-            viewModel.ContactModel._bsd_district_value = viewModel.AddressCityContact?.Id.ToString();
+            viewModel.ContactModel._bsd_district_value = viewModel.AddressCityContact.Id;
             viewModel.ContactModel.bsd_district_label = viewModel.AddressCityContact?.Name;
             viewModel.SetAddress();
             await centerModalContactAddress.Hide();
