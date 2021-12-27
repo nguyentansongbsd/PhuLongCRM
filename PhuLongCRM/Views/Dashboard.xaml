@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="Trang chủ"
+             Title="{Static lang:Language.trang_chu}"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:convertes ="clr-namespace:PhuLongCRM.Converters"
@@ -20,7 +21,7 @@
                         <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="HOA HỒNG -"/>
+                                    <Span Text="{Binding Source={x:Static lang:Language.hoa_hong},StringFormat='{0} -'}"/>
                                     <Span Text="{Binding dateBefor,StringFormat=' {0:MM/yyyy}'}"/>
                                 </FormattedString>
                             </Label.FormattedText>
@@ -29,13 +30,13 @@
                             <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
                                     <Label Text="{Binding TotalCommissionAMonth,Converter={StaticResource CurrencyFormat}}" FontSize="18" TextColor="#7C0617" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                    <Label Text="Tổng tiền" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
                                     <Label Text="{Binding TotalPaidCommissionAMonth,Converter={StaticResource CurrencyFormat}}" FontSize="18" TextColor="#017914" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                    <Label Text="Đã nhận" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.da_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
@@ -59,7 +60,7 @@
                         <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="GIAO DỊCH -"/>
+                                    <Span Text="{Binding Source={x:Static lang:Language.giao_dich},StringFormat='{0} -'}"/>
                                     <Span Text="{Binding dateBefor,StringFormat=' {0:MM/yyyy}'}"/>
                                 </FormattedString>
                             </Label.FormattedText>
@@ -68,25 +69,25 @@
                             <controls:ExtendedFrame Grid.Column="0" Padding="0">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numQueue}" FontSize="18" FontAttributes="Bold" TextColor="#2196F3" HorizontalTextAlignment="Center"/>
-                                    <Label Text="Giữ chỗ" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.giu_cho}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="0">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numQuote}" FontSize="18" FontAttributes="Bold" TextColor="#FA7803" HorizontalTextAlignment="Center"/>
-                                    <Label Text="Đặt cọc" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.dat_coc}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="2" Padding="0">
                                 <StackLayout Margin="2,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numOptionEntry}" FontSize="18" FontAttributes="Bold" TextColor="#0DB302" HorizontalTextAlignment="Center"/>
-                                    <Label Text="Hợp đồng" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.hop_dong}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="3" Padding="0">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numUnit}" FontSize="18" FontAttributes="Bold" TextColor="#D42A16" HorizontalTextAlignment="Center"/>
-                                    <Label Text="Đã bán" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.da_ban}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
@@ -110,7 +111,7 @@
                             </telerikChart:RadCartesianChart>
                         </controls:ExtendedFrame>
 
-                        <Label Text="KHÁCH HÀNG TIỀM NĂNG" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>
+                        <Label Text="{x:Static lang:Language.khach_hang_tiem_nang}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>
                         <controls:ExtendedFrame Padding="0" Margin="14,6">
                             <Grid ColumnDefinitions="*,*" RowDefinitions="200" Padding="8">
                                 <telerikChart:RadPieChart Grid.Column="0">
@@ -130,29 +131,29 @@
                                 <StackLayout Grid.Column="1" Spacing="28" VerticalOptions="Center">
                                     <StackLayout Orientation="Horizontal" Spacing="8" Padding="0,4">
                                         <Label Text="{Binding numKHMoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#2C95F6" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        <Label Text="Khách hàng mới" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                        <Label Text="{x:Static lang:Language.khach_hang_moi}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal" Spacing="8" >
                                         <Label Text="{Binding numKHDaChuyenDoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#F6E22D" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        <Label Text="Đã chuyển đổi" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                        <Label Text="{x:Static lang:Language.da_chuyen_doi}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal" Spacing="8">
                                         <Label Text="{Binding numKHKhongChuyenDoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#932CF6" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        <Label Text="Không chuyển đổi" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
+                                        <Label Text="{x:Static lang:Language.khong_chuyen_doi}" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
                                     </StackLayout>
                                 </StackLayout>
                             </Grid>
                         </controls:ExtendedFrame>
 
                         <StackLayout Orientation="Horizontal" Padding="14,14,14,8">
-                            <Label Text="CÔNG VIỆC HÔM NAY" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
+                            <Label Text="{x:Static lang:Language.cong_viec_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
                             <Label  TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ShowMore_Tapped"/>
                                 </Label.GestureRecognizers>
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Xem thêm  " FontSize="15"/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.xem_them},StringFormat='{0} '}" FontSize="15"/>
                                         <Span Text="&#xf054;" FontSize="13" FontFamily="FontAwesomeSolid"/>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -160,7 +161,7 @@
                         </StackLayout>
                         <StackLayout x:Name="stTaskList" BindableLayout.ItemsSource="{Binding Activities}" Padding="14" Spacing="8">
                             <BindableLayout.EmptyView>
-                                <Label Text="Hôm nay không có công việc" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
+                                <Label Text="{x:Static lang:Language.hom_nay_khong_co_cong_vec}" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
                             </BindableLayout.EmptyView>
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
@@ -173,19 +174,22 @@
                                             <Label FontSize="15" TextColor="#333333">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="Khách hàng: " />
+                                                        <Span Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}'}" />
                                                         <Span Text="{Binding customer}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
-                                            <Label FontSize="15" TextColor="#333333">
-                                                <Label.Text>
-                                                    <MultiBinding StringFormat="Thời gian: {0:h:mm tt} - {1:h:mm tt}">
-                                                        <Binding Path="scheduledstart" />
-                                                        <Binding Path="scheduledend" />
-                                                    </MultiBinding>
-                                                </Label.Text>
-                                            </Label>
+                                            <StackLayout Orientation="Horizontal" Spacing="0" VerticalOptions="Center">
+                                                <Label Text="{Binding Source={x:Static lang:Language.thoi_gian}}" FontSize="15" TextColor="#333333"/>
+                                                <Label FontSize="15" TextColor="#333333">
+                                                    <Label.Text>
+                                                        <MultiBinding StringFormat=': {0:h:mm tt} - {1:h:mm tt}'>
+                                                            <Binding Path="scheduledstart" />
+                                                            <Binding Path="scheduledend" />
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                            </StackLayout>
                                         </StackLayout>
                                     </controls:ExtendedFrame>
                                 </DataTemplate>

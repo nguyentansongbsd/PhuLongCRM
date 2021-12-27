@@ -10,6 +10,7 @@
     <EmbeddedResource Remove="Services\**" />
     <None Remove="Services\**" />
     <None Remove="Behaviors\" />
+    <None Remove="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,10 +36,17 @@
     <Folder Include="Helper\" />
     <Folder Include="Fonts\" />
     <Folder Include="Behaviors\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\MyPage.xaml.cs">
       <DependentUpon>MyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Language.en.Designer.cs">
+      <DependentUpon>Language.en.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Language.Designer.cs">
+      <DependentUpon>Language.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +73,14 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\LookUpViewAddress.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Language.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Language.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="dang_nhap">
+        <value>Đăng nhập</value>
+    </data>
+	<data name="ten_dang_nhap">
+        <value>Tên đăng nhập</value>
+    </data>
+	<data name="mat_khau">
+        <value>Mật khẩu</value>
+    </data>
+	<data name="ghi_nho_dang_nhap">
+        <value>Ghi nhớ đăng nhập</value>
+    </data>
+	<data name="trang_chu">
+        <value>Trang chủ</value>
+    </data>
+	<data name="hoa_hong">
+        <value>HOA HỒNG</value>
+    </data>
+	<data name="tong_tien">
+        <value>Tổng tiền</value>
+    </data>
+	<data name="da_nhan">
+        <value>Đã nhận</value>
+    </data>
+	<data name="giao_dich">
+        <value>GIAO DỊCH</value>
+    </data>
+	<data name="giu_cho">
+        <value>Giữ chỗ</value>
+    </data>
+	<data name="dat_coc">
+        <value>Đặt cọc</value>
+    </data>
+	<data name="hop_dong">
+        <value>Hợp đồng</value>
+    </data>
+    <data name="da_ban">
+        <value>Đã bán</value>
+    </data>
+    <data name="khach_hang_tiem_nang">
+        <value>KHÁCH HÀNG TIỀM NĂNG</value>
+    </data>
+    <data name="khach_hang_moi">
+        <value>Khách hàng mới</value>
+    </data>
+    <data name="da_chuyen_doi">
+        <value>Đã chuyển đổi</value>
+    </data>
+    <data name="khong_chuyen_doi">
+        <value>Không chuyển đổi</value>
+    </data>
+    <data name="cong_viec_hom_nay">
+        <value>CÔNG VIỆC HÔM NAY</value>
+    </data>
+    <data name="xem_them">
+        <value>Xem thêm</value>
+    </data>
+    <data name="hom_nay_khong_co_cong_vec">
+        <value>Hôm nay không có công việc</value>
+    </data>
+    <data name="khach_hang">
+        <value>Khách hàng</value>
+    </data>
+    <data name="thoi_gian">
+        <value>Thời gian</value>
+    </data>
+    <data name="khong_tim_thay_thong_tin_vui_long_thu_lai">
+        <value>Không tìm thấy thông tin. Vui lòng thử lại</value>
+    </data>
+    <data name="ten_dang_nhap_khong_duoc_de_trong">
+        <value>Tên đăng nhập không được để trống</value>
+    </data>
+    <data name="mat_khau_khong_duong_de_trong">
+        <value>Mật khẩu không được để trống</value>
+    </data>
+    <data name="ten_dang_nhap_khong_dung">
+        <value>Tên đăng nhập không đúng</value>
+    </data>
+    <data name="mat_khau_khong_dung">
+        <value>Mật khẩu không đúng</value>
+    </data>
+    <data name="tai_khoan_khong_the_dang_nhap_tren_thiet_bi_nay">
+        <value>Tài khoản không thể đăng nhập trên thiết bị này</value>
+    </data>
+    <data name="khong_tim_thay_user">
+        <value>Không tìm thấy user</value>
+    </data>
+    <data name="loi_ket_noi_dern_server">
+        <value>Lỗi kết nối đến Server.</value>
+    </data>
+    <data name="thong_bao">
+        <value>Thông báo</value>
+    </data>
+    <data name="dong">
+        <value>Đóng</value>
+    </data>
+    <data name="khong_cap_nhat_duoc_thong_tin_imei">
+        <value>Không cập nhật được thông tin Imei</value>
+    </data>
+</root>

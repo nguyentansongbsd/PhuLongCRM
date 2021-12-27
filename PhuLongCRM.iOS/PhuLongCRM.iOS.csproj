@@ -135,6 +135,8 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_167.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_1024.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
+    <BundleResource Include="Resources\ic_english.png" />
+    <BundleResource Include="Resources\ic_vietnam.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
