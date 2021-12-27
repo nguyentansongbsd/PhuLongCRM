@@ -15,6 +15,12 @@ namespace PhuLongCRM.Settings
             set => AppSettings.AddOrUpdateValue(nameof(Id), value);
         }
 
+        public static string Language
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Language), "vi"); //en
+            set => AppSettings.AddOrUpdateValue(nameof(Language), value);
+        }
+
         public static string AccessToken
         {
             get => AppSettings.GetValueOrDefault(nameof(AccessToken), string.Empty);
