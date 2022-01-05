@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -11,16 +12,15 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("1", "Đang xử lý"),
-                new OptionSet("2", "Đang chờ"),
-                new OptionSet("3", "Đang chờ thông tin chi tiết"),
-                new OptionSet("4", "Nghiên cứu"),
-                new OptionSet("5", "Vấn đề đã được giải quyết"),
-                new OptionSet("1000", "Cung cấp thông tin"),
-                new OptionSet("6", "Đã hủy"),
-                new OptionSet("2000", "Hợp nhất"),
-                 new OptionSet("0", "")
-
+                new OptionSet("1", Language.dang_xu_ly),
+                new OptionSet("2", Language.dang_cho),
+                new OptionSet("3", Language.dang_cho_thong_tin_chi_tiet),
+                new OptionSet("4", Language.nghien_cuu),
+                new OptionSet("5", Language.van_de_da_duoc_giai_quyet),
+                new OptionSet("1000", Language.cung_cap_thong_tin),
+                new OptionSet("6", Language.da_huy),
+                new OptionSet("2000", Language.hop_nhat),
+                new OptionSet("0", "")
             };
         }
 

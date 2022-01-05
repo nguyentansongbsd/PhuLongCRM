@@ -102,10 +102,10 @@
                                     <Label Text="{Binding Queue.bsd_queuingfee,StringFormat='{0:#,0} đ'}" IsVisible="{Binding Queue.bsd_queuingfee,Converter={StaticResource NullToHideConverter}}" FontSize="15" TextColor="#333333" />
                                 </StackLayout>
 
-                                <StackLayout Orientation="Horizontal">
+                                <!--<StackLayout Orientation="Horizontal">
                                     <Label Text="Ngân sách:" FontSize="15" TextColor="#333333" />
                                     <Label Text="{Binding Queue.budgetamount,StringFormat='{0:#,0} đ'}" IsVisible="{Binding Queue.budgetamount,Converter={StaticResource NullToHideConverter}}" FontSize="15" TextColor="#333333" />
-                                </StackLayout>
+                                </StackLayout>-->
 
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Giữ chỗ dự án:" FontSize="15" TextColor="#333333"/>
@@ -212,35 +212,13 @@
 
                                         <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
                                             <Label Grid.Column="0" Text="Số ưu tiên" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
-                                            <Label Grid.Column="1" Text="{Binding Queue.bsd_priorityqueue}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
-                                        </Grid>
-
-                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
-                                            <Label Grid.Column="0" Text="Độ ưu tiên" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                                             <Label Grid.Column="1" Text="{Binding Queue.bsd_prioritynumber}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
                                         </Grid>
 
                                         <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
-                                            <Label Grid.Column="0" Text="Ngày thứ tự" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
-                                            <Label Grid.Column="1" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15">
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="{Binding Queue.bsd_dateorder,StringFormat='{0:dd/MM/yyyy} - '}" />
-                                                        <Span Text="{Binding Queue.bsd_dateorder,StringFormat=' {0:hh:mm tt}'}"/>
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
+                                            <Label Grid.Column="0" Text="Độ ưu tiên" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.bsd_priorityqueue}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
                                         </Grid>
-
-                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
-                                            <Label Grid.Column="0" Text="Đã hết hạn" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
-                                            <Label Grid.Column="1" Text="{Binding Queue.bsd_expired_format}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
-                                        </Grid>
-                                        
-                                        <StackLayout Orientation="Horizontal" Padding="16,10" BackgroundColor="White">
-                                            <Label Text="Nhân viên đại lý" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding Queue.bsd_nameofstaffagent}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
-                                        </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="16,10" BackgroundColor="White">
                                             <Label Text="Thời gian giữ chỗ " FontSize="15" TextColor="#333333"/>
@@ -279,6 +257,22 @@
                                             </Label>
                                         </StackLayout>
 
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Ngày thứ tự" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Queue.bsd_dateorder,StringFormat='{0:dd/MM/yyyy} - '}" />
+                                                        <Span Text="{Binding Queue.bsd_dateorder,StringFormat=' {0:hh:mm tt}'}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
+                                            <Label Grid.Column="0" Text="Đã hết hạn" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Queue.bsd_expired_format}" HorizontalOptions="EndAndExpand" FontAttributes="Bold" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
+                                        </Grid>
+
                                         <StackLayout Orientation="Horizontal" Padding="16,10" BackgroundColor="White">
                                             <Label Text="Mô tả" FontSize="15" TextColor="#333333"/>
                                             <Label Text="{Binding Queue.description}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
@@ -305,6 +299,10 @@
                                                 </Label.GestureRecognizers>
                                             </Label>
                                         </Grid>
+                                        <StackLayout Orientation="Horizontal" Padding="16,10" BackgroundColor="White">
+                                            <Label Text="Nhân viên đại lý" FontSize="15" TextColor="#333333"/>
+                                            <Label Text="{Binding Queue.bsd_nameofstaffagent}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="15"/>
+                                        </StackLayout>
 
                                         <Grid ColumnDefinitions="4*,6*" Padding="16,10" BackgroundColor="White">
                                             <Label Grid.Column="0" Text="Cộng tác viên" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>

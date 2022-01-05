@@ -312,11 +312,6 @@
                                 <Label Grid.Column="0" Text="Tiền giữ chỗ" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
                                 <Label Grid.Column="1" Text="{Binding Project.bsd_bookingfee,Converter={StaticResource DecimalToVndConverter}}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
                             </Grid>
-
-                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="15">
-                                <Label Grid.Column="0" Text="Tiền đặt cọc" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
-                                <Label Grid.Column="1" Text="{Binding Project.bsd_depositamount,Converter={StaticResource DecimalToVndConverter}}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
-                            </Grid>
                         </StackLayout>
 
                         <StackLayout x:Name="stackGiuCho" IsVisible="false">

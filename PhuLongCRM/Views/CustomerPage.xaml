@@ -4,8 +4,9 @@
     xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+    xmlns:lang="clr-namespace:PhuLongCRM.Resources"
     xmlns:contentViews="clr-namespace:PhuLongCRM.Views"
-    Title="KHÁCH HÀNG" BackgroundColor="White"
+    Title="{x:Static lang:Language.khach_hang}" BackgroundColor="White"
     x:Class="PhuLongCRM.Views.CustomerPage">
     <ContentPage.Resources>
         <Style TargetType="telerikPrimitives:RadBorder" x:Key="radBorder">
@@ -64,19 +65,19 @@
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Lead_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblLead" Text="Tiềm năng" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblLead" Text="{x:Static lang:Language.khach_hang_tiem_nang}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                     <telerikPrimitives:RadBorder x:Name="radBorderContact" Grid.Column="1" Style="{StaticResource radBorder}">
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Contact_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblContact" Text="Cá nhân" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblContact" Text="{x:Static lang:Language.ca_nhan}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                     <telerikPrimitives:RadBorder x:Name="radBorderAccount" Grid.Column="2" Style="{StaticResource radBorder}">
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Account_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblAccount" Text="Doanh nghiệp" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblAccount" Text="{x:Static lang:Language.doanh_nghiep}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                 </Grid>
                 

@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -43,8 +44,8 @@ namespace PhuLongCRM.Views
 
         private void Create()
         {
-            this.Title = "Tạo Mới Khách Hàng Doanh Nghiệp";
-            btnSave.Text = "Tạo Mới";
+            this.Title = Language.tao_moi_khach_hang_doanh_nghiep;
+            btnSave.Text = Language.tao_moi;
             datePickerNgayCap.DefaultDisplay = DateTime.Now;
             btnSave.Clicked += CreateContact_Clicked;
             viewModel.BusinessType = viewModel.BusinessTypeOptionList.SingleOrDefault(x => x.Val == "100000000");
@@ -58,8 +59,8 @@ namespace PhuLongCRM.Views
         private async void Update()
         {
             viewModel.singleAccount = new AccountFormModel();
-            this.Title = "Cập Nhật Khách Hàng Doanh Nghiệp";
-            btnSave.Text = "Cập Nhật";
+            this.Title = Language.cap_nhat_khach_hang_doanh_nghiep;
+            btnSave.Text = Language.cap_nhat;
             btnSave.Clicked += UpdateContact_Clicked;
 
             await viewModel.LoadOneAccount(this.AccountId);
@@ -166,28 +167,28 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Localization == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn loại khách hàng");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_loai_khach_hang);
                 return;
             }
             if (viewModel.singleAccount.bsd_name == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập tên công ty");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_ten_cong_ty);
                 return;
             }
             if (viewModel.OperationScope == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn operation scope");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_pham_vi_hoat_dong);
                 return;
             }
 
             if (viewModel.PrimaryContact == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn người đại diện");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_dai_dien);
                 return;
             }
             if (viewModel.singleAccount.telephone1 == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số điện thoại công ty");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai_cong_ty);
                 return;
             }
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
@@ -196,7 +197,7 @@ namespace PhuLongCRM.Views
                 Match match = regex.Match(viewModel.singleAccount.emailaddress1);
                 if (!match.Success)
                 {
-                    ToastMessageHelper.ShortMessage("Email sai địng dạng. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
                     return;
                 }
             }
@@ -205,38 +206,38 @@ namespace PhuLongCRM.Views
                 Match match = regex.Match(viewModel.singleAccount.bsd_email2);
                 if (!match.Success)
                 {
-                    ToastMessageHelper.ShortMessage("Email 2 sai địng dạng. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.email_2_sai_dinh_dang_vui_long_thu_lai);
                     return;
                 }
             }
             if (viewModel.singleAccount.bsd_registrationcode == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số giấy phép kinh doanh");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_giay_phep_kinh_doanh);
                 return;
             }
             if (!await viewModel.Check_form_keydata(null, viewModel.singleAccount.bsd_registrationcode, viewModel.singleAccount.accountid.ToString()))
             {
-                ToastMessageHelper.ShortMessage("Số giấy phép kinh doanh đã tạo trong dữ liệu doanh nghiệp");
+                ToastMessageHelper.ShortMessage(Language.so_giay_phep_kinh_doanh_da_tao_trong_du_lieu_doanh_nghiep);
                 return;
             }
             if (viewModel.singleAccount.bsd_vatregistrationnumber != null)
             {
                 if (!await viewModel.Check_form_keydata(viewModel.singleAccount.bsd_vatregistrationnumber, null, viewModel.singleAccount.accountid.ToString()))
                 {
-                    ToastMessageHelper.ShortMessage("Mã số thuế đã tạo trong dữ liệu doanh nghiệp");
+                    ToastMessageHelper.ShortMessage(Language.ma_so_thue_da_tao_trong_du_lieu_doanh_nghiep);
                     return;
                 }
             }
 
             if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_address))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn địa chỉ liên lạc");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_permanentaddress1))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn địa chỉ trụ sở chính");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_tru_so_chinh);
                 return;
             }
 
@@ -260,14 +261,14 @@ namespace PhuLongCRM.Views
                 {
                     if (QueueForm.NeedToRefresh.HasValue) QueueForm.NeedToRefresh = true;
                     if (CustomerPage.NeedToRefreshAccount.HasValue) CustomerPage.NeedToRefreshAccount = true;
-                    ToastMessageHelper.ShortMessage("Tạo khách hàng doanh nghiệp thành công");
+                    ToastMessageHelper.ShortMessage(Language.tao_khach_hang_doanh_nghiep_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Tạo khách hàng doanh nghiệp thất bại");
+                    ToastMessageHelper.ShortMessage(Language.tao_khach_hang_doanh_nghiep_that_bai);
                 }
             }
             else
@@ -276,15 +277,15 @@ namespace PhuLongCRM.Views
                 if (updated)
                 {
                     if (CustomerPage.NeedToRefreshAccount.HasValue) CustomerPage.NeedToRefreshAccount = true;
-                    //if (AccountDetailPage.NeedToRefreshAccount.HasValue) AccountDetailPage.NeedToRefreshAccount = true;
+                    if (AccountDetailPage.NeedToRefreshAccount.HasValue) AccountDetailPage.NeedToRefreshAccount = true;
                     await Navigation.PopAsync();
-                    ToastMessageHelper.ShortMessage("Cập nhật khách hàng doanh nghiệp thành công");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_khach_hang_doanh_nghiep_thanh_cong);
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Cập nhật khách hàng doanh nghiệp thất bại");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_khach_hang_doanh_nghiep_that_bai);
                 }
             }
         }
