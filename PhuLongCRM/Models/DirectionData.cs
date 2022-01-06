@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -16,14 +17,14 @@ namespace PhuLongCRM.Models
         public static List<OptionSetFilter> Directions()
         {
             var directions = new List<OptionSetFilter>();
-            directions.Add(new OptionSetFilter {Val = "100000000",Label= "Đông" });
-            directions.Add(new OptionSetFilter { Val = "100000001", Label = "Tây" });
-            directions.Add(new OptionSetFilter { Val = "100000002", Label = "Nam" });
-            directions.Add(new OptionSetFilter { Val = "100000003", Label = "Bắc" });
-            directions.Add(new OptionSetFilter { Val = "100000004", Label = "Tây bắc" });
-            directions.Add(new OptionSetFilter { Val = "100000005", Label = "Đông bắc" });
-            directions.Add(new OptionSetFilter { Val = "100000006", Label = "Tây nam" });
-            directions.Add(new OptionSetFilter { Val = "100000007", Label = "Đông nam" });
+            directions.Add(new OptionSetFilter { Val = "100000000", Label= Language.huong_dong });
+            directions.Add(new OptionSetFilter { Val = "100000001", Label = Language.huong_tay });
+            directions.Add(new OptionSetFilter { Val = "100000002", Label = Language.huong_nam });
+            directions.Add(new OptionSetFilter { Val = "100000003", Label = Language.huong_bac });
+            directions.Add(new OptionSetFilter { Val = "100000004", Label = Language.huong_tay_bac });
+            directions.Add(new OptionSetFilter { Val = "100000005", Label = Language.huong_dong_bac });
+            directions.Add(new OptionSetFilter { Val = "100000006", Label = Language.huong_tay_nam });
+            directions.Add(new OptionSetFilter { Val = "100000007", Label = Language.huong_dong_nam });
             return directions;
         }
     }

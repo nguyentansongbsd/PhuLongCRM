@@ -64,7 +64,7 @@ namespace PhuLongCRM.Views
             Lookup_ResolutionType.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                viewModel.ResolutionTypes = CaseResolutionType.CaseResolutionTypeData();
+                viewModel.ResolutionTypes = CaseStatusCodeData.CaseStatusData();
                 LoadingHelper.Hide();
             };
             Lookup_BillableTime.PreOpenAsync = async () =>

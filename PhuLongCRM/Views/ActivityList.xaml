@@ -5,8 +5,9 @@
              xmlns:helper="clr-namespace:PhuLongCRM.Helper"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:views="clr-namespace:PhuLongCRM.Views" xmlns:converters="clr-namespace:PhuLongCRM.Converters"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              x:Class="PhuLongCRM.Views.ActivityList"
-             Title="Hoạt Động">
+             Title="{x:Static lang:Language.hoat_dong}">
     <ContentPage.Resources>
         <Style TargetType="telerikPrimitives:RadBorder" x:Key="radBorder">
             <Setter Property="CornerRadius" Value="0"/>
@@ -56,70 +57,6 @@
             </Setter>
         </Style>
         <converters:NullToHideConverter x:Key="NullToHideConverter" />
-        <!--<ResourceDictionary> chưa dùng 
-            <DataTemplate x:Key="Task">
-                <ViewCell>
-                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
-                        <Label Text="{Binding activitytypecode_format}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Row="0"/>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                            <Label Text="Khách hàng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding regarding_name}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                            <Label Text="Thời gian bắt đầu: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                            <Label Text="Thời gian kết thúc: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding scheduledend_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-            <DataTemplate x:Key="Meet">
-                <ViewCell>
-                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
-                        <Label Text="{Binding activitytypecode_format}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Row="0"/>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                            <Label Text="Khách hàng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding regarding_name}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                            <Label Text="Thời gian bắt đầu: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                            <Label Text="Thời gian kết thúc: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding scheduledend_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
-                            <Label Text="Địa điểm: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding bsd_address}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
-                        </Grid>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-            <DataTemplate x:Key="Phone">
-                <ViewCell>
-                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
-                        <Label Text="{Binding activitytypecode_format}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Row="0"/>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                            <Label Text="Khách hàng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding regarding_name}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                            <Label Text="Thời gian: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                        <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                            <Label Text="Ngày: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                            <Label Text="{Binding scheduledend_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                        </Grid>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-            <helper:ActivityDataTemplateSelector x:Key="ItemTemplate" Phone="{StaticResource Phone}" Task="{StaticResource Task}" Meet="{StaticResource Meet}"/>
-        </ResourceDictionary>-->
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
@@ -129,19 +66,19 @@
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Task_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblTask" Text="Công Việc" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblTask" Text="{x:Static lang:Language.cong_viec}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                     <telerikPrimitives:RadBorder x:Name="radBorderMeeting" Grid.Column="1" Style="{StaticResource radBorder}">
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Meeting_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblMeeting" Text="Cuộc Họp" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblMeeting" Text="{x:Static lang:Language.cuoc_hop}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                     <telerikPrimitives:RadBorder x:Name="radBorderPhoneCall" Grid.Column="2" Style="{StaticResource radBorder}">
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PhoneCall_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblPhoneCall" Text="Cuộc Gọi" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblPhoneCall" Text="{x:Static lang:Language.cuoc_goi}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                 </Grid>
 
@@ -160,16 +97,16 @@
                                         <Label Grid.Column="1" Text="{Binding subject}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                                        <Label Text="Khách hàng: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                         <Label Text="{Binding regarding_name}" IsVisible="{Binding regarding_name,Converter={StaticResource NullToHideConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                         <Label Text="{Binding customer}" IsVisible="{Binding customer,Converter={StaticResource NullToHideConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                        <Label Text="Thời gian bắt đầu: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_bat_dau},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                         <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                        <Label Text="Thời gian kết thúc: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_ket_thuc},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                         <Label Text="{Binding scheduledend_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                 </Grid>

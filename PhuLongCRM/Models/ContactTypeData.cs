@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -9,10 +10,10 @@ namespace PhuLongCRM.Models
         public static List<OptionSet> ContactTypes() {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","Khách hàng"), // khach hanfg Customer
-                new OptionSet("100000001","Cộng tác viên"), // cong tac vien Collaborator
-                new OptionSet("100000002","Người ủy quyền"), // người ủy quyền Authorized
-                new OptionSet("100000003","Người đại diện pháp lý"), //Legal Representative
+                new OptionSet("100000000",Language.khach_hang), // khach hanfg Customer
+                new OptionSet("100000001",Language.cong_tac_vien), // cong tac vien Collaborator
+                new OptionSet("100000002",Language.nguoi_uy_quyen), // người ủy quyền Authorized
+                new OptionSet("100000003",Language.nguoi_dai_dien_phap_ly), //Legal Representative
             };
         }
 

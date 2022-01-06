@@ -83,11 +83,11 @@
             <controls:CenterModal x:Name="centerModelPassword" Title="Đổi mật khẩu">
                 <controls:CenterModal.Body>
                     <StackLayout Padding="14">
-                        <controls:FormLabelRequired Text="Mật khấu cũ"/>
-                        <controls:MainEntry Text="{Binding OldPassword}" Placeholder="Nhập mật khấu cũ" TextChanged="OldPassword_TextChanged"/>
+                        <controls:FormLabelRequired Text="Mật khẩu cũ"/>
+                        <controls:MainEntry Text="{Binding OldPassword}" Placeholder="Nhập mật khẩu cũ" TextChanged="OldPassword_TextChanged"/>
 
-                        <controls:FormLabelRequired Text="Mật khấu mới"/>
-                        <controls:MainEntry Text="{Binding NewPassword}" Placeholder="Nhập mật khấu mới" TextChanged="NewPassword_TextChanged"/>
+                        <controls:FormLabelRequired Text="Mật khẩu mới"/>
+                        <controls:MainEntry Text="{Binding NewPassword}" Placeholder="Nhập mật khẩu mới" TextChanged="NewPassword_TextChanged"/>
 
                         <controls:FormLabelRequired Text="Xác nhận mật khẩu mới"/>
                         <controls:MainEntry Text="{Binding ConfirmNewPassword}" Placeholder="Nhập xác nhận mật khẩu mới" TextChanged="ConfirmPassword_TextChanged"/>

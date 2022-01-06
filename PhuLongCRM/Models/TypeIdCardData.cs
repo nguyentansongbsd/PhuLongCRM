@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -10,9 +11,9 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","CMND"),
-                new OptionSet("100000001","CCCD"),
-                new OptionSet("100000002","Passport"),
+                new OptionSet("100000000",Language.cmnd),
+                new OptionSet("100000001",Language.cccd),
+                new OptionSet("100000002",Language.ho_chieu),
             };
         }
 

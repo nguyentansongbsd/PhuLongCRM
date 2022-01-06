@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -10,9 +11,9 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","Giữ nguyên"),
-                new OptionSet("100000001","Gộp đầu"),
-                new OptionSet("100000002","Gộp cuối"),
+                new OptionSet("100000000",Language.giu_nguyen),
+                new OptionSet("100000001",Language.gop_dau),
+                new OptionSet("100000002",Language.gop_cuoi),
             };
         }
         public static OptionSet GetPaymentSchemeTypeById(string Id)

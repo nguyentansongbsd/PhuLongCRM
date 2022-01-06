@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -11,11 +12,11 @@ namespace PhuLongCRM.Models
         {
             if(_bool)
             {
-                return "Có";
+                return Language.co;
             }   
             else
             {
-                return "Không";
+                return Language.khong;
             }    
         }
     }

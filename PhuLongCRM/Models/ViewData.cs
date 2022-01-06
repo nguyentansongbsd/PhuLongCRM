@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -28,19 +29,18 @@ namespace PhuLongCRM.Models
         public static List<OptionSetFilter> Views()
         {
             return new List<OptionSetFilter>() {
-                new OptionSetFilter(){ Val="100000000",Label="Thành phố"},
-                new OptionSetFilter(){Val="100000001", Label="Bể bơi" },  // hồ bơi
-                new OptionSetFilter(){ Val="100000002",Label="Công viên"},
-                new OptionSetFilter(){ Val="100000003",Label="Mặt tiền"},
-                new OptionSetFilter(){ Val="100000004",Label="Sân vườn"},
-                new OptionSetFilter(){ Val="100000006",Label="Xa lộ"},
-                new OptionSetFilter(){ Val="100000007",Label="Hồ"}, //lake
-                new OptionSetFilter(){ Val="100000008",Label="Sông"},
-                new OptionSetFilter(){ Val="100000009",Label="Biển"},
-                new OptionSetFilter(){ Val="100000010",Label="01 mặt thoáng"}, 
-                new OptionSetFilter(){ Val="100000011",Label="02 mặt thoáng"},
-                new OptionSetFilter(){ Val="100000012",Label="Hồ bơi"}, // pool
-
+                new OptionSetFilter(){ Val="100000000",Label=Language.thanh_pho},
+                new OptionSetFilter(){ Val="100000001",Label=Language.be_boi },  // hồ bơi
+                new OptionSetFilter(){ Val="100000002",Label=Language.cong_vien},
+                new OptionSetFilter(){ Val="100000003",Label=Language.mat_tien},
+                new OptionSetFilter(){ Val="100000004",Label=Language.san_vuon},
+                new OptionSetFilter(){ Val="100000006",Label=Language.xa_lo},
+                new OptionSetFilter(){ Val="100000007",Label=Language.ho}, //lake
+                new OptionSetFilter(){ Val="100000008",Label=Language.song},
+                new OptionSetFilter(){ Val="100000009",Label=Language.bien},
+                new OptionSetFilter(){ Val="100000010",Label=Language.mot_mat_thoang}, 
+                new OptionSetFilter(){ Val="100000011",Label=Language.hai_mat_thoang},
+                new OptionSetFilter(){ Val="100000012",Label=Language.ho_boi}, // pool
             };
         }
     }

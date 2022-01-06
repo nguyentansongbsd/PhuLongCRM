@@ -111,4 +111,817 @@
     <data name="khong_cap_nhat_duoc_thong_tin_imei">
         <value>Unable to update information Imei</value>
     </data>
+    <data name="chua_co_contact_khong_the_chinh_sua_thong_tin">
+        <value>No contact, can't edit info</value>
+    </data>
+    <data name="nhan_de_chinh_sua">
+        <value>Click to edit</value>
+    </data>
+    <data name="dong_bo_danh_ba">
+        <value>Sync Contacts</value>
+    </data>
+    <data name="gio_hang">
+        <value>Direct Sale</value>
+    </data>
+    <data name="danh_sach_giu_cho">
+        <value>Queues</value>
+    </data>
+    <data name="danh_sach_bang_tinh_gia">
+        <value>Quotation Reservation</value>
+    </data>
+    <data name="danh_sach_dat_coc">
+        <value>Reserves</value>
+    </data>
+    <data name="danh_sach_hop_dong">
+        <value>Contracts</value>
+    </data>
+    <data name="tai_lieu_kinh_doanh">
+        <value>Sales Literature</value>
+    </data>
+    <data name="danh_sach_theo_doi">
+        <value>Follow Up List</value>
+    </data>
+    <data name="phan_hoi">
+        <value>Cases</value>
+    </data>
+    <data name="lich_lam_viec">
+        <value>Calendar</value>
+    </data>
+    <data name="hoat_dong">
+        <value>Activities</value>
+    </data>
+    <data name="dang_xuat">
+        <value>Logout</value>
+    </data>
+    <data name="nhap">
+        <value>Draft</value>
+    </data>
+    <data name="chuan_bi">
+        <value>Preparing</value>
+    </data>
+    <data name="san_sang">
+        <value>Available</value>
+    </data>
+    <data name="dat_cho">
+        <value>Booking</value>
+    </data>
+    <data name="dat_coc">
+        <value>Reserve</value>
+    </data>
+    <data name="dong_y_chuyen_coc">
+        <value>Collected</value>
+    </data>
+    <data name="da_du_tien_coc">
+        <value>Deposited</value>
+    </data>
+    <data name="hoan_tat_dat_coc">
+        <value>Option</value>
+    </data>
+    <data name="thanh_toan_dot_1">
+        <value>1st Installment</value>
+    </data>
+    <data name="da_ky_ttdc_hddc">
+        <value>Signed D.A</value>
+    </data>
+    <data name="du_dieu_dien">
+        <value>Qualified</value>
+    </data>
+    <data name="da_ban">
+        <value>Sold</value>
+    </data>
+    <data name="tiem_nang">
+        <value>Lead</value>
+    </data>
+    <data name="ca_nhan">
+        <value>Contact</value>
+    </data>
+    <data name="doanh_nghiep">
+        <value>Account</value>
+    </data>
+    <data name="tim_kiem">
+        <value>Search</value>
+    </data>
+    <data name="co">
+        <value>Yes</value>
+    </data>
+    <data name="khong">
+        <value>No</value>
+    </data>
+    <data name="doi_tac">
+        <value>Partner</value>
+    </data>
+    <data name="dai_ly">
+        <value>Sales Agent</value>
+    </data>
+    <data name="chu_dau_tu">
+        <value>Developer</value>
+    </data>
+    <data name="dang_xu_ly">
+        <value>In Progress</value>
+    </data>
+    <data name="dang_cho">
+        <value>On Hold</value>
+    </data>
+    <data name="dang_cho_thong_tin_chi_tiet">
+        <value>Waiting for Details</value>
+    </data>
+    <data name="nghien_cuu">
+        <value>Researching</value>
+    </data>
+    <data name="van_de_da_duoc_giai_quyet">
+        <value>Problem Solved</value>
+    </data>
+    <data name="cung_cap_thong_tin">
+        <value>Information Provided</value>
+    </data>
+    <data name="da_huy">
+        <value>Cancelled</value>
+    </data>
+    <data name="hop_nhat">
+        <value>Merged</value>
+    </data>
+    <data name="cau_hoi">
+        <value>Question</value>
+    </data>
+    <data name="van_de">
+        <value>Problem</value>
+    </data>
+    <data name="yeu_cau">
+        <value>Request</value>
+    </data>
+    <data name="nam">
+        <value>Male</value>
+    </data>
+    <data name="nu">
+        <value>Female</value>
+    </data>
+    <data name="khac">
+        <value>Other</value>
+    </data>
+    <data name="cong_tac_vien">
+        <value>Collaborator</value>
+    </data>
+    <data name="nguoi_uy_quyen">
+        <value>Authorized</value>
+    </data>
+    <data name="nguoi_dai_dien_phap_ly">
+        <value>Legal Representative</value>
+    </data>
+    <data name="nha_o_can_ho">
+        <value>Houes/ Apartment</value>
+    </data>
+    <data name="nghi_duong">
+        <value>Resort</value>
+    </data>
+    <data name="chua_xac_dinh">
+        <value>Undefined</value>
+    </data>
+    <data name="chinh_thuc">
+        <value>Official</value>
+    </data>
+    <data name="tiem_nang">
+        <value>Potential</value>
+    </data>
+    <data name="huong_dong">
+        <value>East</value>
+    </data>
+    <data name="huong_tay">
+        <value>West</value>
+    </data>
+    <data name="huong_nam">
+        <value>South</value>
+    </data>
+    <data name="huong_bac">
+        <value>North</value>
+    </data>
+    <data name="huong_tay_bac">
+        <value>North West</value>
+    </data>
+    <data name="huong_dong_bac">
+        <value>North East</value>
+    </data>
+    <data name="huong_tay_nam">
+        <value>South West</value>
+    </data>
+    <data name="huong_dong_nam">
+        <value>South East</value>
+    </data>
+    <data name="ful_nhap">
+        <value>Active</value>
+    </data>
+    <data name="hoan_thanh">
+        <value>Completed</value>
+    </data>
+    <data name="vo_hieu_luc">
+        <value>Inactive</value>
+    </data>
+    <data name="giao_dich_tt_du_dot_1">
+        <value>Option Entry - 1st installment</value>
+    </data>
+    <data name="giao_dich_da_ky_hdmb">
+        <value>Option Entry - Contract</value>
+    </data>
+    <data name="giao_dich_installments">
+        <value>Option Entry - Installments</value>
+    </data>
+    <data name="giao_dich_da_thanh_ly">
+        <value>Option Entry - Terminate</value>
+    </data>
+    <data name="dat_coc_tt_du_tien_coc">
+        <value>Reservation - Deposited</value>
+    </data>
+    <data name="dat_coc_sign_off_rf">
+        <value>Reservation - Sign off RF</value>
+    </data>
+    <data name="dat_coc_da_thanh_ly">
+        <value>Reservation - Terminate</value>
+    </data>
+    <data name="units">
+        <value>Units</value>
+    </data>
+    <data name="chua_thanh_toan">
+        <value>Not Paid</value>
+    </data>
+    <data name="da_thanh_toan">
+        <value>Paid</value>
+    </data>
+    <data name="vo_hieu_luc">
+        <value>Inactive</value>
+    </data>
+    <data name="bao">
+        <value>Newspapers</value>
+    </data>
+    <data name="staff_phu_long">
+        <value>Staff Phu Long</value>
+    </data>
+    <data name="thuong_hieu">
+        <value>Trademark</value>
+    </data>
+    <data name="hot_line">
+        <value>Hotline</value>
+    </data>
+    <data name="vi_tri_hien_tai">
+        <value>The current of the position</value>
+    </data>
+    <data name="khach_hang_cu_da_mua_gioi_thieu">
+        <value>Old customers have bought referrals</value>
+    </data>
+    <data name="quang_cao">
+        <value>Advertisement</value>
+    </data>
+    <data name="nhan_vien_gioi_thieu">
+        <value>Employee Referral</value>
+    </data>
+    <data name="gioi_thieu_ben_ngoai">
+        <value>External Referral</value>
+    </data>
+    <data name="doi_tac">
+        <value>Partner</value>
+    </data>
+    <data name="quan_he_cong_chung">
+        <value>Public Relations</value>
+    </data>
+    <data name="hoi_thao">
+        <value>Seminar</value>
+    </data>
+    <data name="trien_lam_thuong_mai">
+        <value>Trade Show</value>
+    </data>
+    <data name="trang_web">
+        <value>Web</value>
+    </data>
+    <data name="truyen_mieng">
+        <value>Word of Mouth</value>
+    </data>
+    <data name="giu_nguyen">
+        <value>Giữ nguyên</value>
+    </data>
+    <data name="gop_dau">
+        <value>Gộp đầu</value>
+    </data>
+    <data name="gop_cuoi">
+        <value>Gộp cuối</value>
+    </data>
+    <data name="nha_o">
+        <value>Apartment project</value>
+    </data>
+    <data name="thuong_mai">
+        <value>Land projects</value>
+    </data>
+    <data name="can_ho_chung_cu">
+        <value>Căn hộ chung cư</value>
+    </data>
+    <data name="nha_pho">
+        <value>Nhà phố</value>
+    </data>
+    <data name="dat_nen">
+        <value>Đất nền</value>
+    </data>
+    <data name="nghi_duong">
+        <value>Nghỉ dưỡng</value>
+    </data>
+    <data name="shophouse_va_officetel">
+        <value>Shophouse và Officetel</value>
+    </data>
+    <data name="xuong_kho">
+        <value>Xưởng/ Kho</value>
+    </data>
+    <data name="dang_cho">
+        <value>On Hold</value>
+    </data>
+    <data name="thanh_cong">
+        <value>Won</value>
+    </data>
+    <data name="het_hang">
+        <value>Out-Sold</value>
+    </data>
+    <data name="dang_doi">
+        <value>Waiting</value>
+    </data>
+    <data name="het_han">
+        <value>Expired</value>
+    </data>
+    <data name="xac_nhan_huy">
+        <value>Xác nhận hủy</value>
+    </data>
+    <data name="huy_gg_chua_hoan_tien">
+        <value>Hủy GC chưa hoàn tiền</value>
+    </data>
+    <data name="huy_gg_da_hoan_tien">
+        <value>Hủy GC đã hoàn tiền</value>
+    </data>
+    <data name="dang_xu_ly">
+        <value>In Progress</value>
+    </data>
+    <data name="dat_coc">
+        <value>Reservation</value>
+    </data>
+    <data name="da_thanh_ly">
+        <value>Terminated</value>
+    </data>
+    <data name="dang_cho_huy_bo_tien_gui">
+        <value>Pending Cancel Deposit</value>
+    </data>
+    <data name="tu_choi">
+        <value>Reject</value>
+    </data>
+    <data name="da_ky_rf">
+        <value>Signed RF</value>
+    </data>
+    <data name="da_het_han_ky_rf">
+        <value>Expired of signing RF</value>
+    </data>
+    <data name="chuyen_coc">
+        <value>Collected</value>
+    </data>
+    <data name="bao_gia">
+        <value>Quotation</value>
+    </data>
+    <data name="bao_gia_het_han">
+        <value>Expired Quotation</value>
+    </data>
+    <data name="da_ky_phieu_coc">
+        <value>Đã ký phiếu cọc</value>
+    </data>
+    <data name="tt_du_tien_coc">
+        <value>Deposited</value>
+    </data>
+    <data name="mat_khach_hang">
+        <value>Lost</value>
+    </data>
+    <data name="da_sua_doi">
+        <value>Revised</value>
+    </data>
+    <data name="da_trinh">
+        <value>Submitted</value>
+    </data>
+    <data name="da_duyet">
+        <value>Approved</value>
+    </data>
+    <data name="thay_doi_thong_tin">
+        <value>Change information</value>
+    </data>
+    <data name="vo_chong">
+        <value>Spouse</value>
+    </data>
+    <data name="con">
+        <value>Child</value>
+    </data>
+    <data name="cha_me">
+        <value>Parent</value>
+    </data>
+    <data name="ban">
+        <value>Friend</value>
+    </data>
+    <data name="cmnd">
+        <value>Identity Card Number (ID)</value>
+    </data>
+    <data name="cccd">
+        <value>Identity Card</value>
+    </data>
+    <data name="ho_chieu">
+        <value>Passport</value>
+    </data>
+    <data name="thanh_pho">
+        <value>City</value>
+    </data>
+    <data name="be_boi">
+        <value>Swimming Poll</value>
+    </data>
+    <data name="cong_vien">
+        <value>Park</value>
+    </data>
+    <data name="mat_tien">
+        <value>Facade</value>
+    </data>
+    <data name="san_vuon">
+        <value>Garden</value>
+    </data>
+    <data name="xa_lo">
+        <value>High Way</value>
+    </data>
+    <data name="ho">
+        <value>Lake</value>
+    </data>
+    <data name="song">
+        <value>River</value>
+    </data>
+    <data name="bien">
+        <value>Sea</value>
+    </data>
+    <data name="mot_mat_thoang">
+        <value>01 Side Open</value>
+    </data>
+    <data name="hai_mat_thoang">
+        <value>02 Side Open</value>
+    </data>
+    <data name="ho_boi">
+        <value>Pool</value>
+    </data>
+    <data name="thong_tin_khach_hang">
+        <value>Customer information</value>
+    </data>
+    <data name="ma_khach_hang">
+        <value>Customer code</value>
+    </data>
+    <data name="loai">
+        <value>Localization</value>
+    </data>
+    <data name="nhom">
+        <value>Business type</value>
+    </data>
+    <data name="dai_dien">
+        <value>Đại diện</value>
+    </data>
+    <data name="giay_phep_kinh_doanh">
+        <value>Registration Code</value>
+    </data>
+    <data name="dien_thoai">
+        <value>Phone</value>
+    </data>
+    <data name="nhan_tin">
+        <value>Message</value>
+    </data>
+    <data name="goi_dien">
+        <value>Call</value>
+    </data>
+    <data name="thong_tin">
+        <value>Information</value>
+    </data>
+    <data name="giao_dich">
+        <value>Transaction</value>
+    </data>
+    <data name="nguoi_uy_quyen">
+        <value>Người Ủy Quyền</value>
+    </data>
+    <data name="ten_cong_ty_khac">
+        <value>Account Name (Other)</value>
+    </data>
+    <data name="ten_viet_tat">
+        <value>Company Code</value>
+    </data>
+    <data name="email">
+        <value>Email</value>
+    </data>
+    <data name="trang_web">
+        <value>Website</value>
+    </data>
+    <data name="noi_cap">
+        <value>Place of issue</value>
+    </data>
+    <data name="nhap_so_giay_phep_kinh_doanh">
+        <value>Nhập số giấy phép kinh doanh</value>
+    </data>
+    <data name="ngay_cap">
+        <value>Issued on</value>
+    </data>
+    <data name="ma_so_thue">
+        <value>VAT Registration Number</value>
+    </data>
+    <data name="dia_chi_lien_lac">
+        <value>Address</value>
+    </data>
+    <data name="dia_chi_tru_so_chinh">
+        <value>Permanent Address</value>
+    </data>
+    <data name="nguoi_dai_dien">
+        <value>Representative</value>
+    </data>
+    <data name="so_dien_thoai">
+        <value>Mobile phone</value>
+    </data>
+    <data name="dia_chi_thuong_tru">
+        <value>Address</value>
+    </data>
+    <data name="khong_co_du_lieu">
+        <value>No data</value>
+    </data>
+    <data name="du_an">
+        <value>Project</value>
+    </data>
+    <data name="thoi_gian_het_han">
+        <value>Queuing Expired</value>
+    </data>
+    <data name="san_pham">
+        <value>Unit</value>
+    </data>
+    <data name="tong_tien">
+        <value>Total Amount</value>
+    </data>
+    <data name="cham_soc_khach_hang">
+        <value>Customer care</value>
+    </data>
+    <data name="thoi_gian_bat_dau">
+        <value>Thời gian bắt đầu</value>
+    </data>
+    <data name="thoi_gian_ket_thuc">
+        <value>Thời gian kết thúc</value>
+    </data>
+    <data name="tinh_trang">
+        <value>Tình trạng</value>
+    </data>
+    <data name="dia_chi">
+        <value>Địa chỉ</value>
+    </data>
+    <data name="ten_cong_ty">
+        <value>Tên công ty</value>
+    </data>
+    <data name="ngay_bat_dau_hieu_luc">
+        <value>Ngày bắt đầu hiệu lực</value>
+    </data>
+    <data name="ngay_het_hieu_luc">
+        <value>Ngày hết hiệu lực</value>
+    </data>
+    <data name="chuc_vu_vn">
+        <value>Chức vụ (VN)</value>
+    </data>
+    <data name="chuc_vu_en">
+        <value>Chức vụ (EN)</value>
+    </data>
+    <data name="mo_ta_vn">
+        <value>Mô tả (VN)</value>
+    </data>
+    <data name="mo_ta_en">
+        <value>Mô tả (EN)</value>
+    </data>
+    <data name="them_cuoc_hop">
+        <value>Thêm Cuộc họp</value>
+    </data>
+    <data name="them_cuoc_goi">
+        <value>Thêm Cuộc gọi</value>
+    </data>
+    <data name="them_cong_viec">
+        <value>Thêm Công việc</value>
+    </data>
+    <data name="them_nguoi_uy_quyen">
+        <value>Thêm người ủy quyền</value>
+    </data>
+    <data name="chinh_sua">
+        <value>Chỉnh sửa</value>
+    </data>
+    <data name="xac_nhan">
+        <value>Xác nhận</value>
+    </data>
+    <data name="ban_co_muon_xoa_nguoi_uye_quyen_khong">
+        <value>Bạn có muốn xóa người ủy quyền không ?</value>
+    </data>
+    <data name="dong_y">
+        <value>Đồng ý</value>
+    </data>
+    <data name="huy">
+        <value>Hủy</value>
+    </data>
+    <data name="da_xoa_nguoi_uy_quyen_duoc_chon">
+        <value>Đã xóa người ủy quyền được chọn</value>
+    </data>
+    <data name="xao_nguoi_uy_quyen_that_bai">
+        <value>Xóa người ủy quyền thất bại</value>
+    </data>
+    <data name="so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai">
+        <value>Số điện thoại sai định dạng. Vui lòng kiểm tra lại</value>
+    </data>
+    <data name="khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai">
+        <value>Khách hàng không có số điện thoại. Vui lòng kiểm tra lại</value>
+    </data>
+    <data name="thong_tin_cong_ty">
+        <value>Thông Tin Công Ty</value>
+    </data>
+    <data name="dai_dien_phap_luat">
+        <value>Đại Diện Pháp Luật</value>
+    </data>
+    <data name="loai_khach_hang">
+        <value>Loại khách hàng</value>
+    </data>
+    <data name="nhom_khach_hang">
+        <value>Nhóm khách hàng</value>
+    </data>
+    <data name="chon_loai_khach_hang">
+        <value>Chọn loại khách hàng</value>
+    </data>
+    <data name="chon_tinh_trang">
+        <value>Chọn tình trạng</value>
+    </data>
+    <data name="nhap_ten_cong_ty">
+        <value>Nhập tên công ty</value>
+    </data>
+    <data name="nhap_ten_cong_ty_khac">
+        <value>Nhập tên công ty (khác)</value>
+    </data>
+    <data name="nhap_ten_viet_tat">
+        <value>Nhập tên viết tắt</value>
+    </data>
+    <data name="pham_vi_hoat_dong">
+        <value>Phạm vi hoạt động</value>
+    </data>
+    <data name="chon_pham_vi_hoat_dong">
+        <value>Chọn phạm vi hoạt động</value>
+    </data>
+    <data name="chon_nguoi_dai_dien">
+        <value>Chọn người đại diện</value>
+    </data>
+    <data name="so_dien_thoai_cong_ty">
+        <value>Số điện thoại công ty</value>
+    </data>
+    <data name="nhap_so_dien_thoai_cong_ty">
+        <value>Nhập số điện thoại công ty</value>
+    </data>
+    <data name="nhap_email">
+        <value>Nhập email</value>
+    </data>
+    <data name="nhap_fax_cua_cong_ty">
+        <value>Nhập fax của công ty</value>
+    </data>
+    <data name="nhap_website_cua_cong_ty">
+        <value>Nhập website của công ty</value>
+    </data>
+    <data name="chon_ngay_cap">
+        <value>Chọn ngày cấp</value>
+    </data>
+    <data name="nhap_noi_cap">
+        <value>Nhập nơi cấp</value>
+    </data>
+    <data name="nhap_ma_so_thue">
+        <value>Nhập mã số thuế</value>
+    </data>
+    <data name="chon_dia_chi_lien_lac">
+        <value>Chọn địa chỉ liên lạc</value>
+    </data>
+    <data name="chon_dia_chi_tru_so_chinh">
+        <value>Chọn địa chỉ trụ sở chính</value>
+    </data>
+    <data name="chon_dia_chi_tru_so_chinh">
+        <value>Chọn địa chỉ trụ sở chính</value>
+    </data>
+    <data name="tao_moi_khach_hang_doanh_nghiep">
+        <value>Tạo Mới Khách Hàng Doanh Nghiệp</value>
+    </data>
+    <data name="tao_moi">
+        <value>Tạo Mới</value>
+    </data>
+    <data name="cap_nhat">
+        <value>Cập Nhật</value>
+    </data>
+    <data name="cap_nhat_khach_hang_doanh_nghiep">
+        <value>Cập Nhật Khách Hàng Doanh Nghiệp</value>
+    </data>
+    <data name="vui_long_chon_loai_khach_hang">
+        <value>Vui lòng chọn loại khách hàng</value>
+    </data>
+    <data name="vui_long_nhap_ten_cong_ty">
+        <value>Vui lòng nhập tên công ty</value>
+    </data>
+    <data name="vui_long_chon_pham_vi_hoat_dong">
+        <value>Vui lòng chọn phạm vi hoạt động</value>
+    </data>
+    <data name="vui_long_chon_nguoi_dai_dien">
+        <value>Vui lòng chọn người đại diện</value>
+    </data>
+    <data name="vui_long_nhap_so_dien_thoai_cong_ty">
+        <value>Vui lòng nhập số điện thoại công ty</value>
+    </data>
+    <data name="email_sai_dinh_dang_vui_long_thu_lai">
+        <value>Email sai địng dạng. Vui lòng thử lại</value>
+    </data>
+    <data name="email_2_sai_dinh_dang_vui_long_thu_lai">
+        <value>Email 2 sai địng dạng. Vui lòng thử lại</value>
+    </data>
+    <data name="vui_long_nhap_so_giay_phep_kinh_doanh">
+        <value>Vui lòng nhập số giấy phép kinh doanh</value>
+    </data>
+    <data name="so_giay_phep_kinh_doanh_da_tao_trong_du_lieu_doanh_nghiep">
+        <value>Số giấy phép kinh doanh đã tạo trong dữ liệu doanh nghiệp</value>
+    </data>
+    <data name="ma_so_thue_da_tao_trong_du_lieu_doanh_nghiep">
+        <value>Mã số thuế đã tạo trong dữ liệu doanh nghiệp</value>
+    </data>
+    <data name="vui_long_chon_dia_chi_lien_lac">
+        <value>Vui lòng chọn địa chỉ liên lạc</value>
+    </data>
+    <data name="vui_long_chon_dia_chi_tru_so_chinh">
+        <value>Vui lòng chọn địa chỉ trụ sở chính</value>
+    </data>
+    <data name="tao_khach_hang_doanh_nghiep_thanh_cong">
+        <value>Tạo khách hàng doanh nghiệp thành công</value>
+    </data>
+    <data name="tao_khach_hang_doanh_nghiep_that_bai">
+        <value>Tạo khách hàng doanh nghiệp thất bại</value>
+    </data>
+    <data name="cap_nhat_khach_hang_doanh_nghiep_thanh_cong">
+        <value>Cập nhật khách hàng doanh nghiệp thành công</value>
+    </data>
+    <data name="cap_nhat_khach_hang_doanh_nghiep_that_bai">
+        <value>Cập nhật khách hàng doanh nghiệp thất bại</value>
+    </data>
+    <data name="cong_viec">
+        <value>Task</value>
+    </data>
+    <data name="cuoc_hop">
+        <value>Meeting</value>
+    </data>
+    <data name="cuoc_goi">
+        <value>Phone Call</value>
+    </data>
+    <data name="tuy_chon">
+        <value>Tuỳ chọn</value>
+    </data>
+    <data name="goi_tu">
+        <value>Gọi từ</value>
+    </data>
+    <data name="goi_den">
+        <value>Gọi đến</value>
+    </data>
+    <data name="mo_ta">
+        <value>Mô tả</value>
+    </data>
+    <data name="nguoi_tham_du_bat_buoc">
+        <value>Người tham dự bắt buộc</value>
+    </data>
+    <data name="nguoi_tham_khong_du_bat_buoc">
+        <value>Người tham dự không bắt buộc</value>
+    </data>
+    <data name="nguoi_lien_quan">
+        <value>Người liên quan</value>
+    </data>
+    <data name="dia_diem">
+        <value>Địa điểm</value>
+    </data>
+    <data name="su_kien_ca_ngay">
+        <value>Sự kiện cả ngày</value>
+    </data>
+    <data name="cuoc_goi_da_hoan_thanh">
+        <value>Cuộc gọi đã hoàn thành</value>
+    </data>
+    <data name="loi_khi_hoan_thanh_cuoc_goi_vui_long_thu_lai">
+        <value>Lỗi khi hoàn thành cuộc gọi. Vui lòng thử lại</value>
+    </data>
+    <data name="cong_viec_da_hoan_thanh">
+        <value>Công việc đã hoàn thành</value>
+    </data>
+    <data name="loi_khi_hoan_thanh_cong_viec_vui_long_thu_lai">
+        <value>Lỗi khi hoàn thành công việc. Vui lòng thử lại</value>
+    </data>
+    <data name="cuoc_hop_da_hoan_thanh">
+        <value>Cuộc họp đã hoàn thành</value>
+    </data>
+    <data name="loi_khi_hoan_thanh_cuoc_hop_vui_long_thu_lai">
+        <value>Lỗi khi hoàn thành cuộc họp. Vui lòng thử lại</value>
+    </data>
+    <data name="cuoc_goi_da_duoc_huy">
+        <value>Cuộc gọi đã được hủy</value>
+    </data>
+    <data name="loi_khi_huy_cuoc_goi_vui_long_thu_lai">
+        <value>Lỗi khi hủy cuộc gọi. Vui lòng thử lại</value>
+    </data>
+    <data name="cong_viec_da_duoc_huy">
+        <value>Công việc đã được hủy</value>
+    </data>
+    <data name="loi_khi_huy_cong_viec_vui_long_thu_lai">
+        <value>Lỗi khi hủy công việc. Vui lòng thử lại</value>
+    </data>
+    <data name="cuoc_hop_da_duoc_huy">
+        <value>Cuộc họp đã được hủy</value>
+    </data>
+    <data name="loi_khi_huy_cuoc_hop_vui_long_thu_lai">
+        <value>Lỗi khi hủy cuộc họp. Vui lòng thử lại</value>
+    </data>
 </root>

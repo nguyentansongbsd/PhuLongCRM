@@ -139,7 +139,7 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="Diện tích sử dụng: "/>
-                                                <Span Text="{Binding UnitInfo.bsd_constructionarea,StringFormat='{0:#,0.#0} m2'}"/>
+                                                <Span Text="{Binding UnitInfo.bsd_constructionarea,StringFormat='{0:#,0.#0} m2'}" FontAttributes="Bold"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
@@ -147,7 +147,7 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="Loại: "/>
-                                                <Span Text="{Binding UnitInfo.bsd_unittype_name}"/>
+                                                <Span Text="{Binding UnitInfo.bsd_unittype_name}" FontAttributes="Bold"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
