@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using Xamarin.Forms;
 
@@ -38,7 +39,7 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    await DisplayAlert("", "Không tìm thấy dữ liệu", "Đóng");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     LoadingHelper.Hide();
                 }
             };

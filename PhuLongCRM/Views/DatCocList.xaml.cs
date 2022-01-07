@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace PhuLongCRM.Views
         {
             ReservationListModel val = e.Item as ReservationListModel;
             LoadingHelper.Show();
-            BangTinhGiaDetailPage newPage = new BangTinhGiaDetailPage(val.quoteid) { Title = "Đặt cọc" };
+            BangTinhGiaDetailPage newPage = new BangTinhGiaDetailPage(val.quoteid) { Title = Language.dat_coc };
             newPage.OnCompleted = async (OnCompleted) =>
             {
                 if (OnCompleted == true)

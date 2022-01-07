@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace PhuLongCRM.Views
 
         public void InitAdd()
         {
-            viewModel.Title = "Tạo Công Việc";
+            viewModel.Title = Language.tao_cong_viec;
             viewModel.TaskFormModel = new TaskFormModel();
             dateTimeTGBatDau.DefaultDisplay = DateTime.Now;
             dateTimeTGKetThuc.DefaultDisplay = DateTime.Now;
@@ -69,8 +70,7 @@ namespace PhuLongCRM.Views
             await viewModel.LoadTask();
             if (viewModel.TaskFormModel != null)
             {
-                viewModel.Title = "Cập Nhật Công Việc";
-                btnSave.Text = "Cập nhật công việc";
+                btnSave.Text = viewModel.Title = Language.cap_nhap_cong_viec;
                 CheckTaskForm?.Invoke(true);
             }
             else
@@ -85,7 +85,7 @@ namespace PhuLongCRM.Views
             {
                 if (viewModel.TaskFormModel.scheduledstart > viewModel.TaskFormModel.scheduledend || viewModel.TaskFormModel.scheduledstart == viewModel.TaskFormModel.scheduledend)
                 {
-                    ToastMessageHelper.ShortMessage("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+                    ToastMessageHelper.ShortMessage(Language.thoi_gian_bat_dau_phai_nho_hon_thoi_gian_ket_thuc);
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace PhuLongCRM.Views
             {
                 if (viewModel.TaskFormModel.scheduledstart > viewModel.TaskFormModel.scheduledend || viewModel.TaskFormModel.scheduledstart == viewModel.TaskFormModel.scheduledend)
                 {
-                    ToastMessageHelper.ShortMessage("Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
+                    ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace PhuLongCRM.Views
         {
             if (!viewModel.TaskFormModel.scheduledstart.HasValue)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian bắt đầu");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
                 viewModel.IsEventAllDay = false;
                 return;
             }
@@ -125,25 +125,25 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(viewModel.TaskFormModel.subject))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập chủ đề");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_chu_de);
                 return;
             }
 
             if (!viewModel.TaskFormModel.scheduledstart.HasValue)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian bắt đầu");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
                 return;
             }
 
             if (!viewModel.TaskFormModel.scheduledend.HasValue)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc);
                 return;
             }
 
             if ((viewModel.TaskFormModel.scheduledstart.HasValue && viewModel.TaskFormModel.scheduledend.HasValue) && (viewModel.TaskFormModel.scheduledstart > viewModel.TaskFormModel.scheduledend))
             {
-                ToastMessageHelper.ShortMessage("Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
+                ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
                 return;
             }
 
@@ -160,14 +160,14 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage("Tạo công việc thành công");
+                    ToastMessageHelper.ShortMessage(Language.tao_cong_viec_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Tạo công việc thất bại");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
             else
@@ -182,14 +182,14 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage("Cập nhật công việc thành công");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Cập nhật công việc thất bại");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -317,7 +318,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -366,7 +367,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -384,12 +385,12 @@ namespace PhuLongCRM.Views
                 else if (isSuccess == 1)
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Sản phẩm không thể tạo bảng tính giá");
+                    ToastMessageHelper.ShortMessage(Language.san_pham_khong_the_tao_bang_tinh_gia);
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -408,7 +409,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }

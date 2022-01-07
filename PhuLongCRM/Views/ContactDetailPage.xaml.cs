@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using Stormlion.PhotoBrowser;
@@ -40,12 +41,12 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Cuộc họp", "FontAwesomeRegular", "\uf274", null, NewMeet));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Cuộc gọi", "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Công việc", "FontAwesomeSolid", "\uf073", null, NewTask));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
 
                 if (viewModel.singleContact.statuscode != "100000000")
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, EditContact));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
 
                 if (viewModel.singleContact.employee_id != UserLogged.Id)
                 {
@@ -102,7 +103,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin khách hàng");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -282,7 +283,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -302,7 +303,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -366,13 +367,13 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Số điện thoại sai định dạng. Vui lòng kiểm tra lại");
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 }
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Khách hàng không có số điện thoại. Vui lòng kiểm tra lại");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
 
@@ -391,13 +392,13 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Số điện thoại sai định dạng. Vui lòng kiểm tra lại");
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 }
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Khách hàng không có số điện thoại. Vui lòng kiểm tra lại");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
 
@@ -474,7 +475,7 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin công ty");
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 };
             }
@@ -494,7 +495,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }

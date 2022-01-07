@@ -8,6 +8,7 @@ using System.Linq;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
 using Xamarin.Essentials;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Views
 {
@@ -150,11 +151,11 @@ namespace PhuLongCRM.Views
             var SelectedContact = this.viewModel.Contacts.Where(x => x.IsSelected == true);
             if (SelectedContact.Any() == false)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn Contact để chuyển sang khách hàng tiềm năng");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_contact_de_chuyen_sang_khach_hang_tiem_nang);
                 return;
             }
 
-            var choice = await DisplayAlert("", "Chuyển liên hệ thành khách hàng tiềm năng?", "Chuyển", "Huỷ bỏ");
+            var choice = await DisplayAlert("", Language.chuyen_lien_he_thanh_khach_hang_tiem_nang, Language.chuyen, Language.huy);
             if (choice)
             {
                 this.ConvertToLead(SelectedContact);
@@ -169,19 +170,19 @@ namespace PhuLongCRM.Views
                 var re = await createLead(new LeadFormModel()
                 {
                     leadid = Guid.NewGuid(),
-                    bsd_topic_label = "Khách Hàng Tiềm Năng Từ Danh Bạ",
+                    bsd_topic_label = Language.khach_hang_tiem_nang_tu_danh_ba,
                     lastname = i.Name,
                     mobilephone = i.numberFormated,
                 });
 
                 if (!re.IsSuccess)
                 {
-                    ToastMessageHelper.ShortMessage("Đã có lỗi xảy ra. Vui lòng thử lại sau");
+                    ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
                     LoadingHelper.Hide();
                     return;
                 }
             }
-            ToastMessageHelper.ShortMessage("Chuyển thành công");
+            ToastMessageHelper.ShortMessage(Language.chuyen_thanh_cong);
             this.reset();
         }
 

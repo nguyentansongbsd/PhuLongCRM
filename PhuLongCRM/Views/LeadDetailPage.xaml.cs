@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace PhuLongCRM.Views
         public LeadDetailPage(Guid id)
         {
             InitializeComponent();
-            this.Title = "THÔNG TIN KHÁCH HÀNG";
+            this.Title = Language.thong_tin_khach_hang;
             this.Id = id;
             this.BindingContext = viewModel = new LeadDetailPageViewModel();
             NeedToRefreshLeadDetail = false;
@@ -66,20 +67,20 @@ namespace PhuLongCRM.Views
             }
             else if (viewModel.singleLead.statuscode == "4" || viewModel.singleLead.statuscode == "5" || viewModel.singleLead.statuscode == "6"|| viewModel.singleLead.statuscode == "7")
             {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem("Kích hoạt lại KH", "FontAwesomeSolid", "\uf1b8", null, ReactivateLead));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.kich_hoat_lai_kh, "FontAwesomeSolid", "\uf1b8", null, ReactivateLead));
             }
             else
             {
                 if (viewModel.singleLead.leadqualitycode == 3)
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Không chuyển đổi", "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, Update));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
                 }
                 else
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chuyển đổi khách hàng", "FontAwesomeSolid", "\uf542", null, LeadQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Không chuyển đổi", "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, Update));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chuyen_doi_khach_hang, "FontAwesomeSolid", "\uf542", null, LeadQualify));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
                 }
             }
         }
@@ -98,7 +99,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Đã xảy ra lỗi. Vui lòng thử lại.");
+                    ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
                 }
             };
             
@@ -115,7 +116,7 @@ namespace PhuLongCRM.Views
                 if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                 if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Thành công");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
             }
             else
             {
@@ -127,23 +128,23 @@ namespace PhuLongCRM.Views
         private async void LeadDisQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string[] options = new string[] { "Mất khách hàng", "Không liên hệ được", "Không quan tâm", "Đã hủy" };
+            string[] options = new string[] { Language.mat_khach_hang, Language.khong_lien_lac_duoc, Language.khong_quan_tam, Language.da_huy };
             
-            string aws = await DisplayActionSheet("Tuỳ chọn", "Huỷ", null, options);
+            string aws = await DisplayActionSheet(Language.tuy_chon, Language.huy, null, options);
 
-            if (aws == "Mất khách hàng")
+            if (aws == Language.mat_khach_hang)
             {
                 viewModel.LeadStatusCode = 4;
             }
-            else if (aws == "Không liên hệ được")
+            else if (aws == Language.khong_lien_lac_duoc)
             {
                 viewModel.LeadStatusCode = 5;
             }
-            else if (aws == "Không quan tâm")
+            else if (aws == Language.khong_quan_tam)
             {
                 viewModel.LeadStatusCode = 6;
             }
-            else if (aws == "Đã hủy")
+            else if (aws == Language.da_huy)
             {
                 viewModel.LeadStatusCode = 7;
             }
@@ -158,11 +159,11 @@ namespace PhuLongCRM.Views
                     await viewModel.LoadOneLead(Id.ToString());
                     viewModel.ButtonCommandList.Clear();
                     SetButtonFloatingButton();
-                    ToastMessageHelper.ShortMessage("Thành công");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage("Thất bại");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
             
@@ -181,11 +182,11 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadOneLead(Id.ToString());
                 viewModel.ButtonCommandList.Clear();
                 SetButtonFloatingButton();
-                ToastMessageHelper.ShortMessage("Thành công");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
             }
             else
             {
-                ToastMessageHelper.ShortMessage("Thất bại");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
             }
             LoadingHelper.Hide();
         }
@@ -203,12 +204,12 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage("Số điện thoại sai định dạng. Vui lòng kiểm tra lại");
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 }
             }
             else
             {
-                ToastMessageHelper.ShortMessage("Khách hàng không có số điện thoại. Vui lòng kiểm tra lại");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
 
@@ -224,12 +225,12 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage("Số điện thoại sai định dạng. Vui lòng kiểm tra lại");
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 }
             }
             else
             {
-                ToastMessageHelper.ShortMessage("Khách hàng không có số điện thoại. Vui lòng kiểm tra lại");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
         // Tab Thong tin

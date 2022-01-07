@@ -2,10 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:controls="clr-namespace:PhuLongCRM.Controls" 
-             xmlns:converter="clr-namespace:PhuLongCRM.Converters" 
+             xmlns:converter="clr-namespace:PhuLongCRM.Converters"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              x:Class="PhuLongCRM.Views.DatCocList"
-             Title="DANH SÁCH ĐẶT CỌC">
+             Title="{x:Static lang:Language.danh_sach_dat_coc}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
@@ -15,7 +16,7 @@
         <AbsoluteLayout>
             <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <controls:SearchBarFrame Grid.Row="0" Margin="10,10,10,5">
-                    <SearchBar Text="{Binding Keyword}" Placeholder="Từ khoá" FontSize="15" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
+                    <controls:SearchBar Text="{Binding Keyword}" FontSize="15" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
                 </controls:SearchBarFrame>
 
                 <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped">
@@ -30,19 +31,19 @@
                                         <Label Grid.Column="1" Text="{Binding name}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" VerticalOptions="Center"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="Khách hàng: " FontSize="15" TextColor="#333333"/>
+                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
                                         <Label Grid.Column="1" Text="{Binding purchaser}" FontSize="15" TextColor="#333333"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="Dự án: " FontSize="15" TextColor="#333333"/>
+                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
                                         <Label Grid.Column="1" Text="{Binding bsd_project_name}" FontSize="15" TextColor="#333333"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="Sản phẩm: " FontSize="15" TextColor="#333333"/>
+                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
                                         <Label Grid.Column="1" Text="{Binding bsd_unitno_name}" FontSize="15" TextColor="#333333"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="Tổng tiền: " FontSize="15" TextColor="#333333"/>
+                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
                                         <Label Grid.Column="1" Text="{Binding totalamount_format}" FontSize="15" TextColor="#333333"/>
                                     </Grid>
                                 </StackLayout>

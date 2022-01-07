@@ -4,8 +4,9 @@
              xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              x:Class="PhuLongCRM.Views.LichLamViecTheoNgay"
-             Title="Lịch Làm Việc Theo Ngày">
+             Title="{x:Static lang:Language.lich_lam_viec_theo_ngay}">
     <ContentPage.Resources>
         <Style TargetType="telerikPrimitives:RadBorder" x:Key="radBorder">
             <Setter Property="CornerRadius" Value="0"/>
@@ -63,19 +64,19 @@
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Task_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblTask" Text="Công Việc" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblTask" Text="{x:Static lang:Language.cong_viec}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                     <telerikPrimitives:RadBorder x:Name="radBorderMeeting" Grid.Column="1" Style="{StaticResource radBorder}">
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Meeting_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblMeeting" Text="Cuộc Họp" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblMeeting" Text="{x:Static lang:Language.cuoc_hop}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                     <telerikPrimitives:RadBorder x:Name="radBorderPhoneCall" Grid.Column="2" Style="{StaticResource radBorder}">
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PhoneCall_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblPhoneCall" Text="Cuộc Gọi" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblPhoneCall" Text="{x:Static lang:Language.cuoc_goi}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                 </Grid>
                 <telerikInput:RadCalendar Grid.Row="1" ViewMode="Day"
