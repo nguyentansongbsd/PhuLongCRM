@@ -6,9 +6,10 @@
              xmlns:ffimagetransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:converters="clr-namespace:PhuLongCRM.Converters"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
-             Title="Thông tin cá nhân"
+             Title="{x:Static lang:Language.thong_tin_ca_nhan}"
              x:Class="PhuLongCRM.Views.UserInfoPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -35,19 +36,19 @@
                         </telerikPrimitives:RadBorder>
                     </Grid>
                     
-                    <controls:FormLabelRequired Text="Họ tên" Margin="0,20,0,0"/>
+                    <controls:FormLabelRequired Text="{x:Static lang:Language.ho_ten}" Margin="0,20,0,0"/>
                     <controls:MainEntry Text="{Binding ContactModel.bsd_fullname}" IsEnabled="False" ShowClearButton="False"/>
 
-                    <controls:FormLabelRequired Text="Tài khoản" />
+                    <controls:FormLabelRequired Text="{x:Static lang:Language.tai_khoan}" />
                     <controls:MainEntry Text="{Binding UserName}" IsEnabled="False" ShowClearButton="False"/>
 
-                    <controls:FormLabel Text="Email"/>
-                    <controls:MainEntry Text="{Binding ContactModel.emailaddress1}" Placeholder="Nhập email"/>
+                    <controls:FormLabel Text="{x:Static lang:Language.email}"/>
+                    <controls:MainEntry Text="{Binding ContactModel.emailaddress1}" Placeholder="{x:Static lang:Language.nhap_email}"/>
 
-                    <controls:FormLabelRequired Text="Số điện thoại"/>
-                    <controls:MainEntry Text="{Binding ContactModel.mobilephone}" Keyboard="Numeric" Placeholder="Nhập số điện thoại"/>
+                    <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}"/>
+                    <controls:MainEntry Text="{Binding ContactModel.mobilephone}" Keyboard="Numeric" Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}"/>
 
-                    <controls:FormLabel Text="Mật khẩu"/>
+                    <controls:FormLabel Text="{x:Static lang:Language.mat_khau}"/>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="0">
                         <controls:MainEntry Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Password}" IsPassword="True" ShowClearButton="False"/>
                         <StackLayout Grid.Column="0"/>
@@ -58,15 +59,15 @@
                         </Label>
                     </Grid>
 
-                    <controls:FormLabelRequired Text="Ngày sinh"/>
+                    <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_sinh}"/>
                     <controls:DatePickerBorder x:Name="datePickerNgaySinh" Date="{Binding ContactModel.birthdate}" Format="dd/MM/yyyy"/>
 
-                    <controls:FormLabelRequired Text="Giới tính"/>
-                    <controls:LookUp NameDisplay="Label" BottomModal="{Reference LookUpModal}" Placeholder="Chọn giới tính" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
+                    <controls:FormLabelRequired Text="{x:Static lang:Language.gioi_tinh}"/>
+                    <controls:LookUp NameDisplay="Label" BottomModal="{Reference LookUpModal}" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
 
-                    <controls:FormLabelRequired Text="Địa chỉ"/>
+                    <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi}"/>
                     <Grid>
-                        <controls:MainEntry Text="{Binding Address}" ShowClearButton="False" Placeholder="Địa chỉ"/>
+                        <controls:MainEntry Text="{Binding Address}" ShowClearButton="False" Placeholder="{x:Static lang:Language.dia_chi}"/>
                         <StackLayout>
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ChangeAddress_Tapped"/>
@@ -77,7 +78,7 @@
                 </StackLayout>
             </ScrollView>
             <StackLayout Padding="10" BackgroundColor="White" AbsoluteLayout.LayoutBounds="0,1,1,60" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional">
-                <Button Text="Lưu" Clicked="SaveUserInfor_Clicked" HeightRequest="40" CornerRadius="5" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" FontSize="15"/>
+                <Button Text="{x:Static lang:Language.luu}" Clicked="SaveUserInfor_Clicked" HeightRequest="40" CornerRadius="5" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" FontSize="15"/>
             </StackLayout>
 
             <controls:CenterModal x:Name="centerModelPassword" Title="Đổi mật khẩu">

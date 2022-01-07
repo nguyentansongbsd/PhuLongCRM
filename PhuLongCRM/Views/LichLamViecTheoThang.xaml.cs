@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using Telerik.XamarinForms.Input;
 using Xamarin.Forms;
@@ -144,17 +145,17 @@ namespace PhuLongCRM.Views
         private async void AddButton_Clicked(object sender, System.EventArgs e)
         {
             LoadingHelper.Show();
-            string[] options = new string[] { "Tạo Công Việc", "Tạo Cuộc Họp", "Tạo Cuộc Gọi" };
-            string asw = await DisplayActionSheet("Tuỳ chọn", "Hủy", null, options);
-            if (asw == "Tạo Công Việc")
+            string[] options = new string[] { Language.tao_cong_viec, Language.tao_cuoc_hop, Language.tao_cuoc_goi };
+            string asw = await DisplayActionSheet(Language.tuy_chon, Language.huy, null, options);
+            if (asw == Language.tao_cong_viec)
             {
                 await Navigation.PushAsync(new TaskForm());
             }
-            else if (asw == "Tạo Cuộc Gọi")
+            else if (asw == Language.tao_cuoc_goi)
             {
                 await Navigation.PushAsync(new PhoneCallForm());
             }
-            else if (asw == "Tạo Cuộc Họp")
+            else if (asw == Language.tao_cuoc_hop)
             {
                 await Navigation.PushAsync(new MeetingForm());
             }
@@ -189,7 +190,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             }
             else if (val.Activity.activitytypecode == "phonecall")
@@ -212,7 +213,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             }
             else if (val.Activity.activitytypecode == "appointment")
@@ -235,7 +236,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             }
         }

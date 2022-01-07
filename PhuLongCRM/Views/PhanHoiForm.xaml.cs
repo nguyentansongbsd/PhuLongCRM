@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             this.BindingContext = viewModel = new PhanHoiFormViewModel();
-            viewModel.TabsDoiTuong = new List<string>() { "Giữ chỗ,", "Bảng Tính Giá", "Hợp đồng" };
+            viewModel.TabsDoiTuong = new List<string>() { Language.giu_cho_btn, Language.bang_tinh_gia_btn, Language.hop_dong };
             SerPreOpen();
         }
 
@@ -41,8 +42,8 @@ namespace PhuLongCRM.Views
             await viewModel.LoadCase();
             if (viewModel.singlePhanHoi != null)
             {
-                this.Title = "CẬP NHẬT PHẢN HỒI";
-                buttonSave.Text = "Cập nhật phản hồi";
+                this.Title = Language.cap_nhat_phan_hoi;
+                buttonSave.Text = Language.cap_nhat;
                 CheckPhanHoi?.Invoke(true);
             }
             else
@@ -100,7 +101,7 @@ namespace PhuLongCRM.Views
             lookupUnits.PreOpen = async () => {
                 if (viewModel.Project == null)
                 {
-                    ToastMessageHelper.ShortMessage("Vui lòng chọn dự án");
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_du_an);
                 }
             };
 
@@ -152,19 +153,19 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.CaseType == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn loại phản hồi");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_loai_phan_hoi);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(viewModel.singlePhanHoi.title))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập tiêu đề");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_tieu_de);
                 return;
             }
 
             if (viewModel.Customer == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn khách hàng");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_khach_hang);
                 return;
             }
 
@@ -176,13 +177,13 @@ namespace PhuLongCRM.Views
                 {
                     if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                     await Navigation.PopAsync();
-                    ToastMessageHelper.ShortMessage("Tạo phản hồi thành công");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Tạo phản hồi thất bại");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
             else
@@ -192,13 +193,13 @@ namespace PhuLongCRM.Views
                 {
                     if (PhanHoiDetailPage.NeedToRefresh.HasValue) PhanHoiDetailPage.NeedToRefresh = true;
                     await Navigation.PopAsync();
-                    ToastMessageHelper.ShortMessage("Cập nhật phản hồi thành công");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Cập nhật phản hồi thất bại");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
                 }
             }
         }

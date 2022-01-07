@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,9 @@ namespace PhuLongCRM.Views
         {
             await LoadDataThongTin(CaseId);
             SetPreOpen();
-            viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy phản hồi", "FontAwesomeRegular", "\uf273", null, CancelCase));
-            viewModel.ButtonCommandList.Add(new FloatButtonItem("Giải quyết phản hồi", "FontAwesomeRegular", "\uf274", null, CompletedCase));
-            viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null,Update));
+            viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_phan_hoi, "FontAwesomeRegular", "\uf273", null, CancelCase));
+            viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.giai_quyet_phan_hoi, "FontAwesomeRegular", "\uf274", null, CompletedCase));
+            viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null,Update));
 
             if (viewModel.Case.incidentid != Guid.Empty)
                 OnCompleted?.Invoke(true);
@@ -115,7 +116,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -123,8 +124,8 @@ namespace PhuLongCRM.Views
         private async void CancelCase(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string options = await DisplayActionSheet("Hủy phản hồi", "Không", "Có", "Xác nhận hủy phản hồi");
-            if (options == "Có")
+            string options = await DisplayActionSheet(Language.huy_phan_hoi, Language.khong, Language.co, Language.xac_nhan_huy_phan_hoi);
+            if (options == Language.co)
             {
                 viewModel.Case.statecode = 2;
                 viewModel.Case.statuscode = 6;
@@ -132,15 +133,15 @@ namespace PhuLongCRM.Views
                 {
                     await viewModel.LoadCase(viewModel.Case.incidentid);
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Đã hủy phản hồi");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Hủy phản hồi thất bại. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
-            else if (options == "Không")
+            else if (options == Language.khong)
             {
                 LoadingHelper.Hide();
             }
@@ -160,19 +161,19 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.ResolutionType == null || viewModel.ResolutionType.Val == string.Empty)
             {
-                ToastMessageHelper.ShortMessage("Chưa chọn hướng giải quyết");
+                ToastMessageHelper.ShortMessage(Language.chua_chon_huong_giai_quyet);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(viewModel.subject))
             {
-                ToastMessageHelper.ShortMessage("Chưa nhập phương án");
+                ToastMessageHelper.ShortMessage(Language.chua_nhap_phuong_an);
                 return;
             }
 
             if (viewModel.BillableTime == null || viewModel.BillableTime.Val == string.Empty)
             {
-                ToastMessageHelper.ShortMessage("Chưa chọn billable time");
+                ToastMessageHelper.ShortMessage(Language.chua_chon_thoi_gian_co_the_thanh_toan);
                 return;
             }
 
@@ -180,12 +181,12 @@ namespace PhuLongCRM.Views
             {
                 await viewModel.LoadCase(viewModel.Case.incidentid);
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Phản hồi đã được giải quyết");
+                ToastMessageHelper.ShortMessage(Language.phan_hoi_da_duoc_giai_quyet);
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Giải quyết phản hồi thất bại. Vui lòng thử lại");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
             }
             await centerModalUpdateCase.Hide();
         }
@@ -198,12 +199,12 @@ namespace PhuLongCRM.Views
             {
                 await viewModel.LoadCase(viewModel.Case.incidentid);
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Đã mở lại phản hồi");
+                ToastMessageHelper.ShortMessage(Language.da_mo_lai_phan_hoi);
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Mở lại phản hồi thất bại. Vui lòng thử lại");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
             }
         }
 
@@ -263,7 +264,7 @@ namespace PhuLongCRM.Views
                         else
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }
@@ -280,7 +281,7 @@ namespace PhuLongCRM.Views
                         else
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }

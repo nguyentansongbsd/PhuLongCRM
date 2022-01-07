@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.Views
@@ -14,7 +15,6 @@ namespace PhuLongCRM.Views
         private LeadsContentView LeadsContentView;
         private ContactsContentview ContactsContentview;
         private AccountsContentView AccountsContentView;
-        private Label DataNull = new Label() { Text = "Không có dữ liệu", FontSize = 18, TextColor = Color.Gray, HorizontalTextAlignment = TextAlignment.Center, Margin = new Thickness(0, 30, 0, 0) };
         public CustomerPage()
         {
             LoadingHelper.Show();
@@ -145,17 +145,17 @@ namespace PhuLongCRM.Views
         private async void NewCustomer_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string[] options = new string[] { "Khách hàng tiềm năng", "Khách hàng cá nhân", "Khách hàng doanh nghiệp" };
-            string asw = await DisplayActionSheet("Tùy chọn", "Hủy", null, options);
-            if (asw == "Khách hàng tiềm năng")
+            string[] options = new string[] { Language.khach_hang_tiem_nang_option, Language.khach_hang_ca_nhan_option, Language.khach_hang_doanh_nghiep_option };
+            string asw = await DisplayActionSheet(Language.huy, Language.huy, null, options);
+            if (asw == Language.khach_hang_tiem_nang_option)
             {
                 await Navigation.PushAsync(new LeadForm());
             }
-            else if (asw == "Khách hàng cá nhân")
+            else if (asw == Language.khach_hang_ca_nhan_option)
             {
                 await Navigation.PushAsync(new ContactForm());
             }
-            else if (asw == "Khách hàng doanh nghiệp")
+            else if (asw == Language.khach_hang_doanh_nghiep_option)
             {
                 await Navigation.PushAsync(new AccountForm());
             }
