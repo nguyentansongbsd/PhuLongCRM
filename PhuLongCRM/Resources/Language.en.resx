@@ -28,7 +28,7 @@
         <value>Home</value>
     </data>
 	<data name="hoa_hong">
-        <value>COMMISSION</value>
+        <value>Commission</value>
     </data>
 	<data name="tong_tien">
         <value>Total amount</value>
@@ -37,7 +37,7 @@
         <value>Received</value>
     </data>
 	<data name="giao_dich">
-        <value>TRANSACTION</value>
+        <value>Transaction</value>
     </data>
 	<data name="giu_cho">
         <value>Queuing</value>
@@ -421,7 +421,7 @@
         <value>Nghỉ dưỡng</value>
     </data>
     <data name="shophouse_va_officetel">
-        <value>Shophouse và Officetel</value>
+        <value>Shophouse and Officetel</value>
     </data>
     <data name="xuong_kho">
         <value>Xưởng/ Kho</value>
@@ -610,7 +610,7 @@
         <value>Place of issue</value>
     </data>
     <data name="nhap_so_giay_phep_kinh_doanh">
-        <value>Nhập số giấy phép kinh doanh</value>
+        <value>Enter registration Code</value>
     </data>
     <data name="ngay_cap">
         <value>Issued on</value>
@@ -652,64 +652,64 @@
         <value>Customer care</value>
     </data>
     <data name="thoi_gian_bat_dau">
-        <value>Thời gian bắt đầu</value>
+        <value>Start Date</value>
     </data>
     <data name="thoi_gian_ket_thuc">
-        <value>Thời gian kết thúc</value>
+        <value>Due Date</value>
     </data>
     <data name="tinh_trang">
-        <value>Tình trạng</value>
+        <value>Status</value>
     </data>
     <data name="dia_chi">
-        <value>Địa chỉ</value>
+        <value>Address</value>
     </data>
     <data name="ten_cong_ty">
-        <value>Tên công ty</value>
+        <value>Account Name</value>
     </data>
     <data name="ngay_bat_dau_hieu_luc">
-        <value>Ngày bắt đầu hiệu lực</value>
+        <value>Effective Date To</value>
     </data>
     <data name="ngay_het_hieu_luc">
-        <value>Ngày hết hiệu lực</value>
+        <value>Effective Date From</value>
     </data>
     <data name="chuc_vu_vn">
-        <value>Chức vụ (VN)</value>
+        <value>Job Title (VN)</value>
     </data>
     <data name="chuc_vu_en">
-        <value>Chức vụ (EN)</value>
+        <value>Job Title (EN)</value>
     </data>
     <data name="mo_ta_vn">
-        <value>Mô tả (VN)</value>
+        <value>Descriptions (VN)</value>
     </data>
     <data name="mo_ta_en">
-        <value>Mô tả (EN)</value>
+        <value>Descriptions (EN)</value>
     </data>
-    <data name="them_cuoc_hop">
-        <value>Thêm Cuộc họp</value>
+    <data name="tao_cuoc_hop">
+        <value>Create Meeting</value>
     </data>
-    <data name="them_cuoc_goi">
-        <value>Thêm Cuộc gọi</value>
+    <data name="tao_cuoc_goi">
+        <value>Create Phone Call</value>
     </data>
-    <data name="them_cong_viec">
-        <value>Thêm Công việc</value>
+    <data name="tao_cong_viec">
+        <value>Create Task</value>
     </data>
     <data name="them_nguoi_uy_quyen">
-        <value>Thêm người ủy quyền</value>
+        <value>Add Mandatory Secondary</value>
     </data>
     <data name="chinh_sua">
-        <value>Chỉnh sửa</value>
+        <value>Edit</value>
     </data>
     <data name="xac_nhan">
-        <value>Xác nhận</value>
+        <value>Confirm</value>
     </data>
     <data name="ban_co_muon_xoa_nguoi_uye_quyen_khong">
         <value>Bạn có muốn xóa người ủy quyền không ?</value>
     </data>
     <data name="dong_y">
-        <value>Đồng ý</value>
+        <value>Agree</value>
     </data>
     <data name="huy">
-        <value>Hủy</value>
+        <value>Cancel</value>
     </data>
     <data name="da_xoa_nguoi_uy_quyen_duoc_chon">
         <value>Đã xóa người ủy quyền được chọn</value>
@@ -718,115 +718,112 @@
         <value>Xóa người ủy quyền thất bại</value>
     </data>
     <data name="so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai">
-        <value>Số điện thoại sai định dạng. Vui lòng kiểm tra lại</value>
+        <value>Invalid phone number. Please check again</value>
     </data>
     <data name="khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai">
-        <value>Khách hàng không có số điện thoại. Vui lòng kiểm tra lại</value>
+        <value>The customer does not have a phone number. Please check again</value>
     </data>
     <data name="thong_tin_cong_ty">
-        <value>Thông Tin Công Ty</value>
+        <value>Account information</value>
     </data>
     <data name="dai_dien_phap_luat">
         <value>Đại Diện Pháp Luật</value>
     </data>
     <data name="loai_khach_hang">
-        <value>Loại khách hàng</value>
+        <value>Localization</value>
     </data>
     <data name="nhom_khach_hang">
-        <value>Nhóm khách hàng</value>
+        <value>Business Type</value>
     </data>
     <data name="chon_loai_khach_hang">
-        <value>Chọn loại khách hàng</value>
+        <value>Choose Business Type</value>
     </data>
     <data name="chon_tinh_trang">
-        <value>Chọn tình trạng</value>
+        <value>Choose Status</value>
     </data>
     <data name="nhap_ten_cong_ty">
-        <value>Nhập tên công ty</value>
+        <value>Enter Account Name</value>
     </data>
     <data name="nhap_ten_cong_ty_khac">
-        <value>Nhập tên công ty (khác)</value>
+        <value>Enter Account Name (Other)</value>
     </data>
     <data name="nhap_ten_viet_tat">
-        <value>Nhập tên viết tắt</value>
+        <value>Enter Company Code</value>
     </data>
     <data name="pham_vi_hoat_dong">
-        <value>Phạm vi hoạt động</value>
+        <value>Operation Scope</value>
     </data>
     <data name="chon_pham_vi_hoat_dong">
-        <value>Chọn phạm vi hoạt động</value>
+        <value>Choose Operation Scope</value>
     </data>
     <data name="chon_nguoi_dai_dien">
         <value>Chọn người đại diện</value>
     </data>
     <data name="so_dien_thoai_cong_ty">
-        <value>Số điện thoại công ty</value>
+        <value>Phone</value>
     </data>
     <data name="nhap_so_dien_thoai_cong_ty">
-        <value>Nhập số điện thoại công ty</value>
+        <value>Enter Phone</value>
     </data>
     <data name="nhap_email">
-        <value>Nhập email</value>
+        <value>Enter Email</value>
     </data>
     <data name="nhap_fax_cua_cong_ty">
-        <value>Nhập fax của công ty</value>
+        <value>Enter Fax</value>
     </data>
     <data name="nhap_website_cua_cong_ty">
-        <value>Nhập website của công ty</value>
+        <value>Enter Website</value>
     </data>
     <data name="chon_ngay_cap">
-        <value>Chọn ngày cấp</value>
+        <value>Choose Issued on</value>
     </data>
     <data name="nhap_noi_cap">
-        <value>Nhập nơi cấp</value>
+        <value>Enter Place of issue</value>
     </data>
     <data name="nhap_ma_so_thue">
-        <value>Nhập mã số thuế</value>
+        <value>Enter VAT Registration Number</value>
     </data>
     <data name="chon_dia_chi_lien_lac">
-        <value>Chọn địa chỉ liên lạc</value>
+        <value>Choose Address</value>
     </data>
     <data name="chon_dia_chi_tru_so_chinh">
-        <value>Chọn địa chỉ trụ sở chính</value>
-    </data>
-    <data name="chon_dia_chi_tru_so_chinh">
-        <value>Chọn địa chỉ trụ sở chính</value>
+        <value>Choose Permanent Address</value>
     </data>
     <data name="tao_moi_khach_hang_doanh_nghiep">
-        <value>Tạo Mới Khách Hàng Doanh Nghiệp</value>
+        <value>Create Account</value>
     </data>
     <data name="tao_moi">
-        <value>Tạo Mới</value>
+        <value>Create</value>
     </data>
     <data name="cap_nhat">
-        <value>Cập Nhật</value>
+        <value>Update</value>
     </data>
     <data name="cap_nhat_khach_hang_doanh_nghiep">
-        <value>Cập Nhật Khách Hàng Doanh Nghiệp</value>
+        <value>Update Account</value>
     </data>
     <data name="vui_long_chon_loai_khach_hang">
-        <value>Vui lòng chọn loại khách hàng</value>
+        <value>Please choose localization</value>
     </data>
     <data name="vui_long_nhap_ten_cong_ty">
-        <value>Vui lòng nhập tên công ty</value>
+        <value>Please enter account name</value>
     </data>
     <data name="vui_long_chon_pham_vi_hoat_dong">
-        <value>Vui lòng chọn phạm vi hoạt động</value>
+        <value>Please choose Operation Scope</value>
     </data>
     <data name="vui_long_chon_nguoi_dai_dien">
         <value>Vui lòng chọn người đại diện</value>
     </data>
     <data name="vui_long_nhap_so_dien_thoai_cong_ty">
-        <value>Vui lòng nhập số điện thoại công ty</value>
+        <value>Please enter Phone</value>
     </data>
     <data name="email_sai_dinh_dang_vui_long_thu_lai">
-        <value>Email sai địng dạng. Vui lòng thử lại</value>
+        <value>Invalid email format. Please try again</value>
     </data>
     <data name="email_2_sai_dinh_dang_vui_long_thu_lai">
-        <value>Email 2 sai địng dạng. Vui lòng thử lại</value>
+        <value>Invalid email 2 format. Please try again</value>
     </data>
     <data name="vui_long_nhap_so_giay_phep_kinh_doanh">
-        <value>Vui lòng nhập số giấy phép kinh doanh</value>
+        <value>Please enter Registration Code</value>
     </data>
     <data name="so_giay_phep_kinh_doanh_da_tao_trong_du_lieu_doanh_nghiep">
         <value>Số giấy phép kinh doanh đã tạo trong dữ liệu doanh nghiệp</value>
@@ -835,22 +832,22 @@
         <value>Mã số thuế đã tạo trong dữ liệu doanh nghiệp</value>
     </data>
     <data name="vui_long_chon_dia_chi_lien_lac">
-        <value>Vui lòng chọn địa chỉ liên lạc</value>
+        <value>Please choose Address</value>
     </data>
     <data name="vui_long_chon_dia_chi_tru_so_chinh">
-        <value>Vui lòng chọn địa chỉ trụ sở chính</value>
+        <value>Please choose Permanent Address</value>
     </data>
     <data name="tao_khach_hang_doanh_nghiep_thanh_cong">
-        <value>Tạo khách hàng doanh nghiệp thành công</value>
+        <value>Create Account Successed</value>
     </data>
     <data name="tao_khach_hang_doanh_nghiep_that_bai">
-        <value>Tạo khách hàng doanh nghiệp thất bại</value>
+        <value>Create Account Failed</value>
     </data>
     <data name="cap_nhat_khach_hang_doanh_nghiep_thanh_cong">
-        <value>Cập nhật khách hàng doanh nghiệp thành công</value>
+        <value>Update Account Successed</value>
     </data>
     <data name="cap_nhat_khach_hang_doanh_nghiep_that_bai">
-        <value>Cập nhật khách hàng doanh nghiệp thất bại</value>
+        <value>Update Account Failed</value>
     </data>
     <data name="cong_viec">
         <value>Task</value>
@@ -862,16 +859,16 @@
         <value>Phone Call</value>
     </data>
     <data name="tuy_chon">
-        <value>Tuỳ chọn</value>
+        <value>Options</value>
     </data>
     <data name="goi_tu">
-        <value>Gọi từ</value>
+        <value>Call from</value>
     </data>
     <data name="goi_den">
-        <value>Gọi đến</value>
+        <value>Call to</value>
     </data>
     <data name="mo_ta">
-        <value>Mô tả</value>
+        <value>Description</value>
     </data>
     <data name="nguoi_tham_du_bat_buoc">
         <value>Người tham dự bắt buộc</value>
@@ -883,208 +880,208 @@
         <value>Người liên quan</value>
     </data>
     <data name="dia_diem">
-        <value>Địa điểm</value>
+        <value>Location</value>
     </data>
     <data name="su_kien_ca_ngay">
-        <value>Sự kiện cả ngày</value>
+        <value>Event all day</value>
     </data>
     <data name="cuoc_goi_da_hoan_thanh">
-        <value>Cuộc gọi đã hoàn thành</value>
+        <value>Phone call Completed</value>
     </data>
     <data name="loi_khi_hoan_thanh_cuoc_goi_vui_long_thu_lai">
-        <value>Lỗi khi hoàn thành cuộc gọi. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="cong_viec_da_hoan_thanh">
-        <value>Công việc đã hoàn thành</value>
+        <value>Task Completed</value>
     </data>
     <data name="loi_khi_hoan_thanh_cong_viec_vui_long_thu_lai">
-        <value>Lỗi khi hoàn thành công việc. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="cuoc_hop_da_hoan_thanh">
-        <value>Cuộc họp đã hoàn thành</value>
+        <value>Meeting Completed</value>
     </data>
     <data name="loi_khi_hoan_thanh_cuoc_hop_vui_long_thu_lai">
-        <value>Lỗi khi hoàn thành cuộc họp. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="cuoc_goi_da_duoc_huy">
-        <value>Cuộc gọi đã được hủy</value>
+        <value>Phone call canceled</value>
     </data>
     <data name="loi_khi_huy_cuoc_goi_vui_long_thu_lai">
-        <value>Lỗi khi hủy cuộc gọi. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="cong_viec_da_duoc_huy">
-        <value>Công việc đã được hủy</value>
+        <value>Task canceled</value>
     </data>
     <data name="loi_khi_huy_cong_viec_vui_long_thu_lai">
-        <value>Lỗi khi hủy công việc. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="cuoc_hop_da_duoc_huy">
-        <value>Cuộc họp đã được hủy</value>
+        <value>Meeting canceled</value>
     </data>
     <data name="loi_khi_huy_cuoc_hop_vui_long_thu_lai">
-        <value>Lỗi khi hủy cuộc họp. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="phi_dat_coc">
-        <value>Phí đặt cọc</value>
+        <value>Deposit Fee</value>
     </data>
     <data name="chinh_sach">
-        <value>Chính Sách</value>
+        <value>Policy</value>
     </data>
     <data name="tong_hop">
-        <value>Tổng Hợp</value>
+        <value>Synthetic</value>
     </data>
     <data name="chi_tiet">
-        <value>Chi Tiết</value>
+        <value>Detail</value>
     </data>
     <data name="lich">
-        <value>Lịch</value>
+        <value>Calendar</value>
     </data>
     <data name="dieu_kien_ban_giao">
-        <value>Điều kiện bàn giao</value>
+        <value>Handover Condition</value>
     </data>
     <data name="chiet_khau_theo_pttt">
         <value>Chiết khấu theo PTTT</value>
     </data>
     <data name="chiet_khau_chung">
-        <value>Chiết khấu chung</value>
+        <value>Discount</value>
     </data>
     <data name="chiet_khau_noi_bo">
-        <value>Chiết khấu nội bộ</value>
+        <value>Internal Discount</value>
     </data>
     <data name="khuyen_mai">
-        <value>Khuyến mại</value>
+        <value>Promotions</value>
     </data>
     <data name="chiet_khau_quy_doi">
-        <value>Chiết khấu quy đổi</value>
+        <value>Exchange Discount</value>
     </data>
     <data name="nguoi_dong_so_huu">
-        <value>Người Đồng Sở Hữu</value>
+        <value>Co-owner</value>
     </data>
     <data name="thong_tin_ban_hang">
-        <value>Thông Tin Bán Hàng</value>
+        <value>Sales Information</value>
     </data>
     <data name="thong_tin_san_pham">
-        <value>Thông Tin Sản Phẩm</value>
+        <value>Unit Information</value>
     </data>
     <data name="tinh_trang_san_pham">
         <value>Tình trạng sản phẩm</value>
     </data>
     <data name="dien_tich_xay_dung">
-        <value>Diện tích xây dựng</value>
+        <value>Construction Area</value>
     </data>
     <data name="dien_tich_su_dung">
-        <value>Diện tích sử dụng</value>
+        <value>Net Usable Area</value>
     </data>
     <data name="dien_tich_thuc_te">
-        <value>Diện tích thực tế</value>
+        <value>Actual Area</value>
     </data>
     <data name="thong_tin_chi_tiet">
-        <value>Thông Tin Chi Tiết</value>
+        <value>Detail information</value>
     </data>
     <data name="dot_mo_ban">
-        <value>Đợt mở bán</value>
+        <value>Phases Launch</value>
     </data>
     <data name="bang_gia_goc">
-        <value>Bảng giá gốc</value>
+        <value>Price List</value>
     </data>
     <data name="phi_giu_cho">
-        <value>Phí giữ chỗ</value>
+        <value>Queuing Fee</value>
     </data>
     <data name="tong_tien_thanh_toan">
-        <value>Tổng tiền thanh toán</value>
+        <value>Total Amount Paid</value>
     </data>
     <data name="thong_tin_san_dai_ly">
         <value>Thông Tin Sàn/Đại Lý</value>
     </data>
     <data name="dai_ly_san_giao_dich">
-        <value>Đại lý/Sàn giao dịch</value>
+        <value>Sales Agent Company</value>
     </data>
     <data name="nhan_vien_dai_ly_san">
-        <value>Nhân viên Đại lý/Sàn</value>
+        <value>Name of Staff-Agent</value>
     </data>
     <data name="cong_tac_vien">
-        <value>Cộng tác viên</value>
+        <value>Collaborator</value>
     </data>
     <data name="khach_hang_gioi_thieu">
-        <value>Khách hàng giới thiệu</value>
+        <value>Customer Referral</value>
     </data>
     <data name="thong_tin_bang_tinh_gia">
-        <value>Thông Tin Bảng Tính Giá</value>
+        <value>Quotation information</value>
     </data>
     <data name="ngay_in">
-        <value>Ngày in</value>
+        <value>Quotation Printed Date</value>
     </data>
     <data name="het_han_ky">
-        <value>Hết hạn ký</value>
+        <value>Expired date of signing QF</value>
     </data>
     <data name="thong_tin_gia">
-        <value>Thông Tin Giá</value>
+        <value>Price information</value>
     </data>
     <data name="gia_goc">
-        <value>Giá gốc</value>
+        <value>Listed Price</value>
     </data>
     <data name="chiet_khau">
-        <value>Chiết khấu</value>
+        <value>Discount</value>
     </data>
     <data name="dkbg">
-        <value>ĐKBG</value>
+        <value>Handover Condition Amount</value>
     </data>
     <data name="gia_ban_truoc_thue">
-        <value>Giá bán trước thuế</value>
+        <value>Net Selling Price</value>
     </data>
     <data name="gia_tri_qsdd">
-        <value>Giá trị QSDĐ</value>
+        <value>Land Value Deduction</value>
     </data>
     <data name="thue">
-        <value>Thuế</value>
+        <value>Total VAT Tax</value>
     </data>
     <data name="phi_bao_tri">
-        <value>Phí bảo trì</value>
+        <value>Maintenance Fee</value>
     </data>
     <data name="tong_tien">
-        <value>Tổng tiền</value>
+        <value>Total Amount</value>
     </data>
     <data name="phi_quan_ly">
-        <value>Phí Quản Lý</value>
+        <value>Management Amount</value>
     </data>
     <data name="so_thang_dong_phi">
-        <value>Số tháng đóng phí</value>
+        <value>Number of months paid M.F</value>
     </data>
     <data name="dot_thanh_toan">
-        <value>Đợt thanh toán</value>
+        <value>Installment</value>
     </data>
     <data name="ngay_den_han">
-        <value>Ngày đến hạn</value>
+        <value>Due date</value>
     </data>
     <data name="tien_dot">
-        <value>Tiền đợt</value>
+        <value>Amount of this phase</value>
     </data>
     <data name="tien_dat_coc">
-        <value>Tiền đặt cọc</value>
+        <value>Deposit Amount</value>
     </data>
     <data name="da_thanh_toan">
-        <value>Đã thanh toán</value>
+        <value>Amount was paid</value>
     </data>
     <data name="ngay_ky">
-        <value>Ngày ký</value>
+        <value>Quotation signed date</value>
     </data>
     <data name="cap_nhat_bang_tinh_gia">
-        <value>Cập Nhật Bảng Tính Giá</value>
+        <value>Update Quotation</value>
     </data>
     <data name="huy_bang_tinh_gia">
-        <value>Hủy Bảng Tính Giá</value>
+        <value>Cancel Quotation</value>
     </data>
     <data name="xoa_lich_thanh_toan">
-        <value>Xóa Lịch Thanh Toán</value>
+        <value>Clear Installment</value>
     </data>
     <data name="tao_lich_thanh_toan">
-        <value>Tạo Lịch Thanh Toán</value>
+        <value>PS Generate</value>
     </data>
     <data name="ky_bang_tinh_gia">
         <value>Ký Bảng Tính Giá</value>
     </data>
     <data name="xac_nhan_in">
-        <value>Xác nhận in</value>
+        <value>Print Quotation Final</value>
     </data>
     <data name="xac_nhan_tai_pdc">
         <value>Xác Nhận Tải PĐC</value>
@@ -1093,22 +1090,22 @@
         <value>Ký Phiếu Đặt Cọc</value>
     </data>
     <data name="da_xoa_lich_thanh_toan">
-        <value>Đã xóa lịch thanh toán</value>
+        <value>Cleared Installment</value>
     </data>
     <data name="xoa_lich_thanh_toan_that_bai_vui_long_thu_lai">
-        <value>Xóa lịch thanh toán thất bại. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="da_xac_nhan_in">
-        <value>Đã xác nhận in</value>
+        <value>Print Quotation Final</value>
     </data>
     <data name="vui_long_tao_lich_thanh_toan">
-        <value>Vui lòng tạo lịch thanh toán</value>
+        <value>Please create Installment</value>
     </data>
     <data name="xac_nhan_in_thanh_cong">
-        <value>Xác nhận in thành công</value>
+        <value>Print Quotation Final Successed</value>
     </data>
     <data name="xac_nhan_in_that_bai">
-        <value>Xác nhận in thất bại</value>
+        <value>Print Quotation Final Failed</value>
     </data>
     <data name="da_xac_nhan_tai_phieu_dat_coc">
         <value>Đã xác nhận tải phiếu đặt cọc</value>
@@ -1120,88 +1117,85 @@
         <value>Sản phẩm đang ở trạng thái Reserve không thể tạo bảng tính giá</value>
     </data>
     <data name="khong_co_thong_tin_bang_tinh_gia">
-        <value>Không có thông tin bảng tính giá</value>
+        <value>No Quotation Information</value>
     </data>
     <data name="tao_lich_thanh_toan_thanh_cong">
-        <value>Tạo lịch thanh toán thành công</value>
+        <value>Create Installment Successed</value>
     </data>
     <data name="phieu_dat_coc_da_duoc_ky">
         <value>Phiếu đặt cọc đã được ký</value>
     </data>
     <data name="ky_phieu_dat_coc_that_bai_vui_long_thu_lai">
-        <value>Ký phiếu đặt cọc thất bại. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="vui_long_tao_lich_thanh_toan">
-        <value>Vui lòng tạo lịch thanh toán</value>
+        <value>Please create installment</value>
     </data>
     <data name="bang_tinh_gia_da_duoc_ky">
-        <value>Bảng tính giá đã được ký</value>
+        <value>Quotation signed</value>
     </data>
     <data name="ky_bang_tinh_gia_that_bai_vui_long_thu_lai">
-        <value>Ký bảng tính giá thất bại. Vui lòng thử lại</value>
-    </data>
-    <data name="huy_bang_tinh_gia">
-        <value>Hủy Bảng Tính Giá</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="da_huy_bang_tinh_gia">
-        <value>Đã hủy bảng tính giá</value>
+        <value>Canceled Quotation</value>
     </data>
     <data name="huy_bang_tinh_gia_that_bai_vui_long_thu_lai">
-        <value>Hủy bảng tính giá thất bại. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="da_huy_dat_coc">
-        <value>Đã hủy đặt cọc</value>
+        <value>Canceled Reserve</value>
     </data>
     <data name="huy_dat_coc_that_bai_vui_long_thu_lai">
-        <value>Hủy đặt cọc thất bại. Vui lòng thử lại</value>
+        <value>Error. Please try again</value>
     </data>
     <data name="gioi_tinh">
-        <value>Giới tính</value>
+        <value>Gender</value>
     </data>
     <data name="quoc_tich">
-        <value>Quốc tịch</value>
+        <value>Localization</value>
     </data>
     <data name="ngay_sinh">
-        <value>Ngày sinh</value>
+        <value>Birth date</value>
     </data>
     <data name="chuc_vu">
-        <value>Chức vụ</value>
+        <value>Job Title (VN)</value>
     </data>
     <data name="sdt_kinh_doanh">
-        <value>SĐT kinh doanh</value>
+        <value>Business Phone</value>
     </data>
     <data name="thong_tin_cmnd_ho_chieu">
-        <value>Thông Tin CMND/Hộ Chiếu</value>
+        <value>Identity card number/Passport information</value>
     </data>
     <data name="hinh_chup_cmnd">
-        <value>Hình chụp CMND</value>
+        <value>Photo Identity card number</value>
     </data>
     <data name="so_cmnd">
-        <value>Số CMND</value>
+        <value>Identity Card Number (ID)</value>
     </data>
     <data name="so_ho_chieu">
-        <value>Số hộ chiếu</value>
+        <value>Passport</value>
     </data>
     <data name="ngay_cap_ho_chieu">
-        <value>Ngày Cấp hộ chiếu</value>
+        <value>Issued On (Passport)</value>
     </data>
     <data name="noi_cap_ho_chieu">
-        <value>Nơi cấp hộ chiếu</value>
+        <value>Place of Issue (Passport)</value>
     </data>
     <data name="so_the_can_cuoc">
-        <value>Số thẻ căn cước</value>
+        <value>ID Card</value>
     </data>
     <data name="thong_tin_co_ban">
-        <value>Thông Tin Cơ Bản</value>
+        <value>Basic information</value>
     </data>
     <data name="phong_thuy">
-        <value>Phong Thủy</value>
+        <value>Feng Shui</value>
     </data>
     <data name="ho_ten">
-        <value>Họ tên</value>
+        <value>User name</value>
     </data>
     <data name="nhap_ho_ten_khach_hang">
-        <value>Nhập họ tên khách hàng</value>
+        <value>Please enter user name</value>
     </data>
     <data name="nhom_khach_hang">
         <value>Nhóm khách hàng</value>

@@ -1313,21 +1313,21 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        internal static string them_cuoc_hop {
+        internal static string tao_cuoc_hop {
             get {
-                return ResourceManager.GetString("them_cuoc_hop", resourceCulture);
+                return ResourceManager.GetString("tao_cuoc_hop", resourceCulture);
             }
         }
         
-        internal static string them_cuoc_goi {
+        internal static string tao_cuoc_goi {
             get {
-                return ResourceManager.GetString("them_cuoc_goi", resourceCulture);
+                return ResourceManager.GetString("tao_cuoc_goi", resourceCulture);
             }
         }
         
-        internal static string them_cong_viec {
+        internal static string tao_cong_viec {
             get {
-                return ResourceManager.GetString("them_cong_viec", resourceCulture);
+                return ResourceManager.GetString("tao_cong_viec", resourceCulture);
             }
         }
         
@@ -3701,6 +3701,12 @@ namespace PhuLongCRM.Resources {
             }
         }
         
+        internal static string them_cuoc_goi {
+            get {
+                return ResourceManager.GetString("them_cuoc_goi", resourceCulture);
+            }
+        }
+        
         internal static string cap_nhat_cuoc_goi {
             get {
                 return ResourceManager.GetString("cap_nhat_cuoc_goi", resourceCulture);
@@ -4214,12 +4220,6 @@ namespace PhuLongCRM.Resources {
         internal static string tao_bang_tinh_gia_thanh_cong {
             get {
                 return ResourceManager.GetString("tao_bang_tinh_gia_thanh_cong", resourceCulture);
-            }
-        }
-        
-        internal static string tao_cong_viec {
-            get {
-                return ResourceManager.GetString("tao_cong_viec", resourceCulture);
             }
         }
         
