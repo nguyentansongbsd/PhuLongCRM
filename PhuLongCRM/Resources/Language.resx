@@ -789,9 +789,6 @@
     <data name="chon_dia_chi_tru_so_chinh">
         <value>Chọn địa chỉ trụ sở chính</value>
     </data>
-    <data name="chon_dia_chi_tru_so_chinh">
-        <value>Chọn địa chỉ trụ sở chính</value>
-    </data>
     <data name="tao_moi_khach_hang_doanh_nghiep">
         <value>Tạo Mới Khách Hàng Doanh Nghiệp</value>
     </data>
@@ -820,10 +817,10 @@
         <value>Vui lòng nhập số điện thoại công ty</value>
     </data>
     <data name="email_sai_dinh_dang_vui_long_thu_lai">
-        <value>Email sai địng dạng. Vui lòng thử lại</value>
+        <value>Email sai định dạng. Vui lòng thử lại</value>
     </data>
     <data name="email_2_sai_dinh_dang_vui_long_thu_lai">
-        <value>Email 2 sai địng dạng. Vui lòng thử lại</value>
+        <value>Email 2 sai định dạng. Vui lòng thử lại</value>
     </data>
     <data name="vui_long_nhap_so_giay_phep_kinh_doanh">
         <value>Vui lòng nhập số giấy phép kinh doanh</value>
@@ -1140,9 +1137,6 @@
     <data name="ky_bang_tinh_gia_that_bai_vui_long_thu_lai">
         <value>Ký bảng tính giá thất bại. Vui lòng thử lại</value>
     </data>
-    <data name="huy_bang_tinh_gia">
-        <value>Hủy Bảng Tính Giá</value>
-    </data>
     <data name="da_huy_bang_tinh_gia">
         <value>Đã hủy bảng tính giá</value>
     </data>
@@ -1203,7 +1197,7 @@
     <data name="nhap_ho_ten_khach_hang">
         <value>Nhập họ tên khách hàng</value>
     </data>
-    <data name="nhom_khach_hang">
+    <data name="nhom_khach_hang_contact">
         <value>Nhóm khách hàng</value>
     </data>
     <data name="nhap_so_dien_thoai">
@@ -1516,6 +1510,9 @@
         <value>Phương thức phạt TL</value>
     </data>
     <data name="hoan_tien">
+        <value>Hoàn tiền</value>
+    </data>
+    <data name="hoan_tien_percent">
         <value>Hoàn tiền</value>
     </data>
     <data name="tong_tien_phat">
@@ -2019,9 +2016,6 @@
     <data name="tao_giu_cho_thanh_cong">
         <value>Tạo giữ chỗ thành công</value>
     </data>
-    <data name="tao_giu_cho_thanh_cong">
-        <value>Tạo giữ chỗ thành công</value>
-    </data>
     <data name="ma_giu_cho">
         <value>Mã giữ chỗ</value>
     </data>
@@ -2304,9 +2298,6 @@
     <data name="ban_dang_su_dung_mat_khau_cu_vui_long_nhap_lai">
         <value>Bạn đang sử dụng mật khẩu cũ. Vui lòng nhập lại.</value>
     </data>
-    <data name="ban_dang_su_dung_mat_khau_cu_vui_long_nhap_lai">
-        <value>Bạn đang sử dụng mật khẩu cũ. Vui lòng nhập lại.</value>
-    </data>
     <data name="doi_mat_khau_thanh_cong">
         <value>Đổi mật khẩu thành công</value>
     </data>
@@ -2321,9 +2312,6 @@
     </data>
     <data name="doi_hinh_dai_dien_thanh_cong">
         <value>Đổi hình đại diện thành công</value>
-    </data>
-    <data name="doi_hinh_dai_dien_that_bai">
-        <value>Đổi hình đại diện thất bại</value>
     </data>
     <data name="doi_hinh_dai_dien_that_bai">
         <value>Đổi hình đại diện thất bại</value>

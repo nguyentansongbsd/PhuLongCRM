@@ -14,6 +14,7 @@ namespace PhuLongCRM
             InitializeComponent();
             this.BindingContext = this;
             test.InputValue = num = "840336021479";
+
             
         }
 
