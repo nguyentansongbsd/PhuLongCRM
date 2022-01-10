@@ -2315,6 +2315,12 @@ namespace PhuLongCRM.Resources {
             }
         }
         
+        internal static string nhom_khach_hang_contact {
+            get {
+                return ResourceManager.GetString("nhom_khach_hang_contact", resourceCulture);
+            }
+        }
+        
         internal static string nhap_so_dien_thoai {
             get {
                 return ResourceManager.GetString("nhap_so_dien_thoai", resourceCulture);
@@ -2936,6 +2942,12 @@ namespace PhuLongCRM.Resources {
         internal static string hoan_tien {
             get {
                 return ResourceManager.GetString("hoan_tien", resourceCulture);
+            }
+        }
+        
+        internal static string hoan_tien_percent {
+            get {
+                return ResourceManager.GetString("hoan_tien_percent", resourceCulture);
             }
         }
         

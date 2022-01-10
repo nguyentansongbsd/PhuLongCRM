@@ -1197,7 +1197,7 @@
     <data name="nhap_ho_ten_khach_hang">
         <value>Nhập họ tên khách hàng</value>
     </data>
-    <data name="nhom_khach_hang">
+    <data name="nhom_khach_hang_contact">
         <value>Nhóm khách hàng</value>
     </data>
     <data name="nhap_so_dien_thoai">
@@ -1510,6 +1510,9 @@
         <value>Phương thức phạt TL</value>
     </data>
     <data name="hoan_tien">
+        <value>Hoàn tiền</value>
+    </data>
+    <data name="hoan_tien_percent">
         <value>Hoàn tiền</value>
     </data>
     <data name="tong_tien_phat">
@@ -2013,9 +2016,6 @@
     <data name="tao_giu_cho_thanh_cong">
         <value>Tạo giữ chỗ thành công</value>
     </data>
-    <data name="tao_giu_cho_thanh_cong">
-        <value>Tạo giữ chỗ thành công</value>
-    </data>
     <data name="ma_giu_cho">
         <value>Mã giữ chỗ</value>
     </data>
@@ -2298,9 +2298,6 @@
     <data name="ban_dang_su_dung_mat_khau_cu_vui_long_nhap_lai">
         <value>Bạn đang sử dụng mật khẩu cũ. Vui lòng nhập lại.</value>
     </data>
-    <data name="ban_dang_su_dung_mat_khau_cu_vui_long_nhap_lai">
-        <value>Bạn đang sử dụng mật khẩu cũ. Vui lòng nhập lại.</value>
-    </data>
     <data name="doi_mat_khau_thanh_cong">
         <value>Đổi mật khẩu thành công</value>
     </data>
@@ -2315,9 +2312,6 @@
     </data>
     <data name="doi_hinh_dai_dien_thanh_cong">
         <value>Đổi hình đại diện thành công</value>
-    </data>
-    <data name="doi_hinh_dai_dien_that_bai">
-        <value>Đổi hình đại diện thất bại</value>
     </data>
     <data name="doi_hinh_dai_dien_that_bai">
         <value>Đổi hình đại diện thất bại</value>

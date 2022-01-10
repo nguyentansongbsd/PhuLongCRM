@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using PhuLongCRM.Models;
 using Xamarin.Forms;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Controls
 {
@@ -163,7 +164,7 @@ namespace PhuLongCRM.Controls
             StackLayout stSearchBar = new StackLayout();          
 
             searchBar = new SearchBar();
-            searchBar.Placeholder = "Từ khoá";
+            searchBar.Placeholder = Language.tim_kiem;
             searchBar.TextChanged += SearchBar_TextChangedEventArgs;
 
             SearchBarFrame searchBarFrame = new SearchBarFrame();
