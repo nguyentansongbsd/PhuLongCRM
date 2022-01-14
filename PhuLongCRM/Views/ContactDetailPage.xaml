@@ -580,12 +580,11 @@
                         <Image x:Name="ImageDetail"/>
                     </controls:PinchZoomImage.Content>
                 </controls:PinchZoomImage>
-                <telerikPrimitives:RadBorder VerticalOptions="Start" HorizontalOptions="End" BackgroundColor="White" Margin="0,10,10,0" BorderColor="#444444" BorderThickness="1" HeightRequest="25" WidthRequest="25" CornerRadius="13">
-                    <Label FontFamily="FontAwesomeSolid" Text="&#xf00d;" TextColor="#444444" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Close_LookUpImage_Tapped" NumberOfTapsRequired="1"/>
-                        </Label.GestureRecognizers>
-                    </Label>
+                <telerikPrimitives:RadBorder VerticalOptions="Start" HorizontalOptions="End" Margin="{OnPlatform Android='0,10,10,0',iOS='0,100,10,0'}" BorderColor="#444444" BorderThickness="1" HeightRequest="25" WidthRequest="25" CornerRadius="13">
+                    <telerikPrimitives:RadBorder.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Close_LookUpImage_Tapped" NumberOfTapsRequired="1"/>
+                    </telerikPrimitives:RadBorder.GestureRecognizers>
+                    <Label FontFamily="FontAwesomeSolid" Text="&#xf00d;" TextColor="#444444" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White"/>
                 </telerikPrimitives:RadBorder>
             </Grid>
 
