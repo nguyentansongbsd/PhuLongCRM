@@ -31,6 +31,9 @@ namespace PhuLongCRM.ViewModels
         private ObservableCollection<QueuesModel> _listGiuCho;
         public ObservableCollection<QueuesModel> ListGiuCho { get => _listGiuCho; set { _listGiuCho = value; OnPropertyChanged(nameof(ListGiuCho)); } }
 
+        private EventModel _event;
+        public EventModel Event { get => _event; set { _event = value; OnPropertyChanged(nameof(Event)); } }
+
         private ProjectInfoModel _project;
         public ProjectInfoModel Project
         {
@@ -227,9 +230,6 @@ namespace PhuLongCRM.ViewModels
 
             unitChartModels = new List<ChartModel>()
             {
-                new ChartModel {Category ="Chuẩn bị", Value=ChuanBi},
-                new ChartModel { Category = "Sẵn sàng", Value = SanSang },
-                new ChartModel { Category = "Booking", Value = Booking },
                 new ChartModel {Category ="Giữ chỗ",Value=GiuCho},
                 new ChartModel { Category = "Đặt cọc", Value = DatCoc },
                 new ChartModel {Category ="Đồng ý chuyển cọc",Value=DongYChuyenCoc },
@@ -239,6 +239,9 @@ namespace PhuLongCRM.ViewModels
                 new ChartModel { Category = "Signed D.A", Value = SignedDA },
                 new ChartModel { Category = "Qualified", Value = Qualified },
                 new ChartModel { Category = "Đã bán", Value =  DaBan},
+                new ChartModel {Category ="Chuẩn bị", Value=ChuanBi},
+                new ChartModel { Category = "Sẵn sàng", Value = SanSang },
+                new ChartModel { Category = "Booking", Value = Booking },
             };
             foreach (var item in unitChartModels)
             {
@@ -407,6 +410,38 @@ namespace PhuLongCRM.ViewModels
             //        Collections.Add(new CollectionData { Id = item.documentid, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
             //    }
             //}
+        }
+
+        public async Task LoadDataEvent()
+        {
+            if (ProjectId == Guid.Empty) return;
+
+            string FetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_event'>
+                                    <attribute name='bsd_name' />
+                                    <attribute name='bsd_startdate' />
+                                    <attribute name='bsd_eventcode' />
+                                    <attribute name='bsd_enddate' />
+                                    <attribute name='bsd_eventid' />
+                                    <order attribute='bsd_eventcode' descending='true' />
+                                    <filter type='and'>
+                                      <condition attribute='statuscode' operator='eq' value='100000000' />
+                                      <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
+                                    </filter>
+                                    <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaselaunch' link-type='outer' alias='ab'>
+                                      <attribute name='bsd_name' alias='bsd_phaselaunch_name'/>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<EventModel>>("bsd_events", FetchXml);
+            if (result == null || result.value.Any() == false) return;
+            Event = result.value.FirstOrDefault();
+            if (Event.bsd_startdate.HasValue && Event.bsd_enddate.HasValue)
+            {
+                Event.bsd_startdate = Event.bsd_startdate.Value.ToLocalTime();
+                Event.bsd_enddate = Event.bsd_enddate.Value.ToLocalTime();
+            }
         }
     }
 }

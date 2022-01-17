@@ -4462,5 +4462,11 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("doi_hinh_dai_dien_that_bai", resourceCulture);
             }
         }
+        
+        internal static string ma_su_kien {
+            get {
+                return ResourceManager.GetString("ma_su_kien", resourceCulture);
+            }
+        }
     }
 }

@@ -346,7 +346,7 @@
                                                 <DataTemplate>
                                                     <StackLayout BackgroundColor ="White" Padding="15,10">
                                                         <StackLayout.GestureRecognizers>
-                                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ItemReservation_Tapped" CommandParameter="{Binding quoteid}"/>
+                                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ItemQuatation_Tapped" CommandParameter="{Binding quoteid}"/>
                                                         </StackLayout.GestureRecognizers>
                                                         <Grid ColumnDefinitions="Auto,*">
                                                             <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="4" BorderColor="Transparent" Padding="5" BackgroundColor="{Binding statuscode,Converter={StaticResource ReservationStatusCodeConverterColor}}">
@@ -368,7 +368,7 @@
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*">
                                                             <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding totalamount_format}" FontSize="15" TextColor="#333333"/>
+                                                            <Label Grid.Column="1" Text="{Binding totalamount_format}" FontSize="15" TextColor="Red" FontAttributes="Bold"/>
                                                         </Grid>
                                                     </StackLayout>
                                                 </DataTemplate>

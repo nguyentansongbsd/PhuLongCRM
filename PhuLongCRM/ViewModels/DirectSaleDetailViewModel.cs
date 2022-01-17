@@ -357,6 +357,7 @@ namespace PhuLongCRM.ViewModels
                                 <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='an' >
                                    <attribute name='bsd_startdate' alias='startdate_event' />
                                    <attribute name='bsd_enddate' alias='enddate_event'/>
+                                   <attribute name='statuscode' alias='statuscode_event'/>
                                 </link-entity>
                               </entity>
                             </fetch>";
@@ -366,7 +367,7 @@ namespace PhuLongCRM.ViewModels
             var data = result.value;
             foreach (var item in data)
             {
-                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now)
+                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
                 {
                     IsShowBtnBangTinhGia = true;
                     return;

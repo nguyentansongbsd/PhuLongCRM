@@ -114,6 +114,9 @@
                                             </Label.Text>
                                         </Label>
                                         <StackLayout Grid.Column="1" IsVisible="{Binding IsHasEvent}" HorizontalOptions="End" Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OpenEvent_Tapped"/>
+                                            </StackLayout.GestureRecognizers>
                                             <Label Text="{x:Static lang:Language.su_kien}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" TextColor="#FEC93D"/>
                                             <Label Text="&#xf005;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="13" TextColor="#FEC93D"/>
                                         </StackLayout>
@@ -179,9 +182,6 @@
                                             <telerikChart:RadPieChart.Palette>
                                                 <telerikChart:ChartPalette>
                                                     <telerikChart:ChartPalette.Entries>
-                                                        <telerikChart:PaletteEntry FillColor="#F1C50D" StrokeColor="Transparent" />
-                                                        <telerikChart:PaletteEntry FillColor="#2FCC71" StrokeColor="Transparent" />
-                                                        <telerikChart:PaletteEntry FillColor="#00CED1" StrokeColor="Transparent" />
                                                         <telerikChart:PaletteEntry FillColor="#04A8F4" StrokeColor="Transparent" />
                                                         <telerikChart:PaletteEntry FillColor="#14A184" StrokeColor="Transparent" />
                                                         <telerikChart:PaletteEntry FillColor="#8F44AD" StrokeColor="Transparent" />
@@ -191,6 +191,9 @@
                                                         <telerikChart:PaletteEntry FillColor="#A0DB8E" StrokeColor="Transparent" />
                                                         <telerikChart:PaletteEntry FillColor="#6897BB" StrokeColor="Transparent" />
                                                         <telerikChart:PaletteEntry FillColor="#BF3A2B" StrokeColor="Transparent" />
+                                                        <telerikChart:PaletteEntry FillColor="#F1C50D" StrokeColor="Transparent" />
+                                                        <telerikChart:PaletteEntry FillColor="#2FCC71" StrokeColor="Transparent" />
+                                                        <telerikChart:PaletteEntry FillColor="#00CED1" StrokeColor="Transparent" />
                                                     </telerikChart:ChartPalette.Entries>
                                                 </telerikChart:ChartPalette>
                                             </telerikChart:RadPieChart.Palette>
@@ -355,6 +358,52 @@
             <StackLayout x:Name="btnGiuCho" IsVisible="{Binding IsShowBtnGiuCho}" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White">
                 <Button Text="{x:Static lang:Language.giu_cho_btn}" Clicked="GiuCho_Clicked" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" Margin="10,5"/>
             </StackLayout>
+            <ContentView x:Name="ContentEvent" IsVisible="false" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000" Padding="20">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentEvent_Tapped"/>
+                </ContentView.GestureRecognizers>
+                <telerikPrimitives:RadBorder VerticalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="White" Padding="10">
+                    <telerikPrimitives:RadBorder.GestureRecognizers>
+                        <TapGestureRecognizer/>
+                    </telerikPrimitives:RadBorder.GestureRecognizers>
+                    <Grid Grid.Row="0" Margin="0" RowDefinitions="Auto,*,Auto">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                            <Label Grid.Column="0" Text="{x:Static lang:Language.su_kien}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="17" Padding="2" TextColor="#666666">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentEvent_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+
+                        <ScrollView Grid.Row="1">
+                            <Grid RowSpacing="10" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                                <Label Text="{Binding Event.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
+
+                                <controls:FormLabel Text="{x:Static lang:Language.ma_su_kien}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="1" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding Event.bsd_eventcode}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="{x:Static lang:Language.dot_mo_ban}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="2" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="2" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding Event.bsd_phaselaunch_name}" FontSize="14" TextColor="{StaticResource NavigationPrimary}" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_bat_dau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="3" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="3" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding Event.bsd_startdate,StringFormat='{0:dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="4" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding Event.bsd_enddate,StringFormat='{0:dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+                        </ScrollView>
+                    </Grid>
+                </telerikPrimitives:RadBorder>
+            </ContentView>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

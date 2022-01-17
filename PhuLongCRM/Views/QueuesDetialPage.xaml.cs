@@ -17,6 +17,7 @@ namespace PhuLongCRM.Views
     {
         public Action<bool> OnCompleted;
         public static bool? NeedToRefreshBTG = null;
+        public static bool? NeedToRefreshDC = null;
         public QueuesDetialPageViewModel viewModel;
         public QueuesDetialPage(Guid queueId)
         {
@@ -24,14 +25,14 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new QueuesDetialPageViewModel();
             viewModel.QueueId = queueId;
             NeedToRefreshBTG = false;
+            NeedToRefreshDC = false;
             Init();
         }
 
         public async void Init()
         {
             await viewModel.LoadQueue();
-            SetButtons();
-
+            
             VisualStateManager.GoToState(radBorderThongTin, "Active");
             VisualStateManager.GoToState(radBorderGiaoDich, "InActive");
             VisualStateManager.GoToState(lbThongTin, "Active");
@@ -39,6 +40,8 @@ namespace PhuLongCRM.Views
 
             if (viewModel.Queue != null)
             {
+                viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();// co dat co thi an nut btg
+                SetButtons();
                 OnCompleted?.Invoke(true);
             }
             else
@@ -57,6 +60,17 @@ namespace PhuLongCRM.Views
                 viewModel.PageBangTinhGia = 1;
                 await viewModel.LoadDanhSachBangTinhGia();
                 NeedToRefreshBTG = false;
+                LoadingHelper.Hide();
+            }
+            if (viewModel.DatCocList != null && NeedToRefreshDC == true)
+            {
+                LoadingHelper.Show();
+                viewModel.DatCocList.Clear();
+                viewModel.PageDatCoc = 1;
+                await viewModel.LoadDanhSachDatCoc();
+                viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();
+                SetButtons();
+                NeedToRefreshDC = false;
                 LoadingHelper.Hide();
             }
         }
@@ -349,11 +363,31 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
+        private void ItemQuatation_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId) { Title = Language.danh_sach_bang_tinh_gia };
+            bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(bangTinhGiaDetail);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
+        }
+
         private void ItemReservation_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId) { Title = Language.dat_coc };
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
             {
                 if (isSuccess)

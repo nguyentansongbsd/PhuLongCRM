@@ -81,6 +81,8 @@ namespace PhuLongCRM.ViewModels
                             <value>100000003</value>
                             <value>100000000</value>
                             <value>100000002</value>
+                            <value>100000009</value>
+                            <value>100000010</value>
                           </condition>
                           <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
                           "+ status + @"

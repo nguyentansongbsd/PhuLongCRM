@@ -11,5 +11,6 @@ namespace PhuLongCRM.Models
         public Guid bsd_phaseslaunchid { get; set; }
         public DateTime startdate_event { get; set; }
         public DateTime enddate_event { get; set; }
+        public string statuscode_event { get; set; }
     }
 }
