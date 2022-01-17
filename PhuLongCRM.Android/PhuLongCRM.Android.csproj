@@ -90,6 +90,7 @@
     <Compile Include="Services\OpenAppSetting.cs" />
     <Compile Include="Renderers\DatePickerBorderRenderer.cs" />
     <Compile Include="Renderers\TimePickerBorderRenderer.cs" />
+    <Compile Include="Renderers\EntryNoneBorderRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

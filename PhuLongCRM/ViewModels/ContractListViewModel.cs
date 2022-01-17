@@ -32,7 +32,8 @@ namespace PhuLongCRM.ViewModels
                                             <condition attribute='customeridname' operator='like' value ='%25{Keyword}%25' />          
                                             <condition attribute='bsd_projectname' operator='like' value ='%25{Keyword}%25' />              
                                             <condition attribute='bsd_unitnumbername' operator='like' value ='%25{Keyword}%25' />             
-                                            <condition attribute='ordernumber' operator='like' value ='%25{Keyword}%25' />                  
+                                            <condition attribute='ordernumber' operator='like' value ='%25{Keyword}%25' />
+                                            <condition attribute='bsd_contractnumber' operator='like' value ='%25{Keyword}%25' />
                                         </filter >                  
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>

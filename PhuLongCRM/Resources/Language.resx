@@ -2316,4 +2316,7 @@
     <data name="doi_hinh_dai_dien_that_bai">
         <value>Đổi hình đại diện thất bại</value>
     </data>
+    <data name="ma_su_kien">
+        <value>Mã sự kiện</value>
+    </data>
 </root>

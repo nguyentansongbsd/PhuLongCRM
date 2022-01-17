@@ -493,11 +493,6 @@
                                                             <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                                             <Label Grid.Column="1" Text="{Binding activitytypecode_format}" TextColor="#444444" FontSize="15"/>
                                                         </Grid>
-
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                                            <Label Grid.Column="1" Text="{Binding customer}" TextColor="#444444" FontSize="15"/>
-                                                        </Grid>
                                                         <Grid ColumnDefinitions="Auto,*">
                                                             <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_bat_dau},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                             <Label Text="{Binding scheduledstart_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
