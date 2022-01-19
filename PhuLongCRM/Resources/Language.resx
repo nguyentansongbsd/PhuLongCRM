@@ -2319,4 +2319,7 @@
     <data name="ma_su_kien">
         <value>Mã sự kiện</value>
     </data>
+    <data name="ban_co_chan_chan_muon_thay_doi_pttt">
+        <value>Bạn có chắc chắn muốn thay đổi PTTT?</value>
+    </data>
 </root>

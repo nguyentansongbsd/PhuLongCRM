@@ -373,15 +373,39 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             if (viewModel.PaymentScheme.Val != viewModel.Quote.paymentscheme_id.ToString())
             {
-                if (viewModel.DiscountChildsPaymentSchemes.Any(x => x.Selected))
+                if (viewModel.Quote.paymentscheme_id != Guid.Empty)
                 {
-                    var answer = await DisplayAlert("", Language.ban_dang_tich_chon_chieu_khau_theo_pttt_ban_co_chac_chan_muon_thay_doi_pttt_nay, Language.dong_y, Language.huy);
-                    if (answer == false)
+                    var ans = await DisplayAlert("", Language.ban_co_chan_chan_muon_thay_doi_pttt, Language.dong_y, Language.huy);
+                    if (ans == false)
                     {
                         LoadingHelper.Hide();
+                        viewModel.PaymentScheme = viewModel.paymentSheme_Temp;
                         return;
                     }
+                    if (viewModel.DiscountChildsPaymentSchemes.Any(x => x.Selected))
+                    {
+                        var answer = await DisplayAlert("", Language.ban_dang_tich_chon_chieu_khau_theo_pttt_ban_co_chac_chan_muon_thay_doi_pttt_nay, Language.dong_y, Language.huy);
+                        if (answer == false)
+                        {
+                            LoadingHelper.Hide();
+                            viewModel.PaymentScheme = viewModel.paymentSheme_Temp;
+                            return;
+                        }
+                    }
+                    CrmApiResponse apiResponse = await viewModel.UpdatePaymentShemes();
+                    if (apiResponse.IsSuccess)
+                    {
+                        viewModel.paymentSheme_Temp = viewModel.PaymentScheme;
+                        viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(apiResponse.ErrorResponse.error.message);
+                    }
                 }
+                
+                
                 viewModel.DiscountChildsPaymentSchemes.Clear();
                 var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
                 await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
@@ -1004,6 +1028,7 @@ namespace PhuLongCRM.Views
                                 if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                                 if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                                 this.Title = buttonSave.Text = Language.cap_nhat_thanh_cong;
+                                viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
                                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                                 LoadingHelper.Hide();
                             }
