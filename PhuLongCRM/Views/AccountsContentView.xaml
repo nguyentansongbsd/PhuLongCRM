@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls" xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              x:Class="PhuLongCRM.Views.AccountsContentView">
   <ContentView.Content>
@@ -21,15 +22,15 @@
                                         <Label Grid.Column="1" Text="{Binding bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                                        <Label Text="Đại diện: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding Source={x:Static lang:Language.dai_dien},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                         <Label Text="{Binding primarycontact_name}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                        <Label Text="Số điện thoại: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding Source={x:Static lang:Language.so_dien_thoai},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                         <Label Text="{Binding telephone1}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                        <Label Text="Địa chỉ: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding Source={x:Static lang:Language.dia_chi},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                         <Label Text="{Binding bsd_address}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                     </Grid>
                                 </Grid>

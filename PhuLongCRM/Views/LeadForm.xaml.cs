@@ -6,6 +6,7 @@ using PhuLongCRM.Helper;
 using PhuLongCRM.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Views
 {
@@ -18,10 +19,8 @@ namespace PhuLongCRM.Views
         public LeadForm()
         {
             InitializeComponent();
-            this.Title = "TẠO MỚI KH TIỀM NĂNG";
+            this.Title = Language.tao_moi_kh_tiem_nang;
             Init();
-            datePickerNgaySinh.DefaultDisplay = DateTime.Now;
-            datePickerNgayCap.DefaultDisplay = DateTime.Now;
             
             viewModel.Rating = RatingData.GetRatingById("2");//mac dinh la warm
             viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById("100000002"); // mac dinh la "Chua xac dinh"
@@ -29,8 +28,8 @@ namespace PhuLongCRM.Views
         public LeadForm(Guid Id)
         {
             InitializeComponent();
-            this.Title = "CẬP NHẬT KH TIỀM NĂNG";
-            btn_save_lead.Text = "CẬP NHẬT KHÁCH HÀNG";
+            this.Title = Language.cap_nhat_kh_tiem_nang;
+            btn_save_lead.Text = Language.cap_nhat;
             Init();
             viewModel.LeadId = Id;
             InitUpdate();
@@ -80,11 +79,6 @@ namespace PhuLongCRM.Views
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead.leadsourcecode))
                 {
                     viewModel.LeadSource = LeadSourcesData.GetLeadSourceById(viewModel.singleLead.leadsourcecode);
-                }
-
-                if (!viewModel.singleLead.new_birthday.HasValue)
-                {
-                    datePickerNgaySinh.DefaultDisplay = DateTime.Now;
                 }
 
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead._transactioncurrencyid_value))
@@ -161,7 +155,7 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadCampainsForLookup();
                 if (viewModel.list_campaign_lookup.Count == 0)
                 {
-                    ToastMessageHelper.ShortMessage("Không load được chiến dịch");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
                 LoadingHelper.Hide();
             };
@@ -223,16 +217,16 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.TypeIdCard?.Val == "100000000" && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
             {
-                ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Gồm 09 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
             }
             if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length > 12 ||
                 viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
             {
-                ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Gồm 12 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
             if (viewModel.TypeIdCard?.Val == "100000003" && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
             {
-                ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Gồm 08 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
             }
         }
 
@@ -240,7 +234,7 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.singleLead.mobilephone.Length != 14)
             {
-                ToastMessageHelper.ShortMessage("Số điện thoại không hợp lệ (Gồm 10 ký tự)");
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
             }
         }
 
@@ -248,7 +242,7 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.singleLead.telephone1.Length != 14)
             {
-                ToastMessageHelper.ShortMessage("Số điện thoại không hợp lệ (Giới hạn 10 ký tự)");
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
             }
         }
 
@@ -256,72 +250,66 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Topic == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn tiêu đề");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_tieu_de);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.lastname))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập họ tên");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_ho_ten);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số điện thoại");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);
                 return;
             }
 
             if (!string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone) && viewModel.singleLead.mobilephone.Length != 14)
             {
-                ToastMessageHelper.ShortMessage("Số điện thoại không hợp lệ (Gồm 10 ký tự)");
-                return;
-            }
-
-            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1) && viewModel.singleLead.telephone1.Length != 14)
-            {
-                ToastMessageHelper.ShortMessage("Số điện thoại công ty không hợp lệ (Gồm 10 ký tự)");
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 return;
             }
 
             if (viewModel.CustomerGroup == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn phân nhóm");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_phan_nhom);
                 return;
             }
 
             if (viewModel.Area == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn khu vực");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_khu_vuc);
                 return;
             }
 
             if (viewModel.LeadSource == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn nguồn khách hàng");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguon_khach_hang);
                 return;
             }
 
             if (viewModel.singleLead.new_birthday != null && (DateTime.Now.Year - DateTime.Parse(viewModel.singleLead.new_birthday.ToString()).Year < 18))
             {
-                ToastMessageHelper.ShortMessage("Khách hàng phải từ 18 tuổi");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
                 return ;
             }
 
             if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
             {
-                ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Gồm 09 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
             if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 12
                 || viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
             {
-                ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Gồm 12 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
             }
             if (viewModel.TypeIdCard?.Val == "100000003" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
             {
-                ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Gồm 08 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
             }
 
@@ -345,14 +333,14 @@ namespace PhuLongCRM.Views
                 {
                     if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
                     if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
-                    ToastMessageHelper.ShortMessage("Thành công");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không thêm được khách hàng. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
             else
@@ -363,13 +351,13 @@ namespace PhuLongCRM.Views
                     if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
                     if (LeadDetailPage.NeedToRefreshLeadDetail.HasValue) LeadDetailPage.NeedToRefreshLeadDetail = true;
                     await Navigation.PopAsync();
-                    ToastMessageHelper.ShortMessage("Thành công");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không cập nhật được khách hàng. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
         }

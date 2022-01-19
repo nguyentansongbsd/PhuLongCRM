@@ -167,6 +167,33 @@ namespace PhuLongCRM.ViewModels
             this.Queue = data;
         }
 
+        public async Task<bool> CheckReserve()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                      <entity name='quote'>
+                        <attribute name='name' alias='Label'/>
+                        <filter type='and'>
+                            <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
+                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='statuscode' operator='in'>
+                                   <value>100000000</value>
+                                   <value>100000001</value>
+                                   <value>100000006</value>
+                                   <value>3</value>
+                                   <value>4</value>
+                               </condition>
+                        </filter>
+                      </entity>
+                    </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("quotes", fetchXml);
+            if (result == null) return false;
+            if (result.value.Any() == false && this.Queue.statuscode == 100000000)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public async Task LoadDanhSachBangTinhGia()
         {
             string fetchXml = $@"<fetch version='1.0' count='5' page='{PageBangTinhGia}' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -239,7 +266,11 @@ namespace PhuLongCRM.ViewModels
                                <condition attribute='statuscode' operator='in'>
                                    <value>100000000</value>
                                    <value>100000001</value>
-                                   <value>4</value>
+                                   <value>100000006</value>
+                                   <value>861450001</value>
+                                   <value>861450002</value>
+                                   <value>4</value>                
+                                   <value>3</value>
                                </condition>
                                <filter type='and'>
                                    <condition attribute='statuscode' operator='in'>

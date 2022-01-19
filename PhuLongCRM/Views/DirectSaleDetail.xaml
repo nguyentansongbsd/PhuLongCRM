@@ -4,7 +4,8 @@
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:converter ="clr-namespace:PhuLongCRM.Converters"
-             Title="{OnPlatform Android='GIỎ HÀNG'}" x:Name="this"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
+             Title="{x:Static lang:Language.gio_hang}" x:Name="this"
              x:Class="PhuLongCRM.Views.DirectSaleDetail">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -142,7 +143,14 @@
                                     </telerikPrimitives:RadBorder.GestureRecognizers>
                                     <StackLayout Spacing="0">
                                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Margin="16,0,16,0">
-                                            <Label Grid.Column="0" Text="{Binding bsd_name,StringFormat='Tầng {0}'}" FontSize="16" FontAttributes="Bold" TextColor="#333333" />
+                                            <Label Grid.Column="0" FontSize="16" FontAttributes="Bold" TextColor="#333333">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0} {1}">
+                                                        <Binding Source="{x:Static lang:Language.tang}" />
+                                                        <Binding Path="bsd_name" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
                                             <Label Grid.Column="1" Text="{Binding Source={x:Reference flexContentUnits},Path=IsVisible,Converter={StaticResource customIndicatorConverter}}"  FontSize="15" FontFamily="FontAwesomeSolid" VerticalOptions="End"  TextColor="#333333" />
                                         </Grid>
                                         <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" RowDefinitions="Auto" HorizontalOptions="Center" Margin="10,16,10,0">
@@ -174,7 +182,14 @@
                                                         </telerikPrimitives:RadBorder.GestureRecognizers>
                                                         <StackLayout>
                                                             <Label Text="{Binding name}" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" HorizontalTextAlignment="Center"/>
-                                                            <Label Text="{Binding NumQueses,StringFormat='Giữ chỗ: {0}'}" FontFamily="FontRobotoMedium" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                                            <Label FontFamily="FontRobotoMedium" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center">
+                                                                <Label.Text>
+                                                                    <MultiBinding StringFormat="{}{0}: {1}">
+                                                                        <Binding Source="{x:Static lang:Language.danh_sach_giu_cho}" />
+                                                                        <Binding Path="NumQueses" />
+                                                                    </MultiBinding>
+                                                                </Label.Text>
+                                                            </Label>
                                                             <Label Text="{Binding price,StringFormat='{0:0,0 đ}'}" IsVisible="{Binding _bsd_phaseslaunchid_value, Converter={StaticResource HidePriceOnDirectSaleConverter}}" TextColor="White" FontFamily="FontRobotoBold" FontSize="20" HorizontalTextAlignment="Center" />
                                                         </StackLayout>
                                                     </telerikPrimitives:RadBorder>
@@ -224,7 +239,7 @@
                             <Label FontSize="15" TextColor="#444444">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Diện tích sử dụng : "/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}: '}"/>
                                         <Span Text="{Binding Unit.bsd_constructionarea,StringFormat='{0:#,0.#0} m2'}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -232,7 +247,7 @@
                             <Label FontSize="15" TextColor="#444444">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Loại: "/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}: '}"/>
                                         <Span Text="{Binding Unit.bsd_unittype_name}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -240,10 +255,10 @@
                             <Label FontSize="15" TextColor="#444444">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Hướng "/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.huong},StringFormat='{0} '}"/>
                                         <Span Text="{Binding UnitDirection.Label}"/>
                                         <Span Text=" - "/>
-                                        <Span Text="Hướng nhìn "/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.huong_nhin},StringFormat='{0} '}"/>
                                         <Span Text="{Binding UnitView}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -255,7 +270,7 @@
                                 <Label TextColor="#2196F3" VerticalOptions="Center" HorizontalTextAlignment="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="Xem thông tin" FontSize="15" FontAttributes="Bold"/>
+                                            <Span Text="{x:Static lang:Language.xem_thong_tin}" FontSize="15" FontAttributes="Bold"/>
                                             <Span Text="  "/>
                                             <Span Text="&#xf101;" FontFamily="FontAwesomeSolid" FontSize="18" />
                                         </FormattedString>
@@ -264,13 +279,13 @@
                             </telerikPrimitives:RadBorder>
                         </StackLayout>
                         <StackLayout Grid.Row="1">
-                            <Label Text="Giữ chỗ" TextColor="#333333" FontSize="15"  BackgroundColor="#F2F2F2" Padding="10" FontAttributes="Bold" />
+                            <Label Text="{x:Static lang:Language.danh_sach_giu_cho}" TextColor="#333333" FontSize="15"  BackgroundColor="#F2F2F2" Padding="10" FontAttributes="Bold" />
                             <ScrollView Padding="0,0,0,40">
                                 <StackLayout>
                                     <StackLayout BindableLayout.ItemsSource="{Binding QueueList}" Spacing="1" BackgroundColor="#eeeeee">
                                         <BindableLayout.EmptyViewTemplate>
                                             <DataTemplate>
-                                                <Label Text="Không có dữ liệu" FontSize="18" HorizontalTextAlignment="Center" Padding="0,30,0,0" TextColor="#333333" BackgroundColor="White"/>
+                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" FontSize="18" HorizontalTextAlignment="Center" Padding="0,30,0,0" TextColor="#333333" BackgroundColor="White"/>
                                             </DataTemplate>
                                         </BindableLayout.EmptyViewTemplate>
                                         <BindableLayout.ItemTemplate>
@@ -290,7 +305,7 @@
                                                     <Label FontSize="15" TextColor="#333333">
                                                         <Label.FormattedText>
                                                             <FormattedString>
-                                                                <Span Text="Khách hàng: "/>
+                                                                <Span Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}"/>
                                                                 <Span Text="{Binding customername}"/>
                                                             </FormattedString>
                                                         </Label.FormattedText>
@@ -298,7 +313,7 @@
                                                     <Label FontSize="15" TextColor="#333333" >
                                                         <Label.FormattedText>
                                                             <FormattedString>
-                                                                <Span Text="Thời gian hết hạn: "/>
+                                                                <Span Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}: '}"/>
                                                                 <Span Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}"/>
                                                                 <Span Text="{Binding bsd_queuingexpired ,StringFormat=' {0:h:mm tt}'}"/>
                                                             </FormattedString>
@@ -313,8 +328,8 @@
                             </ScrollView>
                         </StackLayout>
                         <Grid x:Name="gridButton" Grid.Row="2" ColumnDefinitions="*,*" BackgroundColor="White" Padding="10,5" Margin="0,0,0,5">
-                            <Button x:Name="btnGiuCho" Text="Giữ chỗ" Clicked="GiuCho_Clicked" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" />
-                            <Button x:Name="btnBangTinhGia" Text="Bảng tính giá" Clicked="BangTinhGia_Clicked" IsVisible="{Binding IsShowBtnBangTinhGia}" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10"/>
+                            <Button x:Name="btnGiuCho" Text="{x:Static lang:Language.giu_cho_btn}" Clicked="GiuCho_Clicked" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" />
+                            <Button x:Name="btnBangTinhGia" Text="{x:Static lang:Language.bang_tinh_gia_btn}" Clicked="BangTinhGia_Clicked" IsVisible="{Binding IsShowBtnBangTinhGia}" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10"/>
                         </Grid>
                     </Grid>
                 </telerikPrimitives:RadBorder>
@@ -327,34 +342,34 @@
                 <telerikPrimitives:RadBorder BackgroundColor="White" BorderColor="Transparent" BorderThickness="0" CornerRadius="0,0,10,10">
                     <Grid Margin="20" ColumnDefinitions="30,*,30,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
                         <BoxView Grid.Row="0" Grid.Column="0" BackgroundColor="#F1C50D" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="0" Grid.Column="1" Text="Chuẩn bị" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="{x:Static lang:Language.chuan_bi}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="0" Grid.Column="2" BackgroundColor="#2FCC71" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="0" Grid.Column="3" Text="Sẵn sàng" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="0" Grid.Column="3" Text="{x:Static lang:Language.san_sang}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
                         <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="#00CED1" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="1" Grid.Column="1" Text="Đặt chỗ" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{x:Static lang:Language.dat_cho}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="1" Grid.Column="2" BackgroundColor="#04A8F4" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="1" Grid.Column="3" Text="Giữ chỗ" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="3" Text="{x:Static lang:Language.giu_cho}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
                         <BoxView Grid.Row="2" Grid.Column="0" BackgroundColor="#14A184" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="2" Grid.Column="1" Text="Đặt cọc" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Grid.Column="1" Text="{x:Static lang:Language.dat_coc}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="2" Grid.Column="2" BackgroundColor="#8F44AD" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="2" Grid.Column="3" Text="Đồng ý chuyển cọc" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Grid.Column="3" Text="{x:Static lang:Language.dong_y_chuyen_coc}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
                         <BoxView Grid.Row="3" Grid.Column="0" BackgroundColor="#e67e22" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="3" Grid.Column="1" Text="Đã đủ tiền cọc" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="3" Grid.Column="1" Text="{x:Static lang:Language.da_du_tien_coc}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="3" Grid.Column="2" BackgroundColor="#808080" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="3" Grid.Column="3" Text="Hoàn tất đặt cọc" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="3" Grid.Column="3" Text="{x:Static lang:Language.hoan_tat_dat_coc}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
                         <BoxView Grid.Row="4" Grid.Column="0" BackgroundColor="#808080" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="4" Grid.Column="1" Text="Thanh toán đợt 1" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="4" Grid.Column="1" Text="{x:Static lang:Language.thanh_toan_dot_1}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="4" Grid.Column="2" BackgroundColor="#A0DB8E" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="4" Grid.Column="3" Text="Đã ký TTĐC/HĐĐC" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="4" Grid.Column="3" Text="{x:Static lang:Language.da_ky_ttdc_hddc}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
 
                         <BoxView Grid.Row="5" Grid.Column="0" BackgroundColor="#6897BB" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="5" Grid.Column="1" Text="Đủ điều kiện" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="5" Grid.Column="1" Text="{x:Static lang:Language.du_dieu_dien}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                         <BoxView Grid.Row="5" Grid.Column="2" BackgroundColor="#BF3A2B" HeightRequest="30" VerticalOptions="Center"/>
-                        <Label Grid.Row="5" Grid.Column="3" Text="Đã bán" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="5" Grid.Column="3" Text="{x:Static lang:Language.da_ban}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
                     </Grid>
                 </telerikPrimitives:RadBorder>
             </StackLayout>

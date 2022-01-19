@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-            Title="{Binding Title}"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             BackgroundColor="White"
             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
             ios:Page.UseSafeArea="true"
+            xmlns:lang="clr-namespace:PhuLongCRM.Resources"
             xmlns:controls="clr-namespace:PhuLongCRM.Controls" 
             xmlns:converter="clr-namespace:PhuLongCRM.Converters"
             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
@@ -41,57 +41,57 @@
 
                         <telerikPrimitives:RadExpander.Header>
                             <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                <Label Style="{StaticResource ExpanderHeadingText}" Text="Thông Tin Cơ Bản"/>
+                                <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_co_ban}"/>
                             </telerikPrimitives:ExpanderHeader>
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
                             <StackLayout BackgroundColor="White" Padding="10">
 
-                                <controls:FormLabel x:Name="customerCode" Text="Mã khách hàng" FontSize="15" IsVisible="false"/>
+                                <controls:FormLabel x:Name="customerCode" Text="{x:Static lang:Language.ma_khach_hang}" FontSize="15" IsVisible="false"/>
                                 <telerikPrimitives:RadBorder BorderColor="#f1f1f1" IsVisible="{Binding Path=IsVisible,Source={Reference customerCode}}" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
                                     <Label Text="{Binding singleContact.bsd_customercode}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
                                 </telerikPrimitives:RadBorder>
 
-                                <controls:FormLabelRequired Text="Họ tên" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập họ tên khách hàng" Text="{Binding singleContact.bsd_fullname}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.ho_ten}" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_ho_ten_khach_hang}" Text="{Binding singleContact.bsd_fullname}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="Nhóm khách hàng" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.nhom_khach_hang_contact}" FontSize="15" Margin="0,10,0,0"/>
                                 <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
                                     <Label Text="{Binding ContactType.Label}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
                                 </telerikPrimitives:RadBorder>
 
-                                <controls:FormLabel Text="Tình trạng" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:LookUp x:Name="lookUpTinhTrang" Placeholder="Chọn tình trạng" BottomModal="{Reference BottomModal}" NameDisplay="Label" ItemsSource="{Binding CustomerStatusReasons}" SelectedItem="{Binding CustomerStatusReason}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.tinh_trang}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:LookUp x:Name="lookUpTinhTrang" Placeholder="{x:Static lang:Language.chon_tinh_trang}" BottomModal="{Reference BottomModal}" NameDisplay="Label" ItemsSource="{Binding CustomerStatusReasons}" SelectedItem="{Binding CustomerStatusReason}"/>
 
-                                <controls:FormLabelRequired Text="Số điện thoại" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập số điện thoại" Text="{Binding singleContact.mobilephone}" FontSize="15" Keyboard="Numeric" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}" Text="{Binding singleContact.mobilephone}" FontSize="15" Keyboard="Numeric" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabelRequired Text="Giới tính" Margin="0,10,0,0"/>
-                                <controls:LookUp x:Name="Lookup_GenderOptions" Placeholder="Chọn giới tính" ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding singleGender}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label" />
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.gioi_tinh}" Margin="0,10,0,0"/>
+                                <controls:LookUp x:Name="Lookup_GenderOptions" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding singleGender}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label" />
 
-                                <controls:FormLabelRequired Text="Quốc tịch" Margin="0,10,0,0"/>
-                                <controls:LookUp x:Name="Lookup_LocalizationOptions" Placeholder="Chọn quốc tịch" ItemsSource="{Binding LocalizationOptions}" SelectedItem="{Binding singleLocalization}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.quoc_tich}" Margin="0,10,0,0"/>
+                                <controls:LookUp x:Name="Lookup_LocalizationOptions" Placeholder="{x:Static lang:Language.chon_quoc_tich}" ItemsSource="{Binding LocalizationOptions}" SelectedItem="{Binding singleLocalization}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label"/>
 
-                                <controls:FormLabelRequired Text="Ngày sinh" Margin="0,10,0,0"/>
-                                <controls:DatePickerControl x:Name="datePickerNgaySinh" Date="{Binding singleContact.birthdate}" Placeholder="Chọn ngày sinh" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_sinh}" Margin="0,10,0,0"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleContact.birthdate}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}" />
 
-                                <controls:FormLabel Text="Email" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập email" Text="{Binding singleContact.emailaddress1}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.email}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_email}" Text="{Binding singleContact.emailaddress1}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="Công ty" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:LookUp x:Name="Lookup_Account"  NameDisplay="Name" BottomModal="{Reference BottomModal}" Placeholder="Chọn công ty" SelectedItem="{Binding Account}" ItemsSource="{Binding list_account_lookup}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.cong_ty}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:LookUp x:Name="Lookup_Account"  NameDisplay="Name" BottomModal="{Reference BottomModal}" Placeholder="{x:Static lang:Language.chon_cong_ty}" SelectedItem="{Binding Account}" ItemsSource="{Binding list_account_lookup}"/>
 
-                                <controls:FormLabel Text="Chức vụ" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập chức vụ" Text="{Binding singleContact.bsd_jobtitlevn}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.chuc_vu}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_chuc_vu}" Text="{Binding singleContact.bsd_jobtitlevn}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="Số điện thoại kinh doanh" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập số điện thoại kinh doanh" Text="{Binding singleContact.telephone1}" FontSize="15" Keyboard="Numeric" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.so_dien_thoai_kinh_doanh}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_dien_thoai_kinh_doanh}" Text="{Binding singleContact.telephone1}" FontSize="15" Keyboard="Numeric" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabelRequired Text="Địa chỉ liên lạc" Margin="0,10,0,0"/>
-                                <controls:LookUpAddress Placeholder="Chọn địa chỉ liên lạc" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_lien_lac}" Margin="0,10,0,0"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}"/>
 
-                                <controls:FormLabelRequired Text="Địa chỉ thường trú" Margin="0,10,0,0"/>
-                                <controls:LookUpAddress Placeholder="Chọn địa chỉ thường trú" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal}"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_thuong_tru}" Margin="0,10,0,0"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal}"/>
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
                     </telerikPrimitives:RadExpander>
@@ -99,19 +99,19 @@
                     <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                         <telerikPrimitives:RadExpander.Header>
                             <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                <Label Style="{StaticResource ExpanderHeadingText}" Text="Thông Tin CMND/Hộ Chiếu"/>
+                                <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_cmnd_ho_chieu}"/>
                             </telerikPrimitives:ExpanderHeader>
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
                             <StackLayout BackgroundColor="White" Padding="10">
-                                <controls:FormLabel Text="Hình chụp CMND" FontSize="15" IsVisible="false"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.hinh_chup_cmnd}" FontSize="15" IsVisible="false"/>
                                 <Grid ColumnDefinitions="*,*" IsVisible="false">
                                     <telerikPrimitives:RadBorder x:Name="MatTruocCMND" BorderThickness="1" BorderColor="#f1f1f1f1" CornerRadius="5" Grid.Column="0">
                                         <telerikPrimitives:RadBorder.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="MatTruocCMND_Tapped" NumberOfTapsRequired="1"/>
                                         </telerikPrimitives:RadBorder.GestureRecognizers>
                                         <Grid>
-                                            <Label Text="Mặt trước CMND" FontSize="15" TextColor="#444444" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                            <Label Text="{x:Static lang:Language.mat_truoc_cmnd}" FontSize="15" TextColor="#444444" VerticalOptions="Center" HorizontalOptions="Center"/>
                                             <ffimageloading:CachedImage Source="{Binding singleContact.bsd_mattruoccmnd_source}" DownsampleWidth="500" Aspect="AspectFill" IsVisible="{Binding singleContact.bsd_mattruoccmnd, Converter={StaticResource NullToHideConverter}}"/>
                                         </Grid>
                                     </telerikPrimitives:RadBorder>
@@ -120,38 +120,38 @@
                                             <TapGestureRecognizer Tapped="MatSauCMND_Tapped" NumberOfTapsRequired="1"/>
                                         </telerikPrimitives:RadBorder.GestureRecognizers>
                                         <Grid>
-                                            <Label Text="Mặt sau CMND" FontSize="15" TextColor="#444444" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                            <Label Text="{x:Static lang:Language.mat_sau_cmnd}" FontSize="15" TextColor="#444444" VerticalOptions="Center" HorizontalOptions="Center"/>
                                             <ffimageloading:CachedImage Source="{Binding singleContact.bsd_matsaucmnd_source}" DownsampleWidth="500" Aspect="AspectFill" IsVisible="{Binding singleContact.bsd_matsaucmnd, Converter={StaticResource NullToHideConverter}}"/>
                                         </Grid>
                                     </telerikPrimitives:RadBorder>
                                 </Grid>
 
-                                <controls:FormLabelRequired Text="Số CMND" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập số CMND" Text="{Binding singleContact.bsd_identitycardnumber}" FontSize="15" Keyboard="Numeric" TextChanged="CMND_TextChanged" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.so_cmnd}" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_cmnd}" Text="{Binding singleContact.bsd_identitycardnumber}" FontSize="15" Keyboard="Numeric" TextChanged="CMND_TextChanged" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="Ngày cấp" Margin="0,10,0,0"/>
-                                <controls:DatePickerControl x:Name="datePickerNgayCap" Date="{Binding singleContact.bsd_dategrant}" Placeholder="Chọn ngày cấp" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" Margin="0,10,0,0"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" />
 
-                                <controls:FormLabel Text="Nơi cấp" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:MainEntry Text="{Binding singleContact.bsd_placeofissue}" Placeholder="Nhập nơi cấp" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.noi_cap}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Text="{Binding singleContact.bsd_placeofissue}" Placeholder="{x:Static lang:Language.nhap_noi_cap}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="Số hộ chiếu" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập số hộ chiếu" Text="{Binding singleContact.bsd_passport}" FontSize="15" Keyboard="Numeric" TextChanged="PassPort_TextChanged" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.so_ho_chieu}" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_ho_chieu}" Text="{Binding singleContact.bsd_passport}" FontSize="15" Keyboard="Numeric" TextChanged="PassPort_TextChanged" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="Ngày cấp hộ chiếu" Margin="0,10,0,0"/>
-                                <controls:DatePickerControl x:Name="datePickerNgayCapHoChieu" Date="{Binding singleContact.bsd_issuedonpassport}" Placeholder="Chọn ngày cấp hộ chiếu" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.ngay_cap_ho_chieu}" Margin="0,10,0,0"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_issuedonpassport}" Placeholder="{x:Static lang:Language.chon_ngay_cap_ho_chieu}"/>
 
-                                <controls:FormLabel Text="Nơi cấp hộ chiếu" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:MainEntry Text="{Binding singleContact.bsd_placeofissuepassport}" Placeholder="Nhập nơi cấp hộ chiếu" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.noi_cap_ho_chieu}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Text="{Binding singleContact.bsd_placeofissuepassport}" Placeholder="{x:Static lang:Language.nhap_noi_cap_ho_chieu}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="Số thẻ căn cước" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập số thẻ căn cước" Text="{Binding singleContact.bsd_idcard}" FontSize="15" Keyboard="Numeric" TextChanged="CCCD_TextChanged" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.so_the_can_cuoc}" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_the_can_cuoc}" Text="{Binding singleContact.bsd_idcard}" FontSize="15" Keyboard="Numeric" TextChanged="CCCD_TextChanged" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="Ngày cấp thẻ căn cước" Margin="0,10,0,0"/>
-                                <controls:DatePickerControl x:Name="datePikerNgayCapTheCanCuoc" Date="{Binding singleContact.bsd_issuedateidcard}" Placeholder="Chọn ngày cấp thẻ căn cước" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.ngay_cap_the_can_cuoc}" Margin="0,10,0,0"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_issuedateidcard}" Placeholder="{x:Static lang:Language.chon_ngay_cap_the_can_cuoc}"/>
 
-                                <controls:FormLabel Text="Nơi cấp thẻ căn cước" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:MainEntry Text="{Binding singleContact.bsd_placeofissueidcar}" Placeholder="Nhập nơi cấp thẻ căn cước" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.noi_cap_the_can_cuoc}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Text="{Binding singleContact.bsd_placeofissueidcar}" Placeholder="{x:Static lang:Language.nhap_noi_cap_the_can_cuoc}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>

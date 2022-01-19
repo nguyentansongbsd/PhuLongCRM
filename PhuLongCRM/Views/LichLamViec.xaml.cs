@@ -1,4 +1,6 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using System;
 using System.Collections.Generic;
 
@@ -8,16 +10,25 @@ namespace PhuLongCRM.Views
 {
     public partial class LichLamViec : ContentPage
     {
+        public List<OptionSet> data { get; set; }
         public LichLamViec()
         {
             InitializeComponent();
+            this.BindingContext = this;
+            Init();
+        }
+
+        public async void Init()
+        {
+            data = new List<OptionSet>() { new OptionSet("1",Language.lich_lam_viec_theo_thang), new OptionSet("2", Language.lich_lam_viec_theo_tuan), new OptionSet("3", Language.lich_lam_viec_theo_tuan),};
+            listView.ItemsSource = data;
         }
 
         void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
             LoadingHelper.Show();
-            string item = e.Item as string;         
-            if (item.Contains("tháng"))
+            OptionSet item = e.Item as OptionSet;         
+            if (item.Val == "1")
             {
                 LoadingHelper.Show();
                 LichLamViecTheoThang lichLamViecTheoThang = new LichLamViecTheoThang();
@@ -31,10 +42,10 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        await DisplayAlert("Thông Báo", "Không tìm thấy lịch làm việc", "Đóng");
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_lich_lam_viec);
                     }
                 };
-            } else if (item.Contains("tuần"))
+            } else if (item.Val == "2")
             {
                 LoadingHelper.Show();
                 LichLamViecTheoTuan lichLamViecTheoTuan = new LichLamViecTheoTuan();
@@ -48,10 +59,10 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        await DisplayAlert("Thông Báo", "Không tìm thấy lịch làm việc", "Đóng");
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_lich_lam_viec);
                     }
                 };               
-            }else if (item.Contains("ngày"))
+            }else if (item.Val == "3")
             {
                 LoadingHelper.Show();
                 LichLamViecTheoNgay lichLamViecTheoNgay = new LichLamViecTheoNgay();
@@ -65,7 +76,7 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        await DisplayAlert("Thông Báo", "Không tìm thấy lịch làm việc", "Đóng");
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_lich_lam_viec);
                     }
                 };              
             }         

@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -116,7 +117,7 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             if (viewModel.Project == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn Dự án");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_du_an);
                 LoadingHelper.Hide();
             }
             else
@@ -138,12 +139,12 @@ namespace PhuLongCRM.Views
                     else if (Success == 1)
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.LongMessage("Không có sản phẩm");
+                        ToastMessageHelper.LongMessage(Language.khong_co_san_pham);
                     }
                     else if (Success == 2)
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.LongMessage("Không có sản phẩm");
+                        ToastMessageHelper.LongMessage(Language.khong_co_san_pham);
                     }
                 };
             }
@@ -154,7 +155,7 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             if (viewModel.Project == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn Dự án");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_du_an);
                 LoadingHelper.Hide();
                 return;
             }
@@ -169,7 +170,7 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    await DisplayAlert("", "Không tìm thấy thông tin.", "Đóng");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     LoadingHelper.Hide();
                 }
             };

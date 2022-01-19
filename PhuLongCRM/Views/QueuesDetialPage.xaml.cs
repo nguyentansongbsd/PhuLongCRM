@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -16,6 +17,7 @@ namespace PhuLongCRM.Views
     {
         public Action<bool> OnCompleted;
         public static bool? NeedToRefreshBTG = null;
+        public static bool? NeedToRefreshDC = null;
         public QueuesDetialPageViewModel viewModel;
         public QueuesDetialPage(Guid queueId)
         {
@@ -23,14 +25,14 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new QueuesDetialPageViewModel();
             viewModel.QueueId = queueId;
             NeedToRefreshBTG = false;
+            NeedToRefreshDC = false;
             Init();
         }
 
         public async void Init()
         {
             await viewModel.LoadQueue();
-            SetButtons();
-
+            
             VisualStateManager.GoToState(radBorderThongTin, "Active");
             VisualStateManager.GoToState(radBorderGiaoDich, "InActive");
             VisualStateManager.GoToState(lbThongTin, "Active");
@@ -38,6 +40,8 @@ namespace PhuLongCRM.Views
 
             if (viewModel.Queue != null)
             {
+                viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();// co dat co thi an nut btg
+                SetButtons();
                 OnCompleted?.Invoke(true);
             }
             else
@@ -56,6 +60,17 @@ namespace PhuLongCRM.Views
                 viewModel.PageBangTinhGia = 1;
                 await viewModel.LoadDanhSachBangTinhGia();
                 NeedToRefreshBTG = false;
+                LoadingHelper.Hide();
+            }
+            if (viewModel.DatCocList != null && NeedToRefreshDC == true)
+            {
+                LoadingHelper.Show();
+                viewModel.DatCocList.Clear();
+                viewModel.PageDatCoc = 1;
+                await viewModel.LoadDanhSachDatCoc();
+                viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();
+                SetButtons();
+                NeedToRefreshDC = false;
                 LoadingHelper.Hide();
             }
         }
@@ -89,7 +104,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy dự án");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -115,7 +130,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -134,7 +149,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy đại lý bán hàng ");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -155,7 +170,7 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không tìm thấy đại lý bán hàng ");
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 };
             }
@@ -177,7 +192,7 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không tìm thấy đại lý bán hàng ");
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 };
             }
@@ -197,7 +212,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không có số điện thoại");
+                    ToastMessageHelper.ShortMessage(Language.khong_co_so_dien_thoai);
                 }
             }
             catch (Exception ex)
@@ -218,7 +233,7 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage("Không có số điện thoại");
+                    ToastMessageHelper.ShortMessage(Language.khong_co_so_dien_thoai);
                 }
                 LoadingHelper.Hide();
             }
@@ -231,7 +246,7 @@ namespace PhuLongCRM.Views
 
         private async void HuyGiuCho_Clicked(object sender, EventArgs e)
         {
-            bool confirm = await DisplayAlert("Xác nhận", "Bạn có muốn hủy giữ chỗ này không ?", "Đồng ý", "Hủy");
+            bool confirm = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_huy_giu_cho_nay_khong, Language.dong_y, Language.huy);
             if (confirm == false) return;
 
             string url_action = "";
@@ -281,12 +296,12 @@ namespace PhuLongCRM.Views
                 else if (isSuccess == 1)
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Sản phẩm không thể tạo bảng tính giá");
+                    ToastMessageHelper.ShortMessage(Language.san_pham_khong_the_tao_bang_tinh_gia);
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -348,11 +363,11 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private void ItemReservation_Tapped(object sender, EventArgs e)
+        private void ItemQuatation_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId) { Title = Language.danh_sach_bang_tinh_gia };
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
             {
                 if (isSuccess)
@@ -363,7 +378,27 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
+        }
+
+        private void ItemReservation_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId) { Title = Language.dat_coc };
+            bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(bangTinhGiaDetail);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -383,7 +418,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -405,7 +440,7 @@ namespace PhuLongCRM.Views
                         else
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }
@@ -422,7 +457,7 @@ namespace PhuLongCRM.Views
                         else
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }
@@ -455,16 +490,17 @@ namespace PhuLongCRM.Views
                 SetButtons();
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                 if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
+                if (ProjectInfo.NeedToRefreshNumQueue.HasValue) ProjectInfo.NeedToRefreshNumQueue = true;
                 if (UnitInfo.NeedToRefreshQueue.HasValue) UnitInfo.NeedToRefreshQueue = true;
                 if (AccountDetailPage.NeedToRefreshQueues.HasValue) AccountDetailPage.NeedToRefreshQueues = true;
                 if (ContactDetailPage.NeedToRefreshQueues.HasValue) ContactDetailPage.NeedToRefreshQueues = true;
-                ToastMessageHelper.ShortMessage("Hủy giữ chỗ thành công");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Hủy giữ chỗ thất bại");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
             }
         }
     }

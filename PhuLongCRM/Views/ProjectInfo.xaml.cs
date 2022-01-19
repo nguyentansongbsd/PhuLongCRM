@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using Stormlion.PhotoBrowser;
 using System;
@@ -16,6 +17,7 @@ namespace PhuLongCRM.Views
     {
         public Action<bool> OnCompleted;
         public static bool? NeedToRefreshQueue = null;
+        public static bool? NeedToRefreshNumQueue = null;
         public ProjectInfoViewModel viewModel;
 
         public ProjectInfo(Guid projectId,string projectName = null)
@@ -23,6 +25,7 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             this.BindingContext = viewModel = new ProjectInfoViewModel();
             NeedToRefreshQueue = false;
+            NeedToRefreshNumQueue = false;
             viewModel.ProjectId = projectId;
             viewModel.ProjectName = projectName;
             Init();
@@ -75,7 +78,15 @@ namespace PhuLongCRM.Views
                 NeedToRefreshQueue = false;
                 LoadingHelper.Hide();
             }
-            //await CrossMediaManager.Current.Stop();
+
+            if (NeedToRefreshNumQueue == true)
+            {
+                LoadingHelper.Show();
+                viewModel.SoGiuCho = 0;
+                await viewModel.LoadThongKeGiuCho();
+                NeedToRefreshNumQueue = false;
+                LoadingHelper.Hide();
+            }
         }
 
         private async void ThongKe_Tapped(object sender, EventArgs e)
@@ -136,7 +147,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -163,7 +174,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin chủ đầu tư");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -182,7 +193,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -234,6 +245,20 @@ namespace PhuLongCRM.Views
         {
             var index = viewModel.Collections.IndexOf(viewModel.Collections.FirstOrDefault(x => x.SharePointType == SharePointType.Image));
             carouseView.ScrollTo(index, position: ScrollToPosition.End);
+        }
+
+        private async void OpenEvent_Tapped(object sender, EventArgs e)
+        {
+            if (viewModel.Event == null)
+            {
+                await viewModel.LoadDataEvent();
+            }
+            ContentEvent.IsVisible = true;
+        }
+
+        private void CloseContentEvent_Tapped(object sender, EventArgs e)
+        {
+            ContentEvent.IsVisible = false;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -10,10 +11,10 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","Khách hàng"),
-                new OptionSet("100000001","Đối tác"),
-                new OptionSet("100000002","Đại lý"),
-                new OptionSet("100000003","Chủ đầu tư"),
+                new OptionSet("100000000",Language.khach_hang),
+                new OptionSet("100000001",Language.doi_tac),
+                new OptionSet("100000002",Language.dai_ly),
+                new OptionSet("100000003",Language.chu_dau_tu),
             };
         }
         public static OptionSet GetBussinessTypeById(string Id)

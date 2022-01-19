@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using Xamarin.Forms;
@@ -48,7 +49,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -60,7 +61,7 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private async void Search_TextChanged(object sender, EventArgs e)
+        private void Search_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(viewModel.Keyword))
             {
