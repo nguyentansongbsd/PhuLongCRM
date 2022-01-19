@@ -17,6 +17,7 @@ namespace PhuLongCRM.Views
     {
         public Action<bool> OnCompleted;
         public static bool? NeedToRefreshQueue = null;
+        public static bool? NeedToRefreshNumQueue = null;
         public ProjectInfoViewModel viewModel;
 
         public ProjectInfo(Guid projectId,string projectName = null)
@@ -24,6 +25,7 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             this.BindingContext = viewModel = new ProjectInfoViewModel();
             NeedToRefreshQueue = false;
+            NeedToRefreshNumQueue = false;
             viewModel.ProjectId = projectId;
             viewModel.ProjectName = projectName;
             Init();
@@ -76,7 +78,15 @@ namespace PhuLongCRM.Views
                 NeedToRefreshQueue = false;
                 LoadingHelper.Hide();
             }
-            //await CrossMediaManager.Current.Stop();
+
+            if (NeedToRefreshNumQueue == true)
+            {
+                LoadingHelper.Show();
+                viewModel.SoGiuCho = 0;
+                await viewModel.LoadThongKeGiuCho();
+                NeedToRefreshNumQueue = false;
+                LoadingHelper.Hide();
+            }
         }
 
         private async void ThongKe_Tapped(object sender, EventArgs e)

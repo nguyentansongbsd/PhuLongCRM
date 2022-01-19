@@ -70,7 +70,7 @@
                                 <controls:LookUp x:Name="lookUpGioiTinh" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
-                                <controls:DatePickerControl x:Name="datePickerNgaySinh" Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}" />
 
                                 <controls:FormLabel Text="{x:Static lang:Language.loai_the_id}"/>
                                 <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="{x:Static lang:Language.chon_loai_the_id}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}"/>
@@ -82,7 +82,7 @@
                                 <controls:LookUp x:Name="lookUpKhuVuc" Placeholder="{x:Static lang:Language.chon_khu_vuc}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Area}" ItemsSource="{Binding Areas}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}"/>
-                                <controls:DatePickerControl x:Name="datePickerNgayCap" Date="{Binding singleLead.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleLead.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" />
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap}"/>
                                 <controls:MainEntry Text="{Binding singleLead.bsd_placeofissue}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_noi_cap}" Margin="0,0,0,5"/>

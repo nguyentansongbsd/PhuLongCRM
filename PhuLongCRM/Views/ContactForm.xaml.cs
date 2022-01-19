@@ -48,9 +48,6 @@ namespace PhuLongCRM.Views
         {
             this.Title = Language.tao_moi_khach_hang_ca_nhan;
             btn_save_contact.Text = Language.tao_moi;
-            datePickerNgayCap.DefaultDisplay = DateTime.Now;
-            datePickerNgayCapHoChieu.DefaultDisplay = DateTime.Now;
-            datePikerNgayCapTheCanCuoc.DefaultDisplay = DateTime.Now;
             btn_save_contact.Clicked += CreateContact_Clicked;
             viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById("1");
             lookUpTinhTrang.IsEnabled = false;

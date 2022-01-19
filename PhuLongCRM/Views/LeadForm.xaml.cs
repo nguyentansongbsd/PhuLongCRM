@@ -21,8 +21,6 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             this.Title = Language.tao_moi_kh_tiem_nang;
             Init();
-            datePickerNgaySinh.DefaultDisplay = DateTime.Now;
-            datePickerNgayCap.DefaultDisplay = DateTime.Now;
             
             viewModel.Rating = RatingData.GetRatingById("2");//mac dinh la warm
             viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById("100000002"); // mac dinh la "Chua xac dinh"
@@ -81,11 +79,6 @@ namespace PhuLongCRM.Views
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead.leadsourcecode))
                 {
                     viewModel.LeadSource = LeadSourcesData.GetLeadSourceById(viewModel.singleLead.leadsourcecode);
-                }
-
-                if (!viewModel.singleLead.new_birthday.HasValue)
-                {
-                    datePickerNgaySinh.DefaultDisplay = DateTime.Now;
                 }
 
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead._transactioncurrencyid_value))
