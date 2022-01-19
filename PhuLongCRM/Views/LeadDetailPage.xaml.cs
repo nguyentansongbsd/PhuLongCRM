@@ -115,6 +115,9 @@ namespace PhuLongCRM.Views
                 if (CustomerPage.NeedToRefreshAccount.HasValue) CustomerPage.NeedToRefreshAccount = true;
                 if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                 if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
+                await viewModel.LoadOneLead(Id.ToString());
+                viewModel.ButtonCommandList.Clear();
+                SetButtonFloatingButton();
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
             }

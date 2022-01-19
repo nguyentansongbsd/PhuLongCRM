@@ -60,7 +60,7 @@
                     </Grid>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_sinh}"/>
-                    <controls:DatePickerBorder x:Name="datePickerNgaySinh" Date="{Binding ContactModel.birthdate}" Format="dd/MM/yyyy"/>
+                    <controls:DatePickerBoderControl Date="{Binding ContactModel.birthdate}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.gioi_tinh}"/>
                     <controls:LookUp NameDisplay="Label" BottomModal="{Reference LookUpModal}" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>

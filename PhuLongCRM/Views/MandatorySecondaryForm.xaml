@@ -46,11 +46,11 @@
                     <Grid ColumnDefinitions="*,*">
                         <Grid ColumnDefinitions="Auto,*" Grid.Column="0">
                             <controls:FormLabel Text="{x:Static lang:Language.tu}" FontSize="15" Grid.Column="0"/>
-                            <controls:DatePickerControl x:Name="datePickerNgayHieuLucTu" Date="{Binding mandatorySecondary.bsd_effectivedateto}" Placeholder="Chọn ngày" Grid.Column="1" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy" DateSelected="Effectivedateto_DateSelected"/> 
+                            <controls:DatePickerBoderControl Date="{Binding mandatorySecondary.bsd_effectivedateto}" Placeholder="Chọn ngày" Grid.Column="1" Date_Selected="Effectivedateto_DateSelected"/> 
                         </Grid>
                         <Grid ColumnDefinitions="Auto,*" Grid.Column="1">
                             <controls:FormLabel Text="{x:Static lang:Language.den}" FontSize="15" Grid.Column="0"/>
-                            <controls:DatePickerControl x:Name="datePickerNgayHieuLucDen" Date="{Binding mandatorySecondary.bsd_effectivedatefrom}" Placeholder="Chọn ngày" Grid.Column="1" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy" DateSelected="Effectivedatefrom_DateSelected"/>
+                            <controls:DatePickerBoderControl Date="{Binding mandatorySecondary.bsd_effectivedatefrom}" Placeholder="Chọn ngày" Grid.Column="1" Date_Selected="Effectivedatefrom_DateSelected"/>
                         </Grid>
                     </Grid>
 

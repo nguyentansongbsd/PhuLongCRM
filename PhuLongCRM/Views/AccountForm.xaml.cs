@@ -46,7 +46,6 @@ namespace PhuLongCRM.Views
         {
             this.Title = Language.tao_moi_khach_hang_doanh_nghiep;
             btnSave.Text = Language.tao_moi;
-            datePickerNgayCap.DefaultDisplay = DateTime.Now;
             btnSave.Clicked += CreateContact_Clicked;
             viewModel.BusinessType = viewModel.BusinessTypeOptionList.SingleOrDefault(x => x.Val == "100000000");
         }
