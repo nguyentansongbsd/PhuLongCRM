@@ -104,8 +104,9 @@
                             </Grid>
                             <telerikPrimitives:RadBorder BorderColor="#808080" CornerRadius="10" BorderThickness="1" BackgroundColor="White" Grid.Row="1" >
                                 <StackLayout Margin="15" Spacing="10">
-                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
-                                        <Label Grid.Column="0" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
+                                        <Label Grid.Column="0" Text="{Binding StatusCode.Name}" BackgroundColor="{Binding StatusCode.Background}" Padding="4,2" Margin="0,2" FontSize="13" FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center"/>
+                                        <Label Grid.Column="1" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center">
                                             <Label.Text>
                                                 <MultiBinding StringFormat="{}{0} - {1}">
                                                     <Binding Path="Project.bsd_name" />
@@ -113,7 +114,7 @@
                                                 </MultiBinding>
                                             </Label.Text>
                                         </Label>
-                                        <StackLayout Grid.Column="1" IsVisible="{Binding IsHasEvent}" HorizontalOptions="End" Orientation="Horizontal">
+                                        <StackLayout Grid.Column="2" IsVisible="{Binding IsHasEvent}" HorizontalOptions="End" Orientation="Horizontal">
                                             <StackLayout.GestureRecognizers>
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OpenEvent_Tapped"/>
                                             </StackLayout.GestureRecognizers>

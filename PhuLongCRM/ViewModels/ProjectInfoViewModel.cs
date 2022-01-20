@@ -98,6 +98,9 @@ namespace PhuLongCRM.ViewModels
         private ImageSource _ImageSource;
         public ImageSource ImageSource { get => _ImageSource; set { _ImageSource = value; OnPropertyChanged(nameof(ImageSource)); } }
 
+        private StatusCodeModel _statusCode;
+        public StatusCodeModel StatusCode { get => _statusCode; set { _statusCode = value; OnPropertyChanged(nameof(StatusCode)); } }
+
         public ProjectInfoViewModel()
         {
             ListGiuCho = new ObservableCollection<QueuesModel>();
@@ -122,6 +125,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_managementamount' />
                                 <attribute name='bsd_bookingfee' />
                                 <attribute name='bsd_depositamount' />
+                                <attribute name='statuscode' />
                                 <order attribute='bsd_name' descending='false' />
                                 <filter type='and'>
                                   <condition attribute='bsd_projectid' operator='eq' uitype='bsd_project' value='" + ProjectId.ToString() + @"' />
@@ -136,6 +140,7 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ProjectInfoModel>>("bsd_projects", FetchXml);
             if (result == null || result.value.Any() == false) return;
             Project = result.value.FirstOrDefault();
+            this.StatusCode = ProjectStatusCodeData.GetProjectStatusCodeById(Project.statuscode);
             //await LoadAllCollection();
         }
 

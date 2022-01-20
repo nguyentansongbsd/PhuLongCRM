@@ -12,6 +12,8 @@ namespace PhuLongCRM.Models
         public Guid bsd_investor_id { get; set; }
         public string bsd_investor_name { get; set; } // chủ dự án
 
+        public string statuscode { get; set; }
+
         public string bsd_address { get; set; } // địa chỉ vn
 
         public decimal bsd_depositpercentda { get; set; } // phần trăm cọc

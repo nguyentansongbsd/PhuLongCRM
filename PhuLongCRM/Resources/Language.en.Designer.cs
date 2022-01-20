@@ -3983,15 +3983,15 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        internal static string chon_chieu_khau_chung {
+        internal static string chon_chiet_khau_chung {
             get {
-                return ResourceManager.GetString("chon_chieu_khau_chung", resourceCulture);
+                return ResourceManager.GetString("chon_chiet_khau_chung", resourceCulture);
             }
         }
         
-        internal static string chon_chieu_khau_noi_bo {
+        internal static string chon_chiet_khau_noi_bo {
             get {
-                return ResourceManager.GetString("chon_chieu_khau_noi_bo", resourceCulture);
+                return ResourceManager.GetString("chon_chiet_khau_noi_bo", resourceCulture);
             }
         }
         
@@ -4472,6 +4472,36 @@ namespace PhuLongCRM.Resources {
         internal static string ban_co_chan_chan_muon_thay_doi_pttt {
             get {
                 return ResourceManager.GetString("ban_co_chan_chan_muon_thay_doi_pttt", resourceCulture);
+            }
+        }
+        
+        internal static string nguoi_nhan_cuoc_goi_phai_khac_nguoi_lien_quan {
+            get {
+                return ResourceManager.GetString("nguoi_nhan_cuoc_goi_phai_khac_nguoi_lien_quan", resourceCulture);
+            }
+        }
+        
+        internal static string nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan {
+            get {
+                return ResourceManager.GetString("nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan", resourceCulture);
+            }
+        }
+        
+        internal static string nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc {
+            get {
+                return ResourceManager.GetString("nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc", resourceCulture);
+            }
+        }
+        
+        internal static string nguoi_tham_du_khong_bat_buoc_phai_khac_nguoi_lien_quan {
+            get {
+                return ResourceManager.GetString("nguoi_tham_du_khong_bat_buoc_phai_khac_nguoi_lien_quan", resourceCulture);
+            }
+        }
+        
+        internal static string phi_giu_cho_da_thanh_toan {
+            get {
+                return ResourceManager.GetString("phi_giu_cho_da_thanh_toan", resourceCulture);
             }
         }
     }

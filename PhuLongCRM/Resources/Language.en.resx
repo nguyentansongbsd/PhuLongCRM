@@ -1671,9 +1671,6 @@
     <data name="vui_long_chon_tieu_de">
         <value>Please choose title</value>
     </data>
-    <data name="vui_long_nhap_ho_ten">
-        <value>Please enter user name</value>
-    </data>
     <data name="vui_long_chon_phan_nhom">
         <value>please choose gustomer group</value>
     </data>
@@ -2055,10 +2052,10 @@
     <data name="chieu_khau_chung">
         <value>Discount List</value>
     </data>
-    <data name="chon_chieu_khau_chung">
+    <data name="chon_chiet_khau_chung">
         <value>Choose Discount</value>
     </data>
-    <data name="chon_chieu_khau_noi_bo">
+    <data name="chon_chiet_khau_noi_bo">
         <value>Choose Internal Discount</value>
     </data>
     <data name="khuyen_mai">

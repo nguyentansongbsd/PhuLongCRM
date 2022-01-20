@@ -146,6 +146,9 @@ namespace PhuLongCRM.ViewModels
         private TotalReservationModel _totalReservation;
         public TotalReservationModel TotalReservation { get => _totalReservation; set { _totalReservation = value;OnPropertyChanged(nameof(TotalReservation)); } }
 
+        private PhasesLanchModel _phasesLanchModel;
+        public PhasesLanchModel PhasesLanchModel { get => _phasesLanchModel; set { _phasesLanchModel = value; OnPropertyChanged(nameof(PhasesLanchModel)); } }
+
         public OptionSet QuoteDetail { get; set; }
         private Guid PhasesLaunchId { get; set; }
         public Guid UnitType { get; set; }
@@ -514,6 +517,54 @@ namespace PhuLongCRM.ViewModels
             this.Quote.bsd_managementfee = this.UnitInfor.bsd_managementamountmonth * this.UnitInfor.bsd_netsaleablearea * this.UnitInfor.bsd_numberofmonthspaidmf * (decimal)1.1;
             this.UnitType = UnitInfor._bsd_unittype_value;
             this.PhasesLaunchId = this.UnitInfor._bsd_phaseslaunchid_value;
+        }
+
+        public async Task LoadPhasesLaunch()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_phaseslaunch'>
+                                    <attribute name='bsd_phaseslaunchid' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_phaseslaunchid' operator='eq' value='{this.Quote._bsd_phaseslaunchid_value}' />
+                                    </filter>
+                                    <link-entity name='bsd_discounttype' from='bsd_discounttypeid' to='bsd_discountlist' visible='false' link-type='outer' alias='a_182aff31ba81e911a83b000d3a07be23'>
+                                      <attribute name='bsd_name' alias='discount_name'/>
+                                       <attribute name='bsd_discounttypeid' alias='discount_id'/>
+                                    </link-entity>
+                                    <link-entity name='bsd_interneldiscount' from='bsd_interneldiscountid' to='bsd_internaldiscountlist' visible='false' link-type='outer' alias='a_7514fc37ba81e911a83b000d3a07be23'>
+                                      <attribute name='bsd_name' alias='internel_name'/>
+                                      <attribute name='bsd_interneldiscountid' alias='internel_id'/>
+                                    </link-entity>
+                                    <link-entity name='bsd_discountonpaymentscheme' from='bsd_discountonpaymentschemeid' to='bsd_discountonpaymentscheme' visible='false' link-type='outer' alias='a_e829ff31ba81e911a83b000d3a07be23'>
+                                      <attribute name='bsd_name' alias='paymentscheme_name'/>
+                                      <attribute name='bsd_discountonpaymentschemeid' alias='paymentscheme_id'/>
+                                    </link-entity>
+                                    <link-entity name='bsd_discountpromotion' from='bsd_discountpromotionid' to='bsd_promotiondiscountlist' visible='false' link-type='outer' alias='a_feadc62e2b23eb11a813000d3a07be14'>
+                                      <attribute name='bsd_name' alias='promotion_name'/>
+                                      <attribute name='bsd_discountpromotionid' alias='promotion_id' />
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhasesLanchModel>>("bsd_phaseslaunchs", fetchXml);
+            if (result == null || result.value.Any() == false) return;
+
+            this.PhasesLanchModel = result.value.SingleOrDefault();
+            if (PhasesLanchModel.discount_id != Guid.Empty)
+            {
+                this.DiscountList = new OptionSet() { Val = PhasesLanchModel.discount_id.ToString(), Label = PhasesLanchModel.discount_name };
+                await LoadDiscountChilds();
+            }
+            if (PhasesLanchModel.internel_id != Guid.Empty)
+            {
+                this.DiscountInternelList = new OptionSet() { Val = PhasesLanchModel.internel_id.ToString(), Label = PhasesLanchModel.internel_name };
+                await LoadDiscountChildsInternel();
+            }
+            if (PhasesLanchModel.promotion_id != Guid.Empty)
+            {
+                this.DiscountExchangeList = new OptionSet() { Val = PhasesLanchModel.promotion_id.ToString(), Label = PhasesLanchModel.promotion_name };
+                await LoadDiscountChildsExchange();
+            }
+            
         }
 
         // Load tax code
@@ -1144,6 +1195,29 @@ namespace PhuLongCRM.ViewModels
             var content = await GetContentPaymentShemes();
             CrmApiResponse response = await CrmHelper.PatchData(path, content);
             return response;
+        }
+
+        public async Task<CrmApiResponse> UpdateDiscountChildsPaymentShemes()
+        {
+            string path = $"/quotes({this.Quote.quoteid})";
+            var content = await GetContentDiscountChildsPaymentShemes();
+            CrmApiResponse response = await CrmHelper.PatchData(path, content);
+            return response;
+        }
+
+        private async Task<object> GetContentDiscountChildsPaymentShemes()
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            ckPTTTIds = new List<string>();
+            foreach (var item in DiscountChildsPaymentSchemes)
+            {
+                if (item.Selected == true)
+                {
+                    ckPTTTIds.Add(item.Val);
+                }
+            }
+            data["bsd_selectedchietkhaupttt"] = ckPTTTIds.Count > 0 ? string.Join(",", ckPTTTIds) : null; ;
+            return data;
         }
 
         private async Task<object> GetContentPaymentShemes()
