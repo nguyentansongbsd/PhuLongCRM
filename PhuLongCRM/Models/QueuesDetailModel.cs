@@ -31,6 +31,7 @@ namespace PhuLongCRM.Models
         public double? budgetamount { get; set; }
 
         public Guid _bsd_phaselaunch_value { get; set; }
+        public Guid bsd_phaseslaunch_id { get; set; }
         public string phaselaunch_name { get; set; }
 
         public string bsd_nameofstaffagent { get; set; }

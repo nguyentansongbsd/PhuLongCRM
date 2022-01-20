@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PhuLongCRM.Resources;
+using Xamarin.Forms.Internals;
 
 namespace PhuLongCRM.Views
 {
@@ -81,7 +82,8 @@ namespace PhuLongCRM.Views
                     lookupGiuCho.HideClearButton();
                 }
                 viewModel.PaymentSchemeType = PaymentSchemeTypeData.GetPaymentSchemeTypeById("100000000");
-                await viewModel.LoadTaxCode();
+
+                await Task.WhenAll(viewModel.LoadTaxCode(),viewModel.LoadPhasesLaunch());
                 SetPreOpen();
                 CheckReservation?.Invoke(0);
             }
@@ -391,10 +393,18 @@ namespace PhuLongCRM.Views
                             viewModel.PaymentScheme = viewModel.paymentSheme_Temp;
                             return;
                         }
+                        foreach (var item in viewModel.DiscountChildsPaymentSchemes)
+                        {
+                            if (item.Selected == true)
+                            {
+                                item.Selected = false;
+                            }
+                        }
                     }
                     CrmApiResponse apiResponse = await viewModel.UpdatePaymentShemes();
                     if (apiResponse.IsSuccess)
                     {
+                        if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                         viewModel.paymentSheme_Temp = viewModel.PaymentScheme;
                         viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
                     }
@@ -405,7 +415,6 @@ namespace PhuLongCRM.Views
                     }
                 }
                 
-                
                 viewModel.DiscountChildsPaymentSchemes.Clear();
                 var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
                 await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
@@ -413,13 +422,26 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private void DiscountChildPaymentSchemeItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        private async void DiscountChildPaymentSchemeItem_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
         {
             if (_isEnableCheck) return;
             if (viewModel.IsHadLichThanhToan == true)
             {
                 ToastMessageHelper.ShortMessage(Language.da_co_lich_thanh_toan_khong_duoc_chinh_sua);
                 return;
+            }
+            if (viewModel.Quote.quoteid != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                CrmApiResponse response = await viewModel.UpdateDiscountChildsPaymentShemes();
+                if (!response.IsSuccess)
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(response.ErrorResponse.error.message);
+                    return;
+                }
+                if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
+                LoadingHelper.Hide();
             }
         }
 

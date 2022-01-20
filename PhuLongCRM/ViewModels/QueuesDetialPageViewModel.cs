@@ -112,6 +112,7 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity>
                                 <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaselaunch' visible='false' link-type='outer' alias='a_485347ca19dbeb11bacb002248168cad'>
                                   <attribute name='bsd_name' alias='phaselaunch_name'/>
+                                  <attribute name='bsd_phaseslaunchid' alias='bsd_phaseslaunch_id'/>
                                 </link-entity>
                                 <link-entity name='account' from='accountid' to='bsd_salesagentcompany' visible='false' link-type='outer' alias='a_ab034cb219dbeb11bacb002248168cad'>
                                   <attribute name='bsd_name' alias='salesagentcompany_name'/>

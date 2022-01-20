@@ -1521,9 +1521,6 @@
     <data name="thanh_ly">
         <value>Thanh Lý</value>
     </data>
-    <data name="thu_thanh_ly">
-        <value>Thư thanh lý</value>
-    </data>
     <data name="ban_lai">
         <value>Bán lại</value>
     </data>
@@ -1673,12 +1670,6 @@
     </data>
     <data name="vui_long_chon_tieu_de">
         <value>Vui lòng chọn tiêu đề</value>
-    </data>
-    <data name="vui_long_nhap_ho_ten">
-        <value>Vui lòng nhập họ tên</value>
-    </data>
-    <data name="vui_long_nhap_so_dien_thoai">
-        <value>Vui lòng nhập số điện thoại</value>
     </data>
     <data name="vui_long_chon_phan_nhom">
         <value>Vui lòng chọn phân nhóm</value>
@@ -1935,9 +1926,6 @@
     <data name="vui_long_chon_nguoi_nhan_cuoc_goi">
         <value>Vui lòng chọn người nhận cuộc gọi</value>
     </data>
-    <data name="vui_long_nhap_so_dien_thoai">
-        <value>Vui lòng nhập số điện thoại</value>
-    </data>
     <data name="da_them_cuoc_goi">
         <value>Đã thêm cuộc gọi</value>
     </data>
@@ -2036,9 +2024,6 @@
     </data>
     <data name="ban_co_muon_huy_giu_cho_nay_khong">
         <value>Bạn có muốn hủy giữ chỗ này không ?</value>
-    </data>
-    <data name="dong_so_huu">
-        <value>Đồng sở hữu</value>
     </data>
     <data name="them_nguoi_dong_so_huu">
         <value>Thêm người đồng sở hữu</value>
