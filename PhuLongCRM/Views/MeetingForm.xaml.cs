@@ -154,6 +154,30 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
+            if(viewModel.Optional != null && viewModel.Optional.Count>0)
+            {
+                if(!CheckCusomer(viewModel.Required,viewModel.Optional))
+                {
+                    ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc);
+                    return;
+                }    
+            }    
+            if(viewModel.Customer !=null)
+            {
+                if (!CheckCusomer(viewModel.Required, null ,viewModel.Customer))
+                {
+                    ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan);
+                    return;
+                }
+            }
+            if (viewModel.Optional != null && viewModel.Optional.Count > 0 && viewModel.Customer != null)
+            {
+                if (!CheckCusomer(null, viewModel.Optional, viewModel.Customer))
+                {
+                    ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_khong_bat_buoc_phai_khac_nguoi_lien_quan);
+                    return;
+                }
+            }
 
             LoadingHelper.Show();
 
@@ -289,6 +313,32 @@ namespace PhuLongCRM.Views
                 viewModel.MeetingModel.isalldayevent = false;
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
             }    
+        }
+        private bool CheckCusomer(List<string> required = null, List<string> option = null, OptionSet customer = null)
+        {
+            if (required != null && option != null)
+            {
+                if (required.Where(x => option.Any(s => s == x)).ToList().Count > 0)
+                    return false;
+                else
+                    return true;
+            }
+            else if (required != null && customer != null)
+            {
+                if (required.Where(x => x == customer.Val).ToList().Count > 0)
+                    return false;
+                else
+                    return true;
+            }
+            else if (option != null && customer != null)
+            {
+                if (option.Where(x => x == customer.Val).ToList().Count > 0)
+                    return false;
+                else
+                    return true;
+            }
+            else
+                return false;
         }
     }
 }
