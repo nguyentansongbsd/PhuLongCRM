@@ -56,7 +56,7 @@ namespace PhuLongCRM.Models
         public int bsd_prioritynumber { get => _bsd_prioritynumber; set { _bsd_prioritynumber = value; OnPropertyChanged(nameof(bsd_prioritynumber)); } }
 
         private DateTime _bsd_dateorder;
-        public DateTime bsd_dateorder { get => _bsd_dateorder; set { _bsd_dateorder = value; OnPropertyChanged(nameof(bsd_dateorder)); } }
+        public DateTime bsd_dateorder { get => _bsd_dateorder.AddHours(7); set { _bsd_dateorder = value; OnPropertyChanged(nameof(bsd_dateorder)); } }
 
         private bool _bsd_expired;
         public bool bsd_expired { get => _bsd_expired; set { _bsd_expired = value; OnPropertyChanged(nameof(bsd_expired)); } }
@@ -69,5 +69,7 @@ namespace PhuLongCRM.Models
         public string collaborator_name { get; set; }
         public Guid customerreferral_id { get; set; }
         public string customerreferral_name { get; set; }
+        //bsd_queuingfeepaid
+        public double bsd_queuingfeepaid { get; set; }
     }
 }

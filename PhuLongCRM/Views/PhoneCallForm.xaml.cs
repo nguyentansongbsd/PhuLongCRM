@@ -37,18 +37,7 @@ namespace PhuLongCRM.Views
             Init();           
             PhoneCallId = id;
             Update();
-        }
-
-        public PhoneCallForm(Guid idCustomer, string nameCustomer, string codeCustomer)
-        {
-            InitializeComponent();
-            Init();
-            Create();
-            viewModel.CallTo = new OptionSet { Val = idCustomer.ToString(), Label = nameCustomer, Title = codeCustomer };
-            Lookup_CallTo.IsVisible = false;
-            CustomerMapping.IsVisible = true;
-            Lookup_CallTo_SelectedItemChange(null, null);
-        }
+        }      
 
         private void Init()
         {
@@ -56,6 +45,25 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new PhoneCallViewModel();
             DatePickerStart.DefaultDisplay = DateTime.Now;
             DatePickerEnd.DefaultDisplay = DateTime.Now;
+            if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+            {
+                viewModel.CallTo = ContactDetailPage.FromCustomer;
+                Lookup_CallTo.IsVisible = false;
+                CustomerMapping.IsVisible = true;
+                Lookup_CallTo_SelectedItemChange(null, null);
+            }
+            else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+            {
+                viewModel.CallTo = AccountDetailPage.FromCustomer;
+                Lookup_CallTo.IsVisible = false;
+                CustomerMapping.IsVisible = true;
+                Lookup_CallTo_SelectedItemChange(null, null);
+            }
+            else
+            {
+                Lookup_CallTo.IsVisible = true;
+                CustomerMapping.IsVisible = false;
+            }
         }
 
         private void Create()

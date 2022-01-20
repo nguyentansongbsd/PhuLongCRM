@@ -99,8 +99,8 @@
                                     </Label>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Source={x:Static lang:Language.phi_giu_cho},StringFormat='{0}: '}" FontSize="15" TextColor="#333333" />
-                                    <Label Text="{Binding Queue.bsd_queuingfee,StringFormat='{0:#,0} đ'}" IsVisible="{Binding Queue.bsd_queuingfee,Converter={StaticResource NullToHideConverter}}" FontSize="15" TextColor="#333333" />
+                                    <Label Text="{Binding Source={x:Static lang:Language.phi_giu_cho_da_thanh_toan},StringFormat='{0}: '}" FontSize="15" TextColor="#333333" />
+                                    <Label Text="{Binding Queue.bsd_queuingfeepaid,StringFormat='{0:#,0} đ'}" IsVisible="{Binding Queue.bsd_queuingfee,Converter={StaticResource NullToHideConverter}}" FontSize="15" TextColor="#333333" />
                                 </StackLayout>
 
                                 <!--<StackLayout Orientation="Horizontal">

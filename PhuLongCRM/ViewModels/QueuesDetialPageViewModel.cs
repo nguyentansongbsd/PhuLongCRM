@@ -84,12 +84,13 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_units' alias='_bsd_units_value'/>
                                 <attribute name='bsd_phaselaunch' />
                                 <attribute name='bsd_salesagentcompany' />
-                                    <attribute name='bsd_priorityqueue' />
-                                    <attribute name='bsd_prioritynumber' />
-                                    <attribute name='bsd_ordernumber' />
-                                    <attribute name='bsd_dateorder' />
-                                    <attribute name='statecode' />
-                                    <attribute name='bsd_expired' />
+                                <attribute name='bsd_priorityqueue' />
+                                <attribute name='bsd_prioritynumber' />
+                                <attribute name='bsd_ordernumber' />
+                                <attribute name='bsd_dateorder' />
+                                <attribute name='statecode' />
+                                <attribute name='bsd_expired' />
+                                <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='opportunityid' operator='eq' value='{QueueId}'/>

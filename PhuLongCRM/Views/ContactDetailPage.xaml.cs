@@ -21,6 +21,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefresh = null;
         public static bool? NeedToRefreshQueues = null;
         public static bool? NeedToRefreshActivity = null;
+        public static OptionSet FromCustomer = null;
         private ContactDetailPageViewModel viewModel;
         private Guid Id;
         private PhotoBrowser photoBrowser;
@@ -52,6 +53,7 @@ namespace PhuLongCRM.Views
                 {
                     floatingButtonGroup.IsVisible = false;
                 }
+                FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
                 OnCompleted(true);
             }
 
@@ -64,7 +66,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleContact != null)
             {
                 LoadingHelper.Show();
-                await Navigation.PushAsync(new MeetingForm(viewModel.singleContact.contactid, viewModel.singleContact.bsd_fullname, viewModel.CodeContac));
+                await Navigation.PushAsync(new MeetingForm());
                 LoadingHelper.Hide();
             }
         }
@@ -74,7 +76,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleContact != null)
             {
                 LoadingHelper.Show();
-                await Navigation.PushAsync(new PhoneCallForm(viewModel.singleContact.contactid, viewModel.singleContact.bsd_fullname, viewModel.CodeContac));
+                await Navigation.PushAsync(new PhoneCallForm());
                 LoadingHelper.Hide();
             }
         }
@@ -84,7 +86,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleContact != null)
             {
                 LoadingHelper.Show();
-                await Navigation.PushAsync(new TaskForm(viewModel.singleContact.contactid, viewModel.singleContact.bsd_fullname, viewModel.CodeContac));
+                await Navigation.PushAsync(new TaskForm());
                 LoadingHelper.Hide();
             }
         }
@@ -341,6 +343,7 @@ namespace PhuLongCRM.Views
                 LookUpImage.IsVisible = false;
                 return true;
             }
+            FromCustomer = null;
             return base.OnBackButtonPressed();
         }
 
@@ -376,7 +379,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {          
             string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
@@ -401,24 +403,20 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-
         private async void ThongTin_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(1);
         }
-
         private async void GiaoDich_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(2);
             await LoadDataGiaoDich(Id.ToString());
         }
-
         private void PhongThuy_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(3);
             LoadDataPhongThuy();
         }
-
         private void Tab_Tapped(int tab)
         {
             if (tab == 1)
@@ -458,7 +456,6 @@ namespace PhuLongCRM.Views
                 TabPhongThuy.IsVisible = false;
             }
         }
-
         private void ThongTinCongTy_Tapped(object sender, EventArgs e)
         {            
             if (!string.IsNullOrEmpty(viewModel.singleContact._parentcustomerid_value))
@@ -480,7 +477,6 @@ namespace PhuLongCRM.Views
                 };
             }
         }      
-
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();

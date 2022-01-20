@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Controls;
+using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,6 +29,34 @@ namespace PhuLongCRM.Models
                     _customer = value;
                     OnPropertyChanged(nameof(Customer));
                 }
+            }
+        }
+        public string cutomer_name
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(lead_name))
+                    return lead_name;
+                else if (!string.IsNullOrWhiteSpace(contact_name))
+                    return contact_name;
+                else if (!string.IsNullOrWhiteSpace(account_name))
+                    return account_name;
+                else
+                    return user_name;
+            }
+        }
+        public string title_code
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(lead_name))
+                    return LookUpMultiSelect.CodeLead;
+                else if (!string.IsNullOrWhiteSpace(contact_name))
+                    return LookUpMultiSelect.CodeContac;
+                else if (!string.IsNullOrWhiteSpace(account_name))
+                    return LookUpMultiSelect.CodeAccount;
+                else
+                    return "";
             }
         }
     }
