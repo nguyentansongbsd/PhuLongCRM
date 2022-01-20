@@ -31,17 +31,7 @@ namespace PhuLongCRM.Views
             Init();
             MeetId = id;
             Update();
-        }
-
-        public MeetingForm(Guid idCustomer, string nameCustomer, string codeCustomer)
-        {
-            InitializeComponent();
-            Init();
-            Create();
-            viewModel.CustomerMapping = new OptionSet { Val = idCustomer.ToString(), Label = nameCustomer, Title = codeCustomer };
-            Lookup_Required.IsVisible = false;
-            CustomerMapping.IsVisible = true;
-        }
+        }     
 
         private void Init()
         {
@@ -49,7 +39,23 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new MeetingViewModel();
             DatePickerStart.DefaultDisplay = DateTime.Now;
             DatePickerEnd.DefaultDisplay = DateTime.Now;
-            SetPreOpen();
+            if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+            {
+                viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
+                Lookup_Required.IsVisible = false;
+                CustomerMapping.IsVisible = true;
+            }
+            else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+            {
+                viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
+                Lookup_Required.IsVisible = false;
+                CustomerMapping.IsVisible = true;
+            }
+            else
+            {
+                Lookup_Required.IsVisible = true;
+                CustomerMapping.IsVisible = false;
+            }
         }
 
         private void Create()
@@ -72,26 +78,6 @@ namespace PhuLongCRM.Views
             BtnSave.Clicked += Update_Clicked;
             await viewModel.loadDataMeet(this.MeetId);
 
-            var _data = await viewModel.loadDataParty(this.MeetId);
-            if (_data.Any())
-            {
-                List<string> requiredIds = new List<string>();
-                List<string> optionalIds = new List<string>();
-                foreach (var item in _data)
-                {
-                    if (item.typemask == 5)
-                    {
-                        requiredIds.Add(item.partyID.ToString());
-                    }
-                    else if (item.typemask == 6)
-                    {
-                        optionalIds.Add(item.partyID.ToString());
-                    }
-                }
-                viewModel.Required = requiredIds;
-                viewModel.Optional = optionalIds;
-            }
-
             if (viewModel.MeetingModel.activityid != Guid.Empty)
             {
                 OnCompleted?.Invoke(true);
@@ -104,26 +90,6 @@ namespace PhuLongCRM.Views
         private void Update_Clicked(object sender, EventArgs e)
         {
             SaveData(this.MeetId);
-        }
-
-        public void SetPreOpen()
-        {
-            Lookup_Required.PreShow = async () =>
-            {
-                LoadingHelper.Show();
-                await viewModel.LoadAllLookUp();
-                viewModel.SetTabs();
-                LoadingHelper.Hide();
-            };
-
-            Lookup_Optional.PreShow = async () =>
-            {
-                LoadingHelper.Show();
-                await viewModel.LoadAllLookUp();
-                viewModel.SetTabs();
-                LoadingHelper.Hide();
-
-            };      
         }
 
         private async void SaveData(Guid id)
@@ -314,7 +280,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
             }    
         }
-        private bool CheckCusomer(List<string> required = null, List<string> option = null, OptionSet customer = null)
+        private bool CheckCusomer(List<OptionSetFilter> required = null, List<OptionSetFilter> option = null, OptionSet customer = null)
         {
             if (required != null && option != null)
             {
@@ -325,14 +291,14 @@ namespace PhuLongCRM.Views
             }
             else if (required != null && customer != null)
             {
-                if (required.Where(x => x == customer.Val).ToList().Count > 0)
+                if (required.Where(x => x.Val == customer.Val).ToList().Count > 0)
                     return false;
                 else
                     return true;
             }
             else if (option != null && customer != null)
             {
-                if (option.Where(x => x == customer.Val).ToList().Count > 0)
+                if (option.Where(x => x.Val == customer.Val).ToList().Count > 0)
                     return false;
                 else
                     return true;

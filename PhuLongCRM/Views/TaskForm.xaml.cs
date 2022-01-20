@@ -22,41 +22,39 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             Init();
             InitAdd();
-            Lookup_NguoiLienQuan.IsVisible = true;
-            ContactMapping.IsVisible = false;
         }
-
         public TaskForm(Guid taskId)
         {
             InitializeComponent();
             Init();
             viewModel.TaskId = taskId;
             InitUpdate();
-            Lookup_NguoiLienQuan.IsVisible = true;
-            ContactMapping.IsVisible = false;
         }
-
         public TaskForm(DateTime dateTimeNew)
         {
             InitializeComponent();
-
         }
-
-        public TaskForm(Guid idCustomer, string nameCustomer, string codeCustomer)
-        {
-            InitializeComponent();
-            Init();
-            InitAdd();
-            viewModel.Customer = new OptionSet { Val= idCustomer.ToString(), Label = nameCustomer, Title = codeCustomer};
-            Lookup_NguoiLienQuan.IsVisible = false;
-            ContactMapping.IsVisible = true;
-        }
-
         public void Init()
         {
             this.BindingContext = viewModel = new TaskFormViewModel();
+            if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+            {
+                viewModel.Customer = ContactDetailPage.FromCustomer;
+                Lookup_NguoiLienQuan.IsVisible = false;
+                ContactMapping.IsVisible = true;
+            }
+            else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+            {
+                viewModel.Customer = AccountDetailPage.FromCustomer;
+                Lookup_NguoiLienQuan.IsVisible = false;
+                ContactMapping.IsVisible = true;
+            }
+            else
+            {
+                Lookup_NguoiLienQuan.IsVisible = true;
+                ContactMapping.IsVisible = false;
+            }    
         }
-
         public void InitAdd()
         {
             viewModel.Title = Language.tao_cong_viec;
@@ -64,7 +62,6 @@ namespace PhuLongCRM.Views
             dateTimeTGBatDau.DefaultDisplay = DateTime.Now;
             dateTimeTGKetThuc.DefaultDisplay = DateTime.Now;
         }
-
         public async void InitUpdate()
         {
             await viewModel.LoadTask();
@@ -78,7 +75,6 @@ namespace PhuLongCRM.Views
                 CheckTaskForm?.Invoke(false);
             }
         }
-
         private void DateStart_Selected(object sender, EventArgs e)
         {
             if (viewModel.TaskFormModel.scheduledstart.HasValue && viewModel.TaskFormModel.scheduledend.HasValue)
@@ -89,7 +85,6 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-
         private void DateEnd_Selected(object sender, EventArgs e)
         {
             if (viewModel.TaskFormModel.scheduledstart.HasValue && viewModel.TaskFormModel.scheduledend.HasValue)
@@ -100,12 +95,10 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-
         private void EventAllDay_Tapped(object sender, EventArgs e)
         {
             viewModel.IsEventAllDay = !viewModel.IsEventAllDay;
         }
-
         private void CheckedBoxEventAllDay_Change(object sender, EventArgs e)
         {
             if (!viewModel.TaskFormModel.scheduledstart.HasValue)
@@ -120,7 +113,6 @@ namespace PhuLongCRM.Views
                 viewModel.TaskFormModel.scheduledend = viewModel.TaskFormModel.scheduledstart.Value.AddDays(1);
             }
         }
-
         private async void SaveTask_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(viewModel.TaskFormModel.subject))

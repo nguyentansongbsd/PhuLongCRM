@@ -22,6 +22,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshMandatory = null;
         public static bool? NeedToRefreshQueues = null;
         public static bool? NeedToRefreshActivity = null;
+        public static OptionSet FromCustomer = null;
         private AccountDetailPageViewModel viewModel;
 
         public AccountDetailPage(Guid accountId)
@@ -57,7 +58,7 @@ namespace PhuLongCRM.Views
                 {
                     floatingButtonGroup.IsVisible = false;
                 }
-
+                FromCustomer = new OptionSet {Val= viewModel.singleAccount.accountid.ToString(),Label=viewModel.singleAccount.bsd_name, Title = viewModel.CodeAccount };
                 OnCompleted?.Invoke(true);
             }
                 
@@ -547,7 +548,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleAccount != null)
             {
                 LoadingHelper.Show();
-                await Navigation.PushAsync(new MeetingForm(viewModel.singleAccount.accountid,viewModel.singleAccount.bsd_name,viewModel.CodeAccount));
+                await Navigation.PushAsync(new MeetingForm());
                 LoadingHelper.Hide();
             }
         }
@@ -557,7 +558,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleAccount != null)
             {
                 LoadingHelper.Show();
-                await Navigation.PushAsync(new PhoneCallForm(viewModel.singleAccount.accountid, viewModel.singleAccount.bsd_name, viewModel.CodeAccount));
+                await Navigation.PushAsync(new PhoneCallForm());
                 LoadingHelper.Hide();
             }
         }
@@ -567,7 +568,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleAccount != null)
             {
                 LoadingHelper.Show();
-                await Navigation.PushAsync(new TaskForm(viewModel.singleAccount.accountid, viewModel.singleAccount.bsd_name, viewModel.CodeAccount));
+                await Navigation.PushAsync(new TaskForm());
                 LoadingHelper.Hide();
             }
         }

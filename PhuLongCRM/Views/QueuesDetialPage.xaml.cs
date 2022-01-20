@@ -205,8 +205,9 @@ namespace PhuLongCRM.Views
             {
                 if (!string.IsNullOrWhiteSpace(viewModel.NumPhone))
                 {
+                    string phone = viewModel.NumPhone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
                     LoadingHelper.Hide();
-                    SmsMessage sms = new SmsMessage(null, viewModel.NumPhone);
+                    SmsMessage sms = new SmsMessage(null, phone);
                     await Sms.ComposeAsync(sms);
                 }
                 else
@@ -229,7 +230,8 @@ namespace PhuLongCRM.Views
             {
                 if (!string.IsNullOrWhiteSpace(viewModel.NumPhone))
                 {
-                    await Launcher.OpenAsync($"tel:{viewModel.NumPhone}");
+                    string phone = viewModel.NumPhone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
+                    await Launcher.OpenAsync($"tel:{phone}");
                 }
                 else
                 {
@@ -273,8 +275,11 @@ namespace PhuLongCRM.Views
             }
 
             LoadingHelper.Show();
-            var content = new { };
-            CrmApiResponse res = await CrmHelper.PostData(url_action, content);
+            var data = new
+            {
+                input = "Yes"
+            };
+            CrmApiResponse res = await CrmHelper.PostData(url_action, data);
             Message(res.IsSuccess);
         }
 
