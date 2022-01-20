@@ -70,6 +70,7 @@ namespace PhuLongCRM.ViewModels
         private LookUp _customerReferral;
         public LookUp CustomerReferral { get => _customerReferral; set { _customerReferral = value; OnPropertyChanged(nameof(CustomerReferral)); } }
 
+        public OptionSet paymentSheme_Temp { get; set; }
         private OptionSet _paymentScheme;
         public OptionSet PaymentScheme { get => _paymentScheme; set { _paymentScheme = value; OnPropertyChanged(nameof(PaymentScheme)); } }
         private OptionSet _paymentSchemeType;
@@ -359,7 +360,7 @@ namespace PhuLongCRM.ViewModels
                 this.DiscountExchangeList = new OptionSet(this.Quote.discountpromotion_id, this.Quote.discountpromotion_name);
             }
 
-            this.PaymentScheme = new OptionSet(this.Quote.paymentscheme_id.ToString(), this.Quote.paymentscheme_name);
+            this.paymentSheme_Temp = this.PaymentScheme = new OptionSet(this.Quote.paymentscheme_id.ToString(), this.Quote.paymentscheme_name);
             this.DiscountList = this.Quote.discountlist_id != Guid.Empty ? new OptionSet(this.Quote.discountlist_id.ToString(), this.Quote.discountlist_name) : null;
             this.PhasesLaunchId = this.Quote._bsd_phaseslaunchid_value;
             this.UnitType = this.Quote._bsd_unittype_value;
@@ -1137,6 +1138,29 @@ namespace PhuLongCRM.ViewModels
             return response;
         }
 
+        public async Task<CrmApiResponse> UpdatePaymentShemes()
+        {
+            string path = $"/quotes({this.Quote.quoteid})";
+            var content = await GetContentPaymentShemes();
+            CrmApiResponse response = await CrmHelper.PatchData(path, content);
+            return response;
+        }
+
+        private async Task<object> GetContentPaymentShemes()
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+
+            if (this.PaymentScheme != null)
+            {
+                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_paymentscheme");
+            }
+            return data;
+        }
+
         public async Task<object> GetContentCreateQuote()
         {
             Dictionary<string, object> data = new Dictionary<string, object>();
@@ -1168,6 +1192,7 @@ namespace PhuLongCRM.ViewModels
             if (this.PaymentScheme != null)
             {
                 data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
+                this.Quote.paymentscheme_id = Guid.Parse(this.PaymentScheme.Val);
             }
             else
             {
@@ -1234,14 +1259,6 @@ namespace PhuLongCRM.ViewModels
                 data["pricelevelid@odata.bind"] = $"/pricelevels({this.Quote.pricelist_apply_id})";
             }
 
-            if (this.PaymentScheme != null)
-            {
-                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
-            }
-            else
-            {
-                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_paymentscheme");
-            }
             if (this.DiscountList != null)
             {
                 data["bsd_discountlist@odata.bind"] = $"/bsd_discounttypes({this.DiscountList.Val})";

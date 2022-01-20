@@ -6728,5 +6728,11 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("yeu_cau", resourceCulture);
             }
         }
+        
+        internal static string ban_co_chan_chan_muon_thay_doi_pttt {
+            get {
+                return ResourceManager.GetString("ban_co_chan_chan_muon_thay_doi_pttt", resourceCulture);
+            }
+        }
     }
 }
