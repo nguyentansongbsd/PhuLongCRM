@@ -277,7 +277,6 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_floor' alias='floorid'/>
                                     <attribute name='bsd_blocknumber' alias='blockid'/>
                                     <attribute name='bsd_phaseslaunchid' alias='_bsd_phaseslaunchid_value' />
-                                    <attribute name='bsd_phaseslaunchid' />
                                     <attribute name='bsd_vippriority' />
                                     <order attribute='bsd_constructionarea' descending='true' />
                                     <filter type='and'>
