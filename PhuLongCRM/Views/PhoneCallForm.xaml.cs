@@ -122,6 +122,11 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
+            if (viewModel.Customer != null && viewModel.Customer.Val == viewModel.CallTo.Val)
+            {
+                ToastMessageHelper.ShortMessage(Language.nguoi_nhan_cuoc_goi_phai_khac_nguoi_lien_quan);
+                return;
+            }
 
             LoadingHelper.Show();
 

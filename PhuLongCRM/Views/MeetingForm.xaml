@@ -48,7 +48,7 @@
                     <controls:LookUpMultipleOptions x:Name="Lookup_Optional" Placeholder="{x:Static lang:Language.chon_nguoi_tham_du_khong_bat_buoc}" ListTab="{Binding Tabs}" ListListView="{Binding AllsLookUpOptional}" CenterModal="{x:Reference CenterModal}" SelectedIds="{Binding Optional}" ShowClearButton="False" ShowCloseButton="False"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.nguoi_lien_quan}" FontSize="15" Margin="0,10,0,0"/>
-                    <controls:LookUpMultipleTabs x:Name="Lookup_Customer" Placeholder="{x:Static lang:Language.chon_nguoi_lien_quan}" CenterModal="{x:Reference CenterModal}" SelectedItem="{Binding Customer}" ShowAccount="True" ShowContact="True" ShowLead="True"/>
+                    <controls:LookUpMultipleTabs x:Name="Lookup_Customer" Placeholder="{x:Static lang:Language.chon_nguoi_lien_quan}" CenterModal="{x:Reference CenterModal}" SelectedItem="{Binding Customer}" ShowAccount="True" ShowContact="True" ShowLead="True" LoadNewLead="True"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.dia_diem}" FontSize="15" Margin="0,10,0,0"/>
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_dia_diem}" Text="{Binding MeetingModel.location}" FontSize="15"/>

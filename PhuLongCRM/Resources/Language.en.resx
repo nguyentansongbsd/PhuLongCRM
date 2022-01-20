@@ -2310,4 +2310,19 @@
     <data name="ban_co_chan_chan_muon_thay_doi_pttt">
         <value>Bạn có chắc chắn muốn thay đổi PTTT?</value>
     </data>
+    <data name="nguoi_nhan_cuoc_goi_phai_khac_nguoi_lien_quan" xml:space="preserve">
+      <value>Người nhận cuộc gọi phải khác người liên quan</value>
+    </data>
+    <data name="nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan" xml:space="preserve">
+      <value>Người tham dự bắt buộc phải khác người liên quan</value>
+    </data>
+    <data name="nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc" xml:space="preserve">
+      <value>Người tham dự bắt buộc phải khách người tham dự không bắt buộc</value>
+    </data>
+    <data name="nguoi_tham_du_khong_bat_buoc_phai_khac_nguoi_lien_quan" xml:space="preserve">
+      <value>Người tham dự không bắt buộc phải khác người liên quan</value>
+    </data>
+    <data name="phi_giu_cho_da_thanh_toan" xml:space="preserve">
+      <value>Queuing free paid</value>
+    </data>
 </root>

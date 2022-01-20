@@ -43,11 +43,11 @@ namespace PhuLongCRM.Views
                 if (activitytypecode == "phonecall")
                 {
                     await viewModel.loadPhoneCall(activityid);
-                    await viewModel.loadFromTo(activityid);
-                    viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.PhoneCall.statecode.ToString());
-                    viewModel.ActivityType = Language.cuoc_goi;
                     if (viewModel.PhoneCall != null && viewModel.PhoneCall.activityid != Guid.Empty)
                     {
+                        await viewModel.loadFromTo(activityid);
+                        viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.PhoneCall.statecode.ToString());
+                        viewModel.ActivityType = Language.cuoc_goi;
                         this.IsVisible = true;
                         ContentPhoneCall.IsVisible = true;
                         ContentTask.IsVisible = false;
@@ -62,16 +62,17 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
+                        this.IsVisible = false;
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 }
                 else if (activitytypecode == "task")
                 {
                     await viewModel.loadTask(activityid);
-                    viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Task.statecode.ToString());
-                    viewModel.ActivityType = Language.cong_viec;
                     if (viewModel.Task != null && viewModel.Task.activityid != Guid.Empty)
                     {
+                        viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Task.statecode.ToString());
+                        viewModel.ActivityType = Language.cong_viec;
                         this.IsVisible = true;
                         ContentPhoneCall.IsVisible = false;
                         ContentTask.IsVisible = true;
@@ -86,17 +87,18 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
+                        this.IsVisible = false;
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 }
                 else if (activitytypecode == "appointment")
                 {
                     await viewModel.loadMeet(activityid);
-                    await viewModel.loadFromToMeet(activityid);
-                    viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Meet.statecode.ToString());
-                    viewModel.ActivityType = Language.cuoc_hop;
                     if (viewModel.Meet != null && viewModel.Meet.activityid != Guid.Empty)
                     {
+                        await viewModel.loadFromToMeet(activityid);
+                        viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Meet.statecode.ToString());
+                        viewModel.ActivityType = Language.cuoc_hop;
                         this.IsVisible = true;
                         ContentPhoneCall.IsVisible = false;
                         ContentTask.IsVisible = false;
@@ -112,6 +114,7 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
+                        this.IsVisible = false;
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 }

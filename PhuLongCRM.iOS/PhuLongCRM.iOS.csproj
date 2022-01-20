@@ -118,25 +118,63 @@
     <BundleResource Include="Resources\bsd_ton.png" />
     <BundleResource Include="Resources\btn_send.png" />
     <BundleResource Include="Resources\Logo_PL_480.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_40.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_60.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_58.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_87.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_80.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_120.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_120-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_180.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_20.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_40-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_29.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_58-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_40-2.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_80-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_76.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_152.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_167.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_1024.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_120-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_40-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_58-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_40-2.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_80-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_152.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_167.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Logo_PL_1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
     <BundleResource Include="Resources\ic_english.png" />
     <BundleResource Include="Resources\ic_vietnam.jpg" />
   </ItemGroup>

@@ -323,13 +323,9 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='statecode' />
                                 <attribute name='createdby' />
                                 <attribute name='statuscode' />
-                                <attribute name='requiredattendees' />
-                                <attribute name='prioritycode' />
                                 <attribute name='scheduledstart' />
                                 <attribute name='scheduledend' />
                                 <attribute name='scheduleddurationminutes' />
-                                <attribute name='bsd_mmeetingformuploaded' />
-                                <attribute name='optionalattendees' />
                                 <attribute name='isalldayevent' />
                                 <attribute name='location' />
                                 <attribute name='activityid' />
