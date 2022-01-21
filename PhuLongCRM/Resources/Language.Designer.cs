@@ -53,15 +53,6 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Bạn có chắc chắn muốn thay đổi PTTT?.
-        /// </summary>
-        internal static string ban_co_chan_chan_muon_thay_doi_pttt {
-            get {
-                return ResourceManager.GetString("ban_co_chan_chan_muon_thay_doi_pttt", resourceCulture);
-            }
-        }
-        
         internal static string ten_dang_nhap {
             get {
                 return ResourceManager.GetString("ten_dang_nhap", resourceCulture);
@@ -3140,15 +3131,6 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Phí giữ chỗ đã thanh toán.
-        /// </summary>
-        internal static string phi_giu_cho_da_thanh_toan {
-            get {
-                return ResourceManager.GetString("phi_giu_cho_da_thanh_toan", resourceCulture);
-            }
-        }
-        
         internal static string chon_khu_vuc {
             get {
                 return ResourceManager.GetString("chon_khu_vuc", resourceCulture);
@@ -4516,6 +4498,7 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("nguoi_tham_du_khong_bat_buoc_phai_khac_nguoi_lien_quan", resourceCulture);
             }
         }
+        
         internal static string phi_giu_cho_da_thanh_toan {
             get {
                 return ResourceManager.GetString("phi_giu_cho_da_thanh_toan", resourceCulture);
