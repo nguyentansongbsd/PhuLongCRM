@@ -5,6 +5,7 @@ using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -37,23 +38,33 @@ namespace PhuLongCRM.Views
         public void Init()
         {
             this.BindingContext = viewModel = new TaskFormViewModel();
-            if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+            // kiểm tra page trước là page nào
+            var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
+            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
             {
-                viewModel.Customer = ContactDetailPage.FromCustomer;
-                Lookup_NguoiLienQuan.IsVisible = false;
-                ContactMapping.IsVisible = true;
-            }
-            else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
-            {
-                viewModel.Customer = AccountDetailPage.FromCustomer;
-                Lookup_NguoiLienQuan.IsVisible = false;
-                ContactMapping.IsVisible = true;
+                if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+                {
+                    viewModel.Customer = ContactDetailPage.FromCustomer;
+                    Lookup_NguoiLienQuan.IsVisible = false;
+                    ContactMapping.IsVisible = true;
+                }
+                else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+                {
+                    viewModel.Customer = AccountDetailPage.FromCustomer;
+                    Lookup_NguoiLienQuan.IsVisible = false;
+                    ContactMapping.IsVisible = true;
+                }
+                else
+                {
+                    Lookup_NguoiLienQuan.IsVisible = true;
+                    ContactMapping.IsVisible = false;
+                }
             }
             else
             {
                 Lookup_NguoiLienQuan.IsVisible = true;
                 ContactMapping.IsVisible = false;
-            }    
+            }
         }
         public void InitAdd()
         {
