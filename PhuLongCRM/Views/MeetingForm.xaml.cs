@@ -39,17 +39,27 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new MeetingViewModel();
             DatePickerStart.DefaultDisplay = DateTime.Now;
             DatePickerEnd.DefaultDisplay = DateTime.Now;
-            if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+            // kiểm tra page trước là page nào
+            var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
+            if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
             {
-                viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
-                Lookup_Required.IsVisible = false;
-                CustomerMapping.IsVisible = true;
-            }
-            else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
-            {
-                viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
-                Lookup_Required.IsVisible = false;
-                CustomerMapping.IsVisible = true;
+                if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
+                    Lookup_Required.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
+                }
+                else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
+                    Lookup_Required.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
+                }
+                else
+                {
+                    Lookup_Required.IsVisible = true;
+                    CustomerMapping.IsVisible = false;
+                }
             }
             else
             {

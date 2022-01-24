@@ -1,4 +1,4 @@
-using PhuLongCRM.Controls;
+﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
@@ -45,19 +45,29 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new PhoneCallViewModel();
             DatePickerStart.DefaultDisplay = DateTime.Now;
             DatePickerEnd.DefaultDisplay = DateTime.Now;
-            if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+            // kiểm tra page trước là page nào
+            var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
+            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
             {
-                viewModel.CallTo = ContactDetailPage.FromCustomer;
-                Lookup_CallTo.IsVisible = false;
-                CustomerMapping.IsVisible = true;
-                Lookup_CallTo_SelectedItemChange(null, null);
-            }
-            else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
-            {
-                viewModel.CallTo = AccountDetailPage.FromCustomer;
-                Lookup_CallTo.IsVisible = false;
-                CustomerMapping.IsVisible = true;
-                Lookup_CallTo_SelectedItemChange(null, null);
+                if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CallTo = ContactDetailPage.FromCustomer;
+                    Lookup_CallTo.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
+                    Lookup_CallTo_SelectedItemChange(null, null);
+                }
+                else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CallTo = AccountDetailPage.FromCustomer;
+                    Lookup_CallTo.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
+                    Lookup_CallTo_SelectedItemChange(null, null);
+                }
+                else
+                {
+                    Lookup_CallTo.IsVisible = true;
+                    CustomerMapping.IsVisible = false;
+                }
             }
             else
             {
