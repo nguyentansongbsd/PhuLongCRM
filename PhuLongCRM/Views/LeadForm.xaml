@@ -52,7 +52,7 @@
                                 <controls:MainEntry Text="{Binding singleLead.lastname}" FontSize="15"  Placeholder="Nhập họ tên"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}"/>
-                                <controls:PhoneEntryControl PhoneNum="{Binding singleLead.mobilephone}" Keyboard="Numeric" FontSize="15" Placeholder="+84-033XXXXXXX" Unfocused="mobilephone_text_Unfocused"/>
+                                <controls:PhoneEntryControl Text="{Binding singleLead.mobilephone}" Keyboard="Numeric" FontSize="15" Placeholder="+84-033XXXXXXX" Unfocused="mobilephone_text_Unfocused"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.nhap_so_dien_thoai_cong_ty}"/>
                                 <controls:PhoneEntryControl Text="{Binding singleLead.telephone1}" Keyboard="Numeric" FontSize="15"  Placeholder="+84-033XXXXXXX" Unfocused="telephone1_text_Unfocused"/>

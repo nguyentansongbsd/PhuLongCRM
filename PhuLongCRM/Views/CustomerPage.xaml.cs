@@ -146,7 +146,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             string[] options = new string[] { Language.khach_hang_tiem_nang_option, Language.khach_hang_ca_nhan_option, Language.khach_hang_doanh_nghiep_option };
-            string asw = await DisplayActionSheet(Language.huy, Language.huy, null, options);
+            string asw = await DisplayActionSheet(Language.tao_khach_hang, Language.huy, null, options);
             if (asw == Language.khach_hang_tiem_nang_option)
             {
                 await Navigation.PushAsync(new LeadForm());
