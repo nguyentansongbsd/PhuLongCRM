@@ -232,7 +232,7 @@ namespace PhuLongCRM.Views
 
         private void mobilephone_text_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.singleLead.mobilephone.Length != 14)
+            if (viewModel.singleLead.mobilephone?.Length != 14)
             {
                 ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
             }
@@ -240,7 +240,7 @@ namespace PhuLongCRM.Views
 
         private void telephone1_text_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.singleLead.telephone1.Length != 14)
+            if (viewModel.singleLead.telephone1?.Length != 14)
             {
                 ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
             }

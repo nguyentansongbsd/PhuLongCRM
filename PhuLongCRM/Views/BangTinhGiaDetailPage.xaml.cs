@@ -56,6 +56,9 @@ namespace PhuLongCRM.Views
                 viewModel.CoownerList.Clear();
                 viewModel.ListDiscount.Clear();
                 viewModel.ListPromotion.Clear();
+                viewModel.ShowInstallmentList = false;
+                viewModel.NumberInstallment = 0;
+                viewModel.InstallmentList.Clear();
 
                 await Task.WhenAll(
                     LoadDataChinhSach(ReservationId),
