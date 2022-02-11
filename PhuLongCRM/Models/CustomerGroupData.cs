@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,9 +11,9 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","Nhà ở/ Căn hộ"),
-                new OptionSet("100000001","Nghỉ dưỡng"),
-                new OptionSet("100000002","Chưa xác định"),
+                new OptionSet("100000000", Language.nha_o_can_ho),
+                new OptionSet("100000001",Language.nghi_duong),
+                new OptionSet("100000002",Language.chua_xac_dinh),
             };
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,10 @@ namespace PhuLongCRM.Models
         {
             return new List<StatusCodeModel>()
             {
-                new StatusCodeModel("1","Hoàn Thành","#03ACF5"),
-                new StatusCodeModel("0","Đang Mở","#06CF79"),
-                new StatusCodeModel("2","Đã hủy","#333333"),
-                new StatusCodeModel("3","Scheduled","#04A388"),
+                new StatusCodeModel("1",Language.activity_completed_sts,"#03ACF5"),
+                new StatusCodeModel("0",Language.activity_open_sts,"#06CF79"),
+                new StatusCodeModel("2",Language.activity_cancelled_sts,"#333333"),
+                new StatusCodeModel("3",Language.activity_scheduled_sts,"#04A388"),
             };
         }
     }

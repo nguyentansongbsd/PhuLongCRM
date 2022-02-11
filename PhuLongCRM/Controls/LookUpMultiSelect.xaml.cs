@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
@@ -90,7 +91,7 @@ namespace PhuLongCRM.Controls
 
             if (ShowLead == true)
             {
-                TabsLead = CreateTabs("KH Tiềm Năng");
+                TabsLead = CreateTabs(Language.kh_tiem_nang);
                 gridTabs.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 gridTabs.Children.Add(TabsLead);
                 Grid.SetColumn(TabsLead, numberTab);
@@ -116,7 +117,7 @@ namespace PhuLongCRM.Controls
             }
             if (ShowContact == true)
             {
-                TabsContact = CreateTabs("KH Cá Nhân");
+                TabsContact = CreateTabs(Language.kh_ca_nhan);
                 gridTabs.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 gridTabs.Children.Add(TabsContact);
                 Grid.SetColumn(TabsContact, numberTab);
@@ -141,7 +142,7 @@ namespace PhuLongCRM.Controls
             }
             if (ShowAccount == true)
             {
-                TabsAccount = CreateTabs("KH Doanh Nghiệp");
+                TabsAccount = CreateTabs(Language.kh_doanh_nghiep);
                 gridTabs.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 gridTabs.Children.Add(TabsAccount);
                 Grid.SetColumn(TabsAccount, numberTab);
@@ -193,7 +194,7 @@ namespace PhuLongCRM.Controls
             btnClose.TextColor = Color.White;
             btnClose.TextTransform = TextTransform.None;
             btnClose.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
-            btnClose.Text = "Lưu";
+            btnClose.Text = Language.luu;//"Lưu";
             btnClose.Clicked += SaveButton_Clicked;
             grid.Children.Add(btnClose);
             Grid.SetColumn(btnClose, 0);

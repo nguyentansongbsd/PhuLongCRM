@@ -78,7 +78,7 @@ namespace PhuLongCRM.Controls
         {
             saveButton = new Button()
             {
-                Text = "Lưu",
+                Text = Language.luu,
                 BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"],
                 TextColor = Color.White,
                 Padding = new Thickness(10, 5)
@@ -88,7 +88,7 @@ namespace PhuLongCRM.Controls
 
             Button deleteButton = new Button()
             {
-                Text = "Xoá",
+                Text = Language.xoa,
                 TextColor = (Color)App.Current.Resources["NavigationPrimary"],
                 BackgroundColor = Color.White,
                 BorderColor = (Color)App.Current.Resources["NavigationPrimary"],
@@ -106,7 +106,7 @@ namespace PhuLongCRM.Controls
 
             cancelButton = new Button()
             {
-                Text = "Đóng",
+                Text = Language.dong,
                 TextColor = (Color)App.Current.Resources["NavigationPrimary"],
                 BackgroundColor = Color.White,
                 BorderColor = (Color)App.Current.Resources["NavigationPrimary"],

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using Telerik.XamarinForms.Input;
 using Xamarin.Forms;
 
@@ -26,7 +27,7 @@ namespace PhuLongCRM.Models
                         this.LeadBorderColor = Color.FromHex("#f79364"); //Light Orange
                         this.ItemBackgroundColor = Color.FromHex("#f79364"); 
                     }
-                    activitytype_label = "Công việc";
+                    activitytype_label = Language.cong_viec;//"Công việc";
                     break;
                 case "phonecall":
                     if (activity.statecode == "0")
@@ -39,7 +40,7 @@ namespace PhuLongCRM.Models
                         this.LeadBorderColor = Color.FromHex("#3aa8e3"); //Light Blue
                         this.ItemBackgroundColor = Color.FromHex("#3aa8e3");
                     }
-                    activitytype_label = "Cuộc gọi";
+                    activitytype_label = Language.cuoc_goi;//"Cuộc gọi";
                     break;
                 case "appointment":
                     if (activity.statecode == "0")
@@ -52,7 +53,7 @@ namespace PhuLongCRM.Models
                         this.LeadBorderColor = Color.FromHex("#d3ffce"); //Light Green
                         this.ItemBackgroundColor = Color.FromHex("#d3ffce");
                     }
-                    activitytype_label = "Cuộc họp";
+                    activitytype_label = Language.cuoc_hop;// "Cuộc họp";
                     break;
             }
             switch (activity.statecode)

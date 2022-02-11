@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -37,7 +38,7 @@ namespace PhuLongCRM.Models
                 //if (!string.IsNullOrWhiteSpace(bsd_name))
                 //    name += bsd_name;
                 if (bsd_ordernumber != 0)
-                    name += $" Đợt {bsd_ordernumber}";
+                    name += $" {Language.dot_thanh_toan} {bsd_ordernumber}";
                 if (bsd_amountpercent != 0)
                     name += string.Format(" - {0:#,0}%", bsd_amountpercent);
                 return name;

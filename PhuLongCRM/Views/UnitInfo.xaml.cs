@@ -16,6 +16,7 @@ namespace PhuLongCRM.Views
     {
         public Action<bool> OnCompleted;
         public static bool? NeedToRefreshQueue = null;
+        public static bool? NeedToRefreshQuotation = null;
         private UnitInfoViewModel viewModel;
 
         public UnitInfo(Guid id)
@@ -87,6 +88,15 @@ namespace PhuLongCRM.Views
                 viewModel.list_danhsachdatcho.Clear();
                 await viewModel.LoadQueues();
                 NeedToRefreshQueue = false;
+                LoadingHelper.Hide();
+            }
+            if (NeedToRefreshQuotation == true)
+            {
+                LoadingHelper.Show();
+                viewModel.PageBangTinhGia = 1;
+                viewModel.BangTinhGiaList.Clear();
+                await viewModel.LoadDanhSachBangTinhGia();
+                NeedToRefreshQuotation = false;
                 LoadingHelper.Hide();
             }
             //await CrossMediaManager.Current.Stop();

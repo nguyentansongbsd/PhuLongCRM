@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,28 +11,28 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("1", "1 Phút"),
-                new OptionSet("15", "15 Phút"),
-                new OptionSet("30", "30 Phút"),
-                new OptionSet("45", "45 Phút"),
-                new OptionSet("60", "1 Giờ"),
-                new OptionSet("90", "1.5 Giờ"),
-                new OptionSet("120", "2 Giờ"),
-                new OptionSet("150", "2.5 Giờ"),
-                 new OptionSet("180", "3 Giờ"),
-                new OptionSet("210", "3.5 Giờ"),
-                 new OptionSet("240", "4 Giờ"),
-                new OptionSet("270", "4.5 Giờ"),
-                 new OptionSet("300", "5 Giờ"),
-                new OptionSet("330", "5.5 Giờ"),
-                 new OptionSet("360", "6 Giờ"),
-                new OptionSet("390", "6.5 Giờ"),
-                 new OptionSet("420", "7 Giờ"),
-                new OptionSet("450", "7.5 Giờ"),
-                new OptionSet("480", "8 Giờ"),
-                new OptionSet("1440", "1 Ngày"),
-                new OptionSet("2880", "2 Ngày"),
-                new OptionSet("4320", "3 Ngày"),
+               new OptionSet("1", "1 "+ Language.case_phut_sts),
+                new OptionSet("15", "15 "+ Language.case_phut_sts),
+                new OptionSet("30", "30 "+ Language.case_phut_sts),
+                new OptionSet("45", "45 "+ Language.case_phut_sts),
+                new OptionSet("60", "1 "+ Language.case_gio_sts),
+                new OptionSet("90", "1.5 "+ Language.case_gio_sts),
+                new OptionSet("120", "2 "+ Language.case_gio_sts),
+                new OptionSet("150", "2.5 "+ Language.case_gio_sts),
+                 new OptionSet("180", "3 "+ Language.case_gio_sts),
+                new OptionSet("210", "3.5 "+ Language.case_gio_sts),
+                 new OptionSet("240", "4 "+ Language.case_gio_sts),
+                new OptionSet("270", "4.5 "+ Language.case_gio_sts),
+                 new OptionSet("300", "5 "+ Language.case_gio_sts),
+                new OptionSet("330", "5.5 "+ Language.case_gio_sts),
+                 new OptionSet("360", "6 "+ Language.case_gio_sts),
+                new OptionSet("390", "6.5 "+ Language.case_gio_sts),
+                 new OptionSet("420", "7 "+ Language.case_gio_sts),
+                new OptionSet("450", "7.5 "+ Language.case_gio_sts),
+                new OptionSet("480", "8 "+ Language.case_gio_sts),
+                new OptionSet("1440", "1 "+ Language.case_ngay_sts),
+                new OptionSet("2880", "2 "+ Language.case_ngay_sts),
+                new OptionSet("4320", "3 "+ Language.case_ngay_sts),
             };
         }
     }

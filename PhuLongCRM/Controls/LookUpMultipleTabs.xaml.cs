@@ -1,5 +1,6 @@
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using PhuLongCRM.Views;
@@ -103,7 +104,7 @@ namespace PhuLongCRM.Controls
 
             if (ShowLead == true)
             {
-                TabsLead = CreateTabs("KH Tiềm Năng");
+                TabsLead = CreateTabs(Language.kh_tiem_nang);
                 gridTabs.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 gridTabs.Children.Add(TabsLead);
                 Grid.SetColumn(TabsLead, numberTab);
@@ -129,7 +130,7 @@ namespace PhuLongCRM.Controls
             }
             if (ShowContact == true)
             {
-                TabsContact = CreateTabs("KH Cá Nhân");
+                TabsContact = CreateTabs(Language.kh_ca_nhan);
                 gridTabs.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 gridTabs.Children.Add(TabsContact);
                 Grid.SetColumn(TabsContact, numberTab);
@@ -154,7 +155,7 @@ namespace PhuLongCRM.Controls
             }
             if (ShowAccount == true)
             {
-                TabsAccount = CreateTabs("KH Doanh Nghiệp");
+                TabsAccount = CreateTabs(Language.kh_doanh_nghiep);
                 gridTabs.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 gridTabs.Children.Add(TabsAccount);
                 Grid.SetColumn(TabsAccount, numberTab);
@@ -196,7 +197,7 @@ namespace PhuLongCRM.Controls
                 btnNewContact.TextColor = Color.White;
                 btnNewContact.TextTransform = TextTransform.None;
                 btnNewContact.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
-                btnNewContact.Text = "Thêm KH Cá Nhân";
+                btnNewContact.Text = Language.them_kh_ca_nhan;
                 btnNewContact.Clicked += NewContact_Clicked;
                 grid.Children.Add(btnNewContact);
                 Grid.SetColumn(btnNewContact, 0);
@@ -209,7 +210,7 @@ namespace PhuLongCRM.Controls
                 btnNewAccount.TextColor = Color.White;
                 btnNewAccount.TextTransform = TextTransform.None;
                 btnNewAccount.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
-                btnNewAccount.Text = "Thêm KH Doanh Nghiệp";
+                btnNewAccount.Text = Language.them_kh_doanh_nghiep;
                 btnNewAccount.Clicked += NewAccount_Clicked;
                 grid.Children.Add(btnNewAccount);
                 Grid.SetColumn(btnNewAccount, 1);

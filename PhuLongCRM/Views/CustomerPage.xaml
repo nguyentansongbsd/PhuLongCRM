@@ -65,7 +65,7 @@
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Lead_Tapped"/>
                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblLead" Text="{x:Static lang:Language.khach_hang_tiem_nang}" Style="{StaticResource labelTap}"/>
+                        <Label x:Name="lblLead" Text="{x:Static lang:Language.tiem_nang}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                     <telerikPrimitives:RadBorder x:Name="radBorderContact" Grid.Column="1" Style="{StaticResource radBorder}">
                         <telerikPrimitives:RadBorder.GestureRecognizers>
