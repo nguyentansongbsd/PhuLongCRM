@@ -415,6 +415,8 @@ namespace PhuLongCRM.Views
                     if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                     if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
+                    if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
+                    if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
                     this.Title = Language.dat_coc;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.bang_tinh_gia_da_duoc_ky);
@@ -442,6 +444,7 @@ namespace PhuLongCRM.Views
                     if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                     if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                     if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
+                    if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.da_huy_bang_tinh_gia);
                 }
@@ -622,6 +625,7 @@ namespace PhuLongCRM.Views
                     if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                     if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
+                    if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.da_huy_dat_coc);
                 }

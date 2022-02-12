@@ -161,7 +161,7 @@ namespace PhuLongCRM.ViewModels
             }
 
             ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
-            ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
+//            ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
             ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
             
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
@@ -191,7 +191,8 @@ namespace PhuLongCRM.ViewModels
             if (result == null) return false;
             if (result.value.Any() == false && this.Queue.statuscode == 100000000)
             {
-                return true;
+                return ShowBtnBangTinhGia = (Queue.statuscode == 100000000 && !string.IsNullOrWhiteSpace(Queue.phaselaunch_name)) ? true : false;
+                //return true;
             }
             return false;
         }

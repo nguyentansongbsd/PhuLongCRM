@@ -80,7 +80,7 @@
             <Setter Property="Padding" Value="25,10"/>
         </Style>
         <Style  x:Key="Lb_Title_Content" TargetType="controls:FormLabelValue">
-            <Setter Property="Padding" Value="25,10"/>
+            <Setter Property="Padding" Value="0,10,25,10"/>
             <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
         </Style>
         <converter:MandatorySecondaryStatusCodeConverter x:Key="MandatorySecondaryStatusCodeConverter"/>

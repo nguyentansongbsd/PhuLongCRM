@@ -17,6 +17,7 @@ namespace PhuLongCRM.Views
         public Action<bool> OnCompleted;
         public static bool? NeedToRefreshQueue = null;
         public static bool? NeedToRefreshQuotation = null;
+        public static bool? NeedToRefreshReservation = null;
         private UnitInfoViewModel viewModel;
 
         public UnitInfo(Guid id)
@@ -24,6 +25,8 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             this.BindingContext = viewModel = new UnitInfoViewModel();
             NeedToRefreshQueue = false;
+            NeedToRefreshQuotation = false;
+            NeedToRefreshReservation = false;
             viewModel.UnitId = id;
             Init();
         }
@@ -99,34 +102,41 @@ namespace PhuLongCRM.Views
                 NeedToRefreshQuotation = false;
                 LoadingHelper.Hide();
             }
+            if (NeedToRefreshReservation == true)
+            {
+                LoadingHelper.Show();
+                viewModel.PageDanhSachDatCoc = 1;
+                viewModel.list_danhsachdatcoc.Clear();
+                await viewModel.LoadDanhSachDatCoc();
+                NeedToRefreshReservation = false;
+                LoadingHelper.Hide();
+            }
             //await CrossMediaManager.Current.Stop();
         }
 
         public void SetButton()
         {
-            if (btnGiuCho.IsVisible ==false && viewModel.IsShowBtnBangTinhGia ==false)
+            gridButton = new Grid();
+            if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == false)
             {
                 gridButton.IsVisible = false;
             }
-            else if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == true)
+            gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+            if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == true)
             {
-                gridButton.IsVisible = true;
+                gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
                 Grid.SetColumn(btnGiuCho, 0);
                 Grid.SetColumn(btnBangTinhGia, 1);
             }
             else if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == false)
             {
-                gridButton.IsVisible = true;
                 Grid.SetColumn(btnGiuCho, 0);
-                Grid.SetColumnSpan(btnGiuCho, 2);
                 Grid.SetColumn(btnBangTinhGia, 0);
             }
             else if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == true)
             {
-                gridButton.IsVisible = true;
-                Grid.SetColumn(btnGiuCho, 0);
                 Grid.SetColumn(btnBangTinhGia, 0);
-                Grid.SetColumnSpan(btnBangTinhGia, 2);
+                Grid.SetColumn(btnGiuCho, 0);
             }
         }
 

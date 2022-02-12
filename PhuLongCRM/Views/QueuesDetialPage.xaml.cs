@@ -77,16 +77,34 @@ namespace PhuLongCRM.Views
 
         private void SetButtons()
         {
-            viewModel.ShowButtons = (viewModel.ShowBtnHuyGiuCho == false && viewModel.ShowBtnBangTinhGia == false) ? false : true;
-            gridButtons.ColumnDefinitions.Clear();
-            var btns = gridButtons.Children.Where(x => x.IsVisible == true).ToList();
-            for (int i = 0; i < btns.Count(); i++)
+            //viewModel.ShowButtons = (viewModel.ShowBtnHuyGiuCho == false && viewModel.ShowBtnBangTinhGia == false) ? false : true;
+            //gridButtons.ColumnDefinitions.Clear();
+            //var btns = gridButtons.Children.Where(x => x.IsVisible == true).ToList();
+            //for (int i = 0; i < btns.Count(); i++)
+            //{
+            //    gridButtons.ColumnDefinitions.Add(new ColumnDefinition()
+            //    {
+            //        Width = new GridLength(1, GridUnitType.Star),
+            //    });
+            //    Grid.SetColumn(btns[i], i);
+            //}
+            gridButtons = new Grid();
+            gridButtons.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+            if (viewModel.ShowBtnHuyGiuCho == true && viewModel.ShowBtnBangTinhGia == true)
             {
-                gridButtons.ColumnDefinitions.Add(new ColumnDefinition()
-                {
-                    Width = new GridLength(1, GridUnitType.Star),
-                });
-                Grid.SetColumn(btns[i], i);
+                gridButtons.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+                Grid.SetColumn(btnHuyGiuCho, 0);
+                Grid.SetColumn(btnBangTinhGia, 1);
+            }
+            else if (viewModel.ShowBtnHuyGiuCho == true && viewModel.ShowBtnBangTinhGia == false)
+            {
+                Grid.SetColumn(btnHuyGiuCho, 0);
+                Grid.SetColumn(btnBangTinhGia, 0);
+            }
+            else if (viewModel.ShowBtnHuyGiuCho == false && viewModel.ShowBtnBangTinhGia == true)
+            {
+                Grid.SetColumn(btnBangTinhGia, 0);
+                Grid.SetColumn(btnHuyGiuCho, 0);
             }
         }
 
