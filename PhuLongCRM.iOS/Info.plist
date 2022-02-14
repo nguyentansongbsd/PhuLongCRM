@@ -34,8 +34,6 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleShortVersionString</key>
 	<string>0.1.0</string>
-	<key>CFBundleVersion</key>
-	<string>5</string>
 	<key>NSCameraUsageDescription</key>
 	<string>PhuLongCRM cần truy cập vào máy ảnh của bạn để chụp hình làm ảnh đại diện.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -50,5 +48,7 @@
 	<string>PhuLongCRM cần quyền truy cập vào danh bạ để lấy số điện thoại</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleVersion</key>
+	<string>6</string>
 </dict>
 </plist>
