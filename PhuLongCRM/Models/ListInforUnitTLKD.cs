@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,27 +21,27 @@ namespace PhuLongCRM.Models
                 switch (statuscode)
                 {
                     case 1:
-                        return "Preparing";
+                        return Language.chuan_bi;
                     case 100000000:
-                        return "Available";
+                        return Language.san_sang;//"Available";
                     case 100000004:
-                        return "Queuing";
+                        return Language.giu_cho;//"Queuing";
                     case 100000007:
-                        return "Giữ chỗ";
+                        return Language.dat_cho;//"Giữ chỗ";
                     case 100000006:
-                        return "Reserve";
+                        return Language.dat_coc;//"Reserve";
                     case 100000005:
-                        return "Collected";
+                        return Language.dong_y_chuyen_coc;//"Collected";
                     case 100000003:
-                        return "Deposited";
+                        return Language.da_du_tien_coc;//"Deposited";
                     case 100000001:
-                        return "1st Installment";
+                        return Language.thanh_toan_dot_1;//"1st Installment";
                     case 100000008:
-                        return "Đủ điều kiện";
+                        return Language.du_dieu_dien;//"Đủ điều kiện";
                     case 100000009:
-                        return "Thỏa thuận đặt cọc";
+                        return Language.da_ky_ttdc_hddc;//"Thỏa thuận đặt cọc";
                     case 100000002:
-                        return "Sold";
+                        return Language.da_ban;//"Sold";
                     default:
                         return "";
                 }

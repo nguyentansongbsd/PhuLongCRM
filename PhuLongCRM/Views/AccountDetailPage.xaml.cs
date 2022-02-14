@@ -572,5 +572,10 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
+
+        private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
+        {
+            OnAppearing();
+        }
     }
 }

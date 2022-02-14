@@ -389,7 +389,7 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        internal static string tiem_nang {
+        internal static string tiem_nang_sts {
             get {
                 return ResourceManager.GetString("tiem_nang", resourceCulture);
             }

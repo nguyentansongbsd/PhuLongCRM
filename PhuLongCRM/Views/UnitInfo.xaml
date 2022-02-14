@@ -131,7 +131,8 @@
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}"/>
+                                                <Span Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}:'}"/>
+                                                <Span Text=" "/>
                                                 <Span Text="{Binding UnitInfo.bsd_project_name}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
@@ -139,15 +140,18 @@
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}: '}"/>
-                                                <Span Text="{Binding UnitInfo.bsd_constructionarea,StringFormat='{0:#,0.#0} m2'}" FontAttributes="Bold"/>
+                                                <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
+                                                <Span Text=" "/>
+                                                <Span Text="{Binding UnitInfo.bsd_constructionarea,StringFormat='{0:#,0.#0}'}" FontAttributes="Bold"/>
+                                                <Span Text="{x:Static lang:Language.sqm}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}: '}"/>
+                                                <Span Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}:'}"/>
+                                                <Span Text=" "/>
                                                 <Span Text="{Binding UnitInfo.bsd_unittype_name}" FontAttributes="Bold"/>
                                             </FormattedString>
                                         </Label.FormattedText>
@@ -331,7 +335,8 @@
                                                         <Label Grid.Row="1" FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
                                                                 <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}"/>
+                                                                    <Span Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}:'}"/>
+                                                                    <Span Text=" "/>
                                                                     <Span Text="{Binding customername}"/>
                                                                 </FormattedString>
                                                             </Label.FormattedText>
@@ -339,7 +344,8 @@
                                                         <Label Grid.Row="2" FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
                                                                 <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}"/>
+                                                                    <Span Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}:'}"/>
+                                                                    <Span Text=" "/>
                                                                     <Span Text="{Binding project_name}"/>
                                                                 </FormattedString>
                                                             </Label.FormattedText>
@@ -347,7 +353,8 @@
                                                         <Label Grid.Row="3" FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
                                                                 <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}: '}"/>
+                                                                    <Span Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}:'}"/>
+                                                                    <Span Text=" "/>
                                                                     <Span Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}"/>
                                                                     <Span Text="{Binding bsd_queuingexpired,StringFormat='{0:HH:mm}'}"/>
                                                                 </FormattedString>
@@ -518,7 +525,7 @@
                     </Grid>
                 </StackLayout>
             </ScrollView>
-            <Grid x:Name="gridButton" ColumnDefinitions="*,*" RowDefinitions="Auto" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White" Padding="10,5">
+            <Grid x:Name="gridButton" RowDefinitions="Auto" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White" Padding="10,5">
                 <Button x:Name="btnGiuCho" Text="{x:Static lang:Language.giu_cho_btn}" Clicked="GiuCho_Clicked" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" />
                 <Button x:Name="btnBangTinhGia" Text="{x:Static lang:Language.bang_tinh_gia_btn}" Clicked="BangTinhGia_Clicked" IsVisible="{Binding IsShowBtnBangTinhGia}" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10"/>
             </Grid>

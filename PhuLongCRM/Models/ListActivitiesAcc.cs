@@ -1,5 +1,6 @@
 ﻿using System;
 using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.Models
@@ -16,13 +17,13 @@ namespace PhuLongCRM.Models
                 switch (activitytypecode)
                 {
                     case "task":
-                        return "Task";
+                        return Language.cong_viec;
                     case "phonecall":
-                        return "Phone Call";
+                        return Language.cuoc_goi;
                     case "appointment":
-                        return "Collection Meeting";
+                        return Language.cuoc_hop;
                     default:
-                        return "";
+                        return " ";
                 }
             }
         }

@@ -130,20 +130,48 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
-            if(viewModel.Optional != null && viewModel.Optional.Count>0)
+            if (viewModel.CustomerMapping == null)
             {
-                if(!CheckCusomer(viewModel.Required,viewModel.Optional))
+                if (viewModel.Optional != null && viewModel.Optional.Count > 0)
                 {
-                    ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc);
-                    return;
-                }    
-            }    
-            if(viewModel.Customer !=null)
+                    if (!CheckCusomer(viewModel.Required, viewModel.Optional))
+                    {
+                        ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc);
+                        return;
+                    }
+                }
+            }
+            else
             {
-                if (!CheckCusomer(viewModel.Required, null ,viewModel.Customer))
+                if (viewModel.Optional != null && viewModel.Optional.Count > 0)
                 {
-                    ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan);
-                    return;
+                    if (!CheckCusomer(null, viewModel.Optional, viewModel.CustomerMapping))
+                    {
+                        ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc);
+                        return;
+                    }
+                }
+            }
+            if (viewModel.CustomerMapping == null)
+            {
+                if (viewModel.Customer != null)
+                {
+                    if (!CheckCusomer(viewModel.Required, null, viewModel.Customer))
+                    {
+                        ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                if (viewModel.Customer != null)
+                {
+                    if (viewModel.Customer.Val == viewModel.CustomerMapping.Val)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan);
+                        return;
+                    }
                 }
             }
             if (viewModel.Optional != null && viewModel.Optional.Count > 0 && viewModel.Customer != null)

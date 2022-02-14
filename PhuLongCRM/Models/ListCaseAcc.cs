@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 
 using Xamarin.Forms;
 
@@ -57,21 +58,21 @@ namespace PhuLongCRM.Models
                 switch (statuscode)
                 {
                     case 1:
-                        return "In Progress";
+                        return Language.dang_xu_ly; //"In Progress";
                     case 2:
-                        return "On Hold";
+                        return Language.dang_cho; //"On Hold";
                     case 3:
-                        return "Waiting for Details";
+                        return Language.dang_cho_thong_tin_chi_tiet; //"Waiting for Details";
                     case 4:
-                        return "Researching";
+                        return Language.nghien_cuu; //"Researching";
                     case 5:
-                        return "Problem Solved";
+                        return Language.van_de_da_duoc_giai_quyet; //"Problem Solved";
                     case 1000:
-                        return "Information Provided";
+                        return Language.cung_cap_thong_tin; //"Information Provided";
                     case 6:
-                        return "Canceled";
+                        return Language.da_huy; //"Canceled";
                     case 2000:
-                        return "Merged";
+                        return Language.hop_nhat; //"Merged"; 
                     default:
                         return "";
                 }

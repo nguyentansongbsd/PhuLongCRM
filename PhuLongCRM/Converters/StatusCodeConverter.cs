@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -12,31 +13,31 @@ namespace PhuLongCRM.Converters
         {
             if ((string)value == "1")
             {
-                return "Mới"; // New
+                return Language.new_sts;//"Mới"; // New
             }
             else if ((string)value == "2")
             {
-                return "Đã Liên Hệ"; // Contacted
+                return Language.da_lien_he_sts;//"Đã Liên Hệ"; // Contacted
             }
             else if ((string)value == "3")
             {
-                return "Đã Xác Nhận";
+                return Language.da_xac_nhan_sts;//"Đã Xác Nhận";
             }
             else if ((string)value == "4")
             {
-                return "Mất Khách Hàng"; // Lost
+                return Language.mat_khach_hang;//"Mất Khách Hàng"; // Lost
             }
             else if ((string)value == "5")
             {
-                return "Không Liên Hệ Được"; // Cannot Contact
+                return Language.khong_lien_lac_duoc;//"Không Liên Hệ Được"; // Cannot Contact
             }
             else if ((string)value == "6")
             {
-                return "Không Quan Tâm";  //No Longer Interested
+                return Language.khong_quan_tam;//"Không Quan Tâm";  //No Longer Interested
             }
             else if ((string)value == "7")
             {
-                return "Đã hủy"; // Canceled
+                return Language.da_huy;// "Đã hủy"; // Canceled
             }
             else
             {

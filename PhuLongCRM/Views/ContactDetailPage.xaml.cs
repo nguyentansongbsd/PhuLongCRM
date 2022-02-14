@@ -496,5 +496,9 @@ namespace PhuLongCRM.Views
             };
         }
 
+        private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
+        {
+            OnAppearing();
+        }
     }
 }

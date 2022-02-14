@@ -43,7 +43,7 @@
                     <controls:FormLabel Text="{x:Static lang:Language.tinh_trang_san_pham}" Margin="0,5,0,0"/>
                     <controls:LookUpMultipleOptions x:Name="lookupMultipleUnitStatus" Placeholder="{x:Static lang:Language.chon_tinh_trang_san_pham}" Margin="0,0,0,5" CenterModal="{Reference CenterModal}" SelectedIds="{Binding SelectedUnitStatus}" ItemsSource="{Binding UnitStatusOptions}" ShowClearButton="False" ShowCloseButton="False"/>
 
-                    <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0} (m²)'}" Margin="0,5,0,0"/>
+                    <controls:FormLabel Text="{x:Static lang:Language.dien_tich_su_dung}" Margin="0,5,0,0"/>
                     <controls:LookUp x:Name="lookupNetArea" Placeholder="{x:Static lang:Language.chon_dien_tich_su_dung}" Margin="0,0,0,5" BottomModal="{Reference LookupModal}" NameDisplay="Name" SelectedItem="{Binding NetArea}" ItemsSource="{Binding NetAreas}"/>
                     
                     <controls:FormLabel Text="{x:Static lang:Language.gia_ban_vnd}" Margin="0,5,0,0"/>

@@ -37,6 +37,7 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
             <Setter Property="Padding" Value="0,10"/>
+            <Setter Property="LineBreakMode" Value="TailTruncation"/>
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup>
@@ -79,7 +80,7 @@
             <Setter Property="Padding" Value="25,10"/>
         </Style>
         <Style  x:Key="Lb_Title_Content" TargetType="controls:FormLabelValue">
-            <Setter Property="Padding" Value="25,10"/>
+            <Setter Property="Padding" Value="0,10,25,10"/>
             <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
         </Style>
         <converter:MandatorySecondaryStatusCodeConverter x:Key="MandatorySecondaryStatusCodeConverter"/>
@@ -225,14 +226,21 @@
                                             <controls:FormLabelValue Text="{Binding singleAccount.bsd_vatregistrationnumber}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
                                         </Grid>
 
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="25,10">
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.nguoi_uy_quyen},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                        <Grid RowDefinitions="Auto,1,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_lien_lac},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="0" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding singleAccount.bsd_address}" Grid.Column="1" Grid.Row="0" FontSize="15" TextColor="#444444" Padding="0,10,25,10" />
+                                            <BoxView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" BackgroundColor="#F1F1F1" HeightRequest="0.5"/>
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_tru_so_chinh},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="2" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding singleAccount.bsd_permanentaddress1}" Grid.Column="1" Grid.Row="2" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <!--<Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="25,10">
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_lien_lac},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
                                             <controls:FormLabelValue Text="{Binding singleAccount.bsd_address}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="25,10">
                                             <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_tru_so_chinh},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
                                             <controls:FormLabelValue Text="{Binding singleAccount.bsd_permanentaddress1}" Grid.Column="1" FontSize="15" TextColor="#444444" />
-                                        </Grid>
+                                        </Grid>-->
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -243,7 +251,7 @@
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
-                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="1" BackgroundColor="#F1F1F1">
+                                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="1" BackgroundColor="#F1F1F1">
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="0">
                                             <controls:FormLabel Text="{x:Static lang:Language.nguoi_dai_dien}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding PrimaryContact.bsd_fullname}" Grid.Column="1" FontSize="15" TextColor="#2196F3" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End">
@@ -256,14 +264,21 @@
                                             <controls:FormLabel Text="{x:Static lang:Language.so_dien_thoai}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding PrimaryContact.mobilephone}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
                                         </Grid>
-                                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="25,10">
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dai_dien_phap_luat},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                        <Grid Grid.Row="2" RowDefinitions="Auto,1,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_lien_lac},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="0" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding PrimaryContact.bsd_contactaddress}" Grid.Column="1" Grid.Row="0" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                            <BoxView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" BackgroundColor="#F1F1F1" HeightRequest="0.5"/>
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_tru_so_chinh},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="2" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding PrimaryContact.bsd_permanentaddress1}" Grid.Column="1" Grid.Row="2" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <!--<Grid Grid.Row="2" ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="25,10">
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_lien_lac},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
                                             <controls:FormLabelValue Text="{Binding PrimaryContact.bsd_contactaddress}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                         </Grid>
                                         <Grid Grid.Row="3" ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="25,10">
                                             <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_thuong_tru},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
                                             <controls:FormLabelValue Text="{Binding PrimaryContact.bsd_permanentaddress1}" Grid.Column="1" FontSize="15" TextColor="#444444" />
-                                        </Grid>
+                                        </Grid>-->
                                     </Grid>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -294,7 +309,8 @@
                                                         <Label FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
                                                                 <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.dia_chi_thuong_tru},StringFormat='{0}: '}"/>
+                                                                    <Span Text="{Binding Source={x:Static lang:Language.dia_chi_thuong_tru},StringFormat='{0}:'}"/>
+                                                                    <Span Text=" "/>
                                                                     <Span Text="{Binding customer_name}"/>
                                                                 </FormattedString>
                                                             </Label.FormattedText>
@@ -302,7 +318,8 @@
                                                         <Label FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
                                                                 <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}"/>
+                                                                    <Span Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}:'}"/>
+                                                                    <Span Text=" "/>
                                                                     <Span Text="{Binding bsd_project_name}"/>
                                                                 </FormattedString>
                                                             </Label.FormattedText>
@@ -310,7 +327,8 @@
                                                         <Label FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
                                                                 <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}: '}"/>
+                                                                    <Span Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}:'}"/>
+                                                                    <Span Text=" "/>
                                                                     <Span Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}"/>
                                                                     <Span Text="{Binding bsd_queuingexpired,StringFormat=' {0:HH:mm}'}"/>
                                                                 </FormattedString>
@@ -401,19 +419,19 @@
                                                             <Label Grid.Column="1" Text="{Binding ordernumber}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                                                            <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}:'}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                            <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                             <Label Text="{Binding customer_name}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                                            <Label Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}:'}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                            <Label Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                             <Label Text="{Binding project_name}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                                            <Label Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}:'}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                            <Label Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                             <Label Text="{Binding unit_name}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
-                                                            <Label Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}:'}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                            <Label Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                             <Label Text="{Binding totalamount}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                     </Grid>
@@ -452,12 +470,12 @@
                                                         </Grid>
 
                                                         <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}:'}" FontSize="15" TextColor="#444444"/>
+                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                                             <Label Grid.Column="1" Text="{Binding activitytypecode_format}" TextColor="#444444" FontSize="15"/>
                                                         </Grid>
 
                                                         <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}:'}" FontSize="15" TextColor="#444444"/>
+                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                                             <Label Grid.Column="1" Text="{Binding regarding_name}" TextColor="#444444" FontSize="15"/>
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*">
@@ -585,7 +603,7 @@
                 </telerikPrimitives:RadBorder>
             </ContentView>
 
-            <views:ActivityPopupContentView x:Name="ActivityPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
+            <views:ActivityPopupContentView x:Name="ActivityPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" HidePopupActivity="ActivityPopup_HidePopupActivity"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

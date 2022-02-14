@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.Controls
@@ -16,7 +17,7 @@ namespace PhuLongCRM.Controls
             //}
             //this.BackgroundColor = Color.White;
             this.FontFamily = "Segoe";
-            this.Placeholder = "Từ khoá";
+            this.Placeholder = Language.tim_kiem;
         }
     }
 }

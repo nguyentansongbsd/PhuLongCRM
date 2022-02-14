@@ -20,6 +20,10 @@ namespace PhuLongCRM.Views
         private List<Label> meetRequired = new List<Label>();
         private Guid ActivityId;
         private string activitytype;
+        private string meet_typecode = "appointment";
+        private string task_typecode = "task";
+        private string phonecall_typecode = "phonecall";
+        public event EventHandler HidePopupActivity;
 
         public ActivityPopupContentView()
         {
@@ -31,6 +35,7 @@ namespace PhuLongCRM.Views
         private void CloseContentActivity_Tapped(object sender, EventArgs e)
         {
             this.IsVisible = false;
+            HidePopupActivity?.Invoke((object)this, EventArgs.Empty);
         }
 
         public async void ShowActivityPopup(Guid activityid,string activitytypecode)
@@ -40,7 +45,7 @@ namespace PhuLongCRM.Views
                 ActivityId = activityid;
                 activitytype = activitytypecode;
                 LoadingHelper.Show();
-                if (activitytypecode == "phonecall")
+                if (activitytypecode == phonecall_typecode)
                 {
                     await viewModel.loadPhoneCall(activityid);
                     if (viewModel.PhoneCall != null && viewModel.PhoneCall.activityid != Guid.Empty)
@@ -66,7 +71,7 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 }
-                else if (activitytypecode == "task")
+                else if (activitytypecode == task_typecode)
                 {
                     await viewModel.loadTask(activityid);
                     if (viewModel.Task != null && viewModel.Task.activityid != Guid.Empty)
@@ -91,7 +96,7 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 }
-                else if (activitytypecode == "appointment")
+                else if (activitytypecode == meet_typecode)
                 {
                     await viewModel.loadMeet(activityid);
                     if (viewModel.Meet != null && viewModel.Meet.activityid != Guid.Empty)
@@ -192,6 +197,7 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusPhoneCall(viewModel.CodeCompleted))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.PhoneCall.statecode.ToString());
+                        NeedRefresh(phonecall_typecode);
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.cuoc_goi_da_hoan_thanh);
                     }
@@ -207,6 +213,7 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusTask(viewModel.CodeCompleted))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Task.statecode.ToString());
+                        NeedRefresh(task_typecode);
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.cong_viec_da_hoan_thanh);
                     }
@@ -222,6 +229,7 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusMeet(viewModel.CodeCompleted))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Meet.statecode.ToString());
+                        NeedRefresh(meet_typecode);
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.cuoc_hop_da_hoan_thanh);
                     }
@@ -240,6 +248,7 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusPhoneCall(viewModel.CodeCancel))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.PhoneCall.statecode.ToString());
+                        NeedRefresh(phonecall_typecode);
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.cuoc_goi_da_duoc_huy);
                     }
@@ -255,6 +264,7 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusTask(viewModel.CodeCancel))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Task.statecode.ToString());
+                        NeedRefresh(task_typecode);
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.cong_viec_da_duoc_huy);
                     }
@@ -270,6 +280,7 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusMeet(viewModel.CodeCancel))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Meet.statecode.ToString());
+                        NeedRefresh(meet_typecode);
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.cuoc_hop_da_duoc_huy);
                     }
@@ -476,6 +487,30 @@ namespace PhuLongCRM.Views
                     };
                 }
             }
+        }
+        private void NeedRefresh(string type)
+        {
+            if(type==meet_typecode)
+            {
+                if (Dashboard.NeedToRefreshMeet.HasValue) Dashboard.NeedToRefreshMeet = true;
+                if (ActivityList.NeedToRefreshMeet.HasValue) ActivityList.NeedToRefreshMeet = true;
+            }
+            else if (type == task_typecode)
+            {
+                if (Dashboard.NeedToRefreshTask.HasValue) Dashboard.NeedToRefreshTask = true;
+                if (ActivityList.NeedToRefreshTask.HasValue) ActivityList.NeedToRefreshTask = true;
+            }
+            else if (type == phonecall_typecode)
+            {
+                if (Dashboard.NeedToRefreshPhoneCall.HasValue) Dashboard.NeedToRefreshPhoneCall = true;
+                if (ActivityList.NeedToRefreshPhoneCall.HasValue) ActivityList.NeedToRefreshPhoneCall = true;
+            }
+
+            if (LichLamViecTheoThang.NeedToRefresh.HasValue) LichLamViecTheoThang.NeedToRefresh = true;
+            if (LichLamViecTheoTuan.NeedToRefresh.HasValue) LichLamViecTheoTuan.NeedToRefresh = true;
+            if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
+            if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
+            if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
         }
     }
 }

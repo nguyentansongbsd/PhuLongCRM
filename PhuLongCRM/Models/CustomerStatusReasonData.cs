@@ -11,7 +11,7 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("1",Language.tiem_nang),
+                new OptionSet("1",Language.tiem_nang_sts),
                 new OptionSet("100000000",Language.chinh_thuc),
             };
         }

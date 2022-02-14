@@ -28,31 +28,33 @@ namespace PhuLongCRM.Models
 
         private string _statuscode;
         public string statuscode { get => _statuscode; set { _statuscode = value; OnPropertyChanged(nameof(statuscode)); } }
-        public string statuscode_label {
-            get
-            {
-                switch (statuscode)
-                {
-                    case "2": return "Pending";
-                    case "1":return "Open";
-                    case "3":return "Submitted - In Progress";
-                    case "100000000":return "Option";
-                    case "100000006":return "Terminated";
-                    case "100000005":return "Handover";
-                    case "100000004":return "Complete Payment";
-                    case "100000003":return "Being Payment";
-                    case "100000002":return "Signed Contract";
-                    case "100000008":return "Đã ký TT/HĐ cọc";
-                    case "100000007":return "Đủ điều kiện";
-                    case "100000001":return "1st Installment";
-                    case "4":return "Canceled";
-                    case "100001":return "Complete";
-                    case "100002":return "Partial";
-                    case "100003":return "Invoiced";
-                    default: return null;
-                }
-            }
-        }
+
+        public string statuscode_label { get { return statuscode != null ? ContractStatusCodeData.GetContractStatusCodeById(statuscode.ToString())?.Name : null; } }
+        //public string statuscode_label {
+        //    get
+        //    {
+        //        switch (statuscode)
+        //        {
+        //            case "2": return "Pending";
+        //            case "1":return "Open";
+        //            case "3":return "Submitted - In Progress";
+        //            case "100000000":return "Option";
+        //            case "100000006":return "Terminated";
+        //            case "100000005":return "Handover";
+        //            case "100000004":return "Complete Payment";
+        //            case "100000003":return "Being Payment";
+        //            case "100000002":return "Signed Contract";
+        //            case "100000008":return "Đã ký TT/HĐ cọc";
+        //            case "100000007":return "Đủ điều kiện";
+        //            case "100000001":return "1st Installment";
+        //            case "4":return "Canceled";
+        //            case "100001":return "Complete";
+        //            case "100002":return "Partial";
+        //            case "100003":return "Invoiced";
+        //            default: return null;
+        //        }
+        //    }
+        //}
 
         private decimal? _totalamount;
         public decimal? totalamount { get => _totalamount; set { _totalamount = value; OnPropertyChanged(nameof(totalamount)); } }

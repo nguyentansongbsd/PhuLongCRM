@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -68,7 +69,7 @@ namespace PhuLongCRM.Controls
             OnPreOpen();
 
             SelectedItem = new AddressModel();
-            SelectedItem.lineaddress = "AAAAAAAAAAAAAAAAAAAAA";
+            SelectedItem.lineaddress = "";
 
             list_country_lookup = new ObservableCollection<LookUp>();
             list_province_lookup = new ObservableCollection<LookUp>();
@@ -106,7 +107,7 @@ namespace PhuLongCRM.Controls
         {
             if (SelectedItem == null || string.IsNullOrWhiteSpace(SelectedItem.lineaddress))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số nhà/đường/phường");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_nha_duong_phuong);
                 return;
             }
 
@@ -329,7 +330,7 @@ namespace PhuLongCRM.Controls
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             Button btnClose = new Button();
-            btnClose.Text = "Đóng";
+            btnClose.Text = Language.dong;
             btnClose.BackgroundColor = Color.White;
             btnClose.TextColor = (Color)App.Current.Resources["NavigationPrimary"];
             btnClose.BorderColor = (Color)App.Current.Resources["NavigationPrimary"];
@@ -342,6 +343,7 @@ namespace PhuLongCRM.Controls
             Grid.SetRow(btnClose, 0);
 
             Button btnSave = new Button();
+            btnSave.Text = Language.luu;
             btnSave.SetBinding(Button.TextProperty, "SelectedItem.lineaddress");
             btnSave.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
             btnSave.TextColor = Color.White;

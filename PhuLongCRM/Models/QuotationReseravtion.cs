@@ -37,32 +37,7 @@ namespace PhuLongCRM.Models
 
         private string _statuscode;
         public string statuscode { get => _statuscode; set { _statuscode = value; OnPropertyChanged(nameof(statuscode)); } }
-        public string statuscode_label { get
-            {
-                switch (statuscode)
-                {
-                    case "1":return "In Progress - Draf";
-                    case "2": return "In Progress - Active";
-                    case "3": return "Deposited";
-                    case "4": return "Won";
-                    case "5": return "Lost";
-                    case "6": return "Canceled";
-                    case "7": return "Revised";
-                    case "100000007":return "Quotation";
-                    case "100000000":return "Reservation";
-                    case "100000006":return "Collected";
-                    case "100000010": return "Đã ký phiếu cọc";
-                    case "100000011": return "Draft";
-                    case "100000002": return "Pending Cancel Deposit";
-                    case "100000004": return "Signed RF";
-                    case "100000009": return "Expired";
-                    case "100000001": return "Terminated";
-                    case "100000003": return "Reject";
-                    case "100000005": return "Expired of signing RF";
-                    case "100000008": return "Expired Quotation";
-                    default: return null;
-                }
-            } }
+        public string statuscode_label { get { return statuscode != null ? QuoteStatusCodeData.GetQuoteStatusCodeById(statuscode.ToString())?.Name : null; } }
 
         private string _transaction_currency;
         public string transaction_currency { get => _transaction_currency; set { _transaction_currency = value; OnPropertyChanged(nameof(transaction_currency)); } }
