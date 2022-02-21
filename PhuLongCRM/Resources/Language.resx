@@ -532,10 +532,10 @@
     <value>Xác nhận hủy</value>
   </data>
   <data name="huy_gg_chua_hoan_tien" xml:space="preserve">
-    <value>Hủy GC chưa hoàn tiền</value>
+    <value>Đã hủy - Chưa hoàn tiền</value>
   </data>
   <data name="huy_gg_da_hoan_tien" xml:space="preserve">
-    <value>Hủy GC đã hoàn tiền</value>
+    <value>Đã hủy - Hoàn tiền</value>
   </data>
   <data name="da_thanh_ly" xml:space="preserve">
     <value>Đã thanh lý</value>
@@ -2525,5 +2525,38 @@
   </data>
   <data name="xoa" xml:space="preserve">
     <value>Xóa</value>
+  </data>
+  <data name="nhap_zip_code" xml:space="preserve">
+    <value>Nhập ZIP code</value>
+  </data>
+  <data name="zip_code" xml:space="preserve">
+    <value>ZIP code</value>
+  </data>
+  <data name="area_mien_bac" xml:space="preserve">
+    <value>Miền bắc</value>
+  </data>
+  <data name="area_mien_nam" xml:space="preserve">
+    <value>Miền nam</value>
+  </data>
+  <data name="area_mien_trung" xml:space="preserve">
+    <value>Miền trung</value>
+  </data>
+  <data name="ngay_het_han_reservation" xml:space="preserve">
+    <value>Ngày hết hạn ký</value>
+  </data>
+  <data name="ngay_in_reservation" xml:space="preserve">
+    <value>Ngày in</value>
+  </data>
+  <data name="ngay_ky_reservation" xml:space="preserve">
+    <value>Ngày ký</value>
+  </data>
+  <data name="ngay_tai_len_reservation" xml:space="preserve">
+    <value>Ngày tải lên</value>
+  </data>
+  <data name="so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung" xml:space="preserve">
+    <value>Số CMND/ Số CCCD/ Số hộ chiếu đã được sử dụng.</value>
+  </data>
+  <data name="trinh_trang_reservation" xml:space="preserve">
+    <value>Tình trạng</value>
   </data>
 </root>

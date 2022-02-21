@@ -81,47 +81,47 @@
                 <Button Text="{x:Static lang:Language.luu}" Clicked="SaveUserInfor_Clicked" HeightRequest="40" CornerRadius="5" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" FontSize="15"/>
             </StackLayout>
 
-            <controls:CenterModal x:Name="centerModelPassword" Title="Đổi mật khẩu">
+            <controls:CenterModal x:Name="centerModelPassword" Title="{x:Static lang:Language.doi_mat_khau}">
                 <controls:CenterModal.Body>
                     <StackLayout Padding="14">
-                        <controls:FormLabelRequired Text="Mật khẩu cũ"/>
-                        <controls:MainEntry Text="{Binding OldPassword}" Placeholder="Nhập mật khẩu cũ" TextChanged="OldPassword_TextChanged"/>
+                        <controls:FormLabelRequired Text="{x:Static lang:Language.mat_khau_cu}"/>
+                        <controls:MainEntry Text="{Binding OldPassword}" Placeholder="{x:Static lang:Language.nhap_mat_khau_cu}" TextChanged="OldPassword_TextChanged"/>
 
-                        <controls:FormLabelRequired Text="Mật khẩu mới"/>
-                        <controls:MainEntry Text="{Binding NewPassword}" Placeholder="Nhập mật khẩu mới" TextChanged="NewPassword_TextChanged"/>
+                        <controls:FormLabelRequired Text="{x:Static lang:Language.mat_khau_moi}"/>
+                        <controls:MainEntry Text="{Binding NewPassword}" Placeholder="{x:Static lang:Language.nhap_mat_khau_moi}" TextChanged="NewPassword_TextChanged"/>
 
-                        <controls:FormLabelRequired Text="Xác nhận mật khẩu mới"/>
-                        <controls:MainEntry Text="{Binding ConfirmNewPassword}" Placeholder="Nhập xác nhận mật khẩu mới" TextChanged="ConfirmPassword_TextChanged"/>
+                        <controls:FormLabelRequired Text="{x:Static lang:Language.xac_nhan_mat_khau_moi}"/>
+                        <controls:MainEntry Text="{Binding ConfirmNewPassword}" Placeholder="{x:Static lang:Language.nhap_xac_nhan_mat_khau_moi}" TextChanged="ConfirmPassword_TextChanged"/>
                     </StackLayout>
                 </controls:CenterModal.Body>
                 <controls:CenterModal.Footer>
-                    <Button Text="Lưu" Margin="14,8" Clicked="SaveChangedPassword_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" FontSize="15"/>
+                    <Button Text="{x:Static lang:Language.luu}" Margin="14,8" Clicked="SaveChangedPassword_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" FontSize="15"/>
                 </controls:CenterModal.Footer>
             </controls:CenterModal>
 
-            <controls:CenterModal x:Name="centerModalContactAddress" Title="Địa chỉ">
+            <controls:CenterModal x:Name="centerModalContactAddress" Title="{x:Static lang:Language.dia_chi}">
                 <controls:CenterModal.Body>
                     <ScrollView>
                         <StackLayout Margin="10">
-                            <controls:FormLabel Text="Quốc gia"/>
-                            <controls:LookUp x:Name="lookUpContacAddressCountry" Placeholder="Chọn quốc gia" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressCountryContact}" ItemsSource="{Binding list_country_lookup}" SelectedItemChange="ContactAddressCountry_Changed"/>
+                            <controls:FormLabel Text="{x:Static lang:Language.quoc_gia}"/>
+                            <controls:LookUp x:Name="lookUpContacAddressCountry" Placeholder="{x:Static lang:Language.chon_quoc_gia}" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressCountryContact}" ItemsSource="{Binding list_country_lookup}" SelectedItemChange="ContactAddressCountry_Changed"/>
 
-                            <controls:FormLabel Text="ZIP code"/>
-                            <controls:MainEntry Placeholder="Nhập ZIP code" Text="{Binding AddressPostalCodeContact}"/>
+                            <controls:FormLabel Text="{x:Static lang:Language.zip_code}"/>
+                            <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_zip_code}" Text="{Binding AddressPostalCodeContact}"/>
 
-                            <controls:FormLabel Text="Tỉnh thành"/>
-                            <controls:LookUp x:Name="lookUpContactAddressProvice" Placeholder="Chọn tỉnh thành" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressStateProvinceContact}" ItemsSource="{Binding list_province_lookup}" SelectedItemChange="ContactAddressProvince_Changed"/>
+                            <controls:FormLabel Text="{x:Static lang:Language.tinh_thanh}"/>
+                            <controls:LookUp x:Name="lookUpContactAddressProvice" Placeholder="{x:Static lang:Language.chon_tinh_thanh}" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressStateProvinceContact}" ItemsSource="{Binding list_province_lookup}" SelectedItemChange="ContactAddressProvince_Changed"/>
 
-                            <controls:FormLabel Text="Quận/Huyện"/>
-                            <controls:LookUp x:Name="lookUpContactAddressDistrict" Placeholder="Chọn quận/huyện" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressCityContact}" ItemsSource="{Binding list_district_lookup}"/>
+                            <controls:FormLabel Text="{x:Static lang:Language.quan_huyen}"/>
+                            <controls:LookUp x:Name="lookUpContactAddressDistrict" Placeholder="{x:Static lang:Language.chon_quan_huyen}" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressCityContact}" ItemsSource="{Binding list_district_lookup}"/>
 
-                            <controls:FormLabelRequired Text="Số nhà/Đường/Phường"/>
-                            <controls:MainEntry Placeholder="Nhập số nhà/đường/phường" Text="{Binding AddressLine1Contact}"/>
+                            <controls:FormLabelRequired Text="{x:Static lang:Language.so_nha_duong_phuong}"/>
+                            <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_nha_duong_phuong}" Text="{Binding AddressLine1Contact}"/>
                         </StackLayout>
                     </ScrollView>
                 </controls:CenterModal.Body>
                 <controls:CenterModal.Footer>
-                    <Button Grid.Column="1" Text="Xác nhận" Margin="10" Clicked="ConfirmContactAddress_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
+                    <Button Grid.Column="1" Text="{x:Static lang:Language.xac_nhan}" Margin="10" Clicked="ConfirmContactAddress_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
                 </controls:CenterModal.Footer>
             </controls:CenterModal>
 

@@ -45,7 +45,7 @@
                     </telerikPrimitives:RadBorder>
 
                     <controls:FormLabel Text="{x:Static lang:Language.nguoi_tham_khong_du_bat_buoc}" Margin="0,10,0,0"/>
-                    <controls:LookUpMultiSelect Placeholder="{x:Static lang:Language.chon_nguoi_tham_du_khong_bat_buoc}" CenterModal="{x:Reference CenterModal}" SelectedIds="{Binding Optional}" ShowLead="True" ShowContact="True" ShowAccount="True"/>
+                    <controls:LookUpMultiSelect Placeholder="{x:Static lang:Language.chon_nguoi_tham_du_khong_bat_buoc}" CenterModal="{x:Reference CenterModal}" SelectedIds="{Binding Optional}" ShowLead="True" ShowContact="True" ShowAccount="True" LoadNewLead="True"/> <!--chỉ tìm lead new-->
 
                     <controls:FormLabel Text="{x:Static lang:Language.nguoi_lien_quan}" FontSize="15" Margin="0,10,0,0"/>
                     <controls:LookUpMultipleTabs x:Name="Lookup_Customer" Placeholder="{x:Static lang:Language.chon_nguoi_lien_quan}" CenterModal="{x:Reference CenterModal}" SelectedItem="{Binding Customer}" ShowAccount="True" ShowContact="True" ShowLead="True" LoadNewLead="True"/>
@@ -57,7 +57,7 @@
                     <controls:DatePickerControl x:Name="DatePickerStart" Date="{Binding MeetingModel.scheduledstart}" Placeholder="{x:Static lang:Language.chon_thoi_gian_bat_dau}" DisplayFormat="dd/MM/yyyy - h:mm tt" SpinnerFormat="dd/MM/yyyy h:mm tt" DateSelected="DatePickerStart_DateSelected"/>
 
                     <Grid ColumnDefinitions="Auto,Auto" Margin="0,10,0,0">
-                        <controls:FormLabel Text="Sự kiện cả ngày" Grid.Column="0"/>
+                        <controls:FormLabel Text="{x:Static lang:Language.su_kien_ca_ngay}" Grid.Column="0"/>
                         <CheckBox HorizontalOptions="End" Grid.Column="1" IsChecked="{Binding MeetingModel.isalldayevent}" CheckedChanged="AllDayEvent_changeChecked"/>
                     </Grid>
                     

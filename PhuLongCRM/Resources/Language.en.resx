@@ -151,7 +151,7 @@
     <value>Reservation</value>
   </data>
   <data name="hop_dong" xml:space="preserve">
-    <value>Commission</value>
+    <value>Contract</value>
   </data>
   <data name="da_ban" xml:space="preserve">
     <value>Sold</value>
@@ -232,10 +232,10 @@
     <value>Queues</value>
   </data>
   <data name="danh_sach_bang_tinh_gia" xml:space="preserve">
-    <value>Quotation Reservation</value>
+    <value>Quotation</value>
   </data>
   <data name="danh_sach_dat_coc" xml:space="preserve">
-    <value>Reserves</value>
+    <value>Reservation</value>
   </data>
   <data name="danh_sach_hop_dong" xml:space="preserve">
     <value>Contracts</value>
@@ -460,7 +460,7 @@
     <value>The current of the position</value>
   </data>
   <data name="khach_hang_cu_da_mua_gioi_thieu" xml:space="preserve">
-    <value>Old customers have bought referrals</value>
+    <value>Old customers have bought referrals.</value>
   </data>
   <data name="quang_cao" xml:space="preserve">
     <value>Advertisement</value>
@@ -529,13 +529,13 @@
     <value>Expired</value>
   </data>
   <data name="xac_nhan_huy" xml:space="preserve">
-    <value>Xác nhận hủy</value>
+    <value>Confirm Cancel</value>
   </data>
   <data name="huy_gg_chua_hoan_tien" xml:space="preserve">
-    <value>Hủy GC chưa hoàn tiền</value>
+    <value>Cancelled - Not Refund</value>
   </data>
   <data name="huy_gg_da_hoan_tien" xml:space="preserve">
-    <value>Hủy GC đã hoàn tiền</value>
+    <value>Cancelled - Refunded</value>
   </data>
   <data name="da_thanh_ly" xml:space="preserve">
     <value>Terminated</value>
@@ -760,7 +760,7 @@
     <value>Create Phone Call</value>
   </data>
   <data name="tao_cong_viec" xml:space="preserve">
-    <value>Create task</value>
+    <value>Create Task</value>
   </data>
   <data name="them_nguoi_uy_quyen" xml:space="preserve">
     <value>Add Mandatory Secondary</value>
@@ -790,7 +790,7 @@
     <value>Invalid phone number. Please check again</value>
   </data>
   <data name="khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai" xml:space="preserve">
-    <value>The customer does not have a phone number. Please check again</value>
+    <value>The customer does not have a phone number. Please check again.</value>
   </data>
   <data name="thong_tin_cong_ty" xml:space="preserve">
     <value>Account information</value>
@@ -829,7 +829,7 @@
     <value>Choose representative</value>
   </data>
   <data name="so_dien_thoai_cong_ty" xml:space="preserve">
-    <value>Phone</value>
+    <value>Company phone</value>
   </data>
   <data name="nhap_so_dien_thoai_cong_ty" xml:space="preserve">
     <value>Enter Phone</value>
@@ -1003,13 +1003,13 @@
     <value>Detail</value>
   </data>
   <data name="lich" xml:space="preserve">
-    <value>Calendar</value>
+    <value>Installment</value>
   </data>
   <data name="dieu_kien_ban_giao" xml:space="preserve">
     <value>Handover Condition</value>
   </data>
   <data name="chiet_khau_theo_pttt" xml:space="preserve">
-    <value>Chiết khấu theo PTTT</value>
+    <value>Payment Scheme Discount</value>
   </data>
   <data name="chiet_khau_chung" xml:space="preserve">
     <value>Discount</value>
@@ -1222,7 +1222,7 @@
     <value>Business Phone</value>
   </data>
   <data name="thong_tin_cmnd_ho_chieu" xml:space="preserve">
-    <value>Identity card number/Passport information</value>
+    <value>Identity card number/ Passport information</value>
   </data>
   <data name="hinh_chup_cmnd" xml:space="preserve">
     <value>Photo Identity card number</value>
@@ -1342,7 +1342,7 @@
     <value>Please choose birth date</value>
   </data>
   <data name="khach_hang_phai_tu_18_tuoi" xml:space="preserve">
-    <value>Customer must be older than 18 years old</value>
+    <value>Customer must be older than 18 years old.</value>
   </data>
   <data name="email_sai_dinh_dang" xml:space="preserve">
     <value>Email is wrong format</value>
@@ -1483,7 +1483,7 @@
     <value>Transfer</value>
   </data>
   <data name="khach_hang_tiem_nang_tu_danh_ba" xml:space="preserve">
-    <value>The Lead is transferred from the contacts sync feature</value>
+    <value>The Lead is transferred from the contacts sync feature.</value>
   </data>
   <data name="da_co_loi_xay_ra_vui_long_thu_lai_sau" xml:space="preserve">
     <value>Error. Please try again</value>
@@ -2029,16 +2029,16 @@
     <value>Please enter title queue</value>
   </data>
   <data name="khach_hang_da_tham_gia_giu_cho_cho_du_an_nay" xml:space="preserve">
-    <value>This customer has already queued this unit</value>
+    <value>This customer has already queued this unit.</value>
   </data>
   <data name="khach_hang_phai_khac_dai_ly_ban_hang" xml:space="preserve">
-    <value>Customer and Sales agent company are duplicated. Please check again</value>
+    <value>Customer and Sales agent company are duplicated. Please check again.</value>
   </data>
   <data name="khach_hang_phai_khac_cong_tac_vien" xml:space="preserve">
-    <value>Customer and Collaborator are duplicated. Please check again</value>
+    <value>Customer and Collaborator are duplicated. Please check again.</value>
   </data>
   <data name="khach_hang_phai_khac_khach_hang_gioi_thieu" xml:space="preserve">
-    <value>Customer and Customer Referral are duplicated. Please check again</value>
+    <value>Customer and Customer Referral are duplicated. Please check again.</value>
   </data>
   <data name="tao_giu_cho_thanh_cong" xml:space="preserve">
     <value>Create queue successed</value>
@@ -2176,10 +2176,10 @@
     <value>Please choose relationship</value>
   </data>
   <data name="khach_hang_khong_duoc_trung_voi_nguoi_mua" xml:space="preserve">
-    <value>Customer and Purchaser are duplicated. Please check again</value>
+    <value>Customer and Purchaser are duplicated. Please check again.</value>
   </data>
   <data name="khach_hang_da_duoc_chon" xml:space="preserve">
-    <value>Customer has been seleted</value>
+    <value>Customer has been seleted.</value>
   </data>
   <data name="them_dong_so_huu_thanh_cong" xml:space="preserve">
     <value>Add co-owner successed</value>
@@ -2191,7 +2191,7 @@
     <value>Purchaser and Sales agent company are duplicated. Please check again</value>
   </data>
   <data name="khach_hang_coower_va_khach_hang_khong_duoc_trung" xml:space="preserve">
-    <value>Co-Owner and Customer are duplicated. Please check again</value>
+    <value>Co-Owner and Customer are duplicated. Please check again.</value>
   </data>
   <data name="dai_ly_san_giao_dich_khong_duoc_trung_voi_nguoi_mua_vui_long_chon_lai" xml:space="preserve">
     <value>Sales Agent Company and Purchaser are duplicated. Please check again</value>
@@ -2200,7 +2200,7 @@
     <value>Collaborator and Purchaser are duplicated. Please check again</value>
   </data>
   <data name="khach_hang_gioi_thieu_khong_duoc_trung_voi_nguoi_mua_vui_long_chon_lai" xml:space="preserve">
-    <value>Customer Referral and Purchaser are duplicated. Please check again</value>
+    <value>Customer Referral and Purchaser are duplicated. Please check again.</value>
   </data>
   <data name="vui_long_chon_dieu_kien_ban_giao" xml:space="preserve">
     <value>Please choose Handover Condition</value>
@@ -2525,5 +2525,38 @@
   </data>
   <data name="xoa" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="nhap_zip_code" xml:space="preserve">
+    <value>Enter ZIP code</value>
+  </data>
+  <data name="zip_code" xml:space="preserve">
+    <value>ZIP code</value>
+  </data>
+  <data name="area_mien_bac" xml:space="preserve">
+    <value>Northern</value>
+  </data>
+  <data name="area_mien_nam" xml:space="preserve">
+    <value>Southern</value>
+  </data>
+  <data name="area_mien_trung" xml:space="preserve">
+    <value>Central</value>
+  </data>
+  <data name="ngay_het_han_reservation" xml:space="preserve">
+    <value>Expired date of signing RF</value>
+  </data>
+  <data name="ngay_in_reservation" xml:space="preserve">
+    <value>Reservation printed date</value>
+  </data>
+  <data name="ngay_ky_reservation" xml:space="preserve">
+    <value>Reservation signed date</value>
+  </data>
+  <data name="ngay_tai_len_reservation" xml:space="preserve">
+    <value>Reservation uploaded date</value>
+  </data>
+  <data name="so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung" xml:space="preserve">
+    <value>ID card numbers/ ID card numbers/ Passport numbers has been used.</value>
+  </data>
+  <data name="trinh_trang_reservation" xml:space="preserve">
+    <value>Reservation status</value>
   </data>
 </root>

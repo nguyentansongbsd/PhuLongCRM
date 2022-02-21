@@ -320,6 +320,7 @@ namespace PhuLongCRM.Views
         }
         private bool CheckCusomer(List<OptionSetFilter> required = null, List<OptionSetFilter> option = null, OptionSet customer = null)
         {
+            // kiểm tra từ kh hàng- kh liên quan k check
             if (required != null && option != null)
             {
                 if (required.Where(x => option.Any(s => s == x)).ToList().Count > 0)

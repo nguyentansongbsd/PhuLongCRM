@@ -108,7 +108,7 @@
                                             <controls:FormLabel Text="{x:Static lang:Language.nguoi_tham_du_bat_buoc}" Grid.Column="0" FontSize="14" TextColor="#444444" LineHeight="1.2"/>
                                             <telerikPrimitives:RadBorder Grid.Column="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
                                                 <Grid>
-                                                    <FlexLayout x:Name="flexRequired" Wrap="Wrap" AlignItems="Start">
+                                                    <FlexLayout x:Name="flexRequired" Wrap="Wrap" AlignItems="Center">
                                                         <BindableLayout.ItemTemplate>
                                                             <DataTemplate>
                                                                 <Label Text="{Binding Label}" Padding="5" FontSize="14" TextColor="{StaticResource NavigationPrimary}">

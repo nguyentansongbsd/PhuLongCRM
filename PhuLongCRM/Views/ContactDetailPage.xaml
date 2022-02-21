@@ -223,10 +223,10 @@
                                         </Grid>
                                         <Grid Grid.Row="6" RowDefinitions="Auto,1,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_lien_lac},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="0" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_contactaddress}" Grid.Column="1" Grid.Row="0" FontSize="15" TextColor="#444444" Padding="0,10,25,10" />
+                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_contactaddress}" Grid.Column="1" Grid.Row="0" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                             <BoxView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" BackgroundColor="#F1F1F1" HeightRequest="0.5"/>
                                             <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_tru_so_chinh},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="2" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_permanentaddress1}" Grid.Column="1" Grid.Row="2" FontSize="15" TextColor="#444444" Padding="0,10,25,10"/>
+                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_permanentaddress1}" Grid.Column="1" Grid.Row="2" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <!--<Label Grid.Row="6" FontSize="15" TextColor="#444444" BackgroundColor="White" Padding="25,10">
                                             <Label.FormattedText>

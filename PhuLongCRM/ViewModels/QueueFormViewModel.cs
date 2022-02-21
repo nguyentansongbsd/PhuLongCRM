@@ -99,8 +99,7 @@ namespace PhuLongCRM.ViewModels
         {
             string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='product'>
-                                    <attribute name='name' alias='bsd_units_name' />                                   
-                                    <attribute name='description' />                                
+                                    <attribute name='name' alias='bsd_units_name' />                                
                                     <attribute name='statuscode' alias='UnitStatusCode'/>
                                     <attribute name='bsd_projectcode' />                                 
                                     <attribute name='productid' alias='bsd_units_id' />

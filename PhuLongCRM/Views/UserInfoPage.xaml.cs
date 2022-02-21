@@ -222,7 +222,7 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(viewModel.AddressLine1Contact))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số nhà/đường/phường");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_nha_duong_phuong);
                 return;
             }
 

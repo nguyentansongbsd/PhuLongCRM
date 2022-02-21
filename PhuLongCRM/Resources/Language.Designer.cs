@@ -115,6 +115,33 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miền bắc.
+        /// </summary>
+        internal static string area_mien_bac {
+            get {
+                return ResourceManager.GetString("area_mien_bac", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miền nam.
+        /// </summary>
+        internal static string area_mien_nam {
+            get {
+                return ResourceManager.GetString("area_mien_nam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miền trung.
+        /// </summary>
+        internal static string area_mien_trung {
+            get {
+                return ResourceManager.GetString("area_mien_trung", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bạn.
         /// </summary>
         internal static string ban {
@@ -3238,7 +3265,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hủy GC chưa hoàn tiền.
+        ///   Looks up a localized string similar to Đã hủy - Chưa hoàn tiền.
         /// </summary>
         internal static string huy_gg_chua_hoan_tien {
             get {
@@ -3247,7 +3274,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hủy GC đã hoàn tiền.
+        ///   Looks up a localized string similar to Đã hủy - Hoàn tiền.
         /// </summary>
         internal static string huy_gg_da_hoan_tien {
             get {
@@ -4210,6 +4237,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ngày hết hạn ký.
+        /// </summary>
+        internal static string ngay_het_han_reservation {
+            get {
+                return ResourceManager.GetString("ngay_het_han_reservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ngày hết hiệu lực.
         /// </summary>
         internal static string ngay_het_hieu_luc {
@@ -4246,11 +4282,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ngày in.
+        /// </summary>
+        internal static string ngay_in_reservation {
+            get {
+                return ResourceManager.GetString("ngay_in_reservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ngày ký.
         /// </summary>
         internal static string ngay_ky {
             get {
                 return ResourceManager.GetString("ngay_ky", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày ký.
+        /// </summary>
+        internal static string ngay_ky_reservation {
+            get {
+                return ResourceManager.GetString("ngay_ky_reservation", resourceCulture);
             }
         }
         
@@ -4278,6 +4332,15 @@ namespace PhuLongCRM.Resources {
         internal static string ngay_tai_len_hd {
             get {
                 return ResourceManager.GetString("ngay_tai_len_hd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày tải lên.
+        /// </summary>
+        internal static string ngay_tai_len_reservation {
+            get {
+                return ResourceManager.GetString("ngay_tai_len_reservation", resourceCulture);
             }
         }
         
@@ -4939,6 +5002,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nhập ZIP code.
+        /// </summary>
+        internal static string nhap_zip_code {
+            get {
+                return ResourceManager.GetString("nhap_zip_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nhóm.
         /// </summary>
         internal static string nhom {
@@ -5331,6 +5403,15 @@ namespace PhuLongCRM.Resources {
         internal static string so_cmnd_khong_hop_le_gioi_han_9_ky_tu {
             get {
                 return ResourceManager.GetString("so_cmnd_khong_hop_le_gioi_han_9_ky_tu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Số CMND/ Số CCCD/ Số hộ chiếu đã được sử dụng..
+        /// </summary>
+        internal static string so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung {
+            get {
+                return ResourceManager.GetString("so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung", resourceCulture);
             }
         }
         
@@ -6541,6 +6622,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tình trạng.
+        /// </summary>
+        internal static string trinh_trang_reservation {
+            get {
+                return ResourceManager.GetString("trinh_trang_reservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Truyền miệng.
         /// </summary>
         internal static string truyen_mieng {
@@ -7284,6 +7374,15 @@ namespace PhuLongCRM.Resources {
         internal static string yeu_cau {
             get {
                 return ResourceManager.GetString("yeu_cau", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZIP code.
+        /// </summary>
+        internal static string zip_code {
+            get {
+                return ResourceManager.GetString("zip_code", resourceCulture);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace PhuLongCRM.Models
                 new OptionSet("100000000","Miền bắc"),
                 new OptionSet("100000001","Miền trung"),
                 new OptionSet("100000002","Miền nam"),
-                new OptionSet("100000003","Tất cả"),
+                new OptionSet("100000003",Language.tat_ca),
             };
         }
 

@@ -49,12 +49,12 @@
                                 <controls:LookUp x:Name="lookUpDanhGia" Placeholder="{x:Static lang:Language.chon_danh_gia}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Rating}" ItemsSource="{Binding Ratings}"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.ho_ten}"/>
-                                <controls:MainEntry Text="{Binding singleLead.lastname}" FontSize="15"  Placeholder="Nhập họ tên"/>
+                                <controls:MainEntry Text="{Binding singleLead.lastname}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_ho_ten}"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}"/>
                                 <controls:PhoneEntryControl Text="{Binding singleLead.mobilephone}" Keyboard="Numeric" FontSize="15" Placeholder="+84-033XXXXXXX" Unfocused="mobilephone_text_Unfocused"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.nhap_so_dien_thoai_cong_ty}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.so_dien_thoai_cong_ty}"/>
                                 <controls:PhoneEntryControl Text="{Binding singleLead.telephone1}" Keyboard="Numeric" FontSize="15"  Placeholder="+84-033XXXXXXX" Unfocused="telephone1_text_Unfocused"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.phan_nhom}"/>

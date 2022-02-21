@@ -550,7 +550,7 @@
                     </StackLayout>
                 </controls:CenterModal.Body>
                 <controls:CenterModal.Footer>
-                    <Button Text="Lưu" Clicked="SaveCoOwner_CLicked" Margin="10,5" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" FontSize="15" FontAttributes="Bold" CornerRadius="5"/>
+                    <Button Text="{x:Static lang:Language.luu}" Clicked="SaveCoOwner_CLicked" Margin="10,5" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" FontSize="15" FontAttributes="Bold" CornerRadius="5"/>
                 </controls:CenterModal.Footer>
             </controls:CenterModal>
 

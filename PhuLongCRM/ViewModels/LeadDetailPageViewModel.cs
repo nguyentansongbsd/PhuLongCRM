@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -206,9 +207,9 @@ namespace PhuLongCRM.ViewModels
 
         public void loadGender()
         {
-            list_gender_optionset.Add(new OptionSet() { Val = ("1"), Label = "Nam", });
-            list_gender_optionset.Add(new OptionSet() { Val = ("2"), Label = "Nữ", });
-            list_gender_optionset.Add(new OptionSet() { Val = ("100000000"), Label = "Khác", });
+            list_gender_optionset.Add(new OptionSet() { Val = ("1"), Label = Language.nam, });
+            list_gender_optionset.Add(new OptionSet() { Val = ("2"), Label = Language.nu, });
+            list_gender_optionset.Add(new OptionSet() { Val = ("100000000"), Label = Language.khac, });
         }
 
         public async Task<OptionSet> loadOneGender(string id)

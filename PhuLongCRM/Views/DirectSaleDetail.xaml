@@ -242,6 +242,7 @@
                                         <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
                                         <Span Text=" "/>
                                         <Span Text="{Binding Unit.bsd_constructionarea,StringFormat='{0:#,0.#0} '}"/>
+                                        <Span Text=" "/>
                                         <Span Text="{x:Static lang:Language.sqm}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -258,10 +259,12 @@
                             <Label FontSize="15" TextColor="#444444">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="{Binding Source={x:Static lang:Language.huong},StringFormat='{0} '}"/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.huong},StringFormat='{0}:'}"/>
+                                        <Span Text=" "/>
                                         <Span Text="{Binding UnitDirection.Label}"/>
                                         <Span Text=" - "/>
-                                        <Span Text="{Binding Source={x:Static lang:Language.huong_nhin},StringFormat='{0} '}"/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.huong_nhin},StringFormat='{0}:'}"/>
+                                        <Span Text=" "/>
                                         <Span Text="{Binding UnitView}"/>
                                     </FormattedString>
                                 </Label.FormattedText>

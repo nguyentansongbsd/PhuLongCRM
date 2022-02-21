@@ -1050,7 +1050,7 @@ namespace PhuLongCRM.Views
                                 if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                                 if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                                 if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
-                                this.Title = buttonSave.Text = Language.cap_nhat_thanh_cong;
+                                this.Title = buttonSave.Text = Language.cap_nhat_thanh_cong; ///??
                                 viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
                                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                                 LoadingHelper.Hide();
