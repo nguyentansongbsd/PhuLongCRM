@@ -1447,6 +1447,8 @@ namespace PhuLongCRM.ViewModels
                 data["uomid@odata.bind"] = $"/products({this.UnitInfor._defaultuomid_value})";
                 data["productid@odata.bind"] = $"/products({this.UnitInfor.productid})";
                 data["createdby@odata.bind"] = $"/systemusers({UserLogged.ManagerId})";
+                data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)";
+                //transactioncurrencyid
             }
 
             return data;

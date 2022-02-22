@@ -2559,4 +2559,7 @@
   <data name="trinh_trang_reservation" xml:space="preserve">
     <value>Reservation status</value>
   </data>
+  <data name="tax_code" xml:space="preserve">
+    <value>Tax code</value>
+  </data>
 </root>

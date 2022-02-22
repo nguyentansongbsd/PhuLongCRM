@@ -537,7 +537,7 @@ namespace PhuLongCRM.Views
         private void CustomerReferral_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            if (viewModel.CustomerReferral.Title == "3")
+            if (viewModel.CustomerReferral?.Title == "3")
             {
                 ContactDetailPage contactDetailPage = new ContactDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
                 contactDetailPage.OnCompleted = async (isSuccess) => {
@@ -553,7 +553,7 @@ namespace PhuLongCRM.Views
                     }
                 };
             }
-            else if (viewModel.CustomerReferral.Title == "2")
+            else if (viewModel.CustomerReferral?.Title == "2")
             {
                 AccountDetailPage accountDetailPage = new AccountDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
                 accountDetailPage.OnCompleted = async (isSuccess) => {

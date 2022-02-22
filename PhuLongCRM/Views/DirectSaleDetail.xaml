@@ -181,7 +181,10 @@
                                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnitItem_Tapped" CommandParameter="{Binding productid}"/>
                                                         </telerikPrimitives:RadBorder.GestureRecognizers>
                                                         <StackLayout>
-                                                            <Label Text="{Binding name}" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" HorizontalTextAlignment="Center"/>
+                                                            <Grid ColumnDefinitions="Auto,Auto" HorizontalOptions="Center">
+                                                                <Label Grid.Column="0" Text="{Binding name}" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" HorizontalTextAlignment="Center"/>
+                                                                <Label Grid.Column="1" Text="*" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" IsVisible="{Binding has_event}" HorizontalTextAlignment="Center"/>
+                                                            </Grid>
                                                             <Label FontFamily="FontRobotoMedium" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center">
                                                                 <Label.Text>
                                                                     <MultiBinding StringFormat="{}{0}: {1}">

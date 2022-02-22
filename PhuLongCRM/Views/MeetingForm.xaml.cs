@@ -43,13 +43,13 @@ namespace PhuLongCRM.Views
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
             if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
             {
-                if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+                if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
                     Lookup_Required.IsVisible = false;
                     CustomerMapping.IsVisible = true;
                 }
-                else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+                else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
                     Lookup_Required.IsVisible = false;

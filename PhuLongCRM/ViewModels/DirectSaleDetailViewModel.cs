@@ -106,6 +106,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadUnitByFloor(Guid floorId)
         {
+            string now_date = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
             string StatusReason_Condition = StatusReason == null ? "" : "<condition attribute='statuscode' operator='eq' value='" + StatusReason.Val + @"' />";
             string PhasesLaunch_Condition = (!string.IsNullOrWhiteSpace(Filter.Phase))
                 ? @"<condition attribute='bsd_phaseslaunchid' operator='eq' uitype='bsd_phaseslaunch' value='" + Filter.Phase + @"' />"
@@ -118,7 +119,7 @@ namespace PhuLongCRM.ViewModels
                                           </link-entity>
                                         </link-entity>" : "";
 
-            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? "<condition attribute='name' operator='like' value='%25" + Filter.Unit + "%25' />" : "";
+            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? " < condition attribute='name' operator='like' value='%25" + Filter.Unit + "%25' />" : "";
 
             string Direction_Condition = string.Empty;
             if (!string.IsNullOrWhiteSpace(Filter.Direction))
@@ -240,6 +241,15 @@ namespace PhuLongCRM.ViewModels
                                 <link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='ag' >
                                     <attribute name='statuscode' alias='queses_statuscode'/>
                                 </link-entity>
+                                        <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='asmn'>
+                                          <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='atmn'>
+                                            <attribute name='bsd_eventid' alias='event_id'/>
+                                            <filter type='and'>
+                                              <condition attribute='statuscode' operator='eq' value='100000000' />
+                                              <condition attribute='bsd_enddate' operator='on-or-after' value='{now_date}' />
+                                            </filter>
+                                          </link-entity>
+                                        </link-entity>
                                 '{isEvent}'
                               </entity>
                             </fetch>";

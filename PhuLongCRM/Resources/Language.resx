@@ -2559,4 +2559,7 @@
   <data name="trinh_trang_reservation" xml:space="preserve">
     <value>Tình trạng</value>
   </data>
+  <data name="tax_code" xml:space="preserve">
+    <value>Mã số thuế</value>
+  </data>
 </root>

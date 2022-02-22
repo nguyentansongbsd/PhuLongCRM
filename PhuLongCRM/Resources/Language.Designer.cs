@@ -5902,6 +5902,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã số thuế.
+        /// </summary>
+        internal static string tax_code {
+            get {
+                return ResourceManager.GetString("tax_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tên công ty.
         /// </summary>
         internal static string ten_cong_ty {
