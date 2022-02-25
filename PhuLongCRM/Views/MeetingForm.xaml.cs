@@ -43,28 +43,37 @@ namespace PhuLongCRM.Views
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
             if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
             {
-                if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+                if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
                     Lookup_Required.IsVisible = false;
                     CustomerMapping.IsVisible = true;
+                    Lookup_Customer.IsVisible = false;
+                    RegardingMapping.IsVisible = true;
+                    Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
                 }
-                else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+                else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
                     Lookup_Required.IsVisible = false;
                     CustomerMapping.IsVisible = true;
+                    Lookup_Customer.IsVisible = false;
+                    RegardingMapping.IsVisible = true;
                 }
                 else
                 {
                     Lookup_Required.IsVisible = true;
                     CustomerMapping.IsVisible = false;
+                    Lookup_Customer.IsVisible = true;
+                    RegardingMapping.IsVisible = false;
                 }
             }
             else
             {
                 Lookup_Required.IsVisible = true;
                 CustomerMapping.IsVisible = false;
+                Lookup_Customer.IsVisible = true;
+                RegardingMapping.IsVisible = false;
             }
         }
 
@@ -151,37 +160,7 @@ namespace PhuLongCRM.Views
                         return;
                     }
                 }
-            }
-            if (viewModel.CustomerMapping == null)
-            {
-                if (viewModel.Customer != null)
-                {
-                    if (!CheckCusomer(viewModel.Required, null, viewModel.Customer))
-                    {
-                        ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan);
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                if (viewModel.Customer != null)
-                {
-                    if (viewModel.Customer.Val == viewModel.CustomerMapping.Val)
-                    {
-                        ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_lien_quan);
-                        return;
-                    }
-                }
-            }
-            if (viewModel.Optional != null && viewModel.Optional.Count > 0 && viewModel.Customer != null)
-            {
-                if (!CheckCusomer(null, viewModel.Optional, viewModel.Customer))
-                {
-                    ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_khong_bat_buoc_phai_khac_nguoi_lien_quan);
-                    return;
-                }
-            }
+            }        
 
             LoadingHelper.Show();
 
@@ -320,6 +299,7 @@ namespace PhuLongCRM.Views
         }
         private bool CheckCusomer(List<OptionSetFilter> required = null, List<OptionSetFilter> option = null, OptionSet customer = null)
         {
+            // kiểm tra từ kh hàng- kh liên quan k check
             if (required != null && option != null)
             {
                 if (required.Where(x => option.Any(s => s == x)).ToList().Count > 0)

@@ -63,7 +63,7 @@ namespace PhuLongCRM.Views
         {
             //viewModel.Filter.Block = viewModel.Blocks.FirstOrDefault().bsd_blockid.ToString();
             await viewModel.LoadTotalDirectSale();
-            if (viewModel.DirectSaleResult.Count != 0)
+             if (viewModel.DirectSaleResult.Count != 0)
             {
                 SetBlocks();
                 var firstBlock = viewModel.DirectSaleResult.FirstOrDefault();
@@ -244,10 +244,9 @@ namespace PhuLongCRM.Views
             {
                 viewModel.UnitView = null;
             }
-
             if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004")
             {
-                btnGiuCho.IsVisible = viewModel.Unit.bsd_vippriority ? false : true;
+                btnGiuCho.IsVisible = !viewModel.Unit.bsd_vippriority;
                 if (viewModel.UnitStatusCode.Id != "1" && viewModel.IsShowBtnBangTinhGia == true)
                 {
                     viewModel.IsShowBtnBangTinhGia = true;
@@ -264,7 +263,8 @@ namespace PhuLongCRM.Views
             }
 
             SetButton();
-            
+
+            gridButton.IsVisible = !viewModel.Unit.bsd_vippriority;
             contentUnitInfor.IsVisible = true;
             LoadingHelper.Hide();
         }
@@ -367,7 +367,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
+                   // ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }

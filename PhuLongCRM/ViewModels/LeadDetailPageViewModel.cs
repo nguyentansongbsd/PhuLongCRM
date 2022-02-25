@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -121,6 +122,12 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
                                         <attribute name='name'  alias='campaignid_label'/>
                                     </link-entity>
+                                    <link-entity name='account' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='accountid' alias='account_id'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='contactid' alias='contact_id'/>
+                                    </link-entity>
                                     <filter type='and'>
                                           <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                                     </filter>
@@ -206,9 +213,9 @@ namespace PhuLongCRM.ViewModels
 
         public void loadGender()
         {
-            list_gender_optionset.Add(new OptionSet() { Val = ("1"), Label = "Nam", });
-            list_gender_optionset.Add(new OptionSet() { Val = ("2"), Label = "Nữ", });
-            list_gender_optionset.Add(new OptionSet() { Val = ("100000000"), Label = "Khác", });
+            list_gender_optionset.Add(new OptionSet() { Val = ("1"), Label = Language.nam, });
+            list_gender_optionset.Add(new OptionSet() { Val = ("2"), Label = Language.nu, });
+            list_gender_optionset.Add(new OptionSet() { Val = ("100000000"), Label = Language.khac, });
         }
 
         public async Task<OptionSet> loadOneGender(string id)

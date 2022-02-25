@@ -8,14 +8,14 @@ namespace PhuLongCRM.Models
     public class Unit : BaseViewModel
     {
         public Guid productid { get; set; }
-        public string name { get; set; }
+        public string name { get; set; } 
         public decimal price { get; set; }
         public int? statuscode { get; set; }
 
         public Guid floorid { get; set; }
         public Guid blockid { get; set; }
         public Guid event_id { get; set; } // join voi phaseslauch va event de lay ra vent id de biet duoc co phai nam trong event ko.
-
+        public bool has_event { get { return ( event_id != Guid.Empty && statuscode == 100000000 || event_id != Guid.Empty && statuscode == 100000004) ? true : false; } }
         public string queseid { get; set; }
         public string queses_statuscode { get; set; }
         public int NumQueses { get; set; }

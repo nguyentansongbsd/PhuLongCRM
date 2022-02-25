@@ -201,7 +201,7 @@
                                             <controls:FormLabelValue Text="{Binding singleLead.bsd_placeofissue}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="5">
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.nhap_so_dien_thoai_cong_ty},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.so_dien_thoai_cong_ty},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleLead.telephone1, Converter={StaticResource PhoneConverter}}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="6">

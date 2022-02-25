@@ -126,14 +126,14 @@ namespace PhuLongCRM.Models
             }
         }
         public DateTime scheduledstart { get; set; }
-        public string scheduledstart_format
+        public DateTime scheduledstart_format
         {
-            get => StringHelper.DateFormat(this.scheduledstart.ToLocalTime());
+            get => this.scheduledstart.ToLocalTime();
         }
         public DateTime scheduledend { get; set; }
-        public string scheduledend_format
+        public DateTime scheduledend_format
         {
-            get => StringHelper.DateFormat(this.scheduledend.ToLocalTime());
+            get => this.scheduledend.ToLocalTime();
         }
         public DateTime createdon { get; set; }
         public string createdon_format

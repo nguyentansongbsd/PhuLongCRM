@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -93,7 +94,7 @@ namespace PhuLongCRM.ViewModels
         {
             singleLead = new LeadFormModel();
             list_industrycode_optionset = new ObservableCollection<OptionSet>();
-            this.Genders = new List<OptionSet>() { new OptionSet("1","Nam"), new OptionSet("2", "Nữ") };
+            this.Genders = new List<OptionSet>() { new OptionSet("1",Language.nam), new OptionSet("2", Language.nu) };
             this.loadIndustrycode();
         }
 
@@ -604,6 +605,29 @@ namespace PhuLongCRM.ViewModels
             foreach (var x in result.value)
             {
                 list_campaign_lookup.Add(x);
+            }
+        }
+
+        // check id
+        public async Task<bool> CheckID(string identitycardnumber, string leadid)
+        {
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='lead'>
+                                    <attribute name='fullname' />
+                                    <filter type='and'>
+                                        <condition attribute='bsd_identitycardnumberid' operator='eq' value='" + identitycardnumber + @"' />
+                                        <condition attribute='leadid' operator='ne' value='" + leadid + @"' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("leads", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
+using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
@@ -17,17 +18,21 @@ namespace PhuLongCRM.Views
     public partial class MandatorySecondaryForm : ContentPage
     {
         private MandatorySecondaryFormViewModel viewModel;
-        public MandatorySecondaryForm(Guid id)
+        public MandatorySecondaryForm(OptionSet account)
         {
             InitializeComponent();
-            Init(id.ToString());
+            Init(account);
         }
 
-        private async void Init(string id)
+        private async void Init(OptionSet account)
         {
             this.BindingContext = viewModel = new MandatorySecondaryFormViewModel();
             SetPreOpen();
-            await viewModel.GetOneAccountById(id);
+            if (account != null)
+            {
+                viewModel.mandatorySecondary.bsd_developeraccount = account.Label;
+                viewModel.mandatorySecondary._bsd_developeraccount_value = Guid.Parse(account.Val);
+            }
         }
 
         public void SetPreOpen()

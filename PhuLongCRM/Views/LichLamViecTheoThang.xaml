@@ -197,12 +197,12 @@
 
                                     <controls:FormLabel Text="Thời gian bắt đầu" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="5"/>
                                     <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="5" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                        <Label Text="{Binding PhoneCall.scheduledstart,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                        <Label Text="{Binding PhoneCall.scheduledstart,StringFormat='{0:dd/MM/yyyy} - HH:mm'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
                                     </telerikPrimitives:RadBorder>
 
                                     <controls:FormLabel Text="Thời gian kết thúc" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="6"/>
                                     <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="6" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                        <Label Text="{Binding PhoneCall.scheduledend,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding PhoneCall.scheduledend,StringFormat='{0:dd/MM/yyyy} - HH:mm'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
                                     </telerikPrimitives:RadBorder>
 
 
@@ -226,12 +226,12 @@
 
                                     <controls:FormLabel Text="Thời gian bắt đầu" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="2"/>
                                     <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="2" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                        <Label Text="{Binding ScheduledStartTask,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                        <Label Text="{Binding ScheduledStartTask,StringFormat='{0:dd/MM/yyyy} - HH:mm'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
                                     </telerikPrimitives:RadBorder>
 
                                     <controls:FormLabel Text="Thời gian kết thúc" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="3"/>
                                     <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="3" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                        <Label Text="{Binding ScheduledEndTask,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding ScheduledEndTask,StringFormat='{0:dd/MM/yyyy} - HH:mm'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
                                     </telerikPrimitives:RadBorder>
                                     
                                     <controls:FormLabel Text="Mô tả:" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4"/>
@@ -265,12 +265,12 @@
 
                                     <controls:FormLabel Text="Thời gian bắt đầu" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="5"/>
                                     <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="5" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                        <Label Text="{Binding Meet.scheduledstart,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                        <Label Text="{Binding Meet.scheduledstart,StringFormat='{0:dd/MM/yyyy} - HH:mm'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
                                     </telerikPrimitives:RadBorder>
 
                                     <controls:FormLabel Text="Thời gian kết thúc" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="6"/>
                                     <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="6" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                        <Label Text="{Binding Meet.scheduledend,StringFormat='{0:h:mm tt - dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding Meet.scheduledend,StringFormat='{0:dd/MM/yyyy} - HH:mm'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
                                     </telerikPrimitives:RadBorder>
 
                                     <controls:FormLabel Text="Sự kiện cả ngày" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="7"/>

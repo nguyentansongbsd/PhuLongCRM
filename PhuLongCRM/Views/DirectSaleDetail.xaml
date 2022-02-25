@@ -181,7 +181,10 @@
                                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnitItem_Tapped" CommandParameter="{Binding productid}"/>
                                                         </telerikPrimitives:RadBorder.GestureRecognizers>
                                                         <StackLayout>
-                                                            <Label Text="{Binding name}" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" HorizontalTextAlignment="Center"/>
+                                                            <Grid ColumnDefinitions="Auto,Auto" HorizontalOptions="Center">
+                                                                <Label Grid.Column="0" Text="{Binding name}" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" HorizontalTextAlignment="Center"/>
+                                                                <Label Grid.Column="1" Text="*" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" IsVisible="{Binding has_event}" HorizontalTextAlignment="Center"/>
+                                                            </Grid>
                                                             <Label FontFamily="FontRobotoMedium" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center">
                                                                 <Label.Text>
                                                                     <MultiBinding StringFormat="{}{0}: {1}">
@@ -242,6 +245,7 @@
                                         <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
                                         <Span Text=" "/>
                                         <Span Text="{Binding Unit.bsd_constructionarea,StringFormat='{0:#,0.#0} '}"/>
+                                        <Span Text=" "/>
                                         <Span Text="{x:Static lang:Language.sqm}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -249,7 +253,7 @@
                             <Label FontSize="15" TextColor="#444444">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}:'}"/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.loai_unit},StringFormat='{0}:'}"/>
                                         <Span Text=" "/>
                                         <Span Text="{Binding Unit.bsd_unittype_name}"/>
                                     </FormattedString>
@@ -258,10 +262,12 @@
                             <Label FontSize="15" TextColor="#444444">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="{Binding Source={x:Static lang:Language.huong},StringFormat='{0} '}"/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.huong},StringFormat='{0}:'}"/>
+                                        <Span Text=" "/>
                                         <Span Text="{Binding UnitDirection.Label}"/>
                                         <Span Text=" - "/>
-                                        <Span Text="{Binding Source={x:Static lang:Language.huong_nhin},StringFormat='{0} '}"/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.huong_nhin},StringFormat='{0}:'}"/>
+                                        <Span Text=" "/>
                                         <Span Text="{Binding UnitView}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -320,7 +326,7 @@
                                                                 <Span Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}:'}"/>
                                                                 <Span Text=" "/>
                                                                 <Span Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}"/>
-                                                                <Span Text="{Binding bsd_queuingexpired ,StringFormat=' {0:h:mm tt}'}"/>
+                                                                <Span Text="{Binding bsd_queuingexpired ,StringFormat=' {0:HH:mm}'}"/>
                                                             </FormattedString>
                                                         </Label.FormattedText>
                                                     </Label>

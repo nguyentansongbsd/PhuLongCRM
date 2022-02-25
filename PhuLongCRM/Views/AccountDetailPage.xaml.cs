@@ -463,7 +463,7 @@ namespace PhuLongCRM.Views
         private async void AddMandatorySecondary(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            MandatorySecondaryForm newPage = new MandatorySecondaryForm(viewModel.singleAccount.accountid);
+            MandatorySecondaryForm newPage = new MandatorySecondaryForm(new OptionSet { Val = viewModel.singleAccount.accountid.ToString(), Label = viewModel.singleAccount.bsd_name });
             await Navigation.PushAsync(newPage);
             LoadingHelper.Hide();
         }

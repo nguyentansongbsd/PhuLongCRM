@@ -178,6 +178,10 @@
                                                 </StackLayout>
                                             </ScrollView>
                                         </Grid>
+                                        <Grid ColumnDefinitions="Auto,Auto" BackgroundColor="White" >
+                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_dac_biet}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
+                                            <StackLayout x:Name="stackLayoutSpecialDiscount" IsVisible="false" Grid.Column="2" HorizontalOptions="End" Orientation="Vertical" Padding="0,10,25,10" Spacing="10"/>
+                                        </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -240,19 +244,19 @@
                                     <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <controls:FormLabel Text="{x:Static lang:Language.tinh_trang_san_pham}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_unitstatus_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_unitstatus_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.dien_tich_xay_dung}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_constructionarea, StringFormat='{0:#,0.#0}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_constructionarea, StringFormat='{0:#,0.#0}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.dien_tich_su_dung}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_netusablearea, StringFormat='{0:#,0.#0}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_netusablearea, StringFormat='{0:#,0.#0}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.dien_tich_thuc_te}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_actualarea, StringFormat='{0:#,0.#0}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_actualarea, StringFormat='{0:#,0.#0}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -267,7 +271,7 @@
                                     <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <controls:FormLabel Text="{x:Static lang:Language.du_an}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.project_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End">
+                                            <controls:FormLabelValue Text="{Binding Reservation.project_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End">
                                                 <controls:FormLabelValue.GestureRecognizers>
                                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Project_Tapped"/>
                                                 </controls:FormLabelValue.GestureRecognizers>
@@ -275,27 +279,27 @@
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.dot_mo_ban}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.phaseslaunch_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.phaseslaunch_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.bang_gia_goc}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.pricelevel_name_phaseslaunch}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.pricelevel_name_apply}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.ma_so_thue}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.taxcode_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabel Text="{x:Static lang:Language.tax_code}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.taxcode_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.phi_giu_cho}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_bookingfee, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_bookingfee, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.phi_dat_coc}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_depositfee, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_depositfee, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.tong_tien_thanh_toan}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_totalamountpaid, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_totalamountpaid, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -362,6 +366,37 @@
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_hop_dong}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.trinh_trang_reservation}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_reservationformstatus}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_in_reservation}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_reservationprinteddate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_het_han_reservation}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_signingexpired,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_tai_len_reservation}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_reservationuploadeddate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_ky_reservation}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
+                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_rfsigneddate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
                         </StackLayout>
                         <!--tab chi tiết-->
                         <StackLayout x:Name="TabChiTiet" IsVisible="false" Margin="0,5,0,0">
@@ -374,35 +409,35 @@
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="{x:Static lang:Language.gia_goc}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{x:Static lang:Language.gia_goc}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,25"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.bsd_detailamount, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.chiet_khau},StringFormat='( - ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.chiet_khau},StringFormat='( - ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,25"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.bsd_discount, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dkbg},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dkbg},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,25"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.bsd_packagesellingamount, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="{x:Static lang:Language.gia_ban_truoc_thue}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{x:Static lang:Language.gia_ban_truoc_thue}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,25"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.bsd_totalamountlessfreight, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.gia_tri_qsdd},StringFormat='( - ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.gia_tri_qsdd},StringFormat='( - ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,25"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.bsd_landvaluededuction, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.thue},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.thue},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,25"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.totaltax, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,25"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.bsd_freightamount, StringFormat='{0:#,0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.tong_tien}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{x:Static lang:Language.tong_tien}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,25"/>
                                             <controls:FormLabelValue Text="{Binding Reservation.totalamount, StringFormat='{0:#,0} đ'}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="Red" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                     </StackLayout>
@@ -470,15 +505,15 @@
                                                         <Label Text="{Binding Source={x:Static lang:Language.da_thanh_toan},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_amountwaspaid, StringFormat='{0:#,0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_managementamount_format,Converter={StaticResource NullToHideConverter}}" >
-                                                        <Label Grid.Column="0" Text="&#xf192;" VerticalOptions="Center" TextColor="#b2b2b2" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
-                                                        <Label Text="{Binding Source={x:Static lang:Language.phi_quan_ly},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                                        <Label Text="{Binding bsd_managementamount, StringFormat='{0:#,0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
-                                                    </Grid>
                                                     <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_maintenanceamount_format,Converter={StaticResource NullToHideConverter}}" >
                                                         <Label Grid.Column="0" Text="&#xf192;" TextColor="#b2b2b2" VerticalOptions="Center" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
                                                         <Label Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                         <Label Text="{Binding bsd_maintenanceamount, StringFormat='{0:#,0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_managementamount_format,Converter={StaticResource NullToHideConverter}}" >
+                                                        <Label Grid.Column="0" Text="&#xf192;" VerticalOptions="Center" TextColor="#b2b2b2" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
+                                                        <Label Text="{Binding Source={x:Static lang:Language.phi_quan_ly},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                                        <Label Text="{Binding bsd_managementamount, StringFormat='{0:#,0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
                                                     </Grid>
                                                 </StackLayout>
                                             </telerikPrimitives:RadBorder>

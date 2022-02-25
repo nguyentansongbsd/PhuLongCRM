@@ -107,6 +107,7 @@ namespace PhuLongCRM.Views
                     viewModel.LoadDiscountsExChange()
                     ) ;
                 await viewModel.LoadHandoverCondition(ReservationId);
+                SutUpSpecialDiscount();
             }
         }
 
@@ -537,7 +538,7 @@ namespace PhuLongCRM.Views
         private void CustomerReferral_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            if (viewModel.CustomerReferral.Title == "3")
+            if (viewModel.CustomerReferral?.Title == "3")
             {
                 ContactDetailPage contactDetailPage = new ContactDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
                 contactDetailPage.OnCompleted = async (isSuccess) => {
@@ -553,7 +554,7 @@ namespace PhuLongCRM.Views
                     }
                 };
             }
-            else if (viewModel.CustomerReferral.Title == "2")
+            else if (viewModel.CustomerReferral?.Title == "2")
             {
                 AccountDetailPage accountDetailPage = new AccountDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
                 accountDetailPage.OnCompleted = async (isSuccess) => {
@@ -634,6 +635,24 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.huy_dat_coc_that_bai_vui_long_thu_lai);
                 }
+            }
+        }
+        private void SutUpSpecialDiscount()
+        {
+            if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
+            {
+                stackLayoutSpecialDiscount.IsVisible = true;
+                foreach (var item in viewModel.ListSpecialDiscount)
+                {
+                    if (!string.IsNullOrEmpty(item.Label))
+                    {
+                        stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
+                    }
+                }
+            }
+            else
+            {
+                stackLayoutSpecialDiscount.IsVisible = false;
             }
         }
     }

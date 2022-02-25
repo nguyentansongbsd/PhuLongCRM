@@ -112,6 +112,10 @@
                                     <Label Text="{Binding Source={x:Static lang:Language.giu_cho_du_an},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
                                     <Label Text="{Binding QueueProject}" TextColor="#333333" FontSize="15"/>
                                 </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Source={x:Static lang:Language.da_het_han},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
+                                    <Label Text="{Binding Queue.bsd_expired_format}" TextColor="#333333" FontSize="15"/>
+                                </StackLayout>
                             </StackLayout>
                             <Grid Grid.Row="1" ColumnDefinitions="*,1,*" BackgroundColor="White">
                                 <Label Grid.Column="0" TextColor="#939393" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Margin="0,8">
@@ -227,7 +231,7 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="{Binding Queue.createdon,StringFormat='{0:dd/MM/yyyy} - '}" />
-                                                        <Span Text="{Binding Queue.createdon,StringFormat=' {0:hh:mm tt}'}"/>
+                                                        <Span Text="{Binding Queue.createdon,StringFormat=' {0:HH:mm}'}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -239,7 +243,7 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="{Binding Queue.bsd_bookingtime,StringFormat='{0:dd/MM/yyyy} - '}" />
-                                                        <Span Text="{Binding Queue.bsd_bookingtime,StringFormat=' {0:hh:mm tt}'}"/>
+                                                        <Span Text="{Binding Queue.bsd_bookingtime,StringFormat=' {0:HH:mm}'}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -251,7 +255,7 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="{Binding Queue.bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}" />
-                                                        <Span Text="{Binding Queue.bsd_queuingexpired,StringFormat=' {0:hh:mm tt}'}"/>
+                                                        <Span Text="{Binding Queue.bsd_queuingexpired,StringFormat=' {0:HH:mm}'}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -263,7 +267,7 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="{Binding Queue.bsd_dateorder,StringFormat='{0:dd/MM/yyyy} - '}" />
-                                                        <Span Text="{Binding Queue.bsd_dateorder,StringFormat=' {0:hh:mm tt}'}"/>
+                                                        <Span Text="{Binding Queue.bsd_dateorder,StringFormat=' {0:HH:mm}'}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>

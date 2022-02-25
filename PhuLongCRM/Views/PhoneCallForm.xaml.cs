@@ -49,14 +49,14 @@ namespace PhuLongCRM.Views
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
             if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
             {
-                if (ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+                if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
                     viewModel.CallTo = ContactDetailPage.FromCustomer;
                     Lookup_CallTo.IsVisible = false;
                     CustomerMapping.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
                 }
-                else if (AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+                else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
                 {
                     viewModel.CallTo = AccountDetailPage.FromCustomer;
                     Lookup_CallTo.IsVisible = false;

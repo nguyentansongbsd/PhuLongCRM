@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -194,6 +195,8 @@ namespace PhuLongCRM.Controls
             }
             foreach (var x in result.value)
             {
+                if (UserLogged.Language == "en")
+                    x.Name = x.Detail;
                 list_country_lookup.Add(x);
             }
         }
@@ -216,6 +219,8 @@ namespace PhuLongCRM.Controls
                 if (result != null && result.value.Count > 0)
                 {
                     Country = result.value.FirstOrDefault();
+                    if (UserLogged.Language == "en")
+                        Country.Name = Country.Detail;
                     SelectedItem.country_name = Country.Name;
                     SelectedItem.country_id = Country.Id;
                 }
@@ -242,6 +247,8 @@ namespace PhuLongCRM.Controls
             }
             foreach (var x in result.value)
             {
+                if (UserLogged.Language == "en")
+                    x.Name = x.Detail;
                 list_province_lookup.Add(x);
             }
         }
@@ -265,6 +272,8 @@ namespace PhuLongCRM.Controls
                 if (result != null && result.value.Count > 0)
                 {
                     Province = result.value.FirstOrDefault();
+                    if (UserLogged.Language == "en")
+                        Province.Name = Province.Detail;
                     SelectedItem.province_name = Province.Name;
                     SelectedItem.province_id = Province.Id;
                 }
@@ -291,6 +300,8 @@ namespace PhuLongCRM.Controls
             }
             foreach (var x in result.value)
             {
+                if (UserLogged.Language == "en")
+                    x.Name = x.Detail;
                 list_district_lookup.Add(x);
             }
         }
@@ -314,6 +325,8 @@ namespace PhuLongCRM.Controls
                 if (result != null && result.value.Count > 0)
                 {
                     District = result.value.FirstOrDefault();
+                    if (UserLogged.Language == "en")
+                        District.Name = District.Detail;
                     SelectedItem.district_name = District.Name;
                     SelectedItem.district_id = District.Id;
                 }

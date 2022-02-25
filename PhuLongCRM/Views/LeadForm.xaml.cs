@@ -312,6 +312,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
             }
+            if(!await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid,viewModel.singleLead.leadid.ToString()))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
+                return;
+            }    
 
             LoadingHelper.Show();
 

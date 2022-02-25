@@ -300,12 +300,16 @@ namespace PhuLongCRM.ViewModels
                     item_required["partyid_contact@odata.bind"] = "/contacts(" + CustomerMapping.Val + ")";
                     item_required["participationtypemask"] = 5;
                     arrayMeeting.Add(item_required);
+
+                    data["regardingobjectid_contact_appointment@odata.bind"] = "/contacts(" + CustomerMapping.Val + ")";
                 }
                 else if (CustomerMapping.Title == CodeAccount)
                 {
                     item_required["partyid_account@odata.bind"] = "/accounts(" + CustomerMapping.Val + ")";
                     item_required["participationtypemask"] = 5;
                     arrayMeeting.Add(item_required);
+
+                    data["regardingobjectid_account_appointment@odata.bind"] = "/accounts(" + CustomerMapping.Val + ")";
                 }
             }
             if (Required != null)

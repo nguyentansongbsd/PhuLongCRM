@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 
 namespace PhuLongCRM.ViewModels
@@ -153,11 +154,11 @@ namespace PhuLongCRM.ViewModels
 
             if (data.unit_name != null)
             {
-                QueueProject = "Không";
+                QueueProject = Language.khong;
             }
             else
             {
-                QueueProject = "Có";
+                QueueProject = Language.co;
             }
 
             ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;

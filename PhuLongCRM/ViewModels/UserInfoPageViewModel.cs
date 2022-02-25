@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 
 namespace PhuLongCRM.ViewModels
@@ -84,7 +85,7 @@ namespace PhuLongCRM.ViewModels
         public UserInfoPageViewModel()
         {
             Password = UserLogged.Password;
-            this.Genders = new List<OptionSet>() { new OptionSet("1", "Nam"), new OptionSet("2", "Nữ"), new OptionSet("100000000", "Khác") };
+            this.Genders = new List<OptionSet>() { new OptionSet("1", Language.nam), new OptionSet("2", Language.nu), new OptionSet("100000000", Language.khac) };
             this.Avatar = UserLogged.Avartar;
             this.UserName = UserLogged.User;
         }

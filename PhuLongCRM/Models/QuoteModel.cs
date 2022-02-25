@@ -102,7 +102,7 @@ namespace PhuLongCRM.Models
         public string bsd_paymentschemestype { get; set; }
         public DateTime? bsd_startingdatecalculateofps { get; set; }
 
-        public string quotedetail_id { get; set; }
+        public Guid quotedetail_id { get; set; }
 
         public string collaborator_id { get; set; }
         public string collaborator_name { get; set; }

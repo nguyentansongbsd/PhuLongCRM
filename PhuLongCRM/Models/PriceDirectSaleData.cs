@@ -17,7 +17,7 @@ namespace PhuLongCRM.Models
                 new PriceDirectSaleModel("4","5 " + Language.currency_billion + " -> 10 " + Language.currency_billion,"5000000000","10000000000"),
                 new PriceDirectSaleModel("5","10 " + Language.currency_billion + " -> 20 " + Language.currency_billion,"10000000000","20000000000"),
                 new PriceDirectSaleModel("6","20 " + Language.currency_billion + " -> 50 " + Language.currency_billion,"20000000000","50000000000"),
-                new PriceDirectSaleModel("7",Language.string_more_than + " 50",null,"50000000000")
+                new PriceDirectSaleModel("7",Language.string_more_than + " 50 "+ Language.currency_billion,null,"50000000000")
             };
         }
         public static PriceDirectSaleModel GetPriceById(string Id)

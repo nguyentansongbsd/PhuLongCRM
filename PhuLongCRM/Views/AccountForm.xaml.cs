@@ -61,6 +61,7 @@ namespace PhuLongCRM.Views
             this.Title = Language.cap_nhat_khach_hang_doanh_nghiep;
             btnSave.Text = Language.cap_nhat;
             btnSave.Clicked += UpdateContact_Clicked;
+            lookUpTinhTrang.IsEnabled = false;
 
             await viewModel.LoadOneAccount(this.AccountId);
 
