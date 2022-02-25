@@ -21,7 +21,7 @@
 	<queries>
 		<intent>
 			<action android:name="android.intent.action.VIEW" />
-			<data android:scheme="smsto"/>
+			<data android:scheme="smsto" />
 		</intent>
 	</queries>
 </manifest>
