@@ -342,7 +342,7 @@
                                             <Grid ColumnDefinitions="Auto,Auto,*" Grid.Row="2">
                                                 <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                 <Label Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}" TextColor="#444444" FontSize="15" Grid.Column="1" />
-                                                <Label Text="{Binding bsd_queuingexpired ,StringFormat=' {0:h:mm tt}'}" TextColor="#444444" FontSize="15" Grid.Column="2" />
+                                                <Label Text="{Binding bsd_queuingexpired ,StringFormat=' {0:HH:mm}'}" TextColor="#444444" FontSize="15" Grid.Column="2" />
                                             </Grid>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiuChoItem_Tapped" CommandParameter="{Binding opportunityid}"/>

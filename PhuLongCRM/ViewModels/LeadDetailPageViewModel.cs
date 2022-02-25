@@ -122,6 +122,12 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
                                         <attribute name='name'  alias='campaignid_label'/>
                                     </link-entity>
+                                    <link-entity name='account' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='accountid' alias='account_id'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='contactid' alias='contact_id'/>
+                                    </link-entity>
                                     <filter type='and'>
                                           <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                                     </filter>

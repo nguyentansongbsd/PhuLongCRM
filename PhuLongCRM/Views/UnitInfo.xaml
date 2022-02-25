@@ -151,7 +151,7 @@
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}:'}"/>
+                                                <Span Text="{Binding Source={x:Static lang:Language.loai_unit},StringFormat='{0}:'}"/>
                                                 <Span Text=" "/>
                                                 <Span Text="{Binding UnitInfo.bsd_unittype_name}"/>
                                             </FormattedString>
@@ -227,7 +227,7 @@
 
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.dien_tich_xay_dung}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_constructionarea,StringFormat='{0:#,0.#0} m2'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_constructionarea,StringFormat='{0:#,0.#0}'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
@@ -252,7 +252,7 @@
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout BackgroundColor="#eeeeee" Spacing="1">
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
-                                            <Label Text="{Binding Source={x:Static lang:Language.gia_tri_qsdd},StringFormat='{0}/m²'}" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{x:Static lang:Language.gia_tri_qsdd_m}" FontSize="15" TextColor="#333333" />
                                             <Label Text="{Binding UnitInfo.bsd_landvalueofunit,Converter={StaticResource DecimalToVndConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">

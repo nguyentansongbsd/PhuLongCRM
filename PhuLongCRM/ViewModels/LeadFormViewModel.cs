@@ -616,7 +616,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='fullname' />
                                     <filter type='and'>
                                         <condition attribute='bsd_identitycardnumberid' operator='eq' value='" + identitycardnumber + @"' />
-                                        <condition attribute='contactid' operator='ne' value='" + leadid + @"' />
+                                        <condition attribute='leadid' operator='ne' value='" + leadid + @"' />
                                     </filter>
                                   </entity>
                                 </fetch>";

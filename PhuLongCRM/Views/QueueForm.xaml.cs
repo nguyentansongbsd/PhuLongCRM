@@ -88,22 +88,28 @@ namespace PhuLongCRM.Views
             if (from)
             {
                 await viewModel.LoadFromUnit(viewModel.UnitId);
-                await viewModel.createQueueDraft(false, viewModel.UnitId);
-                topic.Text = viewModel.QueueFormModel.bsd_units_name;              
+                string res = await viewModel.createQueueDraft(false, viewModel.UnitId);
+                topic.Text = viewModel.QueueFormModel.bsd_units_name;
                 if (viewModel.QueueFormModel.bsd_units_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
                     OnCompleted?.Invoke(true);
                 else
+                {
                     OnCompleted?.Invoke(false);
+                    ToastMessageHelper.ShortMessage(res);
+                }
             }
             else
             {
                 await viewModel.LoadFromProject(viewModel.UnitId);
-                await viewModel.createQueueDraft(true, viewModel.UnitId);
-                topic.Text = viewModel.QueueFormModel.bsd_project_name +" - "+ DateTime.Now.ToString("dd/MM/yyyyy");                
+                string res = await viewModel.createQueueDraft(true, viewModel.UnitId);
+                topic.Text = viewModel.QueueFormModel.bsd_project_name +" - "+ DateTime.Now.ToString("dd/MM/yyyyy");
                 if (viewModel.QueueFormModel.bsd_project_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
                     OnCompleted?.Invoke(true);
                 else
+                {
                     OnCompleted?.Invoke(false);
+                    ToastMessageHelper.ShortMessage(res);
+                }
             }            
         }
 

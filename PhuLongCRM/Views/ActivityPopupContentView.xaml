@@ -33,12 +33,12 @@
 
                                 <controls:FormLabel Text="{x:Static lang:Language.goi_tu}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="1"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding PhoneCall.call_from}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding PhoneCall.call_from}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                                 </telerikPrimitives:RadBorder>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.goi_den}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="2"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="2" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding PhoneCall.call_to}" FontSize="14" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="Center">
+                                    <Label Text="{Binding PhoneCall.call_to}" FontSize="14" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="Start">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PhoneCallTo_Tapped"/>
                                         </Label.GestureRecognizers>
@@ -47,22 +47,22 @@
 
                                 <controls:FormLabel Text="{x:Static lang:Language.so_dien_thoai}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="3"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="3" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding PhoneCall.phonenumber}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding PhoneCall.phonenumber}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                                 </telerikPrimitives:RadBorder>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.nguoi_lien_quan}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="4" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding PhoneCall.Customer.Name}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding PhoneCall.Customer.Name}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                                 </telerikPrimitives:RadBorder>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_bat_dau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="5"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="5" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding PhoneCall.scheduledstart,StringFormat='{0:dd/MM/yyyy - h:mm tt}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                    <Label Text="{Binding PhoneCall.scheduledstart,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Start" />
                                 </telerikPrimitives:RadBorder>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="6"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="6" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding PhoneCall.scheduledend,StringFormat='{0:dd/MM/yyyy - h:mm tt}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding PhoneCall.scheduledend,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                                 </telerikPrimitives:RadBorder>
 
 
@@ -77,7 +77,7 @@
 
                                 <controls:FormLabel Text="{x:Static lang:Language.nguoi_lien_quan}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="1"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding Task.Customer.Name}" FontSize="14" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="Center">
+                                    <Label Text="{Binding Task.Customer.Name}" FontSize="14" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="Start">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TaskCustomer_Tapped"/>
                                         </Label.GestureRecognizers>
@@ -86,12 +86,12 @@
 
                                 <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_bat_dau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="2"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="2" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding Task.scheduledstart,StringFormat='{0:dd/MM/yyyy - h:mm tt}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                    <Label Text="{Binding Task.scheduledstart,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Start" />
                                 </telerikPrimitives:RadBorder>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="3"/>
                                 <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="3" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding Task.scheduledend,StringFormat='{0:dd/MM/yyyy - h:mm tt}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Task.scheduledend,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                                 </telerikPrimitives:RadBorder>
 
                                 <controls:FormLabel Text="{Binding Source={x:Static lang:Language.mo_ta},StringFormat='{0}: '}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4"/>
@@ -106,9 +106,9 @@
                                     <StackLayout>
                                         <Grid ColumnDefinitions="4*,6*">
                                             <controls:FormLabel Text="{x:Static lang:Language.nguoi_tham_du_bat_buoc}" Grid.Column="0" FontSize="14" TextColor="#444444" LineHeight="1.2"/>
-                                            <telerikPrimitives:RadBorder Grid.Column="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                            <telerikPrimitives:RadBorder Grid.Column="1" BorderColor="#f3f3f3" Padding="0" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
                                                 <Grid>
-                                                    <FlexLayout x:Name="flexRequired" Wrap="Wrap" AlignItems="Center">
+                                                    <FlexLayout x:Name="flexRequired" Wrap="Wrap" AlignItems="Start">
                                                         <BindableLayout.ItemTemplate>
                                                             <DataTemplate>
                                                                 <Label Text="{Binding Label}" Padding="5" FontSize="14" TextColor="{StaticResource NavigationPrimary}">
@@ -125,31 +125,31 @@
                                         <Grid ColumnDefinitions="4*,6*">
                                             <controls:FormLabel Text="{x:Static lang:Language.nguoi_tham_khong_du_bat_buoc}" Grid.Column="0" FontSize="14" TextColor="#444444" LineHeight="1.2"/>
                                             <telerikPrimitives:RadBorder Grid.Column="1" BorderColor="#f3f3f3" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                                <Label Text="{Binding Meet.optional}" FontSize="14" TextColor="#444444" Margin="5" LineHeight="1.2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                                <Label Text="{Binding Meet.optional}" FontSize="14" TextColor="#444444" Margin="5" LineHeight="1.2" HorizontalTextAlignment="Start"/>
                                             </telerikPrimitives:RadBorder>
                                         </Grid>
                                         <Grid ColumnDefinitions="4*,6*">
                                             <controls:FormLabel Text="{x:Static lang:Language.nguoi_lien_quan}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                             <telerikPrimitives:RadBorder Grid.Column="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                                <Label Text="{Binding Meet.Customer.Name}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                                <Label Text="{Binding Meet.Customer.Name}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                                             </telerikPrimitives:RadBorder>
                                         </Grid>
                                         <Grid ColumnDefinitions="4*,6*">
                                             <controls:FormLabel Text="{x:Static lang:Language.dia_diem}" Grid.Column="0" FontSize="14" TextColor="#444444"/>
                                             <telerikPrimitives:RadBorder Grid.Column="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                                <Label Text="{Binding Meet.location}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                                <Label Text="{Binding Meet.location}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                                             </telerikPrimitives:RadBorder>
                                         </Grid>
                                         <Grid ColumnDefinitions="4*,6*">
                                             <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_bat_dau}" Grid.Column="0" FontSize="14" TextColor="#444444"/>
                                             <telerikPrimitives:RadBorder Grid.Column="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                                <Label Text="{Binding Meet.scheduledstart,StringFormat='{0:dd/MM/yyyy - h:mm tt}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" />
+                                                <Label Text="{Binding Meet.scheduledstart,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Start" />
                                             </telerikPrimitives:RadBorder>
                                         </Grid>
                                         <Grid ColumnDefinitions="4*,6*">
                                             <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444"/>
                                             <telerikPrimitives:RadBorder Grid.Column="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                                <Label Text="{Binding Meet.scheduledend,StringFormat='{0:dd/MM/yyyy - h:mm tt}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center"/>
+                                                <Label Text="{Binding Meet.scheduledend,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                                             </telerikPrimitives:RadBorder>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,Auto">

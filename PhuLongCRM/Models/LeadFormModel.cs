@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using Xamarin.Forms;
 
@@ -140,7 +141,7 @@ namespace PhuLongCRM.Models
         public string donotsendmmValue { get { return _donotsendmmValue; } set { _donotsendmmValue = value; OnPropertyChanged(nameof(donotsendmmValue)); } }
 
         private bool _donotsendmm;
-        public bool donotsendmm { get { return _donotsendmm; } set { _donotsendmm = value; donotsendmmValue = value ? "Không gửi" : "Gửi"; OnPropertyChanged(nameof(donotsendmm)); } }
+        public bool donotsendmm { get { return _donotsendmm; } set { _donotsendmm = value; donotsendmmValue = value ? Language.khong_gui : Language.gui; OnPropertyChanged(nameof(donotsendmm)); } }
 
         private DateTime? _lastusedincampaign;
         public DateTime? lastusedincampaign { get { return _lastusedincampaign; }
@@ -301,5 +302,7 @@ namespace PhuLongCRM.Models
         public string bsd_accountcountry_name { get; set; }
         public string bsd_accountprovince_name { get; set; }
         public string bsd_accountdistrict_name { get; set; }
+        public Guid account_id { get; set; }
+        public Guid contact_id { get; set; }
     }
 }

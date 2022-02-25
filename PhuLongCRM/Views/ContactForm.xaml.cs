@@ -64,6 +64,8 @@ namespace PhuLongCRM.Views
             this.Title = Language.cap_nhat_khach_hang_ca_nhan;
             btn_save_contact.Text = Language.cap_nhat;
             btn_save_contact.Clicked += UpdateContact_Clicked;
+            lookUpTinhTrang.IsEnabled = false;
+
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
                 customerCode.IsVisible = true;
@@ -155,12 +157,12 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
-            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_contactaddress))
+            if (string.IsNullOrWhiteSpace(viewModel.Address1.lineaddress))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_permanentaddress1))
+            if (string.IsNullOrWhiteSpace(viewModel.Address2.lineaddress))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_thuong_tru);
                 return;
@@ -173,7 +175,7 @@ namespace PhuLongCRM.Views
             if (!await viewModel.CheckCMND(viewModel.singleContact.bsd_identitycardnumber, id))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_da_duoc_su_dung);
-                return;
+               // return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && !await viewModel.CheckPassport(viewModel.singleContact.bsd_passport, id))
             {

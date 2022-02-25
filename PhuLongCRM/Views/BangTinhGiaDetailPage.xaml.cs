@@ -107,6 +107,7 @@ namespace PhuLongCRM.Views
                     viewModel.LoadDiscountsExChange()
                     ) ;
                 await viewModel.LoadHandoverCondition(ReservationId);
+                SutUpSpecialDiscount();
             }
         }
 
@@ -634,6 +635,24 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.huy_dat_coc_that_bai_vui_long_thu_lai);
                 }
+            }
+        }
+        private void SutUpSpecialDiscount()
+        {
+            if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
+            {
+                stackLayoutSpecialDiscount.IsVisible = true;
+                foreach (var item in viewModel.ListSpecialDiscount)
+                {
+                    if (!string.IsNullOrEmpty(item.Label))
+                    {
+                        stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
+                    }
+                }
+            }
+            else
+            {
+                stackLayoutSpecialDiscount.IsVisible = false;
             }
         }
     }

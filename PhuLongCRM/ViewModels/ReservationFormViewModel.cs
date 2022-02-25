@@ -315,7 +315,7 @@ namespace PhuLongCRM.ViewModels
             if (result2 == null || result2.value.Any() == false) return;
 
             var data = result2.value.SingleOrDefault();
-            this.quotedetailid = Guid.Parse(data.quotedetail_id);
+            this.quotedetailid = data.quotedetail_id;
             this.Quote.tax_id = data.tax_id;
             this.Quote.tax_value = data.tax_value;
             this.Quote.saleagentcompany_id = data.saleagentcompany_id;
@@ -946,22 +946,133 @@ namespace PhuLongCRM.ViewModels
         // Load danh sach dai ly/ san giao dich
         public async Task LoadSalesAgents()
         {
+            string fetchphaseslaunch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='bsd_phaseslaunch'>
+                                <attribute name='bsd_name' />
+                                <attribute name='bsd_locked' />
+                                <attribute name='bsd_salesagentcompany' />
+                                <attribute name='bsd_phaseslaunchid' />
+                                <order attribute='bsd_name' descending='true' />
+                                <filter type='and'>
+                                    <condition attribute='bsd_phaseslaunchid' operator='eq' value='{PhasesLaunchId}' />
+                                </filter>
+                                <link-entity name='account' from='accountid' to='bsd_salesagentcompany' link-type='outer' alias='aw'>
+                                    <attribute name='name' alias='salesagentcompany_name' />
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+            var result_phasesLaunch = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhasesLaunch>>("bsd_phaseslaunchs", fetchphaseslaunch);
+
+            string develop = $@"<link-entity name='bsd_project' from='bsd_investor' to='accountid' link-type='inner' alias='aj'>
+                                                <filter type='and'>
+                                                    <condition attribute='bsd_projectid' operator='eq' value='{PhasesLaunchId}' />
+                                                </filter>
+                                            </link-entity>";
+            string all = $@"<link-entity name='bsd_projectshare' from='bsd_salesagent' to='accountid' link-type='inner' alias='az'>
+                                                <filter type='and'>
+                                                    <condition attribute='statuscode' operator='eq' value='1' />
+                                                    <condition attribute='bsd_project' operator='eq' value='{PhasesLaunchId}' />
+                                                </filter>
+                                            </link-entity>";
+            string sale_phasesLaunch = $@"<link-entity name='bsd_phaseslaunch' from='bsd_salesagentcompany' to='accountid' link-type='inner' alias='ak'>
+                                                        <filter type='and'>
+                                                            <condition attribute='bsd_phaseslaunchid' operator='eq' value='{PhasesLaunchId}' />
+                                                         </filter>
+                                                    </link-entity>";
+            string isproject = $@"<filter type='and'>
+                                       <condition attribute='bsd_businesstypesys' operator='contain-values'>
+                                         <value>100000002</value>
+                                       </condition>                                
+                                    </filter>";
+
+            if (result_phasesLaunch != null && result_phasesLaunch.value.Count > 0)
+            {
+                var phasesLaunch = result_phasesLaunch.value.FirstOrDefault();
+                if (phasesLaunch.bsd_locked == false)
+                {
+                    if (string.IsNullOrWhiteSpace(phasesLaunch.salesagentcompany_name))
+                    {
+                        if (SalesAgents != null)
+                        {
+                            SalesAgents.AddRange(await LoadAccuntSales(all));
+                            SalesAgents.AddRange(await LoadAccuntSales(develop));
+                        }
+                    }
+                    else
+                    {
+                        if (SalesAgents != null)
+                        {
+                            SalesAgents.AddRange(await LoadAccuntSales(sale_phasesLaunch));
+                            SalesAgents.AddRange(await LoadAccuntSales(develop));
+                        }
+                    }
+                }
+                else if (phasesLaunch.bsd_locked == true)
+                {
+                    if (string.IsNullOrWhiteSpace(phasesLaunch.salesagentcompany_name))
+                    {
+                        if (SalesAgents != null)
+                        {
+                            SalesAgents.AddRange(await LoadAccuntSales(develop));
+                        }
+                    }
+                    else
+                    {
+                        if (SalesAgents != null)
+                        {
+                            SalesAgents.AddRange(await LoadAccuntSales(sale_phasesLaunch));
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                if (SalesAgents != null)
+                {
+                    SalesAgents.AddRange(await LoadAccuntSales(all));
+                    SalesAgents.AddRange(await LoadAccuntSales(develop));
+                }
+            }
             //Load account co field bsd_businesstypesys la sales agent(100000002)
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            //string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            //                      <entity name='account'>
+            //                        <attribute name='name' alias='Label'/>
+            //                        <attribute name='accountid' alias='Val' />
+            //                        <order attribute='createdon' descending='true' />
+            //                        <filter type='and'>
+            //                          <condition attribute='bsd_businesstype' operator='contain-values'>
+            //                            <value>100000002</value>
+            //                          </condition>
+            //                        </filter>
+            //                      </entity>
+            //                    </fetch>";
+            //var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("accounts", fetchXml);
+            //if (result == null || result.value.Any() == false) return;
+            //this.SalesAgents = result.value;
+        }
+
+        public async Task<List<OptionSet>> LoadAccuntSales(string filter)
+        {
+            List<OptionSet> list = new List<OptionSet>();
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='account'>
-                                    <attribute name='name' alias='Label'/>
+                                    <attribute name='name' alias='Label' />
                                     <attribute name='accountid' alias='Val' />
                                     <order attribute='createdon' descending='true' />
-                                    <filter type='and'>
-                                      <condition attribute='bsd_businesstype' operator='contain-values'>
-                                        <value>100000002</value>
-                                      </condition>
-                                    </filter>
+                                    " + filter + @"
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("accounts", fetchXml);
-            if (result == null || result.value.Any() == false) return;
-            this.SalesAgents = result.value;
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("accounts", fetch);
+            if (result != null && result.value.Count != 0)
+            {
+                var data = result.value;
+                foreach (var item in data)
+                {
+                    list.Add(item);
+                }
+            }
+            return list;
         }
 
         // Load cong tac vien

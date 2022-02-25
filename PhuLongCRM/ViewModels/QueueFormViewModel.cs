@@ -601,7 +601,7 @@ namespace PhuLongCRM.ViewModels
 
         //}
 
-        public async Task createQueueDraft(bool isQueueProject, Guid id)
+        public async Task<string> createQueueDraft(bool isQueueProject, Guid id)
         {
             if(isQueueProject)
             {
@@ -624,16 +624,24 @@ namespace PhuLongCRM.ViewModels
                             {
                                 this.idQueueDraft = Guid.Parse(itemformat);
                                 await LoadQueueDraft(idQueueDraft);
+                                return null;
                             }
                             else
+                            {
                                 this.idQueueDraft = Guid.Empty;
+                                return res.ErrorResponse?.error.message;
+                            }
                         }
+                        //else
+                        //    return res.ErrorResponse?.error.message;
                     }
                 }
                 else
                 {
                     this.idQueueDraft = Guid.Empty;
+                    return res.ErrorResponse?.error.message;
                 }
+                return res.ErrorResponse?.error.message;
             }   
             else
             {
@@ -657,16 +665,24 @@ namespace PhuLongCRM.ViewModels
                             {
                                 this.idQueueDraft = Guid.Parse(itemformat);
                                 await LoadQueueDraft(idQueueDraft);
+                                return null;
                             }
                             else
+                            {
                                 this.idQueueDraft = Guid.Empty;
+                                return res.ErrorResponse?.error.message;
+                            }
                         }
+                        //else
+                        //    return res.ErrorResponse?.error.message;
                     }
                 }
                 else
                 {
                     this.idQueueDraft = Guid.Empty;
+                    return res.ErrorResponse?.error.message;
                 }
+                return res.ErrorResponse?.error.message;
             }    
         }
 

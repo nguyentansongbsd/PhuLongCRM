@@ -32,10 +32,10 @@
     </Shell.MenuItemTemplate>
     <Shell.ItemTemplate>
         <DataTemplate>
-            <Grid ColumnDefinitions="20,*" Padding="16,8,16,8" ColumnSpacing="16" >
-                <Image Source="{Binding Icon}" VerticalOptions="Center" HorizontalOptions="Center"/>
-                <Label Text="{Binding Title}" TextColor="#555555" FontSize="17" Grid.Column="1" VerticalTextAlignment="Center" />
-            </Grid>
+            <StackLayout Orientation="Horizontal" Padding="16,8,16,8" Spacing="16" >
+                <Image Source="{Binding Icon}" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Label Text="{Binding Title}" TextColor="#555555" FontSize="17" VerticalTextAlignment="Center" />
+            </StackLayout>
         </DataTemplate>
     </Shell.ItemTemplate>
 
@@ -60,7 +60,6 @@
             <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
         </StackLayout>
     </Shell.FlyoutHeader>
-
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="{x:Static lang:Language.trang_chu}" ContentTemplate="{DataTemplate views:Dashboard}">
             <ShellContent.Icon>

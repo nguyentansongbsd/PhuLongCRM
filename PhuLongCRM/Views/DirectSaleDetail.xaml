@@ -253,7 +253,7 @@
                             <Label FontSize="15" TextColor="#444444">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}:'}"/>
+                                        <Span Text="{Binding Source={x:Static lang:Language.loai_unit},StringFormat='{0}:'}"/>
                                         <Span Text=" "/>
                                         <Span Text="{Binding Unit.bsd_unittype_name}"/>
                                     </FormattedString>
@@ -326,7 +326,7 @@
                                                                 <Span Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}:'}"/>
                                                                 <Span Text=" "/>
                                                                 <Span Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}"/>
-                                                                <Span Text="{Binding bsd_queuingexpired ,StringFormat=' {0:h:mm tt}'}"/>
+                                                                <Span Text="{Binding bsd_queuingexpired ,StringFormat=' {0:HH:mm}'}"/>
                                                             </FormattedString>
                                                         </Label.FormattedText>
                                                     </Label>
