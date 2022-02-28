@@ -229,13 +229,13 @@ namespace PhuLongCRM.Views
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_address))
+            if (string.IsNullOrWhiteSpace(viewModel.Address1.address))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_permanentaddress1))
+            if (string.IsNullOrWhiteSpace(viewModel.Address2.address))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_tru_so_chinh);
                 return;

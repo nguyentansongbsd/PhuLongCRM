@@ -372,7 +372,7 @@ namespace PhuLongCRM.Models
 
         public Guid employee_id { get; set; }
         public string bsd_customercode { get; set; }
-        public string statuscode_format { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Name : null; } }
-        public string statuscode_color { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Background : null; } }
+        public string statuscode_format { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString())?.Name : null; } }
+        public string statuscode_color { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString())?.Background : null; } }
     }
 }

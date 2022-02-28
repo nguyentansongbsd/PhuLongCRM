@@ -332,5 +332,15 @@ namespace PhuLongCRM.Views
                 viewModel.photoBrowser.Show();
             }
         }
+        private async void OpenEvent_Tapped(object sender, EventArgs e)
+        {
+            if (viewModel.Event == null)
+                await viewModel.LoadDataEvent();
+            ContentEvent.IsVisible = true;
+        }
+        private void CloseContentEvent_Tapped(object sender, EventArgs e)
+        {
+            ContentEvent.IsVisible = false;
+        }
     }
 }

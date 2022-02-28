@@ -84,5 +84,7 @@ namespace PhuLongCRM.Models
         public decimal bsd_managementamountmonth { get; set; }// đơn giá tính phí quản lý (tháng/m2)
 
         public decimal bsd_handovercondition { get; set; } // Điều kiện bàn giao %
+        public Guid event_id { get; set; }
+        public bool is_event { get { if (event_id != Guid.Empty) return true; else return false; } }
     }
 }
