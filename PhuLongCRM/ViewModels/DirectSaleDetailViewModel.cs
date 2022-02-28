@@ -295,6 +295,15 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='bsd_unittype' from='bsd_unittypeid' to='bsd_unittype' visible='false' link-type='outer' alias='a_493690ec6ce2e811a94e000d3a1bc2d1'>
                                       <attribute name='bsd_name'  alias='bsd_unittype_name'/>
                                     </link-entity>
+                                    <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
+                                      <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
+                                        <attribute name='bsd_eventid' alias='event_id' />
+                                        <filter type='and'>
+                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                            <condition attribute='bsd_eventid' operator='not-null' />
+                                        </filter>
+                                      </link-entity>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Unit>>("products", fetchXml);

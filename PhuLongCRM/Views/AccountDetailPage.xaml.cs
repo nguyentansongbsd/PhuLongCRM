@@ -317,7 +317,6 @@ namespace PhuLongCRM.Views
         }
 
         #endregion
-
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
             string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
@@ -339,7 +338,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
             string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
@@ -360,25 +358,21 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-
         private void ThongTin_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(1);
         }
-
         private async void GiaoDich_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(2);
             await LoadDataGiaoDich(AccountId.ToString());
         }
-
         private async void NguoiUyQuyen_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(3);
             await LoadDataNguoiUyQuyen(AccountId.ToString());
             SetHeightListView();
         }
-
         private void Tab_Tapped(int tab)
         {
             if (tab == 1)
@@ -418,7 +412,6 @@ namespace PhuLongCRM.Views
                 TabNguoiUyQuyen.IsVisible = false;
             }
         }
-
         private void NguoiDaiDien_Tapped(object sender, EventArgs e)
         {
             if (viewModel.PrimaryContact.contactid != null)
@@ -440,7 +433,6 @@ namespace PhuLongCRM.Views
                 };
             }
         }
-
         private async void Update(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -459,7 +451,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private async void AddMandatorySecondary(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -467,7 +458,6 @@ namespace PhuLongCRM.Views
             await Navigation.PushAsync(newPage);
             LoadingHelper.Hide();
         }
-
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -487,12 +477,10 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void CloseContentMandatorySecondary_Tapped(object sender, EventArgs e)
         {
             ContentMandatorySecondary.IsVisible = false;
         }
-
         private void ListMandatorySecondary_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -502,7 +490,6 @@ namespace PhuLongCRM.Views
             ContentMandatorySecondary.IsVisible = true;
             LoadingHelper.Hide();
         }
-
         private async void ListMoreMandatory_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             if (e.Item != null)
@@ -518,7 +505,6 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-
         private void SetHeightListView()
         {
             double height_item = (viewModel.list_MandatorySecondary.Count() * 110) + 50;
@@ -542,7 +528,6 @@ namespace PhuLongCRM.Views
                 ListMandatory.IsVisible = true;
             }
         }
-
         private async void NewMeet(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
@@ -552,7 +537,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-
         private async void NewPhoneCall(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
@@ -562,7 +546,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-
         private async void NewTask(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
@@ -572,7 +555,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-
         private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
         {
             OnAppearing();
