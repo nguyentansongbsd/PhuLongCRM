@@ -4,7 +4,8 @@
       xmlns:controls="clr-namespace:PhuLongCRM.Controls" ColumnDefinitions="*,Auto"
       x:Class="PhuLongCRM.Controls.DatePickerBoderControl">
     <controls:DatePickerBorder x:Name="datePicker" Grid.ColumnSpan="2"  OnChangeState="datePicker_OnChangeState" DateSelected="datePicker_DateSelected"/>
-    <controls:EntryNoneBorderControl x:Name="entry" Grid.Column="0" IsEnabled="False" FontSize="15" Margin="8,2"/>
+    <!--<controls:EntryNoneBorderControl x:Name="entry" Grid.Column="0" IsEnabled="False" FontSize="15" Margin="8,2"/>-->
+    <controls:LookUpEntry x:Name="entry" Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="False"/>
     <Label x:Name="btnClear" Grid.Column="1" Text="&#xf057;" IsVisible="false"  FontFamily="FontAwesomeRegular" TextColor="Gray" FontSize="15" Padding="8,6" Margin="0,0,2,0" VerticalOptions="Center" >
         <Label.GestureRecognizers>
             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ClearDate_Tapped"/>

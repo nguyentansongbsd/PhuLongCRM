@@ -12,15 +12,15 @@ namespace PhuLongCRM.Converters
         {
             if ((int)value == 1)
             {
-                return "HOT";
+                return "Hot";
             }
             else if ((int)value == 2)
             {
-                return "WARM";
+                return "Warm";
             }
             else if ((int)value == 3)
             {
-                return "COLD";
+                return "Cold";
             }
             else
             {

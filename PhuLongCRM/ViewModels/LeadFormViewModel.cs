@@ -180,40 +180,49 @@ namespace PhuLongCRM.ViewModels
                                 <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                             </filter>
                              <link-entity name='bsd_country' from='bsd_countryid' to='bsd_accountcountry' link-type='outer' alias='aa'>
-                                  <attribute name='bsd_countryid' alias='bsd_accountcountry_id' />
+                                    <attribute name='bsd_countryid' alias='bsd_accountcountry_id' />
                                     <attribute name='bsd_name' alias='bsd_accountcountry_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_accountcountry_name_en'/>
                                 </link-entity>
                                 <link-entity name='new_district' from='new_districtid' to='bsd_accountdistrict' link-type='outer' alias='ab'>
-                                  <attribute name='new_districtid' alias='bsd_accountdistrict_id' />
+                                    <attribute name='new_districtid' alias='bsd_accountdistrict_id' />
                                     <attribute name='new_name' alias='bsd_accountdistrict_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_accountdistrict_name_en'/>
                                 </link-entity>
                                 <link-entity name='new_province' from='new_provinceid' to='bsd_accountprovince' link-type='outer' alias='ac'>
-                                 <attribute name='new_provinceid' alias='bsd_accountprovince_id' />
+                                    <attribute name='new_provinceid' alias='bsd_accountprovince_id' />
                                     <attribute name='new_name' alias='bsd_accountprovince_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_accountprovince_name_en'/>
                                 </link-entity>
                                 <link-entity name='bsd_country' from='bsd_countryid' to='bsd_country' link-type='outer' alias='ad'>
                                     <attribute name='bsd_countryid' alias='bsd_country_id' />
                                     <attribute name='bsd_name' alias='bsd_country_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_country_name_en'/>
                                 </link-entity>
                                 <link-entity name='new_district' from='new_districtid' to='bsd_district' link-type='outer' alias='ae'>
                                     <attribute name='new_districtid' alias='bsd_district_id' />
                                     <attribute name='new_name' alias='bsd_district_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_district_name_en'/>
                                 </link-entity>
                                 <link-entity name='new_province' from='new_provinceid' to='bsd_province' link-type='outer' alias='af'>
                                     <attribute name='new_provinceid' alias='bsd_province_id' />
                                     <attribute name='new_name' alias='bsd_province_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_province_name_en'/>
                                 </link-entity>
                                 <link-entity name='bsd_country' from='bsd_countryid' to='bsd_permanentcountry' link-type='outer' alias='ag'>
                                     <attribute name='bsd_countryid' alias='bsd_permanentcountry_id' />
                                     <attribute name='bsd_name' alias='bsd_permanentcountry_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_permanentcountry_name_en'/>
                                 </link-entity>
                                 <link-entity name='new_district' from='new_districtid' to='bsd_permanentdistrict' link-type='outer' alias='ah'>
                                     <attribute name='new_districtid' alias='bsd_permanentdistrict_id' />
                                     <attribute name='new_name' alias='bsd_permanentdistrict_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_permanentdistrict_name_en'/>
                                 </link-entity>
                                 <link-entity name='new_province' from='new_provinceid' to='bsd_permanentprovince' link-type='outer' alias='ai'>
                                     <attribute name='new_provinceid' alias='bsd_permanentprovince_id' />
                                     <attribute name='new_name' alias='bsd_permanentprovince_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_permanentprovince_name_en'/>
                                 </link-entity>
                           </entity>
                         </fetch>";
@@ -226,33 +235,45 @@ namespace PhuLongCRM.ViewModels
             var tmp2 = result2.value.FirstOrDefault();
             singleLead.bsd_accountcountry_id = tmp2.bsd_accountcountry_id;
             singleLead.bsd_accountcountry_name = tmp2.bsd_accountcountry_name;
+            singleLead.bsd_accountcountry_name_en = tmp2.bsd_accountcountry_name_en;
             singleLead.bsd_accountdistrict_id = tmp2.bsd_accountdistrict_id;
             singleLead.bsd_accountdistrict_name = tmp2.bsd_accountdistrict_name;
+            singleLead.bsd_accountdistrict_name_en = tmp2.bsd_accountdistrict_name_en;
             singleLead.bsd_accountprovince_id = tmp2.bsd_accountprovince_id;
             singleLead.bsd_accountprovince_name = tmp2.bsd_accountprovince_name;
+            singleLead.bsd_accountprovince_name_en = tmp2.bsd_accountprovince_name_en;
 
             singleLead.bsd_permanentcountry_id = tmp2.bsd_permanentcountry_id;
             singleLead.bsd_permanentcountry_name = tmp2.bsd_permanentcountry_name;
+            singleLead.bsd_permanentcountry_name_en = tmp2.bsd_permanentcountry_name_en;
             singleLead.bsd_permanentdistrict_id = tmp2.bsd_permanentdistrict_id;
             singleLead.bsd_permanentdistrict_name = tmp2.bsd_permanentdistrict_name;
+            singleLead.bsd_permanentdistrict_name_en = tmp2.bsd_permanentdistrict_name_en;
             singleLead.bsd_permanentprovince_id = tmp2.bsd_permanentprovince_id;
             singleLead.bsd_permanentprovince_name = tmp2.bsd_permanentprovince_name;
+            singleLead.bsd_permanentprovince_name_en = tmp2.bsd_permanentprovince_name_en;
 
             singleLead.bsd_country_id = tmp2.bsd_country_id;
             singleLead.bsd_country_name = tmp2.bsd_country_name;
+            singleLead.bsd_country_name_en = tmp2.bsd_country_name_en;
             singleLead.bsd_district_id = tmp2.bsd_district_id;
             singleLead.bsd_district_name = tmp2.bsd_district_name;
+            singleLead.bsd_district_name_en = tmp2.bsd_district_name_en;
             singleLead.bsd_province_id = tmp2.bsd_province_id;
             singleLead.bsd_province_name = tmp2.bsd_province_name;
+            singleLead.bsd_province_name_en = tmp2.bsd_province_name_en;
 
             Address1 = new AddressModel
             {
                 country_id = singleLead.bsd_country_id,
-                country_name = singleLead.bsd_country_name,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_country_name_en) && UserLogged.Language == "en" ? singleLead.bsd_country_name_en : singleLead.bsd_country_name,
+                country_name_en = singleLead.bsd_country_name_en,
                 province_id = singleLead.bsd_province_id,
-                province_name = singleLead.bsd_province_name,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_province_name_en) && UserLogged.Language == "en" ? singleLead.bsd_province_name_en : singleLead.bsd_province_name,
+                province_name_en = singleLead.bsd_province_name_en,
                 district_id = singleLead.bsd_district_id,
-                district_name = singleLead.bsd_district_name,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_district_name_en) && UserLogged.Language == "en" ? singleLead.bsd_district_name_en : singleLead.bsd_district_name,
+                district_name_en = singleLead.bsd_district_name_en,
                 lineaddress = singleLead.bsd_housenumberstreet,
                 address = singleLead.bsd_contactaddress
             };
@@ -260,11 +281,14 @@ namespace PhuLongCRM.ViewModels
             Address2 = new AddressModel
             {
                 country_id = singleLead.bsd_permanentcountry_id,
-                country_name = singleLead.bsd_permanentcountry_name,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentcountry_name_en : singleLead.bsd_permanentcountry_name,
+                country_name_en = singleLead.bsd_permanentcountry_name_en,
                 province_id = singleLead.bsd_permanentprovince_id,
-                province_name = singleLead.bsd_permanentprovince_name,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentprovince_name_en : singleLead.bsd_permanentprovince_name,
+                province_name_en = singleLead.bsd_permanentprovince_name_en,
                 district_id = singleLead.bsd_permanentdistrict_id,
-                district_name = singleLead.bsd_permanentdistrict_name,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentdistrict_name_en : singleLead.bsd_permanentdistrict_name,
+                district_name_en = singleLead.bsd_permanentdistrict_name_en,
                 lineaddress = singleLead.bsd_permanentaddress,
                 address = singleLead.bsd_permanentaddress1
             };
@@ -272,11 +296,14 @@ namespace PhuLongCRM.ViewModels
             Address3 = new AddressModel
             {
                 country_id = singleLead.bsd_accountcountry_id,
-                country_name = singleLead.bsd_accountcountry_name,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountcountry_name_en : singleLead.bsd_accountcountry_name,
+                country_name_en = singleLead.bsd_accountcountry_name_en,
                 province_id = singleLead.bsd_accountprovince_id,
-                province_name = singleLead.bsd_accountprovince_name,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountprovince_name_en : singleLead.bsd_accountprovince_name,
+                province_name_en = singleLead.bsd_accountprovince_name_en,
                 district_id = singleLead.bsd_accountdistrict_id,
-                district_name = singleLead.bsd_accountdistrict_name,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountdistrict_name_en : singleLead.bsd_accountdistrict_name,
+                district_name_en = singleLead.bsd_accountdistrict_name_en,
                 lineaddress = singleLead.bsd_account_housenumberstreetwardvn,
                 address = singleLead.bsd_accountaddressvn
             };
@@ -431,8 +458,10 @@ namespace PhuLongCRM.ViewModels
 
             if (Address3 != null)
             {
-                data["bsd_account_housenumberstreetwardvn"] = Address3.lineaddress;
-                data["bsd_accountaddressvn"] = Address3.address;
+                if(!string.IsNullOrWhiteSpace(Address3.lineaddress))
+                    data["bsd_account_housenumberstreetwardvn"] = Address3.lineaddress;
+                if (!string.IsNullOrWhiteSpace(Address3.address))
+                    data["bsd_accountaddressvn"] = Address3.address;
             }
 
             ////bsd_permanentcountry
@@ -469,8 +498,10 @@ namespace PhuLongCRM.ViewModels
             }
             if (Address2 != null)
             {
-                data["bsd_permanentaddress"] = Address2.lineaddress;
-                data["bsd_permanentaddress1"] = Address2.address;
+                if (!string.IsNullOrWhiteSpace(Address2.lineaddress))
+                    data["bsd_permanentaddress"] = Address2.lineaddress;
+                if (!string.IsNullOrWhiteSpace(Address2.address))
+                    data["bsd_permanentaddress1"] = Address2.address;
             }
 
             //bsd_country
@@ -507,8 +538,10 @@ namespace PhuLongCRM.ViewModels
             }
             if (Address1 != null)
             {
-                data["bsd_housenumberstreet"] = Address1.lineaddress;// singleLead.bsd_housenumberstreet;
-                data["bsd_contactaddress"] = Address1.address;// singleLead.bsd_contactaddress;
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
+                    data["bsd_housenumberstreet"] = Address1.lineaddress;// singleLead.bsd_housenumberstreet;
+                if (!string.IsNullOrWhiteSpace(Address1.address))
+                    data["bsd_contactaddress"] = Address1.address;// singleLead.bsd_contactaddress;
             }
 
             return data;

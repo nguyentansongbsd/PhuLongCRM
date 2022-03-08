@@ -285,7 +285,7 @@
 
                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="15">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.phan_tram_coc},StringFormat='{0} (%)'}" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
-                                <Label Grid.Column="1" Text="{Binding Project.bsd_depositpercentda,StringFormat='{0:#,0.#0}%'}" TextColor="#333333" HorizontalTextAlignment="End" VerticalOptions="Center" FontSize="15" />
+                                <Label Grid.Column="1" Text="{Binding Project.bsd_depositpercentda_format,StringFormat='{0}%'}" TextColor="#333333" HorizontalTextAlignment="End" VerticalOptions="Center" FontSize="15" />
                             </Grid>
 
                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="15">
@@ -295,12 +295,12 @@
 
                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="15">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.gia_tri_qsdd},StringFormat='{0} (m2)'}" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
-                                <Label Grid.Column="1" Text="{Binding Project.bsd_landvalueofproject,Converter={StaticResource DecimalToVndConverter}}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
+                                <Label Grid.Column="1" Text="{Binding Project.bsd_landvalueofproject_format,StringFormat='{0} đ'}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
                             </Grid>
 
                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="15">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='{0} (%)'}" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
-                                <Label Grid.Column="1" Text="{Binding Project.bsd_maintenancefeespercent,StringFormat='{0:#,0.#0}%'}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
+                                <Label Grid.Column="1" Text="{Binding Project.bsd_maintenancefeespercent_format,StringFormat='{0}%'}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
                             </Grid>
 
                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="15">
@@ -310,12 +310,12 @@
 
                             <Grid ColumnDefinitions="4*,6*" BackgroundColor="White" Padding="15">
                                 <Label Grid.Column="0" Text="{x:Static lang:Language.don_gia_phi_quan_ly_thang_m2}" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
-                                <Label Grid.Column="1" Text="{Binding Project.bsd_managementamount,Converter={StaticResource DecimalToVndConverter}}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
+                                <Label Grid.Column="1" Text="{Binding Project.bsd_managementamount_format,StringFormat='{0} đ'}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
                             </Grid>
 
                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="15">
                                 <Label Grid.Column="0" Text="{x:Static lang:Language.tien_giu_cho}" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
-                                <Label Grid.Column="1" Text="{Binding Project.bsd_bookingfee,Converter={StaticResource DecimalToVndConverter}}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
+                                <Label Grid.Column="1" Text="{Binding Project.bsd_bookingfee_format,StringFormat='{0} đ'}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" />
                             </Grid>
                         </StackLayout>
 
@@ -333,7 +333,7 @@
                                                 <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                     <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                 </telerikPrimitives:RadBorder>
-                                                <Label Grid.Column="1" Text="{Binding name}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                <Label Grid.Column="1" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                             </Grid>
                                             <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                                 <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
@@ -342,7 +342,7 @@
                                             <Grid ColumnDefinitions="Auto,Auto,*" Grid.Row="2">
                                                 <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                 <Label Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}" TextColor="#444444" FontSize="15" Grid.Column="1" />
-                                                <Label Text="{Binding bsd_queuingexpired ,StringFormat=' {0:HH:mm}'}" TextColor="#444444" FontSize="15" Grid.Column="2" />
+                                                <Label Text="{Binding bsd_queuingexpired ,StringFormat='{0:HH:mm}'}" TextColor="#444444" FontSize="15" Grid.Column="2" />
                                             </Grid>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiuChoItem_Tapped" CommandParameter="{Binding opportunityid}"/>
@@ -351,7 +351,7 @@
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
-                            <Button Clicked="ShowMoreListDatCho_Clicked" IsVisible="{Binding ShowMoreBtnGiuCho}" BorderColor="#1399D5" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                            <Button Clicked="ShowMoreListDatCho_Clicked" IsVisible="{Binding ShowMoreBtnGiuCho}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
                         </StackLayout>
                     </Grid>
                 </StackLayout>

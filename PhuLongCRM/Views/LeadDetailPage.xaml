@@ -127,9 +127,15 @@
                     <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Margin="10,20,10,0">
                         <Grid RowDefinitions="Auto,1,Auto" RowSpacing="0">
                             <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="10" Padding="20,10" Grid.Row="0">
-                                <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
-                                    <Label Text="{Binding singleLead.leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" BackgroundColor="{Binding singleLead.leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Padding="3,0" Margin="0,2" FontSize="11" FontAttributes="Bold" TextColor="White" Grid.Column="0" VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding singleLead.fullname}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Column="1"/>
+                                <Grid ColumnDefinitions="Auto,Auto,Auto,*" Grid.Row="0">
+                                    <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding singleLead.leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Grid.Column="0">
+                                        <Label Text="{Binding singleLead.leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                    </telerikPrimitives:RadBorder>
+                                    <BoxView Grid.Column="1" WidthRequest="1" HeightRequest="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Gray"/>
+                                    <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding singleLead.statuscode_color}" Grid.Column="2">
+                                        <Label Text="{Binding singleLead.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                    </telerikPrimitives:RadBorder>
+                                    <Label Grid.Column="3" Text="{Binding singleLead.fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                     <Label Text="{Binding Source={x:Static lang:Language.ma_khach_hang},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
@@ -269,7 +275,7 @@
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="6">
                                             <controls:FormLabel Text="{x:Static lang:Language.doanh_thu_moi_nam}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <controls:FormLabelValue Text="{Binding singleLead.revenue, StringFormat='{0:#,0}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
+                                            <controls:FormLabelValue Text="{Binding singleLead.revenue_format, StringFormat='{0:#,0}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="7">
                                             <controls:FormLabel Text="{x:Static lang:Language.so_luong_nhan_vien}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>

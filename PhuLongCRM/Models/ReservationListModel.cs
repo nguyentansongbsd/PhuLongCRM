@@ -11,7 +11,7 @@ namespace PhuLongCRM.Models
         public string name { get; set; }
 
         public decimal totalamount { get; set; }
-        public string totalamount_format { get => StringHelper.DecimalToCurrencyText(totalamount); }
+        public string totalamount_format { get => StringFormatHelper.FormatCurrency(totalamount); }
 
         public Guid bsd_project_id { get; set; }
         public string bsd_project_name { get; set; }

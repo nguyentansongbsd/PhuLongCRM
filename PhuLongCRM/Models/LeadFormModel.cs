@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using Xamarin.Forms;
@@ -18,6 +19,8 @@ namespace PhuLongCRM.Models
 
         private string _statuscode;
         public string statuscode { get { return _statuscode; } set { _statuscode = value; OnPropertyChanged(nameof(statecode)); } }
+        public string statuscode_format { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Name : null; } } 
+        public string statuscode_color { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Background : "#808080"; } }
 
         private string _statecode;
         public string statecode { get { return _statecode; } set { _statecode = value; OnPropertyChanged(nameof(statecode)); } }
@@ -116,6 +119,7 @@ namespace PhuLongCRM.Models
         //public decimal? revenue { get { return _revenue; } set { _revenue = value; OnPropertyChanged(nameof(revenue)); } }
 
         public decimal? revenue { get; set; }
+        public string revenue_format { get => StringFormatHelper.FormatCurrency(revenue); }
         public string numberofemployees { get; set; }
 
         private string _sic;
@@ -282,6 +286,9 @@ namespace PhuLongCRM.Models
         public string bsd_country_name { get; set; }
         public string bsd_province_name { get; set; }
         public string bsd_district_name { get; set; }
+        public string bsd_country_name_en { get; set; }
+        public string bsd_province_name_en { get; set; }
+        public string bsd_district_name_en { get; set; }
 
         //địa chỉ thường trú
         public Guid bsd_permanentcountry_id { get; set; }
@@ -292,6 +299,9 @@ namespace PhuLongCRM.Models
         public string bsd_permanentcountry_name { get; set; }
         public string bsd_permanentprovince_name { get; set; }
         public string bsd_permanentdistrict_name { get; set; }
+        public string bsd_permanentcountry_name_en { get; set; }
+        public string bsd_permanentprovince_name_en { get; set; }
+        public string bsd_permanentdistrict_name_en { get; set; }
 
         //địa chỉ công ty
         public Guid bsd_accountcountry_id { get; set; }
@@ -302,6 +312,9 @@ namespace PhuLongCRM.Models
         public string bsd_accountcountry_name { get; set; }
         public string bsd_accountprovince_name { get; set; }
         public string bsd_accountdistrict_name { get; set; }
+        public string bsd_accountcountry_name_en { get; set; }
+        public string bsd_accountprovince_name_en { get; set; }
+        public string bsd_accountdistrict_name_en { get; set; }
         public Guid account_id { get; set; }
         public Guid contact_id { get; set; }
     }

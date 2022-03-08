@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Helper;
+using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -70,10 +71,15 @@ namespace PhuLongCRM.Models
         public Guid project_id { get; set; }
         public string project_name { get; set; }
         public decimal bsd_sellingprice { get; set; } // giá bán
+        public string bsd_sellingprice_format { get => StringFormatHelper.FormatCurrency(bsd_sellingprice); }
         public decimal bsd_totalamount { get; set; } // tổng tiền
+        public string bsd_totalamount_format { get => StringFormatHelper.FormatCurrency(bsd_totalamount); }
         public decimal bsd_totalamountpaid { get; set; } // tổng tiền thanh toán 
+        public string bsd_totalamountpaid_format { get => StringFormatHelper.FormatCurrency(bsd_totalamountpaid); }
         public decimal bsd_totalforfeitureamount { get; set; } // tổng tiền phạt
+        public string bsd_totalforfeitureamount_format { get => StringFormatHelper.FormatCurrency(bsd_totalforfeitureamount); }
         public decimal bsd_forfeitureamount { get; set; } // hoàn tiền
+        public string bsd_forfeitureamount_format { get => StringFormatHelper.FormatCurrency(bsd_forfeitureamount); }
         public int bsd_takeoutmoney { get; set; } // phương thức phạt
         public string bsd_takeoutmoney_format 
         { get 
@@ -87,6 +93,7 @@ namespace PhuLongCRM.Models
             } 
         }
         public decimal bsd_forfeiturepercent { get; set; } // hoàn tiền
+        public string bsd_forfeiturepercent_format { get => StringFormatHelper.FormatCurrency(bsd_forfeiturepercent); }
         public bool isRefund
         {
             get

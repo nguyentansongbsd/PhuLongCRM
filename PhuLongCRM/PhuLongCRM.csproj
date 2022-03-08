@@ -33,7 +33,6 @@
     <Folder Include="Converters\" />
     <Folder Include="Settings\" />
     <Folder Include="IServices\" />
-    <Folder Include="Helper\" />
     <Folder Include="Fonts\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Resources\" />

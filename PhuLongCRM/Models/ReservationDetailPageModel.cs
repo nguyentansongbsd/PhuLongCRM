@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Helper;
+using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -60,9 +61,11 @@ namespace PhuLongCRM.Models
         public int bsd_unitstatus { get; set; } // tình trạng sản phẩm
         public string bsd_unitstatus_format { get => StatusCodeUnit.GetStatusCodeById(bsd_unitstatus.ToString()).Name; }
         public decimal bsd_constructionarea { get; set; } // diện tích xây dựng
+        public string bsd_constructionarea_format { get => StringFormatHelper.FormatCurrency(bsd_constructionarea); }
         public decimal bsd_netusablearea { get; set; } // diện tích sử dụng
+        public string bsd_netusablearea_format { get => StringFormatHelper.FormatCurrency(bsd_netusablearea); }
         public decimal bsd_actualarea { get; set; } // diện tích thực
-
+        public string bsd_actualarea_format { get => StringFormatHelper.FormatCurrency(bsd_actualarea); }
         // thông tin chi tiết
         public Guid project_id { get; set; } // id dự án
         public string project_name { get; set; } // tên dự án
@@ -76,7 +79,9 @@ namespace PhuLongCRM.Models
         public Guid taxcode_id { get; set; } // id thuế
         public string taxcode_name { get; set; } // tên thuế
         public decimal bsd_bookingfee { get; set; } // phí giữ chỗ
+        public string bsd_bookingfee_format { get => StringFormatHelper.FormatCurrency(bsd_bookingfee); }
         public decimal bsd_depositfee { get; set; } // phí đặt cọc 
+        public string bsd_depositfee_format { get => StringFormatHelper.FormatCurrency(bsd_depositfee); }
         public int bsd_contracttypedescripton { get; set; } // loại hợp đồng 
         public string bsd_contracttypedescripton_format
         {
@@ -90,6 +95,7 @@ namespace PhuLongCRM.Models
             }
         }
         public decimal bsd_totalamountpaid { get; set; } // tổng tiền thanh toán 
+        public string bsd_totalamountpaid_format { get => StringFormatHelper.FormatCurrency(bsd_totalamountpaid); }
 
         // thông tin báo giá
         public DateTime? _bsd_reservationtime; // thời gian đặt cọc
@@ -205,6 +211,7 @@ namespace PhuLongCRM.Models
 
         // thông tin đặt cọc
         public int bsd_reservationformstatus { get; set; } // trạng thái pđc
+        public string bsd_reservationformstatus_format { get => QuoteStatusCodeData.GetQuoteStatusCodeById(bsd_reservationformstatus.ToString())?.Name; }
 
         public DateTime? _bsd_reservationprinteddate; // ngày in
         public DateTime? bsd_reservationprinteddate
@@ -287,16 +294,25 @@ namespace PhuLongCRM.Models
 
         // thông tin giá
         public decimal bsd_detailamount { get; set; } // giá gốc
+        public string bsd_detailamount_format { get => StringFormatHelper.FormatCurrency(bsd_detailamount); }
         public decimal bsd_discount { get; set; } // chiết khấu
+        public string bsd_discount_format { get => StringFormatHelper.FormatCurrency(bsd_discount); }
         public decimal bsd_packagesellingamount { get; set; } // đkbg
+        public string bsd_packagesellingamount_format { get => StringFormatHelper.FormatCurrency(bsd_packagesellingamount); }
         public decimal bsd_totalamountlessfreight { get; set; } // giá bán thực
+        public string bsd_totalamountlessfreight_format { get => StringFormatHelper.FormatCurrency(bsd_totalamountlessfreight); }
         public decimal bsd_landvaluededuction { get; set; } // giá trị qsdđ
+        public string bsd_landvaluededuction_format { get => StringFormatHelper.FormatCurrency(bsd_landvaluededuction); }
         public decimal totaltax { get; set; } // thuế
+        public string totaltax_format { get => StringFormatHelper.FormatCurrency(totaltax); }
         public decimal bsd_freightamount { get; set; } // phí bảo trì
+        public string bsd_freightamount_format { get => StringFormatHelper.FormatCurrency(bsd_freightamount); }
         public decimal totalamount { get; set; } // tổng tiền
+        public string totalamount_format { get => StringFormatHelper.FormatCurrency(totalamount); }
 
         // phí quản lý
         public decimal bsd_managementfee { get; set; } // phí quản lý 
+        public string bsd_managementfee_format { get => StringFormatHelper.FormatCurrency(bsd_managementfee); }
         public int bsd_numberofmonthspaidmf { get; set; } // số tháng đóng phí
         public int bsd_waivermanafeemonth { get; set; } // miễn giảm
 

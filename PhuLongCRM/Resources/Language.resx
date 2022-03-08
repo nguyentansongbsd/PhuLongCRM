@@ -2586,4 +2586,28 @@
   <data name="gia_tri_qsdd_m" xml:space="preserve">
     <value>Giá trị QSDĐ/m²</value>
   </data>
+  <data name="chon_dia_chi" xml:space="preserve">
+    <value>Chọn địa chỉ</value>
+  </data>
+  <data name="inactive_sts" xml:space="preserve">
+    <value>Vô hiệu lực</value>
+  </data>
+  <data name="ms_active_sts" xml:space="preserve">
+    <value>Nháp</value>
+  </data>
+  <data name="ms_applying_sts" xml:space="preserve">
+    <value>Đang áp dụng</value>
+  </data>
+  <data name="ms_cancel_sts" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="ms_inactive_sts" xml:space="preserve">
+    <value>Vô hiệu lực</value>
+  </data>
+  <data name="da_chon" xml:space="preserve">
+    <value>Đã chọn</value>
+  </data>
+  <data name="dieu_kien_ban_giao_khong_phu_hop_voi_unit_type" xml:space="preserve">
+    <value>Điều kiện bàn giao đã chọn không phù hợp với Loại sản phẩm đang thực hiện giao dịch. Vui lòng kiểm tra lại thông tin hoặc chọn điều kiện bàn giao khác.</value>
+  </data>
 </root>

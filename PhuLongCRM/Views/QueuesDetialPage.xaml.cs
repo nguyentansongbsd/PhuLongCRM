@@ -41,6 +41,8 @@ namespace PhuLongCRM.Views
             if (viewModel.Queue != null)
             {
                 viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();// co dat co thi an nut btg
+                if (viewModel.QueueProject == Language.co)
+                    viewModel.ShowBtnBangTinhGia = false;
                 SetButtons();
                 OnCompleted?.Invoke(true);
             }
@@ -272,10 +274,10 @@ namespace PhuLongCRM.Views
             string url_action = "";
             if (viewModel.Queue != null)
             {
-                if(viewModel.Queue.statuscode == 100000002)
+                if (viewModel.Queue.statuscode == 100000002)
                 {
                     url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
-                }   
+                }
                 else if (viewModel.Queue.statuscode == 100000000)
                 {
                     if (await viewModel.CheckQuote())
@@ -285,11 +287,11 @@ namespace PhuLongCRM.Views
                     }
                     else
                         url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
-                }   
+                }
                 else if (viewModel.Queue.statuscode == 100000008)
                 {
                     url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Opportunity_HuyGiuChoCoTien";
-                }    
+                }
             }
 
             LoadingHelper.Show();
@@ -298,7 +300,10 @@ namespace PhuLongCRM.Views
                 input = "Yes"
             };
             CrmApiResponse res = await CrmHelper.PostData(url_action, data);
-            Message(res.IsSuccess);
+            if (res.IsSuccess == true)
+                Message(res.IsSuccess);
+            else
+                ToastMessageHelper.ShortMessage(res.ErrorResponse?.error.message);
         }
 
         private void CreateQuotation_Clicked(object sender, EventArgs e)

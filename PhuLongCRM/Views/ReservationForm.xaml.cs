@@ -362,7 +362,8 @@ namespace PhuLongCRM.Views
             }
             if (viewModel.HandoverCondition.bsd_byunittype == true && (viewModel.HandoverCondition._bsd_unittype_value != viewModel.UnitType))
             {
-                ToastMessageHelper.ShortMessage(Language.khong_the_them_dieu_kien_ban_giao);
+                ToastMessageHelper.ShortMessage(Language.dieu_kien_ban_giao_khong_phu_hop_voi_unit_type);
+                //Điều kiện bàn giao đã chọn không phù hợp với Loại sản phẩm đang thực hiện giao dịch. Vui lòng kiểm tra lại thông tin hoặc chọn điều kiện bàn giao khác.
                 viewModel.HandoverCondition = null;
                 return;
             }

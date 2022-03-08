@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Helper;
+using PhuLongCRM.ViewModels;
 using System;
 namespace PhuLongCRM.Models
 {
@@ -7,23 +8,17 @@ namespace PhuLongCRM.Models
         public string opportunityid { get; set; }
         public string name { get; set; }
         public string description { get; set; }
-
         public Guid _bsd_units_value { get; set; }
         public string unit_name { get; set; }
-
         public Guid _bsd_project_value { get; set; }
         public string project_name { get; set; }
-
         public string bsd_queuenumber { get; set; }
-
         public Guid contact_id { get; set; }
         public string contact_name { get; set; }
         public string PhoneContact { get; set; }
-
         public Guid account_id { get; set; }
         public string account_name { get; set; }
         public string PhoneAccount { get; set; }
-
         public Guid _bsd_salesagentcompany_value { get; set; }
         public string salesagentcompany_name { get; set; }
 
@@ -72,5 +67,6 @@ namespace PhuLongCRM.Models
         public string customerreferral_name { get; set; }
         //bsd_queuingfeepaid
         public double bsd_queuingfeepaid { get; set; }
+        public string bsd_queuingfeepaid_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfeepaid); }
     }
 }

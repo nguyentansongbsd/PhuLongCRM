@@ -49,7 +49,6 @@ namespace PhuLongCRM.Views
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.them_nguoi_uy_quyen, "FontAwesomeSolid", "\uf2b5", null, AddMandatorySecondary));
 
                     if (viewModel.singleAccount.statuscode != "100000000")
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
@@ -450,13 +449,6 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
-        }
-        private async void AddMandatorySecondary(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            MandatorySecondaryForm newPage = new MandatorySecondaryForm(new OptionSet { Val = viewModel.singleAccount.accountid.ToString(), Label = viewModel.singleAccount.bsd_name });
-            await Navigation.PushAsync(newPage);
-            LoadingHelper.Hide();
         }
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {

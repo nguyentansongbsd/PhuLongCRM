@@ -14,6 +14,7 @@ namespace PhuLongCRM.Models
             {
                 new StatusCodeModel("100000000",Language.chinh_thuc,"#2FCC71"),
                 new StatusCodeModel("1",Language.tiem_nang_sts,"#04A8F4"),
+                new StatusCodeModel("2",Language.inactive_sts,"#808080"),
                 new StatusCodeModel("0","","#FFFFFF"),
             };
         }

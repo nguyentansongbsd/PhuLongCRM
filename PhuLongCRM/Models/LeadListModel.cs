@@ -24,5 +24,7 @@ namespace PhuLongCRM.Models
                 return this.createdon.ToString("dd/MM/yyyy");
             }
         }
+        public string statuscode_format { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Name : null; } }
+        public string statuscode_color { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Background : "#808080"; } }
     }
 }

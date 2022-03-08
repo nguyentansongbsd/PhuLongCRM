@@ -320,13 +320,6 @@ namespace PhuLongCRM.Views
 
             LoadingHelper.Show();
 
-            //viewModel.singleLead.address1_city = viewModel.AddressCity != null ? viewModel.AddressCity.Name : null;
-            //viewModel.singleLead.address1_stateorprovince = viewModel.AddressStateProvince != null ? viewModel.AddressStateProvince.Name : null;
-            //viewModel.singleLead.address1_country = viewModel.AddressCountry != null ? viewModel.AddressCountry.Name : null;
-
-            //viewModel.singleLead.address1_line1 = viewModel.AddressLine1;
-            //viewModel.singleLead.address1_composite = viewModel.AddressComposite;
-
             viewModel.singleLead.industrycode = viewModel.IndustryCode != null ? viewModel.IndustryCode.Val : null;
             viewModel.singleLead._transactioncurrencyid_value = viewModel.SelectedCurrency != null ? viewModel.SelectedCurrency.Val : null;
             viewModel.singleLead._campaignid_value = viewModel.Campaign != null ? viewModel.Campaign.Val : null;
