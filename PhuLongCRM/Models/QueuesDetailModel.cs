@@ -66,7 +66,7 @@ namespace PhuLongCRM.Models
         public Guid customerreferral_id { get; set; }
         public string customerreferral_name { get; set; }
         //bsd_queuingfeepaid
-        public double bsd_queuingfeepaid { get; set; }
+        public decimal bsd_queuingfeepaid { get; set; }
         public string bsd_queuingfeepaid_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfeepaid); }
     }
 }
