@@ -51,8 +51,8 @@
                 </StackLayout>
             </ScrollView>
             <Grid AbsoluteLayout.LayoutBounds="0,1,1,60" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White" ColumnDefinitions="*,*" RowDefinitions="Auto" Padding="15,10">
-                <Button Grid.Column="0" Text="{x:Static lang:Language.thong_tin_du_an}" FontAttributes="Bold" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White"  Clicked="ShowInfo" HeightRequest="40" Padding="10,5" CornerRadius="10"/>
-                <Button Grid.Column="1" Text="{x:Static lang:Language.tim_kiem}" FontAttributes="Bold" BackgroundColor="{StaticResource NavigationPrimary}" HeightRequest="40" Padding="10,5"  CornerRadius="10" TextColor="White" Clicked="SearchClicked"/>
+                <Button Grid.Column="0" Text="{x:Static lang:Language.thong_tin_du_an}" FontAttributes="Bold" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White"  Clicked="ShowInfo" HeightRequest="40" Padding="10,2" CornerRadius="10"/>
+                <Button Grid.Column="1" Text="{x:Static lang:Language.tim_kiem}" FontAttributes="Bold" BackgroundColor="{StaticResource NavigationPrimary}" HeightRequest="40" Padding="10,2"  CornerRadius="10" TextColor="White" Clicked="SearchClicked"/>
             </Grid>
 
             <controls:BottomModal x:Name="bottomModalProject" Title="{x:Static lang:Language.chon_du_an}" >

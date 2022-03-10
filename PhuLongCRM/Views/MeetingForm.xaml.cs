@@ -46,8 +46,18 @@ namespace PhuLongCRM.Views
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
-                    Lookup_Required.IsVisible = false;
-                    CustomerMapping.IsVisible = true;
+                    if (viewModel.Required == null)
+                    {
+                        List<OptionSetFilter> item = new List<OptionSetFilter>();
+                        item.Add(new OptionSetFilter
+                        {
+                            Val = ContactDetailPage.FromCustomer.Val,
+                            Label = ContactDetailPage.FromCustomer.Label,
+                            Title = ContactDetailPage.FromCustomer.Title,
+                            Selected = true
+                        });
+                        viewModel.Required = item;
+                    }
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                     Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
@@ -55,23 +65,29 @@ namespace PhuLongCRM.Views
                 else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
-                    Lookup_Required.IsVisible = false;
-                    CustomerMapping.IsVisible = true;
+                    if (viewModel.Required == null)
+                    {
+                        List<OptionSetFilter> item = new List<OptionSetFilter>();
+                        item.Add(new OptionSetFilter
+                        {
+                            Val = AccountDetailPage.FromCustomer.Val,
+                            Label = AccountDetailPage.FromCustomer.Label,
+                            Title = AccountDetailPage.FromCustomer.Title,
+                            Selected = true
+                        });
+                        viewModel.Required = item;
+                    }
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                 }
                 else
                 {
-                    Lookup_Required.IsVisible = true;
-                    CustomerMapping.IsVisible = false;
                     Lookup_Customer.IsVisible = true;
                     RegardingMapping.IsVisible = false;
                 }
             }
             else
             {
-                Lookup_Required.IsVisible = true;
-                CustomerMapping.IsVisible = false;
                 Lookup_Customer.IsVisible = true;
                 RegardingMapping.IsVisible = false;
             }

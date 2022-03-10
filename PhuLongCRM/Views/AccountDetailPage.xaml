@@ -100,19 +100,19 @@
                                     <Label Grid.Column="1" Text="{Binding singleAccount.bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                                    <Label Text="{Binding Source={x:Static lang:Language.ma_khach_hang},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                    <Label Text="{Binding Source={x:Static lang:Language.ma_khach_hang},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding singleAccount.bsd_customercode}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                    <Label Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                    <Label Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding Localization.Label}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                    <Label Text="{Binding Source={x:Static lang:Language.nhom},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                    <Label Text="{Binding Source={x:Static lang:Language.nhom},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding BusinessTypes}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
-                                    <Label Text="{Binding Source={x:Static lang:Language.dai_dien},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                    <Label Text="{Binding Source={x:Static lang:Language.dai_dien},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding PrimaryContact.bsd_fullname}" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NguoiDaiDien_Tapped"/>
@@ -121,11 +121,11 @@
                                 </Grid>
 
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="5">
-                                    <controls:FormLabel Text="{Binding Source={x:Static lang:Language.giay_phep_kinh_doanh},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                    <controls:FormLabel Text="{Binding Source={x:Static lang:Language.giay_phep_kinh_doanh},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <controls:FormLabelValue Text="{Binding singleAccount.bsd_registrationcode}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="6">
-                                    <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dien_thoai},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                    <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dien_thoai},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <controls:FormLabelValue Text="{Binding singleAccount.telephone1}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                 </Grid>
                             </Grid>
@@ -388,7 +388,7 @@
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
-                                        <Button Clicked="ShowMoreQuotation_Clicked" IsVisible="{Binding ShowMoreQuotation}" BorderColor="#1399D5" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="Xem Thêm" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                                        <Button Clicked="ShowMoreQuotation_Clicked" IsVisible="{Binding ShowMoreQuotation}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="Xem Thêm" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -416,7 +416,7 @@
                                                             <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                                 <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                             </telerikPrimitives:RadBorder>
-                                                            <Label Grid.Column="1" Text="{Binding ordernumber}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                            <Label Grid.Column="1" Text="{Binding ordernumber}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                                             <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
@@ -432,13 +432,13 @@
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
                                                             <Label Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                            <Label Text="{Binding totalamount}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
+                                                            <Label Text="{Binding totalamount_format}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                     </Grid>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
-                                        <Button Clicked="ShowMoreContract_Clicked" IsVisible="{Binding ShowMoreContract}" BorderColor="#1399D5" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="Xem Thêm" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                                        <Button Clicked="ShowMoreContract_Clicked" IsVisible="{Binding ShowMoreContract}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="Xem Thêm" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -466,7 +466,7 @@
                                                             <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statecode_color}" VerticalOptions="Start">
                                                                 <Label Grid.Column="0" Text="{Binding statecode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                             </telerikPrimitives:RadBorder>
-                                                            <Label Grid.Column="1" Text="{Binding subject}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                                            <Label Grid.Column="1" Text="{Binding subject}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                                         </Grid>
 
                                                         <Grid ColumnDefinitions="Auto,*">
@@ -490,7 +490,7 @@
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
-                                        <Button Clicked="ShowMoreCase_Clicked" IsVisible="{Binding ShowMoreCase}" BorderColor="#1399D5" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="Xem Thêm" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                                        <Button Clicked="ShowMoreCase_Clicked" IsVisible="{Binding ShowMoreCase}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="Xem Thêm" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -502,28 +502,24 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" BackgroundColor ="White" Padding="25,15" Margin="0,1" RowSpacing="10" HeightRequest="110">
+                                            <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
                                                 <Grid.GestureRecognizers>
                                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ListMandatorySecondary_Tapped" CommandParameter="{Binding .}"/>
                                                 </Grid.GestureRecognizers>
-                                                <Label Text="{Binding bsd_contact_name}" FontSize="15" FontAttributes="Bold" TextColor="#2196F3" Grid.Column="0"/>
-                                                <Grid ColumnDefinitions="Auto,*" Grid.Row="1" Grid.ColumnSpan="2">
-                                                    <Label Text="{Binding Source={x:Static lang:Language.tinh_trang},StringFormat='{0}: '}" FontSize="14" TextColor="#333333" Grid.Column="0"/>
-                                                    <Label Text="{Binding statuscode,Converter={StaticResource MandatorySecondaryStatusCodeConverter}}" LineBreakMode="TailTruncation" FontSize="14" TextColor="#333333" Grid.Column="1"/>
+                                                <Grid ColumnDefinitions="Auto,*" Grid.Row="0">
+                                                    <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
+                                                        <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                                    </telerikPrimitives:RadBorder>
+                                                    <Label Grid.Column="1" Text="{Binding bsd_contact_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                 </Grid>
-                                                <Grid ColumnDefinitions="Auto,*" Grid.Row="2" Grid.ColumnSpan="2">
-                                                    <Label Text="{Binding Source={x:Static lang:Language.so_dien_thoai},StringFormat='{0}: '}" FontSize="14" TextColor="#333333" Grid.Column="0"/>
-                                                    <Label Text="{Binding bsd_contacmobilephone}" LineBreakMode="TailTruncation" FontSize="14" TextColor="#333333" Grid.Column="1"/>
+                                                <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                                                    <Label Text="{Binding Source={x:Static lang:Language.so_dien_thoai},StringFormat='{0}:'}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                    <Label Text="{Binding bsd_contacmobilephone}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                 </Grid>
-                                                <Grid ColumnDefinitions="Auto,*" Grid.Row="3" Grid.ColumnSpan="2">
-                                                    <Label Text="{Binding Source={x:Static lang:Language.dia_chi},StringFormat='{0}: '}" FontSize="14" TextColor="#333333" Grid.Column="0"/>
-                                                    <Label Text="{Binding bsd_contactaddress}" LineBreakMode="TailTruncation" FontSize="14" TextColor="#333333" Grid.Column="1"/>
+                                                <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
+                                                    <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_hieu_luc},StringFormat='{0}:'}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                    <Label Text="{Binding bsd_effectivedateto,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                 </Grid>
-                                                <Label Text="&#xf057;" TextColor="#333333" FontFamily="FontAwesomeRegular" FontSize="Medium" Grid.Row="0" Grid.Column="1" IsVisible="{Binding is_employee}">
-                                                    <Label.GestureRecognizers>
-                                                        <TapGestureRecognizer Tapped="DeleteMandatory_Clicked" NumberOfTapsRequired="1" CommandParameter="{Binding .}" />
-                                                    </Label.GestureRecognizers>
-                                                </Label>
                                             </Grid>
                                         </ViewCell>
                                     </DataTemplate>

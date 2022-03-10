@@ -102,7 +102,7 @@ namespace PhuLongCRM.Views
             {
                 await viewModel.LoadFromProject(viewModel.UnitId);
                 string res = await viewModel.createQueueDraft(true, viewModel.UnitId);
-                topic.Text = viewModel.QueueFormModel.bsd_project_name +" - "+ DateTime.Now.ToString("dd/MM/yyyyy");
+                topic.Text = viewModel.QueueFormModel.bsd_project_name +" - "+ DateTime.Now.ToString("dd/MM/yyyy");
                 if (viewModel.QueueFormModel.bsd_project_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
                     OnCompleted?.Invoke(true);
                 else

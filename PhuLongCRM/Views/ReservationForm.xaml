@@ -329,17 +329,17 @@
 
                                         <controls:FormLabel Text="{x:Static lang:Language.dien_tich_xay_dung}" Margin="0,10,0,0"/>
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="#F2F2F2" HeightRequest="40">
-                                            <Label Text="{Binding Quote.bsd_constructionarea,StringFormat='{0:#,0.##}'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
+                                            <Label Text="{Binding Quote.bsd_constructionarea_format}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
                                         </telerikPrimitives:RadBorder>
 
                                         <controls:FormLabel Text="{x:Static lang:Language.dien_tich_su_dung}" Margin="0,10,0,0"/>
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="#F2F2F2" HeightRequest="40">
-                                            <Label Text="{Binding Quote.bsd_netusablearea,StringFormat='{0:#,0.##}'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
+                                            <Label Text="{Binding Quote.bsd_netusablearea_format}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
                                         </telerikPrimitives:RadBorder>
 
                                         <controls:FormLabel Text="{x:Static lang:Language.dien_tich_thuc_te}" Margin="0,10,0,0"/>
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="#F2F2F2" HeightRequest="40">
-                                            <Label Text="{Binding Quote.bsd_actualarea,StringFormat='{0:#,0.##}'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
+                                            <Label Text="{Binding Quote.bsd_actualarea_format}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
                                         </telerikPrimitives:RadBorder>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -371,17 +371,17 @@
 
                                         <controls:FormLabel Text="{x:Static lang:Language.tax_code}" Margin="0,10,0,0"/>
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="#F2F2F2" HeightRequest="40">
-                                            <Label Text="{Binding TaxCode.bsd_value,StringFormat='{0:#,0.##}%'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
+                                            <Label Text="{Binding TaxCode.bsd_value_format,StringFormat='{0}%'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
                                         </telerikPrimitives:RadBorder>
 
                                         <controls:FormLabel Text="{x:Static lang:Language.tien_giu_cho}" Margin="0,10,0,0"/>
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="#F2F2F2" HeightRequest="40">
-                                            <Label Text="{Binding Quote.bsd_bookingfee,StringFormat='{0:#,0.##} đ'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
+                                            <Label Text="{Binding Quote.bsd_bookingfee_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
                                         </telerikPrimitives:RadBorder>
 
                                         <controls:FormLabel Text="{x:Static lang:Language.tien_dat_coc}" Margin="0,10,0,0"/>
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="#F2F2F2" HeightRequest="40">
-                                            <Label Text="{Binding Quote.bsd_depositfee,StringFormat='{0:#,0.##} đ'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
+                                            <Label Text="{Binding Quote.bsd_depositfee_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
                                         </telerikPrimitives:RadBorder>
 
                                     </StackLayout>
@@ -429,47 +429,47 @@
                                     <StackLayout BackgroundColor="#eeeeee" Spacing="1">
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{x:Static lang:Language.gia_ban_goc}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.ListedPrice,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.ListedPrice_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{Binding Source={x:Static lang:Language.chiet_khau},StringFormat='(-) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.Discount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.Discount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{Binding Source={x:Static lang:Language.tong_tien_dkbg},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.HandoverAmount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.HandoverAmount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{x:Static lang:Language.gia_ban_truoc_thue}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.NetSellingPrice,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.NetSellingPrice_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{Binding Source={x:Static lang:Language.tong_gia_tri_qsdd},StringFormat='(-) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.LandValue,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.LandValue_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{Binding Source={x:Static lang:Language.tong_tien_thue_vat},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.TotalTax,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.TotalTax_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.MaintenanceFee,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.MaintenanceFee_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{x:Static lang:Language.gia_ban_sau_thue}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.NetSellingPriceAfterVAT,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.NetSellingPriceAfterVAT_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
                                             <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.TotalAmount,StringFormat='{0:#,0} đ'}" FontSize="15" TextColor="Red" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.TotalAmount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="Red" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -491,7 +491,7 @@
 
                                         <controls:FormLabel Text="{x:Static lang:Language.phi_quan_ly}" Margin="0,10,0,0"/>
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="#F2F2F2" HeightRequest="40">
-                                            <Label Text="{Binding Quote.bsd_managementfee,StringFormat='{0:#,0.##} đ'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
+                                            <Label Text="{Binding Quote.bsd_managementfee_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#666666" Margin="10,0" VerticalOptions="Center"/>
                                         </telerikPrimitives:RadBorder>
 
                                         <!--<controls:FormLabelRequired Text="Miễn giảm (Tháng)"/>

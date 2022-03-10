@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
@@ -68,10 +69,10 @@ namespace PhuLongCRM.ViewModels
         public AccountDetailPageViewModel()
         {
             BusinessTypeOptions = new ObservableCollection<OptionSet>();
-            BusinessTypeOptions.Add(new OptionSet("100000000", "Khách hàng"));
-            BusinessTypeOptions.Add(new OptionSet("100000001", "Đối tác"));
-            BusinessTypeOptions.Add(new OptionSet("100000002", "Đại lý"));
-            BusinessTypeOptions.Add(new OptionSet("100000003", "Chủ đầu tư"));
+            BusinessTypeOptions.Add(new OptionSet("100000000", Language.khach_hang));
+            BusinessTypeOptions.Add(new OptionSet("100000001", Language.doi_tac));
+            BusinessTypeOptions.Add(new OptionSet("100000002", Language.dai_ly));
+            BusinessTypeOptions.Add(new OptionSet("100000003", Language.chu_dau_tu));
 
             list_thongtinqueing = new ObservableCollection<QueueFormModel>();
             list_thongtinquotation = new ObservableCollection<ReservationListModel>();

@@ -25,6 +25,8 @@ namespace PhuLongCRM.Models
             }
         }
         public int statuscode { get; set; }
+        public string statuscode_format { get { return statuscode != 0 ? MandatorySecondaryStatusCodeData.GetMandatorySecondaryStatusById(statuscode.ToString())?.Name : null; } }
+        public string statuscode_color { get { return statuscode != 0 ? MandatorySecondaryStatusCodeData.GetMandatorySecondaryStatusById(statuscode.ToString())?.Background : "#808080"; } }
         public string ownerid { get; set; }
 
         public string _bsd_jobtitlevn;
@@ -64,5 +66,6 @@ namespace PhuLongCRM.Models
         public string bsd_descriptionsen { get { return _bsd_descriptionsen; } set { _bsd_descriptionsen = value; OnPropertyChanged(nameof(bsd_descriptionsen)); } }
         public bool is_employee { get; set; }
         public Guid bsd_employeeid { get; set; }
+
     }
 }

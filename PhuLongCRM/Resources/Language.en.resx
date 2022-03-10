@@ -2586,4 +2586,28 @@
   <data name="gia_tri_qsdd_m" xml:space="preserve">
     <value>Land value deduction/sqm</value>
   </data>
+  <data name="chon_dia_chi" xml:space="preserve">
+    <value>Choose address</value>
+  </data>
+  <data name="inactive_sts" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="ms_active_sts" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="ms_applying_sts" xml:space="preserve">
+    <value>Applying</value>
+  </data>
+  <data name="ms_cancel_sts" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ms_inactive_sts" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="da_chon" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="dieu_kien_ban_giao_khong_phu_hop_voi_unit_type" xml:space="preserve">
+    <value>Handover Condition is not suitable with Unit type. Please check again or choose another handover condition.</value>
+  </data>
 </root>

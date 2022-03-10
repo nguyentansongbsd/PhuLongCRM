@@ -156,7 +156,7 @@
                                             <FormattedString>
                                                 <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
                                                 <Span Text=" "/>
-                                                <Span Text="{Binding UnitInfo.bsd_constructionarea,StringFormat='{0:#,0.#0}'}" FontAttributes="Bold"/>
+                                                <Span Text="{Binding UnitInfo.bsd_constructionarea_format}" FontAttributes="Bold"/>
                                                 <Span Text=" "/>
                                                 <Span Text="{x:Static lang:Language.sqm}"/>
                                             </FormattedString>
@@ -236,22 +236,22 @@
 
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{Binding Source={x:Static lang:Language.bien_do_chenh_lech_dien_tich},StringFormat='% {0} (+/-)'}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_areavariance,StringFormat='{0:#,0.00}'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_areavariance_format}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.dien_tich_xay_dung}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_constructionarea,StringFormat='{0:#,0.#0}'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_constructionarea_format}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.phi_giu_cho}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_queuingfee,Converter={StaticResource DecimalToVndConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_queuingfee_format,StringFormat='{0} đ'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
 
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.phi_dat_coc}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_depositamount,Converter={StaticResource DecimalToVndConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_depositamount_format,StringFormat='{0} đ'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -267,19 +267,19 @@
                                     <StackLayout BackgroundColor="#eeeeee" Spacing="1">
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.gia_tri_qsdd_m}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_landvalueofunit,Converter={StaticResource DecimalToVndConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_landvalueofunit_format,StringFormat='{0} đ'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.tong_gia_tri_qsdd}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_landvalue,Converter={StaticResource DecimalToVndConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_landvalue_format,StringFormat='{0} đ'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{Binding Source={x:Static lang:Language.thue},StringFormat='{0} (%)'}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_taxpercent,StringFormat='{0:#,0.00}%'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_taxpercent_format,StringFormat='{0}%'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.thue}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_vat,Converter={StaticResource DecimalToVndConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_vat_format,StringFormat='{0} đ'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -299,11 +299,11 @@
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='{0} (%)'}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_maintenancefeespercent,StringFormat='{0:#,0.00}%'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_maintenancefeespercent_format,StringFormat='{0}%'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.phi_bao_tri}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_maintenancefees,Converter={StaticResource DecimalToVndConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_maintenancefees_format,StringFormat='{0} đ'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.so_thang_tinh_phu_quan_ly}" FontSize="15" TextColor="#333333" />
@@ -311,11 +311,11 @@
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{x:Static lang:Language.phi_quan_ly_thang_m2}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_managementamountmonth,Converter={StaticResource DecimalToVndConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_managementamountmonth_format,StringFormat='{0} đ'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" BackgroundColor="White" Padding="17,15">
                                             <Label Text="{Binding Source={x:Static lang:Language.dieu_kien_ban_giao},StringFormat='{0} (%)'}" FontSize="15" TextColor="#333333" />
-                                            <Label Text="{Binding UnitInfo.bsd_handovercondition,StringFormat='{0:#,0.00}%'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
+                                            <Label Text="{Binding UnitInfo.bsd_handovercondition_format,StringFormat='{0}%'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" />
                                         </StackLayout>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -347,7 +347,7 @@
                                                             <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                                 <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                             </telerikPrimitives:RadBorder>
-                                                            <Label Grid.Column="1" Text="{Binding name}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                            <Label Grid.Column="1" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                         <Label Grid.Row="1" FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
@@ -381,7 +381,7 @@
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
-                                        <Button Clicked="ShowMoreDanhSachDatCho_Clicked" IsVisible="{Binding ShowMoreDanhSachDatCho}" BorderColor="#1399D5" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                                        <Button Clicked="ShowMoreDanhSachDatCho_Clicked" IsVisible="{Binding ShowMoreDanhSachDatCho}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -432,7 +432,7 @@
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
-                                        <Button Clicked="ShowMoreBangTinhGia_Clicked" IsVisible="{Binding ShowMoreBangTinhGia}" BorderColor="#1399D5" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                                        <Button Clicked="ShowMoreBangTinhGia_Clicked" IsVisible="{Binding ShowMoreBangTinhGia}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -512,7 +512,7 @@
                                                             <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                                 <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                             </telerikPrimitives:RadBorder>
-                                                            <Label Grid.Column="1" Text="{Binding ordernumber}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                            <Label Grid.Column="1" Text="{Binding ordernumber}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                                             <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
@@ -528,13 +528,13 @@
                                                         </Grid>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
                                                             <Label Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                            <Label Text="{Binding totalamount}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
+                                                            <Label Text="{Binding totalamount_format}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                                         </Grid>
                                                     </Grid>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
-                                        <Button Clicked="ShowMoreDanhSachHopDong_Clicked" IsVisible="{Binding ShowMoreDanhSachHopDong}" BorderColor="#1399D5" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                                        <Button Clicked="ShowMoreDanhSachHopDong_Clicked" IsVisible="{Binding ShowMoreDanhSachHopDong}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>

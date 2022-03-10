@@ -181,22 +181,28 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='bsd_fullname' alias='primarycontactname'/>
                                     </link-entity>                                
                                    <link-entity name='new_district' from='new_districtid' to='bsd_district' link-type='outer' alias='af' >
-                                        <attribute name='new_name' alias='district_name' />                                       
+                                        <attribute name='new_name' alias='district_name' />
+                                        <attribute name='bsd_nameen'  alias='district_name_en'/>
                                     </link-entity>
                                      <link-entity name='new_province' from='new_provinceid' to='bsd_province' link-type='outer' alias='ag'>
                                         <attribute name='new_name' alias='province_name' />                                       
+                                        <attribute name='bsd_nameen'  alias='province_name_en'/>
                                     </link-entity>
                                    <link-entity name='bsd_country' from='bsd_countryid' to='bsd_nation' link-type='outer' alias='as'>
                                         <attribute name='bsd_name' alias='country_name' />                                      
+                                        <attribute name='bsd_nameen'  alias='country_name_en'/>
                                     </link-entity>
                                     <link-entity name='bsd_country' from='bsd_countryid' to='bsd_permanentnation' link-type='outer' alias='ae' >
                                         <attribute name='bsd_name' alias='permanentnation_name' /> 
+                                        <attribute name='bsd_nameen'  alias='permanentnation_name_en'/>
                                     </link-entity>
                                     <link-entity name='new_province' from='new_provinceid' to='bsd_permanentprovince' link-type='outer' alias='afa' >
                                         <attribute name='new_name' alias='permanentprovince_name' />
+                                        <attribute name='bsd_nameen'  alias='permanentprovince_name_en'/>
                                     </link-entity>
                                     <link-entity name='new_district' from='new_districtid' to='bsd_permanentdistrict' link-type='outer' alias='agt' >
                                         <attribute name='new_name' alias='permanentdistrict_name' />  
+                                        <attribute name='bsd_nameen'  alias='permanentdistrict_name_en'/>
                                     </link-entity>
                                     <filter type='and'>
                                         <condition attribute='accountid' operator='eq' value='{" + accountid + @"}' />
@@ -217,11 +223,14 @@ namespace PhuLongCRM.ViewModels
             Address1 = new AddressModel
             {
                 country_id = singleAccount._bsd_country_value,
-                country_name = singleAccount.country_name,
+                country_name = !string.IsNullOrWhiteSpace(singleAccount.country_name_en) && UserLogged.Language == "en" ? singleAccount.country_name_en : singleAccount.country_name,
+                country_name_en = singleAccount.country_name_en,
                 province_id = singleAccount._bsd_province_value,
-                province_name = singleAccount.province_name,
+                province_name = !string.IsNullOrWhiteSpace(singleAccount.province_name_en) && UserLogged.Language == "en" ? singleAccount.province_name_en : singleAccount.province_name,
+                province_name_en = singleAccount.province_name_en,
                 district_id = singleAccount._bsd_district_value,
-                district_name = singleAccount.district_name,
+                district_name = !string.IsNullOrWhiteSpace(singleAccount.district_name_en) && UserLogged.Language == "en" ? singleAccount.district_name_en : singleAccount.district_name,
+                district_name_en = singleAccount.district_name_en,
                 address = singleAccount.bsd_address,
                 lineaddress = singleAccount.bsd_housenumberstreet,
                 //address_en = singleAccount.bsd_diachi,
@@ -231,11 +240,14 @@ namespace PhuLongCRM.ViewModels
             Address2 = new AddressModel
             {
                 country_id = singleAccount._bsd_permanentnation_value,
-                country_name = singleAccount.permanentnation_name,
+                country_name = !string.IsNullOrWhiteSpace(singleAccount.permanentnation_name_en) && UserLogged.Language == "en" ? singleAccount.permanentnation_name_en : singleAccount.permanentnation_name,
+                country_name_en = singleAccount.permanentnation_name_en,
                 province_id = singleAccount._bsd_permanentprovince_value,
-                province_name = singleAccount.permanentprovince_name,
+                province_name = !string.IsNullOrWhiteSpace(singleAccount.permanentprovince_name_en) && UserLogged.Language == "en" ? singleAccount.permanentprovince_name_en : singleAccount.permanentprovince_name,
+                province_name_en = singleAccount.permanentprovince_name_en,
                 district_id = singleAccount._bsd_permanentdistrict_value,
-                district_name = singleAccount.permanentdistrict_name,
+                district_name = !string.IsNullOrWhiteSpace(singleAccount.permanentdistrict_name_en) && UserLogged.Language == "en" ? singleAccount.permanentdistrict_name_en : singleAccount.permanentdistrict_name,
+                district_name_en = singleAccount.permanentdistrict_name_en,
                 address = singleAccount.bsd_permanentaddress1,
                 lineaddress = singleAccount.bsd_permanenthousenumberstreetwardvn
             };
@@ -324,20 +336,26 @@ namespace PhuLongCRM.ViewModels
 
             if (Address1 != null)
             {
-                data["bsd_housenumberstreet"] = Address1.lineaddress; //bsd_housenumberstreet line1
-                data["bsd_street"] = Address1.lineaddress_en;
-
-                data["bsd_address"] = Address1.address; //bsd_address ad1
-                data["bsd_diachi"] = Address1.address_en; //bsd_diachi ad1 en
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
+                    data["bsd_housenumberstreet"] = Address1.lineaddress; //bsd_housenumberstreet line1
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress_en))
+                    data["bsd_street"] = Address1.lineaddress_en;
+                if (!string.IsNullOrWhiteSpace(Address1.address))
+                    data["bsd_address"] = Address1.address; //bsd_address ad1
+                if (!string.IsNullOrWhiteSpace(Address1.address_en))
+                    data["bsd_diachi"] = Address1.address_en; //bsd_diachi ad1 en
             }
 
             if (Address2 != null)
             {
-                data["bsd_permanenthousenumberstreetwardvn"] = Address2.lineaddress; //bsd_permanenthousenumberstreetwardvn l2
-                data["bsd_permanenthousenumberstreetward"] = Address2.lineaddress_en;
-
-                data["bsd_permanentaddress1"] = Address2.address; //bsd_permanentaddress1 ad2
-                data["bsd_diachithuongtru"] = Address2.address_en; //bsd_diachithuongtru ad2 en
+                if (!string.IsNullOrWhiteSpace(Address2.lineaddress))
+                    data["bsd_permanenthousenumberstreetwardvn"] = Address2.lineaddress; //bsd_permanenthousenumberstreetwardvn l2
+                if (!string.IsNullOrWhiteSpace(Address2.lineaddress_en))
+                    data["bsd_permanenthousenumberstreetward"] = Address2.lineaddress_en;
+                if (!string.IsNullOrWhiteSpace(Address2.address))
+                    data["bsd_permanentaddress1"] = Address2.address; //bsd_permanentaddress1 ad2
+                if (!string.IsNullOrWhiteSpace(Address2.address_en))
+                    data["bsd_diachithuongtru"] = Address2.address_en; //bsd_diachithuongtru ad2 en
             }
 
             if (singleAccount._primarycontactid_value == null)

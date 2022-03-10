@@ -474,7 +474,6 @@ namespace PhuLongCRM.ViewModels
                 await LoadProvinceByName();
             }        
         }
-
         public async Task LoadProvinceByName()
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -494,9 +493,7 @@ namespace PhuLongCRM.ViewModels
                 this.Province = result.value.FirstOrDefault();
                 await LoadDistrictByName();
             }          
-        }
-
-       
+        }     
         public async Task LoadDistrictByName()
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>

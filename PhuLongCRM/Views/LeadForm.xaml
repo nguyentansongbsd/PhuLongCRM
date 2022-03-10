@@ -153,7 +153,7 @@
                 </StackLayout>
             </ScrollView>
             <StackLayout AbsoluteLayout.LayoutBounds="0,1,1,60" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White">
-                <Button x:Name="btn_save_lead" Text="{x:Static lang:Language.tao_khach_hang}" Clicked="SaveLead_Clicked" Margin="10" Padding="10,5" HeightRequest="40" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White"/>
+                <Button x:Name="btn_save_lead" Text="{x:Static lang:Language.tao_khach_hang}" FontAttributes="Bold" Clicked="SaveLead_Clicked" Margin="10" Padding="10,5" HeightRequest="40" CornerRadius="10" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White"/>
             </StackLayout>
             <controls:CenterModal x:Name="centerModal"/>
             <controls:BottomModal x:Name="BottomModal"/>

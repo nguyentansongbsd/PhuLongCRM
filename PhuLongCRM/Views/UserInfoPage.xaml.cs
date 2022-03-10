@@ -29,32 +29,8 @@ namespace PhuLongCRM.Views
         {
             this.BindingContext = viewModel = new UserInfoPageViewModel();
             centerModelPassword.Body.BindingContext = viewModel;
-            centerModalContactAddress.Body.BindingContext = viewModel;
             await viewModel.LoadContact();
-            SetPreOpen();
             LoadingHelper.Hide();
-        }
-
-        private void SetPreOpen()
-        {
-            lookUpContacAddressCountry.PreOpenAsync = async () =>
-            {
-                LoadingHelper.Show();
-                await viewModel.LoadCountryForLookup();
-                LoadingHelper.Hide();
-            };
-            lookUpContactAddressProvice.PreOpenAsync=async () =>
-            {
-                LoadingHelper.Show();
-                await viewModel.LoadProvincesForLookup(viewModel.AddressCountryContact);
-                LoadingHelper.Hide();
-            };
-            lookUpContactAddressDistrict.PreOpenAsync = async () => {
-                LoadingHelper.Show();
-                await viewModel.LoadDistrictForLookup(viewModel.AddressStateProvinceContact);
-                LoadingHelper.Hide();
-            };
-
         }
 
         private async void ChangePassword_Tapped(object sender, EventArgs e)
@@ -94,6 +70,23 @@ namespace PhuLongCRM.Views
 
         private async void SaveChangedPassword_Clicked(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(viewModel.OldPassword))
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_mat_khau_cu);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(viewModel.NewPassword))
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_mat_khau_moi);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(viewModel.ConfirmNewPassword))
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_xac_nhan_mat_khau_moi);
+                return;
+            }
+
             if (viewModel.OldPassword.Contains(" "))
             {
                 ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duoc_chua_ky_tu_khoan_trang);
@@ -112,27 +105,9 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(viewModel.OldPassword))
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_mat_khau_cu);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(viewModel.NewPassword))
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_mat_khau_moi);
-                return;
-            }
-
             if (viewModel.NewPassword.Length < 6)
             {
                 ToastMessageHelper.ShortMessage(Language.mat_khau_it_nhat_6_ky_tu);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(viewModel.ConfirmNewPassword))
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_xac_nhan_mat_khau_moi);
                 return;
             }
 
@@ -168,76 +143,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.doi_mat_khau_that_bai);
             }
-        }
-
-        private async void ChangeAddress_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            if (viewModel.ContactModel._bsd_country_value != Guid.Empty)
-            {
-                viewModel.AddressCountryContact = new LookUp() { Id = viewModel.ContactModel._bsd_country_value, Name = viewModel.ContactModel.bsd_country_label };
-            }
-            else
-            {
-                viewModel.AddressCountryContact = null;
-            }
-
-            if (viewModel.ContactModel._bsd_province_value != Guid.Empty)
-            {
-                viewModel.AddressStateProvinceContact = new LookUp() { Id = viewModel.ContactModel._bsd_province_value, Name = viewModel.ContactModel.bsd_province_label };
-            }
-            else
-            {
-                viewModel.AddressStateProvinceContact = null;
-            }
-
-            if (viewModel.ContactModel._bsd_district_value != Guid.Empty)
-            {
-                viewModel.AddressCityContact = new LookUp() { Id = viewModel.ContactModel._bsd_district_value, Name = viewModel.ContactModel.bsd_district_label };
-            }
-            else
-            {
-                viewModel.AddressCityContact = null;
-            }
-
-            viewModel.AddressLine1Contact = viewModel.ContactModel.bsd_housenumberstreet;
-            viewModel.AddressPostalCodeContact = viewModel.ContactModel.bsd_postalcode;
-            await centerModalContactAddress.Show();
-            LoadingHelper.Hide();
-        }
-
-        private async void ContactAddressCountry_Changed(object sender, EventArgs e)
-        {
-            if (viewModel.list_province_lookup.Count != 0) return;
-            await viewModel.LoadProvincesForLookup(viewModel.AddressCountryContact);
-        }
-
-        private async void ContactAddressProvince_Changed(object sender, EventArgs e)
-        {
-            if (viewModel.list_district_lookup.Count != 0) return;
-            await viewModel.LoadDistrictForLookup(viewModel.AddressStateProvinceContact);
-        }
-
-        private async void ConfirmContactAddress_Clicked(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(viewModel.AddressLine1Contact))
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_nha_duong_phuong);
-                return;
-            }
-
-            LoadingHelper.Show();
-            viewModel.ContactModel.bsd_housenumberstreet = viewModel.AddressLine1Contact;
-            viewModel.ContactModel.bsd_postalcode = viewModel.AddressPostalCodeContact;
-            viewModel.ContactModel._bsd_country_value = viewModel.AddressCountryContact.Id;
-            viewModel.ContactModel.bsd_country_label = viewModel.AddressCountryContact?.Name;
-            viewModel.ContactModel._bsd_province_value = viewModel.AddressStateProvinceContact.Id;
-            viewModel.ContactModel.bsd_province_label = viewModel.AddressStateProvinceContact?.Name;
-            viewModel.ContactModel._bsd_district_value = viewModel.AddressCityContact.Id;
-            viewModel.ContactModel.bsd_district_label = viewModel.AddressCityContact?.Name;
-            viewModel.SetAddress();
-            await centerModalContactAddress.Hide();
-            LoadingHelper.Hide();
         }
 
         private async void SaveUserInfor_Clicked(object sender, EventArgs e)

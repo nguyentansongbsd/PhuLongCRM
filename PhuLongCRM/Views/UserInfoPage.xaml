@@ -66,14 +66,7 @@
                     <controls:LookUp NameDisplay="Label" BottomModal="{Reference LookUpModal}" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi}"/>
-                    <Grid>
-                        <controls:MainEntry Text="{Binding Address}" ShowClearButton="False" Placeholder="{x:Static lang:Language.dia_chi}"/>
-                        <StackLayout>
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ChangeAddress_Tapped"/>
-                            </StackLayout.GestureRecognizers>
-                        </StackLayout>
-                    </Grid>
+                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi}" BottomModal="{Reference LookUpModal}" SelectedItem="{Binding AddressContact}" CenterModal="{Reference CenterModal}"/>
 
                 </StackLayout>
             </ScrollView>
@@ -99,32 +92,7 @@
                 </controls:CenterModal.Footer>
             </controls:CenterModal>
 
-            <controls:CenterModal x:Name="centerModalContactAddress" Title="{x:Static lang:Language.dia_chi}">
-                <controls:CenterModal.Body>
-                    <ScrollView>
-                        <StackLayout Margin="10">
-                            <controls:FormLabel Text="{x:Static lang:Language.quoc_gia}"/>
-                            <controls:LookUp x:Name="lookUpContacAddressCountry" Placeholder="{x:Static lang:Language.chon_quoc_gia}" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressCountryContact}" ItemsSource="{Binding list_country_lookup}" SelectedItemChange="ContactAddressCountry_Changed"/>
-
-                            <controls:FormLabel Text="{x:Static lang:Language.zip_code}"/>
-                            <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_zip_code}" Text="{Binding AddressPostalCodeContact}"/>
-
-                            <controls:FormLabel Text="{x:Static lang:Language.tinh_thanh}"/>
-                            <controls:LookUp x:Name="lookUpContactAddressProvice" Placeholder="{x:Static lang:Language.chon_tinh_thanh}" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressStateProvinceContact}" ItemsSource="{Binding list_province_lookup}" SelectedItemChange="ContactAddressProvince_Changed"/>
-
-                            <controls:FormLabel Text="{x:Static lang:Language.quan_huyen}"/>
-                            <controls:LookUp x:Name="lookUpContactAddressDistrict" Placeholder="{x:Static lang:Language.chon_quan_huyen}" BottomModal="{Reference LookUpModal}" NameDisplay="Name" SelectedItem="{Binding AddressCityContact}" ItemsSource="{Binding list_district_lookup}"/>
-
-                            <controls:FormLabelRequired Text="{x:Static lang:Language.so_nha_duong_phuong}"/>
-                            <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_nha_duong_phuong}" Text="{Binding AddressLine1Contact}"/>
-                        </StackLayout>
-                    </ScrollView>
-                </controls:CenterModal.Body>
-                <controls:CenterModal.Footer>
-                    <Button Grid.Column="1" Text="{x:Static lang:Language.xac_nhan}" Margin="10" Clicked="ConfirmContactAddress_Clicked" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" BorderWidth="0" CornerRadius="10"/>
-                </controls:CenterModal.Footer>
-            </controls:CenterModal>
-
+            <controls:CenterModal x:Name="CenterModal" />
             <controls:BottomModal x:Name="LookUpModal"/>
         </AbsoluteLayout>
     </ContentPage.Content>

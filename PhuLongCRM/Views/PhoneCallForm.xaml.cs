@@ -52,26 +52,28 @@ namespace PhuLongCRM.Views
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
                     viewModel.CallTo = ContactDetailPage.FromCustomer;
-                    Lookup_CallTo.IsVisible = false;
+                    viewModel.Customer = ContactDetailPage.FromCustomer;
+                    Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
                 }
                 else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
                 {
                     viewModel.CallTo = AccountDetailPage.FromCustomer;
-                    Lookup_CallTo.IsVisible = false;
+                    viewModel.Customer = AccountDetailPage.FromCustomer;
+                    Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
                 }
                 else
                 {
-                    Lookup_CallTo.IsVisible = true;
+                    Lookup_Customer.IsVisible = true;
                     CustomerMapping.IsVisible = false;
                 }
             }
             else
             {
-                Lookup_CallTo.IsVisible = true;
+                Lookup_Customer.IsVisible = true;
                 CustomerMapping.IsVisible = false;
             }
         }
@@ -196,7 +198,9 @@ namespace PhuLongCRM.Views
         {
             if (date != null && date1 != null )
             {
-                int result = DateTime.Compare(date.Value, date1.Value);
+                DateTime timeStart = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, date.Value.Hour, date.Value.Minute, 0);
+                DateTime timeEnd = new DateTime(date1.Value.Year, date1.Value.Month, date1.Value.Day, date1.Value.Hour, date1.Value.Minute, 0);
+                int result = DateTime.Compare(timeStart, timeEnd);
                 if (result < 0)
                     return -1;
                 else if (result == 0)

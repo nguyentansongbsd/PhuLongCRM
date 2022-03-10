@@ -378,6 +378,15 @@ namespace PhuLongCRM.ViewModels
             this.TotalReservation.MaintenanceFee = this.Quote.bsd_freightamount;
             this.TotalReservation.NetSellingPriceAfterVAT = this.Quote.bsd_netsellingpriceaftervat;
             this.TotalReservation.TotalAmount = this.Quote.totalamount;
+            this.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(TotalReservation.ListedPrice);
+            this.TotalReservation.Discount_format = StringFormatHelper.FormatCurrency(TotalReservation.Discount);
+            this.TotalReservation.HandoverAmount_format = StringFormatHelper.FormatCurrency(TotalReservation.HandoverAmount);
+            this.TotalReservation.NetSellingPrice_format = StringFormatHelper.FormatCurrency(TotalReservation.NetSellingPrice);
+            this.TotalReservation.LandValue_format = StringFormatHelper.FormatCurrency(TotalReservation.LandValue);
+            this.TotalReservation.TotalTax_format = StringFormatHelper.FormatCurrency(TotalReservation.TotalTax);
+            this.TotalReservation.MaintenanceFee_format = StringFormatHelper.FormatCurrency(TotalReservation.MaintenanceFee);
+            this.TotalReservation.NetSellingPriceAfterVAT_format = StringFormatHelper.FormatCurrency(TotalReservation.NetSellingPriceAfterVAT);
+            this.TotalReservation.TotalAmount_format = StringFormatHelper.FormatCurrency(TotalReservation.TotalAmount);
         }
 
         // Tinh tien

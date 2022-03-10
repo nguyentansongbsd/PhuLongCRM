@@ -193,7 +193,7 @@
                                                                     </MultiBinding>
                                                                 </Label.Text>
                                                             </Label>
-                                                            <Label Text="{Binding price,StringFormat='{0:0,0 đ}'}" IsVisible="{Binding _bsd_phaseslaunchid_value, Converter={StaticResource HidePriceOnDirectSaleConverter}}" TextColor="White" FontFamily="FontRobotoBold" FontSize="20" HorizontalTextAlignment="Center" />
+                                                            <Label Text="{Binding price_format,StringFormat='{0} đ'}" IsVisible="{Binding _bsd_phaseslaunchid_value, Converter={StaticResource HidePriceOnDirectSaleConverter}}" TextColor="White" FontFamily="FontRobotoBold" FontSize="20" HorizontalTextAlignment="Center" />
                                                         </StackLayout>
                                                     </telerikPrimitives:RadBorder>
                                                 </DataTemplate>
@@ -242,7 +242,7 @@
                                 </Label>
                             </Grid>
                             <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding Unit._bsd_phaseslaunchid_value, Converter={StaticResource HidePriceOnDirectSaleConverter}}">
-                                <Label Grid.Column="0" Text="{Binding Unit.price,Converter={StaticResource DecimalToVndConverter}}" FontSize="16" FontAttributes="Bold" TextColor="#790311"/>
+                                <Label Grid.Column="0" Text="{Binding Unit.price_format,StringFormat='{0} đ'}" FontSize="16" FontAttributes="Bold" TextColor="#790311"/>
 
                                 <StackLayout Grid.Column="1" IsVisible="{Binding Unit.has_event}" HorizontalOptions="End" Orientation="Horizontal" Margin="0,0,8,0">
                                     <Label Text="{x:Static lang:Language.su_kien}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" TextColor="#FEC93D"/>
@@ -259,7 +259,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
                                         <Span Text=" "/>
-                                        <Span Text="{Binding Unit.bsd_constructionarea,StringFormat='{0:#,0.#0} '}"/>
+                                        <Span Text="{Binding Unit.bsd_constructionarea_format}"/>
                                         <Span Text=" "/>
                                         <Span Text="{x:Static lang:Language.sqm}"/>
                                     </FormattedString>
