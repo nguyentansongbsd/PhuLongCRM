@@ -39,6 +39,9 @@ namespace PhuLongCRM.Models
         public int statuscode { get; set; }
         public string statuscode_label { get; set; }
 
+        public string statuscode_format { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString()).Name; } }
+        public string statuscode_color { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString()).BackGroundColor; } }
+
         public string bsd_queuenumber { get; set; }
         public decimal? estimatedvalue { get; set; }
         public string estimatedvalue_format => estimatedvalue.HasValue ? string.Format("{0:#,0.#}", estimatedvalue.Value) + " đ" : null;

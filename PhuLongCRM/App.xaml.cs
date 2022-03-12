@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Globalization;
+using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using PhuLongCRM.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,7 +13,10 @@ namespace PhuLongCRM
         public App()
         {
             InitializeComponent();
+            CultureInfo cultureInfo = new CultureInfo(UserLogged.Language);
+            Language.Culture = cultureInfo;
             MainPage = new Login();
+
         }
 
         protected override void OnStart()

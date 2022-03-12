@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -22,7 +23,7 @@ namespace PhuLongCRM.ViewModels
         public int total { get => _total; set { _total = value; totalChecked = numberChecked.ToString() + "/" + value.ToString(); OnPropertyChanged(nameof(total)); } }
 
         private string _totalChecked;
-        public string totalChecked { get => _totalChecked; set { _totalChecked = "Đã chọn " + value; OnPropertyChanged(nameof(totalChecked)); } }
+        public string totalChecked { get => _totalChecked; set { _totalChecked = Language.da_chon + " " + value; OnPropertyChanged(nameof(totalChecked)); } }
 
         public DanhBaViewModel()
         {

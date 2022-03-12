@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -108,7 +109,7 @@ namespace PhuLongCRM.Controls
                 name = this.SelectedItem.GetType().GetProperty(this.NameDisplay)?.GetValue(this.SelectedItem, null)?.ToString();
             }
 
-            if (name != null && name != "Tất cả" && !name.Contains("Tất cả"))
+            if (name != null && name != Language.tat_ca && !name.Contains(Language.tat_ca))
             {
                 lblText.Text = name;
                 lblText.FontFamily = "SegoeBold";
@@ -144,7 +145,6 @@ namespace PhuLongCRM.Controls
             StackLayout stSearchBar = new StackLayout();
 
             searchBar = new SearchBar();
-            searchBar.Placeholder = "Từ khoá";
             searchBar.TextChanged += SearchBar_TextChangedEventArgs;
 
             SearchBarFrame searchBarFrame = new SearchBarFrame();
@@ -232,7 +232,7 @@ namespace PhuLongCRM.Controls
             if(Multiple)
             {
                 var item = e.Item as OptionSet;
-                if(item.Label != null && item.Label == "Tất cả" && item.Label.Contains("Tất cả") && item.Selected == false)
+                if(item.Label != null && item.Label == Language.tat_ca && item.Label.Contains(Language.tat_ca) && item.Selected == false)
                 {
                     foreach(var i in ItemsSource.Cast<OptionSet>().ToList())
                     {
@@ -242,7 +242,7 @@ namespace PhuLongCRM.Controls
                 
                 var selectedAll = ItemsSource.Cast<OptionSet>().ToList().Where(x => x.Val=="-1").FirstOrDefault();
 
-                if (item.Label != null && item.Label != "Tất cả" && !item.Label.Contains("Tất cả") && selectedAll != null && selectedAll.Selected == true)
+                if (item.Label != null && item.Label != Language.tat_ca && !item.Label.Contains(Language.tat_ca) && selectedAll != null && selectedAll.Selected == true)
                 {
                     selectedAll.Selected = false;
                 }

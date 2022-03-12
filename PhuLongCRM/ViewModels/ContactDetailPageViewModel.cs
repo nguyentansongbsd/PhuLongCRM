@@ -60,10 +60,7 @@ namespace PhuLongCRM.ViewModels
         public string frontImage { get => _frontImage; set { _frontImage = value; OnPropertyChanged(nameof(frontImage)); } }
 
         private string _behindImage;
-        public string behindImage { get => _behindImage; set { _behindImage = value; OnPropertyChanged(nameof(behindImage)); } }
-
-        private OptionSet _customerType;
-        public OptionSet CustomerType { get => _customerType; set { _customerType = value; OnPropertyChanged(nameof(CustomerType)); } }
+        public string behindImage { get => _behindImage; set { _behindImage = value; OnPropertyChanged(nameof(behindImage)); } }        
 
         private bool _showCMND;
         public bool ShowCMND { get => _showCMND; set { _showCMND = value; OnPropertyChanged(nameof(ShowCMND)); } }
@@ -220,8 +217,12 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
                                            <value>100000000</value>
-                                           <value>100000001</value>
-                                           <value>4</value>
+                                            <value>100000001</value>
+                                            <value>100000006</value>
+                                            <value>861450001</value>
+                                            <value>861450002</value>
+                                            <value>4</value>                
+                                            <value>3</value>
                                        </condition>
                                        <filter type='and'>
                                            <condition attribute='statuscode' operator='in'>

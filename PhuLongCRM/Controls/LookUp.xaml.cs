@@ -24,7 +24,7 @@ namespace PhuLongCRM.Controls
             set { SetValue(SelectedItemProperty, value); }
         }
 
-        public static readonly BindableProperty NameDipslayProperty = BindableProperty.Create(nameof(SelectedItem), typeof(string), typeof(LookUp), null, BindingMode.TwoWay, propertyChanged: DisplayNameChang);
+        public static readonly BindableProperty NameDipslayProperty = BindableProperty.Create(nameof(NameDisplay), typeof(string), typeof(LookUp), null, BindingMode.TwoWay, propertyChanged: DisplayNameChang);
 
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(LookUp), null, BindingMode.TwoWay, null);
         public IEnumerable ItemsSource { get => (IEnumerable)GetValue(ItemsSourceProperty); set { SetValue(ItemsSourceProperty, value); } }

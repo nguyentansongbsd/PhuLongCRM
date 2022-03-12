@@ -1,4 +1,5 @@
 ﻿using System;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 
 namespace PhuLongCRM.Models
@@ -19,13 +20,13 @@ namespace PhuLongCRM.Models
             {
                 switch (value)
                 {
-                    case 0: statusLabel = "Đang tải...";
+                    case 0: statusLabel = Language.dang_tai;
                         statusColor = Xamarin.Forms.Color.Black;
                         break;
-                    case 1: statusLabel = "Thành công";
+                    case 1: statusLabel = Language.thong_bao_thanh_cong;
                         statusColor = Xamarin.Forms.Color.Green;
                         break;
-                    case 2: statusLabel = "Thất bại";
+                    case 2: statusLabel = Language.thong_bao_that_bai;
                         statusColor = Xamarin.Forms.Color.Red;
                         break;
                 }
@@ -35,7 +36,7 @@ namespace PhuLongCRM.Models
             } }
         
         private string _statusLabel;
-        public string statusLabel { get => _statusLabel == null ? "Đang tải..." : _statusLabel; set { _statusLabel = value; OnPropertyChanged(nameof(statusLabel)); } }
+        public string statusLabel { get => _statusLabel == null ? Language.dang_tai : _statusLabel; set { _statusLabel = value; OnPropertyChanged(nameof(statusLabel)); } }
 
         private Xamarin.Forms.Color _statusColor;
         public Xamarin.Forms.Color statusColor { get => _statusColor; set { _statusColor = value;  OnPropertyChanged(nameof(statusColor)); } }

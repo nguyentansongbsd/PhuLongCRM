@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -30,17 +31,7 @@ namespace PhuLongCRM.Views
             Init();
             MeetId = id;
             Update();
-        }
-
-        public MeetingForm(Guid idCustomer, string nameCustomer, string codeCustomer)
-        {
-            InitializeComponent();
-            Init();
-            Create();
-            viewModel.CustomerMapping = new OptionSet { Val = idCustomer.ToString(), Label = nameCustomer, Title = codeCustomer };
-            Lookup_Required.IsVisible = false;
-            CustomerMapping.IsVisible = true;
-        }
+        }     
 
         private void Init()
         {
@@ -48,13 +39,64 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new MeetingViewModel();
             DatePickerStart.DefaultDisplay = DateTime.Now;
             DatePickerEnd.DefaultDisplay = DateTime.Now;
-            SetPreOpen();
+            // kiểm tra page trước là page nào
+            var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
+            if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
+            {
+                if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
+                    if (viewModel.Required == null)
+                    {
+                        List<OptionSetFilter> item = new List<OptionSetFilter>();
+                        item.Add(new OptionSetFilter
+                        {
+                            Val = ContactDetailPage.FromCustomer.Val,
+                            Label = ContactDetailPage.FromCustomer.Label,
+                            Title = ContactDetailPage.FromCustomer.Title,
+                            Selected = true
+                        });
+                        viewModel.Required = item;
+                    }
+                    Lookup_Customer.IsVisible = false;
+                    RegardingMapping.IsVisible = true;
+                    Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
+                }
+                else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
+                    if (viewModel.Required == null)
+                    {
+                        List<OptionSetFilter> item = new List<OptionSetFilter>();
+                        item.Add(new OptionSetFilter
+                        {
+                            Val = AccountDetailPage.FromCustomer.Val,
+                            Label = AccountDetailPage.FromCustomer.Label,
+                            Title = AccountDetailPage.FromCustomer.Title,
+                            Selected = true
+                        });
+                        viewModel.Required = item;
+                    }
+                    Lookup_Customer.IsVisible = false;
+                    RegardingMapping.IsVisible = true;
+                }
+                else
+                {
+                    Lookup_Customer.IsVisible = true;
+                    RegardingMapping.IsVisible = false;
+                }
+            }
+            else
+            {
+                Lookup_Customer.IsVisible = true;
+                RegardingMapping.IsVisible = false;
+            }
         }
 
         private void Create()
         {
-            this.Title = "Tạo mới cuộc họp";
-            BtnSave.Text = "Tạo cuộc họp";
+            this.Title = Language.tao_moi_cuoc_hop;
+            BtnSave.Text = Language.tao_cuoc_hop;
             IsInit = true;
             BtnSave.Clicked += Create_Clicked;
         }
@@ -66,30 +108,10 @@ namespace PhuLongCRM.Views
 
         private async void Update()
         {
-            this.Title = "Cập nhật cuộc họp";
-            BtnSave.Text = "Cập nhật";
+            this.Title = Language.cap_nhat_cuoc_hop;
+            BtnSave.Text = Language.cap_nhat;
             BtnSave.Clicked += Update_Clicked;
             await viewModel.loadDataMeet(this.MeetId);
-
-            var _data = await viewModel.loadDataParty(this.MeetId);
-            if (_data.Any())
-            {
-                List<string> requiredIds = new List<string>();
-                List<string> optionalIds = new List<string>();
-                foreach (var item in _data)
-                {
-                    if (item.typemask == 5)
-                    {
-                        requiredIds.Add(item.partyID.ToString());
-                    }
-                    else if (item.typemask == 6)
-                    {
-                        optionalIds.Add(item.partyID.ToString());
-                    }
-                }
-                viewModel.Required = requiredIds;
-                viewModel.Optional = optionalIds;
-            }
 
             if (viewModel.MeetingModel.activityid != Guid.Empty)
             {
@@ -105,54 +127,56 @@ namespace PhuLongCRM.Views
             SaveData(this.MeetId);
         }
 
-        public void SetPreOpen()
-        {
-            Lookup_Required.PreShow = async () =>
-            {
-                LoadingHelper.Show();
-                await viewModel.LoadAllLookUp();
-                viewModel.SetTabs();
-                LoadingHelper.Hide();
-            };
-
-            Lookup_Optional.PreShow = async () =>
-            {
-                LoadingHelper.Show();
-                await viewModel.LoadAllLookUp();
-                viewModel.SetTabs();
-                LoadingHelper.Hide();
-
-            };      
-        }
-
         private async void SaveData(Guid id)
         {
             if (string.IsNullOrWhiteSpace(viewModel.MeetingModel.subject))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập chủ đề cuộc họp");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_chu_de_cuoc_hop);
                 return;
             }
             if (viewModel.CustomerMapping == null)
             {
                 if (viewModel.Required == null || viewModel.Required.Count <= 0)
                 {
-                    ToastMessageHelper.ShortMessage("Vui lòng chọn người tham dự bắt buộc");
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_tham_du_bat_buoc);
                     return;
                 }
             }
             if (viewModel.MeetingModel.scheduledstart == null || viewModel.MeetingModel.scheduledend == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc và thời gian bắt đầu");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau);
                 return;
             }
             if (viewModel.MeetingModel.scheduledstart != null && viewModel.MeetingModel.scheduledend != null)
             {
                 if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend) != -1)
                 {
-                    ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu");
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                     return;
                 }
             }
+            if (viewModel.CustomerMapping == null)
+            {
+                if (viewModel.Optional != null && viewModel.Optional.Count > 0)
+                {
+                    if (!CheckCusomer(viewModel.Required, viewModel.Optional))
+                    {
+                        ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                if (viewModel.Optional != null && viewModel.Optional.Count > 0)
+                {
+                    if (!CheckCusomer(null, viewModel.Optional, viewModel.CustomerMapping))
+                    {
+                        ToastMessageHelper.ShortMessage(Language.nguoi_tham_du_bat_buoc_phai_khac_nguoi_tham_du_khong_bat_buoc);
+                        return;
+                    }
+                }
+            }        
 
             LoadingHelper.Show();
 
@@ -167,14 +191,14 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage("Đã thêm cuộc họp");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Thêm cuộc họp thất bại");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
             else
@@ -188,14 +212,14 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage("Cập nhật thành công");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Cập nhật cuộc họp thất bại");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
                 }
             }
         }
@@ -227,7 +251,7 @@ namespace PhuLongCRM.Views
                 {
                     if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend) != -1)
                     {
-                        ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu");
+                        ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.MeetingModel.scheduledstart = viewModel.MeetingModel.scheduledend;
                     }
                 }
@@ -242,13 +266,13 @@ namespace PhuLongCRM.Views
                 {
                     if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend) != -1)
                     {
-                        ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu");
+                        ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart;
                     }
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian bắt đầu");
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
                 }
             }
         }
@@ -286,8 +310,35 @@ namespace PhuLongCRM.Views
             else
             {
                 viewModel.MeetingModel.isalldayevent = false;
-                ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian bắt đầu");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
             }    
+        }
+        private bool CheckCusomer(List<OptionSetFilter> required = null, List<OptionSetFilter> option = null, OptionSet customer = null)
+        {
+            // kiểm tra từ kh hàng- kh liên quan k check
+            if (required != null && option != null)
+            {
+                if (required.Where(x => option.Any(s => s == x)).ToList().Count > 0)
+                    return false;
+                else
+                    return true;
+            }
+            else if (required != null && customer != null)
+            {
+                if (required.Where(x => x.Val == customer.Val).ToList().Count > 0)
+                    return false;
+                else
+                    return true;
+            }
+            else if (option != null && customer != null)
+            {
+                if (option.Where(x => x.Val == customer.Val).ToList().Count > 0)
+                    return false;
+                else
+                    return true;
+            }
+            else
+                return false;
         }
     }
 }

@@ -46,8 +46,8 @@ namespace PhuLongCRM.ViewModels
         private OptionSet _unitDirection;
         public OptionSet UnitDirection { get => _unitDirection; set { _unitDirection = value; OnPropertyChanged(nameof(UnitDirection)); } }
 
-        private OptionSet _unitView;
-        public OptionSet UnitView { get => _unitView; set { _unitView = value; OnPropertyChanged(nameof(UnitView)); } }
+        private string _unitView;
+        public string UnitView { get => _unitView; set { _unitView = value; OnPropertyChanged(nameof(UnitView)); } }
 
         private string _numChuanBiInBlock;
         public string NumChuanBiInBlock { get => _numChuanBiInBlock; set { _numChuanBiInBlock = value; OnPropertyChanged(nameof(NumChuanBiInBlock)); } }
@@ -106,6 +106,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadUnitByFloor(Guid floorId)
         {
+            string now_date = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
             string StatusReason_Condition = StatusReason == null ? "" : "<condition attribute='statuscode' operator='eq' value='" + StatusReason.Val + @"' />";
             string PhasesLaunch_Condition = (!string.IsNullOrWhiteSpace(Filter.Phase))
                 ? @"<condition attribute='bsd_phaseslaunchid' operator='eq' uitype='bsd_phaseslaunch' value='" + Filter.Phase + @"' />"
@@ -118,7 +119,7 @@ namespace PhuLongCRM.ViewModels
                                           </link-entity>
                                         </link-entity>" : "";
 
-            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? "<condition attribute='name' operator='like' value='%25" + Filter.Unit + "%25' />" : "";
+            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? " < condition attribute='name' operator='like' value='%25" + Filter.Unit + "%25' />" : "";
 
             string Direction_Condition = string.Empty;
             if (!string.IsNullOrWhiteSpace(Filter.Direction))
@@ -146,7 +147,7 @@ namespace PhuLongCRM.ViewModels
                     {
                         tmp += "<value>" + i + "</value>";
                     }
-                    View_Condition = @"<condition attribute='bsd_viewphulong' operator='in'>" + tmp + "</condition>";
+                    View_Condition = @"<condition attribute='bsd_viewphulong' operator='contain-values'>" + tmp + "</condition>";
                 }
             }
 
@@ -240,6 +241,15 @@ namespace PhuLongCRM.ViewModels
                                 <link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='ag' >
                                     <attribute name='statuscode' alias='queses_statuscode'/>
                                 </link-entity>
+                                        <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='asmn'>
+                                          <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='atmn'>
+                                            <attribute name='bsd_eventid' alias='event_id'/>
+                                            <filter type='and'>
+                                              <condition attribute='statuscode' operator='eq' value='100000000' />
+                                              <condition attribute='bsd_enddate' operator='on-or-after' value='{now_date}' />
+                                            </filter>
+                                          </link-entity>
+                                        </link-entity>
                                 '{isEvent}'
                               </entity>
                             </fetch>";
@@ -271,12 +281,12 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_projectcode' alias='_bsd_projectcode_value'/>
                                     <attribute name='price' />
                                     <attribute name='productid' />
-                                    <attribute name='bsd_view' />
+                                    <attribute name='bsd_viewphulong' />
                                     <attribute name='bsd_direction' />
                                     <attribute name='bsd_constructionarea' />
                                     <attribute name='bsd_floor' alias='floorid'/>
                                     <attribute name='bsd_blocknumber' alias='blockid'/>
-                                    <attribute name='bsd_phaseslaunchid' />
+                                    <attribute name='bsd_phaseslaunchid' alias='_bsd_phaseslaunchid_value' />
                                     <attribute name='bsd_vippriority' />
                                     <order attribute='bsd_constructionarea' descending='true' />
                                     <filter type='and'>
@@ -284,6 +294,15 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                     <link-entity name='bsd_unittype' from='bsd_unittypeid' to='bsd_unittype' visible='false' link-type='outer' alias='a_493690ec6ce2e811a94e000d3a1bc2d1'>
                                       <attribute name='bsd_name'  alias='bsd_unittype_name'/>
+                                    </link-entity>
+                                    <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
+                                      <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
+                                        <attribute name='bsd_eventid' alias='event_id' />
+                                        <filter type='and'>
+                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                            <condition attribute='bsd_eventid' operator='not-null' />
+                                        </filter>
+                                      </link-entity>
                                     </link-entity>
                                   </entity>
                                 </fetch>";
@@ -331,7 +350,7 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var x in data)
             {
-                x.statuscode_label = QueuesStatusCodeData.GetQueuesById(x.statuscode.ToString()).Name;
+                //x.statuscode_label = QueuesStatusCodeData.GetQueuesById(x.statuscode.ToString()).Name;
                 QueueList.Add(x);
             }
             //if (QueueList.Any(x=>x.statuscode == 100000000))  // chỗ này đang bị lỗi khi có 2 giữ chỗ queue
@@ -356,6 +375,7 @@ namespace PhuLongCRM.ViewModels
                                 <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='an' >
                                    <attribute name='bsd_startdate' alias='startdate_event' />
                                    <attribute name='bsd_enddate' alias='enddate_event'/>
+                                   <attribute name='statuscode' alias='statuscode_event'/>
                                 </link-entity>
                               </entity>
                             </fetch>";
@@ -365,7 +385,7 @@ namespace PhuLongCRM.ViewModels
             var data = result.value;
             foreach (var item in data)
             {
-                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now)
+                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
                 {
                     IsShowBtnBangTinhGia = true;
                     return;
@@ -384,12 +404,16 @@ namespace PhuLongCRM.ViewModels
             var arrStatus = directSaleModel.stringQty.Split(',');
             this.Block.NumChuanBiInBlock = arrStatus[0];
             this.Block.NumSanSangInBlock = arrStatus[1];
-            this.Block.NumGiuChoInBlock = arrStatus[2];
-            this.Block.NumDatCocInBlock = arrStatus[3];
-            this.Block.NumDongYChuyenCoInBlock = arrStatus[4];
-            this.Block.NumDaDuTienCocInBlock = arrStatus[5];
-            this.Block.NumThanhToanDot1InBlock = arrStatus[6];
-            this.Block.NumDaBanInBlock = arrStatus[7];
+            this.Block.NumBookingInBlock = arrStatus[2];
+            this.Block.NumGiuChoInBlock = arrStatus[3];
+            this.Block.NumDatCocInBlock = arrStatus[4];
+            this.Block.NumDongYChuyenCoInBlock = arrStatus[5];
+            this.Block.NumDaDuTienCocInBlock = arrStatus[6];
+            this.Block.NumOptionInBlock = arrStatus[7];
+            this.Block.NumThanhToanDot1InBlock = arrStatus[8];
+            this.Block.NumSignedDAInBlock = arrStatus[9];
+            this.Block.NumQualifiedInBlock = arrStatus[10];
+            this.Block.NumDaBanInBlock = arrStatus[11];
 
             foreach (var item in directSaleModel.listFloor)
             {
@@ -399,12 +423,16 @@ namespace PhuLongCRM.ViewModels
                 var arrStatusInFloor = item.stringQty.Split(',');
                 floor.NumChuanBiInFloor = arrStatusInFloor[0];
                 floor.NumSanSangInFloor = arrStatusInFloor[1];
-                floor.NumGiuChoInFloor = arrStatusInFloor[2];
-                floor.NumDatCocInFloor = arrStatusInFloor[3];
-                floor.NumDongYChuyenCoInFloor = arrStatusInFloor[4];
-                floor.NumDaDuTienCocInFloor = arrStatusInFloor[5];
-                floor.NumThanhToanDot1InFloor = arrStatusInFloor[6];
-                floor.NumDaBanInFloor = arrStatusInFloor[7];
+                floor.NumBookingInFloor = arrStatusInFloor[2];
+                floor.NumGiuChoInFloor = arrStatusInFloor[3];
+                floor.NumDatCocInFloor = arrStatusInFloor[4];
+                floor.NumDongYChuyenCoInFloor = arrStatusInFloor[5];
+                floor.NumDaDuTienCocInFloor = arrStatusInFloor[6];
+                floor.NumOptionInFloor = arrStatusInFloor[7];
+                floor.NumThanhToanDot1InFloor = arrStatusInFloor[8];
+                floor.NumSignedDAInFloor = arrStatusInFloor[9];
+                floor.NumQualifiedInFloor = arrStatusInFloor[10];
+                floor.NumDaBanInFloor = arrStatusInFloor[11];
                 this.Block.Floors.Add(floor);
             };
         }

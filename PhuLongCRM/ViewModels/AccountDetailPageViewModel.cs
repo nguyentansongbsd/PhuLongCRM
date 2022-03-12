@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,6 @@ namespace PhuLongCRM.ViewModels
 
         private string _businessTypes;
         public string BusinessTypes { get => _businessTypes; set { _businessTypes = value; OnPropertyChanged(nameof(BusinessTypes)); } }
-
-        private OptionSet _customerType;
-        public OptionSet CustomerType { get => _customerType; set { _customerType = value; OnPropertyChanged(nameof(CustomerType)); } }
 
         private OptionSet _localization;
         public OptionSet Localization { get => _localization; set { _localization = value; OnPropertyChanged(nameof(Localization)); } }
@@ -71,10 +69,10 @@ namespace PhuLongCRM.ViewModels
         public AccountDetailPageViewModel()
         {
             BusinessTypeOptions = new ObservableCollection<OptionSet>();
-            BusinessTypeOptions.Add(new OptionSet("100000000", "Khách hàng"));
-            BusinessTypeOptions.Add(new OptionSet("100000001", "Đối tác"));
-            BusinessTypeOptions.Add(new OptionSet("100000002", "Đại lý"));
-            BusinessTypeOptions.Add(new OptionSet("100000003", "Chủ đầu tư"));
+            BusinessTypeOptions.Add(new OptionSet("100000000", Language.khach_hang));
+            BusinessTypeOptions.Add(new OptionSet("100000001", Language.doi_tac));
+            BusinessTypeOptions.Add(new OptionSet("100000002", Language.dai_ly));
+            BusinessTypeOptions.Add(new OptionSet("100000003", Language.chu_dau_tu));
 
             list_thongtinqueing = new ObservableCollection<QueueFormModel>();
             list_thongtinquotation = new ObservableCollection<ReservationListModel>();
@@ -266,8 +264,12 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
                                            <value>100000000</value>
-                                           <value>100000001</value>
-                                           <value>4</value>
+                                            <value>100000001</value>
+                                            <value>100000006</value>
+                                            <value>861450001</value>
+                                            <value>861450002</value>
+                                            <value>4</value>                
+                                            <value>3</value>
                                        </condition>
                                        <filter type='and'>
                                            <condition attribute='statuscode' operator='in'>

@@ -6,6 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
+    <None Remove="Behaviors\" />
+    <None Remove="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Telerik.UI.for.Xamarin" Version="2020.1.218.1" />
@@ -21,20 +29,22 @@
     <PackageReference Include="MR.Gestures" Version="2.1.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
     <Folder Include="Converters\" />
     <Folder Include="Settings\" />
-    <Folder Include="Controls\" />
     <Folder Include="IServices\" />
-    <Folder Include="Helper\" />
     <Folder Include="Fonts\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\MyPage.xaml.cs">
-      <DependentUpon>MyPage.xaml</DependentUpon>
+    <Compile Update="Resources\Language.en.Designer.cs">
+      <DependentUpon>Language.en.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Language.Designer.cs">
+      <DependentUpon>Language.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -54,5 +64,24 @@
     <EmbeddedResource Include="Fonts\Roboto-Bold.ttf" />
     <EmbeddedResource Include="Fonts\Roboto-Medium.ttf" />
     <EmbeddedResource Include="Fonts\Roboto-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\LookUpAddress.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\LookUpMultiSelect.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\LookUpViewAddress.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Language.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Language.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

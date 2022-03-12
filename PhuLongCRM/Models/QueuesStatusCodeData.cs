@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -24,16 +25,18 @@ namespace PhuLongCRM.Models
         {
             return new List<QueuesStatusCodeModel>()
             {
-                new QueuesStatusCodeModel("1","Nháp","#808080"), // Draft
-                new QueuesStatusCodeModel("2","On Hold","#808080"), //?????
-                new QueuesStatusCodeModel("3","Won","#808080"), //?????
-                new QueuesStatusCodeModel("4","Đã hủy","#808080"),
-                new QueuesStatusCodeModel("5","Out-Sold","#808080"), //?????
-                new QueuesStatusCodeModel("100000000","Giữ chỗ","#00CF79"),
-                new QueuesStatusCodeModel("100000001","Collected Queuing Fee","#808080"), //?????
-                new QueuesStatusCodeModel("100000002","Đang đợi","#FDC206"),
-                new QueuesStatusCodeModel("100000003","Hết hạn","#B3B3B3"),
-                new QueuesStatusCodeModel("100000004","Hoàn thành","#C50147"),
+                new QueuesStatusCodeModel("1",Language.nhap,"#808080"), // Draft
+                new QueuesStatusCodeModel("2",Language.dang_cho,"#808080"), // On hold
+                new QueuesStatusCodeModel("3",Language.thanh_cong,"#808080"), // Won
+                new QueuesStatusCodeModel("4",Language.da_huy,"#808080"),
+                new QueuesStatusCodeModel("5",Language.het_hang,"#808080"), //Out-Sold
+                new QueuesStatusCodeModel("100000000",Language.giu_cho,"#00CF79"),
+                new QueuesStatusCodeModel("100000002",Language.dang_doi,"#FDC206"),
+                new QueuesStatusCodeModel("100000003",Language.het_han,"#B3B3B3"),
+                new QueuesStatusCodeModel("100000004",Language.hoan_thanh,"#C50147"),
+                new QueuesStatusCodeModel("100000008",Language.xac_nhan_huy,"#808080"),
+                new QueuesStatusCodeModel("100000009",Language.huy_gg_chua_hoan_tien,"#808080"), 
+                new QueuesStatusCodeModel("100000010",Language.huy_gg_da_hoan_tien,"#808080"),
                 new QueuesStatusCodeModel("0","","#808080")
             };
         }

@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,10 @@ namespace PhuLongCRM.Views
         private List<Label> meetRequired = new List<Label>();
         private Guid ActivityId;
         private string activitytype;
+        private string meet_typecode = "appointment";
+        private string task_typecode = "task";
+        private string phonecall_typecode = "phonecall";
+        public event EventHandler HidePopupActivity;
 
         public ActivityPopupContentView()
         {
@@ -30,6 +35,7 @@ namespace PhuLongCRM.Views
         private void CloseContentActivity_Tapped(object sender, EventArgs e)
         {
             this.IsVisible = false;
+            HidePopupActivity?.Invoke((object)this, EventArgs.Empty);
         }
 
         public async void ShowActivityPopup(Guid activityid,string activitytypecode)
@@ -39,14 +45,14 @@ namespace PhuLongCRM.Views
                 ActivityId = activityid;
                 activitytype = activitytypecode;
                 LoadingHelper.Show();
-                if (activitytypecode == "phonecall")
+                if (activitytypecode == phonecall_typecode)
                 {
                     await viewModel.loadPhoneCall(activityid);
-                    await viewModel.loadFromTo(activityid);
-                    viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.PhoneCall.statecode.ToString());
-                    viewModel.ActivityType = "Cuộc Gọi";
                     if (viewModel.PhoneCall != null && viewModel.PhoneCall.activityid != Guid.Empty)
                     {
+                        await viewModel.loadFromTo(activityid);
+                        viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.PhoneCall.statecode.ToString());
+                        viewModel.ActivityType = Language.cuoc_goi;
                         this.IsVisible = true;
                         ContentPhoneCall.IsVisible = true;
                         ContentTask.IsVisible = false;
@@ -61,16 +67,17 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
+                        this.IsVisible = false;
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 }
-                else if (activitytypecode == "task")
+                else if (activitytypecode == task_typecode)
                 {
                     await viewModel.loadTask(activityid);
-                    viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Task.statecode.ToString());
-                    viewModel.ActivityType = "Công Việc";
                     if (viewModel.Task != null && viewModel.Task.activityid != Guid.Empty)
                     {
+                        viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Task.statecode.ToString());
+                        viewModel.ActivityType = Language.cong_viec;
                         this.IsVisible = true;
                         ContentPhoneCall.IsVisible = false;
                         ContentTask.IsVisible = true;
@@ -85,17 +92,18 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
+                        this.IsVisible = false;
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 }
-                else if (activitytypecode == "appointment")
+                else if (activitytypecode == meet_typecode)
                 {
                     await viewModel.loadMeet(activityid);
-                    await viewModel.loadFromToMeet(activityid);
-                    viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Meet.statecode.ToString());
-                    viewModel.ActivityType = "Cuộc Họp";
                     if (viewModel.Meet != null && viewModel.Meet.activityid != Guid.Empty)
                     {
+                        await viewModel.loadFromToMeet(activityid);
+                        viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Meet.statecode.ToString());
+                        viewModel.ActivityType = Language.cuoc_hop;
                         this.IsVisible = true;
                         ContentPhoneCall.IsVisible = false;
                         ContentTask.IsVisible = false;
@@ -111,76 +119,77 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
+                        this.IsVisible = false;
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 }
             }
         }
 
-        private async void Update_Clicked(object sender, EventArgs e)
+        private void Update_Clicked(object sender, EventArgs e)
         {
             if (viewModel.PhoneCall != null && viewModel.PhoneCall.activityid != Guid.Empty)
             {
                 LoadingHelper.Show();
-                //PhoneCallForm newPage = new PhoneCallForm(viewModel.PhoneCall.activityid);
-                //newPage.OnCompleted = async (OnCompleted) =>
-                //{
-                //    if (OnCompleted == true)
-                //    {
-                //        await Navigation.PushAsync(newPage);
-                //        LoadingHelper.Hide();
-                //    }
-                //    else
-                //    {
-                //        LoadingHelper.Hide();
-                //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
-                //    }
-                //};
+                PhoneCallForm newPage = new PhoneCallForm(viewModel.PhoneCall.activityid);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == true)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
             }
             else if (viewModel.Task != null && viewModel.Task.activityid != Guid.Empty)
             {
                 LoadingHelper.Show();
-                //TaskForm newPage = new TaskForm(viewModel.Task.activityid);
-                //newPage.CheckTaskForm = async (OnCompleted) =>
-                //{
-                //    if (OnCompleted == true)
-                //    {
-                //        await Navigation.PushAsync(newPage);
-                //        LoadingHelper.Hide();
-                //    }
-                //    else
-                //    {
-                //        LoadingHelper.Hide();
-                //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
-                //    }
-                //};
+                TaskForm newPage = new TaskForm(viewModel.Task.activityid);
+                newPage.CheckTaskForm = async (OnCompleted) =>
+                {
+                    if (OnCompleted == true)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
             }
             else if (viewModel.Meet != null && viewModel.Meet.activityid != Guid.Empty)
             {
                 LoadingHelper.Show();
-                //MeetingForm newPage = new MeetingForm(viewModel.Meet.activityid);
-                //newPage.OnCompleted = async (OnCompleted) =>
-                //{
-                //    if (OnCompleted == true)
-                //    {
-                //        await Navigation.PushAsync(newPage);
-                //        LoadingHelper.Hide();
-                //    }
-                //    else
-                //    {
-                //        LoadingHelper.Hide();
-                //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
-                //    }
-                //};
+                MeetingForm newPage = new MeetingForm(viewModel.Meet.activityid);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == true)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
             }
         }
 
         private async void Completed_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string[] options = new string[] { "Hoàn Thành", "Hủy" };
-            string asw = await App.Current.MainPage.DisplayActionSheet("Tuỳ chọn", "Đóng", null, options);
-            if (asw == "Hoàn Thành")
+            string[] options = new string[] { Language.hoan_thanh, Language.huy };
+            string asw = await App.Current.MainPage.DisplayActionSheet(Language.tuy_chon, Language.dong, null, options);
+            if (asw == Language.hoan_thanh)
             {
                 if (viewModel.PhoneCall != null && viewModel.PhoneCall.activityid != Guid.Empty)
                 {
@@ -188,13 +197,14 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusPhoneCall(viewModel.CodeCompleted))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.PhoneCall.statecode.ToString());
+                        NeedRefresh(phonecall_typecode);
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Cuộc gọi đã hoàn thành");
+                        ToastMessageHelper.ShortMessage(Language.cuoc_goi_da_hoan_thanh);
                     }
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Lỗi khi hoàn thành cuộc gọi. Vui lòng thử lại");
+                        ToastMessageHelper.ShortMessage(Language.loi_khi_hoan_thanh_cuoc_goi_vui_long_thu_lai);
                     }
                 }
                 else if (viewModel.Task != null && viewModel.Task.activityid != Guid.Empty)
@@ -203,13 +213,14 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusTask(viewModel.CodeCompleted))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Task.statecode.ToString());
+                        NeedRefresh(task_typecode);
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Công việc đã hoàn thành");
+                        ToastMessageHelper.ShortMessage(Language.cong_viec_da_hoan_thanh);
                     }
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Lỗi khi hoàn thành công việc. Vui lòng thử lại");
+                        ToastMessageHelper.ShortMessage(Language.loi_khi_hoan_thanh_cong_viec_vui_long_thu_lai);
                     }
                 }
                 else if (viewModel.Meet != null && viewModel.Meet.activityid != Guid.Empty)
@@ -218,17 +229,18 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusMeet(viewModel.CodeCompleted))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Meet.statecode.ToString());
+                        NeedRefresh(meet_typecode);
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Cuộc họp đã hoàn thành");
+                        ToastMessageHelper.ShortMessage(Language.cuoc_hop_da_hoan_thanh);
                     }
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Lỗi khi hoàn thành cuộc họp. Vui lòng thử lại");
+                        ToastMessageHelper.ShortMessage(Language.loi_khi_hoan_thanh_cuoc_hop_vui_long_thu_lai);
                     }
                 }
             }
-            else if (asw == "Hủy")
+            else if (asw ==Language.huy)
             {
                 if (viewModel.PhoneCall != null && viewModel.PhoneCall.activityid != Guid.Empty)
                 {
@@ -236,13 +248,14 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusPhoneCall(viewModel.CodeCancel))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.PhoneCall.statecode.ToString());
+                        NeedRefresh(phonecall_typecode);
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Cuộc gọi đã được hủy");
+                        ToastMessageHelper.ShortMessage(Language.cuoc_goi_da_duoc_huy);
                     }
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Lỗi khi hủy cuộc gọi. Vui lòng thử lại");
+                        ToastMessageHelper.ShortMessage(Language.loi_khi_huy_cuoc_goi_vui_long_thu_lai);
                     }
                 }
                 else if (viewModel.Task != null && viewModel.Task.activityid != Guid.Empty)
@@ -251,13 +264,14 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusTask(viewModel.CodeCancel))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Task.statecode.ToString());
+                        NeedRefresh(task_typecode);
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Công việc đã được hủy");
+                        ToastMessageHelper.ShortMessage(Language.cong_viec_da_duoc_huy);
                     }
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Lỗi khi hủy công việc. Vui lòng thử lại");
+                        ToastMessageHelper.ShortMessage(Language.loi_khi_huy_cong_viec_vui_long_thu_lai);
                     }
                 }
                 else if (viewModel.Meet != null && viewModel.Meet.activityid != Guid.Empty)
@@ -266,13 +280,14 @@ namespace PhuLongCRM.Views
                     if (await viewModel.UpdateStatusMeet(viewModel.CodeCancel))
                     {
                         viewModel.ActivityStatusCode = StatusCodeActivity.GetStatusCodeById(viewModel.Meet.statecode.ToString());
+                        NeedRefresh(meet_typecode);
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Cuộc họp đã được hủy");
+                        ToastMessageHelper.ShortMessage(Language.cuoc_hop_da_duoc_huy);
                     }
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Lỗi khi hủy cuộc họp. Vui lòng thử lại");
+                        ToastMessageHelper.ShortMessage(Language.loi_khi_huy_cuoc_hop_vui_long_thu_lai);
                     }
                 }
             }
@@ -285,38 +300,38 @@ namespace PhuLongCRM.Views
             {
                 if (viewModel.PhoneCall.callto_lead_id != Guid.Empty)
                 {
-                    //LeadDetailPage newPage = new LeadDetailPage(viewModel.PhoneCall.callto_lead_id);
-                    //newPage.OnCompleted = async (OnCompleted) =>
-                    //{
-                    //    if (OnCompleted == true)
-                    //    {
-                    //        await Navigation.PushAsync(newPage);
-                    //        LoadingHelper.Hide();
-                    //    }
-                    //    else
-                    //    {
-                    //        LoadingHelper.Hide();
-                    //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
-                    //    }
-                    //};
+                    LeadDetailPage newPage = new LeadDetailPage(viewModel.PhoneCall.callto_lead_id);
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == true)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
 
                 }
                 else if (viewModel.PhoneCall.callto_contact_id != Guid.Empty)
                 {
-                    //ContactDetailPage newPage = new ContactDetailPage(viewModel.PhoneCall.callto_contact_id);
-                    //newPage.OnCompleted = async (OnCompleted) =>
-                    //{
-                    //    if (OnCompleted == true)
-                    //    {
-                    //        await Navigation.PushAsync(newPage);
-                    //        LoadingHelper.Hide();
-                    //    }
-                    //    else
-                    //    {
-                    //        LoadingHelper.Hide();
-                    //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
-                    //    }
-                    //};
+                    ContactDetailPage newPage = new ContactDetailPage(viewModel.PhoneCall.callto_contact_id);
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == true)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
 
                 }
                 else if (viewModel.PhoneCall.callto_account_id != Guid.Empty)
@@ -332,7 +347,7 @@ namespace PhuLongCRM.Views
                         else
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }
@@ -345,38 +360,38 @@ namespace PhuLongCRM.Views
             {
                 if (viewModel.Task.lead_id != Guid.Empty)
                 {
-                    //LeadDetailPage newPage = new LeadDetailPage(viewModel.Task.lead_id);
-                    //newPage.OnCompleted = async (OnCompleted) =>
-                    //{
-                    //    if (OnCompleted == true)
-                    //    {
-                    //        await Navigation.PushAsync(newPage);
-                    //        LoadingHelper.Hide();
-                    //    }
-                    //    else
-                    //    {
-                    //        LoadingHelper.Hide();
-                    //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
-                    //    }
-                    //};
+                    LeadDetailPage newPage = new LeadDetailPage(viewModel.Task.lead_id);
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == true)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
 
                 }
                 else if (viewModel.Task.contact_id != Guid.Empty)
                 {
-                    //ContactDetailPage newPage = new ContactDetailPage(viewModel.Task.contact_id);
-                    //newPage.OnCompleted = async (OnCompleted) =>
-                    //{
-                    //    if (OnCompleted == true)
-                    //    {
-                    //        await Navigation.PushAsync(newPage);
-                    //        LoadingHelper.Hide();
-                    //    }
-                    //    else
-                    //    {
-                    //        LoadingHelper.Hide();
-                    //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
-                    //    }
-                    //};
+                    ContactDetailPage newPage = new ContactDetailPage(viewModel.Task.contact_id);
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == true)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
 
                 }
                 else if (viewModel.Task.account_id != Guid.Empty)
@@ -392,7 +407,7 @@ namespace PhuLongCRM.Views
                         else
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại.");
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }
@@ -404,37 +419,23 @@ namespace PhuLongCRM.Views
             if(viewModel.MeetRequired != null && viewModel.MeetRequired.Count>0)
             {
                 flexRequired.Children.Clear();
-                for (int i=0;i< viewModel.MeetRequired.Count;i++)
-                {
-                    Label label = new Label();
-                    if (i != 0 && i < viewModel.MeetRequired.Count)
-                    {
-                        string val = viewModel.MeetRequired[i].Label + ", ";
-                        label.Text = val;
-                    }
-                    else
-                        label.Text = viewModel.MeetRequired[i].Label;
-
-                    label.TextColor = (Color)Application.Current.Resources["NavigationPrimary"];
-                    label.FontSize = 15;
-                    var tap = new TapGestureRecognizer();
-                    tap.Tapped += FormToTapped;
-                    label.GestureRecognizers.Add(tap);
-                    flexRequired.Children.Add(label);
-                    meetRequired.Add(label);
-                }
+                BindableLayout.SetItemsSource(flexRequired, viewModel.MeetRequired);
+            }
+        }        
+        public void Refresh()
+        {
+            if (this.IsVisible && ActivityId != Guid.Empty && !string.IsNullOrWhiteSpace(activitytype))
+            {
+                ShowActivityPopup(ActivityId, activitytype);
             }
         }
-
-        private void FormToTapped(object sender, EventArgs e)
+        private void Required_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var button = sender as Label;
-            int index = meetRequired.IndexOf(meetRequired.FirstOrDefault(x => x == button));
-            var item = viewModel.MeetRequired[index];
+            var item = (OptionSet)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item != null && !string.IsNullOrWhiteSpace(item.Val))
             {
-                if(item.Title == viewModel.CodeAccount)
+                if (item.Title == viewModel.CodeAccount)
                 {
                     AccountDetailPage newPage = new AccountDetailPage(Guid.Parse(item.Val));
                     newPage.OnCompleted = async (OnCompleted) =>
@@ -447,52 +448,69 @@ namespace PhuLongCRM.Views
                         else
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }
                 else if (item.Title == viewModel.CodeContac)
                 {
-                    //ContactDetailPage newPage = new ContactDetailPage(Guid.Parse(item.Val));
-                    //newPage.OnCompleted = async (OnCompleted) =>
-                    //{
-                    //    if (OnCompleted == true)
-                    //    {
-                    //        await Navigation.PushAsync(newPage);
-                    //        LoadingHelper.Hide();
-                    //    }
-                    //    else
-                    //    {
-                    //        LoadingHelper.Hide();
-                    //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
-                    //    }
-                    //};
+                    ContactDetailPage newPage = new ContactDetailPage(Guid.Parse(item.Val));
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == true)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
                 }
-                else if(item.Title == viewModel.CodeLead)
+                else if (item.Title == viewModel.CodeLead)
                 {
-                    //LeadDetailPage newPage = new LeadDetailPage(Guid.Parse(item.Val));
-                    //newPage.OnCompleted = async (OnCompleted) =>
-                    //{
-                    //    if (OnCompleted == true)
-                    //    {
-                    //        await Navigation.PushAsync(newPage);
-                    //        LoadingHelper.Hide();
-                    //    }
-                    //    else
-                    //    {
-                    //        LoadingHelper.Hide();
-                    //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
-                    //    }
-                    //};
+                    LeadDetailPage newPage = new LeadDetailPage(Guid.Parse(item.Val));
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == true)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
                 }
             }
         }
-        public void Refresh()
+        private void NeedRefresh(string type)
         {
-            if (this.IsVisible && ActivityId != Guid.Empty && !string.IsNullOrWhiteSpace(activitytype))
+            if(type==meet_typecode)
             {
-                ShowActivityPopup(ActivityId, activitytype);
+                if (Dashboard.NeedToRefreshMeet.HasValue) Dashboard.NeedToRefreshMeet = true;
+                if (ActivityList.NeedToRefreshMeet.HasValue) ActivityList.NeedToRefreshMeet = true;
             }
+            else if (type == task_typecode)
+            {
+                if (Dashboard.NeedToRefreshTask.HasValue) Dashboard.NeedToRefreshTask = true;
+                if (ActivityList.NeedToRefreshTask.HasValue) ActivityList.NeedToRefreshTask = true;
+            }
+            else if (type == phonecall_typecode)
+            {
+                if (Dashboard.NeedToRefreshPhoneCall.HasValue) Dashboard.NeedToRefreshPhoneCall = true;
+                if (ActivityList.NeedToRefreshPhoneCall.HasValue) ActivityList.NeedToRefreshPhoneCall = true;
+            }
+
+            if (LichLamViecTheoThang.NeedToRefresh.HasValue) LichLamViecTheoThang.NeedToRefresh = true;
+            if (LichLamViecTheoTuan.NeedToRefresh.HasValue) LichLamViecTheoTuan.NeedToRefresh = true;
+            if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
+            if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
+            if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
         }
     }
 }

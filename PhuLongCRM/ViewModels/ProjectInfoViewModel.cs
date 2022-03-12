@@ -31,6 +31,9 @@ namespace PhuLongCRM.ViewModels
         private ObservableCollection<QueuesModel> _listGiuCho;
         public ObservableCollection<QueuesModel> ListGiuCho { get => _listGiuCho; set { _listGiuCho = value; OnPropertyChanged(nameof(ListGiuCho)); } }
 
+        private EventModel _event;
+        public EventModel Event { get => _event; set { _event = value; OnPropertyChanged(nameof(Event)); } }
+
         private ProjectInfoModel _project;
         public ProjectInfoModel Project
         {
@@ -95,6 +98,9 @@ namespace PhuLongCRM.ViewModels
         private ImageSource _ImageSource;
         public ImageSource ImageSource { get => _ImageSource; set { _ImageSource = value; OnPropertyChanged(nameof(ImageSource)); } }
 
+        private StatusCodeModel _statusCode;
+        public StatusCodeModel StatusCode { get => _statusCode; set { _statusCode = value; OnPropertyChanged(nameof(StatusCode)); } }
+
         public ProjectInfoViewModel()
         {
             ListGiuCho = new ObservableCollection<QueuesModel>();
@@ -119,6 +125,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_managementamount' />
                                 <attribute name='bsd_bookingfee' />
                                 <attribute name='bsd_depositamount' />
+                                <attribute name='statuscode' />
                                 <order attribute='bsd_name' descending='false' />
                                 <filter type='and'>
                                   <condition attribute='bsd_projectid' operator='eq' uitype='bsd_project' value='" + ProjectId.ToString() + @"' />
@@ -133,6 +140,7 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ProjectInfoModel>>("bsd_projects", FetchXml);
             if (result == null || result.value.Any() == false) return;
             Project = result.value.FirstOrDefault();
+            this.StatusCode = ProjectStatusCodeData.GetProjectStatusCodeById(Project.statuscode);
             //await LoadAllCollection();
         }
 
@@ -214,7 +222,7 @@ namespace PhuLongCRM.ViewModels
                 ChuanBi = data.Where(x => x.statuscode == 1).Count();
                 SanSang = data.Where(x => x.statuscode == 100000000).Count();
                 GiuCho = data.Where(x => x.statuscode == 100000004).Count();
-                SoDatCoc = DatCoc = data.Where(x => x.statuscode == 100000006).Count();
+                DatCoc = data.Where(x => x.statuscode == 100000006).Count();
                 DongYChuyenCoc = data.Where(x => x.statuscode == 100000005).Count();
                 DaDuTienCoc = data.Where(x => x.statuscode == 100000003).Count();
                 ThanhToanDot1 = data.Where(x => x.statuscode == 100000001).Count();
@@ -227,9 +235,6 @@ namespace PhuLongCRM.ViewModels
 
             unitChartModels = new List<ChartModel>()
             {
-                new ChartModel {Category ="Chuẩn bị", Value=ChuanBi},
-                new ChartModel { Category = "Sẵn sàng", Value = SanSang },
-                new ChartModel { Category = "Booking", Value = Booking },
                 new ChartModel {Category ="Giữ chỗ",Value=GiuCho},
                 new ChartModel { Category = "Đặt cọc", Value = DatCoc },
                 new ChartModel {Category ="Đồng ý chuyển cọc",Value=DongYChuyenCoc },
@@ -239,6 +244,9 @@ namespace PhuLongCRM.ViewModels
                 new ChartModel { Category = "Signed D.A", Value = SignedDA },
                 new ChartModel { Category = "Qualified", Value = Qualified },
                 new ChartModel { Category = "Đã bán", Value =  DaBan},
+                new ChartModel {Category ="Chuẩn bị", Value=ChuanBi},
+                new ChartModel { Category = "Sẵn sàng", Value = SanSang },
+                new ChartModel { Category = "Booking", Value = Booking },
             };
             foreach (var item in unitChartModels)
             {
@@ -266,13 +274,15 @@ namespace PhuLongCRM.ViewModels
 
             SoGiuCho = result.value.Count();
         }
-
         public async Task LoadThongKeHopDong()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='salesorder'>
                                 <attribute name='name' />
                                 <order attribute='createdon' descending='true' />
+                                <filter type='and'>
+                                    <condition attribute='statuscode' operator='ne' value='100000006' />
+                                </filter>
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ad'>
                                   <filter type='and'>
                                     <condition attribute='bsd_projectid' operator='eq' value ='{ProjectId}'/>
@@ -285,7 +295,6 @@ namespace PhuLongCRM.ViewModels
 
             SoHopDong = result.value.Count();
         }
-
         public async Task LoadThongKeBangTinhGia()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -293,7 +302,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='name' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                  <condition attribute='statuscode' operator='ne' value='100000001' />
+                                  <condition attribute='statuscode' operator='eq' value='100000007' />
                                 </filter>
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectid' link-type='inner' alias='ae'>
                                   <filter type='and'>
@@ -306,7 +315,33 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
             SoBangTinhGia = result.value.Count();
         }
-
+        public async Task LoadThongKeDatCoc()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='quote'>
+                                <attribute name='name' />
+                                <order attribute='createdon' descending='true' />
+                                <filter type='and'>
+                                  <condition attribute='statuscode' operator='in'>
+                                    <value>100000000</value>
+                                    <value>861450001</value>
+                                    <value>861450002</value>
+                                    <value>100000006</value>
+                                    <value>3</value>
+                                    <value>861450000</value>
+                                  </condition>
+                                </filter>
+                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectid' link-type='inner' alias='ae'>
+                                  <filter type='and'>
+                                    <condition attribute='bsd_projectid' operator='eq' value='{ProjectId}'/>
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QuoteModel>>("quotes", fetchXml);
+            if (result == null || result.value.Any() == false) return;
+            SoDatCoc = result.value.Count();
+        }
         public async Task LoadGiuCho()
         {
             IsLoadedGiuCho = true;
@@ -355,7 +390,6 @@ namespace PhuLongCRM.ViewModels
                 ListGiuCho.Add(item);
             }
         }
-
         public async Task LoadAllCollection()
         {
             // khoa lai vi phu long chua co hinh anh va video
@@ -407,6 +441,37 @@ namespace PhuLongCRM.ViewModels
             //        Collections.Add(new CollectionData { Id = item.documentid, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
             //    }
             //}
+        }
+        public async Task LoadDataEvent()
+        {
+            if (ProjectId == Guid.Empty) return;
+
+            string FetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_event'>
+                                    <attribute name='bsd_name' />
+                                    <attribute name='bsd_startdate' />
+                                    <attribute name='bsd_eventcode' />
+                                    <attribute name='bsd_enddate' />
+                                    <attribute name='bsd_eventid' />
+                                    <order attribute='bsd_eventcode' descending='true' />
+                                    <filter type='and'>
+                                      <condition attribute='statuscode' operator='eq' value='100000000' />
+                                      <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
+                                    </filter>
+                                    <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaselaunch' link-type='outer' alias='ab'>
+                                      <attribute name='bsd_name' alias='bsd_phaselaunch_name'/>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<EventModel>>("bsd_events", FetchXml);
+            if (result == null || result.value.Any() == false) return;
+            Event = result.value.FirstOrDefault();
+            if (Event.bsd_startdate.HasValue && Event.bsd_enddate.HasValue)
+            {
+                Event.bsd_startdate = Event.bsd_startdate.Value.ToLocalTime();
+                Event.bsd_enddate = Event.bsd_enddate.Value.ToLocalTime();
+            }
         }
     }
 }

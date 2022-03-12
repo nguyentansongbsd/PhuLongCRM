@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -10,22 +11,22 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","Newspapers"),
-                new OptionSet("100000001","Staff Phu Long"),
-                new OptionSet("100000002","Trademark"),
-                new OptionSet("100000003","Hotline"),
-                new OptionSet("100000004","The current of the position"),
-                new OptionSet("100000005","Old customers have bought referrals"),
-                new OptionSet("1","Quảng cáo"),
-                new OptionSet("2","Nhân viên giới thiệu"),
-                new OptionSet("3","Giới thiệu bên ngoài"),
-                new OptionSet("4","Đối tác"),
-                new OptionSet("5","Quan hệ công chúng"),
-                new OptionSet("6","Hội thảo"),
-                new OptionSet("7","Triển lãm thương mại"),
-                new OptionSet("8","Trang Web"),
-                new OptionSet("9","Truyền miệng"),
-                new OptionSet("10","Khác"),
+                new OptionSet("100000000",Language.bao),//Newspapers
+                new OptionSet("100000001",Language.staff_phu_long),
+                new OptionSet("100000002",Language.thuong_hieu),//Trademark
+                new OptionSet("100000003",Language.hot_line),
+                new OptionSet("100000004",Language.vi_tri_hien_tai),//The current of the position
+                new OptionSet("100000005",Language.khach_hang_cu_da_mua_gioi_thieu),//Old customers have bought referrals
+                new OptionSet("1",Language.quang_cao),
+                new OptionSet("2",Language.nhan_vien_gioi_thieu),
+                new OptionSet("3",Language.gioi_thieu_ben_ngoai),
+                new OptionSet("4",Language.doi_tac),
+                new OptionSet("5",Language.quan_he_cong_chung),
+                new OptionSet("6",Language.hoi_thao),
+                new OptionSet("7",Language.trien_lam_thuong_mai),
+                new OptionSet("8",Language.trang_web),
+                new OptionSet("9",Language.truyen_mieng),
+                new OptionSet("10",Language.khac),
             };
         }
 

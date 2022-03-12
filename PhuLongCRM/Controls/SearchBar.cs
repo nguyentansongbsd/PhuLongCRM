@@ -1,4 +1,5 @@
 ﻿using System;
+using PhuLongCRM.Resources;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.Controls
@@ -7,7 +8,7 @@ namespace PhuLongCRM.Controls
     {
         public SearchBar()
         {
-            Placeholder = "Tìm kiếm";
+            Placeholder = Language.tim_kiem;
             FontSize = 15;
             TextColor = Color.FromHex("#444444");
             FontFamily = "Segoe";

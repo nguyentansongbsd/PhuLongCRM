@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Helper;
+using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -77,7 +78,7 @@ namespace PhuLongCRM.Models
 
         private decimal _bsd_queuingfee;
         public decimal bsd_queuingfee { get => _bsd_queuingfee; set { _bsd_queuingfee = value; OnPropertyChanged(nameof(bsd_queuingfee)); } } // phí đặt chỗ
-
+        public string bsd_queuingfee_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfee); }
         public decimal landvalue { get; set; } // giá trị đất
 
         public decimal unit_price { get; set; } // Giá bán , tên gốc price => đổi lại tránh trùng khi trong form update khi lấy thông tin về.
@@ -91,6 +92,28 @@ namespace PhuLongCRM.Models
         public string bsd_bookingid { get; set; }
         public string _defaultuomid_value { get; set; }
         public string _transactioncurrencyid_value { get; set; }
-        public decimal bsd_taxpercent { get; set; } 
+        public decimal bsd_taxpercent { get; set; }
+
+        private int _bsd_ordernumber;
+        public int bsd_ordernumber { get => _bsd_ordernumber; set { _bsd_ordernumber = value; OnPropertyChanged(nameof(bsd_ordernumber)); } }
+
+        private int _bsd_priorityqueue;
+        public int bsd_priorityqueue { get => _bsd_priorityqueue; set { _bsd_priorityqueue = value; OnPropertyChanged(nameof(bsd_priorityqueue)); } }
+
+        private int _bsd_prioritynumber;
+        public int bsd_prioritynumber { get => _bsd_prioritynumber; set { _bsd_prioritynumber = value; OnPropertyChanged(nameof(bsd_prioritynumber)); } }
+
+        private DateTime _bsd_dateorder;
+        public DateTime bsd_dateorder { get => _bsd_dateorder; set { _bsd_dateorder = value; OnPropertyChanged(nameof(bsd_dateorder)); } }
+
+        private bool _bsd_expired;
+        public bool bsd_expired { get => _bsd_expired; set { _bsd_expired = value; OnPropertyChanged(nameof(bsd_expired)); } }
+
+        public string bsd_expired_format { get { return BoolToStringData.GetStringByBool(bsd_expired); } }
+
+        public string statuscode_format { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString()).Name; } }
+
+        //private int _statuscode;
+        //public int statuscode { get => _statuscode; set { _statuscode = value; OnPropertyChanged(nameof(statuscode)); } }
     }
 }

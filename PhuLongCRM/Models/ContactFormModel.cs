@@ -41,7 +41,7 @@ namespace PhuLongCRM.Models
         }
 
         private string _mobilephone;
-        public string mobilephone { get { return _mobilephone; } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
+        public string mobilephone { get { return _mobilephone != null && _mobilephone.Contains("+84-")? _mobilephone : (_mobilephone != null && _mobilephone.Contains("+84") ? "+84-" : "+84-" + _mobilephone); } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
 
         private string _createdon;
         public string createdon { get { return _createdon; } set { _createdon = value; OnPropertyChanged(nameof(createdon)); } }
@@ -152,8 +152,8 @@ namespace PhuLongCRM.Models
         private string _bsd_housenumber;
         public string bsd_housenumber { get { return _bsd_housenumber; } set { _bsd_housenumber = value; OnPropertyChanged(nameof(bsd_housenumber)); } }
 
-        private string __bsd_country_value;
-        public string _bsd_country_value { get { return __bsd_country_value; } set { __bsd_country_value = value; OnPropertyChanged(nameof(_bsd_country_value)); } }
+        private Guid __bsd_country_value;
+        public Guid _bsd_country_value { get { return __bsd_country_value; } set { __bsd_country_value = value; OnPropertyChanged(nameof(_bsd_country_value)); } }
 
         private string _bsd_country_label;
         public string bsd_country_label { get { return _bsd_country_label; } set { _bsd_country_label = value; OnPropertyChanged(nameof(bsd_country_label)); } }
@@ -161,8 +161,8 @@ namespace PhuLongCRM.Models
         private string _bsd_country_en;
         public string bsd_country_en { get => _bsd_country_en; set { _bsd_country_en = value; OnPropertyChanged(nameof(bsd_country_en)); } }
 
-        private string __bsd_province_value;
-        public string _bsd_province_value { get { return __bsd_province_value; } set { __bsd_province_value = value; OnPropertyChanged(nameof(_bsd_province_value)); } }
+        private Guid __bsd_province_value;
+        public Guid _bsd_province_value { get { return __bsd_province_value; } set { __bsd_province_value = value; OnPropertyChanged(nameof(_bsd_province_value)); } }
 
         private string _bsd_province_label;
         public string bsd_province_label { get { return _bsd_province_label; } set { _bsd_province_label = value; OnPropertyChanged(nameof(bsd_province_label)); } }
@@ -170,8 +170,8 @@ namespace PhuLongCRM.Models
         private string _bsd_province_en;
         public string bsd_province_en { get { return _bsd_province_en; } set { _bsd_province_en = value; OnPropertyChanged(nameof(bsd_province_en)); } }
 
-        private string __bsd_district_value;
-        public string _bsd_district_value { get { return __bsd_district_value; } set { __bsd_district_value = value; OnPropertyChanged(nameof(_bsd_district_value)); } }
+        private Guid __bsd_district_value;
+        public Guid _bsd_district_value { get { return __bsd_district_value; } set { __bsd_district_value = value; OnPropertyChanged(nameof(_bsd_district_value)); } }
 
         private string _bsd_district_label;
         public string bsd_district_label { get { return _bsd_district_label; } set { _bsd_district_label = value; OnPropertyChanged(nameof(bsd_district_label)); } }
@@ -185,8 +185,8 @@ namespace PhuLongCRM.Models
         private string _bsd_diachithuongtru;
         public string bsd_diachithuongtru { get => _bsd_diachithuongtru; set { _bsd_diachithuongtru = value; OnPropertyChanged(nameof(bsd_diachithuongtru)); } }
 
-        private string __bsd_permanentcountry_value;
-        public string _bsd_permanentcountry_value { get { return __bsd_permanentcountry_value; } set { __bsd_permanentcountry_value = value; OnPropertyChanged(nameof(_bsd_permanentcountry_value)); } }
+        private Guid __bsd_permanentcountry_value;
+        public Guid _bsd_permanentcountry_value { get { return __bsd_permanentcountry_value; } set { __bsd_permanentcountry_value = value; OnPropertyChanged(nameof(_bsd_permanentcountry_value)); } }
 
         private string _bsd_permanentcountry_label;
         public string bsd_permanentcountry_label { get { return _bsd_permanentcountry_label; } set { _bsd_permanentcountry_label = value; OnPropertyChanged(nameof(bsd_permanentcountry_label)); } }
@@ -194,8 +194,8 @@ namespace PhuLongCRM.Models
         private string _bsd_permanentcountry_en;
         public string bsd_permanentcountry_en { get { return _bsd_permanentcountry_en; } set { _bsd_permanentcountry_en = value; OnPropertyChanged(nameof(bsd_permanentcountry_en)); } }
 
-        private string __bsd_permanentprovince_value;
-        public string _bsd_permanentprovince_value { get { return __bsd_permanentprovince_value; } set { __bsd_permanentprovince_value = value; OnPropertyChanged(nameof(_bsd_permanentprovince_value)); } }
+        private Guid __bsd_permanentprovince_value;
+        public Guid _bsd_permanentprovince_value { get { return __bsd_permanentprovince_value; } set { __bsd_permanentprovince_value = value; OnPropertyChanged(nameof(_bsd_permanentprovince_value)); } }
 
         private string _bsd_permanentprovince_label;
         public string bsd_permanentprovince_label { get { return _bsd_permanentprovince_label; } set { _bsd_permanentprovince_label = value; OnPropertyChanged(nameof(bsd_permanentprovince_label)); } }
@@ -203,8 +203,8 @@ namespace PhuLongCRM.Models
         private string _bsd_permanentprovince_en;
         public string bsd_permanentprovince_en { get { return _bsd_permanentprovince_en; } set { _bsd_permanentprovince_en = value; OnPropertyChanged(nameof(bsd_permanentprovince_en)); } }
 
-        private string __bsd_permanentdistrict_value;
-        public string _bsd_permanentdistrict_value { get { return __bsd_permanentdistrict_value; } set { __bsd_permanentdistrict_value = value; OnPropertyChanged(nameof(_bsd_permanentdistrict_value)); } }
+        private Guid __bsd_permanentdistrict_value;
+        public Guid _bsd_permanentdistrict_value { get { return __bsd_permanentdistrict_value; } set { __bsd_permanentdistrict_value = value; OnPropertyChanged(nameof(_bsd_permanentdistrict_value)); } }
 
         private string _bsd_permanentdistrict_label;
         public string bsd_permanentdistrict_label { get { return _bsd_permanentdistrict_label; } set { _bsd_permanentdistrict_label = value; OnPropertyChanged(nameof(bsd_permanentdistrict_label)); } }
@@ -372,5 +372,7 @@ namespace PhuLongCRM.Models
 
         public Guid employee_id { get; set; }
         public string bsd_customercode { get; set; }
+        public string statuscode_format { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString())?.Name : null; } }
+        public string statuscode_color { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString())?.Background : null; } }
     }
 }

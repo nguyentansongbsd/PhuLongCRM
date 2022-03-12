@@ -8,6 +8,7 @@ namespace PhuLongCRM.Models
     {
         public Guid leadid { get; set; }
         public string lastname { get; set; }
+        public string fullname { get; set; }
         public string mobilephone { get; set; }
         public string subject { get; set; }
         public string statuscode { get; set; }
@@ -23,5 +24,7 @@ namespace PhuLongCRM.Models
                 return this.createdon.ToString("dd/MM/yyyy");
             }
         }
+        public string statuscode_format { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Name : null; } }
+        public string statuscode_color { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Background : "#808080"; } }
     }
 }

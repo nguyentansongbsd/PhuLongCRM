@@ -24,30 +24,30 @@ namespace PhuLongCRM.ViewModels
             mandatorySecondary = new MandatorySecondaryModel();
             list_contact_lookup = new ObservableCollection<LookUp>();
         }
-        public async Task GetOneAccountById( string accountid)
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                              <entity name='account'>
-                                <attribute name='bsd_name' />                                
-                                <attribute name='accountid' />
-                                <attribute name='bsd_businesstypesys' alias='bsd_businesstype' />
-                                <order attribute='createdon' descending='true' />
-                                    <filter type='and'>
-                                      <condition attribute='accountid' operator='eq' value='" + accountid + @"' />
-                                    </filter>                                   
-                              </entity>
-                            </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<AccountFormModel>>("accounts", fetch);
-            if (result == null)
-                return;
-            var tmp = result.value.FirstOrDefault();
-            if (tmp == null)
-            {
-                return;
-            }
-            mandatorySecondary.bsd_developeraccount = tmp.bsd_name;
-            mandatorySecondary._bsd_developeraccount_value = tmp.accountid;
-        }
+        //public async Task GetOneAccountById( string accountid)
+        //{
+        //    string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+        //                      <entity name='account'>
+        //                        <attribute name='bsd_name' />                                
+        //                        <attribute name='accountid' />
+        //                        <attribute name='bsd_businesstypesys' alias='bsd_businesstype' />
+        //                        <order attribute='createdon' descending='true' />
+        //                            <filter type='and'>
+        //                              <condition attribute='accountid' operator='eq' value='" + accountid + @"' />
+        //                            </filter>                                   
+        //                      </entity>
+        //                    </fetch>";
+        //    var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<AccountFormModel>>("accounts", fetch);
+        //    if (result == null)
+        //        return;
+        //    var tmp = result.value.FirstOrDefault();
+        //    if (tmp == null)
+        //    {
+        //        return;
+        //    }
+        //    mandatorySecondary.bsd_developeraccount = tmp.bsd_name;
+        //    mandatorySecondary._bsd_developeraccount_value = tmp.accountid;
+        //}
 
         public async Task LoadContactsLookup()
         {

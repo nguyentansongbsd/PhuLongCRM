@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,28 @@ namespace PhuLongCRM.Views
     public partial class DatCocList : ContentPage
     {
         private readonly DatCocListViewModel viewModel;
+        public static bool? NeedToRefresh;
         public DatCocList()
         {
             InitializeComponent();
             BindingContext = viewModel = new DatCocListViewModel();
+            NeedToRefresh = false;
             LoadingHelper.Show();
             Init();
         }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadOnRefreshCommandAsync();
+                LoadingHelper.Hide();
+                NeedToRefresh = false;
+            }
+        }
+
         public async void Init()
         {
             await viewModel.LoadData();
@@ -33,7 +49,7 @@ namespace PhuLongCRM.Views
         {
             ReservationListModel val = e.Item as ReservationListModel;
             LoadingHelper.Show();
-            BangTinhGiaDetailPage newPage = new BangTinhGiaDetailPage(val.quoteid) { Title = "Đặt cọc" };
+            BangTinhGiaDetailPage newPage = new BangTinhGiaDetailPage(val.quoteid) { Title = Language.dat_coc };
             newPage.OnCompleted = async (OnCompleted) =>
             {
                 if (OnCompleted == true)

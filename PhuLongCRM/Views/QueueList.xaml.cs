@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -33,16 +34,19 @@ namespace PhuLongCRM.Views
         {
             QueuesModel val = e.Item as QueuesModel;
             LoadingHelper.Show();
-            //QueueForm newPage = new QueueForm(val.opportunityid);
-            //newPage.CheckQueueInfo = async (CheckQueueInfo) =>
-            //{
-            //    if (CheckQueueInfo == true)
-            //    {
-            //        await Navigation.PushAsync(newPage);                 
-            //    }
-            //    LoadingHelper.Hide();
-            //};
-            await Navigation.PushAsync(new QueuesDetialPage(val.opportunityid));
+            QueuesDetialPage queuesDetialPage = new QueuesDetialPage(val.opportunityid);
+            queuesDetialPage.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(queuesDetialPage);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
             LoadingHelper.Hide();
         }
 

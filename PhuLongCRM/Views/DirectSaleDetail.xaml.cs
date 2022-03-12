@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -42,19 +43,9 @@ namespace PhuLongCRM.Views
             // giu cho thanh cong hoac huy giu cho thanh cong
             if (NeedToRefreshDirectSale == true)
             {
-                LoadingHelper.Show();
-                
-                viewModel.QueueList.Clear();
-                viewModel.PageDanhSachDatCho = 1;
-
-                await viewModel.LoadQueues(viewModel.Unit.productid);
-                await viewModel.LoadUnitById(viewModel.Unit.productid);
-                
-                viewModel.UnitStatusCode = StatusCodeUnit.GetStatusCodeById(viewModel.Unit.statuscode.ToString());
-
+                await LoadUnit(viewModel.Unit.productid);
                 RefreshDirectSale = true;
                 NeedToRefreshDirectSale = false;
-                LoadingHelper.Hide();
             }
         }
 
@@ -62,7 +53,7 @@ namespace PhuLongCRM.Views
         {
             //viewModel.Filter.Block = viewModel.Blocks.FirstOrDefault().bsd_blockid.ToString();
             await viewModel.LoadTotalDirectSale();
-            if (viewModel.DirectSaleResult.Count != 0)
+             if (viewModel.DirectSaleResult.Count != 0)
             {
                 SetBlocks();
                 var firstBlock = viewModel.DirectSaleResult.FirstOrDefault();
@@ -101,6 +92,10 @@ namespace PhuLongCRM.Views
                     item.bsd_blockid = viewModel.Block.bsd_blockid;
                     item.NumChuanBiInBlock = viewModel.Block.NumChuanBiInBlock;
                     item.NumDaBanInBlock = viewModel.Block.NumDaBanInBlock;
+                    item.NumBookingInBlock = viewModel.Block.NumBookingInBlock;
+                    item.NumOptionInBlock = viewModel.Block.NumOptionInBlock;
+                    item.NumSignedDAInBlock = viewModel.Block.NumSignedDAInBlock;
+                    item.NumQualifiedInBlock = viewModel.Block.NumQualifiedInBlock;
                     item.NumDaDuTienCocInBlock = viewModel.Block.NumDaDuTienCocInBlock;
                     item.NumDatCocInBlock = viewModel.Block.NumDatCocInBlock;
                     item.NumDongYChuyenCoInBlock = viewModel.Block.NumDongYChuyenCoInBlock;
@@ -211,49 +206,9 @@ namespace PhuLongCRM.Views
 
         private async void UnitItem_Tapped(object sender, EventArgs e)
         {
-            LoadingHelper.Show();
             var unitId = (Guid)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-
-            viewModel.PageDanhSachDatCho = 1;
-            viewModel.QueueList.Clear();
-            await Task.WhenAll(
-                viewModel.LoadQueues(unitId),
-                viewModel.CheckShowBtnBangTinhGia(unitId),
-                viewModel.LoadUnitById(unitId)
-                );
-
-            viewModel.UnitStatusCode = StatusCodeUnit.GetStatusCodeById(viewModel.Unit.statuscode.ToString());
-            if (!string.IsNullOrWhiteSpace(viewModel.Unit.bsd_direction))
-            {
-                viewModel.UnitDirection = DirectionData.GetDiretionById(viewModel.Unit.bsd_direction);
-            }
-            if (!string.IsNullOrWhiteSpace(viewModel.Unit.bsd_view))
-            {
-                viewModel.UnitView = ViewData.GetViewById(viewModel.Unit.bsd_view);
-            }
-
-            if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004")
-            {
-                btnGiuCho.IsVisible = viewModel.Unit.bsd_vippriority ? false : true;
-                if (viewModel.UnitStatusCode.Id != "1" && viewModel.IsShowBtnBangTinhGia == true)
-                {
-                    viewModel.IsShowBtnBangTinhGia = true;
-                }
-                else
-                {
-                    viewModel.IsShowBtnBangTinhGia = false;
-                }    
-            }
-            else
-            {
-                btnGiuCho.IsVisible = false;
-                viewModel.IsShowBtnBangTinhGia = false;
-            }
-
-            SetButton();
-            
+            await LoadUnit(unitId);
             contentUnitInfor.IsVisible = true;
-            LoadingHelper.Hide();
         }
 
         public void SetButton()
@@ -305,7 +260,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -354,7 +309,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                   // ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -372,12 +327,12 @@ namespace PhuLongCRM.Views
                 else if (isSuccess == 1)
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Sản phẩm không thể tạo bảng tính giá");
+                    ToastMessageHelper.ShortMessage(Language.san_pham_khong_the_tao_bang_tinh_gia);
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -396,7 +351,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -409,6 +364,59 @@ namespace PhuLongCRM.Views
         private void CloseQuestion_Tapped(object sender, EventArgs e)
         {
             stackQuestion.IsVisible = !stackQuestion.IsVisible;
+        }
+
+        private async Task LoadUnit(Guid unitId)
+        {
+            LoadingHelper.Show();
+            viewModel.PageDanhSachDatCho = 1;
+            viewModel.QueueList.Clear();
+            await Task.WhenAll(
+                viewModel.LoadQueues(unitId),
+                viewModel.CheckShowBtnBangTinhGia(unitId),
+                viewModel.LoadUnitById(unitId)
+                );
+
+            viewModel.UnitStatusCode = StatusCodeUnit.GetStatusCodeById(viewModel.Unit.statuscode.ToString());
+            if (!string.IsNullOrWhiteSpace(viewModel.Unit.bsd_direction))
+            {
+                viewModel.UnitDirection = DirectionData.GetDiretionById(viewModel.Unit.bsd_direction);
+            }
+            else
+            {
+                viewModel.UnitDirection = null;
+            }
+            if (!string.IsNullOrWhiteSpace(viewModel.Unit.bsd_viewphulong))
+            {
+                viewModel.UnitView = ViewData.GetViewByIds(viewModel.Unit.bsd_viewphulong);
+            }
+            else
+            {
+                viewModel.UnitView = null;
+            }
+            if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004")
+            {
+                btnGiuCho.IsVisible = !viewModel.Unit.bsd_vippriority;
+                if (viewModel.UnitStatusCode.Id != "1" && viewModel.IsShowBtnBangTinhGia == true)
+                {
+                    viewModel.IsShowBtnBangTinhGia = true;
+                }
+                else
+                {
+                    viewModel.IsShowBtnBangTinhGia = false;
+                }
+            }
+            else
+            {
+                btnGiuCho.IsVisible = false;
+                viewModel.IsShowBtnBangTinhGia = false;
+            }
+
+            SetButton();
+
+            gridButton.IsVisible = !viewModel.Unit.bsd_vippriority;
+            LoadingHelper.Hide();
+
         }
     }
 }

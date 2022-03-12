@@ -7,6 +7,7 @@ using PhuLongCRM.Models;
 using PhuLongCRM.ViewModels;
 using FFImageLoading.Forms;
 using System.Collections.ObjectModel;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Views
 {
@@ -15,6 +16,8 @@ namespace PhuLongCRM.Views
     {
         public Action<bool> OnCompleted;
         public static bool? NeedToRefreshQueue = null;
+        public static bool? NeedToRefreshQuotation = null;
+        public static bool? NeedToRefreshReservation = null;
         private UnitInfoViewModel viewModel;
 
         public UnitInfo(Guid id)
@@ -22,6 +25,8 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             this.BindingContext = viewModel = new UnitInfoViewModel();
             NeedToRefreshQueue = false;
+            NeedToRefreshQuotation = false;
+            NeedToRefreshReservation = false;
             viewModel.UnitId = id;
             Init();
         }
@@ -40,14 +45,14 @@ namespace PhuLongCRM.Views
                 VisualStateManager.GoToState(lblGiaoDich, "InActive");
 
                 viewModel.StatusCode = StatusCodeUnit.GetStatusCodeById(viewModel.UnitInfo.statuscode.ToString());
-                if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_direction))
+                if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_direction)) 
                 {
                     viewModel.Direction = DirectionData.GetDiretionById(viewModel.UnitInfo.bsd_direction);
                 }
 
-                if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_view))
+                if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_viewphulong))
                 {
-                    viewModel.View = ViewData.GetViewById(viewModel.UnitInfo.bsd_view);
+                    viewModel.View = ViewData.GetViewByIds(viewModel.UnitInfo.bsd_viewphulong);
                 }
 
                 if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004)
@@ -67,6 +72,8 @@ namespace PhuLongCRM.Views
                     btnGiuCho.IsVisible = false;
                     viewModel.IsShowBtnBangTinhGia = false;
                 }
+
+                gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
                 SetButton();
                 OnCompleted?.Invoke(true);
             }
@@ -88,34 +95,50 @@ namespace PhuLongCRM.Views
                 NeedToRefreshQueue = false;
                 LoadingHelper.Hide();
             }
+            if (NeedToRefreshQuotation == true)
+            {
+                LoadingHelper.Show();
+                viewModel.PageBangTinhGia = 1;
+                viewModel.BangTinhGiaList.Clear();
+                await viewModel.LoadDanhSachBangTinhGia();
+                NeedToRefreshQuotation = false;
+                LoadingHelper.Hide();
+            }
+            if (NeedToRefreshReservation == true)
+            {
+                LoadingHelper.Show();
+                viewModel.PageDanhSachDatCoc = 1;
+                viewModel.list_danhsachdatcoc.Clear();
+                await viewModel.LoadDanhSachDatCoc();
+                NeedToRefreshReservation = false;
+                LoadingHelper.Hide();
+            }
             //await CrossMediaManager.Current.Stop();
         }
 
         public void SetButton()
         {
-            if (btnGiuCho.IsVisible ==false && viewModel.IsShowBtnBangTinhGia ==false)
+            gridButton = new Grid();
+            if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == false)
             {
                 gridButton.IsVisible = false;
             }
-            else if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == true)
+            gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+            if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == true)
             {
-                gridButton.IsVisible = true;
+                gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
                 Grid.SetColumn(btnGiuCho, 0);
                 Grid.SetColumn(btnBangTinhGia, 1);
             }
             else if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == false)
             {
-                gridButton.IsVisible = true;
                 Grid.SetColumn(btnGiuCho, 0);
-                Grid.SetColumnSpan(btnGiuCho, 2);
                 Grid.SetColumn(btnBangTinhGia, 0);
             }
             else if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == true)
             {
-                gridButton.IsVisible = true;
-                Grid.SetColumn(btnGiuCho, 0);
                 Grid.SetColumn(btnBangTinhGia, 0);
-                Grid.SetColumnSpan(btnBangTinhGia, 2);
+                Grid.SetColumn(btnGiuCho, 0);
             }
         }
 
@@ -189,7 +212,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                   // ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -207,12 +230,12 @@ namespace PhuLongCRM.Views
                 else if (isSuccess == 1)
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Sản phẩm không thể tạo bảng tính giá");
+                    ToastMessageHelper.ShortMessage(Language.san_pham_khong_the_tao_bang_tinh_gia);
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy sản phẩm");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }
@@ -231,7 +254,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -251,7 +274,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -279,7 +302,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -310,6 +333,16 @@ namespace PhuLongCRM.Views
                 viewModel.photoBrowser.StartIndex = item.Index;
                 viewModel.photoBrowser.Show();
             }
+        }
+        private async void OpenEvent_Tapped(object sender, EventArgs e)
+        {
+            if (viewModel.Event == null)
+                await viewModel.LoadDataEvent();
+            ContentEvent.IsVisible = true;
+        }
+        private void CloseContentEvent_Tapped(object sender, EventArgs e)
+        {
+            ContentEvent.IsVisible = false;
         }
     }
 }

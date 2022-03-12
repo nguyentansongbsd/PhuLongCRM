@@ -1,5 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
+using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,19 +18,21 @@ namespace PhuLongCRM.Views
     public partial class MandatorySecondaryForm : ContentPage
     {
         private MandatorySecondaryFormViewModel viewModel;
-        public MandatorySecondaryForm(Guid id)
+        public MandatorySecondaryForm(OptionSet account)
         {
             InitializeComponent();
-            Init(id.ToString());
+            Init(account);
         }
 
-        private async void Init(string id)
+        private async void Init(OptionSet account)
         {
             this.BindingContext = viewModel = new MandatorySecondaryFormViewModel();
-            datePickerNgayHieuLucTu.DefaultDisplay = DateTime.Now;
-            datePickerNgayHieuLucDen.DefaultDisplay = DateTime.Now;
             SetPreOpen();
-            await viewModel.GetOneAccountById(id);
+            if (account != null)
+            {
+                viewModel.mandatorySecondary.bsd_developeraccount = account.Label;
+                viewModel.mandatorySecondary._bsd_developeraccount_value = Guid.Parse(account.Val);
+            }
         }
 
         public void SetPreOpen()
@@ -45,27 +49,27 @@ namespace PhuLongCRM.Views
         {
             if(string.IsNullOrWhiteSpace(viewModel.mandatorySecondary.bsd_name))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập topic");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_tieu_de);
                 return;
             }
             if (viewModel.Contact == null || viewModel.Contact.Id == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn người ủy quyền");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_uy_quyen);
                 return;
             }
             if (viewModel.mandatorySecondary.bsd_effectivedatefrom == null || viewModel.mandatorySecondary.bsd_effectivedateto == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian hiệu lực");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_hieu_luc);
                 return;
             }
             if (string.IsNullOrWhiteSpace(viewModel.mandatorySecondary.bsd_descriptionsvn))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập mô tả (VN)");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_mo_ta_vn);
                 return;
             }
             if (string.IsNullOrWhiteSpace(viewModel.mandatorySecondary.bsd_descriptionsen))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập mô tả (EN)");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_mo_ta_en);
                 return;
             }
             LoadingHelper.Show();
@@ -75,12 +79,12 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
                 if (AccountDetailPage.NeedToRefreshMandatory.HasValue) AccountDetailPage.NeedToRefreshMandatory = true;
                 await Navigation.PopAsync();
-                ToastMessageHelper.ShortMessage("Đã tạo người uỷ quyền thành công");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Tạo người uỷ quyền thất bại");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
             }
         }
 
@@ -91,7 +95,7 @@ namespace PhuLongCRM.Views
             if (this.compareDateTime(viewModel.mandatorySecondary.bsd_effectivedatefrom, viewModel.mandatorySecondary.bsd_effectivedateto) == -1)
             {
                 viewModel.mandatorySecondary.bsd_effectivedateto = viewModel.mandatorySecondary.bsd_effectivedatefrom;
-                ToastMessageHelper.ShortMessage("Ngày hết hiệu lực phải lớn hơn ngày bắt đầu");
+                ToastMessageHelper.ShortMessage(Language.ngay_het_hieu_luc_phai_lon_hon_ngay_bat_dau);
             }
         }
 
@@ -102,7 +106,7 @@ namespace PhuLongCRM.Views
             if (this.compareDateTime(viewModel.mandatorySecondary.bsd_effectivedatefrom,viewModel.mandatorySecondary.bsd_effectivedateto) == -1)
             {
                 viewModel.mandatorySecondary.bsd_effectivedatefrom = viewModel.mandatorySecondary.bsd_effectivedateto;
-                ToastMessageHelper.ShortMessage("Ngày hết hiệu lực phải lớn hơn ngày bắt đầu");
+                ToastMessageHelper.ShortMessage(Language.ngay_het_hieu_luc_phai_lon_hon_ngay_bat_dau);
             }    
         }
 

@@ -21,6 +21,7 @@ namespace PhuLongCRM.ViewModels
         public ObservableCollection<ChartModel> DataMonthUnit { get; set; } = new ObservableCollection<ChartModel>();
 
         public ObservableCollection<ChartModel> CommissionTransactionChart { get; set; } = new ObservableCollection<ChartModel>();
+        public ObservableCollection<ChartModel> CommissionTransactionChart2 { get; set; } = new ObservableCollection<ChartModel>();
         public ObservableCollection<ChartModel> LeadsChart { get; set; } = new ObservableCollection<ChartModel>();
 
         private bool _isRefreshing;
@@ -28,6 +29,7 @@ namespace PhuLongCRM.ViewModels
 
         private decimal _totalCommissionAMonth;
         public decimal TotalCommissionAMonth { get => _totalCommissionAMonth; set { _totalCommissionAMonth = value; OnPropertyChanged(nameof(TotalCommissionAMonth)); } }
+
         private decimal _totalPaidCommissionAMonth;
         public decimal TotalPaidCommissionAMonth { get => _totalPaidCommissionAMonth; set { _totalPaidCommissionAMonth = value; OnPropertyChanged(nameof(TotalPaidCommissionAMonth)); } }
 
@@ -73,10 +75,16 @@ namespace PhuLongCRM.ViewModels
         public DateTime dateBefor { get => _dateBefor; set { _dateBefor = value; OnPropertyChanged(nameof(dateBefor)); } }
         public DateTime dateAfter { get; set; }
 
-        public DateTime firstMonth { get; set; }
-        public DateTime secondMonth { get; set; }
-        public DateTime thirdMonth { get; set; }
-        public DateTime fourthMonth { get; set; }
+        public DateTime first_Month { get; set; }
+        public DateTime second_Month { get; set; }
+        public DateTime third_Month { get; set; }
+        public DateTime fourth_Month { get; set; }
+        // tổng tiền hoa đồng format
+        private string _totalCommission;
+        public string TotalCommission { get => _totalCommission; set { _totalCommission = value; OnPropertyChanged(nameof(TotalCommission)); } }
+        // tổng tiền thanh toán format
+        private string _totalPaidCommission;
+        public string TotalPaidCommission { get => _totalPaidCommission; set { _totalPaidCommission = value; OnPropertyChanged(nameof(TotalPaidCommission)); } }
 
         public ICommand RefreshCommand => new Command(async () =>
         {
@@ -90,10 +98,10 @@ namespace PhuLongCRM.ViewModels
             dateBefor = DateTime.Now;
             DateTime threeMonthsAgo = DateTime.Now.AddMonths(-3);
             dateAfter = new DateTime(threeMonthsAgo.Year, threeMonthsAgo.Month, 1);
-            firstMonth = dateAfter;
-            secondMonth = dateAfter.AddMonths(1);
-            thirdMonth = secondMonth.AddMonths(1);
-            fourthMonth = dateBefor;
+            first_Month = dateAfter;
+            second_Month = dateAfter.AddMonths(1);
+            third_Month = second_Month.AddMonths(1);
+            fourth_Month = dateBefor;
 
             PhoneCall = new PhoneCellModel();
             TaskDetail = new TaskFormModel();
@@ -102,27 +110,30 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadCommissionTransactions()
         {
+            //Phu long khong co file nay <attribute name='bsd_totalcommission' alias='CommissionTotal'/> <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='bsd_commissiontransaction'>
-                                    <attribute name='bsd_commissiontransactionid' alias='Id'/>
-                                    <attribute name='createdon' alias='Date'/>
-                                    <attribute name='bsd_totalcommission' alias='CommissionTotal'/>
-                                    <attribute name='statuscode' alias='CommissionStatus'/>
-                                    <order attribute='createdon' descending='false' />
-                                    <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
-                                      <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='createdon' operator='on-or-before' value='{dateBefor.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='statuscode' operator='in'>
-                                        <value>100000007</value>
-                                        <value>100000006</value>
-                                        <value>100000004</value>
-                                        <value>100000005</value>
-                                      </condition>
-                                    </filter>
-                                  </entity>
+                                    <entity name='bsd_commissiontransaction'>
+                                        <attribute name='bsd_commissiontransactionid' />
+                                        <attribute name='bsd_name' />
+                                        <attribute name='createdon' />
+                                        <attribute name='bsd_totalamountpaid' />
+                                        <attribute name='bsd_totalamount' />
+                                        <attribute name='statuscode' />
+                                        <attribute name='statecode' />
+                                        <order attribute='bsd_name' descending='false' />
+                                        <filter type='and'>
+                                            <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
+                                            <condition attribute='statecode' operator='eq' value='0' />
+                                        </filter>
+                                        <link-entity name='bsd_commissioncalculation' from='bsd_commissioncalculationid' to='bsd_commissioncalculation' link-type='inner'>
+                                            <attribute name='statuscode' alias='statuscode_calculator'/>
+                                            <filter type='and'>
+                                                <condition attribute='statuscode' operator='eq' value='100000003' />
+                                            </filter>
+                                        </link-entity>
+                                    </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("bsd_commissiontransactions", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CommissionTransaction>>("bsd_commissiontransactions", fetchXml);
             if (result == null) return;
 
             decimal countTotalCommissionFr = 0;
@@ -130,39 +141,70 @@ namespace PhuLongCRM.ViewModels
             decimal countTotalCommissionTh = 0;
             decimal countTotalCommissionFo = 0;
 
-            foreach (var item in result.value.Where(x => x.Date.Month == firstMonth.Month))
-            {
-                countTotalCommissionFr += item.CommissionTotal;
-            }
-            foreach (var item in result.value.Where(x => x.Date.Month == secondMonth.Month))
-            {
-                countTotalCommissionSe += item.CommissionTotal;
-            }
-            foreach (var item in result.value.Where(x => x.Date.Month == thirdMonth.Month))
-            {
-                countTotalCommissionTh += item.CommissionTotal;
-            }
-            foreach (var item in result.value.Where(x => x.Date.Month == fourthMonth.Month))
-            {
-                countTotalCommissionFo = this.TotalCommissionAMonth += item.CommissionTotal;
-                if (item.CommissionStatus == "100000007")
-                {
-                    this.TotalPaidCommissionAMonth += item.CommissionTotal;
-                }
-            }
+            decimal countTotalPaidFr = 0;
+            decimal countTotalPaidSe = 0;
+            decimal countTotalPaidTh = 0;
+            decimal countTotalPaidFo = 0;
 
-            ChartModel chartFirstMonth = new ChartModel() { Category = firstMonth.ToString("MM/yyyy"), Value = await TotalAMonth(countTotalCommissionFr) };
-            ChartModel chartSecondMonth = new ChartModel() { Category = secondMonth.ToString("MM/yyyy"), Value = await TotalAMonth(countTotalCommissionSe) };
-            ChartModel chartThirdMonth = new ChartModel() { Category = thirdMonth.ToString("MM/yyyy"), Value = await TotalAMonth(countTotalCommissionTh) };
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourthMonth.ToString("MM/yyyy"), Value = await TotalAMonth(countTotalCommissionFo) };
+            foreach(var item in result.value)
+            {
+                // danh sách các hhgd có sts = Accountant Confirmed lấy từ entity Commission Calculator trong 4 tháng từ ngày hiện tại trở về trước
+                if (item.statuscode_calculator == 100000003 && item.createdon.Month == first_Month.Month)
+                {
+                    countTotalCommissionFr += item.bsd_totalamount;
+                    if (item.statuscode == 100000009)
+                        countTotalPaidFr += item.bsd_totalamountpaid;
+                }
+                if (item.statuscode_calculator == 100000003 && item.createdon.Month == second_Month.Month)
+                {
+                    countTotalCommissionSe += item.bsd_totalamount;
+                    if (item.statuscode == 100000009)
+                        countTotalPaidSe += item.bsd_totalamountpaid;
+                }
+                if (item.statuscode_calculator == 100000003 && item.createdon.Month == third_Month.Month)
+                {
+                    countTotalCommissionTh += item.bsd_totalamount;
+                    if (item.statuscode == 100000009)
+                        countTotalPaidTh += item.bsd_totalamountpaid;
+                }
+                if (item.statuscode_calculator == 100000003 && item.createdon.Month == fourth_Month.Month)
+                {
+                    // tổng hhgd và hhgd paid được tính ở tháng hiện tại (sử dụng cho 2 giá trị thống kê)
+                    countTotalCommissionFo += item.bsd_totalamount;
+                    TotalCommissionAMonth += item.bsd_totalamount;
+                    if (item.statuscode == 100000009)
+                    {
+                        countTotalPaidFo += item.bsd_totalamountpaid;
+                        TotalPaidCommissionAMonth += item.bsd_totalamountpaid;
+                    }
+                }
+            }           
+
+            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalCommissionFr) };
+            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalCommissionSe) };
+            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalCommissionTh) };
+            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalCommissionFo) };
+
+            ChartModel chartFirstMonth2 = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalPaidFr) };
+            ChartModel chartSecondMonth2 = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalPaidSe) };
+            ChartModel chartThirdMonth2 = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalPaidTh) };
+            ChartModel chartFourthMonth2 = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalPaidFo) };
 
             this.CommissionTransactionChart.Add(chartFirstMonth);
             this.CommissionTransactionChart.Add(chartSecondMonth);
             this.CommissionTransactionChart.Add(chartThirdMonth);
             this.CommissionTransactionChart.Add(chartFourthMonth);
-        }
 
-        private async Task<double> TotalAMonth(decimal total)
+            this.CommissionTransactionChart2.Add(chartFirstMonth2);
+            this.CommissionTransactionChart2.Add(chartSecondMonth2);
+            this.CommissionTransactionChart2.Add(chartThirdMonth2);
+            this.CommissionTransactionChart2.Add(chartFourthMonth2);
+
+            //format sau khi tính tổng
+            TotalCommission = StringFormatHelper.FormatCurrency(TotalCommissionAMonth);
+            TotalPaidCommission = StringFormatHelper.FormatCurrency(TotalPaidCommissionAMonth);
+        }
+        private double TotalAMonth(decimal total)
         {
             if (total > 0 && total.ToString().Length > 6)
             {
@@ -174,166 +216,164 @@ namespace PhuLongCRM.ViewModels
                 return 0;
             }
         }
-
         public async Task LoadQueueFourMonths()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='opportunity'>
-                                    <attribute name='createdon' alias='Date' />
-                                    <attribute name='opportunityid' alias='Id' />
-                                    <order attribute='createdon' descending='true' />
-                                    <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
-                                      <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='createdon' operator='on-or-before' value='{dateBefor.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='statuscode' operator='in'>
-                                         <value>100000004</value>
-                                         <value>100000000</value>
-                                         <value>100000002</value>
-                                      </condition>
-                                    </filter>
-                                  </entity>
+                                    <entity name='opportunity'>
+                                        <attribute name='bsd_bookingtime' alias='Date'/>
+                                        <attribute name='opportunityid' alias='Id' />
+                                            <filter type='and'>
+                                                <condition attribute='bsd_bookingtime' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
+                                                <condition attribute='statuscode' operator='in'>
+                                                    <value>100000002</value>
+                                                    <value>100000000</value>
+                                                </condition>
+                                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
+                                            </filter>
+                                    </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("opportunities", fetchXml);
             if (result == null) return;
 
-            var countQueueFr = result.value.Where(x => x.Date.Month == firstMonth.Month).Count();
-            ChartModel chartFirstMonth = new ChartModel() { Category = firstMonth.ToString("MM/yyyy"), Value = countQueueFr };
+            var countQueueFr = result.value.Where(x => x.Date.Month == first_Month.Month).Count();
+            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countQueueFr };
 
-            var countQueueSe = result.value.Where(x => x.Date.Month == secondMonth.Month).Count();
-            ChartModel chartSecondMonth = new ChartModel() { Category = secondMonth.ToString("MM/yyyy"), Value = countQueueSe };
+            var countQueueSe = result.value.Where(x => x.Date.Month == second_Month.Month).Count();
+            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countQueueSe };
 
-            var countQueueTh = result.value.Where(x => x.Date.Month == thirdMonth.Month).Count();
-            ChartModel chartThirdMonth = new ChartModel() { Category = thirdMonth.ToString("MM/yyyy"), Value = countQueueTh };
+            var countQueueTh = result.value.Where(x => x.Date.Month == third_Month.Month).Count();
+            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countQueueTh };
 
-            var countQueueFo = this.numQueue = result.value.Where(x => x.Date.Month == fourthMonth.Month).Count();
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourthMonth.ToString("MM/yyyy"), Value = countQueueFo };
+            var countQueueFo = this.numQueue = result.value.Where(x => x.Date.Month == fourth_Month.Month).Count();
+            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countQueueFo };
 
             this.DataMonthQueue.Add(chartFirstMonth);
             this.DataMonthQueue.Add(chartSecondMonth);
             this.DataMonthQueue.Add(chartThirdMonth);
             this.DataMonthQueue.Add(chartFourthMonth);
         }
-
         public async Task LoadQuoteFourMonths()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='quote'>
-                                    <attribute name='createdon' alias='Date'/>
-                                    <attribute name='quoteid' alias='Id'/>
-                                    <order attribute='createdon' descending='true' />
+                                    <attribute name='bsd_deposittime' alias='Date' />
+                                    <attribute name='quoteid' alias='Id' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
-                                      <condition attribute='createdon' operator='on-or-before' value='{dateBefor.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                       <condition attribute='statuscode' operator='in'>
-                                        <value>100000000</value>
+                                        <value>3</value>
+                                        <value>861450000</value>
                                         <value>4</value>
                                       </condition>
+                                      <condition attribute='bsd_deposittime' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
+                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("quotes", fetchXml);
             if (result == null) return;
 
-            var countQuoteFr = result.value.Where(x => x.Date.Month == firstMonth.Month).Count();
-            ChartModel chartFirstMonth = new ChartModel() { Category = firstMonth.ToString("MM/yyyy"), Value = countQuoteFr };
+            var countQuoteFr = result.value.Where(x => x.Date.Month == first_Month.Month).Count();
+            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countQuoteFr };
 
-            var countQuoteSe = result.value.Where(x => x.Date.Month == secondMonth.Month).Count();
-            ChartModel chartSecondMonth = new ChartModel() { Category = secondMonth.ToString("MM/yyyy"), Value = countQuoteSe };
+            var countQuoteSe = result.value.Where(x => x.Date.Month == second_Month.Month).Count();
+            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countQuoteSe };
 
-            var countQuoteTh = result.value.Where(x => x.Date.Month == thirdMonth.Month).Count();
-            ChartModel chartThirdMonth = new ChartModel() { Category = thirdMonth.ToString("MM/yyyy"), Value = countQuoteTh };
+            var countQuoteTh = result.value.Where(x => x.Date.Month == third_Month.Month).Count();
+            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countQuoteTh };
 
-            var countQuoteFo = this.numQuote = result.value.Where(x => x.Date.Month == fourthMonth.Month).Count();
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourthMonth.ToString("MM/yyyy"), Value = countQuoteFo };
+            var countQuoteFo = this.numQuote = result.value.Where(x => x.Date.Month == fourth_Month.Month).Count();
+            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countQuoteFo };
 
             this.DataMonthQuote.Add(chartFirstMonth);
             this.DataMonthQuote.Add(chartSecondMonth);
             this.DataMonthQuote.Add(chartThirdMonth);
             this.DataMonthQuote.Add(chartFourthMonth);
         }
-
         public async Task LoadOptionEntryFourMonths()
         {
+            // ngoại trừ các sts Terminated , 1st Installment, Option, Qualify, Signed D.A
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='salesorder'>
                                     <attribute name='createdon' alias='Date'/>
-                                    <attribute name='salesorderid' alias='Id' />
-                                    <order attribute='createdon' descending='true' />
+                                    <attribute name='quoteid' alias='Id'/>
                                     <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
-                                      <condition attribute='statuscode' operator='ne' value='100000006' />
+                                      <condition attribute='statuscode' operator='not-in'>
+                                        <value>100000006</value>
+                                        <value>100000001</value>
+                                        <value>100000000</value>
+                                        <value>100000007</value>
+                                        <value>100000008</value>
+                                      </condition>
                                       <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='createdon' operator='on-or-before' value='{dateBefor.ToString("yyyy-MM-dd")}' />
+                                      <condition attribute='bsd_signedcontractdate' operator='null' />
+                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("salesorders", fetchXml);
             if (result == null) return;
 
-            var countOptionEntryFr = result.value.Where(x => x.Date.Month == firstMonth.Month).Count();
-            ChartModel chartFirstMonth = new ChartModel() { Category = firstMonth.ToString("MM/yyyy"), Value = countOptionEntryFr };
+            var countOptionEntryFr = result.value.Where(x => x.Date.Month == first_Month.Month).Count();
+            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countOptionEntryFr };
 
-            var countOptionEntrySe = result.value.Where(x => x.Date.Month == secondMonth.Month).Count();
-            ChartModel chartSecondMonth = new ChartModel() { Category = secondMonth.ToString("MM/yyyy"), Value = countOptionEntrySe };
+            var countOptionEntrySe = result.value.Where(x => x.Date.Month == second_Month.Month).Count();
+            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countOptionEntrySe };
 
-            var countOptionEntryTh = result.value.Where(x => x.Date.Month == thirdMonth.Month).Count();
-            ChartModel chartThirdMonth = new ChartModel() { Category = thirdMonth.ToString("MM/yyyy"), Value = countOptionEntryTh };
+            var countOptionEntryTh = result.value.Where(x => x.Date.Month == third_Month.Month).Count();
+            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countOptionEntryTh };
 
-            var countOptionEntryFo = this.numOptionEntry = result.value.Where(x => x.Date.Month == fourthMonth.Month).Count();
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourthMonth.ToString("MM/yyyy"), Value = countOptionEntryFo };
+            var countOptionEntryFo = this.numOptionEntry = result.value.Where(x => x.Date.Month == fourth_Month.Month).Count();
+            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countOptionEntryFo };
 
             this.DataMonthOptionEntry.Add(chartFirstMonth);
             this.DataMonthOptionEntry.Add(chartSecondMonth);
             this.DataMonthOptionEntry.Add(chartThirdMonth);
             this.DataMonthOptionEntry.Add(chartFourthMonth);
         }
-
         public async Task LoadUnitFourMonths()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='product'>
-                                    <attribute name='createdon' alias='Date'/>
                                     <attribute name='productid' alias='Id'/>
-                                    <order attribute='createdon' descending='true' />
                                     <filter type='and'>
-                                      
                                       <condition attribute='statuscode' operator='eq' value='100000002' />
-                                      <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='createdon' operator='on-or-before' value='{dateBefor.ToString("yyyy-MM-dd")}' />
                                     </filter>
+                                    <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='inner'>
+	                                <attribute name='bsd_signedcontractdate' alias='Date'/>
+                                      <filter type='and'>
+                                        <condition attribute='bsd_signedcontractdate' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
+                                      </filter>
+                                    </link-entity>
                                   </entity>
-                                </fetch>";//<condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/> : chua co filed bsd_employee
+                                </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("products", fetchXml);
             if (result == null) return;
 
-            var countUnitFr = result.value.Where(x => x.Date.Month == firstMonth.Month).Count();
-            ChartModel chartFirstMonth = new ChartModel() { Category = firstMonth.ToString("MM/yyyy"), Value = countUnitFr };
+            var countUnitFr = result.value.Where(x => x.Date.Month == first_Month.Month).Count();
+            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countUnitFr };
 
-            var countUnitSe = result.value.Where(x => x.Date.Month == secondMonth.Month).Count();
-            ChartModel chartSecondMonth = new ChartModel() { Category = secondMonth.ToString("MM/yyyy"), Value = countUnitSe };
+            var countUnitSe = result.value.Where(x => x.Date.Month == second_Month.Month).Count();
+            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countUnitSe };
 
-            var countUnitTh = result.value.Where(x => x.Date.Month == thirdMonth.Month).Count();
-            ChartModel chartThirdMonth = new ChartModel() { Category = thirdMonth.ToString("MM/yyyy"), Value = countUnitTh };
+            var countUnitTh = result.value.Where(x => x.Date.Month == third_Month.Month).Count();
+            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countUnitTh };
 
-            var countUnitFo = this.numUnit = result.value.Where(x => x.Date.Month == fourthMonth.Month).Count();
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourthMonth.ToString("MM/yyyy"), Value = countUnitFo };
+            var countUnitFo = this.numUnit = result.value.Where(x => x.Date.Month == fourth_Month.Month).Count();
+            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countUnitFo };
 
             this.DataMonthUnit.Add(chartFirstMonth);
             this.DataMonthUnit.Add(chartSecondMonth);
             this.DataMonthUnit.Add(chartThirdMonth);
             this.DataMonthUnit.Add(chartFourthMonth);
         }
-
         public async Task LoadLeads()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='lead'>
                                     <attribute name='statuscode' alias='Label'/>
                                     <attribute name='leadid' alias='Val' />
-                                    <order attribute='createdon' descending='true' />
                                     <filter type='and'>
+                                      <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                       <condition attribute='statuscode' operator='ne' value='2'/>
                                       <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                                     </filter>
@@ -1037,5 +1077,16 @@ namespace PhuLongCRM.ViewModels
         public DateTime Date { get; set; }
         public decimal CommissionTotal { get; set; }
         public string CommissionStatus { get; set; }
+    }
+    public class CommissionTransaction
+    {
+        public Guid bsd_commissiontransactionid { get; set; }
+        public string bsd_name { get; set; }
+        public DateTime createdon { get; set; }
+        public decimal bsd_totalamountpaid { get; set; }
+        public decimal bsd_totalamount { get; set; }
+        public int statecode { get; set; }
+        public int statuscode { get; set; }
+        public int statuscode_calculator { get; set; }
     }
 }

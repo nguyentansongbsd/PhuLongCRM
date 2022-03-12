@@ -1,7 +1,8 @@
-using PhuLongCRM.Controls;
+﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -36,18 +37,7 @@ namespace PhuLongCRM.Views
             Init();           
             PhoneCallId = id;
             Update();
-        }
-
-        public PhoneCallForm(Guid idCustomer, string nameCustomer, string codeCustomer)
-        {
-            InitializeComponent();
-            Init();
-            Create();
-            viewModel.CallTo = new OptionSet { Val = idCustomer.ToString(), Label = nameCustomer, Title = codeCustomer };
-            Lookup_CallTo.IsVisible = false;
-            CustomerMapping.IsVisible = true;
-            Lookup_CallTo_SelectedItemChange(null, null);
-        }
+        }      
 
         private void Init()
         {
@@ -55,12 +45,43 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new PhoneCallViewModel();
             DatePickerStart.DefaultDisplay = DateTime.Now;
             DatePickerEnd.DefaultDisplay = DateTime.Now;
+            // kiểm tra page trước là page nào
+            var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
+            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
+            {
+                if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CallTo = ContactDetailPage.FromCustomer;
+                    viewModel.Customer = ContactDetailPage.FromCustomer;
+                    Lookup_Customer.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
+                    Lookup_CallTo_SelectedItemChange(null, null);
+                }
+                else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CallTo = AccountDetailPage.FromCustomer;
+                    viewModel.Customer = AccountDetailPage.FromCustomer;
+                    Lookup_Customer.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
+                    Lookup_CallTo_SelectedItemChange(null, null);
+                }
+                else
+                {
+                    Lookup_Customer.IsVisible = true;
+                    CustomerMapping.IsVisible = false;
+                }
+            }
+            else
+            {
+                Lookup_Customer.IsVisible = true;
+                CustomerMapping.IsVisible = false;
+            }
         }
 
         private void Create()
         {
-            this.Title = "Tạo mới cuộc gọi";
-            BtnSave.Text = "Thêm cuộc gọi";
+            this.Title = Language.tao_moi_cuoc_goi;
+            BtnSave.Text = Language.them_cuoc_goi;
             IsInit = true;
             BtnSave.Clicked += Create_Clicked;
         }
@@ -72,11 +93,11 @@ namespace PhuLongCRM.Views
 
         private async void Update()
         {
-            BtnSave.Text = "Cập nhật";
+            BtnSave.Text = Language.cap_nhat;
             BtnSave.Clicked += Update_Clicked;
             await viewModel.loadPhoneCall(this.PhoneCallId);
             await viewModel.loadFromTo(this.PhoneCallId);
-            this.Title = "Cập nhật cuộc gọi";
+            this.Title = Language.cap_nhat_cuoc_goi;
             if (viewModel.PhoneCellModel.activityid != Guid.Empty)
             {
                 OnCompleted?.Invoke(true);
@@ -95,32 +116,38 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(viewModel.PhoneCellModel.subject))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập chủ đề cuộc gọi");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_chu_de_cuoc_goi);
                 return;
             }         
             if (viewModel.CallTo == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn người nhận cuộc gọi");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_nhan_cuoc_goi);
                 return;
             }
             if (string.IsNullOrWhiteSpace(viewModel.PhoneCellModel.phonenumber))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số điện thoại");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);
                 return;
             }
             if (viewModel.PhoneCellModel.scheduledstart == null || viewModel.PhoneCellModel.scheduledend == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc và thời gian bắt đầu");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau);
                     return;
             }
             if (viewModel.PhoneCellModel.scheduledstart != null && viewModel.PhoneCellModel.scheduledend != null)
             {
                 if (this.compareDateTime(viewModel.PhoneCellModel.scheduledstart, viewModel.PhoneCellModel.scheduledend) != -1)
                 {
-                    ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu");
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                     return;
                 }
             }
+
+            //if (viewModel.Customer != null && viewModel.Customer.Val == viewModel.CallTo.Val)
+            //{
+            //    ToastMessageHelper.ShortMessage(Language.nguoi_nhan_cuoc_goi_phai_khac_nguoi_lien_quan);
+            //    return;
+            //}
 
             LoadingHelper.Show();
 
@@ -135,14 +162,14 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage("Đã thêm cuộc gọi");                   
+                    ToastMessageHelper.ShortMessage(Language.da_them_cuoc_goi);                   
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Thêm cuộc gọi thất bại");
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
             else
@@ -156,14 +183,14 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage("Cập nhật thành công");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Cập nhật cuộc gọi thất bại");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
                 }
             }
         }
@@ -172,7 +199,9 @@ namespace PhuLongCRM.Views
         {
             if (date != null && date1 != null )
             {
-                int result = DateTime.Compare(date.Value, date1.Value);
+                DateTime timeStart = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, date.Value.Hour, date.Value.Minute, 0);
+                DateTime timeEnd = new DateTime(date1.Value.Year, date1.Value.Month, date1.Value.Day, date1.Value.Hour, date1.Value.Minute, 0);
+                int result = DateTime.Compare(timeStart, timeEnd);
                 if (result < 0)
                     return -1;
                 else if (result == 0)
@@ -195,7 +224,7 @@ namespace PhuLongCRM.Views
                 {
                     if (this.compareDateTime(viewModel.PhoneCellModel.scheduledstart, viewModel.PhoneCellModel.scheduledend) != -1)
                     {
-                        ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu");
+                        ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.PhoneCellModel.scheduledstart = viewModel.PhoneCellModel.scheduledend;
                     }
                 }
@@ -210,13 +239,13 @@ namespace PhuLongCRM.Views
                 {
                     if (this.compareDateTime(viewModel.PhoneCellModel.scheduledstart, viewModel.PhoneCellModel.scheduledend) != -1)
                     {
-                        ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu");
+                        ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.PhoneCellModel.scheduledend = viewModel.PhoneCellModel.scheduledstart;
                     }    
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage("Vui lòng chọn thời gian bắt đầu");
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
                 }
             }
         }

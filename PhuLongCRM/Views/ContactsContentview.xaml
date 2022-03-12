@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView xmlns:controls="clr-namespace:PhuLongCRM.Controls"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="PhuLongCRM.Views.ContactsContentview">
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             x:Class="PhuLongCRM.Views.ContactsContentview">
     <ContentView.Content>
         <AbsoluteLayout>
             <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
@@ -14,13 +15,18 @@
                         <DataTemplate>
                             <ViewCell>
                                 <Grid RowDefinitions="Auto,Auto,Auto"  BackgroundColor ="White" Padding="20,15" Margin="0,1">
-                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding bsd_fullname}" FontSize="16" FontAttributes="Bold" TextColor="#026294" LineBreakMode="TailTruncation"/>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">
+                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
+                                            <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                        </telerikPrimitives:RadBorder>
+                                        <Label Grid.Column="1" Text="{Binding bsd_fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                    </Grid>
                                     <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="Số điện thoại: " FontSize="15" TextColor="#444444"/>
+                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.so_dien_thoai},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                         <Label Grid.Column="1" Text="{Binding mobilephone}" FontSize="15" TextColor="#444444"/>
                                     </Grid>
                                     <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="Địa chỉ: " FontSize="15" TextColor="#444444"/>
+                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.dia_chi},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                         <Label Grid.Column="1" Text="{Binding bsd_contactaddress}" FontSize="15" TextColor="#444444" LineBreakMode="TailTruncation"/>
                                     </Grid>
                                 </Grid>

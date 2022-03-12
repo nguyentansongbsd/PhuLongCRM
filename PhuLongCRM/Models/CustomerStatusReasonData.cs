@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Models
 {
@@ -10,8 +11,8 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("1","Tiềm năng"),
-                new OptionSet("100000000","Chính thức"),
+                new OptionSet("1",Language.tiem_nang_sts),
+                new OptionSet("100000000",Language.chinh_thuc),
             };
         }
 

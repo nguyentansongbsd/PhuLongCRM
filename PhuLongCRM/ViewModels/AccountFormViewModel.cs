@@ -112,10 +112,20 @@ namespace PhuLongCRM.ViewModels
         public ObservableCollection<LookUp> list_country_lookup { get; set; }
         public ObservableCollection<LookUp> list_province_lookup { get; set; }
         public ObservableCollection<LookUp> list_district_lookup { get; set; }
-        
+
+        private bool _isOfficial;
+        public bool IsOfficial { get => _isOfficial; set { _isOfficial = value; OnPropertyChanged(nameof(IsOfficial)); } }
+
+        private AddressModel _address1;
+        public AddressModel Address1 { get => _address1; set { _address1 = value; OnPropertyChanged(nameof(Address1)); } }
+        //Address2 // địa chỉ thường trú
+        private AddressModel _address2;
+        public AddressModel Address2 { get => _address2; set { _address2 = value; OnPropertyChanged(nameof(Address2)); } }
+
         public AccountFormViewModel()
         {
-            singleAccount = new AccountFormModel();                   
+            singleAccount = new AccountFormModel();
+            IsOfficial = true;
             list_country_lookup = new ObservableCollection<LookUp>();
             list_province_lookup = new ObservableCollection<LookUp>();
             list_district_lookup = new ObservableCollection<LookUp>();
@@ -171,22 +181,28 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='bsd_fullname' alias='primarycontactname'/>
                                     </link-entity>                                
                                    <link-entity name='new_district' from='new_districtid' to='bsd_district' link-type='outer' alias='af' >
-                                        <attribute name='new_name' alias='district_name' />                                       
+                                        <attribute name='new_name' alias='district_name' />
+                                        <attribute name='bsd_nameen'  alias='district_name_en'/>
                                     </link-entity>
                                      <link-entity name='new_province' from='new_provinceid' to='bsd_province' link-type='outer' alias='ag'>
                                         <attribute name='new_name' alias='province_name' />                                       
+                                        <attribute name='bsd_nameen'  alias='province_name_en'/>
                                     </link-entity>
                                    <link-entity name='bsd_country' from='bsd_countryid' to='bsd_nation' link-type='outer' alias='as'>
                                         <attribute name='bsd_name' alias='country_name' />                                      
+                                        <attribute name='bsd_nameen'  alias='country_name_en'/>
                                     </link-entity>
                                     <link-entity name='bsd_country' from='bsd_countryid' to='bsd_permanentnation' link-type='outer' alias='ae' >
                                         <attribute name='bsd_name' alias='permanentnation_name' /> 
+                                        <attribute name='bsd_nameen'  alias='permanentnation_name_en'/>
                                     </link-entity>
                                     <link-entity name='new_province' from='new_provinceid' to='bsd_permanentprovince' link-type='outer' alias='afa' >
                                         <attribute name='new_name' alias='permanentprovince_name' />
+                                        <attribute name='bsd_nameen'  alias='permanentprovince_name_en'/>
                                     </link-entity>
                                     <link-entity name='new_district' from='new_districtid' to='bsd_permanentdistrict' link-type='outer' alias='agt' >
                                         <attribute name='new_name' alias='permanentdistrict_name' />  
+                                        <attribute name='bsd_nameen'  alias='permanentdistrict_name_en'/>
                                     </link-entity>
                                     <filter type='and'>
                                         <condition attribute='accountid' operator='eq' value='{" + accountid + @"}' />
@@ -198,6 +214,43 @@ namespace PhuLongCRM.ViewModels
                 return;
             var tmp = result.value.FirstOrDefault();
             this.singleAccount = tmp;
+
+            if (singleAccount.statuscode == "100000000")
+                IsOfficial = false;
+            else
+                IsOfficial = true;
+
+            Address1 = new AddressModel
+            {
+                country_id = singleAccount._bsd_country_value,
+                country_name = !string.IsNullOrWhiteSpace(singleAccount.country_name_en) && UserLogged.Language == "en" ? singleAccount.country_name_en : singleAccount.country_name,
+                country_name_en = singleAccount.country_name_en,
+                province_id = singleAccount._bsd_province_value,
+                province_name = !string.IsNullOrWhiteSpace(singleAccount.province_name_en) && UserLogged.Language == "en" ? singleAccount.province_name_en : singleAccount.province_name,
+                province_name_en = singleAccount.province_name_en,
+                district_id = singleAccount._bsd_district_value,
+                district_name = !string.IsNullOrWhiteSpace(singleAccount.district_name_en) && UserLogged.Language == "en" ? singleAccount.district_name_en : singleAccount.district_name,
+                district_name_en = singleAccount.district_name_en,
+                address = singleAccount.bsd_address,
+                lineaddress = singleAccount.bsd_housenumberstreet,
+                //address_en = singleAccount.bsd_diachi,
+                //lineaddress_en = singleAccount.bsd_street,
+            };
+
+            Address2 = new AddressModel
+            {
+                country_id = singleAccount._bsd_permanentnation_value,
+                country_name = !string.IsNullOrWhiteSpace(singleAccount.permanentnation_name_en) && UserLogged.Language == "en" ? singleAccount.permanentnation_name_en : singleAccount.permanentnation_name,
+                country_name_en = singleAccount.permanentnation_name_en,
+                province_id = singleAccount._bsd_permanentprovince_value,
+                province_name = !string.IsNullOrWhiteSpace(singleAccount.permanentprovince_name_en) && UserLogged.Language == "en" ? singleAccount.permanentprovince_name_en : singleAccount.permanentprovince_name,
+                province_name_en = singleAccount.permanentprovince_name_en,
+                district_id = singleAccount._bsd_permanentdistrict_value,
+                district_name = !string.IsNullOrWhiteSpace(singleAccount.permanentdistrict_name_en) && UserLogged.Language == "en" ? singleAccount.permanentdistrict_name_en : singleAccount.permanentdistrict_name,
+                district_name_en = singleAccount.permanentdistrict_name_en,
+                address = singleAccount.bsd_permanentaddress1,
+                lineaddress = singleAccount.bsd_permanenthousenumberstreetwardvn
+            };
         }
 
         public void GetPrimaryContactByID()
@@ -270,16 +323,40 @@ namespace PhuLongCRM.ViewModels
             data["statuscode"] = this.CustomerStatusReason?.Val;
             data["bsd_vatregistrationnumber"] = singleAccount.bsd_vatregistrationnumber;
 
-            data["bsd_housenumberstreet"] = singleAccount.bsd_housenumberstreet;
-            data["bsd_street"] = singleAccount.bsd_housenumberstreet;
-            data["bsd_diachi"] = singleAccount.bsd_diachi;
-            data["bsd_address"] = singleAccount.bsd_address;
+          //  data["bsd_housenumberstreet"] = singleAccount.bsd_housenumberstreet;
+          //  data["bsd_street"] = singleAccount.bsd_housenumberstreet;
+          //  data["bsd_diachi"] = singleAccount.bsd_diachi;
+          //  data["bsd_address"] = singleAccount.bsd_address;
             //data["bsd_postalcode"] = singleAccount.bsd_postalcode;
 
-            data["bsd_permanenthousenumberstreetwardvn"] = singleAccount.bsd_permanenthousenumberstreetwardvn;
-            data["bsd_permanenthousenumberstreetward"] = singleAccount.bsd_permanenthousenumberstreetwardvn;
-            data["bsd_permanentaddress1"] = singleAccount.bsd_permanentaddress1;
-            data["bsd_diachithuongtru"] = singleAccount.bsd_diachithuongtru;
+          //  data["bsd_permanenthousenumberstreetwardvn"] = singleAccount.bsd_permanenthousenumberstreetwardvn;
+          //  data["bsd_permanenthousenumberstreetward"] = singleAccount.bsd_permanenthousenumberstreetwardvn;
+           // data["bsd_permanentaddress1"] = singleAccount.bsd_permanentaddress1;
+           // data["bsd_diachithuongtru"] = singleAccount.bsd_diachithuongtru;
+
+            if (Address1 != null)
+            {
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
+                    data["bsd_housenumberstreet"] = Address1.lineaddress; //bsd_housenumberstreet line1
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress_en))
+                    data["bsd_street"] = Address1.lineaddress_en;
+                if (!string.IsNullOrWhiteSpace(Address1.address))
+                    data["bsd_address"] = Address1.address; //bsd_address ad1
+                if (!string.IsNullOrWhiteSpace(Address1.address_en))
+                    data["bsd_diachi"] = Address1.address_en; //bsd_diachi ad1 en
+            }
+
+            if (Address2 != null)
+            {
+                if (!string.IsNullOrWhiteSpace(Address2.lineaddress))
+                    data["bsd_permanenthousenumberstreetwardvn"] = Address2.lineaddress; //bsd_permanenthousenumberstreetwardvn l2
+                if (!string.IsNullOrWhiteSpace(Address2.lineaddress_en))
+                    data["bsd_permanenthousenumberstreetward"] = Address2.lineaddress_en;
+                if (!string.IsNullOrWhiteSpace(Address2.address))
+                    data["bsd_permanentaddress1"] = Address2.address; //bsd_permanentaddress1 ad2
+                if (!string.IsNullOrWhiteSpace(Address2.address_en))
+                    data["bsd_diachithuongtru"] = Address2.address_en; //bsd_diachithuongtru ad2 en
+            }
 
             if (singleAccount._primarycontactid_value == null)
             {
@@ -290,54 +367,56 @@ namespace PhuLongCRM.ViewModels
                 data["primarycontactid@odata.bind"] = "/contacts(" + singleAccount._primarycontactid_value + ")"; /////Lookup Field
             }
 
-            if (singleAccount._bsd_country_value == null)
+            if (Address1 == null || Address1.country_id == Guid.Empty)
             {
                 await DeletLookup("bsd_nation", singleAccount.accountid);
             }
             else
             {
-                data["bsd_nation@odata.bind"] = "/bsd_countries(" + singleAccount._bsd_country_value + ")"; /////Lookup Field
+                data["bsd_nation@odata.bind"] = "/bsd_countries(" + Address1.country_id + ")"; /////Lookup Field _bsd_country_value
             }
-            if (singleAccount._bsd_province_value == null)
+            if (Address1 == null || Address1.province_id == Guid.Empty)
             {
                 await DeletLookup("bsd_province", singleAccount.accountid);
             }
             else
             {
-                data["bsd_province@odata.bind"] = "/new_provinces(" + singleAccount._bsd_province_value + ")"; /////Lookup Field
+                data["bsd_province@odata.bind"] = "/new_provinces(" + Address1.province_id + ")"; /////Lookup Field _bsd_province_value
             }
-            if (singleAccount._bsd_district_value == null)
+            if (Address1 == null || Address1.district_id == Guid.Empty)
             {
                 await DeletLookup("bsd_district", singleAccount.accountid);
             }
             else
             {
-                data["bsd_district@odata.bind"] = "/new_districts(" + singleAccount._bsd_district_value + ")"; /////Lookup Field
+                //_bsd_district_value
+                data["bsd_district@odata.bind"] = "/new_districts(" + Address1.district_id + ")"; /////Lookup Field _bsd_district_value
             }
 
-            if (singleAccount._bsd_permanentnation_value == null)
+            if (Address2 == null || Address2.country_id == Guid.Empty)
             {
                 await DeletLookup("bsd_PermanentNation", singleAccount.accountid);
             }
             else
             {
-                data["bsd_PermanentNation@odata.bind"] = "/bsd_countries(" + singleAccount._bsd_permanentnation_value + ")"; /////Lookup Field
+                //_bsd_permanentnation_value
+                data["bsd_PermanentNation@odata.bind"] = "/bsd_countries(" + Address2.country_id + ")"; /////Lookup Field _bsd_permanentnation_value
             }
-            if (singleAccount._bsd_permanentprovince_value == null)
+            if (Address2 == null || Address2.province_id == Guid.Empty)
             {
                 await DeletLookup("bsd_PermanentProvince", singleAccount.accountid);
             }
             else
             {
-                data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + singleAccount._bsd_permanentprovince_value + ")"; /////Lookup Field
+                data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + Address2.province_id + ")"; /////Lookup Field _bsd_permanentprovince_value
             }
-            if (singleAccount._bsd_permanentdistrict_value == null)
+            if (Address2 == null || Address2.district_id == Guid.Empty)
             {
                 await DeletLookup("bsd_PermanentDistrict", singleAccount.accountid);
             }
             else
             {
-                data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + singleAccount._bsd_permanentdistrict_value + ")"; /////Lookup Field
+                data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Address2.district_id + ")"; /////Lookup Field _bsd_permanentdistrict_value
             }
 
             if (UserLogged.Id != Guid.Empty)

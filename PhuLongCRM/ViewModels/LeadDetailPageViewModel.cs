@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -72,6 +73,7 @@ namespace PhuLongCRM.ViewModels
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='lead'>
                                     <attribute name='lastname' />
+                                    <attribute name='fullname' />
                                     <attribute name='subject' alias='bsd_topic_label'/>
                                     <attribute name='statuscode' />
                                     <attribute name='statecode' />
@@ -99,14 +101,17 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='new_gender' />
                                     <attribute name='new_birthday' />
                                     <attribute name='leadsourcecode' />
-                                <attribute name='bsd_customercode' />
-                                <attribute name='bsd_customergroup' />
-                                <attribute name='bsd_typeofidcard' />
-                                <attribute name='bsd_identitycardnumberid' />
-                                <attribute name='bsd_area' />
-                                <attribute name='bsd_placeofissue' />
-                                <attribute name='bsd_dategrant' />
-                                <attribute name='bsd_registrationcode' />
+                                    <attribute name='bsd_customercode' />
+                                    <attribute name='bsd_customergroup' />
+                                    <attribute name='bsd_typeofidcard' />
+                                    <attribute name='bsd_identitycardnumberid' />
+                                    <attribute name='bsd_area' />
+                                    <attribute name='bsd_placeofissue' />
+                                    <attribute name='bsd_dategrant' />
+                                    <attribute name='bsd_registrationcode' />
+                                    <attribute name='bsd_accountaddressvn' />
+                                    <attribute name='bsd_permanentaddress1' />
+                                    <attribute name='bsd_contactaddress' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='leadid' operator='eq' value='{" + leadid + @"}' />
@@ -116,6 +121,12 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
                                         <attribute name='name'  alias='campaignid_label'/>
+                                    </link-entity>
+                                    <link-entity name='account' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='accountid' alias='account_id'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='contactid' alias='contact_id'/>
                                     </link-entity>
                                     <filter type='and'>
                                           <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
@@ -127,28 +138,20 @@ namespace PhuLongCRM.ViewModels
             {
                 return;
             }    
-            var tmp = result.value.FirstOrDefault();
-            this.singleLead = tmp;
+            var data = result.value.FirstOrDefault();
+            this.singleLead = data;
             this.singleGender = list_gender_optionset.SingleOrDefault(x => x.Val == this.singleLead.new_gender);
             this.LeadSource = LeadSourcesData.GetLeadSourceById(this.singleLead.leadsourcecode);
             LoadAddress();
             await LoadCountryByName();
         }
 
-        public async Task<bool> Qualify(Guid id)
+        public async Task<CrmApiResponse> Qualify(Guid id)
         {
             string path = "/leads(" + id + ")//Microsoft.Dynamics.CRM.bsd_Action_Lead_QualifyLead";
             var content = new { };
             CrmApiResponse result = await CrmHelper.PostData(path, content);
-
-            if (result.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return result;
         }
 
         public async Task<bool> UpdateStatusCodeLead()
@@ -210,9 +213,9 @@ namespace PhuLongCRM.ViewModels
 
         public void loadGender()
         {
-            list_gender_optionset.Add(new OptionSet() { Val = ("1"), Label = "Nam", });
-            list_gender_optionset.Add(new OptionSet() { Val = ("2"), Label = "Nữ", });
-            list_gender_optionset.Add(new OptionSet() { Val = ("100000000"), Label = "Khác", });
+            list_gender_optionset.Add(new OptionSet() { Val = ("1"), Label = Language.nam, });
+            list_gender_optionset.Add(new OptionSet() { Val = ("2"), Label = Language.nu, });
+            list_gender_optionset.Add(new OptionSet() { Val = ("100000000"), Label = Language.khac, });
         }
 
         public async Task<OptionSet> loadOneGender(string id)
@@ -471,7 +474,6 @@ namespace PhuLongCRM.ViewModels
                 await LoadProvinceByName();
             }        
         }
-
         public async Task LoadProvinceByName()
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -491,9 +493,7 @@ namespace PhuLongCRM.ViewModels
                 this.Province = result.value.FirstOrDefault();
                 await LoadDistrictByName();
             }          
-        }
-
-       
+        }     
         public async Task LoadDistrictByName()
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>

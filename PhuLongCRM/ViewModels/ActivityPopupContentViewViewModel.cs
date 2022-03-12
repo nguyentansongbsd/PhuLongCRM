@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -165,7 +166,8 @@ namespace PhuLongCRM.ViewModels
                 {
                     if (item.typemask == 1) // from call
                     {
-                        PhoneCall.call_from = item.user_name;
+                        // hiển thị thông tin là employee khi ở dưới app
+                        PhoneCall.call_from = UserLogged.User; //item.user_name;
                     }
                     else if (item.typemask == 2) // to call
                     {
@@ -323,13 +325,9 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='statecode' />
                                 <attribute name='createdby' />
                                 <attribute name='statuscode' />
-                                <attribute name='requiredattendees' />
-                                <attribute name='prioritycode' />
                                 <attribute name='scheduledstart' />
                                 <attribute name='scheduledend' />
                                 <attribute name='scheduleddurationminutes' />
-                                <attribute name='bsd_mmeetingformuploaded' />
-                                <attribute name='optionalattendees' />
                                 <attribute name='isalldayevent' />
                                 <attribute name='location' />
                                 <attribute name='activityid' />

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using PhuLongCRM.Models;
 using Xamarin.Forms;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Controls
 {
@@ -77,7 +78,7 @@ namespace PhuLongCRM.Controls
         {
             saveButton = new Button()
             {
-                Text = "Lưu",
+                Text = Language.luu,
                 BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"],
                 TextColor = Color.White,
                 Padding = new Thickness(10, 5)
@@ -87,7 +88,7 @@ namespace PhuLongCRM.Controls
 
             Button deleteButton = new Button()
             {
-                Text = "Xoá",
+                Text = Language.xoa,
                 TextColor = (Color)App.Current.Resources["NavigationPrimary"],
                 BackgroundColor = Color.White,
                 BorderColor = (Color)App.Current.Resources["NavigationPrimary"],
@@ -105,7 +106,7 @@ namespace PhuLongCRM.Controls
 
             cancelButton = new Button()
             {
-                Text = "Đóng",
+                Text = Language.dong,
                 TextColor = (Color)App.Current.Resources["NavigationPrimary"],
                 BackgroundColor = Color.White,
                 BorderColor = (Color)App.Current.Resources["NavigationPrimary"],
@@ -163,7 +164,7 @@ namespace PhuLongCRM.Controls
             StackLayout stSearchBar = new StackLayout();          
 
             searchBar = new SearchBar();
-            searchBar.Placeholder = "Từ khoá";
+            searchBar.Placeholder = Language.tim_kiem;
             searchBar.TextChanged += SearchBar_TextChangedEventArgs;
 
             SearchBarFrame searchBarFrame = new SearchBarFrame();

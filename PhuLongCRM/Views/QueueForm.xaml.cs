@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -13,8 +14,7 @@ namespace PhuLongCRM.Views
     public partial class QueueForm : ContentPage
     {
         public Action<bool> OnCompleted;
-        public static bool? NeedToRefreshContactList = null;
-        public static bool? NeedToRefreshAccountList = null;
+        public static bool? NeedToRefresh;
         public QueueFormViewModel viewModel;
         public Guid QueueId;
         private bool from;
@@ -30,30 +30,18 @@ namespace PhuLongCRM.Views
         public void Init()
         {          
             this.BindingContext = viewModel = new QueueFormViewModel();
-            centerModalKHTN.Body.BindingContext = viewModel;
-            NeedToRefreshAccountList = false;
-            NeedToRefreshContactList = false;
+            NeedToRefresh = false;
             SetPreOpen();            
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (NeedToRefreshAccountList == true)
+            if (NeedToRefresh == true)
             {
                 LoadingHelper.Show();
-                viewModel.AccountsLookUp.Clear();
-                await viewModel.LoadAccountsLookUp();
-                NeedToRefreshAccountList = false;
-                LoadingHelper.Hide();
-            }
-
-            if (NeedToRefreshContactList == true)
-            {
-                LoadingHelper.Show();
-                viewModel.ContactsLookUp.Clear();
-                await viewModel.LoadContactsLookUp();
-                NeedToRefreshContactList = false;
+                Lookup_KhachHang.Refresh();
+                NeedToRefresh = false;
                 LoadingHelper.Hide();
             }
         }
@@ -66,6 +54,18 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadSalesAgentCompany();
                 LoadingHelper.Hide();
             };
+            lookUpCollaborator.PreOpenAsync = async () =>
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadCollaboratorLookUp();
+                LoadingHelper.Hide();
+            };
+            lookUpCustomerReferral.PreOpenAsync = async () =>
+             {
+                 LoadingHelper.Show();
+                 await viewModel.LoadCustomerReferralLookUp();
+                 LoadingHelper.Hide();
+             };
             if (viewModel.AccountsLookUp.Count <= 0)
             {
                // LoadingHelper.Show();
@@ -82,35 +82,41 @@ namespace PhuLongCRM.Views
 
         public async void Create()
         {
-            btnSave.Text = "Tạo Giữ Chỗ";
+            this.Title = btnSave.Text = Language.tao_giu_cho;
             btnSave.Clicked += Create_Clicked; ;
-            this.Title = "Tạo Giữ Chỗ";
-            if(from)
+            viewModel.isUpdate = false;
+            if (from)
             {
                 await viewModel.LoadFromUnit(viewModel.UnitId);
-                viewModel.createQueueDraft(false, viewModel.UnitId);
-                topic.Text = viewModel.QueueFormModel.bsd_units_name;              
-                if (viewModel.QueueFormModel.bsd_units_id != Guid.Empty)
+                string res = await viewModel.createQueueDraft(false, viewModel.UnitId);
+                topic.Text = viewModel.QueueFormModel.bsd_units_name;
+                if (viewModel.QueueFormModel.bsd_units_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
                     OnCompleted?.Invoke(true);
                 else
+                {
                     OnCompleted?.Invoke(false);
+                    ToastMessageHelper.ShortMessage(res);
+                }
             }
             else
             {
                 await viewModel.LoadFromProject(viewModel.UnitId);
-                viewModel.createQueueDraft(true, viewModel.UnitId);
-                topic.Text = viewModel.QueueFormModel.bsd_project_name +" - "+ DateTime.Now.ToString("dd/MM/yyyyy");                
-                if (viewModel.QueueFormModel.bsd_project_id != Guid.Empty)
+                string res = await viewModel.createQueueDraft(true, viewModel.UnitId);
+                topic.Text = viewModel.QueueFormModel.bsd_project_name +" - "+ DateTime.Now.ToString("dd/MM/yyyy");
+                if (viewModel.QueueFormModel.bsd_project_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
                     OnCompleted?.Invoke(true);
                 else
+                {
                     OnCompleted?.Invoke(false);
+                    ToastMessageHelper.ShortMessage(res);
+                }
             }            
         }
 
         private async void Create_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            btnSave.Text = "Đang Tạo Giữ Chỗ...";
+            btnSave.Text = Language.dang_tao_giu_cho;
             await SaveData(null);
         }
 
@@ -118,152 +124,95 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(viewModel.QueueFormModel.name))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập tiêu đề của giữ chỗ");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_tieu_de_giu_cho);
                 LoadingHelper.Hide();
-                btnSave.Text = "Tạo Giữ Chỗ";
+                btnSave.Text = Language.tao_giu_cho;
                 return;
             }
-            if (viewModel.Customer == null || viewModel.Customer.Id == null || viewModel.Customer.Id == Guid.Empty)
+            if (viewModel.Customer == null || string.IsNullOrWhiteSpace(viewModel.Customer.Val))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn khách hàng tiềm năng");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_khach_hang);
                 LoadingHelper.Hide();
-                btnSave.Text = "Tạo Giữ Chỗ";
-                return;
-            }
-            if (viewModel.DailyOption == null || viewModel.DailyOption.Id == null || viewModel.DailyOption.Id == Guid.Empty)
-            {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn đại lý bán hàng");
-                LoadingHelper.Hide();
-                btnSave.Text = "Tạo Giữ Chỗ";
+                btnSave.Text = Language.tao_giu_cho;
                 return;
             }
             if (from)
             {
                 if (!await viewModel.SetQueueTime())
                 {
-                    ToastMessageHelper.ShortMessage("Khách hàng đã tham gia giữ chỗ cho dự án này");
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_da_tham_gia_giu_cho_cho_du_an_nay);
                     LoadingHelper.Hide();
-                    btnSave.Text = "Tạo Giữ Chỗ";
+                    btnSave.Text = Language.tao_giu_cho;
                     return;
                 }
             }
-            if (viewModel.Customer != null && viewModel.Customer.Id != Guid.Empty && viewModel.DailyOption != null && viewModel.DailyOption.Id != Guid.Empty && viewModel.DailyOption.Id == viewModel.Customer.Id)
+            if (viewModel.Customer != null && !string.IsNullOrWhiteSpace(viewModel.Customer.Val) && viewModel.DailyOption != null && viewModel.DailyOption.Id != Guid.Empty && viewModel.DailyOption.Id == Guid.Parse(viewModel.Customer.Val))
             {
-                ToastMessageHelper.ShortMessage("Khách hàng phải khác Đại lý bán hàng");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_khac_dai_ly_ban_hang);
                 LoadingHelper.Hide();
-                btnSave.Text = "Tạo Giữ Chỗ";
+                btnSave.Text = Language.tao_giu_cho;
+                return;
+            }
+            if (viewModel.Customer != null && !string.IsNullOrWhiteSpace(viewModel.Customer.Val) && viewModel.Collaborator != null && viewModel.Collaborator.Id != Guid.Empty && viewModel.Collaborator.Id == Guid.Parse(viewModel.Customer.Val))
+            {
+                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_khac_cong_tac_vien);
+                LoadingHelper.Hide();
+                btnSave.Text = Language.tao_giu_cho;
+                return;
+            }
+            if (viewModel.Customer != null && !string.IsNullOrWhiteSpace(viewModel.Customer.Val) && viewModel.CustomerReferral != null && viewModel.CustomerReferral.Id != Guid.Empty && viewModel.CustomerReferral.Id == Guid.Parse(viewModel.Customer.Val))
+            {
+                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_khac_khach_hang_gioi_thieu);
+                LoadingHelper.Hide();
+                btnSave.Text = Language.tao_giu_cho;
                 return;
             }
             var created = await viewModel.UpdateQueue(viewModel.idQueueDraft);
             if (created)
             {
                 if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
+                if (ProjectInfo.NeedToRefreshNumQueue.HasValue) ProjectInfo.NeedToRefreshNumQueue = true;
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                 if (UnitInfo.NeedToRefreshQueue.HasValue) UnitInfo.NeedToRefreshQueue = true;
                 if (Dashboard.NeedToRefreshQueue.HasValue) Dashboard.NeedToRefreshQueue = true;
                 await Navigation.PopAsync();       
-                ToastMessageHelper.ShortMessage("Tạo giữ chỗ thành công");
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
             else
             {
                 LoadingHelper.Hide();
-                btnSave.Text = "Tạo Giữ Chỗ";
-                ToastMessageHelper.ShortMessage("Tạo giữ chỗ thất bại");
+                btnSave.Text = Language.tao_giu_cho;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
             }
         }
 
-        private async void KhachHangTiemNang_Tapped(object sender, EventArgs e)
+        private void lookUpDaiLy_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
-            LoadingHelper.Show();
-            Tab_Tapped(1);           
-            await centerModalKHTN.Show();
-            LoadingHelper.Hide();
-        }
-
-        private void Contact_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-
-        private void Account_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-        }
-
-        private async void CloseKHTN_Clicked(object sender, EventArgs e)
-        {
-            await centerModalKHTN.Hide();
-        }       
-
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
+            if(viewModel.DailyOption != null && viewModel.DailyOption.Id != Guid.Empty)
             {
-                VisualStateManager.GoToState(radBorderContact, "Selected");
-                VisualStateManager.GoToState(lbContact, "Selected");
-                LookUpContact.IsVisible = true;
-            }
-            else
+                viewModel.Collaborator = null;
+                viewModel.CustomerReferral = null;
+            }    
+        }
+
+        private void lookUpCollaborator_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if (viewModel.Collaborator != null && viewModel.Collaborator.Id != Guid.Empty)
             {
-                VisualStateManager.GoToState(radBorderContact, "Normal");
-                VisualStateManager.GoToState(lbContact, "Normal");
-                LookUpContact.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderAccount, "Selected");
-                VisualStateManager.GoToState(lbAccount, "Selected");
-                LookUpAccount.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderAccount, "Normal");
-                VisualStateManager.GoToState(lbAccount, "Normal");
-                LookUpAccount.IsVisible = false;
+                viewModel.DailyOption = null;
+                viewModel.CustomerReferral = null;
             }
         }
 
-        private async void LookUpContact_ItemTapped(object sender, EventArgs e)
+        private void lookUpCustomerReferral_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
-            var item = (LookUp)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item != null)
+            if (viewModel.CustomerReferral != null && viewModel.CustomerReferral.Id != Guid.Empty)
             {
-                viewModel.Customer = new LookUp();
-                viewModel.Customer.Id = item.Id;
-                viewModel.Customer.Name = item.Name;
-                viewModel.Customer.Detail = "2";
-                viewModel.QueueFormModel.customer_name = item.Name;
+                viewModel.DailyOption = null;
+                viewModel.Collaborator = null;
             }
-            await centerModalKHTN.Hide();
         }
 
-        private async void LookUpAccount_ItemTapped(object sender, EventArgs e)
-        {
-            var item = (LookUp)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item != null)
-            {
-                viewModel.Customer = new LookUp();
-                viewModel.Customer.Id = item.Id;
-                viewModel.Customer.Name = item.Name;
-                viewModel.Customer.Detail = "1";
-                viewModel.QueueFormModel.customer_name = item.Name;
-            }
-            await centerModalKHTN.Hide();
-        }      
-
-        private async void AddContact_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            await Navigation.PushAsync(new ContactForm());
-            LoadingHelper.Hide();
-        }
-
-        private async void AddAccount_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            await Navigation.PushAsync(new AccountForm());
-            LoadingHelper.Hide();
-        }
     }
 }

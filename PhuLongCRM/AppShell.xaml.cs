@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.Views;
 using Xamarin.Forms;
@@ -54,7 +55,7 @@ namespace PhuLongCRM
             LoadingHelper.Show();
             if (UserLogged.ContactId == Guid.Empty)
             {
-                ToastMessageHelper.ShortMessage("Chưa có contact, không thể chỉnh sửa thông tin");
+                ToastMessageHelper.ShortMessage(Language.chua_co_contact_khong_the_chinh_sua_thong_tin);
                 LoadingHelper.Hide();
                 return;
             }
@@ -66,7 +67,7 @@ namespace PhuLongCRM
 
         private async void Logout_Clicked(System.Object sender, System.EventArgs e)
         {
-            await Shell.Current.Navigation.PushModalAsync(new Login(), false);
+            await Shell.Current.GoToAsync("//LoginPage");
         }
     }
 }

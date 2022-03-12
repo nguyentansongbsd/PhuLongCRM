@@ -7,18 +7,5 @@
     <controls:SearchBarFrame x:Name="searchBar" Grid.Row="0" Margin="10,10,10,5">
         <controls:SearchBar SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
     </controls:SearchBarFrame>
-    <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" BackgroundColor="White" >
-        <controls:BsdListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <StackLayout BackgroundColor ="#eeeeee" Padding="0,0,0,1">
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="listView_ItemTapped" CommandParameter="{Binding .}"/>
-                        </StackLayout.GestureRecognizers>
-                        <Label Text="{Binding Label}" FontSize="15" TextColor="#444444" Padding="10" BackgroundColor="White"/>
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </controls:BsdListView.ItemTemplate>
-    </controls:BsdListView>
+    <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" BackgroundColor="White" />
 </Grid>

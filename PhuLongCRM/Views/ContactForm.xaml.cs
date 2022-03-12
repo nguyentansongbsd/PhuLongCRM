@@ -10,6 +10,7 @@ using PhuLongCRM.ViewModels;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using System.Linq;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Views
 {
@@ -39,20 +40,17 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             this.BindingContext = viewModel = new ContactFormViewModel();
-            centerModalContacAddress.Body.BindingContext = viewModel;
-            centerModalPermanentAddress.Body.BindingContext = viewModel;
             viewModel.ContactType = viewModel.ContactTypes.SingleOrDefault(x => x.Val == "100000000");
             SetPreOpen();
         }
 
         private void Create()
         {
-            this.Title = "Tạo Mới Khách Hàng Cá Nhân";
-            btn_save_contact.Text = "Tạo Mới";
-            datePickerNgayCap.DefaultDisplay = DateTime.Now;
-            datePickerNgayCapHoChieu.DefaultDisplay = DateTime.Now;
-            datePikerNgayCapTheCanCuoc.DefaultDisplay = DateTime.Now;
+            this.Title = Language.tao_moi_khach_hang_ca_nhan;
+            btn_save_contact.Text = Language.tao_moi;
             btn_save_contact.Clicked += CreateContact_Clicked;
+            viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById("1");
+            lookUpTinhTrang.IsEnabled = false;
         }
 
         private void CreateContact_Clicked(object sender, EventArgs e)
@@ -63,9 +61,11 @@ namespace PhuLongCRM.Views
         private async void Update()
         {
             await loadData(this.Id.ToString());
-            this.Title = "Cập Nhật Khách Hàng Cá Nhân";
-            btn_save_contact.Text = "Cập Nhật";
+            this.Title = Language.cap_nhat_khach_hang_ca_nhan;
+            btn_save_contact.Text = Language.cap_nhat;
             btn_save_contact.Clicked += UpdateContact_Clicked;
+            lookUpTinhTrang.IsEnabled = false;
+
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
                 customerCode.IsVisible = true;
@@ -113,32 +113,32 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_fullname))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập họ tên");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_ho_ten);
                 return;
             }
             if (string.IsNullOrWhiteSpace(viewModel.singleContact.mobilephone))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số điện thoại");               
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);               
                 return;
             }
             if (viewModel.singleGender == null || viewModel.singleGender.Val == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn giới tính");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_gioi_tinh);
                 return;
             }
             if (viewModel.singleLocalization == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn quốc tịch");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_quoc_tich);
                 return;
             }
             if (viewModel.singleContact.birthdate == null)
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn ngày sinh");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_ngay_sinh);
                 return;
             }
             if (DateTime.Now.Year - DateTime.Parse(viewModel.singleContact.birthdate.ToString()).Year < 18)
             {
-                ToastMessageHelper.ShortMessage("Khách hàng phải từ 18 tuổi");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
                 return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.emailaddress1))
@@ -147,56 +147,57 @@ namespace PhuLongCRM.Views
                 Match match = regex.Match(viewModel.singleContact.emailaddress1);
                 if (!match.Success)
                 {
-                    ToastMessageHelper.ShortMessage("Email sai định dạng");
+                    ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang);
                     return;
                 }
 
                 if (!await viewModel.CheckEmail(viewModel.singleContact.emailaddress1, id))
                 {
-                    ToastMessageHelper.ShortMessage("Email đã được sử dụng");
+                    ToastMessageHelper.ShortMessage(Language.email_da_duoc_su_dung);
                     return;
                 }
             }
-            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_contactaddress))
+            if (string.IsNullOrWhiteSpace(viewModel.Address1.lineaddress))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn địa chỉ liên lạc");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_permanentaddress1))
+            if (string.IsNullOrWhiteSpace(viewModel.Address2.lineaddress))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng chọn địa chỉ thường trú");
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_thuong_tru);
                 return;
             }
             if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber))
             {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số CMND");
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_cmnd);
                 return;
             }
             if (!await viewModel.CheckCMND(viewModel.singleContact.bsd_identitycardnumber, id))
             {
-                ToastMessageHelper.ShortMessage("Số CMNND đã được sử dụng");
-                return;
+                ToastMessageHelper.ShortMessage(Language.so_cmnd_da_duoc_su_dung);
+               // return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && !await viewModel.CheckPassport(viewModel.singleContact.bsd_passport, id))
             {
-                ToastMessageHelper.ShortMessage("Số hộ chiếu đã được sử dụng");
+                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_da_duoc_su_sung);
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && viewModel.singleContact.bsd_identitycardnumber.Length > 9)
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && viewModel.singleContact.bsd_identitycardnumber.Length != 9)
             {
-                ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Giới hạn 09 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_idcard) && viewModel.singleContact.bsd_idcard.Length > 12)
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_idcard) && viewModel.singleContact.bsd_idcard.Length > 12 ||
+                !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_idcard) && viewModel.singleContact.bsd_idcard.Length < 9)
             {
-                ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Giới hạn 12 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
             }
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && viewModel.singleContact.bsd_passport.Length > 8)
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && viewModel.singleContact.bsd_passport.Length != 8)
             {
-                ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Giới hạn 08 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
             }
 
@@ -213,16 +214,16 @@ namespace PhuLongCRM.Views
                 if (created != new Guid())
                 {
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
-                    //if (QueueForm.NeedToRefreshContactList.HasValue) QueueForm.NeedToRefreshContactList = true;
+                    if (QueueForm.NeedToRefresh.HasValue) QueueForm.NeedToRefresh = true;
 
                     await Navigation.PopAsync();
-                    ToastMessageHelper.ShortMessage("Đã tạo khách hàng cá nhân thành công");
+                    ToastMessageHelper.ShortMessage(Language.tao_khach_hang_ca_nhan_thanh_cong);
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Tạo khách hàng cá nhân thất bại");
+                    ToastMessageHelper.ShortMessage(Language.tao_khach_hang_ca_nhan_that_bai);
                 }
             }
             else
@@ -234,7 +235,7 @@ namespace PhuLongCRM.Views
                 {
                     LoadingHelper.Hide();
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
-                    //if (ContactDetailPage.NeedToRefresh.HasValue) ContactDetailPage.NeedToRefresh = true;
+                    if (ContactDetailPage.NeedToRefresh.HasValue) ContactDetailPage.NeedToRefresh = true;
 
                     //if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
                     //{
@@ -246,12 +247,12 @@ namespace PhuLongCRM.Views
                     //   await viewModel.UpLoadCMNDBehind();
                     //}
                     await Navigation.PopAsync();
-                    ToastMessageHelper.ShortMessage("Đã cập nhật thành công");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Cập nhật thất bại");
+                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
                 }
             }
         }
@@ -284,88 +285,12 @@ namespace PhuLongCRM.Views
                 }
                 LoadingHelper.Hide();                
             }; 
-            lookUpContacAddressCountry.PreOpenAsync = async () =>
-            {
-                LoadingHelper.Show();
-                if(viewModel.list_country_lookup.Count == 0)
-                {
-                    await viewModel.LoadCountryForLookup();
-                }
-                LoadingHelper.Hide();
-            };
-            lookUpPermanentAddressCountry.PreOpenAsync = async () =>
-            {
-                LoadingHelper.Show();
-                if (viewModel.list_country_lookup.Count == 0)
-                {
-                    await viewModel.LoadCountryForLookup();
-                }
-                LoadingHelper.Hide();
-            };
-            Lookup_Account.PreOpenAsync = async () =>
+           Lookup_Account.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
                 await viewModel.LoadAccountsLookup();
                 LoadingHelper.Hide();
             };
-        }
-
-        private async void DiaChiLienLac_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            if (viewModel.AddressLine1Contact == null && !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_housenumberstreet))
-            {
-                viewModel.AddressLine1Contact = viewModel.singleContact.bsd_housenumberstreet;
-            }
-
-            if (viewModel.AddressCountryContac == null && !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_country_label))
-            {
-                viewModel.AddressCountryContac = await viewModel.LoadCountryByName(viewModel.singleContact.bsd_country_label);
-                await viewModel.LoadProvincesForLookup(viewModel.AddressCountryContac);
-            }
-
-            if (viewModel.AddressStateProvinceContac == null && !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_province_label))
-            {
-                viewModel.AddressStateProvinceContac = await viewModel.LoadProvinceByName(viewModel.singleContact._bsd_country_value, viewModel.singleContact.bsd_province_label); ;
-                await viewModel.LoadDistrictForLookup(viewModel.AddressStateProvinceContac);
-            }
-
-            if (viewModel.AddressCityContac == null && !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_district_label))
-            {
-                viewModel.AddressCityContac = await viewModel.LoadDistrictByName(viewModel.singleContact._bsd_province_value, viewModel.singleContact.bsd_district_label);
-            }
-
-            LoadingHelper.Hide();
-            await centerModalContacAddress.Show();
-        }
-
-        private async void DiaChiThuongTru_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            if (viewModel.AddressLine1Permanent == null && !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_permanentaddress))
-            {
-                viewModel.AddressLine1Permanent = viewModel.singleContact.bsd_permanentaddress;
-            }
-
-            if (viewModel.AddressCountryPermanent == null && !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_permanentcountry_label))
-            {
-                viewModel.AddressCountryPermanent = await viewModel.LoadCountryByName(viewModel.singleContact.bsd_permanentcountry_label);
-                await viewModel.LoadProvincesForLookup(viewModel.AddressCountryPermanent);
-            }
-
-            if (viewModel.AddressStateProvincePermanent == null && !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_permanentprovince_label))
-            {
-                viewModel.AddressStateProvincePermanent = await viewModel.LoadProvinceByName(viewModel.singleContact._bsd_permanentcountry_value, viewModel.singleContact.bsd_permanentprovince_label); ;
-                await viewModel.LoadDistrictForLookup(viewModel.AddressStateProvincePermanent);
-            }
-
-            if (viewModel.AddressCityPermanent == null && !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_permanentdistrict_label))
-            {
-                viewModel.AddressCityPermanent = await viewModel.LoadDistrictByName(viewModel.singleContact._bsd_permanentprovince_value, viewModel.singleContact.bsd_permanentdistrict_label);
-            }
-
-            LoadingHelper.Hide();
-            await centerModalPermanentAddress.Show();
         }
 
         private void Handle_LayoutChanged(object sender, System.EventArgs e)
@@ -375,201 +300,15 @@ namespace PhuLongCRM.Views
             MatTruocCMND.HeightRequest = tmpHeight;
             MatSauCMND.HeightRequest = tmpHeight;
         }     
-
-        private async void ContacAddressCountry_Changed(object sender, LookUpChangeEvent e)
-        {
-            await viewModel.LoadProvincesForLookup(viewModel.AddressCountryContac);
-        }
-
-        private async void ContacAddressProvince_Changed(object sender, LookUpChangeEvent e)
-        {
-            await viewModel.LoadDistrictForLookup(viewModel.AddressStateProvinceContac);
-        }
-
-        private async void CloseContacAddress_Clicked(object sender, EventArgs e)
-        {
-            await centerModalContacAddress.Hide();
-        }
-
-        private async void ConfirmContacAddress_Clicked(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(viewModel.AddressLine1Contact))
-            {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số nhà/đường/phường");
-                return;
-            }
-
-            List<string> address = new List<string>();
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressLine1Contact))
-            {
-                viewModel.singleContact.bsd_housenumberstreet = viewModel.AddressLine1Contact;
-                address.Add(viewModel.AddressLine1Contact);
-            }
-            else
-            {
-                viewModel.singleContact.bsd_housenumberstreet = null;
-            }
-            if (viewModel.AddressCityContac != null)
-            {
-                viewModel.singleContact.bsd_district_label = viewModel.AddressCityContac.Name;
-                viewModel.singleContact._bsd_district_value = viewModel.AddressCityContac.Id.ToString();
-                address.Add(viewModel.AddressCityContac.Name);
-            }
-            else
-            {
-                viewModel.singleContact.bsd_district_label = null;
-                viewModel.singleContact._bsd_district_value = null;
-            }
-            if (viewModel.AddressStateProvinceContac != null)
-            {
-                viewModel.singleContact.bsd_province_label = viewModel.AddressStateProvinceContac.Name;
-                viewModel.singleContact._bsd_province_value = viewModel.AddressStateProvinceContac.Id.ToString();
-                address.Add(viewModel.AddressStateProvinceContac.Name);
-            }
-            else
-            {
-                viewModel.singleContact.bsd_province_label = null;
-                viewModel.singleContact._bsd_province_value = null;
-            }
-
-            if (viewModel.AddressCountryContac != null)
-            {
-                viewModel.singleContact.bsd_country_label = viewModel.AddressCountryContac.Name;
-                viewModel.singleContact._bsd_country_value = viewModel.AddressCountryContac.Id.ToString();
-                address.Add(viewModel.AddressCountryContac.Name);
-            }
-            else
-            {
-                viewModel.singleContact.bsd_country_label = null;
-                viewModel.singleContact._bsd_country_value = null;
-            }
-            viewModel.singleContact.bsd_contactaddress = viewModel.AddressCompositeContac = string.Join(", ", address);
-
-            //Address En
-            List<string> addressEn = new List<string>();
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressLine1Contact))
-            {
-                addressEn.Add(viewModel.AddressLine1Contact);
-            }
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressCityContac?.Detail))
-            {
-                addressEn.Add(viewModel.AddressCityContac.Detail);
-            }
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressStateProvinceContac?.Detail))
-            {
-                addressEn.Add(viewModel.AddressStateProvinceContac.Detail);
-            }
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressCountryContac?.Detail))
-            {
-                addressEn.Add(viewModel.AddressCountryContac.Detail);
-            }
-            viewModel.singleContact.bsd_diachi = string.Join(", ", addressEn);
-
-            await centerModalContacAddress.Hide();
-        }
-
-        private async void PermanentAddressCountry_Changed(object sender, LookUpChangeEvent e)
-        {
-            await viewModel.LoadProvincesForLookup(viewModel.AddressCountryPermanent);
-        }
-
-        private async void PermanentAddressProvince_Changed(object sender, LookUpChangeEvent e)
-        {
-            await viewModel.LoadDistrictForLookup(viewModel.AddressStateProvincePermanent);
-        }       
-
-        private async void ClosePermanentAddress_Clicked(object sender, EventArgs e)
-        {
-            await centerModalPermanentAddress.Hide();
-        }
-
-        private async void ConfirmPermanentAddress_Clicked(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(viewModel.AddressLine1Permanent))
-            {
-                ToastMessageHelper.ShortMessage("Vui lòng nhập số nhà/đường/phường");
-                return;
-            }
-
-            List<string> address = new List<string>();
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressLine1Permanent))
-            {
-                viewModel.singleContact.bsd_permanentaddress = viewModel.AddressLine1Permanent;
-                address.Add(viewModel.AddressLine1Permanent);
-            }
-            else
-            {
-                viewModel.singleContact.bsd_permanentaddress = null;
-            }
-
-            if (viewModel.AddressCityPermanent != null)
-            {
-                viewModel.singleContact.bsd_permanentdistrict_label = viewModel.AddressCityPermanent.Name;
-                viewModel.singleContact._bsd_permanentdistrict_value = viewModel.AddressCityPermanent.Id.ToString();
-                address.Add(viewModel.AddressCityPermanent.Name);
-            }
-            else
-            {
-                viewModel.singleContact.bsd_permanentdistrict_label = null;
-                viewModel.singleContact._bsd_permanentdistrict_value = null;
-            }
-            if (viewModel.AddressStateProvincePermanent != null)
-            {
-                viewModel.singleContact.bsd_permanentprovince_label = viewModel.AddressStateProvincePermanent.Name;
-                viewModel.singleContact._bsd_permanentprovince_value = viewModel.AddressStateProvincePermanent.Id.ToString();
-                address.Add(viewModel.AddressStateProvincePermanent.Name);
-            }
-            else
-            {
-                viewModel.singleContact.bsd_permanentprovince_label = null;
-                viewModel.singleContact._bsd_permanentprovince_value = null;
-            }
-            if (viewModel.AddressCountryPermanent != null)
-            {
-                viewModel.singleContact.bsd_permanentcountry_label = viewModel.AddressCountryPermanent.Name;
-                viewModel.singleContact._bsd_permanentcountry_value = viewModel.AddressCountryPermanent.Id.ToString();
-                address.Add(viewModel.AddressCountryPermanent.Name);
-            }
-            else
-            {
-                viewModel.singleContact.bsd_permanentcountry_label = null;
-                viewModel.singleContact._bsd_permanentcountry_value = null;
-            }
-            viewModel.singleContact.bsd_permanentaddress1 = viewModel.AddressCompositePermanent = string.Join(", ", address);
-
-            //addres EN
-            List<string> addressPermanentEn = new List<string>();
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressLine1Permanent))
-            {
-                addressPermanentEn.Add(viewModel.AddressLine1Permanent);
-            }
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressCityPermanent?.Detail))
-            {
-                addressPermanentEn.Add(viewModel.AddressCityPermanent.Detail);
-            }
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressStateProvincePermanent?.Detail))
-            {
-                addressPermanentEn.Add(viewModel.AddressStateProvincePermanent.Detail);
-            }
-            if (!string.IsNullOrWhiteSpace(viewModel.AddressCountryPermanent?.Detail))
-            {
-                addressPermanentEn.Add(viewModel.AddressCountryPermanent.Detail);
-            }
-            
-            viewModel.singleContact.bsd_diachithuongtru = string.Join(", ", addressPermanentEn);
-
-            await centerModalPermanentAddress.Hide();
-        }
-
         public void MatTruocCMND_Tapped(object sender, System.EventArgs e)
         {
             List<OptionSet> menuItem = new List<OptionSet>();
             if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
             {
-                menuItem.Add(new OptionSet { Label = "Xem ảnh mặt trước cmnd", Val = "Front" });
+                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_truoc_cmnd, Val = "Front" });
             }
-            menuItem.Add(new OptionSet { Label = "Chụp ảnh", Val = "Front" });
-            menuItem.Add(new OptionSet { Label = "Chọn ảnh từ thư viện", Val = "Front" });
+            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Front" });
+            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Front" });
             this.showMenuImageCMND(menuItem);
         }
 
@@ -578,10 +317,10 @@ namespace PhuLongCRM.Views
             List<OptionSet> menuItem = new List<OptionSet>();
             if (viewModel.singleContact.bsd_matsaucmnd_base64 != null)
             {
-                menuItem.Add(new OptionSet { Label = "Xem ảnh mặt sau cmnd", Val = "Behind" });
+                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_sau_cmnd, Val = "Behind" });
             }
-            menuItem.Add(new OptionSet { Label = "Chụp ảnh", Val = "Behind" });
-            menuItem.Add(new OptionSet { Label = "Chọn ảnh từ thư viện", Val = "Behind" });
+            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Behind" });
+            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Behind" });
             this.showMenuImageCMND(menuItem);
         }
 
@@ -679,25 +418,25 @@ namespace PhuLongCRM.Views
 
         private void CMND_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (viewModel.singleContact.bsd_identitycardnumber.Length > 9)
+            if (viewModel.singleContact.bsd_identitycardnumber.Length != 9)
             {
-                ToastMessageHelper.ShortMessage("Số CMND không hợp lệ (Giới hạn 09 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
             }
         }
 
         private void PassPort_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (viewModel.singleContact.bsd_passport.Length > 8)
+            if (viewModel.singleContact.bsd_passport.Length != 8)
             {
-                ToastMessageHelper.ShortMessage("Số hộ chiếu không hợp lệ (Giới hạn 08 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
             }
         }
 
         private void CCCD_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (viewModel.singleContact.bsd_idcard.Length > 12)
+            if (viewModel.singleContact.bsd_idcard.Length > 12 || viewModel.singleContact.bsd_idcard.Length < 9)
             {
-                ToastMessageHelper.ShortMessage("Số CCCD không hợp lệ (Giới hạn 12 ký tự).");
+                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
         }
     }

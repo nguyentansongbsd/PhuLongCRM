@@ -2,6 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:converters="clr-namespace:PhuLongCRM.Converters"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              x:Class="PhuLongCRM.Views.LeadsContentView">
@@ -10,6 +11,7 @@
             <converters:LeadQualityCodeConverter x:Key="LeadQualityCodeConverter"/>
             <converters:LeadQualityCodeColorConverter x:Key="LeadQualityCodeColorConverter"/>
             <converters:StatusCodeConverter x:Key="StatusCodeConverter"/>
+            <converters:PhoneConverter x:Key="PhoneConverter"/>
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
@@ -22,22 +24,28 @@
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
-                                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+                                <Grid RowDefinitions="Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                    <!--<Grid Grid.Row="0" ColumnDefinitions="Auto,*">
                                         <Label Text="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" BackgroundColor="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Padding="3,0" Margin="0,2" FontSize="11" FontAttributes="Bold" TextColor="White" Grid.Column="0" VerticalTextAlignment="Center"/>
-                                        <Label Text="{Binding lastname}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Column="1"/>
+                                        <Label Text="{Binding fullname}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Column="1"/>
+                                    </Grid>-->
+                                    <Grid ColumnDefinitions="Auto,Auto,Auto,*" Grid.Row="0">
+                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Grid.Column="0">
+                                            <Label Text="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                        </telerikPrimitives:RadBorder>
+                                        <BoxView Grid.Column="1" WidthRequest="1" HeightRequest="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Gray"/>
+                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" Grid.Column="2">
+                                            <Label Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                        </telerikPrimitives:RadBorder>
+                                        <Label Grid.Column="3" Text="{Binding fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                                        <Label Text="Tiêu đề: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding Source={x:Static lang:Language.tieu_de},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                         <Label Text="{Binding subject}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                        <Label Text="Số điện thoại: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding mobilephone}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                        <Label Text="Trạng thái: " TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding statuscode,Converter={StaticResource StatusCodeConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                        <Label Text="{Binding Source={x:Static lang:Language.so_dien_thoai},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding mobilephone, Converter={StaticResource PhoneConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                 </Grid>
                             </ViewCell>

@@ -21,18 +21,34 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>8.0</string>
+	<string>11.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>PhuLongCRM</string>
+	<string>Phu Long CRM</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.bsdsolutions.PhuLongCRM</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>com.bsdsolutions.phulongcrm</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>PhuLongCRM</string>
+	<key>UIMainStoryboardFile</key>
+	<string>LaunchScreen</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.0</string>
+	<key>NSCameraUsageDescription</key>
+	<string>PhuLongCRM cần truy cập vào máy ảnh của bạn để chụp hình làm ảnh đại diện.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>PhuLongCRM cần quyền truy cập vào thư viện hình để lấy hình ảnh làm ảnh đại diện.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to microphone.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>PhuLongCRM muốn truy cập lịch của bạn, để tạo lịch công việc.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>PhuLongCRM cần quyền truy cập vào thư viện hình để lấy hình ảnh làm ảnh đại diện.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>PhuLongCRM cần quyền truy cập vào danh bạ để lấy số điện thoại</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleVersion</key>
+	<string>10</string>
 </dict>
 </plist>

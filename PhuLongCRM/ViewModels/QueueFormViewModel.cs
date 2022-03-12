@@ -20,8 +20,8 @@ namespace PhuLongCRM.ViewModels
         public ObservableCollection<LookUp> ContactsLookUp { get; set; } = new ObservableCollection<LookUp>();
         public ObservableCollection<LookUp> AccountsLookUp { get; set; } = new ObservableCollection<LookUp>();
 
-        private LookUp _customer;
-        public LookUp Customer
+        private OptionSetFilter _customer;
+        public OptionSetFilter Customer
         {
             get => _customer;
             set
@@ -40,7 +40,21 @@ namespace PhuLongCRM.ViewModels
         private LookUp _daiLyOption;
         public LookUp DailyOption { get => _daiLyOption; set { _daiLyOption = value; OnPropertyChanged(nameof(DailyOption)); } }
 
-        public Guid idQueueDraft { get; set; }
+        private List<LookUp> _listCollaborator;
+        public List<LookUp> ListCollaborator { get => _listCollaborator; set { _listCollaborator = value; OnPropertyChanged(nameof(ListCollaborator)); } }
+
+        private LookUp _collaborator;
+        public LookUp Collaborator { get => _collaborator; set { _collaborator = value; OnPropertyChanged(nameof(Collaborator)); } }
+
+        private List<LookUp> _listCustomerReferral;
+        public List<LookUp> ListCustomerReferral { get => _listCustomerReferral; set { _listCustomerReferral = value; OnPropertyChanged(nameof(ListCustomerReferral)); } }
+
+        private LookUp _customerReferral;
+        public LookUp CustomerReferral { get => _customerReferral; set { _customerReferral = value; OnPropertyChanged(nameof(CustomerReferral)); } }
+        public Guid idQueueDraft { get; set; } //StatusReason
+
+        private bool _isUpdate;
+        public bool isUpdate { get => _isUpdate; set { _isUpdate = value; OnPropertyChanged(nameof(isUpdate)); } }
 
         public Guid UnitId { get; set; }
 
@@ -48,6 +62,8 @@ namespace PhuLongCRM.ViewModels
         {
             QueueFormModel = new QueueFormModel();
             DaiLyOptions = new List<LookUp>();
+            ListCollaborator = new List<LookUp>();
+            ListCustomerReferral = new List<LookUp>();
         }
 
         public async Task LoadFromProject(Guid ProjectId)
@@ -83,8 +99,7 @@ namespace PhuLongCRM.ViewModels
         {
             string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='product'>
-                                    <attribute name='name' alias='bsd_units_name' />                                   
-                                    <attribute name='description' />                                
+                                    <attribute name='name' alias='bsd_units_name' />                                
                                     <attribute name='statuscode' alias='UnitStatusCode'/>
                                     <attribute name='bsd_projectcode' />                                 
                                     <attribute name='productid' alias='bsd_units_id' />
@@ -167,7 +182,7 @@ namespace PhuLongCRM.ViewModels
                 return false;
             var data = result.value;
 
-            if (data.Where(x => x.account_id == Customer.Id).ToList().Count > 0 || data.Where(x => x.contact_id == Customer.Id).ToList().Count > 0)
+            if (data.Where(x => x.account_id == Guid.Parse(Customer.Val)).ToList().Count > 0 || data.Where(x => x.contact_id == Guid.Parse(Customer.Val)).ToList().Count > 0)
             {
                 return false;
             }
@@ -586,7 +601,7 @@ namespace PhuLongCRM.ViewModels
 
         //}
 
-        public async void createQueueDraft(bool isQueueProject, Guid id)
+        public async Task<string> createQueueDraft(bool isQueueProject, Guid id)
         {
             if(isQueueProject)
             {
@@ -606,16 +621,27 @@ namespace PhuLongCRM.ViewModels
                         {
                             var itemformat = item.Replace("content", "").Replace(":", "").Replace("'", "").Replace("}", "").Replace('"', ' ').Trim();
                             if (Guid.Parse(itemformat) != Guid.Empty)
+                            {
                                 this.idQueueDraft = Guid.Parse(itemformat);
+                                await LoadQueueDraft(idQueueDraft);
+                                return null;
+                            }
                             else
+                            {
                                 this.idQueueDraft = Guid.Empty;
+                                return res.ErrorResponse?.error.message;
+                            }
                         }
+                        //else
+                        //    return res.ErrorResponse?.error.message;
                     }
                 }
                 else
                 {
                     this.idQueueDraft = Guid.Empty;
+                    return res.ErrorResponse?.error.message;
                 }
+                return res.ErrorResponse?.error.message;
             }   
             else
             {
@@ -636,16 +662,27 @@ namespace PhuLongCRM.ViewModels
                         {
                             var itemformat = item.Replace("content", "").Replace(":", "").Replace("'", "").Replace("}", "").Replace('"', ' ').Trim();
                             if (Guid.Parse(itemformat) != Guid.Empty)
+                            {
                                 this.idQueueDraft = Guid.Parse(itemformat);
+                                await LoadQueueDraft(idQueueDraft);
+                                return null;
+                            }
                             else
+                            {
                                 this.idQueueDraft = Guid.Empty;
+                                return res.ErrorResponse?.error.message;
+                            }
                         }
+                        //else
+                        //    return res.ErrorResponse?.error.message;
                     }
                 }
                 else
                 {
                     this.idQueueDraft = Guid.Empty;
+                    return res.ErrorResponse?.error.message;
                 }
+                return res.ErrorResponse?.error.message;
             }    
         }
 
@@ -654,7 +691,6 @@ namespace PhuLongCRM.ViewModels
             if (id != Guid.Empty)
             {
                 string path = "/opportunities(" + id + ")";
-                QueueFormModel.opportunityid = Guid.NewGuid();
                 var content = await this.getContent2();
                 CrmApiResponse result = await CrmHelper.PatchData(path, content);
                 if (result.IsSuccess)
@@ -676,16 +712,16 @@ namespace PhuLongCRM.ViewModels
           //  data["bsd_queuingfee"] = QueueFormModel.bsd_queuingfee;
             data["name"] = QueueFormModel.name;
 
-            if (Customer != null || Customer.Id != Guid.Empty)
+            if (Customer != null || !string.IsNullOrWhiteSpace(Customer.Val))
             {
-                if (Customer.Detail == "1")
+                if (Customer.Title == Controls.LookUpMultipleTabs.CodeAccount)
                 {
-                    data["customerid_account@odata.bind"] = $"/accounts({Customer.Id})";
+                    data["customerid_account@odata.bind"] = $"/accounts({Customer.Val})";
                     await DeletLookup("customerid_contact", QueueFormModel.opportunityid);
                 }
                 else
                 {
-                    data["customerid_contact@odata.bind"] = $"/contacts({Customer.Id})";
+                    data["customerid_contact@odata.bind"] = $"/contacts({Customer.Val})";
                     await DeletLookup("customerid_account", QueueFormModel.opportunityid);
                 }
             }
@@ -706,6 +742,24 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_salesagentcompany@odata.bind"] = $"/accounts({DailyOption.Id})";
             }
 
+            if (Collaborator == null || Collaborator.Id == Guid.Empty)
+            {
+                await DeletLookup("bsd_collaborator", QueueFormModel.opportunityid);
+            }
+            else
+            {
+                data["bsd_collaborator@odata.bind"] = $"/contacts({Collaborator.Id})";
+            }
+
+            if (CustomerReferral == null || CustomerReferral.Id == Guid.Empty)
+            {
+                await DeletLookup("bsd_customerreferral_contact", QueueFormModel.opportunityid);
+            }
+            else
+            {
+                data["bsd_customerreferral_contact@odata.bind"] = $"/contacts({CustomerReferral.Id})";
+            }
+
             data["bsd_nameofstaffagent"] = QueueFormModel.bsd_nameofstaffagent;
 
             if (UserLogged.Id != null)
@@ -716,6 +770,7 @@ namespace PhuLongCRM.ViewModels
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
+            data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)";
             return data;
         }
 
@@ -832,6 +887,183 @@ namespace PhuLongCRM.ViewModels
                 }
             }   
             return list;
+        }
+
+        public async Task LoadCollaboratorLookUp()
+        {
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='contactid' alias='Id' />
+                    <attribute name='fullname' alias='Name' />
+                    <order attribute='createdon' descending='true' />                   
+                    <filter type='and'>
+                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='bsd_type' operator='eq' value='100000001' />
+                    </filter>
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("contacts", fetch);
+            if (result == null || result.value.Count == 0)
+                return;
+            var data = result.value;
+            foreach (var item in data)
+            {
+                ListCollaborator.Add(item);
+            }
+        }
+
+        public async Task LoadCustomerReferralLookUp()
+        {
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='contactid' alias='Id' />
+                    <attribute name='fullname' alias='Name' />
+                    <order attribute='createdon' descending='true' />                   
+                    <filter type='and'>
+                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='bsd_type' operator='eq' value='100000000' />
+                    </filter>
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("contacts", fetch);
+            if (result == null || result.value.Count == 0)
+                return;
+            var data = result.value;
+            foreach (var item in data)
+            {
+                ListCustomerReferral.Add(item);
+            }
+        }      
+
+        public async Task LoadQueueDraft(Guid queueID)
+        {
+            string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='opportunity'>
+                                    <attribute name='opportunityid' />
+                                    <attribute name='bsd_priorityqueue' />
+                                    <attribute name='bsd_prioritynumber' />
+                                    <attribute name='bsd_ordernumber' />
+                                    <attribute name='bsd_dateorder' />
+                                    <attribute name='statuscode' />
+                                    <attribute name='statecode' />
+                                    <attribute name='bsd_expired' />
+                                    <order attribute='bsd_priorityqueue' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='opportunityid' operator='eq' value='{" + queueID + @"}' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueueFormModel>>("opportunities", fetchXml);
+            if (result == null || result.value.Count == 0)
+                return;
+            var tmp = result.value.FirstOrDefault();
+            QueueFormModel.bsd_priorityqueue = tmp.bsd_priorityqueue;
+            QueueFormModel.bsd_prioritynumber = tmp.bsd_prioritynumber;
+            QueueFormModel.bsd_ordernumber = tmp.bsd_ordernumber;
+            QueueFormModel.bsd_dateorder = tmp.bsd_dateorder;
+            QueueFormModel.bsd_expired = tmp.bsd_expired;
+            QueueFormModel.statuscode = tmp.statuscode;
+        }
+
+        public async Task updateStatusUnit()
+        {
+            IDictionary<string, object> data = new Dictionary<string, object>();
+
+            string fetchSalesorder = @"<fetch>
+                                  <entity name='salesorder'>
+                                    <attribute name='statecode' />
+                                    <attribute name='statuscode' />
+                                    <link-entity name='product' from='productid' to='bsd_unitnumber'>
+                                      <filter>
+                                        <condition attribute='productid' operator='eq' value='{" + QueueFormModel.bsd_units_id + @"}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var resultSalesorder = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContractModel>>("salesorders", fetchSalesorder);
+            if (resultSalesorder != null || resultSalesorder.value.Count > 0)
+                return;
+
+            string fetchQuote = @"<fetch>
+                                  <entity name='quote'>
+                                    <attribute name='statecode' />
+                                    <attribute name='statuscode' />
+                                    <link-entity name='product' from='productid' to='bsd_unitno'>
+                                      <filter>
+                                        <condition attribute='productid' operator='eq' value='{" + QueueFormModel.bsd_units_id + @"}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var resultQuote = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ReservationDetailPageModel>>("quotes", fetchQuote);
+            if (resultQuote != null || resultQuote.value.Count > 0)
+            {
+               if(resultQuote.value.FirstOrDefault(x => x.statuscode == 3 || x.statuscode == 861450000)!=null)
+                {
+                    data["statecode"] = 0;
+                    data["statuscode"] = 100000003;
+                }
+               else if (resultQuote.value.FirstOrDefault(x => x.statuscode == 4) != null)
+                {
+                    data["statecode"] = 0;
+                    data["statuscode"] = 100000010;
+                }
+            }
+            else
+            {
+                string fetchQueue = @"<fetch>
+                                          <entity name='opportunity'>
+                                            <attribute name='name' />
+                                            <attribute name='statuscode' />
+                                            <attribute name='bsd_phaselaunch' alias='_bsd_phaselaunch_value' />
+                                            <filter type='and'>
+                                              <condition attribute='bsd_units' operator='eq' value='{" + QueueFormModel.bsd_units_id + @"}'/>
+                                            </filter>
+                                          </entity>
+                                        </fetch>";
+                var resultQueue = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueuesDetailModel>>("opportunities", fetchQueue);
+                if (resultQueue != null || resultQueue.value.Count > 0)
+                {
+                    if (resultQueue.value.FirstOrDefault(x => x.statuscode == 100000000 || x.statuscode == 100000008) != null)
+                    {
+                        data["statecode"] = 0;
+                        data["statuscode"] = 100000004;
+                    }
+                    else if (resultQueue.value.FirstOrDefault(x => x.statuscode == 100000002) != null)
+                    {
+                        data["statecode"] = 0;
+                        data["statuscode"] = 100000007;
+                    }
+                    else
+                    {
+                        var queue = resultQueue.value.FirstOrDefault(x => x.statuscode == 4 || x.statuscode == 100000007 || x.statuscode == 100000009);
+                        if (queue != null && queue._bsd_phaselaunch_value != Guid.Empty)
+                        {
+                            data["statecode"] = 0;
+                            data["statuscode"] = 100000000;
+                        }
+                        else if (resultQueue.value.FirstOrDefault(x => x.statuscode == 4 || x.statuscode == 100000007) != null)
+                        {
+                            data["statecode"] = 0;
+                            data["statuscode"] = 1;
+                        }
+                    }
+                }
+            }
+
+            string path = "/products(" + QueueFormModel.bsd_units_id + ")";
+            CrmApiResponse result = await CrmHelper.PatchData(path, data);
+        }
+
+        public void test(string a)
+        {
+          if(a.Contains("_moblie"))
+            {
+                a.Replace("_moblie",null);
+                // theem don vi tien te
+            }
+          // chay book nhu binh thuong
+                
         }
     }
 }

@@ -49,8 +49,8 @@ namespace PhuLongCRM.ViewModels
         private OptionSet _diretion;
         public OptionSet Direction { get => _diretion; set { _diretion = value; OnPropertyChanged(nameof(Direction)); } }
 
-        private OptionSet _view;
-        public OptionSet View { get => _view; set { _view = value; OnPropertyChanged(nameof(View)); } }
+        private string _view;
+        public string View { get => _view; set { _view = value; OnPropertyChanged(nameof(View)); } }
 
         private StatusCodeModel _statusCode;
         public StatusCodeModel StatusCode { get => _statusCode; set { _statusCode = value; OnPropertyChanged(nameof(StatusCode)); } }
@@ -78,6 +78,9 @@ namespace PhuLongCRM.ViewModels
         public bool IsLoaded { get; set; } = false;
 
         public bool IsVip { get; set; } = false;
+
+        private EventModel _event;
+        public EventModel Event { get => _event; set { _event = value; OnPropertyChanged(nameof(Event)); } }
 
         public UnitInfoViewModel()
         {
@@ -116,7 +119,8 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='bsd_handovercondition' />
                 <attribute name='bsd_direction' />
                 <attribute name='bsd_vippriority' />
-                <attribute name='bsd_view' />
+                <attribute name='bsd_viewphulong' />
+                <attribute name='bsd_phaseslaunchid' alias='bsd_phaseslaunch_id' />
                 <filter type='and'>
                   <condition attribute='productid' operator='eq' uitype='product' value='" + UnitId.ToString() + @"' />
                 </filter>
@@ -131,6 +135,15 @@ namespace PhuLongCRM.ViewModels
                 </link-entity>
                 <link-entity name='bsd_unittype' from='bsd_unittypeid' to='bsd_unittype' visible='false' link-type='outer' alias='a_493690ec6ce2e811a94e000d3a1bc2d1'>
                   <attribute name='bsd_name'  alias='bsd_unittype_name'/>
+                </link-entity>
+                <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
+                  <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
+                    <attribute name='bsd_eventid' alias='event_id' />
+                    <filter type='and'>
+                        <condition attribute='statuscode' operator='eq' value='100000000' />
+                        <condition attribute='bsd_eventid' operator='not-null' />
+                    </filter>
+                  </link-entity>
                 </link-entity>
               </entity>
             </fetch>";
@@ -248,9 +261,13 @@ namespace PhuLongCRM.ViewModels
                                     <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
-                                           <value>100000000</value>
-                                           <value>100000001</value>
-                                           <value>4</value>
+                                            <value>100000000</value>
+                                            <value>100000001</value>
+                                            <value>100000006</value>
+                                            <value>861450001</value>
+                                            <value>861450002</value>
+                                            <value>4</value>                
+                                            <value>3</value>
                                        </condition>
                                        <filter type='and'>
                                            <condition attribute='statuscode' operator='in'>
@@ -347,6 +364,7 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity><link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='an' >
                                    <attribute name='bsd_startdate' alias='startdate_event' />
                                    <attribute name='bsd_enddate' alias='enddate_event'/>
+                                   <attribute name='statuscode' alias='statuscode_event'/>
                                 </link-entity>
                               </entity>
                             </fetch>";
@@ -356,7 +374,7 @@ namespace PhuLongCRM.ViewModels
             var data = result.value;
             foreach (var item in data)
             {
-                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now)
+                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
                 {
                     IsShowBtnBangTinhGia = true;
                     return;
@@ -431,6 +449,38 @@ namespace PhuLongCRM.ViewModels
             //        ShowCollections = false;
             //    }
             //}
+        }
+        public async Task LoadDataEvent()
+        {
+            if (UnitInfo == null || UnitInfo.event_id == Guid.Empty) return;
+
+            string FetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_event'>
+                                    <attribute name='bsd_name' />
+                                    <attribute name='bsd_startdate' />
+                                    <attribute name='bsd_eventcode' />
+                                    <attribute name='bsd_enddate' />
+                                    <attribute name='bsd_eventid' />
+                                    <order attribute='bsd_eventcode' descending='true' />
+                                    <filter type='and'>
+                                      <condition attribute='statuscode' operator='eq' value='100000000' />
+                                      <condition attribute='bsd_eventid' operator='eq' value='{UnitInfo.event_id}' />
+                                    </filter>
+                                    <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaselaunch' link-type='outer' alias='ab'>
+                                      <attribute name='bsd_name' alias='bsd_phaselaunch_name'/>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<EventModel>>("bsd_events", FetchXml);
+            if (result == null || result.value.Any() == false) return;
+            var data = result.value.FirstOrDefault();
+            Event = data;
+            if (data.bsd_startdate != null && data.bsd_enddate != null)
+            {
+                Event.bsd_startdate = data.bsd_startdate.Value.ToLocalTime();
+                Event.bsd_enddate = data.bsd_enddate.Value.ToLocalTime();
+            }
         }
     }
 }

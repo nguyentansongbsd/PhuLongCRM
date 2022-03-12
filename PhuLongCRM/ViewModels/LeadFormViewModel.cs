@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -77,69 +78,23 @@ namespace PhuLongCRM.ViewModels
         public bool IsShowbtnClearAddress { get => _isShowbtnClearAddress; set { _isShowbtnClearAddress = value; OnPropertyChanged(nameof(IsShowbtnClearAddress)); } }
 
         //IsShowbtnClearAddress
-        private string _addressComposite; 
-        public string AddressComposite
-        {
-            get => _addressComposite;
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(_addressComposite))
-                {
-                    IsShowbtnClearAddress = true;
-                }
-                else
-                {
-                    IsShowbtnClearAddress = false;
-                }
-                _addressComposite = value;
-                OnPropertyChanged(nameof(AddressComposite));
-            }
-        }
 
-        private LookUp _addressCountry;
-        public LookUp AddressCountry
-        {
-            get => _addressCountry;
-            set
-            {
-                _addressCountry = value;
-                OnPropertyChanged(nameof(AddressCountry));
-                AddressStateProvince = null;
-                list_province_lookup.Clear();
-            }
-        }
+        //Address1 // địa chỉ liên lạc
+        private AddressModel _address1;
+        public AddressModel Address1 { get => _address1; set { _address1 = value; OnPropertyChanged(nameof(Address1)); } }
+        //Address2 // địa chỉ thường trú
+        private AddressModel _address2;
+        public AddressModel Address2 { get => _address2; set { _address2 = value; OnPropertyChanged(nameof(Address2)); } }
 
-        private LookUp _addressStateProvince;
-        public LookUp AddressStateProvince
-        {
-            get => _addressStateProvince;
-            set
-            {
-                _addressStateProvince = value;
-                OnPropertyChanged(nameof(AddressStateProvince));
-                AddressCity = null;
-                list_district_lookup.Clear();
-            }
-        }
-
-        private LookUp _addressCity;
-        public LookUp AddressCity { get => _addressCity; set { _addressCity = value; OnPropertyChanged(nameof(AddressCity)); } }
-
-        private string _addressLine1;
-        public string AddressLine1 { get => _addressLine1; set { _addressLine1 = value; OnPropertyChanged(nameof(AddressLine1)); } }
-
-        public ObservableCollection<LookUp> list_country_lookup { get; set; } = new ObservableCollection<LookUp>();
-        public ObservableCollection<LookUp> list_province_lookup { get; set; } = new ObservableCollection<LookUp>();
-        public ObservableCollection<LookUp> list_district_lookup { get; set; } = new ObservableCollection<LookUp>();
-
-        public int pageLookup_country = 1;
-        public int pageLookup_province = 1;
-        public int pageLookup_district = 1;
+        // địa chỉ công ty
+        private AddressModel _address3;
+        public AddressModel Address3 { get => _address3; set { _address3 = value; OnPropertyChanged(nameof(Address3)); } }
 
         public LeadFormViewModel()
         {
             singleLead = new LeadFormModel();
-            this.Genders = new List<OptionSet>() { new OptionSet("1","Nam"), new OptionSet("2", "Nữ") };
+            list_industrycode_optionset = new ObservableCollection<OptionSet>();
+            this.Genders = new List<OptionSet>() { new OptionSet("1",Language.nam), new OptionSet("2", Language.nu) };
             this.loadIndustrycode();
         }
 
@@ -181,6 +136,12 @@ namespace PhuLongCRM.ViewModels
                             <attribute name='bsd_placeofissue' />
                             <attribute name='bsd_dategrant' />
                             <attribute name='bsd_registrationcode' />
+                            <attribute name='bsd_account_housenumberstreetwardvn' />
+                            <attribute name='bsd_accountaddressvn' />
+                            <attribute name='bsd_permanentaddress' />
+                            <attribute name='bsd_permanentaddress1' />
+                            <attribute name='bsd_housenumberstreet' />
+                            <attribute name='bsd_contactaddress' />
                             <order attribute='createdon' descending='true' />
                             <filter type='and'>
                                 <condition attribute='leadid' operator='eq' value='{" + LeadId + @"}' />
@@ -190,6 +151,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='currencyname'  alias='transactioncurrencyid_label'/>
                             </link-entity>
                             <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
+                                <attribute name='campaignid'  alias='_campaignid_value'/>
                                 <attribute name='name'  alias='campaignid_label'/>
                             </link-entity>
                             <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' visible='false' link-type='outer' alias='a_533be24fba81e911a83b000d3a07be23'>
@@ -200,13 +162,151 @@ namespace PhuLongCRM.ViewModels
                         </fetch>";
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
-            var tmp = result.value.FirstOrDefault();
-            if (result == null || tmp == null)
+            if (result == null || result.value.Count == 0)
             {
                 return;
             }
+            var tmp = result.value.FirstOrDefault();
 
             this.singleLead = tmp;
+
+            string fetch2 = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                          <entity name='lead'>
+                            <attribute name='lastname' />
+                            <attribute name='leadid' />
+                            <order attribute='createdon' descending='true' />
+                            <filter type='and'>
+                                <condition attribute='leadid' operator='eq' value='{" + LeadId + @"}' />
+                                <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                            </filter>
+                             <link-entity name='bsd_country' from='bsd_countryid' to='bsd_accountcountry' link-type='outer' alias='aa'>
+                                    <attribute name='bsd_countryid' alias='bsd_accountcountry_id' />
+                                    <attribute name='bsd_name' alias='bsd_accountcountry_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_accountcountry_name_en'/>
+                                </link-entity>
+                                <link-entity name='new_district' from='new_districtid' to='bsd_accountdistrict' link-type='outer' alias='ab'>
+                                    <attribute name='new_districtid' alias='bsd_accountdistrict_id' />
+                                    <attribute name='new_name' alias='bsd_accountdistrict_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_accountdistrict_name_en'/>
+                                </link-entity>
+                                <link-entity name='new_province' from='new_provinceid' to='bsd_accountprovince' link-type='outer' alias='ac'>
+                                    <attribute name='new_provinceid' alias='bsd_accountprovince_id' />
+                                    <attribute name='new_name' alias='bsd_accountprovince_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_accountprovince_name_en'/>
+                                </link-entity>
+                                <link-entity name='bsd_country' from='bsd_countryid' to='bsd_country' link-type='outer' alias='ad'>
+                                    <attribute name='bsd_countryid' alias='bsd_country_id' />
+                                    <attribute name='bsd_name' alias='bsd_country_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_country_name_en'/>
+                                </link-entity>
+                                <link-entity name='new_district' from='new_districtid' to='bsd_district' link-type='outer' alias='ae'>
+                                    <attribute name='new_districtid' alias='bsd_district_id' />
+                                    <attribute name='new_name' alias='bsd_district_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_district_name_en'/>
+                                </link-entity>
+                                <link-entity name='new_province' from='new_provinceid' to='bsd_province' link-type='outer' alias='af'>
+                                    <attribute name='new_provinceid' alias='bsd_province_id' />
+                                    <attribute name='new_name' alias='bsd_province_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_province_name_en'/>
+                                </link-entity>
+                                <link-entity name='bsd_country' from='bsd_countryid' to='bsd_permanentcountry' link-type='outer' alias='ag'>
+                                    <attribute name='bsd_countryid' alias='bsd_permanentcountry_id' />
+                                    <attribute name='bsd_name' alias='bsd_permanentcountry_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_permanentcountry_name_en'/>
+                                </link-entity>
+                                <link-entity name='new_district' from='new_districtid' to='bsd_permanentdistrict' link-type='outer' alias='ah'>
+                                    <attribute name='new_districtid' alias='bsd_permanentdistrict_id' />
+                                    <attribute name='new_name' alias='bsd_permanentdistrict_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_permanentdistrict_name_en'/>
+                                </link-entity>
+                                <link-entity name='new_province' from='new_provinceid' to='bsd_permanentprovince' link-type='outer' alias='ai'>
+                                    <attribute name='new_provinceid' alias='bsd_permanentprovince_id' />
+                                    <attribute name='new_name' alias='bsd_permanentprovince_name' />
+                                    <attribute name='bsd_nameen'  alias='bsd_permanentprovince_name_en'/>
+                                </link-entity>
+                          </entity>
+                        </fetch>";
+
+            var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch2);
+            if (result2 == null || result2.value.Count == 0)
+            {
+                return;
+            }
+            var tmp2 = result2.value.FirstOrDefault();
+            singleLead.bsd_accountcountry_id = tmp2.bsd_accountcountry_id;
+            singleLead.bsd_accountcountry_name = tmp2.bsd_accountcountry_name;
+            singleLead.bsd_accountcountry_name_en = tmp2.bsd_accountcountry_name_en;
+            singleLead.bsd_accountdistrict_id = tmp2.bsd_accountdistrict_id;
+            singleLead.bsd_accountdistrict_name = tmp2.bsd_accountdistrict_name;
+            singleLead.bsd_accountdistrict_name_en = tmp2.bsd_accountdistrict_name_en;
+            singleLead.bsd_accountprovince_id = tmp2.bsd_accountprovince_id;
+            singleLead.bsd_accountprovince_name = tmp2.bsd_accountprovince_name;
+            singleLead.bsd_accountprovince_name_en = tmp2.bsd_accountprovince_name_en;
+
+            singleLead.bsd_permanentcountry_id = tmp2.bsd_permanentcountry_id;
+            singleLead.bsd_permanentcountry_name = tmp2.bsd_permanentcountry_name;
+            singleLead.bsd_permanentcountry_name_en = tmp2.bsd_permanentcountry_name_en;
+            singleLead.bsd_permanentdistrict_id = tmp2.bsd_permanentdistrict_id;
+            singleLead.bsd_permanentdistrict_name = tmp2.bsd_permanentdistrict_name;
+            singleLead.bsd_permanentdistrict_name_en = tmp2.bsd_permanentdistrict_name_en;
+            singleLead.bsd_permanentprovince_id = tmp2.bsd_permanentprovince_id;
+            singleLead.bsd_permanentprovince_name = tmp2.bsd_permanentprovince_name;
+            singleLead.bsd_permanentprovince_name_en = tmp2.bsd_permanentprovince_name_en;
+
+            singleLead.bsd_country_id = tmp2.bsd_country_id;
+            singleLead.bsd_country_name = tmp2.bsd_country_name;
+            singleLead.bsd_country_name_en = tmp2.bsd_country_name_en;
+            singleLead.bsd_district_id = tmp2.bsd_district_id;
+            singleLead.bsd_district_name = tmp2.bsd_district_name;
+            singleLead.bsd_district_name_en = tmp2.bsd_district_name_en;
+            singleLead.bsd_province_id = tmp2.bsd_province_id;
+            singleLead.bsd_province_name = tmp2.bsd_province_name;
+            singleLead.bsd_province_name_en = tmp2.bsd_province_name_en;
+
+            Address1 = new AddressModel
+            {
+                country_id = singleLead.bsd_country_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_country_name_en) && UserLogged.Language == "en" ? singleLead.bsd_country_name_en : singleLead.bsd_country_name,
+                country_name_en = singleLead.bsd_country_name_en,
+                province_id = singleLead.bsd_province_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_province_name_en) && UserLogged.Language == "en" ? singleLead.bsd_province_name_en : singleLead.bsd_province_name,
+                province_name_en = singleLead.bsd_province_name_en,
+                district_id = singleLead.bsd_district_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_district_name_en) && UserLogged.Language == "en" ? singleLead.bsd_district_name_en : singleLead.bsd_district_name,
+                district_name_en = singleLead.bsd_district_name_en,
+                lineaddress = singleLead.bsd_housenumberstreet,
+                address = singleLead.bsd_contactaddress
+            };
+
+            Address2 = new AddressModel
+            {
+                country_id = singleLead.bsd_permanentcountry_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentcountry_name_en : singleLead.bsd_permanentcountry_name,
+                country_name_en = singleLead.bsd_permanentcountry_name_en,
+                province_id = singleLead.bsd_permanentprovince_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentprovince_name_en : singleLead.bsd_permanentprovince_name,
+                province_name_en = singleLead.bsd_permanentprovince_name_en,
+                district_id = singleLead.bsd_permanentdistrict_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentdistrict_name_en : singleLead.bsd_permanentdistrict_name,
+                district_name_en = singleLead.bsd_permanentdistrict_name_en,
+                lineaddress = singleLead.bsd_permanentaddress,
+                address = singleLead.bsd_permanentaddress1
+            };
+
+            Address3 = new AddressModel
+            {
+                country_id = singleLead.bsd_accountcountry_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountcountry_name_en : singleLead.bsd_accountcountry_name,
+                country_name_en = singleLead.bsd_accountcountry_name_en,
+                province_id = singleLead.bsd_accountprovince_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountprovince_name_en : singleLead.bsd_accountprovince_name,
+                province_name_en = singleLead.bsd_accountprovince_name_en,
+                district_id = singleLead.bsd_accountdistrict_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountdistrict_name_en : singleLead.bsd_accountdistrict_name,
+                district_name_en = singleLead.bsd_accountdistrict_name_en,
+                lineaddress = singleLead.bsd_account_housenumberstreetwardvn,
+                address = singleLead.bsd_accountaddressvn
+            };
         }
 
         public async Task<bool> updateLead()
@@ -296,18 +396,18 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_topic@odata.bind"] = "/bsd_topics(" + this.Topic.Val + ")";
             }
 
-            if (singleLead._transactioncurrencyid_value == null)
-            {
-                await DeletLookup("transactioncurrencyid", singleLead.leadid);
-            }
-            else
-            {
-                data["transactioncurrencyid@odata.bind"] = "/transactioncurrencies(" + singleLead._transactioncurrencyid_value + ")"; /////Lookup Field
-            }
+            //if (singleLead._transactioncurrencyid_value == null)
+            //{
+            //    await DeletLookup("transactioncurrencyid", singleLead.leadid);
+            //}
+            //else
+            //{
+            //    data["transactioncurrencyid@odata.bind"] = "/transactioncurrencies(" + singleLead._transactioncurrencyid_value + ")"; /////Lookup Field
+            //}
 
             if (singleLead._campaignid_value == null)
             {
-                await DeletLookup("CampaignId", singleLead.leadid);
+                await DeletLookup("campaignid", singleLead.leadid);
             }
             else
             {
@@ -321,6 +421,129 @@ namespace PhuLongCRM.ViewModels
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
+
+            // địa chỉ công ty
+            //bsd_accountcountry 
+            //bsd_accountprovince
+            //bsd_accountdistrict
+
+            //bsd_account_housenumberstreetwardvn
+            //bsd_accountaddressvn
+            if (Address3 == null || Address3.country_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_accountcountry", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_accountcountry@odata.bind"] = "/bsd_countries(" + Address3.country_id + ")"; /////Lookup Field
+            }
+
+            if (Address3 == null || Address3.province_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_accountprovince", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_accountprovince@odata.bind"] = "/new_provinces(" + Address3.province_id + ")"; /////Lookup Field
+            }
+
+            if (Address3 == null || Address3.district_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_accountdistrict", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_accountdistrict@odata.bind"] = "/new_districts(" + Address3.district_id + ")"; /////Lookup Field
+            }
+
+            if (Address3 != null)
+            {
+                if(!string.IsNullOrWhiteSpace(Address3.lineaddress))
+                    data["bsd_account_housenumberstreetwardvn"] = Address3.lineaddress;
+                if (!string.IsNullOrWhiteSpace(Address3.address))
+                    data["bsd_accountaddressvn"] = Address3.address;
+            }
+
+            ////bsd_permanentcountry
+            ////bsd_permanentprovince
+            ////bsd_permanentdistrict
+
+            ////bsd_permanentaddress
+            ////bsd_permanentaddress1
+            if (Address2 == null || Address2.country_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_PermanentCountry", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_PermanentCountry@odata.bind"] = "/bsd_countries(" + Address2.country_id + ")"; /////Lookup Field
+            }
+
+            if (Address2 == null || Address2.province_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_PermanentProvince", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + Address2.province_id + ")"; /////Lookup Field
+            }
+
+            if (Address2 == null || Address2.district_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_PermanentDistrict", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Address2.district_id + ")"; /////Lookup Field
+            }
+            if (Address2 != null)
+            {
+                if (!string.IsNullOrWhiteSpace(Address2.lineaddress))
+                    data["bsd_permanentaddress"] = Address2.lineaddress;
+                if (!string.IsNullOrWhiteSpace(Address2.address))
+                    data["bsd_permanentaddress1"] = Address2.address;
+            }
+
+            //bsd_country
+            //bsd_province
+            //bsd_district
+
+            //bsd_housenumberstreet
+            //bsd_contactaddress
+            if (Address1 == null || Address1.country_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_Country", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_Country@odata.bind"] = "/bsd_countries(" + Address1.country_id + ")"; /////Lookup Field
+            }
+
+            if (Address1 == null || Address1.province_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_province", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_province@odata.bind"] = "/new_provinces(" + Address1.province_id + ")"; /////Lookup Field
+            }
+
+            if (Address1 == null || Address1.district_id == Guid.Empty)
+            {
+                await DeletLookup("bsd_District", singleLead.leadid);
+            }
+            else
+            {
+                data["bsd_District@odata.bind"] = "/new_districts(" + Address1.district_id + ")"; /////Lookup Field
+            }
+            if (Address1 != null)
+            {
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
+                    data["bsd_housenumberstreet"] = Address1.lineaddress;// singleLead.bsd_housenumberstreet;
+                if (!string.IsNullOrWhiteSpace(Address1.address))
+                    data["bsd_contactaddress"] = Address1.address;// singleLead.bsd_contactaddress;
+            }
+
             return data;
         }
 
@@ -418,148 +641,27 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<LookUp> LoadCountryByName()
+        // check id
+        public async Task<bool> CheckID(string identitycardnumber, string leadid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='bsd_country'>
-                                    <attribute name='bsd_countryname' alias='Name'/>
-                                    <attribute name='bsd_countryid' alias='Id'/>
-                                    <order attribute='bsd_countryname' descending='false' />
+                                  <entity name='lead'>
+                                    <attribute name='fullname' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_countryname' operator='eq' value='" + singleLead.address1_country + @"' />
+                                        <condition attribute='bsd_identitycardnumberid' operator='eq' value='" + identitycardnumber + @"' />
+                                        <condition attribute='leadid' operator='ne' value='" + leadid + @"' />
                                     </filter>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("bsd_countries", fetch);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("leads", fetch);
             if (result != null && result.value.Count > 0)
             {
-                LookUp country = new LookUp();
-                country = result.value.FirstOrDefault();
-                return country;
+                return false;
             }
             else
             {
-                return null;
+                return true;
             }
-        }
-
-        public async Task LoadCountryForLookup()
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='bsd_country'>
-                                    <attribute name='bsd_countryname' alias='Name'/>
-                                    <attribute name='bsd_countryid' alias='Id'/>
-                                    <attribute name='bsd_nameen' alias='Detail'/>
-                                    <order attribute='bsd_priority' descending='false' />
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("bsd_countries", fetch);
-            if (result == null || result.value.Count == 0) return;
-            foreach (var x in result.value)
-            {
-                list_country_lookup.Add(x);
-            }
-        }
-
-        public async Task<LookUp> LoadProvinceByName()
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='new_province'>
-                                    <attribute name='bsd_provincename' alias='Name'/>
-                                    <attribute name='new_provinceid' alias='Id'/>
-                                    <order attribute='bsd_provincename' descending='false' />
-                                    <filter type='and'>
-                                        <condition attribute='bsd_country' operator='eq' value='" + AddressCountry.Id + @"' />
-                                        <condition attribute='bsd_provincename' operator='eq' value='" + singleLead.address1_stateorprovince + @"' />
-                                    </filter>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("new_provinces", fetch);
-            if (result != null && result.value.Count > 0)
-            {
-                LookUp Province = new LookUp();
-                Province = result.value.FirstOrDefault();
-                return Province;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public async Task loadProvincesForLookup()
-        {
-            if (AddressCountry == null) return;
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='new_province'>
-                                    <attribute name='bsd_provincename' alias='Name'/>
-                                    <attribute name='new_provinceid' alias='Id'/>
-                                    <attribute name='bsd_nameen' alias='Detail'/>
-                                    <order attribute='bsd_priority' descending='false' />
-                                    <filter type='and'>
-                                      <condition attribute='bsd_country' operator='eq' value='" + AddressCountry.Id + @"' />
-                                    </filter>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("new_provinces", fetch);
-            if (result == null || result.value.Count == 0) return;
-
-            foreach (var x in result.value)
-            {
-                list_province_lookup.Add(x);
-            }
-
-        }
-
-        public async Task<LookUp> LoadDistrictByName()
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                              <entity name='new_district'>
-                                <attribute name='new_name' alias='Name'/>
-                                <attribute name='new_districtid' alias='Id'/>
-                                <attribute name='bsd_nameen' alias='Detail'/>
-                                <order attribute='new_name' descending='false' />
-                                <filter type='and'>
-                                    <condition attribute='new_province' operator='eq' value='" + AddressStateProvince.Id + @"' />
-                                    <condition attribute='new_name' operator='eq' value='" + singleLead.address1_city + @"' />
-                                </filter>
-                              </entity>
-                            </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("new_districts", fetch);
-            if (result != null && result.value.Count > 0)
-            {
-                LookUp District = new LookUp();
-                District = result.value.FirstOrDefault();
-                return District;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public async Task loadDistrictForLookup()
-        {
-            if (AddressStateProvince == null) return;
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                              <entity name='new_district'>
-                                <attribute name='new_name' alias='Name'/>
-                                <attribute name='new_districtid' alias='Id'/>
-                                <attribute name='bsd_nameen' alias='Detail'/>
-                                <order attribute='new_name' descending='false' />
-                                <filter type='and'>
-                                  <condition attribute='new_province' operator='eq' value='" + AddressStateProvince.Id + @"' />
-                                </filter>
-                              </entity>
-                            </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("new_districts", fetch);
-            if (result == null || result.value.Count == 0) return;
-
-            foreach (var x in result.value)
-            {
-                list_district_lookup.Add(x);
-            }
-
         }
     }
 }

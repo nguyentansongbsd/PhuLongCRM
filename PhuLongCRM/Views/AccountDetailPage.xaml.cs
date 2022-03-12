@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using System;
@@ -21,6 +22,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshMandatory = null;
         public static bool? NeedToRefreshQueues = null;
         public static bool? NeedToRefreshActivity = null;
+        public static OptionSet FromCustomer = null;
         private AccountDetailPageViewModel viewModel;
 
         public AccountDetailPage(Guid accountId)
@@ -44,18 +46,18 @@ namespace PhuLongCRM.Views
             {
                 if ((viewModel.singleAccount.employee_id != Guid.Empty && !string.IsNullOrWhiteSpace(viewModel.singleAccount.employee_name)) && (viewModel.singleAccount.employee_id == UserLogged.Id && viewModel.singleAccount.employee_name == UserLogged.User))
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Cuộc họp", "FontAwesomeRegular", "\uf274", null, NewMeet));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Cuộc gọi", "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Công việc", "FontAwesomeSolid", "\uf073", null, NewTask));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Thêm Người ủy quyền", "FontAwesomeSolid", "\uf2b5", null, AddMandatorySecondary));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem("Chỉnh sửa", "FontAwesomeRegular", "\uf044", null, Update));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+
+                    if (viewModel.singleAccount.statuscode != "100000000")
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
                 }
                 else
                 {
                     floatingButtonGroup.IsVisible = false;
                 }
-                viewModel.CustomerType = CustomerStatusReasonData.GetCustomerStatusReasonById(viewModel.singleAccount.statuscode);
-
+                FromCustomer = new OptionSet {Val= viewModel.singleAccount.accountid.ToString(),Label=viewModel.singleAccount.bsd_name, Title = viewModel.CodeAccount };
                 OnCompleted?.Invoke(true);
             }
                 
@@ -105,7 +107,7 @@ namespace PhuLongCRM.Views
             if (NeedToRefreshActivity == true)
             {
                 LoadingHelper.Show();
-                viewModel.PageCase++;
+                viewModel.PageCase = 1;
                 viewModel.list_thongtincase.Clear();
                 await viewModel.LoadCaseForAccountForm();
                 ActivityPopup.Refresh();
@@ -226,40 +228,40 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            //BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
-            //bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
-            //{
-            //    if (isSuccess)
-            //    {
-            //        await Navigation.PushAsync(bangTinhGiaDetail);
-            //        LoadingHelper.Hide();
-            //    }
-            //    else
-            //    {
-            //        LoadingHelper.Hide();
-            //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
-            //    }
-            //};
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
+            bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(bangTinhGiaDetail);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
 
         private void ItemHopDong_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            //ContractDetailPage contractDetail = new ContractDetailPage(itemId);
-            //contractDetail.OnCompleted = async (isSuccess) =>
-            //{
-            //    if (isSuccess)
-            //    {
-            //        await Navigation.PushAsync(contractDetail);
-            //        LoadingHelper.Hide();
-            //    }
-            //    else
-            //    {
-            //        LoadingHelper.Hide();
-            //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
-            //    }
-            //};
+            ContractDetailPage contractDetail = new ContractDetailPage(itemId);
+            contractDetail.OnCompleted = async (isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(contractDetail);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
 
         private void CaseItem_Tapped(object sender, EventArgs e)
@@ -288,7 +290,7 @@ namespace PhuLongCRM.Views
             Label lblClicked = (Label)sender;
             var a = (TapGestureRecognizer)lblClicked.GestureRecognizers[0];
             MandatorySecondaryModel item = a.CommandParameter as MandatorySecondaryModel;
-            var conform = await DisplayAlert("Xác nhận", "Bạn có muốn xóa người ủy quyền không ?", "Đồng ý", "Hủy");
+            var conform = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_xoa_nguoi_uye_quyen_khong, Language.dong_y, Language.huy);
             if (conform == false) return;
             LoadingHelper.Show();
             var IsSuccess = await viewModel.DeleteMandatory_Secondary(item);
@@ -296,12 +298,12 @@ namespace PhuLongCRM.Views
             {
                 viewModel.list_MandatorySecondary.Remove(item);
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Đã xóa người ủy quyền được chọn");
+                ToastMessageHelper.ShortMessage(Language.da_xoa_nguoi_uy_quyen_duoc_chon);
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage("Xóa người ủy quyền thất bại");
+                ToastMessageHelper.ShortMessage(Language.xao_nguoi_uy_quyen_that_bai);
             }
         }
 
@@ -314,10 +316,9 @@ namespace PhuLongCRM.Views
         }
 
         #endregion
-
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Replace(" ", "");
+            string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
@@ -328,18 +329,17 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage("Số điện thoại sai định dạng. Vui lòng kiểm tra lại");
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 }
             }
             else
             {
-                ToastMessageHelper.ShortMessage("Khách hàng không có số điện thoại. Vui lòng kiểm tra lại");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Replace(" ", "");
+            string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
@@ -349,33 +349,29 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage("Số điện thoại sai định dạng. Vui lòng kiểm tra lại");
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 }
             }
             else
             {
-                ToastMessageHelper.ShortMessage("Khách hàng không có số điện thoại. Vui lòng kiểm tra lại");
+                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-
         private void ThongTin_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(1);
         }
-
         private async void GiaoDich_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(2);
             await LoadDataGiaoDich(AccountId.ToString());
         }
-
         private async void NguoiUyQuyen_Tapped(object sender, EventArgs e)
         {
             Tab_Tapped(3);
             await LoadDataNguoiUyQuyen(AccountId.ToString());
             SetHeightListView();
         }
-
         private void Tab_Tapped(int tab)
         {
             if (tab == 1)
@@ -415,29 +411,27 @@ namespace PhuLongCRM.Views
                 TabNguoiUyQuyen.IsVisible = false;
             }
         }
-
         private void NguoiDaiDien_Tapped(object sender, EventArgs e)
         {
             if (viewModel.PrimaryContact.contactid != null)
             {
                 LoadingHelper.Show();
-                //ContactDetailPage newPage = new ContactDetailPage(viewModel.PrimaryContact.contactid);
-                //newPage.OnCompleted = async (OnCompleted) =>
-                //{
-                //    if (OnCompleted == true)
-                //    {
-                //        await Navigation.PushAsync(newPage);
-                //        LoadingHelper.Hide();
-                //    }
-                //    else
-                //    {
-                //        LoadingHelper.Hide();
-                //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
-                //    }
-                //};
+                ContactDetailPage newPage = new ContactDetailPage(viewModel.PrimaryContact.contactid);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == true)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
             }
         }
-
         private async void Update(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -452,44 +446,33 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage("Không tìm thấy thông tin. Vui lòng thử lại");
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
-
-        private async void AddMandatorySecondary(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            //MandatorySecondaryForm newPage = new MandatorySecondaryForm(viewModel.singleAccount.accountid);
-            //await Navigation.PushAsync(newPage);
-            LoadingHelper.Hide();
-        }
-
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            //QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
-            //queuesDetialPage.OnCompleted = async (IsSuccess) =>
-            //{
-            //    if (IsSuccess)
-            //    {
-            //        await Navigation.PushAsync(queuesDetialPage);
-            //        LoadingHelper.Hide();
-            //    }
-            //    else
-            //    {
-            //        LoadingHelper.Hide();
-            //        ToastMessageHelper.ShortMessage("Không tìm thấy thông tin");
-            //    }
-            //};
+            QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
+            queuesDetialPage.OnCompleted = async (IsSuccess) =>
+            {
+                if (IsSuccess)
+                {
+                    await Navigation.PushAsync(queuesDetialPage);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
-
         private void CloseContentMandatorySecondary_Tapped(object sender, EventArgs e)
         {
             ContentMandatorySecondary.IsVisible = false;
         }
-
         private void ListMandatorySecondary_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -499,7 +482,6 @@ namespace PhuLongCRM.Views
             ContentMandatorySecondary.IsVisible = true;
             LoadingHelper.Hide();
         }
-
         private async void ListMoreMandatory_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             if (e.Item != null)
@@ -515,7 +497,6 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-
         private void SetHeightListView()
         {
             double height_item = (viewModel.list_MandatorySecondary.Count() * 110) + 50;
@@ -539,35 +520,36 @@ namespace PhuLongCRM.Views
                 ListMandatory.IsVisible = true;
             }
         }
-
         private async void NewMeet(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
             {
                 LoadingHelper.Show();
-                //await Navigation.PushAsync(new MeetingForm(viewModel.singleAccount.accountid,viewModel.singleAccount.bsd_name,viewModel.CodeAccount));
+                await Navigation.PushAsync(new MeetingForm());
                 LoadingHelper.Hide();
             }
         }
-
         private async void NewPhoneCall(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
             {
                 LoadingHelper.Show();
-                //await Navigation.PushAsync(new PhoneCallForm(viewModel.singleAccount.accountid, viewModel.singleAccount.bsd_name, viewModel.CodeAccount));
+                await Navigation.PushAsync(new PhoneCallForm());
                 LoadingHelper.Hide();
             }
         }
-
         private async void NewTask(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
             {
                 LoadingHelper.Show();
-                //await Navigation.PushAsync(new TaskForm(viewModel.singleAccount.accountid, viewModel.singleAccount.bsd_name, viewModel.CodeAccount));
+                await Navigation.PushAsync(new TaskForm());
                 LoadingHelper.Hide();
             }
+        }
+        private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
+        {
+            OnAppearing();
         }
     }
 }

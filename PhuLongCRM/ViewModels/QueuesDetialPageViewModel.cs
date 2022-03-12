@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 
 namespace PhuLongCRM.ViewModels
@@ -83,6 +85,13 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_units' alias='_bsd_units_value'/>
                                 <attribute name='bsd_phaselaunch' />
                                 <attribute name='bsd_salesagentcompany' />
+                                <attribute name='bsd_priorityqueue' />
+                                <attribute name='bsd_prioritynumber' />
+                                <attribute name='bsd_ordernumber' />
+                                <attribute name='bsd_dateorder' />
+                                <attribute name='statecode' />
+                                <attribute name='bsd_expired' />
+                                <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='opportunityid' operator='eq' value='{QueueId}'/>
@@ -105,9 +114,18 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity>
                                 <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaselaunch' visible='false' link-type='outer' alias='a_485347ca19dbeb11bacb002248168cad'>
                                   <attribute name='bsd_name' alias='phaselaunch_name'/>
+                                  <attribute name='bsd_phaseslaunchid' alias='bsd_phaseslaunch_id'/>
                                 </link-entity>
                                 <link-entity name='account' from='accountid' to='bsd_salesagentcompany' visible='false' link-type='outer' alias='a_ab034cb219dbeb11bacb002248168cad'>
                                   <attribute name='bsd_name' alias='salesagentcompany_name'/>
+                                </link-entity>
+                                <link-entity name='contact' from='contactid' to='bsd_customerreferral' link-type='outer' alias='aa'>
+                                   <attribute name='bsd_fullname' alias='customerreferral_name' />
+                                   <attribute name='contactid' alias='customerreferral_id'/>
+                                </link-entity>
+                                <link-entity name='contact' from='contactid' to='bsd_collaborator' link-type='outer' alias='ab'>
+                                   <attribute name='bsd_fullname' alias='collaborator_name' />
+                                   <attribute name='contactid' alias='collaborator_id'/>
                                 </link-entity>
                               </entity>
                             </fetch>";
@@ -136,19 +154,48 @@ namespace PhuLongCRM.ViewModels
 
             if (data.unit_name != null)
             {
-                QueueProject = "Không";
+                QueueProject = Language.khong;
             }
             else
             {
-                QueueProject = "Có";
+                QueueProject = Language.co;
             }
 
             ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
-            ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
-
+//            ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
+            ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
+            
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
 
             this.Queue = data;
+        }
+
+        public async Task<bool> CheckReserve()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                      <entity name='quote'>
+                        <attribute name='name' alias='Label'/>
+                        <filter type='and'>
+                            <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
+                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='statuscode' operator='in'>
+                                   <value>100000000</value>
+                                   <value>100000001</value>
+                                   <value>100000006</value>
+                                   <value>3</value>
+                                   <value>4</value>
+                               </condition>
+                        </filter>
+                      </entity>
+                    </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("quotes", fetchXml);
+            if (result == null) return false;
+            if (result.value.Any() == false && this.Queue.statuscode == 100000000)
+            {
+                return ShowBtnBangTinhGia = (Queue.statuscode == 100000000 && !string.IsNullOrWhiteSpace(Queue.phaselaunch_name)) ? true : false;
+                //return true;
+            }
+            return false;
         }
 
         public async Task LoadDanhSachBangTinhGia()
@@ -205,6 +252,8 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadDanhSachDatCoc()
         {
+           
+
             string fetchXml = $@"<fetch version='1.0' count='5' page='{PageDatCoc}' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name='quote'>
                         <attribute name='name' />
@@ -217,11 +266,15 @@ namespace PhuLongCRM.ViewModels
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
                             <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
-                            <filter type='or'>
+                             <filter type='or'>
                                <condition attribute='statuscode' operator='in'>
                                    <value>100000000</value>
                                    <value>100000001</value>
-                                   <value>4</value>
+                                   <value>100000006</value>
+                                   <value>861450001</value>
+                                   <value>861450002</value>
+                                   <value>4</value>                
+                                   <value>3</value>
                                </condition>
                                <filter type='and'>
                                    <condition attribute='statuscode' operator='in'>
@@ -297,5 +350,121 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
+        public async Task<bool> CheckQuote()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='quote'>
+                                    <attribute name='statuscode' />
+                                    <attribute name='quoteid' />
+                                    <order attribute='createdon' descending='true' />
+                                    <filter type='and'>
+                                      <condition attribute='statuscode' operator='not-in'>
+                                        <value>2</value>
+                                        <value>6</value>
+                                      </condition>
+                                      <condition attribute='opportunityid' operator='eq' uitype='opportunity' value='{QueueId}' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueuesDetailModel>>("quotes", fetchXml);
+            if (result == null || result.value.Any() == false) return false;
+
+            var data = result.value.FirstOrDefault();
+            if (data.statuscode == 100000000 || data.statuscode == 100000006 || data.statuscode == 861450001 || data.statuscode == 861450002)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task updateStatusUnit()
+        {
+            IDictionary<string, object> data = new Dictionary<string, object>();
+
+            string fetchSalesorder = @"<fetch>
+                                  <entity name='salesorder'>
+                                    <attribute name='statecode' />
+                                    <attribute name='statuscode' />
+                                    <link-entity name='product' from='productid' to='bsd_unitnumber'>
+                                      <filter>
+                                        <condition attribute='productid' operator='eq' value='{" + Queue._bsd_units_value + @"}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var resultSalesorder = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContractModel>>("salesorders", fetchSalesorder);
+            if (resultSalesorder != null && resultSalesorder.value.Count > 0)
+                return;
+
+            string fetchQuote = @"<fetch>
+                                  <entity name='quote'>
+                                    <attribute name='statecode' />
+                                    <attribute name='statuscode' />
+                                    <link-entity name='product' from='productid' to='bsd_unitno'>
+                                      <filter>
+                                        <condition attribute='productid' operator='eq' value='{" + Queue._bsd_units_value + @"}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var resultQuote = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ReservationDetailPageModel>>("quotes", fetchQuote);
+            if (resultQuote != null && resultQuote.value.Count > 0)
+            {
+                if (resultQuote.value.FirstOrDefault(x => x.statuscode == 3 || x.statuscode == 861450000) != null)
+                {
+                    data["statecode"] = 0;
+                    data["statuscode"] = 100000003;
+                }
+                else if (resultQuote.value.FirstOrDefault(x => x.statuscode == 4) != null)
+                {
+                    data["statecode"] = 0;
+                    data["statuscode"] = 100000010;
+                }
+            }
+            else
+            {
+                string fetchQueue = @"<fetch>
+                                          <entity name='opportunity'>
+                                            <attribute name='name' />
+                                            <attribute name='statuscode' />
+                                            <attribute name='bsd_phaselaunch' alias='_bsd_phaselaunch_value' />
+                                            <filter type='and'>
+                                              <condition attribute='bsd_units' operator='eq' value='{" + Queue._bsd_units_value + @"}'/>
+                                            </filter>
+                                          </entity>
+                                        </fetch>";
+                var resultQueue = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueuesDetailModel>>("opportunities", fetchQueue);
+                if (resultQueue != null && resultQueue.value.Count > 0)
+                {
+                    if (resultQueue.value.FirstOrDefault(x => x.statuscode == 100000000 || x.statuscode == 100000008) != null)
+                    {
+                        data["statecode"] = 0;
+                        data["statuscode"] = 100000004;
+                    }
+                    else if (resultQueue.value.FirstOrDefault(x => x.statuscode == 100000002) != null)
+                    {
+                        data["statecode"] = 0;
+                        data["statuscode"] = 100000007;
+                    }
+                    else
+                    {
+                        var queue = resultQueue.value.FirstOrDefault(x => x.statuscode == 4 || x.statuscode == 100000007 || x.statuscode == 100000009);
+                        if (queue != null && queue._bsd_phaselaunch_value != Guid.Empty)
+                        {
+                            data["statecode"] = 0;
+                            data["statuscode"] = 100000000;
+                        }
+                        else if (resultQueue.value.FirstOrDefault(x => x.statuscode == 4 || x.statuscode == 100000007) != null)
+                        {
+                            data["statecode"] = 0;
+                            data["statuscode"] = 1;
+                        }
+                    }
+                }
+            }
+
+            string path = "/products(" + Queue._bsd_units_value + ")";
+            CrmApiResponse result = await CrmHelper.PatchData(path, data);
+        }
     }
 }

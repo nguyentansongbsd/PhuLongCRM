@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,13 +11,13 @@ namespace PhuLongCRM.Models
         {
             return new List<PriceDirectSaleModel>()
             {
-                new PriceDirectSaleModel("1","Dưới 1 tỷ","1000000000"),
-                new PriceDirectSaleModel("2","1 tỷ -> 2 tỷ","1000000000","2000000000"),
-                new PriceDirectSaleModel("3","2 tỷ -> 5 tỷ","2000000000","5000000000"),
-                new PriceDirectSaleModel("4","5 tỷ -> 10 tỷ","5000000000","10000000000"),
-                new PriceDirectSaleModel("5","10 tỷ -> 20 tỷ","10000000000","20000000000"),
-                new PriceDirectSaleModel("6","20 tỷ -> 50 tỷ","20000000000","50000000000"),
-                new PriceDirectSaleModel("7","50 tỷ trở lên",null,"50000000000")
+                new PriceDirectSaleModel("1",Language.string_under + " 1 " + Language.currency_billion,"1000000000"),
+                new PriceDirectSaleModel("2","1 " + Language.currency_billion + " -> 2 " + Language.currency_billion,"1000000000","2000000000"),
+                new PriceDirectSaleModel("3","2 " + Language.currency_billion + " -> 5 " + Language.currency_billion,"2000000000","5000000000"),
+                new PriceDirectSaleModel("4","5 " + Language.currency_billion + " -> 10 " + Language.currency_billion,"5000000000","10000000000"),
+                new PriceDirectSaleModel("5","10 " + Language.currency_billion + " -> 20 " + Language.currency_billion,"10000000000","20000000000"),
+                new PriceDirectSaleModel("6","20 " + Language.currency_billion + " -> 50 " + Language.currency_billion,"20000000000","50000000000"),
+                new PriceDirectSaleModel("7",Language.string_more_than + " 50 "+ Language.currency_billion,null,"50000000000")
             };
         }
         public static PriceDirectSaleModel GetPriceById(string Id)

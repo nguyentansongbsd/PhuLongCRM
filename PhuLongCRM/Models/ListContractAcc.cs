@@ -1,5 +1,6 @@
 ﻿using System;
 using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.Models
@@ -21,23 +22,23 @@ namespace PhuLongCRM.Models
                 switch (statuscode)
                 {
                     case 1:
-                        return "Open";
+                        return Language.contract_open_sts; //"Open"; 
                     case 2:
-                        return "Pending";
+                        return Language.contract_pending_sts; //"Pending";
                     case 100000000:
-                        return "Option";
+                        return Language.contract_option_sts; //"Option";
                     case 100000001:
-                        return "1st Installment";
+                        return Language.contract_1st_installment_sts; //"1st Installment";
                     case 100000002:
-                        return "Signed Contract";
+                        return Language.contract_signed_contract_sts; //"Signed Contract";
                     case 100000003:
-                        return "Being Payment";
+                        return Language.contract_being_payment_sts; //"Being Payment";
                     case 100000004:
-                        return "Complete Payment";
+                        return Language.contract_complete_payment_sts; //"Complete Payment";
                     case 100000005:
-                        return "Handover";
+                        return Language.contract_handover_sts; //"Handover";
                     case 100000006:
-                        return "Terminated";
+                        return Language.contract_terminated_sts; //"Terminated";
                     default:
                         return "";
                 }

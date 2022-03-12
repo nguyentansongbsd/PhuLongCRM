@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using Xamarin.Forms;
 
@@ -17,6 +19,8 @@ namespace PhuLongCRM.Models
 
         private string _statuscode;
         public string statuscode { get { return _statuscode; } set { _statuscode = value; OnPropertyChanged(nameof(statecode)); } }
+        public string statuscode_format { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Name : null; } } 
+        public string statuscode_color { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Background : "#808080"; } }
 
         private string _statecode;
         public string statecode { get { return _statecode; } set { _statecode = value; OnPropertyChanged(nameof(statecode)); } }
@@ -37,7 +41,7 @@ namespace PhuLongCRM.Models
         public Guid leadid { get { return _leadid; } set { _leadid = value; OnPropertyChanged(nameof(leadid)); } }
 
         private string _telephone1;
-        public string telephone1 { get { return _telephone1; } set { _telephone1 = value; OnPropertyChanged(nameof(telephone1)); } }
+        public string telephone1 { get { return _telephone1;} set { _telephone1 = value; OnPropertyChanged(nameof(telephone1)); } }
 
         private DateTime? _new_birthday;
         public DateTime? new_birthday
@@ -71,6 +75,9 @@ namespace PhuLongCRM.Models
 
         private string _lastname;
         public string lastname { get { return _lastname; } set { _lastname = value; OnPropertyChanged(nameof(lastname)); } }
+
+        private string _fullname;
+        public string fullname { get { return _fullname; } set { _fullname = value; OnPropertyChanged(nameof(fullname)); } }
 
         private string _firstname;
         public string firstname { get { return _firstname; } set { _firstname = value; OnPropertyChanged(nameof(firstname)); } }
@@ -112,6 +119,7 @@ namespace PhuLongCRM.Models
         //public decimal? revenue { get { return _revenue; } set { _revenue = value; OnPropertyChanged(nameof(revenue)); } }
 
         public decimal? revenue { get; set; }
+        public string revenue_format { get => StringFormatHelper.FormatCurrency(revenue); }
         public string numberofemployees { get; set; }
 
         private string _sic;
@@ -137,7 +145,7 @@ namespace PhuLongCRM.Models
         public string donotsendmmValue { get { return _donotsendmmValue; } set { _donotsendmmValue = value; OnPropertyChanged(nameof(donotsendmmValue)); } }
 
         private bool _donotsendmm;
-        public bool donotsendmm { get { return _donotsendmm; } set { _donotsendmm = value; donotsendmmValue = value ? "Không gửi" : "Gửi"; OnPropertyChanged(nameof(donotsendmm)); } }
+        public bool donotsendmm { get { return _donotsendmm; } set { _donotsendmm = value; donotsendmmValue = value ? Language.khong_gui : Language.gui; OnPropertyChanged(nameof(donotsendmm)); } }
 
         private DateTime? _lastusedincampaign;
         public DateTime? lastusedincampaign { get { return _lastusedincampaign; }
@@ -242,9 +250,9 @@ namespace PhuLongCRM.Models
             return str == null ? new List<string>() : str.Split(',').ToList();
         }
 
-        public string bsd_contactaddress { get; set; }
+      //  public string bsd_contactaddress { get; set; }
         public string bsd_diachi { get; set; }
-        public string bsd_housenumberstreet { get; set; }
+       // public string bsd_housenumberstreet { get; set; }
         public string bsd_housenumber { get; set; }
         public string _bsd_country_value { get; set; }
         public string bsd_country_label { get; set; }
@@ -268,5 +276,46 @@ namespace PhuLongCRM.Models
 
         private DateTime? _bsd_dategrant;
         public DateTime? bsd_dategrant { get => _bsd_dategrant; set { if (value.HasValue) _bsd_dategrant = value.Value.ToLocalTime(); else _bsd_dategrant = null; OnPropertyChanged(nameof(bsd_dategrant)); } }
+
+        //địa chỉ liên ljac
+        public Guid bsd_country_id { get; set; }
+        public Guid bsd_province_id { get; set; }
+        public Guid bsd_district_id { get; set; }
+        public string bsd_housenumberstreet { get; set; }
+        public string bsd_contactaddress { get; set; }
+        public string bsd_country_name { get; set; }
+        public string bsd_province_name { get; set; }
+        public string bsd_district_name { get; set; }
+        public string bsd_country_name_en { get; set; }
+        public string bsd_province_name_en { get; set; }
+        public string bsd_district_name_en { get; set; }
+
+        //địa chỉ thường trú
+        public Guid bsd_permanentcountry_id { get; set; }
+        public Guid bsd_permanentprovince_id { get; set; }
+        public Guid bsd_permanentdistrict_id { get; set; }
+        public string bsd_permanentaddress { get; set; }
+        public string bsd_permanentaddress1 { get; set; }
+        public string bsd_permanentcountry_name { get; set; }
+        public string bsd_permanentprovince_name { get; set; }
+        public string bsd_permanentdistrict_name { get; set; }
+        public string bsd_permanentcountry_name_en { get; set; }
+        public string bsd_permanentprovince_name_en { get; set; }
+        public string bsd_permanentdistrict_name_en { get; set; }
+
+        //địa chỉ công ty
+        public Guid bsd_accountcountry_id { get; set; }
+        public Guid bsd_accountprovince_id { get; set; }
+        public Guid bsd_accountdistrict_id { get; set; }
+        public string bsd_account_housenumberstreetwardvn { get; set; }
+        public string bsd_accountaddressvn { get; set; }
+        public string bsd_accountcountry_name { get; set; }
+        public string bsd_accountprovince_name { get; set; }
+        public string bsd_accountdistrict_name { get; set; }
+        public string bsd_accountcountry_name_en { get; set; }
+        public string bsd_accountprovince_name_en { get; set; }
+        public string bsd_accountdistrict_name_en { get; set; }
+        public Guid account_id { get; set; }
+        public Guid contact_id { get; set; }
     }
 }
