@@ -50,10 +50,7 @@ namespace PhuLongCRM.Models
 
         // thong itn gia
         public decimal price { get; set; } // Giá bán
-        public string price_format
-        {
-            get => String.Format("{0:0,0.00 đ}", price);
-        }
+        public string price_format { get => StringFormatHelper.FormatCurrency(price); }
 
         public decimal bsd_landvalueofunit { get; set; } // đơn giá giá trị đất
         public string bsd_landvalueofunit_format { get => StringFormatHelper.FormatCurrency(bsd_landvalueofunit); }

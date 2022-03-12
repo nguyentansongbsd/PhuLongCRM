@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
@@ -103,7 +104,7 @@ namespace PhuLongCRM.ViewModels
         {
             if (FiltersStatus != null && FiltersStatus.Count == 0)
             {
-                FiltersStatus.Add(new OptionSet("-1", "Tất cả"));
+                FiltersStatus.Add(new OptionSet("-1", Language.tat_ca));
                 var list = QueuesStatusCodeData.GetQueuesByIds("4,100000000,100000002,100000003,100000004");
                 foreach (var item in list)
                 {
@@ -128,7 +129,7 @@ namespace PhuLongCRM.ViewModels
                 var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetchXml);
                 if (result == null || result.value.Any() == false) return;
 
-                FiltersProject.Add(new OptionSet("-1", "Tất cả"));
+                FiltersProject.Add(new OptionSet("-1", Language.tat_ca));
                 var data = result.value;
                 foreach (var item in data)
                 {

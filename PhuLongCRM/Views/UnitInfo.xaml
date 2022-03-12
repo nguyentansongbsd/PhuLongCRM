@@ -141,7 +141,7 @@
                                             </StackLayout.GestureRecognizers>
                                         </StackLayout>
                                     </Grid>
-                                    <Label Text="{Binding UnitInfo.price,Converter={StaticResource DecimalToVndConverter}}" FontSize="16" FontAttributes="Bold" TextColor="#790311"/>
+                                    <Label Text="{Binding UnitInfo.price_format,StringFormat='{0} đ'}" FontSize="16" FontAttributes="Bold" TextColor="#790311"/>
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>
