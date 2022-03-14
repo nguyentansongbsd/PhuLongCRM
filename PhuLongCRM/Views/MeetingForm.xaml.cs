@@ -41,7 +41,7 @@ namespace PhuLongCRM.Views
             DatePickerEnd.DefaultDisplay = DateTime.Now;
             // kiểm tra page trước là page nào
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
-            if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
+            if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage" || page_before == "LeadDetailPage")
             {
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
@@ -61,6 +61,24 @@ namespace PhuLongCRM.Views
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                     Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
+                }
+                else if (page_before == "LeadDetailPage" && LeadDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(LeadDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CustomerMapping = LeadDetailPage.FromCustomer;
+                    if (viewModel.Required == null)
+                    {
+                        List<OptionSetFilter> item = new List<OptionSetFilter>();
+                        item.Add(new OptionSetFilter
+                        {
+                            Val = LeadDetailPage.FromCustomer.Val,
+                            Label = LeadDetailPage.FromCustomer.Label,
+                            Title = LeadDetailPage.FromCustomer.Title,
+                            Selected = true
+                        });
+                        viewModel.Required = item;
+                    }
+                    Lookup_Customer.IsVisible = false;
+                    RegardingMapping.IsVisible = true;
                 }
                 else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
                 {
@@ -191,6 +209,7 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
+                    if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
@@ -212,6 +231,7 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
+                    if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
@@ -228,7 +248,9 @@ namespace PhuLongCRM.Views
         {
             if (date != null && date1 != null)
             {
-                int result = DateTime.Compare(date.Value, date1.Value);
+                DateTime timeStart = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, date.Value.Hour, date.Value.Minute, 0);
+                DateTime timeEnd = new DateTime(date1.Value.Year, date1.Value.Month, date1.Value.Day, date1.Value.Hour, date1.Value.Minute, 0);
+                int result = DateTime.Compare(timeStart, timeEnd);
                 if (result < 0)
                     return -1;
                 else if (result == 0)
@@ -295,7 +317,7 @@ namespace PhuLongCRM.Views
                         viewModel.MeetingModel.scheduleddurationminutes = 0;
                     }    
 
-                    viewModel.MeetingModel.scheduledstart = new DateTime(timeStart.Year, timeStart.Month, timeStart.Day, 0, 0, 0);
+                    viewModel.MeetingModel.scheduledstart = new DateTime(timeStart.Year, timeStart.Month, timeStart.Day, 8, 0, 0);
                     viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddDays(1);
                 }
                 else
@@ -304,7 +326,10 @@ namespace PhuLongCRM.Views
                     TimeSpan timeStart = viewModel.MeetingModel.timeStart;
 
                     viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, timeStart.Hours, timeStart.Minutes, timeStart.Seconds);
-                    viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
+                    if (viewModel.MeetingModel.scheduleddurationminutes > 0)
+                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
+                    else
+                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(1);
                 }
             }
             else

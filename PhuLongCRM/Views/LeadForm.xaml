@@ -60,6 +60,12 @@
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.phan_nhom}"/>
                                 <controls:LookUp x:Name="lookUpPhanNhom" Placeholder="{x:Static lang:Language.chon_phan_nhom}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding CustomerGroup}" ItemsSource="{Binding CustomerGroups}"/>
 
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.khu_vuc}"/>
+                                <controls:LookUp x:Name="lookUpKhuVuc" Placeholder="{x:Static lang:Language.chon_khu_vuc}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Area}" ItemsSource="{Binding Areas}"/>
+
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.nguon_khach_hang}"/>
+                                <controls:LookUp x:Name="lookUpLeadSource" Placeholder="{x:Static lang:Language.chon_nguon_khach_hang}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding LeadSource}" ItemsSource="{Binding LeadSources}"/>
+                                
                                 <controls:FormLabel Text="{x:Static lang:Language.chuc_vu}"/>
                                 <controls:MainEntry x:Name="jobtitle_text" Text="{Binding singleLead.jobtitle}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_chuc_vu}"/>
 
@@ -78,22 +84,16 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.so_id}"/>
                                 <controls:MainEntry Text="{Binding singleLead.bsd_identitycardnumberid}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_id}" Margin="0,0,0,5" Unfocused="MainEntry_Unfocused" />
 
-                                <controls:FormLabelRequired Text="{x:Static lang:Language.khu_vuc}"/>
-                                <controls:LookUp x:Name="lookUpKhuVuc" Placeholder="{x:Static lang:Language.chon_khu_vuc}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Area}" ItemsSource="{Binding Areas}"/>
-
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}"/>
                                 <controls:DatePickerBoderControl Date="{Binding singleLead.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" />
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap}"/>
                                 <controls:MainEntry Text="{Binding singleLead.bsd_placeofissue}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_noi_cap}" Margin="0,0,0,5"/>
 
-                                <controls:FormLabelRequired Text="{x:Static lang:Language.nguon_khach_hang}"/>
-                                <controls:LookUp x:Name="lookUpLeadSource" Placeholder="{x:Static lang:Language.chon_nguon_khach_hang}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding LeadSource}" ItemsSource="{Binding LeadSources}"/>
-
-                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_lien_lac}" Margin="0,10,0,0"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_lien_lac}"/>
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference centerModal}"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_thuong_tru}" Margin="0,10,0,0"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_thuong_tru}"/>
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference centerModal}"/>
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
