@@ -47,6 +47,7 @@ namespace PhuLongCRM.Models
         public decimal bsd_constructionarea { get; set; } // diện tích xây dựng
         public string bsd_constructionarea_format { get => StringFormatHelper.FormatCurrency(bsd_constructionarea); }
         public decimal bsd_netsaleablearea { get; set; } // diện tích sử dụng 
+        public string bsd_netsaleablearea_format { get => StringFormatHelper.FormatCurrency(bsd_netsaleablearea); }
 
         // thong itn gia
         public decimal price { get; set; } // Giá bán

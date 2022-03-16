@@ -406,8 +406,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
                                       <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
@@ -459,8 +460,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />   
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
                                       <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
@@ -547,8 +549,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
                                       <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>

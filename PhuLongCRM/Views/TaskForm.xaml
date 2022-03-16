@@ -22,7 +22,7 @@
                     </telerikPrimitives:RadBorder>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.thoi_gian_bat_dau}"/>
-                    <controls:DatePickerControl x:Name="dateTimeTGBatDau" Date="{Binding TaskFormModel.scheduledstart}" Placeholder="{x:Static lang:Language.chon_thoi_gian_bat_dau}" DisplayFormat="dd/MM/yyyy - h:mm tt" SpinnerFormat="dd/MM/yyyy h:mm tt" DateSelected="DateStart_Selected"/>
+                    <controls:DatePickerControl x:Name="dateTimeTGBatDau" Date="{Binding TaskFormModel.scheduledstart}" Placeholder="{x:Static lang:Language.chon_thoi_gian_bat_dau}" DisplayFormat="dd/MM/yyyy - HH:mm" SpinnerFormat="dd/MM/yyyy HH:mm" DateSelected="DateStart_Selected"/>
 
                     <StackLayout Orientation="Horizontal" Spacing="15">
                         <Label Text="{x:Static lang:Language.su_kien_ca_ngay}" TextColor="#444444" FontSize="15" VerticalTextAlignment="Center" >
@@ -34,7 +34,7 @@
                     </StackLayout>
                     
                     <controls:FormLabelRequired Text="{x:Static lang:Language.thoi_gian_ket_thuc}"/>
-                    <controls:DatePickerControl x:Name="dateTimeTGKetThuc" Date="{Binding TaskFormModel.scheduledend}" Placeholder="{x:Static lang:Language.chon_thoi_gian_ket_thuc}" DisplayFormat="dd/MM/yyyy - h:mm tt" SpinnerFormat="dd/MM/yyyy h:mm tt" DateSelected="DateEnd_Selected"/>
+                    <controls:DatePickerControl x:Name="dateTimeTGKetThuc" Date="{Binding TaskFormModel.scheduledend}" Placeholder="{x:Static lang:Language.chon_thoi_gian_ket_thuc}" DisplayFormat="dd/MM/yyyy - HH:mm" SpinnerFormat="dd/MM/yyyy HH:mm" DateSelected="DateEnd_Selected"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" />
                     <controls:MainEditor Text="{Binding TaskFormModel.description}"  HeightRequest="100" Placeholder="{x:Static lang:Language.nhap_mo_ta}" FontSize="15"/>

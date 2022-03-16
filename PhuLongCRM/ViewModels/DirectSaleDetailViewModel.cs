@@ -119,7 +119,7 @@ namespace PhuLongCRM.ViewModels
                                           </link-entity>
                                         </link-entity>" : "";
 
-            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? " < condition attribute='name' operator='like' value='%25" + Filter.Unit + "%25' />" : "";
+            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? $"<condition attribute='name' operator='like' value='%{Filter.Unit}%'/>" : null ;
 
             string Direction_Condition = string.Empty;
             if (!string.IsNullOrWhiteSpace(Filter.Direction))
@@ -227,16 +227,16 @@ namespace PhuLongCRM.ViewModels
                                     <condition attribute='statuscode' operator='ne' value='0' />
                                     <condition attribute='bsd_projectcode' operator='eq' uitype='bsd_project' value='{Filter.Project}'/>
                                     <condition attribute='bsd_floor' operator='eq' uitype='bsd_floor' value='{floorId}' />
-                                    '{PhasesLaunch_Condition}'
-                                    '{UnitCode_Condition}'
-                                    '{StatusReason_Condition}'
-                                    '{UnitStatus_Condition}'
-                                    '{Direction_Condition}'
-                                    '{View_Condition}'
-                                    '{minNetArea_Condition}'
-                                    '{maxNetArea_Condition}'
-                                    '{minPrice_Condition}'
-                                    '{maxPrice_Condition}'
+                                    {PhasesLaunch_Condition}
+                                    {UnitCode_Condition}
+                                    {StatusReason_Condition}
+                                    {UnitStatus_Condition}
+                                    {Direction_Condition}
+                                    {View_Condition}
+                                    {minNetArea_Condition}
+                                    {maxNetArea_Condition}
+                                    {minPrice_Condition}
+                                    {maxPrice_Condition}
                                 </filter>
                                 <link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='ag' >
                                     <attribute name='statuscode' alias='queses_statuscode'/>
@@ -250,7 +250,7 @@ namespace PhuLongCRM.ViewModels
                                             </filter>
                                           </link-entity>
                                         </link-entity>
-                                '{isEvent}'
+                                {isEvent}
                               </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Unit>>("products", fetchXml);
@@ -284,6 +284,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_viewphulong' />
                                     <attribute name='bsd_direction' />
                                     <attribute name='bsd_constructionarea' />
+                                    <attribute name='bsd_netsaleablearea' />
                                     <attribute name='bsd_floor' alias='floorid'/>
                                     <attribute name='bsd_blocknumber' alias='blockid'/>
                                     <attribute name='bsd_phaseslaunchid' alias='_bsd_phaseslaunchid_value' />
@@ -310,6 +311,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
 
             Unit = result.value.FirstOrDefault();
+            await CheckShowBtnBangTinhGia(unitId);
         }
 
         public async Task LoadQueues(Guid unitId)
@@ -387,7 +389,15 @@ namespace PhuLongCRM.ViewModels
             {
                 if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
                 {
-                    IsShowBtnBangTinhGia = true;
+                    if (Unit?.statuscode == 100000000 || Unit?.statuscode == 100000004)
+                    {
+                        IsShowBtnBangTinhGia = true;
+                    }
+                    else
+                    {
+                        IsShowBtnBangTinhGia = false;
+                    }
+                    //IsShowBtnBangTinhGia = true;
                     return;
                 }
                 else

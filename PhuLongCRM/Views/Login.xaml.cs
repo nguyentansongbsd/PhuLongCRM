@@ -168,12 +168,14 @@ namespace PhuLongCRM.Views
             {
                 flagVN.BorderColor = Color.FromHex("#2196F3");
                 flagEN.BorderColor = Color.FromHex("#eeeeee");
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("vi-VN");
             }
                 
             else if (code == "en")
             {
                 flagVN.BorderColor = Color.FromHex("#eeeeee");
                 flagEN.BorderColor = Color.FromHex("#2196F3");
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             }
             Application.Current.MainPage = new Login();
             LoadingHelper.Hide();

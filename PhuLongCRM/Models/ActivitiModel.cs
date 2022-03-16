@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Resources;
+using PhuLongCRM.ViewModels;
 using System;
 namespace PhuLongCRM.Models
 {
@@ -25,5 +26,39 @@ namespace PhuLongCRM.Models
         public string callto_contact_name { get; set; }
         public string callto_accounts_name { get; set; }
         public string callto_lead_name { get; set; }
+        public string activitytypecode_format
+        {
+            get
+            {
+                switch (activitytypecode)
+                {
+                    case "task":
+                        return Language.cong_viec;
+                    case "phonecall":
+                        return Language.cuoc_goi;
+                    case "appointment":
+                        return Language.cuoc_hop;
+                    default:
+                        return "Error";
+                }
+            }
+        }
+        public string activitytypecode_color
+        {
+            get
+            {
+                switch (activitytypecode)
+                {
+                    case "task":
+                        return "#2196F3";
+                    case "phonecall":
+                        return "#0DB302";
+                    case "appointment":
+                        return "#D42A16";
+                    default:
+                        return "#808080";
+                }
+            }
+        }
     }
 }
