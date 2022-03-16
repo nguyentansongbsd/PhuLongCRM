@@ -2610,4 +2610,22 @@
   <data name="dieu_kien_ban_giao_khong_phu_hop_voi_unit_type" xml:space="preserve">
     <value>Điều kiện bàn giao đã chọn không phù hợp với Loại sản phẩm đang thực hiện giao dịch. Vui lòng kiểm tra lại thông tin hoặc chọn điều kiện bàn giao khác.</value>
   </data>
+  <data name="danh_gia_a_z" xml:space="preserve">
+    <value>Đánh giá (↓)</value>
+  </data>
+  <data name="danh_gia_z_a" xml:space="preserve">
+    <value>Đánh giá (↑)</value>
+  </data>
+  <data name="ngay_tao_a_z" xml:space="preserve">
+    <value>Ngày tạo (↓)</value>
+  </data>
+  <data name="ngay_tao_z_a" xml:space="preserve">
+    <value>Ngày tạo (↑)</value>
+  </data>
+  <data name="tinh_trang_a_z" xml:space="preserve">
+    <value>Tình trạng (↓)</value>
+  </data>
+  <data name="tinh_trang_z_a" xml:space="preserve">
+    <value>Tình trạng (↑)</value>
+  </data>
 </root>

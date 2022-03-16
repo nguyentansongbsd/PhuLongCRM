@@ -157,7 +157,7 @@
                                             <FormattedString>
                                                 <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
                                                 <Span Text=" "/>
-                                                <Span Text="{Binding UnitInfo.bsd_constructionarea_format}" FontAttributes="Bold"/>
+                                                <Span Text="{Binding UnitInfo.bsd_netsaleablearea_format}" FontAttributes="Bold"/>
                                                 <Span Text=" "/>
                                                 <Span Text="{x:Static lang:Language.sqm}"/>
                                             </FormattedString>

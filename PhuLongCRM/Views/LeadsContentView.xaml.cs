@@ -68,5 +68,63 @@ namespace PhuLongCRM.Views
                 Search_Pressed(null, EventArgs.Empty);
             }
         }
+
+        private void Sort_Tapped(object sender, EventArgs e)
+        {
+            SortView.IsVisible = !SortView.IsVisible;
+        }
+
+        private async void SelectSort_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = (TapGestureRecognizer)((Label)sender).GestureRecognizers[0];
+            viewModel.KeySort = item.CommandParameter as string;
+            // thay đổi icon
+            if (viewModel.KeySort == "1")
+            {
+                viewModel.Create_on_sort = !viewModel.Create_on_sort;
+                if (viewModel.Create_on_sort)
+                {
+                    icon_createon.Text = "\uf15d";
+                    label_createon.Text = Language.ngay_tao_a_z;
+                }
+                else
+                {
+                    icon_createon.Text = "\uf882";
+                    label_createon.Text = Language.ngay_tao_z_a;
+                }
+            }
+            else if (viewModel.KeySort == "2")
+            {
+                viewModel.Rating_sort = !viewModel.Rating_sort;
+                if (viewModel.Rating_sort)
+                {
+                    icon_rating.Text = "\uf15d";
+                    label_rating.Text = Language.danh_gia_a_z;
+                }
+                else
+                {
+                    icon_rating.Text = "\uf882";
+                    label_rating.Text = Language.danh_gia_z_a;
+                }
+            }
+            else if (viewModel.KeySort == "3")
+            {
+                viewModel.Status_sort = !viewModel.Status_sort;
+                if (viewModel.Status_sort)
+                {
+                    icon_status.Text = "\uf15d";
+                    label_status.Text = Language.tinh_trang_a_z;
+                }
+                else
+                {
+                    icon_status.Text = "\uf882";
+                    label_status.Text = Language.tinh_trang_z_a;
+                }
+            }
+            await viewModel.LoadOnRefreshCommandAsync();
+            SortView.IsVisible = false;
+            LoadingHelper.Hide();
+        }
     }
 }

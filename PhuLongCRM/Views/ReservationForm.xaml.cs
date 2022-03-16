@@ -946,6 +946,7 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.LongMessage(Language.dai_ly_san_giao_dich_khong_duoc_trung_voi_nguoi_mua_vui_long_chon_lai);
                 viewModel.SalesAgent = null;
+                LoadingHelper.Hide();
                 return;
             }
             if (viewModel.SalesAgent != null && !string.IsNullOrWhiteSpace(viewModel.SalesAgent?.Val))
@@ -963,6 +964,7 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.LongMessage(Language.cong_tac_vien_khong_duoc_trung_voi_nguoi_mua_vui_long_chon_lai);
                 viewModel.Collaborator = null;
+                LoadingHelper.Hide();
                 return;
             }
             if (viewModel.Collaborator != null && viewModel.Collaborator?.Id != Guid.Empty)
@@ -980,6 +982,7 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.LongMessage(Language.khach_hang_gioi_thieu_khong_duoc_trung_voi_nguoi_mua_vui_long_chon_lai);
                 viewModel.CustomerReferral = null;
+                LoadingHelper.Hide();
                 return;
             }
             if (viewModel.CustomerReferral != null && viewModel.CustomerReferral?.Id != Guid.Empty)
@@ -1020,7 +1023,7 @@ namespace PhuLongCRM.Views
 
             LoadingHelper.Show();
 
-            if (viewModel.Quote.quoteid == Guid.Empty)
+            if (viewModel.QuoteId == Guid.Empty)
             {
                 CrmApiResponse response = await viewModel.CreateQuote();
                 if (response.IsSuccess)
@@ -1051,9 +1054,9 @@ namespace PhuLongCRM.Views
                                 if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                                 if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                                 if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
-                                
-                                ///this.Title = buttonSave.Text = Language.cap_nhat_thanh_cong; ///??
-                                
+
+                                this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia;
+
                                 viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
                                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                                 LoadingHelper.Hide();

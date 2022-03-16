@@ -73,8 +73,8 @@ namespace PhuLongCRM.Views
                     viewModel.IsShowBtnBangTinhGia = false;
                 }
 
-                gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
                 SetButton();
+                gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
                 OnCompleted?.Invoke(true);
             }
             else

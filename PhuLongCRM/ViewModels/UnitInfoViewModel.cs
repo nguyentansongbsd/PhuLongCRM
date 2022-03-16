@@ -106,6 +106,7 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='statuscode' />
                 <attribute name='bsd_areavariance' />
                 <attribute name='bsd_constructionarea' />
+ <attribute name='bsd_netsaleablearea' />
                 <attribute name='price' />
                 <attribute name='bsd_landvalueofunit' />
                 <attribute name='bsd_landvalue' />

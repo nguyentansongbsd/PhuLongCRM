@@ -997,7 +997,7 @@
     <value>Policy</value>
   </data>
   <data name="tong_hop" xml:space="preserve">
-    <value>Synthetic</value>
+    <value>Sumarry</value>
   </data>
   <data name="chi_tiet" xml:space="preserve">
     <value>Detail</value>
@@ -2056,7 +2056,7 @@
     <value>Cancel Queue</value>
   </data>
   <data name="tao_bang_tinh_gia" xml:space="preserve">
-    <value>Create Quation reservation</value>
+    <value>Create Quation</value>
   </data>
   <data name="khong_co_so_dien_thoai" xml:space="preserve">
     <value>No phone number</value>
@@ -2609,5 +2609,23 @@
   </data>
   <data name="dieu_kien_ban_giao_khong_phu_hop_voi_unit_type" xml:space="preserve">
     <value>Handover Condition is not suitable with Unit type. Please check again or choose another handover condition.</value>
+  </data>
+  <data name="danh_gia_a_z" xml:space="preserve">
+    <value>Rating (↓)</value>
+  </data>
+  <data name="danh_gia_z_a" xml:space="preserve">
+    <value>Rating (↑)</value>
+  </data>
+  <data name="ngay_tao_a_z" xml:space="preserve">
+    <value>Create on (↓)</value>
+  </data>
+  <data name="ngay_tao_z_a" xml:space="preserve">
+    <value>Create on (↑)</value>
+  </data>
+  <data name="tinh_trang_a_z" xml:space="preserve">
+    <value>Status (↓)</value>
+  </data>
+  <data name="tinh_trang_z_a" xml:space="preserve">
+    <value>Status (↑)</value>
   </data>
 </root>

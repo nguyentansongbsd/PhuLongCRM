@@ -443,7 +443,7 @@
                 <Button Clicked="Close_LookUpImagePhongThuy_Clicked" FontFamily="FontAwesomeSolid" TextColor="#444444" Text="&#xf00d;" FontSize="Large" WidthRequest="20" HeightRequest="20" VerticalOptions="Start" HorizontalOptions="End" BackgroundColor="Transparent" Margin="0,10,10,0"/>
             </Grid>
             
-            <views:ActivityPopupContentView x:Name="ActivityPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" HidePopupActivity="ActivityPopup_HidePopupActivity"/>
+            <views:ActivityPopupContentView x:Name="ActivityPopup" HidePopupActivity="ActivityPopup_HidePopupActivity"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
