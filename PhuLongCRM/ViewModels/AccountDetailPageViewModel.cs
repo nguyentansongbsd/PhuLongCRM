@@ -204,6 +204,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='createdon' />
                                 <attribute name='bsd_queuingexpired' />
                                 <attribute name='opportunityid' />
+                                <attribute name='statuscode' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     <condition attribute='parentaccountid' operator='eq' uitype='account' value='{accountid}' />

@@ -646,7 +646,7 @@
     <value>Customer code</value>
   </data>
   <data name="loai" xml:space="preserve">
-    <value>Localization</value>
+    <value>Type</value>
   </data>
   <data name="nhom" xml:space="preserve">
     <value>Business type</value>
@@ -2627,5 +2627,47 @@
   </data>
   <data name="tinh_trang_z_a" xml:space="preserve">
     <value>Status (↑)</value>
+  </data>
+  <data name="queues_unit" xml:space="preserve">
+    <value>Queues/ Unit</value>
+  </data>
+  <data name="queue_unit_saleman_day" xml:space="preserve">
+    <value>Queue/ Unit/ Saleman/ Day</value>
+  </data>
+  <data name="quy_trinh_ban_title" xml:space="preserve">
+    <value>Sales Process</value>
+  </data>
+  <data name="thoi_gian_giu_cho_dai_han" xml:space="preserve">
+    <value>Long queuing time (days)</value>
+  </data>
+  <data name="thoi_gian_giu_cho_ngan_han" xml:space="preserve">
+    <value>Short queuing time (hours)</value>
+  </data>
+  <data name="thong_tin_chung_title" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="units_salesman_day" xml:space="preserve">
+    <value>Units/ Salesman/ Day</value>
+  </data>
+  <data name="chiet_khau_dac_biet_title" xml:space="preserve">
+    <value>Special Discount</value>
+  </data>
+  <data name="dieu_kien_ban_giao_title" xml:space="preserve">
+    <value>Handover Condition</value>
+  </data>
+  <data name="gia_tri" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="khuyen_mai_title" xml:space="preserve">
+    <value>Promotions</value>
+  </data>
+  <data name="phan_tram_giam" xml:space="preserve">
+    <value>Percent discount</value>
+  </data>
+  <data name="phuong_thuc" xml:space="preserve">
+    <value>Method</value>
+  </data>
+  <data name="theo_loai_unit" xml:space="preserve">
+    <value>By unit type</value>
   </data>
 </root>

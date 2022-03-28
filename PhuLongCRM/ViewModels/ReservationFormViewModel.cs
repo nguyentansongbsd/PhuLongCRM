@@ -902,7 +902,7 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var item in result.value)
             {
-                if (item.bsd_startdate.Date < DateTime.Now.Date && item.bsd_enddate.Date > DateTime.Now.Date)
+                if (item.bsd_startdate?.Date < DateTime.Now.Date && item.bsd_enddate?.Date > DateTime.Now.Date)
                 {
                     this.Promotions.Add(item);
                 }

@@ -167,7 +167,8 @@ namespace PhuLongCRM.ViewModels
                     if (item.typemask == 1) // from call
                     {
                         // hiển thị thông tin là employee khi ở dưới app
-                        PhoneCall.call_from = UserLogged.User; //item.user_name;
+                        if (!string.IsNullOrWhiteSpace(UserLogged.ContactName))
+                            PhoneCall.call_from = UserLogged.ContactName;
                     }
                     else if (item.typemask == 2) // to call
                     {

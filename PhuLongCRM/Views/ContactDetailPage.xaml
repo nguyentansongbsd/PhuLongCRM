@@ -337,7 +337,12 @@
                                                         <StackLayout.GestureRecognizers>
                                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiuChoItem_Tapped" CommandParameter="{Binding opportunityid}"/>
                                                         </StackLayout.GestureRecognizers>
-                                                        <Label Text="{Binding name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}"/>
+                                                        <Grid ColumnDefinitions="Auto,*">
+                                                            <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="4" BorderColor="Transparent" Padding="5" BackgroundColor="{Binding statuscode_color}">
+                                                                <Label Text="{Binding statuscode_format}" TextColor="White" FontSize="13" FontAttributes="Bold"/>
+                                                            </telerikPrimitives:RadBorder>
+                                                            <Label Grid.Column="1" Text="{Binding name}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" VerticalOptions="Center"/>
+                                                        </Grid>
                                                         <Label FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
                                                                 <FormattedString>

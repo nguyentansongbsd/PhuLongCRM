@@ -126,7 +126,7 @@ namespace PhuLongCRM.Views
             }
             if (viewModel.IsEventAllDay == true)
             {
-                viewModel.TaskFormModel.scheduledstart = new DateTime(viewModel.TaskFormModel.scheduledstart.Value.Year, viewModel.TaskFormModel.scheduledstart.Value.Month, viewModel.TaskFormModel.scheduledstart.Value.Day, 8, 0, 0); ;
+                viewModel.TaskFormModel.scheduledstart = new DateTime(viewModel.TaskFormModel.scheduledstart.Value.Year, viewModel.TaskFormModel.scheduledstart.Value.Month, viewModel.TaskFormModel.scheduledstart.Value.Day, 7, 0, 0); ;
                 viewModel.TaskFormModel.scheduledend = viewModel.TaskFormModel.scheduledstart.Value.AddDays(1);
             }
         }

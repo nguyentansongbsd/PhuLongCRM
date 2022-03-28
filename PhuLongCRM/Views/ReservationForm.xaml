@@ -188,7 +188,7 @@
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildItem_CheckedChanged"/>
                                             <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                                                <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="{Binding Source={x:Static lang:Language.het_han},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="{Binding Source={x:Static lang:Language.khong_ap_dung},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
                                             </StackLayout>
