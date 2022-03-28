@@ -93,6 +93,9 @@ namespace PhuLongCRM.Views
                     icon_createon.Text = "\uf882";
                     label_createon.Text = Language.ngay_tao_z_a;
                 }
+                label_createon.TextColor = Color.FromHex("1399D5");
+                label_rating.TextColor = Color.FromHex("444444");
+                label_status.TextColor = Color.FromHex("444444");
             }
             else if (viewModel.KeySort == "2")
             {
@@ -107,6 +110,9 @@ namespace PhuLongCRM.Views
                     icon_rating.Text = "\uf882";
                     label_rating.Text = Language.danh_gia_z_a;
                 }
+                label_rating.TextColor = Color.FromHex("1399D5");
+                label_createon.TextColor = Color.FromHex("444444");
+                label_status.TextColor = Color.FromHex("444444");
             }
             else if (viewModel.KeySort == "3")
             {
@@ -121,6 +127,9 @@ namespace PhuLongCRM.Views
                     icon_status.Text = "\uf882";
                     label_status.Text = Language.tinh_trang_z_a;
                 }
+                label_status.TextColor = Color.FromHex("1399D5");
+                label_rating.TextColor = Color.FromHex("444444");
+                label_createon.TextColor = Color.FromHex("444444");
             }
             await viewModel.LoadOnRefreshCommandAsync();
             SortView.IsVisible = false;

@@ -159,6 +159,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='customerid' />
                                 <attribute name='createdon' />
                                 <attribute name='bsd_queuingexpired' />
+                                <attribute name='statuscode' />
                                 <attribute name='opportunityid' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>

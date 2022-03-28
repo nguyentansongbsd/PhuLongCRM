@@ -45,7 +45,7 @@ namespace PhuLongCRM.Models
         public decimal bsd_areavariance { get; set; } // Biên độ diện tích cho phép
         public string bsd_areavariance_format { get => StringFormatHelper.FormatCurrency(bsd_areavariance); }
         public decimal bsd_constructionarea { get; set; } // diện tích xây dựng
-        public string bsd_constructionarea_format { get => StringFormatHelper.FormatCurrency(bsd_constructionarea); }
+        public string bsd_constructionarea_format { get => StringFormatHelper.FormatPercent(bsd_constructionarea); }
         public decimal bsd_netsaleablearea { get; set; } // diện tích sử dụng 
         public string bsd_netsaleablearea_format { get => StringFormatHelper.FormatCurrency(bsd_netsaleablearea); }
 
@@ -58,11 +58,11 @@ namespace PhuLongCRM.Models
         public decimal bsd_landvalue { get; set; } // giá trị đất
         public string bsd_landvalue_format { get => StringFormatHelper.FormatCurrency(bsd_landvalue); }
         public decimal bsd_maintenancefeespercent { get; set; } // phần trăm phí bảo trì
-        public string bsd_maintenancefeespercent_format { get => StringFormatHelper.FormatCurrency(bsd_maintenancefeespercent); }
+        public string bsd_maintenancefeespercent_format { get => StringFormatHelper.FormatPercent(bsd_maintenancefeespercent); }
         public decimal bsd_maintenancefees { get; set; } // tiền phí bảo trị
         public string bsd_maintenancefees_format { get => StringFormatHelper.FormatCurrency(bsd_maintenancefees); }
         public decimal bsd_taxpercent { get; set; } // phằn trăm thuế
-        public string bsd_taxpercent_format { get => StringFormatHelper.FormatCurrency(bsd_taxpercent); }
+        public string bsd_taxpercent_format { get => StringFormatHelper.FormatPercent(bsd_taxpercent); }
         public decimal bsd_vat { get; set; } // tiền tuế
         public string bsd_vat_format { get => StringFormatHelper.FormatCurrency(bsd_vat); }
         public decimal bsd_totalprice { get; set; } // tiền tuế
@@ -78,7 +78,7 @@ namespace PhuLongCRM.Models
         public decimal bsd_managementamountmonth { get; set; }// đơn giá tính phí quản lý (tháng/m2)
         public string bsd_managementamountmonth_format { get => StringFormatHelper.FormatCurrency(bsd_managementamountmonth); }
         public decimal bsd_handovercondition { get; set; } // Điều kiện bàn giao %
-        public string bsd_handovercondition_format { get => StringFormatHelper.FormatCurrency(bsd_handovercondition); }
+        public string bsd_handovercondition_format { get => StringFormatHelper.FormatPercent(bsd_handovercondition); }
         public Guid event_id { get; set; }
         public bool is_event { get { if (event_id != Guid.Empty) return true; else return false; } }
     }

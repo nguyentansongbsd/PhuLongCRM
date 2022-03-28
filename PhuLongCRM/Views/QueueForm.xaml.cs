@@ -183,7 +183,10 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Hide();
                 btnSave.Text = Language.tao_giu_cho;
-                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                if (!string.IsNullOrWhiteSpace(viewModel.Error_update_queue))
+                    ToastMessageHelper.ShortMessage(viewModel.Error_update_queue);
+                else
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
             }
         }
 

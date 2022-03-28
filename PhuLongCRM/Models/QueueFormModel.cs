@@ -111,9 +111,7 @@ namespace PhuLongCRM.Models
 
         public string bsd_expired_format { get { return BoolToStringData.GetStringByBool(bsd_expired); } }
 
-        public string statuscode_format { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString()).Name; } }
-
-        //private int _statuscode;
-        //public int statuscode { get => _statuscode; set { _statuscode = value; OnPropertyChanged(nameof(statuscode)); } }
+        public string statuscode_format { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString())?.Name; } }
+        public string statuscode_color { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString())?.BackGroundColor; } }
     }
 }

@@ -61,11 +61,11 @@ namespace PhuLongCRM.Models
         public int bsd_unitstatus { get; set; } // tình trạng sản phẩm
         public string bsd_unitstatus_format { get => StatusCodeUnit.GetStatusCodeById(bsd_unitstatus.ToString()).Name; }
         public decimal bsd_constructionarea { get; set; } // diện tích xây dựng
-        public string bsd_constructionarea_format { get => StringFormatHelper.FormatCurrency(bsd_constructionarea); }
+        public string bsd_constructionarea_format { get => StringFormatHelper.FormatPercent(bsd_constructionarea); }
         public decimal bsd_netusablearea { get; set; } // diện tích sử dụng
-        public string bsd_netusablearea_format { get => StringFormatHelper.FormatCurrency(bsd_netusablearea); }
+        public string bsd_netusablearea_format { get => StringFormatHelper.FormatPercent(bsd_netusablearea); }
         public decimal bsd_actualarea { get; set; } // diện tích thực
-        public string bsd_actualarea_format { get => StringFormatHelper.FormatCurrency(bsd_actualarea); }
+        public string bsd_actualarea_format { get => StringFormatHelper.FormatPercent(bsd_actualarea); }
         // thông tin chi tiết
         public Guid project_id { get; set; } // id dự án
         public string project_name { get; set; } // tên dự án
