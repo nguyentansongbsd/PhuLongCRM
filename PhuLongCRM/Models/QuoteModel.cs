@@ -13,11 +13,11 @@ namespace PhuLongCRM.Models
         public Guid paymentscheme_id { get; set; }
         public string paymentscheme_name { get; set; }
         public decimal bsd_constructionarea { get; set; }
-        public string bsd_constructionarea_format { get => StringFormatHelper.FormatCurrency(bsd_constructionarea); }
+        public string bsd_constructionarea_format { get => StringFormatHelper.FormatPercent(bsd_constructionarea); }
         public decimal bsd_netusablearea { get; set; }
-        public string bsd_netusablearea_format { get => StringFormatHelper.FormatCurrency(bsd_netusablearea); }
+        public string bsd_netusablearea_format { get => StringFormatHelper.FormatPercent(bsd_netusablearea); }
         public decimal bsd_actualarea { get; set; }
-        public string bsd_actualarea_format { get => StringFormatHelper.FormatCurrency(bsd_actualarea); }
+        public string bsd_actualarea_format { get => StringFormatHelper.FormatPercent(bsd_actualarea); }
         public string bsd_unitstatus { get; set; }
 
         public Guid discountlist_id { get; set; }

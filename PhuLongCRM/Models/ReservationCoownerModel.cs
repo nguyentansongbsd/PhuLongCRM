@@ -11,5 +11,7 @@ namespace PhuLongCRM.Models
         public string account_name { get; set; }
         public string contact_name { get; set; }
         public string customer { get; set; }
+        public string bsd_relationship { get; set; }
+        public string relationship_format { get { return bsd_relationship != string.Empty ? RelationshipCoOwnerData.GetRelationshipById(bsd_relationship)?.Label : null; } }
     }
 }
