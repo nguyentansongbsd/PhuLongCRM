@@ -311,6 +311,14 @@ namespace PhuLongCRM.ViewModels
 
                     data["regardingobjectid_account_appointment@odata.bind"] = "/accounts(" + CustomerMapping.Val + ")";
                 }
+                else if (CustomerMapping.Title == CodeLead)
+                {
+                    item_required["partyid_lead@odata.bind"] = "/leads(" + CustomerMapping.Val + ")";
+                    item_required["participationtypemask"] = 5;
+                    arrayMeeting.Add(item_required);
+
+                    data["regardingobjectid_lead_appointment@odata.bind"] = "/leads(" + CustomerMapping.Val + ")";
+                }
             }
             if (Required != null)
             {
