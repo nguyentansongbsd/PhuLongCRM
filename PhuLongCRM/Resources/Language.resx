@@ -2610,4 +2610,64 @@
   <data name="dieu_kien_ban_giao_khong_phu_hop_voi_unit_type" xml:space="preserve">
     <value>Điều kiện bàn giao đã chọn không phù hợp với Loại sản phẩm đang thực hiện giao dịch. Vui lòng kiểm tra lại thông tin hoặc chọn điều kiện bàn giao khác.</value>
   </data>
+  <data name="danh_gia_a_z" xml:space="preserve">
+    <value>Đánh giá (↓)</value>
+  </data>
+  <data name="danh_gia_z_a" xml:space="preserve">
+    <value>Đánh giá (↑)</value>
+  </data>
+  <data name="ngay_tao_a_z" xml:space="preserve">
+    <value>Ngày tạo (↓)</value>
+  </data>
+  <data name="ngay_tao_z_a" xml:space="preserve">
+    <value>Ngày tạo (↑)</value>
+  </data>
+  <data name="tinh_trang_a_z" xml:space="preserve">
+    <value>Tình trạng (↓)</value>
+  </data>
+  <data name="tinh_trang_z_a" xml:space="preserve">
+    <value>Tình trạng (↑)</value>
+  </data>
+  <data name="queues_unit" xml:space="preserve">
+    <value>Giữ chỗ/ Unit</value>
+  </data>
+  <data name="queue_unit_saleman_day" xml:space="preserve">
+    <value>Giữ chỗ/ Unit/ Nhân viên/ Ngày</value>
+  </data>
+  <data name="quy_trinh_ban_title" xml:space="preserve">
+    <value>Quy Trình Bán</value>
+  </data>
+  <data name="thoi_gian_giu_cho_dai_han" xml:space="preserve">
+    <value>Thời gian giữ chỗ dài hạn</value>
+  </data>
+  <data name="thoi_gian_giu_cho_ngan_han" xml:space="preserve">
+    <value>Thời gian giữ chỗ ngắn hạn</value>
+  </data>
+  <data name="thong_tin_chung_title" xml:space="preserve">
+    <value>Thông Tin Chung</value>
+  </data>
+  <data name="units_salesman_day" xml:space="preserve">
+    <value>Units/ Nhân viên/ Ngày</value>
+  </data>
+  <data name="chiet_khau_dac_biet_title" xml:space="preserve">
+    <value>Chiết Khấu Đặc Biệt</value>
+  </data>
+  <data name="dieu_kien_ban_giao_title" xml:space="preserve">
+    <value>Điều Kiện Bàn Giao</value>
+  </data>
+  <data name="gia_tri" xml:space="preserve">
+    <value>Giá trị</value>
+  </data>
+  <data name="khuyen_mai_title" xml:space="preserve">
+    <value>Khuyến Mãi</value>
+  </data>
+  <data name="phan_tram_giam" xml:space="preserve">
+    <value>Phần trăm giảm</value>
+  </data>
+  <data name="phuong_thuc" xml:space="preserve">
+    <value>Phương thức</value>
+  </data>
+  <data name="theo_loai_unit" xml:space="preserve">
+    <value>Theo loại Unit</value>
+  </data>
 </root>

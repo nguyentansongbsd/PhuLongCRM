@@ -21,7 +21,23 @@ namespace PhuLongCRM.Models
             {
                 if (activitytypecode == "appointment")
                 {
-                    return null;
+                    // return null;
+                    if (this.contact_bsd_fullname != null)
+                    {
+                        return this.contact_bsd_fullname;
+                    }
+                    else if (this.accounts_bsd_name != null)
+                    {
+                        return this.accounts_bsd_name;
+                    }
+                    else if (this.lead_fullname != null)
+                    {
+                        return this.lead_fullname;
+                    }
+                    else
+                    {
+                        return " ";
+                    }
                 }
 
                     if (activitytypecode == "phonecall")

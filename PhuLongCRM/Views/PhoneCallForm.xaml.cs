@@ -47,7 +47,7 @@ namespace PhuLongCRM.Views
             DatePickerEnd.DefaultDisplay = DateTime.Now;
             // kiểm tra page trước là page nào
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
-            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
+            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage" || page_before == "LeadDetailPage")
             {
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
@@ -61,6 +61,14 @@ namespace PhuLongCRM.Views
                 {
                     viewModel.CallTo = AccountDetailPage.FromCustomer;
                     viewModel.Customer = AccountDetailPage.FromCustomer;
+                    Lookup_Customer.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
+                    Lookup_CallTo_SelectedItemChange(null, null);
+                }
+                else if (page_before == "LeadDetailPage" && LeadDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(LeadDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CallTo = LeadDetailPage.FromCustomer;
+                    viewModel.Customer = LeadDetailPage.FromCustomer;
                     Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
@@ -142,11 +150,12 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
-            if (viewModel.Customer != null && viewModel.Customer.Val == viewModel.CallTo.Val)
-            {
-                ToastMessageHelper.ShortMessage(Language.nguoi_nhan_cuoc_goi_phai_khac_nguoi_lien_quan);
-                return;
-            }
+
+            //if (viewModel.Customer != null && viewModel.Customer.Val == viewModel.CallTo.Val)
+            //{
+            //    ToastMessageHelper.ShortMessage(Language.nguoi_nhan_cuoc_goi_phai_khac_nguoi_lien_quan);
+            //    return;
+            //}
 
             LoadingHelper.Show();
 
@@ -161,6 +170,7 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
+                    if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     ToastMessageHelper.ShortMessage(Language.da_them_cuoc_goi);                   
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
@@ -182,6 +192,7 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
+                    if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();

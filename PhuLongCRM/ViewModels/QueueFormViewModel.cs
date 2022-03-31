@@ -55,7 +55,7 @@ namespace PhuLongCRM.ViewModels
 
         private bool _isUpdate;
         public bool isUpdate { get => _isUpdate; set { _isUpdate = value; OnPropertyChanged(nameof(isUpdate)); } }
-
+        public string Error_update_queue { get; set; }
         public Guid UnitId { get; set; }
 
         public QueueFormViewModel()
@@ -699,6 +699,7 @@ namespace PhuLongCRM.ViewModels
                 }
                 else
                 {
+                    Error_update_queue = result.ErrorResponse?.error.message;
                     return false;
                 }
             }

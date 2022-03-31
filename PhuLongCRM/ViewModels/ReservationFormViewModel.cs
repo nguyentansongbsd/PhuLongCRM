@@ -162,6 +162,7 @@ namespace PhuLongCRM.ViewModels
 
             ListCollaborator = new List<LookUp>();
             ListCustomerReferral = new List<LookUp>();
+            SalesAgents = new List<OptionSet>();
         }
 
         public async Task CheckTaoLichThanhToan()
@@ -901,7 +902,7 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var item in result.value)
             {
-                if (item.bsd_startdate.Date < DateTime.Now.Date && item.bsd_enddate.Date > DateTime.Now.Date)
+                if (item.bsd_startdate?.Date < DateTime.Now.Date && item.bsd_enddate?.Date > DateTime.Now.Date)
                 {
                     this.Promotions.Add(item);
                 }
@@ -972,18 +973,18 @@ namespace PhuLongCRM.ViewModels
                             </fetch>";
             var result_phasesLaunch = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhasesLaunch>>("bsd_phaseslaunchs", fetchphaseslaunch);
 
-            string develop = $@"<link-entity name='bsd_project' from='bsd_investor' to='accountid' link-type='inner' alias='aj'>
+            string develop = $@"<link-entity name='bsd_project' from='bsd_investor' to='accountid' link-type='inner'>
                                                 <filter type='and'>
-                                                    <condition attribute='bsd_projectid' operator='eq' value='{PhasesLaunchId}' />
+                                                    <condition attribute='bsd_projectid' operator='eq' value='{Quote.project_id}' />
                                                 </filter>
                                             </link-entity>";
-            string all = $@"<link-entity name='bsd_projectshare' from='bsd_salesagent' to='accountid' link-type='inner' alias='az'>
+            string all = $@"<link-entity name='bsd_projectshare' from='bsd_salesagent' to='accountid' link-type='inner'>
                                                 <filter type='and'>
                                                     <condition attribute='statuscode' operator='eq' value='1' />
-                                                    <condition attribute='bsd_project' operator='eq' value='{PhasesLaunchId}' />
+                                                    <condition attribute='bsd_project' operator='eq' value='{Quote.project_id}' />
                                                 </filter>
                                             </link-entity>";
-            string sale_phasesLaunch = $@"<link-entity name='bsd_phaseslaunch' from='bsd_salesagentcompany' to='accountid' link-type='inner' alias='ak'>
+            string sale_phasesLaunch = $@"<link-entity name='bsd_phaseslaunch' from='bsd_salesagentcompany' to='accountid' link-type='inner'>
                                                         <filter type='and'>
                                                             <condition attribute='bsd_phaseslaunchid' operator='eq' value='{PhasesLaunchId}' />
                                                          </filter>
@@ -1372,6 +1373,8 @@ namespace PhuLongCRM.ViewModels
             data["bsd_projectid@odata.bind"] = $"/bsd_projects({this.Quote._bsd_projectcode_value})";
             data["bsd_taxcode@odata.bind"] = $"/bsd_taxcodes({this.TaxCode.bsd_taxcodeid})";
             data["bsd_unitno@odata.bind"] = $"/products({this.Quote.unit_id})";
+
+            data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)";
 
             if (this.Quote._bsd_phaseslaunchid_value != Guid.Empty)//this.UnitInfor._bsd_phaseslaunchid_value != Guid.Empty
             {

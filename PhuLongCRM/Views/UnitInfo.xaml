@@ -74,6 +74,7 @@
             <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />
             <converter:InformationLabelConverter x:Key="InformationLabelConverter"/>
             <converter:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
+            <converter:HidePriceOnDirectSaleConverter x:Key="HidePriceOnDirectSaleConverter"/>
             <DataTemplate x:Key="Media">
                 <Grid>
                     <ffimageloading:CachedImage Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="300"/>
@@ -141,7 +142,7 @@
                                             </StackLayout.GestureRecognizers>
                                         </StackLayout>
                                     </Grid>
-                                    <Label Text="{Binding UnitInfo.price,Converter={StaticResource DecimalToVndConverter}}" FontSize="16" FontAttributes="Bold" TextColor="#790311"/>
+                                    <Label Text="{Binding UnitInfo.price_format,StringFormat='{0} đ'}" FontSize="16" FontAttributes="Bold" TextColor="#790311" IsVisible="{Binding UnitInfo.bsd_phaseslaunch_id, Converter={StaticResource HidePriceOnDirectSaleConverter}}"/>
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>
@@ -156,7 +157,7 @@
                                             <FormattedString>
                                                 <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
                                                 <Span Text=" "/>
-                                                <Span Text="{Binding UnitInfo.bsd_constructionarea_format}" FontAttributes="Bold"/>
+                                                <Span Text="{Binding UnitInfo.bsd_netsaleablearea_format}" FontAttributes="Bold"/>
                                                 <Span Text=" "/>
                                                 <Span Text="{x:Static lang:Language.sqm}"/>
                                             </FormattedString>

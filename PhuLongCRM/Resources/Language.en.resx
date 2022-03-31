@@ -334,7 +334,7 @@
     <value>Information Provided</value>
   </data>
   <data name="da_huy" xml:space="preserve">
-    <value>Cancelled.</value>
+    <value>Cancelled</value>
   </data>
   <data name="hop_nhat" xml:space="preserve">
     <value>Merged</value>
@@ -409,7 +409,7 @@
     <value>Active</value>
   </data>
   <data name="hoan_thanh" xml:space="preserve">
-    <value>Completed.</value>
+    <value>Completed</value>
   </data>
   <data name="vo_hieu_luc" xml:space="preserve">
     <value>Inactive</value>
@@ -646,7 +646,7 @@
     <value>Customer code</value>
   </data>
   <data name="loai" xml:space="preserve">
-    <value>Localization</value>
+    <value>Type</value>
   </data>
   <data name="nhom" xml:space="preserve">
     <value>Business type</value>
@@ -691,7 +691,7 @@
     <value>VAT Registration Number</value>
   </data>
   <data name="dia_chi_lien_lac" xml:space="preserve">
-    <value>Address</value>
+    <value>Contact address</value>
   </data>
   <data name="dia_chi_tru_so_chinh" xml:space="preserve">
     <value>Permanent address</value>
@@ -703,7 +703,7 @@
     <value>Mobile phone</value>
   </data>
   <data name="dia_chi_thuong_tru" xml:space="preserve">
-    <value>Address</value>
+    <value>Permanent address</value>
   </data>
   <data name="khong_co_du_lieu" xml:space="preserve">
     <value>No data</value>
@@ -997,7 +997,7 @@
     <value>Policy</value>
   </data>
   <data name="tong_hop" xml:space="preserve">
-    <value>Synthetic</value>
+    <value>Sumarry</value>
   </data>
   <data name="chi_tiet" xml:space="preserve">
     <value>Detail</value>
@@ -1639,7 +1639,7 @@
     <value>Successed.</value>
   </data>
   <data name="khong_lien_lac_duoc" xml:space="preserve">
-    <value>Lost</value>
+    <value>Cannot Contact</value>
   </data>
   <data name="khong_quan_tam" xml:space="preserve">
     <value>No Longer Interested</value>
@@ -1699,7 +1699,7 @@
     <value>Create Customer</value>
   </data>
   <data name="dia_chi_cong_ty" xml:space="preserve">
-    <value>Company  address</value>
+    <value>Company address</value>
   </data>
   <data name="chon_dia_chi_cong_ty" xml:space="preserve">
     <value>Choose company address</value>
@@ -1819,7 +1819,7 @@
     <value>Enter location</value>
   </data>
   <data name="chon_thoi_gian_bat_dau" xml:space="preserve">
-    <value>Choose dtart time</value>
+    <value>Choose start time</value>
   </data>
   <data name="chon_thoi_gian_ket_thuc" xml:space="preserve">
     <value>Choose end time</value>
@@ -2056,7 +2056,7 @@
     <value>Cancel Queue</value>
   </data>
   <data name="tao_bang_tinh_gia" xml:space="preserve">
-    <value>Create Quation reservation</value>
+    <value>Create Quation</value>
   </data>
   <data name="khong_co_so_dien_thoai" xml:space="preserve">
     <value>No phone number</value>
@@ -2609,5 +2609,65 @@
   </data>
   <data name="dieu_kien_ban_giao_khong_phu_hop_voi_unit_type" xml:space="preserve">
     <value>Handover Condition is not suitable with Unit type. Please check again or choose another handover condition.</value>
+  </data>
+  <data name="danh_gia_a_z" xml:space="preserve">
+    <value>Rating (↓)</value>
+  </data>
+  <data name="danh_gia_z_a" xml:space="preserve">
+    <value>Rating (↑)</value>
+  </data>
+  <data name="ngay_tao_a_z" xml:space="preserve">
+    <value>Create on (↓)</value>
+  </data>
+  <data name="ngay_tao_z_a" xml:space="preserve">
+    <value>Create on (↑)</value>
+  </data>
+  <data name="tinh_trang_a_z" xml:space="preserve">
+    <value>Status (↓)</value>
+  </data>
+  <data name="tinh_trang_z_a" xml:space="preserve">
+    <value>Status (↑)</value>
+  </data>
+  <data name="queues_unit" xml:space="preserve">
+    <value>Queues/ Unit</value>
+  </data>
+  <data name="queue_unit_saleman_day" xml:space="preserve">
+    <value>Queue/ Unit/ Saleman/ Day</value>
+  </data>
+  <data name="quy_trinh_ban_title" xml:space="preserve">
+    <value>Sales Process</value>
+  </data>
+  <data name="thoi_gian_giu_cho_dai_han" xml:space="preserve">
+    <value>Long queuing time (days)</value>
+  </data>
+  <data name="thoi_gian_giu_cho_ngan_han" xml:space="preserve">
+    <value>Short queuing time (hours)</value>
+  </data>
+  <data name="thong_tin_chung_title" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="units_salesman_day" xml:space="preserve">
+    <value>Units/ Salesman/ Day</value>
+  </data>
+  <data name="chiet_khau_dac_biet_title" xml:space="preserve">
+    <value>Special Discount</value>
+  </data>
+  <data name="dieu_kien_ban_giao_title" xml:space="preserve">
+    <value>Handover Condition</value>
+  </data>
+  <data name="gia_tri" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="khuyen_mai_title" xml:space="preserve">
+    <value>Promotions</value>
+  </data>
+  <data name="phan_tram_giam" xml:space="preserve">
+    <value>Percent discount</value>
+  </data>
+  <data name="phuong_thuc" xml:space="preserve">
+    <value>Method</value>
+  </data>
+  <data name="theo_loai_unit" xml:space="preserve">
+    <value>By unit type</value>
   </data>
 </root>

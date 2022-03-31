@@ -126,6 +126,11 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_bookingfee' />
                                 <attribute name='bsd_depositamount' />
                                 <attribute name='statuscode' />
+                                <attribute name='bsd_queuesperunit' />
+                                <attribute name='bsd_unitspersalesman' />
+                                <attribute name='bsd_queueunitdaysaleman' />
+                                <attribute name='bsd_longqueuingtime' />
+                                <attribute name='bsd_shortqueingtime' />
                                 <order attribute='bsd_name' descending='false' />
                                 <filter type='and'>
                                   <condition attribute='bsd_projectid' operator='eq' uitype='bsd_project' value='" + ProjectId.ToString() + @"' />
@@ -222,7 +227,7 @@ namespace PhuLongCRM.ViewModels
                 ChuanBi = data.Where(x => x.statuscode == 1).Count();
                 SanSang = data.Where(x => x.statuscode == 100000000).Count();
                 GiuCho = data.Where(x => x.statuscode == 100000004).Count();
-                SoDatCoc = DatCoc = data.Where(x => x.statuscode == 100000006).Count();
+                DatCoc = data.Where(x => x.statuscode == 100000006).Count();
                 DongYChuyenCoc = data.Where(x => x.statuscode == 100000005).Count();
                 DaDuTienCoc = data.Where(x => x.statuscode == 100000003).Count();
                 ThanhToanDot1 = data.Where(x => x.statuscode == 100000001).Count();
@@ -274,13 +279,15 @@ namespace PhuLongCRM.ViewModels
 
             SoGiuCho = result.value.Count();
         }
-
         public async Task LoadThongKeHopDong()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='salesorder'>
                                 <attribute name='name' />
                                 <order attribute='createdon' descending='true' />
+                                <filter type='and'>
+                                    <condition attribute='statuscode' operator='ne' value='100000006' />
+                                </filter>
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ad'>
                                   <filter type='and'>
                                     <condition attribute='bsd_projectid' operator='eq' value ='{ProjectId}'/>
@@ -293,7 +300,6 @@ namespace PhuLongCRM.ViewModels
 
             SoHopDong = result.value.Count();
         }
-
         public async Task LoadThongKeBangTinhGia()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -301,7 +307,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='name' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                  <condition attribute='statuscode' operator='ne' value='100000001' />
+                                  <condition attribute='statuscode' operator='eq' value='100000007' />
                                 </filter>
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectid' link-type='inner' alias='ae'>
                                   <filter type='and'>
@@ -314,7 +320,33 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
             SoBangTinhGia = result.value.Count();
         }
-
+        public async Task LoadThongKeDatCoc()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='quote'>
+                                <attribute name='name' />
+                                <order attribute='createdon' descending='true' />
+                                <filter type='and'>
+                                  <condition attribute='statuscode' operator='in'>
+                                    <value>100000000</value>
+                                    <value>861450001</value>
+                                    <value>861450002</value>
+                                    <value>100000006</value>
+                                    <value>3</value>
+                                    <value>861450000</value>
+                                  </condition>
+                                </filter>
+                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectid' link-type='inner' alias='ae'>
+                                  <filter type='and'>
+                                    <condition attribute='bsd_projectid' operator='eq' value='{ProjectId}'/>
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QuoteModel>>("quotes", fetchXml);
+            if (result == null || result.value.Any() == false) return;
+            SoDatCoc = result.value.Count();
+        }
         public async Task LoadGiuCho()
         {
             IsLoadedGiuCho = true;
@@ -363,7 +395,6 @@ namespace PhuLongCRM.ViewModels
                 ListGiuCho.Add(item);
             }
         }
-
         public async Task LoadAllCollection()
         {
             // khoa lai vi phu long chua co hinh anh va video
@@ -416,7 +447,6 @@ namespace PhuLongCRM.ViewModels
             //    }
             //}
         }
-
         public async Task LoadDataEvent()
         {
             if (ProjectId == Guid.Empty) return;

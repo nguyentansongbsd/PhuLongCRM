@@ -107,7 +107,7 @@ namespace PhuLongCRM.Views
                     viewModel.LoadDiscountsExChange()
                     ) ;
                 await viewModel.LoadHandoverCondition(ReservationId);
-                SutUpSpecialDiscount();
+               // SutUpSpecialDiscount();
             }
         }
 
@@ -654,6 +654,70 @@ namespace PhuLongCRM.Views
             {
                 stackLayoutSpecialDiscount.IsVisible = false;
             }
+        }
+        private void CloseContentPromotion_Tapped(object sender, EventArgs e)
+        {
+            ContentPromotion.IsVisible = false;
+        }
+
+        private async void stackLayoutPromotions_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as OptionSet;
+            if (item != null && item.Val != string.Empty)
+            {
+                if (viewModel.PromotionItem == null)
+                {
+                    await viewModel.LoadPromotionItem(item.Val);
+                }
+                else if (viewModel.PromotionItem.bsd_promotionid.ToString() != item.Val)
+                {
+                    await viewModel.LoadPromotionItem(item.Val);
+                }
+            }
+            if (viewModel.PromotionItem != null)
+                ContentPromotion.IsVisible = true;
+            LoadingHelper.Hide();
+        }
+        private void ContentHandoverCondition_Tapped(object sender, EventArgs e)
+        {
+            ContentHandoverCondition.IsVisible = false;
+        }
+
+        private async void HandoverConditionItem_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            if (viewModel.HandoverConditionItem == null && viewModel.Reservation.handovercondition_id != Guid.Empty)
+            {
+                await viewModel.LoadHandoverConditionItem(viewModel.Reservation.handovercondition_id);
+            }
+            if (viewModel.HandoverConditionItem != null)
+                ContentHandoverCondition.IsVisible = true;
+            LoadingHelper.Hide();
+        }
+        private void ContentSpecialDiscount_Tapped(object sender, EventArgs e)
+        {
+            ContentSpecialDiscount.IsVisible = false;
+        }
+
+        private async void stackLayoutSpecialDiscount_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as OptionSet;
+            if (item != null && item.Val != string.Empty)
+            {
+                if (viewModel.DiscountSpecialItem == null)
+                {
+                    await viewModel.LoadDiscountSpecialItem(item.Val);
+                }
+                else if (viewModel.DiscountSpecialItem.bsd_discountspecialid.ToString() != item.Val)
+                {
+                    await viewModel.LoadDiscountSpecialItem(item.Val);
+                }
+            }
+            if (viewModel.DiscountSpecialItem != null)
+                ContentSpecialDiscount.IsVisible = true;
+            LoadingHelper.Hide();
         }
     }
 }

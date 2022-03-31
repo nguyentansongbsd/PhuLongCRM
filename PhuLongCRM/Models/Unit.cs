@@ -21,7 +21,9 @@ namespace PhuLongCRM.Models
         public string queses_statuscode { get; set; }
         public int NumQueses { get; set; }
         public decimal bsd_constructionarea { get; set; }
-        public string bsd_constructionarea_format { get => StringFormatHelper.FormatCurrency(bsd_constructionarea); }
+        public string bsd_constructionarea_format { get => StringFormatHelper.FormatPercent(bsd_constructionarea); }
+        public decimal bsd_netsaleablearea { get; set; }
+        public string bsd_netsaleablearea_format { get => StringFormatHelper.FormatPercent(bsd_netsaleablearea); }
         public string bsd_unittype_name { get; set; }
         public string bsd_direction { get; set; }
         public string bsd_viewphulong { get; set; }

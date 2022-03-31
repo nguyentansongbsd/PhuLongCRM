@@ -79,6 +79,12 @@ namespace PhuLongCRM.ViewModels
         public DateTime second_Month { get; set; }
         public DateTime third_Month { get; set; }
         public DateTime fourth_Month { get; set; }
+        // tổng tiền hoa đồng format
+        private string _totalCommission;
+        public string TotalCommission { get => _totalCommission; set { _totalCommission = value; OnPropertyChanged(nameof(TotalCommission)); } }
+        // tổng tiền thanh toán format
+        private string _totalPaidCommission;
+        public string TotalPaidCommission { get => _totalPaidCommission; set { _totalPaidCommission = value; OnPropertyChanged(nameof(TotalPaidCommission)); } }
 
         public ICommand RefreshCommand => new Command(async () =>
         {
@@ -193,6 +199,10 @@ namespace PhuLongCRM.ViewModels
             this.CommissionTransactionChart2.Add(chartSecondMonth2);
             this.CommissionTransactionChart2.Add(chartThirdMonth2);
             this.CommissionTransactionChart2.Add(chartFourthMonth2);
+
+            //format sau khi tính tổng
+            TotalCommission = StringFormatHelper.FormatCurrency(TotalCommissionAMonth);
+            TotalPaidCommission = StringFormatHelper.FormatCurrency(TotalPaidCommissionAMonth);
         }
         private double TotalAMonth(decimal total)
         {
@@ -396,8 +406,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
                                       <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
@@ -449,8 +460,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />   
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
                                       <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
@@ -537,8 +549,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
                                       <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>

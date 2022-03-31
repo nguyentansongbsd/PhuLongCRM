@@ -14,6 +14,7 @@ namespace PhuLongCRM.Models
 
         private string _description;
         public string description { get => _description; set { _description = value; OnPropertyChanged(nameof(description)); } }
+
         public DateTime? _scheduledstart;
         public DateTime? scheduledstart
         {
@@ -182,6 +183,6 @@ namespace PhuLongCRM.Models
         public string required { get => _required; set { _required = value; OnPropertyChanged(nameof(required)); } }
 
         private string _optional;
-        public string optional { get => _optional; set { _optional = value; OnPropertyChanged(nameof(optional)); } }
+        public string optional { get => _optional; set { _optional = value; OnPropertyChanged(nameof(optional)); } }    
     }
 }
