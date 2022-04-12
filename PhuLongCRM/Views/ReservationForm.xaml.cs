@@ -118,6 +118,7 @@ namespace PhuLongCRM.Views
                 await Task.WhenAll(
                     viewModel.LoadDiscountChilds(),
                     viewModel.LoadDiscountChildsPaymentSchemes(id.ToString()),
+                    viewModel.LoadDiscountSpecialPaymentSchemes(),
                     viewModel.LoadDiscountChildsInternel(),
                     viewModel.LoadDiscountChildsExchange(),
                     viewModel.LoadHandoverCondition(),

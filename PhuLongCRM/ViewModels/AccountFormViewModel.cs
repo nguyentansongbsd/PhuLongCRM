@@ -122,6 +122,8 @@ namespace PhuLongCRM.ViewModels
         private AddressModel _address2;
         public AddressModel Address2 { get => _address2; set { _address2 = value; OnPropertyChanged(nameof(Address2)); } }
 
+        private AddressModel _addressCopy;
+        public AddressModel AddressCopy { get => _addressCopy; set {_addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
         public AccountFormViewModel()
         {
             singleAccount = new AccountFormModel();

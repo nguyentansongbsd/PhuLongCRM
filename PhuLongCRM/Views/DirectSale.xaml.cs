@@ -174,6 +174,19 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                 }
             };
-        }       
+        }
+
+        private void Clear_Clicked(object sender, EventArgs e)
+        {
+            viewModel.Project = null;
+           viewModel.PhasesLaunch = null;
+            viewModel.IsEvent = false;
+            viewModel.UnitCode = null;
+            viewModel.SelectedDirections = null;
+            viewModel.SelectedViews = null;
+            viewModel.SelectedUnitStatus = null;
+            viewModel.NetArea = null;
+            viewModel.Price = null;
+        }
     }
 }

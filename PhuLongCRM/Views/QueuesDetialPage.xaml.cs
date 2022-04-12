@@ -15,9 +15,12 @@ namespace PhuLongCRM.Views
 {
     public partial class QueuesDetialPage : ContentPage
     {
+        public static string CodeQueue = "5";
         public Action<bool> OnCompleted;
         public static bool? NeedToRefreshBTG = null;
         public static bool? NeedToRefreshDC = null;
+        public static bool? NeedToRefreshActivity = null;
+        public static OptionSet FromQueue = null;
         public QueuesDetialPageViewModel viewModel;
         public QueuesDetialPage(Guid queueId)
         {
@@ -25,6 +28,7 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new QueuesDetialPageViewModel();
             viewModel.QueueId = queueId;
             NeedToRefreshBTG = false;
+            NeedToRefreshActivity = false;
             NeedToRefreshDC = false;
             Init();
         }
@@ -40,9 +44,7 @@ namespace PhuLongCRM.Views
 
             if (viewModel.Queue != null)
             {
-                viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();// co dat co thi an nut btg
-                if (viewModel.QueueProject == Language.co)
-                    viewModel.ShowBtnBangTinhGia = false;
+                FromQueue = new OptionSet { Val = viewModel.Queue.opportunityid.ToString(), Label = viewModel.Queue.name, Title = CodeQueue };
                 SetButtons();
                 OnCompleted?.Invoke(true);
             }
@@ -75,41 +77,39 @@ namespace PhuLongCRM.Views
                 NeedToRefreshDC = false;
                 LoadingHelper.Hide();
             }
+            if (NeedToRefreshActivity == true)
+            {
+                LoadingHelper.Show();
+                viewModel.PageCase = 1;
+                viewModel.list_thongtincase.Clear();
+                await viewModel.LoadCaseForQueue();
+                ActivityPopup.Refresh();
+                NeedToRefreshActivity = false;
+                LoadingHelper.Hide();
+            }
         }
 
-        private void SetButtons()
+        private async void SetButtons()
         {
-            //viewModel.ShowButtons = (viewModel.ShowBtnHuyGiuCho == false && viewModel.ShowBtnBangTinhGia == false) ? false : true;
-            //gridButtons.ColumnDefinitions.Clear();
-            //var btns = gridButtons.Children.Where(x => x.IsVisible == true).ToList();
-            //for (int i = 0; i < btns.Count(); i++)
-            //{
-            //    gridButtons.ColumnDefinitions.Add(new ColumnDefinition()
-            //    {
-            //        Width = new GridLength(1, GridUnitType.Star),
-            //    });
-            //    Grid.SetColumn(btns[i], i);
-            //}
-            gridButtons = new Grid();
-            gridButtons.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
-            if (viewModel.ShowBtnHuyGiuCho == true && viewModel.ShowBtnBangTinhGia == true)
+            if (viewModel.Queue != null)
             {
-                gridButtons.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
-                Grid.SetColumn(btnHuyGiuCho, 0);
-                Grid.SetColumn(btnBangTinhGia, 1);
-            }
-            else if (viewModel.ShowBtnHuyGiuCho == true && viewModel.ShowBtnBangTinhGia == false)
-            {
-                Grid.SetColumn(btnHuyGiuCho, 0);
-                Grid.SetColumn(btnBangTinhGia, 0);
-            }
-            else if (viewModel.ShowBtnHuyGiuCho == false && viewModel.ShowBtnBangTinhGia == true)
-            {
-                Grid.SetColumn(btnBangTinhGia, 0);
-                Grid.SetColumn(btnHuyGiuCho, 0);
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+
+                viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();
+                if (viewModel.QueueProject == Language.co)
+                    viewModel.ShowBtnBangTinhGia = false;
+
+                if(viewModel.ShowButtons)
+                {
+                    if(viewModel.ShowBtnBangTinhGia)
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.bang_tinh_gia_btn, "FontAwesomeRegular", "\uf0fe", null, TaoBTG));
+                    if(viewModel.ShowBtnHuyGiuCho)
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_giu_cho, "FontAwesomeSolid", "\uf05e", null, HuyGC));
+                }
             }
         }
-
         private void GoToProject_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -128,14 +128,12 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void GoToPhaseLaunch_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
 
             LoadingHelper.Hide();
         }
-
         private void GoToUnit_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -154,7 +152,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void GoToAcount_Tapped(System.Object sender, System.EventArgs e)
         {
             LoadingHelper.Show();
@@ -173,7 +170,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void GoToCollaborator_Tapped(System.Object sender, System.EventArgs e)
         {
             if (viewModel.Queue != null && viewModel.Queue.collaborator_id != Guid.Empty)
@@ -195,7 +191,6 @@ namespace PhuLongCRM.Views
                 };
             }
         }
-
         private void GoToCustomerReferral_Tapped(System.Object sender, System.EventArgs e)
         {
             if (viewModel.Queue != null && viewModel.Queue.customerreferral_id != Guid.Empty)
@@ -217,7 +212,6 @@ namespace PhuLongCRM.Views
                 };
             }
         }
-
         private async void NhanTin_Tapped(System.Object sender, System.EventArgs e)
         {
             LoadingHelper.Show();
@@ -242,7 +236,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(ex.Message);
             }
         }
-
         private async void GoiDien_Tapped(System.Object sender, System.EventArgs e)
         {
             LoadingHelper.Show();
@@ -265,7 +258,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(ex.Message);
             }
         }
-
         private async void HuyGiuCho_Clicked(object sender, EventArgs e)
         {
             bool confirm = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_huy_giu_cho_nay_khong, Language.dong_y, Language.huy);
@@ -305,11 +297,10 @@ namespace PhuLongCRM.Views
             else
                 ToastMessageHelper.ShortMessage(res.ErrorResponse?.error.message);
         }
-
         private void CreateQuotation_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            OptionSet Queue = new OptionSet(viewModel.Queue.opportunityid, viewModel.Queue.name);
+            OptionSet Queue = new OptionSet(viewModel.Queue.opportunityid.ToString(), viewModel.Queue.name);
             OptionSet SaleAgentCompany = new OptionSet(viewModel.Queue._bsd_salesagentcompany_value.ToString(), viewModel.Queue.salesagentcompany_name);
             string NameOfStaffAgent = viewModel.Queue.bsd_nameofstaffagent;
 
@@ -333,7 +324,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void ThongTin_Tapped(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(radBorderThongTin, "Active");
@@ -343,7 +333,6 @@ namespace PhuLongCRM.Views
             stThongTin.IsVisible = true;
             stGiaoDich.IsVisible = false;
         }
-
         private async void GiaoDich_Tapped(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(radBorderThongTin, "InActive");
@@ -361,12 +350,12 @@ namespace PhuLongCRM.Views
                 await Task.WhenAll(
                     viewModel.LoadDanhSachBangTinhGia(),
                     viewModel.LoadDanhSachDatCoc(),
-                    viewModel.LoadDanhSachHopDong()
+                    viewModel.LoadDanhSachHopDong(),
+                    viewModel.LoadCaseForQueue()
                     );
             }
             LoadingHelper.Hide();
         }
-
         private async void ShowMoreBangTinhGia_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -374,7 +363,6 @@ namespace PhuLongCRM.Views
             await viewModel.LoadDanhSachBangTinhGia();
             LoadingHelper.Hide();
         }
-
         private async void ShowMoreDatCoc_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -382,7 +370,6 @@ namespace PhuLongCRM.Views
             await viewModel.LoadDanhSachDatCoc();
             LoadingHelper.Hide();
         }
-
         private async void ShowMoreHopDong_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -390,7 +377,6 @@ namespace PhuLongCRM.Views
             await viewModel.LoadDanhSachHopDong();
             LoadingHelper.Hide();
         }
-
         private void ItemQuatation_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -410,7 +396,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void ItemReservation_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -430,7 +415,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void ItemHopDong_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -450,7 +434,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void Customer_Tapped(object sender, EventArgs e)
         {
             if(viewModel.Customer!= null)
@@ -504,7 +487,6 @@ namespace PhuLongCRM.Views
         //    CrmApiResponse res = await CrmHelper.PostData(url_action, content);
         //    Message(res.IsSuccess);            
         //}
-
         private async void Message(bool IsSuccess)
         {
             if (IsSuccess)
@@ -530,6 +512,118 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
             }
+        }
+        private async void ShowMoreCase_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            viewModel.PageCase++;
+            await viewModel.LoadCaseForQueue();
+            LoadingHelper.Hide();
+        }
+        private async void NewMeet(object sender, EventArgs e)
+        {
+            if (viewModel.Queue != null)
+            {
+                LoadingHelper.Show();
+                await Navigation.PushAsync(new MeetingForm());
+                LoadingHelper.Hide();
+            }
+        }
+        private async void NewPhoneCall(object sender, EventArgs e)
+        {
+            if (viewModel.Queue != null)
+            {
+                LoadingHelper.Show();
+                await Navigation.PushAsync(new PhoneCallForm());
+                LoadingHelper.Hide();
+            }
+        }
+        private async void NewTask(object sender, EventArgs e)
+        {
+            if (viewModel.Queue != null)
+            {
+                LoadingHelper.Show();
+                await Navigation.PushAsync(new TaskForm());
+                LoadingHelper.Hide();
+            }
+        }
+        private void CaseItem_Tapped(object sender, EventArgs e)
+        {
+            var item = (HoatDongListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item != null && item.activityid != Guid.Empty)
+            {
+                ActivityPopup.ShowActivityPopup(item.activityid, item.activitytypecode);
+            }
+        }
+        private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
+        {
+            OnAppearing();
+        }
+        private async void HuyGC(object sender, EventArgs e)
+        {
+            bool confirm = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_huy_giu_cho_nay_khong, Language.dong_y, Language.huy);
+            if (confirm == false) return;
+
+            string url_action = "";
+            if (viewModel.Queue != null)
+            {
+                if (viewModel.Queue.statuscode == 100000002)
+                {
+                    url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
+                }
+                else if (viewModel.Queue.statuscode == 100000000)
+                {
+                    if (await viewModel.CheckQuote())
+                    {
+                        Message(false);
+                        return;
+                    }
+                    else
+                        url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
+                }
+                else if (viewModel.Queue.statuscode == 100000008)
+                {
+                    url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Opportunity_HuyGiuChoCoTien";
+                }
+            }
+
+            LoadingHelper.Show();
+            var data = new
+            {
+                input = "Yes"
+            };
+            CrmApiResponse res = await CrmHelper.PostData(url_action, data);
+            if (res.IsSuccess == true)
+                Message(res.IsSuccess);
+            else
+                ToastMessageHelper.ShortMessage(res.ErrorResponse?.error.message);
+        }
+        private void TaoBTG(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            OptionSet Queue = new OptionSet(viewModel.Queue.opportunityid.ToString(), viewModel.Queue.name);
+            OptionSet SaleAgentCompany = new OptionSet(viewModel.Queue._bsd_salesagentcompany_value.ToString(), viewModel.Queue.salesagentcompany_name);
+            string NameOfStaffAgent = viewModel.Queue.bsd_nameofstaffagent;
+
+            ReservationForm reservationForm = new ReservationForm(viewModel.Queue._bsd_units_value, Queue, SaleAgentCompany, NameOfStaffAgent, viewModel.Customer);
+            reservationForm.CheckReservation = async (isSuccess) =>
+            {
+                if (isSuccess == 0)
+                {
+                    await Navigation.PushAsync(reservationForm);
+                    LoadingHelper.Hide();
+                }
+                else if (isSuccess == 1)
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.san_pham_khong_the_tao_bang_tinh_gia);
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
+                }
+            };
         }
     }
 }

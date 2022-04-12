@@ -1024,6 +1024,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chọn loại khách hàng.
+        /// </summary>
+        internal static string chon_localization {
+            get {
+                return ResourceManager.GetString("chon_localization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chọn ngày.
         /// </summary>
         internal static string chon_ngay {
@@ -1479,6 +1488,15 @@ namespace PhuLongCRM.Resources {
         internal static string co {
             get {
                 return ResourceManager.GetString("co", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Có VBTT/HĐĐC.
+        /// </summary>
+        internal static string co_vbtt_hddc {
+            get {
+                return ResourceManager.GetString("co_vbtt_hddc", resourceCulture);
             }
         }
         
@@ -2041,6 +2059,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đã thanh toán phí giữ chỗ.
+        /// </summary>
+        internal static string da_thanh_toan_phi_giu_cho {
+            get {
+                return ResourceManager.GetString("da_thanh_toan_phi_giu_cho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đã thêm cuộc gọi..
         /// </summary>
         internal static string da_them_cuoc_goi {
@@ -2100,6 +2127,15 @@ namespace PhuLongCRM.Resources {
         internal static string da_xoa_nguoi_uy_quyen_duoc_chon {
             get {
                 return ResourceManager.GetString("da_xoa_nguoi_uy_quyen_duoc_chon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đặc biệt.
+        /// </summary>
+        internal static string dac_biet {
+            get {
+                return ResourceManager.GetString("dac_biet", resourceCulture);
             }
         }
         
@@ -2271,6 +2307,15 @@ namespace PhuLongCRM.Resources {
         internal static string danh_sach_bang_tinh_gia {
             get {
                 return ResourceManager.GetString("danh_sach_bang_tinh_gia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách chiết khấu.
+        /// </summary>
+        internal static string danh_sach_chiet_khau {
+            get {
+                return ResourceManager.GetString("danh_sach_chiet_khau", resourceCulture);
             }
         }
         
@@ -2491,6 +2536,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Điều kiện áp dụng.
+        /// </summary>
+        internal static string dieu_kien_ap_dung {
+            get {
+                return ResourceManager.GetString("dieu_kien_ap_dung", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Điều kiện bàn giao.
         /// </summary>
         internal static string dieu_kien_ban_giao {
@@ -2514,6 +2568,15 @@ namespace PhuLongCRM.Resources {
         internal static string dieu_kien_ban_giao_title {
             get {
                 return ResourceManager.GetString("dieu_kien_ban_giao_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount No..
+        /// </summary>
+        internal static string discount_no {
+            get {
+                return ResourceManager.GetString("discount_no", resourceCulture);
             }
         }
         
@@ -3859,6 +3922,303 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kế toán.
+        /// </summary>
+        internal static string lead_1_industry {
+            get {
+                return ResourceManager.GetString("lead_1_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhà phân phối, Người điều vận và Nhà chế biến.
+        /// </summary>
+        internal static string lead_10_industry {
+            get {
+                return ResourceManager.GetString("lead_10_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Văn phòng và Phòng khám Bác sĩ.
+        /// </summary>
+        internal static string lead_11_industry {
+            get {
+                return ResourceManager.GetString("lead_11_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sản xuất lâu bền.
+        /// </summary>
+        internal static string lead_12_industry {
+            get {
+                return ResourceManager.GetString("lead_12_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Địa điểm ăn Uống.
+        /// </summary>
+        internal static string lead_13_industry {
+            get {
+                return ResourceManager.GetString("lead_13_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bán lẻ dịch vụ giải trí.
+        /// </summary>
+        internal static string lead_14_industry {
+            get {
+                return ResourceManager.GetString("lead_14_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thuê và cho thuê thiết bị.
+        /// </summary>
+        internal static string lead_15_industry {
+            get {
+                return ResourceManager.GetString("lead_15_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tài chính.
+        /// </summary>
+        internal static string lead_16_industry {
+            get {
+                return ResourceManager.GetString("lead_16_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chế biến thực phẩm và thuốc lá.
+        /// </summary>
+        internal static string lead_17_industry {
+            get {
+                return ResourceManager.GetString("lead_17_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xử lý dựa vào nhiều vốn chuyển về.
+        /// </summary>
+        internal static string lead_18_industry {
+            get {
+                return ResourceManager.GetString("lead_18_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sửa chữa và bảo dưỡng chuyển đến.
+        /// </summary>
+        internal static string lead_19_industry {
+            get {
+                return ResourceManager.GetString("lead_19_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nông nghiệp và trích xuất tài nguyên thiên nhiên Không dầu.
+        /// </summary>
+        internal static string lead_2_industry {
+            get {
+                return ResourceManager.GetString("lead_2_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bảo hiểm.
+        /// </summary>
+        internal static string lead_20_industry {
+            get {
+                return ResourceManager.GetString("lead_20_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dịch vụ pháp lý.
+        /// </summary>
+        internal static string lead_21_industry {
+            get {
+                return ResourceManager.GetString("lead_21_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bán lẻ hàng hóa không lâu bền.
+        /// </summary>
+        internal static string lead_22_industry {
+            get {
+                return ResourceManager.GetString("lead_22_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dịch vụ tiêu dùng nên ngoài.
+        /// </summary>
+        internal static string lead_23_industry {
+            get {
+                return ResourceManager.GetString("lead_23_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trích xuất và phân phối hóa dầu.
+        /// </summary>
+        internal static string lead_24_industry {
+            get {
+                return ResourceManager.GetString("lead_24_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bán lẻ dịch vụ.
+        /// </summary>
+        internal static string lead_25_industry {
+            get {
+                return ResourceManager.GetString("lead_25_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi nhánh SIG.
+        /// </summary>
+        internal static string lead_26_industry {
+            get {
+                return ResourceManager.GetString("lead_26_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dịch vụ xã hội.
+        /// </summary>
+        internal static string lead_27_industry {
+            get {
+                return ResourceManager.GetString("lead_27_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhà thầu giao dịch bên ngoài đặc biệt.
+        /// </summary>
+        internal static string lead_28_industry {
+            get {
+                return ResourceManager.GetString("lead_28_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bất động sản đặc biệt.
+        /// </summary>
+        internal static string lead_29_industry {
+            get {
+                return ResourceManager.GetString("lead_29_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In và Xuất bản Truyền thông.
+        /// </summary>
+        internal static string lead_3_industry {
+            get {
+                return ResourceManager.GetString("lead_3_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vận tải.
+        /// </summary>
+        internal static string lead_30_industry {
+            get {
+                return ResourceManager.GetString("lead_30_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tạo và phân phối tiện ích.
+        /// </summary>
+        internal static string lead_31_industry {
+            get {
+                return ResourceManager.GetString("lead_31_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bán lẻ phương tiện.
+        /// </summary>
+        internal static string lead_32_industry {
+            get {
+                return ResourceManager.GetString("lead_32_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bán buôn.
+        /// </summary>
+        internal static string lead_33_industry {
+            get {
+                return ResourceManager.GetString("lead_33_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhà môi giới.
+        /// </summary>
+        internal static string lead_4_industry {
+            get {
+                return ResourceManager.GetString("lead_4_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bán lẻ Dịch vụ Cấp nước trong Tòa nhà.
+        /// </summary>
+        internal static string lead_5_industry {
+            get {
+                return ResourceManager.GetString("lead_5_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dịch vụ Kinh doanh.
+        /// </summary>
+        internal static string lead_6_industry {
+            get {
+                return ResourceManager.GetString("lead_6_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tư vấn.
+        /// </summary>
+        internal static string lead_7_industry {
+            get {
+                return ResourceManager.GetString("lead_7_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dịch vụ Tiêu dùng.
+        /// </summary>
+        internal static string lead_8_industry {
+            get {
+                return ResourceManager.GetString("lead_8_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quản lý Thiết kế, Chỉ đạo và Quảng cáo.
+        /// </summary>
+        internal static string lead_9_industry {
+            get {
+                return ResourceManager.GetString("lead_9_industry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lịch.
         /// </summary>
         internal static string lich {
@@ -3927,6 +4287,15 @@ namespace PhuLongCRM.Resources {
         internal static string loai_actitivty {
             get {
                 return ResourceManager.GetString("loai_actitivty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loại chiết khấu.
+        /// </summary>
+        internal static string loai_chiet_khau {
+            get {
+                return ResourceManager.GetString("loai_chiet_khau", resourceCulture);
             }
         }
         
@@ -5398,7 +5767,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Phí giữ chỗ đã thanh toán..
+        ///   Looks up a localized string similar to Phí giữ chỗ đã thanh toán.
         /// </summary>
         internal static string phi_giu_cho_da_thanh_toan {
             get {
@@ -5556,6 +5925,15 @@ namespace PhuLongCRM.Resources {
         internal static string quy_trinh_ban_title {
             get {
                 return ResourceManager.GetString("quy_trinh_ban_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Độ ưu tiên.
+        /// </summary>
+        internal static string quyen_uu_tien {
+            get {
+                return ResourceManager.GetString("quyen_uu_tien", resourceCulture);
             }
         }
         

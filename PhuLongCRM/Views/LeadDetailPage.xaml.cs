@@ -142,8 +142,8 @@ namespace PhuLongCRM.Views
             if (!await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid, viewModel.singleLead.leadid.ToString()))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
-                LoadingHelper.Hide();
-                return;
+                //LoadingHelper.Hide();
+                //return;
             }
             CrmApiResponse apiResponse = await viewModel.Qualify(viewModel.singleLead.leadid);
             if (apiResponse.IsSuccess == true)
@@ -232,7 +232,6 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Hide();
         }
-
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
             string phone = viewModel.singleLead.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84",""); // thêm sdt ở đây
@@ -254,7 +253,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
             string phone = viewModel.singleLead.mobilephone.Replace(" ","").Replace("+84-","").Replace("84", ""); // thêm sdt ở đây

@@ -104,7 +104,7 @@
                                     <Label Text="{Binding singleAccount.bsd_customercode}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                    <Label Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                    <Label Text="{Binding Source={x:Static lang:Language.loai_khach_hang},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <Label Text="{Binding Localization.Label}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
@@ -523,7 +523,7 @@
                                                 </Grid>
                                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
                                                     <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_hieu_luc},StringFormat='{0}:'}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                    <Label Text="{Binding bsd_effectivedateto,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                                    <Label Text="{Binding bsd_effectivedateto,StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                 </Grid>
                                             </Grid>
                                         </ViewCell>

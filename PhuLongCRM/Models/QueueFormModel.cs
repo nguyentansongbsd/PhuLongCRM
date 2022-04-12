@@ -78,7 +78,9 @@ namespace PhuLongCRM.Models
 
         private decimal _bsd_queuingfee;
         public decimal bsd_queuingfee { get => _bsd_queuingfee; set { _bsd_queuingfee = value; OnPropertyChanged(nameof(bsd_queuingfee)); } } // phí đặt chỗ
-        public string bsd_queuingfee_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfee); }
+        
+        private string _bsd_queuingfee_format;
+        public string bsd_queuingfee_format { get => _bsd_queuingfee_format; set { _bsd_queuingfee_format = value; OnPropertyChanged(nameof(bsd_queuingfee_format)); } }
         public decimal landvalue { get; set; } // giá trị đất
 
         public decimal unit_price { get; set; } // Giá bán , tên gốc price => đổi lại tránh trùng khi trong form update khi lấy thông tin về.
