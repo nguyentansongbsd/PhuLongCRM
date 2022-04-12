@@ -2,6 +2,7 @@
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace PhuLongCRM.ViewModels
         public string CodeContac = LookUpMultipleTabs.CodeContac;
 
         public string CodeLead = LookUpMultipleTabs.CodeLead;
+
+        public string CodeQueue = QueuesDetialPage.CodeQueue;
 
         public bool _showButton;
         public bool ShowButton { get => _showButton; set { _showButton = value; OnPropertyChanged(nameof(ShowButton)); } }
@@ -73,6 +76,10 @@ namespace PhuLongCRM.ViewModels
                 else if (Customer.Title == CodeAccount)
                 {
                     data["regardingobjectid_account_phonecall@odata.bind"] = "/accounts(" + Customer.Val + ")";
+                }
+                else if (Customer.Title == CodeQueue)
+                {
+                    data["regardingobjectid_opportunity_phonecall@odata.bind"] = "/opportunities(" + Customer.Val + ")";
                 }
             }
             else

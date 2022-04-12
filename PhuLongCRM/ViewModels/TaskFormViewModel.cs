@@ -2,6 +2,7 @@
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace PhuLongCRM.ViewModels
         public string Codelead = LookUpMultipleTabs.CodeLead;
         public string CodeContact = LookUpMultipleTabs.CodeContac;
         public string CodeAccount = LookUpMultipleTabs.CodeAccount;
+        public string CodeQueue = QueuesDetialPage.CodeQueue;
 
         public TaskFormViewModel()
         {
@@ -158,6 +160,10 @@ namespace PhuLongCRM.ViewModels
             else if(Customer != null && Customer.Title == CodeAccount)
             {
                 data["regardingobjectid_account_task@odata.bind"] = "/accounts(" + Customer.Val+ ")";
+            }
+            else if (Customer != null && Customer.Title == CodeQueue)
+            {
+                data["regardingobjectid_opportunity_task@odata.bind"] = "/opportunities(" + Customer.Val + ")";
             }
 
             if (UserLogged.Id != Guid.Empty)
