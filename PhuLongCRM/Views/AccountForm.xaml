@@ -19,7 +19,7 @@
                     </telerikPrimitives:RadBorder>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.loai_khach_hang}" Margin="0,10,0,0"/>
-                    <controls:LookUp x:Name="Lookup_Localization" Placeholder="{x:Static lang:Language.chon_loai_khach_hang}" ItemsSource="{Binding LocalizationOptionList}" SelectedItem="{Binding Localization}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label"/>
+                    <controls:LookUp x:Name="Lookup_Localization" Placeholder="{x:Static lang:Language.chon_localization}" ItemsSource="{Binding LocalizationOptionList}" SelectedItem="{Binding Localization}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.nhom_khach_hang}" FontSize="15" Margin="0,10,0,0"/>
                     <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
@@ -73,10 +73,10 @@
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_ma_so_thue}" Text="{Binding singleAccount.bsd_vatregistrationnumber}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_lien_lac}" Margin="0,10,0,0"/>
-                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}"/>
+                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_tru_so_chinh}" Margin="0,10,0,0"/>
-                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_tru_so_chinh}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal}"/>
+                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_tru_so_chinh}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}"/>
                     <!--<controls:MainEntry Text="{Binding singleAccount.bsd_permanentaddress1}" Placeholder="Chọn địa chỉ trụ sở chính" FontSize="15"/>-->
                 </StackLayout>
             </ScrollView>
@@ -85,6 +85,7 @@
             </Grid>
             
             <controls:CenterModal x:Name="CenterModal" />
+            <controls:CenterModal x:Name="CenterModal2" />
             <controls:BottomModal x:Name="BottomModal"/>
         </AbsoluteLayout>
     </ContentPage.Content>

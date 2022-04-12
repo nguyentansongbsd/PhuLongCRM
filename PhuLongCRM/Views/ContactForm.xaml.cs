@@ -175,6 +175,7 @@ namespace PhuLongCRM.Views
             if (!await viewModel.CheckCMND(viewModel.singleContact.bsd_identitycardnumber, id))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_da_duoc_su_dung);
+                viewModel.checkCMND = viewModel.singleContact.bsd_identitycardnumber;
                // return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && !await viewModel.CheckPassport(viewModel.singleContact.bsd_passport, id))
@@ -214,6 +215,7 @@ namespace PhuLongCRM.Views
                 if (created != new Guid())
                 {
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
+                    if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (QueueForm.NeedToRefresh.HasValue) QueueForm.NeedToRefresh = true;
 
                     await Navigation.PopAsync();
@@ -236,6 +238,7 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                     if (ContactDetailPage.NeedToRefresh.HasValue) ContactDetailPage.NeedToRefresh = true;
+                    if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
 
                     //if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
                     //{

@@ -720,6 +720,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_amount'/>
                                     <attribute name='bsd_percentage'/>
                                     <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
                                     <attribute name='bsd_startdate'/>
                                     <attribute name='bsd_enddate'/>
                                     <attribute name='createdon'/>
@@ -771,6 +772,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_amount'/>
                                     <attribute name='bsd_percentage'/>
                                     <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
                                     <attribute name='bsd_startdate'/>
                                     <attribute name='bsd_enddate'/>
                                     <attribute name='createdon'/>
@@ -806,6 +808,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_amount'/>
                                     <attribute name='bsd_percentage'/>
                                     <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
                                     <attribute name='bsd_startdate'/>
                                     <attribute name='bsd_enddate'/>
                                     <attribute name='createdon'/>
@@ -858,6 +861,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_amount'/>
                                     <attribute name='bsd_percentage'/>
                                     <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
                                     <attribute name='bsd_startdate'/>
                                     <attribute name='bsd_enddate'/>
                                     <attribute name='createdon'/>
@@ -875,6 +879,39 @@ namespace PhuLongCRM.ViewModels
             foreach (var item in result.value)
             {
                 item.IsEnableChecked = (this.IsHadLichThanhToan == true || item.IsExpired == true || item.IsNotApplied == true) ? false : true;
+                this.DiscountChildsPaymentSchemes.Add(item);
+            }
+        }
+
+        public async Task LoadDiscountSpecialPaymentSchemes()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <attribute name='bsd_amount'/>
+                                    <attribute name='bsd_percentage'/>
+                                    <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
+                                    <attribute name='bsd_startdate'/>
+                                    <attribute name='bsd_enddate'/>
+                                    <attribute name='createdon'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <link-entity name='bsd_bsd_discountonpaymentscheme_bsd_discoun' from='bsd_discountid' to='bsd_discountid' intersect='true'>
+                                      <filter type='and'>,
+                                          <condition attribute='bsd_special' operator='eq' value='1'/>,
+                                          <condition attribute='bsd_discounttype' operator='eq' value='100000000'/>,
+                                          <condition attribute='statuscode' operator='eq' value='100000000'/>,
+                                          <condition attribute='bsd_phaseslaunch' operator='eq' value='{PhasesLaunchId}'/>,
+                                        </filter>,
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
+            if (result == null || result.value.Any() == false) return;
+
+            foreach (var item in result.value)
+            {
                 this.DiscountChildsPaymentSchemes.Add(item);
             }
         }

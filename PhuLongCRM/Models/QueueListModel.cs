@@ -61,5 +61,9 @@ namespace PhuLongCRM.Models
         {
             this.unit_name = " ";
         }
+        public decimal bsd_queuingfeepaid { get; set; }
+        public string bsd_queuingfeepaid_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfeepaid); }
+        public bool bsd_collectedqueuingfee { get; set; }
+        public string bsd_collectedqueuingfee_format { get { return BoolToStringData.GetStringByBool(bsd_collectedqueuingfee); } }
     }
 }

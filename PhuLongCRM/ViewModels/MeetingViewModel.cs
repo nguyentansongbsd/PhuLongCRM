@@ -2,6 +2,7 @@ using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -56,6 +57,7 @@ namespace PhuLongCRM.ViewModels
         public string CodeContac = LookUpMultipleTabs.CodeContac;
 
         public string CodeLead = LookUpMultipleTabs.CodeLead;
+        public string CodeQueue = QueuesDetialPage.CodeQueue;
 
         public bool _showButton;
         public bool ShowButton { get => _showButton; set { _showButton = value; OnPropertyChanged(nameof(ShowButton)); } }
@@ -318,6 +320,14 @@ namespace PhuLongCRM.ViewModels
                     arrayMeeting.Add(item_required);
 
                     data["regardingobjectid_lead_appointment@odata.bind"] = "/leads(" + CustomerMapping.Val + ")";
+                }
+                else if (CustomerMapping.Title == CodeQueue)
+                {
+                    //item_required["partyid_lead@odata.bind"] = "/leads(" + CustomerMapping.Val + ")";
+                    //item_required["participationtypemask"] = 5;
+                    //arrayMeeting.Add(item_required);
+
+                    data["regardingobjectid_opportunity_appointment@odata.bind"] = "/opportunities(" + CustomerMapping.Val + ")";
                 }
             }
             if (Required != null)

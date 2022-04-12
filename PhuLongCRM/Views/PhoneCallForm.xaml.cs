@@ -47,7 +47,8 @@ namespace PhuLongCRM.Views
             DatePickerEnd.DefaultDisplay = DateTime.Now;
             // kiểm tra page trước là page nào
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
-            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage" || page_before == "LeadDetailPage")
+            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage" 
+                || page_before == "LeadDetailPage" || page_before == "QueuesDetialPage")
             {
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
@@ -72,6 +73,12 @@ namespace PhuLongCRM.Views
                     Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
+                }
+                else if (page_before == "QueuesDetialPage" && QueuesDetialPage.FromQueue != null && !string.IsNullOrWhiteSpace(QueuesDetialPage.FromQueue.Val))
+                {
+                    viewModel.Customer = QueuesDetialPage.FromQueue;
+                    Lookup_Customer.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
                 }
                 else
                 {
@@ -171,6 +178,7 @@ namespace PhuLongCRM.Views
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
                     if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+                    if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
                     ToastMessageHelper.ShortMessage(Language.da_them_cuoc_goi);                   
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
@@ -193,6 +201,7 @@ namespace PhuLongCRM.Views
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
                     if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+                    if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();

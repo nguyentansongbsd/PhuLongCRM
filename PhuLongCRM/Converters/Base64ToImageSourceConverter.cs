@@ -11,7 +11,7 @@ namespace PhuLongCRM.Converters
         ImageSource image;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!string.IsNullOrWhiteSpace(value.ToString()) && value is string)
+            if (value != null && !string.IsNullOrWhiteSpace(value.ToString()) && value is string)
             {
                 image = null;
                 byte[] bytes = System.Convert.FromBase64String(value.ToString());

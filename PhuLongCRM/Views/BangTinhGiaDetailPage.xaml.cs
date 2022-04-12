@@ -719,5 +719,22 @@ namespace PhuLongCRM.Views
                 ContentSpecialDiscount.IsVisible = true;
             LoadingHelper.Hide();
         }
+
+        private void CloseContentDiscount_Tapped(object sender, EventArgs e)
+        {
+            ContentDiscount.IsVisible = false;
+        }
+
+        private async void Discount_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            if (viewModel.Discount == null && viewModel.Reservation.bsd_discounttypeid != Guid.Empty)
+            {
+                await viewModel.LoadDiscountItem(viewModel.Reservation.bsd_discounttypeid);
+            }
+            if (viewModel.Discount != null)
+                ContentDiscount.IsVisible = true;
+            LoadingHelper.Hide();
+        }
     }
 }

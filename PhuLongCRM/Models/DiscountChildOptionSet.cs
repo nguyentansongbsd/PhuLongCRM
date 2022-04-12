@@ -8,9 +8,9 @@ namespace PhuLongCRM.Models
         {
             get
             {
-                if (new_type == "100000001")
+                if (bsd_method == 100000001)
                     return Label + $" - {StringFormatHelper.FormatCurrency(bsd_amount)} đ";
-                else if (new_type == "100000000")
+                else if (bsd_method == 100000000)
                     return Label + $" - {StringFormatHelper.FormatPercent(bsd_percentage)}%";
                 else
                     return null;
@@ -22,7 +22,7 @@ namespace PhuLongCRM.Models
         public DateTime? bsd_startdate { get; set; }
         public DateTime? bsd_enddate { get; set; }
         public DateTime createdon { get; set; }
-
+        public int bsd_method { get; set; }
         public bool IsEnableChecked { get; set; }
 
         private string _itemColor = "#444444";
@@ -44,7 +44,6 @@ namespace PhuLongCRM.Models
                 return false;
             }
         }
-
         public bool IsNotApplied
         {
             get

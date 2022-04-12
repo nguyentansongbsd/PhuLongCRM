@@ -382,6 +382,16 @@ namespace PhuLongCRM.Models
                     OnPropertyChanged(nameof(bsd_calculatedforsalesreport));
                 }
             }
-        }         
+        }     
+        public bool hide_contract
+        {
+            get
+            {
+                if (statuscode == 100000007)
+                    return false;
+                else
+                    return true;
+            }
+        }
     }
 }

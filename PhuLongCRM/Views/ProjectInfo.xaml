@@ -7,7 +7,7 @@
              xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
              xmlns:converter ="clr-namespace:PhuLongCRM.Converters"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:ffimagetransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              ios:Page.UseSafeArea="true"
              BackgroundColor="White"
              Title="{x:Static lang:Language.thong_tin_du_an}"
@@ -86,6 +86,7 @@
             </Style>
             <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />
             <converter:NullToHideConverter x:Key="nullToHideConverter"/>
+            <converter:Base64ToImageSourceConverter x:Key="Base64ToImagesource"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -130,31 +131,40 @@
                             </Grid>
                             <telerikPrimitives:RadBorder BorderColor="#808080" CornerRadius="10" BorderThickness="1" BackgroundColor="White" Grid.Row="1" >
                                 <StackLayout Margin="15" Spacing="10">
-                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
-                                        <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="5" BackgroundColor="{Binding StatusCode.Background}" VerticalOptions="StartAndExpand">
-                                            <Label Text="{Binding StatusCode.Name}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
-                                        </telerikPrimitives:RadBorder>
-                                        <!--<Label Grid.Column="0" Text="{Binding StatusCode.Name}" BackgroundColor="{Binding StatusCode.Background}" Padding="4,2" Margin="0,2" FontSize="13" FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center"/>-->
-                                        <Label Grid.Column="1" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center">
-                                            <Label.Text>
-                                                <MultiBinding StringFormat="{}{0} - {1}">
-                                                    <Binding Path="Project.bsd_name" />
-                                                    <Binding Path="Project.bsd_projectcode" />
-                                                </MultiBinding>
-                                            </Label.Text>
-                                        </Label>
-                                        <StackLayout Grid.Column="2" IsVisible="{Binding IsHasEvent}" HorizontalOptions="End" Orientation="Horizontal">
-                                            <StackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OpenEvent_Tapped"/>
-                                            </StackLayout.GestureRecognizers>
-                                            <Label Text="{x:Static lang:Language.su_kien}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" TextColor="#FEC93D"/>
-                                            <Label Text="&#xf005;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="13" TextColor="#FEC93D"/>
+                                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
+                                        <controls:ExtendedFrame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Padding="5" CornerRadius="50" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,0,5,0">
+                                            <ffimageloading:CachedImage Source="{Binding Project.bsd_projectslogo, Converter={StaticResource Base64ToImagesource}}" LoadingPlaceholder="user.png" DownsampleWidth="500">
+                                                <ffimageloading:CachedImage.Transformations>
+                                                    <ffimagetransformations:CircleTransformation/>
+                                                </ffimageloading:CachedImage.Transformations>
+                                            </ffimageloading:CachedImage>
+                                        </controls:ExtendedFrame>
+                                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="1">
+                                            <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="5" BackgroundColor="{Binding StatusCode.Background}" VerticalOptions="StartAndExpand">
+                                                <Label Text="{Binding StatusCode.Name}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                            </telerikPrimitives:RadBorder>
+                                            <!--<Label Grid.Column="0" Text="{Binding StatusCode.Name}" BackgroundColor="{Binding StatusCode.Background}" Padding="4,2" Margin="0,2" FontSize="13" FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center"/>-->
+                                            <Label Grid.Column="1" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                        <Binding Path="Project.bsd_name" />
+                                                        <Binding Path="Project.bsd_projectcode" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                            <StackLayout Grid.Column="2" IsVisible="{Binding IsHasEvent}" HorizontalOptions="End" Orientation="Horizontal">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OpenEvent_Tapped"/>
+                                                </StackLayout.GestureRecognizers>
+                                                <Label Text="{x:Static lang:Language.su_kien}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" TextColor="#FEC93D"/>
+                                                <Label Text="&#xf005;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="13" TextColor="#FEC93D"/>
+                                            </StackLayout>
+                                        </Grid>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                                            <Label Text="{Binding ProjectType.Label}" FontSize="15" TextColor="#444444"/>
+                                            <Label Text="{Binding PropertyUsageType.Label,StringFormat='- {0}'}" FontSize="15" TextColor="#444444"/>
                                         </StackLayout>
                                     </Grid>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding ProjectType.Label}" FontSize="15" TextColor="#444444"/>
-                                        <Label Text="{Binding PropertyUsageType.Label,StringFormat='- {0}'}" FontSize="15" TextColor="#444444"/>
-                                    </StackLayout>
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>
@@ -317,6 +327,16 @@
                                         <Grid ColumnDefinitions="3*,7*" BackgroundColor="White" Padding="15">
                                             <Label Grid.Column="0" Text="{x:Static lang:Language.dia_chi}" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
                                             <Label Grid.Column="1" Text="{Binding Project.bsd_address}" TextColor="#333333" HorizontalTextAlignment="End" VerticalOptions="Center" FontSize="15" />
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="3*,7*" BackgroundColor="White" Padding="15">
+                                            <Label Grid.Column="0" Text="{x:Static lang:Language.giu_cho_du_an}" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Project.bsd_queueproject_format}" TextColor="#333333" HorizontalTextAlignment="End" VerticalOptions="Center" FontSize="15" />
+                                        </Grid>
+                                        
+                                        <Grid ColumnDefinitions="3*,7*" BackgroundColor="White" Padding="15">
+                                            <Label Grid.Column="0" Text="{x:Static lang:Language.co_vbtt_hddc}" FontSize="15" TextColor="#333333"  VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Project.bsd_printagreement_format}" TextColor="#333333" HorizontalTextAlignment="End" VerticalOptions="Center" FontSize="15" />
                                         </Grid>
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Padding="15">

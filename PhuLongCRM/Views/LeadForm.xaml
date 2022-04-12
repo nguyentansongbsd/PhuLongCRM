@@ -91,10 +91,10 @@
                                 <controls:MainEntry Text="{Binding singleLead.bsd_placeofissue}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_noi_cap}" Margin="0,0,0,5"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.dia_chi_lien_lac}"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference centerModal}"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference centerModal}" AddressCopy="{Binding AddressCopy}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.dia_chi_thuong_tru}"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference centerModal}"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference centerModal2}" AddressCopy="{Binding AddressCopy}"/>
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
                     </telerikPrimitives:RadExpander>
@@ -117,7 +117,7 @@
                                 <controls:MainEntry x:Name="websiteurl_text" Text="{Binding singleLead.websiteurl}" Placeholder="{x:Static lang:Language.nhap_website_cong_ty}" FontSize="15"/>
 
                                 <controls:FormLabel VerticalOptions="Center" HorizontalOptions="Start" Text="{x:Static lang:Language.dia_chi_cong_ty}" FontSize="15" />
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_cong_ty}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address3}" CenterModal="{Reference centerModal}"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_cong_ty}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address3}" CenterModal="{Reference centerModal3}" AddressCopy="{Binding AddressCopy}"/>
 
                                 <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.mo_ta}" FontSize="15"/>
                                 <controls:MainEditor x:Name="description_text" Text="{Binding singleLead.description}" Placeholder="{x:Static lang:Language.nhap_mo_ta}" FontSize="15" HeightRequest="100"/>
@@ -156,6 +156,8 @@
                 <Button x:Name="btn_save_lead" Text="{x:Static lang:Language.tao_khach_hang}" FontAttributes="Bold" Clicked="SaveLead_Clicked" Margin="10" Padding="10,5" HeightRequest="40" CornerRadius="10" BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White"/>
             </StackLayout>
             <controls:CenterModal x:Name="centerModal"/>
+            <controls:CenterModal x:Name="centerModal2"/>
+            <controls:CenterModal x:Name="centerModal3"/>
             <controls:BottomModal x:Name="BottomModal"/>
             <controls:BottomModal x:Name="LookUpModal"/>
         </AbsoluteLayout>

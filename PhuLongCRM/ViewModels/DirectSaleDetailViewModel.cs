@@ -119,7 +119,7 @@ namespace PhuLongCRM.ViewModels
                                           </link-entity>
                                         </link-entity>" : "";
 
-            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? $"<condition attribute='name' operator='like' value='%{Filter.Unit}%'/>" : null ;
+            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? $"<condition attribute='name' operator='like' value='%25" + Filter.Unit + "%25'/>" : null ;
 
             string Direction_Condition = string.Empty;
             if (!string.IsNullOrWhiteSpace(Filter.Direction))
@@ -322,6 +322,8 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='statuscode' />
                         <attribute name='bsd_project' />
                         <attribute name='opportunityid' />
+                        <attribute name='bsd_queuingfeepaid' />
+                        <attribute name='bsd_collectedqueuingfee' />
                         <attribute name='bsd_queuingexpired' />
                         <order attribute='statuscode' descending='false' />
                         <filter type='and'>
