@@ -5032,5 +5032,125 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("dieu_kien_ban_giao_khong_phu_hop_voi_unit_type", resourceCulture);
             }
         }
+        
+        internal static string danh_gia_a_z {
+            get {
+                return ResourceManager.GetString("danh_gia_a_z", resourceCulture);
+            }
+        }
+        
+        internal static string danh_gia_z_a {
+            get {
+                return ResourceManager.GetString("danh_gia_z_a", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_tao_a_z {
+            get {
+                return ResourceManager.GetString("ngay_tao_a_z", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_tao_z_a {
+            get {
+                return ResourceManager.GetString("ngay_tao_z_a", resourceCulture);
+            }
+        }
+        
+        internal static string tinh_trang_a_z {
+            get {
+                return ResourceManager.GetString("tinh_trang_a_z", resourceCulture);
+            }
+        }
+        
+        internal static string tinh_trang_z_a {
+            get {
+                return ResourceManager.GetString("tinh_trang_z_a", resourceCulture);
+            }
+        }
+        
+        internal static string queues_unit {
+            get {
+                return ResourceManager.GetString("queues_unit", resourceCulture);
+            }
+        }
+        
+        internal static string queue_unit_saleman_day {
+            get {
+                return ResourceManager.GetString("queue_unit_saleman_day", resourceCulture);
+            }
+        }
+        
+        internal static string quy_trinh_ban_title {
+            get {
+                return ResourceManager.GetString("quy_trinh_ban_title", resourceCulture);
+            }
+        }
+        
+        internal static string thoi_gian_giu_cho_dai_han {
+            get {
+                return ResourceManager.GetString("thoi_gian_giu_cho_dai_han", resourceCulture);
+            }
+        }
+        
+        internal static string thoi_gian_giu_cho_ngan_han {
+            get {
+                return ResourceManager.GetString("thoi_gian_giu_cho_ngan_han", resourceCulture);
+            }
+        }
+        
+        internal static string thong_tin_chung_title {
+            get {
+                return ResourceManager.GetString("thong_tin_chung_title", resourceCulture);
+            }
+        }
+        
+        internal static string units_salesman_day {
+            get {
+                return ResourceManager.GetString("units_salesman_day", resourceCulture);
+            }
+        }
+        
+        internal static string chiet_khau_dac_biet_title {
+            get {
+                return ResourceManager.GetString("chiet_khau_dac_biet_title", resourceCulture);
+            }
+        }
+        
+        internal static string dieu_kien_ban_giao_title {
+            get {
+                return ResourceManager.GetString("dieu_kien_ban_giao_title", resourceCulture);
+            }
+        }
+        
+        internal static string gia_tri {
+            get {
+                return ResourceManager.GetString("gia_tri", resourceCulture);
+            }
+        }
+        
+        internal static string khuyen_mai_title {
+            get {
+                return ResourceManager.GetString("khuyen_mai_title", resourceCulture);
+            }
+        }
+        
+        internal static string phan_tram_giam {
+            get {
+                return ResourceManager.GetString("phan_tram_giam", resourceCulture);
+            }
+        }
+        
+        internal static string phuong_thuc {
+            get {
+                return ResourceManager.GetString("phuong_thuc", resourceCulture);
+            }
+        }
+        
+        internal static string theo_loai_unit {
+            get {
+                return ResourceManager.GetString("theo_loai_unit", resourceCulture);
+            }
+        }
     }
 }
