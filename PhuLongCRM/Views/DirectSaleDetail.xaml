@@ -345,6 +345,14 @@
                                                             </FormattedString>
                                                         </Label.FormattedText>
                                                     </Label>
+                                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                                                        <Label Text="{Binding Source={x:Static lang:Language.phi_giu_cho_da_thanh_toan},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                        <Label Text="{Binding bsd_queuingfeepaid_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                                                        <Label Text="{Binding Source={x:Static lang:Language.da_thanh_toan_phi_giu_cho},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                        <Label Text="{Binding bsd_collectedqueuingfee_format}" TextColor="Red" FontSize="15" Grid.Column="1" FontAttributes="Bold"/>
+                                                    </Grid>
                                                 </StackLayout>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>

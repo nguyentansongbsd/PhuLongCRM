@@ -45,5 +45,10 @@ namespace PhuLongCRM.Models
         public int bsd_queueunitdaysaleman { get; set; }
         public int bsd_longqueuingtime { get; set; }
         public int bsd_shortqueingtime { get; set; }
+        public string bsd_projectslogo { get; set; }
+        public bool bsd_queueproject { get; set; }
+        public string bsd_queueproject_format { get { return BoolToStringData.GetStringByBool(bsd_queueproject); } }
+        public bool bsd_printagreement { get; set; }
+        public string bsd_printagreement_format { get { return BoolToStringData.GetStringByBool(bsd_printagreement); } }
     }
 }

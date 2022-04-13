@@ -293,7 +293,6 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Hide();
         }
-
         private void PhoneCallTo_Tapped(object sender, EventArgs e)
         {
             if (viewModel.PhoneCall != null)
@@ -353,7 +352,6 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-
         private void TaskCustomer_Tapped(object sender, EventArgs e)
         {
             if (viewModel.Task != null)
@@ -413,7 +411,6 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-
         private void SetItem()
         {
             if(viewModel.MeetRequired != null && viewModel.MeetRequired.Count>0)
@@ -512,6 +509,7 @@ namespace PhuLongCRM.Views
             if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
             if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
             if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+            if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
         }
     }
 }

@@ -49,8 +49,7 @@ namespace PhuLongCRM.ViewModels
         private string IMAGE_CMND_FOLDER = "Contact_CMND";
         private string frontImage_name;
         private string behindImage_name;
-
-        private string checkCMND;
+        public string checkCMND { get; set; }
 
         private bool _isOfficial;
         public bool IsOfficial { get => _isOfficial; set { _isOfficial = value; OnPropertyChanged(nameof(IsOfficial)); } }
@@ -61,6 +60,8 @@ namespace PhuLongCRM.ViewModels
         private AddressModel _address2;
         public AddressModel Address2 { get => _address2; set { _address2 = value; OnPropertyChanged(nameof(Address2)); } }
 
+        private AddressModel _addressCopy;
+        public AddressModel AddressCopy { get => _addressCopy; set { _addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
         public ContactFormViewModel()
         {
             singleContact = new ContactFormModel();

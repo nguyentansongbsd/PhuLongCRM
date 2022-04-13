@@ -93,6 +93,7 @@ namespace PhuLongCRM.ViewModels
             this.QueueFormModel = tmp;
             QueueFormModel.bsd_queuingfee = QueueFormModel.bsd_bookingf;
             QueueFormModel._queue_createdon = DateTime.Now;
+            QueueFormModel.bsd_queuingfee_format = StringFormatHelper.FormatCurrency(QueueFormModel.bsd_queuingfee);
         }
 
         public async Task LoadFromUnit(Guid UnitId)
@@ -142,6 +143,7 @@ namespace PhuLongCRM.ViewModels
                 QueueFormModel.bsd_queuingfee = QueueFormModel.bsd_units_queuingfee;
             else if (QueueFormModel.bsd_bookingf > 0)
                 QueueFormModel.bsd_queuingfee = QueueFormModel.bsd_bookingf;
+            QueueFormModel.bsd_queuingfee_format = StringFormatHelper.FormatCurrency(QueueFormModel.bsd_queuingfee);
         }
 
         public async Task<bool> SetQueueTime()
