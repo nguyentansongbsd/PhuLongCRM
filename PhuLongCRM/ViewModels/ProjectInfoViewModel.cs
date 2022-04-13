@@ -131,6 +131,9 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_queueunitdaysaleman' />
                                 <attribute name='bsd_longqueuingtime' />
                                 <attribute name='bsd_shortqueingtime' />
+                                <attribute name='bsd_projectslogo'/>
+                                <attribute name='bsd_queueproject'/>
+                                <attribute name='bsd_printagreement'/>
                                 <order attribute='bsd_name' descending='false' />
                                 <filter type='and'>
                                   <condition attribute='bsd_projectid' operator='eq' uitype='bsd_project' value='" + ProjectId.ToString() + @"' />

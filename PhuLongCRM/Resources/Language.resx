@@ -2347,7 +2347,7 @@
     <value>Người tham dự không bắt buộc phải khác người liên quan.</value>
   </data>
   <data name="phi_giu_cho_da_thanh_toan" xml:space="preserve">
-    <value>Phí giữ chỗ đã thanh toán.</value>
+    <value>Phí giữ chỗ đã thanh toán</value>
   </data>
   <data name="chon_quan_huyen" xml:space="preserve">
     <value>Chọn quận huyện</value>
@@ -2669,5 +2669,131 @@
   </data>
   <data name="theo_loai_unit" xml:space="preserve">
     <value>Theo loại Unit</value>
+  </data>
+  <data name="lead_10_industry" xml:space="preserve">
+    <value>Nhà phân phối, Người điều vận và Nhà chế biến</value>
+  </data>
+  <data name="lead_11_industry" xml:space="preserve">
+    <value>Văn phòng và Phòng khám Bác sĩ</value>
+  </data>
+  <data name="lead_12_industry" xml:space="preserve">
+    <value>Sản xuất lâu bền</value>
+  </data>
+  <data name="lead_13_industry" xml:space="preserve">
+    <value>Địa điểm ăn Uống</value>
+  </data>
+  <data name="lead_14_industry" xml:space="preserve">
+    <value>Bán lẻ dịch vụ giải trí</value>
+  </data>
+  <data name="lead_15_industry" xml:space="preserve">
+    <value>Thuê và cho thuê thiết bị</value>
+  </data>
+  <data name="lead_16_industry" xml:space="preserve">
+    <value>Tài chính</value>
+  </data>
+  <data name="lead_17_industry" xml:space="preserve">
+    <value>Chế biến thực phẩm và thuốc lá</value>
+  </data>
+  <data name="lead_18_industry" xml:space="preserve">
+    <value>Xử lý dựa vào nhiều vốn chuyển về</value>
+  </data>
+  <data name="lead_19_industry" xml:space="preserve">
+    <value>Sửa chữa và bảo dưỡng chuyển đến</value>
+  </data>
+  <data name="lead_1_industry" xml:space="preserve">
+    <value>Kế toán</value>
+  </data>
+  <data name="lead_20_industry" xml:space="preserve">
+    <value>Bảo hiểm</value>
+  </data>
+  <data name="lead_21_industry" xml:space="preserve">
+    <value>Dịch vụ pháp lý</value>
+  </data>
+  <data name="lead_22_industry" xml:space="preserve">
+    <value>Bán lẻ hàng hóa không lâu bền</value>
+  </data>
+  <data name="lead_23_industry" xml:space="preserve">
+    <value>Dịch vụ tiêu dùng nên ngoài</value>
+  </data>
+  <data name="lead_24_industry" xml:space="preserve">
+    <value>Trích xuất và phân phối hóa dầu</value>
+  </data>
+  <data name="lead_25_industry" xml:space="preserve">
+    <value>Bán lẻ dịch vụ</value>
+  </data>
+  <data name="lead_26_industry" xml:space="preserve">
+    <value>Chi nhánh SIG</value>
+  </data>
+  <data name="lead_27_industry" xml:space="preserve">
+    <value>Dịch vụ xã hội</value>
+  </data>
+  <data name="lead_28_industry" xml:space="preserve">
+    <value>Nhà thầu giao dịch bên ngoài đặc biệt</value>
+  </data>
+  <data name="lead_29_industry" xml:space="preserve">
+    <value>Bất động sản đặc biệt</value>
+  </data>
+  <data name="lead_2_industry" xml:space="preserve">
+    <value>Nông nghiệp và trích xuất tài nguyên thiên nhiên Không dầu</value>
+  </data>
+  <data name="lead_30_industry" xml:space="preserve">
+    <value>Vận tải</value>
+  </data>
+  <data name="lead_31_industry" xml:space="preserve">
+    <value>Tạo và phân phối tiện ích</value>
+  </data>
+  <data name="lead_32_industry" xml:space="preserve">
+    <value>Bán lẻ phương tiện</value>
+  </data>
+  <data name="lead_33_industry" xml:space="preserve">
+    <value>Bán buôn</value>
+  </data>
+  <data name="lead_3_industry" xml:space="preserve">
+    <value>In và Xuất bản Truyền thông</value>
+  </data>
+  <data name="lead_4_industry" xml:space="preserve">
+    <value>Nhà môi giới</value>
+  </data>
+  <data name="lead_5_industry" xml:space="preserve">
+    <value>Bán lẻ Dịch vụ Cấp nước trong Tòa nhà</value>
+  </data>
+  <data name="lead_6_industry" xml:space="preserve">
+    <value>Dịch vụ Kinh doanh</value>
+  </data>
+  <data name="lead_7_industry" xml:space="preserve">
+    <value>Tư vấn</value>
+  </data>
+  <data name="lead_8_industry" xml:space="preserve">
+    <value>Dịch vụ Tiêu dùng</value>
+  </data>
+  <data name="lead_9_industry" xml:space="preserve">
+    <value>Quản lý Thiết kế, Chỉ đạo và Quảng cáo</value>
+  </data>
+  <data name="chon_localization" xml:space="preserve">
+    <value>Chọn loại khách hàng</value>
+  </data>
+  <data name="co_vbtt_hddc" xml:space="preserve">
+    <value>Có VBTT/HĐĐC</value>
+  </data>
+  <data name="da_thanh_toan_phi_giu_cho" xml:space="preserve">
+    <value>Đã thanh toán phí giữ chỗ</value>
+  </data>
+  <data name="dac_biet" xml:space="preserve">
+    <value>Đặc biệt</value>
+  </data>
+  <data name="danh_sach_chiet_khau" xml:space="preserve">
+    <value>Danh sách chiết khấu</value>
+  </data>
+  <data name="dieu_kien_ap_dung" xml:space="preserve">
+    <value>Điều kiện áp dụng</value>
+  </data>
+  <data name="discount_no" xml:space="preserve">
+    <value>Discount No.</value>
+  </data>
+  <data name="loai_chiet_khau" xml:space="preserve">
+    <value>Loại chiết khấu</value>
+  </data>
+  <data name="quyen_uu_tien" xml:space="preserve">
+    <value>Độ ưu tiên</value>
   </data>
 </root>

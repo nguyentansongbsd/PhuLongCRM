@@ -28,7 +28,7 @@ namespace PhuLongCRM.ViewModels
         public AccountFormModel singleAccount { get => _singleAccount; set { _singleAccount = value; OnPropertyChanged(nameof(singleAccount)); } }
 
         private ContactFormModel _PrimaryContact;
-        public ContactFormModel PrimaryContact { get => _PrimaryContact; set { if (_PrimaryContact != value) { this._PrimaryContact = value; OnPropertyChanged(nameof(PrimaryContact)); } } }
+        public ContactFormModel PrimaryContact { get => _PrimaryContact; set { if (_PrimaryContact != value) { this._PrimaryContact = value; OnPropertyChanged(nameof(PrimaryContact)); } } }        
 
         public ObservableCollection<QueueFormModel> list_thongtinqueing { get; set; }
         public ObservableCollection<ReservationListModel> list_thongtinquotation { get; set; }
@@ -184,6 +184,8 @@ namespace PhuLongCRM.ViewModels
                 }
                 BusinessTypes = string.Join(", ", listType);
             }
+            else
+                BusinessTypes = Language.khach_hang;
         }
 
         private string LoadAddress(string address)
@@ -438,7 +440,6 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_descriptionsvn' />
                                     <attribute name='bsd_developeraccount' />
                                     <attribute name='bsd_contact' />
-                                    <attribute name='bsd_employee' alias='bsd_employeeid' />
                                     <order attribute='statuscode' descending='false' />
                                     <order attribute='createdon' descending='true' />
                                     <link-entity name='contact' from='contactid' to='bsd_contact' visible='false' link-type='outer' alias='contacts'>
@@ -446,7 +447,7 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='mobilephone' alias='bsd_contacmobilephone'/>
                                         <attribute name='bsd_contactaddress' alias='bsd_contactaddress'/>
                                     </link-entity>         
-                                    <link-entity name='account' from='accountid' to='bsd_developeraccount' link-type='inner' alias='aa'>
+                                    <link-entity name='account' from='accountid' to='bsd_developeraccount' link-type='outer' alias='aa'>
                                         <attribute name='bsd_name' alias='bsd_developeraccount_name' />
                                     </link-entity>
                                     <filter type='and'>

@@ -2095,7 +2095,7 @@
     <value>Choose internal discount</value>
   </data>
   <data name="them_khuyen_mai" xml:space="preserve">
-    <value>Create Promotions</value>
+    <value>Chooese Promotions</value>
   </data>
   <data name="chon_chiet_khau_quy_doi" xml:space="preserve">
     <value>Choose exchange discount</value>
@@ -2669,5 +2669,131 @@
   </data>
   <data name="theo_loai_unit" xml:space="preserve">
     <value>By unit type</value>
+  </data>
+  <data name="lead_10_industry" xml:space="preserve">
+    <value>Distributors, dispatchers and processors</value>
+  </data>
+  <data name="lead_11_industry" xml:space="preserve">
+    <value>Doctor's offices and clinics</value>
+  </data>
+  <data name="lead_12_industry" xml:space="preserve">
+    <value>Durable manufacturing</value>
+  </data>
+  <data name="lead_13_industry" xml:space="preserve">
+    <value>Eating and drinking places</value>
+  </data>
+  <data name="lead_14_industry" xml:space="preserve">
+    <value>Entertainment retail</value>
+  </data>
+  <data name="lead_15_industry" xml:space="preserve">
+    <value>Equipment rental and leasing</value>
+  </data>
+  <data name="lead_16_industry" xml:space="preserve">
+    <value>Financial</value>
+  </data>
+  <data name="lead_17_industry" xml:space="preserve">
+    <value>Food and tobacco processing</value>
+  </data>
+  <data name="lead_18_industry" xml:space="preserve">
+    <value>Inbound capital intensive processing</value>
+  </data>
+  <data name="lead_19_industry" xml:space="preserve">
+    <value>Inbound repair and services</value>
+  </data>
+  <data name="lead_1_industry" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="lead_20_industry" xml:space="preserve">
+    <value>Insurance</value>
+  </data>
+  <data name="lead_21_industry" xml:space="preserve">
+    <value>Legal services</value>
+  </data>
+  <data name="lead_22_industry" xml:space="preserve">
+    <value>Non-Durable merchandise retail</value>
+  </data>
+  <data name="lead_23_industry" xml:space="preserve">
+    <value>Outbound consumer service</value>
+  </data>
+  <data name="lead_24_industry" xml:space="preserve">
+    <value>Petrochemical extraction and distribution</value>
+  </data>
+  <data name="lead_25_industry" xml:space="preserve">
+    <value>Service retail</value>
+  </data>
+  <data name="lead_26_industry" xml:space="preserve">
+    <value>SIG affiliations</value>
+  </data>
+  <data name="lead_27_industry" xml:space="preserve">
+    <value>Social services</value>
+  </data>
+  <data name="lead_28_industry" xml:space="preserve">
+    <value>Special outbound trade contractors</value>
+  </data>
+  <data name="lead_29_industry" xml:space="preserve">
+    <value>Specialty realty</value>
+  </data>
+  <data name="lead_2_industry" xml:space="preserve">
+    <value>Agriculture and Non-petrol natural resource extraction</value>
+  </data>
+  <data name="lead_30_industry" xml:space="preserve">
+    <value>Transportation</value>
+  </data>
+  <data name="lead_31_industry" xml:space="preserve">
+    <value>Utility creation and distribution</value>
+  </data>
+  <data name="lead_32_industry" xml:space="preserve">
+    <value>Vehicle retail</value>
+  </data>
+  <data name="lead_33_industry" xml:space="preserve">
+    <value>Wholesale</value>
+  </data>
+  <data name="lead_3_industry" xml:space="preserve">
+    <value>Broadcasting printing and Publishing</value>
+  </data>
+  <data name="lead_4_industry" xml:space="preserve">
+    <value>Brokers</value>
+  </data>
+  <data name="lead_5_industry" xml:space="preserve">
+    <value>Building supply retail</value>
+  </data>
+  <data name="lead_6_industry" xml:space="preserve">
+    <value>Business services</value>
+  </data>
+  <data name="lead_7_industry" xml:space="preserve">
+    <value>Consulting</value>
+  </data>
+  <data name="lead_8_industry" xml:space="preserve">
+    <value>Consumer services</value>
+  </data>
+  <data name="lead_9_industry" xml:space="preserve">
+    <value>Design, direction and creative management</value>
+  </data>
+  <data name="chon_localization" xml:space="preserve">
+    <value>Choose localization</value>
+  </data>
+  <data name="co_vbtt_hddc" xml:space="preserve">
+    <value>Is deposit contract</value>
+  </data>
+  <data name="da_thanh_toan_phi_giu_cho" xml:space="preserve">
+    <value>Collected queuing fee</value>
+  </data>
+  <data name="dac_biet" xml:space="preserve">
+    <value>Special</value>
+  </data>
+  <data name="danh_sach_chiet_khau" xml:space="preserve">
+    <value>Discount Items</value>
+  </data>
+  <data name="dieu_kien_ap_dung" xml:space="preserve">
+    <value>Conditions apply</value>
+  </data>
+  <data name="discount_no" xml:space="preserve">
+    <value>Discount No.</value>
+  </data>
+  <data name="loai_chiet_khau" xml:space="preserve">
+    <value>Discount type</value>
+  </data>
+  <data name="quyen_uu_tien" xml:space="preserve">
+    <value>Priority</value>
   </data>
 </root>
