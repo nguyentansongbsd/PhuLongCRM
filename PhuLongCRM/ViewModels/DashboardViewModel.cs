@@ -368,6 +368,10 @@ namespace PhuLongCRM.ViewModels
         }
         public async Task LoadLeads()
         {
+            ChartModel chartKHMoi = new ChartModel();
+            ChartModel chartKHDaChuyenDoi = new ChartModel();
+            ChartModel chartKHKhongChuyenDoi = new ChartModel();
+
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='lead'>
                                     <attribute name='statuscode' alias='Label'/>
@@ -380,16 +384,22 @@ namespace PhuLongCRM.ViewModels
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetchXml);
-            if (result == null || result.value.Count == 0) return;
+            if (result != null && result.value.Count > 0)
+            {
+                numKHMoi = result.value.Where(x => x.Label == "1").Count();
+                numKHDaChuyenDoi = result.value.Where(x => x.Label == "3").Count();
+                numKHKhongChuyenDoi = result.value.Where(x => x.Label == "4" || x.Label == "5" || x.Label == "6" || x.Label == "7").Count();
 
-            numKHMoi = result.value.Where(x => x.Label == "1").Count();
-            ChartModel chartKHMoi = new ChartModel() { Category = "Khách hàng mới", Value = numKHMoi };
-
-            numKHDaChuyenDoi = result.value.Where(x => x.Label == "3").Count();
-            ChartModel chartKHDaChuyenDoi = new ChartModel() { Category = "Đã chuyển đổi", Value = numKHDaChuyenDoi };
-
-            numKHKhongChuyenDoi = result.value.Where(x => x.Label == "4" || x.Label == "5" || x.Label == "6" || x.Label == "7").Count();
-            ChartModel chartKHKhongChuyenDoi = new ChartModel() { Category = "Không chuyển đổi", Value = numKHKhongChuyenDoi };
+                chartKHMoi = new ChartModel() { Category = "Khách hàng mới", Value = numKHMoi };
+                chartKHDaChuyenDoi = new ChartModel() { Category = "Đã chuyển đổi", Value = numKHDaChuyenDoi };
+                chartKHKhongChuyenDoi = new ChartModel() { Category = "Không chuyển đổi", Value = numKHKhongChuyenDoi };
+            }
+            else
+            {
+                chartKHMoi = new ChartModel() { Category = "Khách hàng mới", Value = 1 };
+                chartKHDaChuyenDoi = new ChartModel() { Category = "Đã chuyển đổi", Value = 1 };
+                chartKHKhongChuyenDoi = new ChartModel() { Category = "Không chuyển đổi", Value = 1 };
+            }
 
             this.LeadsChart.Add(chartKHMoi);
             this.LeadsChart.Add(chartKHDaChuyenDoi);
