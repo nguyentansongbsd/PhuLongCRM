@@ -8,11 +8,19 @@ namespace PhuLongCRM.ViewModels
     public class ContactsContentviewViewmodel : ListViewBaseViewModel2<ContactListModel>
     {
         public string Keyword { get; set; }
-       
+        public string KeyFilter { get; set; }
         public ContactsContentviewViewmodel()
         {
             PreLoadData = new Command(() =>
             {
+                string filter = string.Empty;
+                if (!string.IsNullOrWhiteSpace(KeyFilter))
+                {
+                    if (KeyFilter == "1")
+                        filter = "<condition attribute='statuscode' operator='eq' value='100000000' />";
+                    else if (KeyFilter == "2")
+                        filter = "<condition attribute='statuscode' operator='eq' value='1' />";
+                }
                 EntityName = "contacts";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
@@ -32,7 +40,8 @@ namespace PhuLongCRM.ViewModels
                       <condition attribute='emailaddress1' operator='like' value='%25{Keyword}%25' />
                     </filter>
                     <filter type='and'>
-                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                      {filter}
                     </filter>
                   </entity>
                 </fetch>";
