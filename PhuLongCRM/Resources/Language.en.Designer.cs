@@ -5404,8 +5404,6 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("quyen_uu_tien", resourceCulture);
             }
         }
-<<<<<<< HEAD
-=======
         
         internal static string user_name_khong_dung {
             get {
@@ -5484,6 +5482,5 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("loi_he_thong", resourceCulture);
             }
         }
->>>>>>> 2e2e02e571b5217b5f0d00c7755553dc09b14c6c
     }
 }

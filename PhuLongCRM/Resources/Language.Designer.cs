@@ -3611,6 +3611,84 @@ namespace PhuLongCRM.Resources {
             }
         }
         
+        internal static string chua_chon_huong_giai_quyet {
+            get {
+                return ResourceManager.GetString("chua_chon_huong_giai_quyet", resourceCulture);
+            }
+        }
+        
+        internal static string chua_nhap_phuong_an {
+            get {
+                return ResourceManager.GetString("chua_nhap_phuong_an", resourceCulture);
+            }
+        }
+        
+        internal static string chua_chon_thoi_gian_co_the_thanh_toan {
+            get {
+                return ResourceManager.GetString("chua_chon_thoi_gian_co_the_thanh_toan", resourceCulture);
+            }
+        }
+        
+        internal static string phan_hoi_da_duoc_giai_quyet {
+            get {
+                return ResourceManager.GetString("phan_hoi_da_duoc_giai_quyet", resourceCulture);
+            }
+        }
+        
+        internal static string da_mo_lai_phan_hoi {
+            get {
+                return ResourceManager.GetString("da_mo_lai_phan_hoi", resourceCulture);
+            }
+        }
+        
+        internal static string tao_phan_hoi {
+            get {
+                return ResourceManager.GetString("tao_phan_hoi", resourceCulture);
+            }
+        }
+        
+        internal static string chon_loai {
+            get {
+                return ResourceManager.GetString("chon_loai", resourceCulture);
+            }
+        }
+        
+        internal static string chon_khach_hang {
+            get {
+                return ResourceManager.GetString("chon_khach_hang", resourceCulture);
+            }
+        }
+        
+        internal static string chon_san_pham {
+            get {
+                return ResourceManager.GetString("chon_san_pham", resourceCulture);
+            }
+        }
+        
+        internal static string chon_chu_de {
+            get {
+                return ResourceManager.GetString("chon_chu_de", resourceCulture);
+            }
+        }
+        
+        internal static string chon_phan_hoi_lien_quan {
+            get {
+                return ResourceManager.GetString("chon_phan_hoi_lien_quan", resourceCulture);
+            }
+        }
+        
+        internal static string chon_nguon {
+            get {
+                return ResourceManager.GetString("chon_nguon", resourceCulture);
+            }
+        }
+        
+        internal static string nhap_noi_dung {
+            get {
+                return ResourceManager.GetString("nhap_noi_dung", resourceCulture);
+            }
+        }
+        
         internal static string vui_long_chon_loai_phan_hoi {
             get {
                 return ResourceManager.GetString("vui_long_chon_loai_phan_hoi", resourceCulture);
