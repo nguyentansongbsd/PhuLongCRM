@@ -20,12 +20,13 @@ namespace PhuLongCRM.Views
         private Guid Id;
         public static OptionSet FromCustomer = null;
         public static bool? NeedToRefreshActivity = null;
-        public LeadDetailPage(Guid id)
+        public LeadDetailPage(Guid id,bool isFromQRCode = false)
         {
             InitializeComponent();
             this.Title = Language.thong_tin_khach_hang;
             this.Id = id;
             this.BindingContext = viewModel = new LeadDetailPageViewModel();
+            viewModel.IsFromQRCode = isFromQRCode;
             NeedToRefreshLeadDetail = false;
             NeedToRefreshActivity = false;
             Tab_Tapped(1);
@@ -42,7 +43,7 @@ namespace PhuLongCRM.Views
                 FromCustomer = new OptionSet { Val = viewModel.singleLead.leadid.ToString(), Label = viewModel.singleLead.lastname, Title = viewModel.CodeLead };
                 viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
                 viewModel.Area = AreaData.GetAreaById(viewModel.singleLead.bsd_area);
-                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard ))
+                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard))
                 {
                     viewModel.TypeIdCard = TypeIdCardData.GetTypeIdCardById(viewModel.singleLead.bsd_typeofidcard);
                 }
@@ -278,9 +279,16 @@ namespace PhuLongCRM.Views
         {
             if (leadid != null && viewModel.singleLead == null)
             {
-                await viewModel.LoadOneLead(leadid);
-                if (viewModel.singleLead.new_gender != null) { await viewModel.loadOneGender(viewModel.singleLead.new_gender); }
-                if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }                
+                try
+                {
+                    await viewModel.LoadOneLead(leadid);
+                    if (viewModel.singleLead.new_gender != null) { await viewModel.loadOneGender(viewModel.singleLead.new_gender); }
+                    if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }                
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         }
 

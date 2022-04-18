@@ -7,20 +7,32 @@ namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
-        private string _num;
-        public string num { get=>_num; set { _num = value; OnPropertyChanged(nameof(num)); } }
+        //private string _num;
+        //public string num { get => _num; set { _num = value; OnPropertyChanged(nameof(num)); } }
+        public static string tessst { get; set; }
         public BlankPage()
         {
             InitializeComponent();
-            this.BindingContext = this;
-            test.InputValue = num = "840336021479";
+            zxing.OnScanResult += (result) =>
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                lblResult.Text = result.Text;
+            });
 
-            
+
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            zxing.IsScanning = true;
         }
 
-        private async void Button_Clicked(System.Object sender, System.EventArgs e)
+        protected override void OnDisappearing()
         {
-            await DisplayAlert("", test.Mask, "ok");
+            zxing.IsScanning = false;
+
+            base.OnDisappearing();
         }
     }
 }

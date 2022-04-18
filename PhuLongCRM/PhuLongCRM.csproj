@@ -12,11 +12,15 @@
     <None Remove="Behaviors\" />
     <None Remove="Resources\" />
     <None Remove="FirebaseDatabase.net" />
+    <None Remove="BarcodeScanner.XF" />
+    <None Remove="ZXing.Net.Mobile" />
+    <None Remove="ZXing.Net" />
+    <None Remove="ZXing.Net.Mobile.Forms" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
     <PackageReference Include="Telerik.UI.for.Xamarin" Version="2020.1.218.1" />
     <PackageReference Include="PhotoBrowser.Forms" Version="0.1.4" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
@@ -29,6 +33,8 @@
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="MR.Gestures" Version="2.1.3" />
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
