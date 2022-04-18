@@ -5464,5 +5464,23 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("vui_long_nhap_xac_nhan_mat_khau", resourceCulture);
             }
         }
+        
+        internal static string ma_qr_khong_dung {
+            get {
+                return ResourceManager.GetString("ma_qr_khong_dung", resourceCulture);
+            }
+        }
+        
+        internal static string quen_mat_khau {
+            get {
+                return ResourceManager.GetString("quen_mat_khau", resourceCulture);
+            }
+        }
+        
+        internal static string loi_he_thong {
+            get {
+                return ResourceManager.GetString("loi_he_thong", resourceCulture);
+            }
+        }
     }
 }

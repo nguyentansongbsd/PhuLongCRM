@@ -2826,4 +2826,13 @@
 	<data name="vui_long_nhap_xac_nhan_mat_khau">
         <value>Please enter confirm your password</value>
     </data>
+	<data name="ma_qr_khong_dung">
+        <value>QR code is not correct.</value>
+    </data>
+	<data name="quen_mat_khau">
+        <value>Forgot password ?</value>
+    </data>
+	<data name="loi_he_thong">
+        <value>System error.</value>
+    </data>
 </root>

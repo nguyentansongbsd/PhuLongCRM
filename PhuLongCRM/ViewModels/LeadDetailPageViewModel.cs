@@ -32,7 +32,7 @@ namespace PhuLongCRM.ViewModels
         public OptionSet Area { get => _area; set { _area = value; OnPropertyChanged(nameof(Area)); } }
 
         private PhongThuyModel _PhongThuy;
-        public PhongThuyModel PhongThuy { get => _PhongThuy; set { _PhongThuy = value; OnPropertyChanged(nameof(PhongThuy)); } }                
+        public PhongThuyModel PhongThuy { get => _PhongThuy; set { _PhongThuy = value; OnPropertyChanged(nameof(PhongThuy)); } }
         public ObservableCollection<OptionSet> list_gender_optionset { get; set; }
         public ObservableCollection<OptionSet> list_industrycode_optionset { get; set; }
         public ObservableCollection<HuongPhongThuy> list_HuongTot { set; get; }
@@ -60,10 +60,13 @@ namespace PhuLongCRM.ViewModels
         private bool _showMoreCase;
         public bool ShowMoreCase { get => _showMoreCase; set { _showMoreCase = value; OnPropertyChanged(nameof(ShowMoreCase)); } }
         public int PageCase { get; set; } = 1;
+
+        public bool IsFromQRCode { get; set; }
+
         public LeadDetailPageViewModel()
         {
             singleGender = new OptionSet();
-            singleIndustrycode = new OptionSet();                      
+            singleIndustrycode = new OptionSet();
 
             list_gender_optionset = new ObservableCollection<OptionSet>();
             list_industrycode_optionset = new ObservableCollection<OptionSet>();
@@ -73,10 +76,17 @@ namespace PhuLongCRM.ViewModels
 
             this.loadGender();
             this.loadIndustrycode();
-        }      
+        }
 
         public async Task LoadOneLead(String leadid)
         {
+            string filterEmployee = string.Empty;
+            if (IsFromQRCode == false)
+            {
+                filterEmployee = @"<filter type='and'>
+                                          <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    </filter>";
+            }
             singleLead = new LeadFormModel();
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='lead'>
@@ -136,16 +146,14 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='contact' from='originatingleadid' to='leadid' link-type='outer'>
                                         <attribute name='contactid' alias='contact_id'/>
                                     </link-entity>
-                                    <filter type='and'>
-                                          <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
-                                    </filter>
+                                    " + filterEmployee + @"
                                 </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
-            if(result == null)
+            if (result == null)
             {
                 return;
-            }    
+            }
             var data = result.value.FirstOrDefault();
             this.singleLead = data;
             this.singleGender = list_gender_optionset.SingleOrDefault(x => x.Val == this.singleLead.new_gender);
@@ -199,7 +207,7 @@ namespace PhuLongCRM.ViewModels
             else
             {
                 IsSuccessContact = false;
-            }           
+            }
         }
         public async Task CreateAccount()
         {
@@ -216,7 +224,7 @@ namespace PhuLongCRM.ViewModels
                 {
                     IsSuccessAccount = false;
                 }
-            }           
+            }
         }
 
         public void loadGender()
@@ -309,7 +317,7 @@ namespace PhuLongCRM.ViewModels
             this.singleIndustrycode = list_industrycode_optionset.FirstOrDefault(x => x.Val == id); ;
             return singleIndustrycode;
         }
-              
+
         public void LoadPhongThuy()
         {
             PhongThuy = new PhongThuyModel();
@@ -377,7 +385,7 @@ namespace PhuLongCRM.ViewModels
                 address.Add(singleLead.address1_country);
             }
 
-            Address = string.Join(", ", address);       
+            Address = string.Join(", ", address);
         }
 
         private async Task<object> getContentContact()
@@ -387,10 +395,10 @@ namespace PhuLongCRM.ViewModels
             data["lastname"] = singleLead.lastname;
             data["bsd_fullname"] = singleLead.lastname;
             data["emailaddress1"] = singleLead.emailaddress1;
-            data["mobilephone"] = singleLead.mobilephone;          
+            data["mobilephone"] = singleLead.mobilephone;
             data["bsd_jobtitlevn"] = singleLead.jobtitle;
             data["telephone1"] = singleLead.telephone1;
-             data["birthdate"] = singleLead.new_birthday.HasValue ? (DateTime.Parse(singleLead.new_birthday.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
+            data["birthdate"] = singleLead.new_birthday.HasValue ? (DateTime.Parse(singleLead.new_birthday.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
             data["gendercode"] = singleLead.new_gender;
 
             if (UserLogged.Id != null)
@@ -410,8 +418,8 @@ namespace PhuLongCRM.ViewModels
             IDictionary<string, object> data = new Dictionary<string, object>();
             Guid accountid = Guid.NewGuid();
             data["accountid"] = accountid;
-            data["bsd_name"] = singleLead.companyname;        
-            data["websiteurl"] = singleLead.websiteurl;          
+            data["bsd_name"] = singleLead.companyname;
+            data["websiteurl"] = singleLead.websiteurl;
             if (!string.IsNullOrWhiteSpace(singleLead.numberofemployees))
             {
                 data["numberofemployees"] = int.Parse(singleLead.numberofemployees);
@@ -441,7 +449,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_postalcode"] = singleLead.address1_postalcode;
             if (singleLead._transactioncurrencyid_value == null)
             {
-                await DeletLookup("accounts","transactioncurrencyid", accountid);
+                await DeletLookup("accounts", "transactioncurrencyid", accountid);
             }
             else
             {
@@ -492,7 +500,7 @@ namespace PhuLongCRM.ViewModels
         private async Task<object> getContent()
         {
             IDictionary<string, object> data = new Dictionary<string, object>();
-            data["statecode"] = "1";            
+            data["statecode"] = "1";
             return data;
         }
 
@@ -513,7 +521,7 @@ namespace PhuLongCRM.ViewModels
             {
                 Country = result.value.FirstOrDefault();
                 await LoadProvinceByName();
-            }        
+            }
         }
         public async Task LoadProvinceByName()
         {
@@ -533,8 +541,8 @@ namespace PhuLongCRM.ViewModels
             {
                 this.Province = result.value.FirstOrDefault();
                 await LoadDistrictByName();
-            }          
-        }     
+            }
+        }
         public async Task LoadDistrictByName()
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -553,7 +561,7 @@ namespace PhuLongCRM.ViewModels
             if (result != null && result.value.Count > 0)
             {
                 this.District = result.value.FirstOrDefault();
-            }        
+            }
         }
         // check id
         public async Task<bool> CheckID(string identitycardnumber, string leadid)
@@ -579,7 +587,7 @@ namespace PhuLongCRM.ViewModels
         }
         public async Task LoadCaseForLead()
         {
-            if(list_customercare == null)
+            if (list_customercare == null)
                 list_customercare = new ObservableCollection<HoatDongListModel>();
 
             if (list_customercare != null && singleLead != null && singleLead.leadid != Guid.Empty)

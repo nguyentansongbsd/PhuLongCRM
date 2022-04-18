@@ -5,29 +5,22 @@
     xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
     xmlns:behavior="clr-namespace:PhuLongCRM.Behaviors"
     xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+    xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
     x:Class="PhuLongCRM.BlankPage">
-    <ContentPage.Content>
-        <StackLayout Margin="10,50">
-            <!--<controls:PhoneEntryControl x:Name="test" PhoneNum="{Binding num}"  Placeholder="phone"/>-->
-            <!--<controls:MainEntry x:Name="test" Keyboard="Numeric" Text="{Binding num}" Placeholder="Nhap so dien thoai">
-                <controls:MainEntry.Behaviors>
-                    <behavior:MaskedBehavior Mask="+XX-XXXXXXXXXX"/>
-                </controls:MainEntry.Behaviors>
-            </controls:MainEntry>-->
-            <telerikInput:RadMaskedInput x:Name="test" WatermarkTextColor="#444444"
-                                 DisplayedTextColor="#444444" InputValue="{Binding num, Mode=TwoWay}"
-                                                             WatermarkText="+84-" HeightRequest="40"
-                                                             DisplayedTextFontSize="20"
-                                                             Placeholder="_" 
-                                                             Mask="+CC-0000000000"
-                                                             MaskType="Text">
-                <telerikInput:RadMaskedInput.BorderStyle>
-                    <telerikInput:BorderStyle BorderColor="LightGray" 
-                                                                  BorderThickness="1" 
-                                                                  CornerRadius="5"/>
-                </telerikInput:RadMaskedInput.BorderStyle>
-            </telerikInput:RadMaskedInput>
-            <Button Text="clicked" Clicked="Button_Clicked"/>
-        </StackLayout>
-    </ContentPage.Content>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <zxing:ZXingScannerView x:Name="zxing"
+                                VerticalOptions="FillAndExpand"/>
+        <zxing:ZXingDefaultOverlay TopText="Hold your phone up to the barcode"
+                                   BottomText="Scanning will happen automatically"/>
+        <Label x:Name="lblResult"
+               Grid.Row="1"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"/>
+    </Grid>
 </ContentPage>

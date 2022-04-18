@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
     <PackageReference Include="Telerik.UI.for.Xamarin">
       <Version>2020.1.218.1</Version>
     </PackageReference>
@@ -81,6 +81,12 @@
     </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="ZXing.Net.Mobile">
+      <Version>2.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="ZXing.Net.Mobile.Forms">
+      <Version>2.4.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -255,7 +261,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhuLongCRM\PhuLongCRM.csproj">
-      <Project>{2FACEA4F-8A12-43ED-B08B-C8642C7CAF11}</Project>
+      <Project>{0149556D-DDA3-40DE-A55B-5B5D55887044}</Project>
       <Name>PhuLongCRM</Name>
     </ProjectReference>
   </ItemGroup>
