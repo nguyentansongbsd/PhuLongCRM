@@ -5152,5 +5152,257 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("theo_loai_unit", resourceCulture);
             }
         }
+        
+        internal static string lead_10_industry {
+            get {
+                return ResourceManager.GetString("lead_10_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_11_industry {
+            get {
+                return ResourceManager.GetString("lead_11_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_12_industry {
+            get {
+                return ResourceManager.GetString("lead_12_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_13_industry {
+            get {
+                return ResourceManager.GetString("lead_13_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_14_industry {
+            get {
+                return ResourceManager.GetString("lead_14_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_15_industry {
+            get {
+                return ResourceManager.GetString("lead_15_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_16_industry {
+            get {
+                return ResourceManager.GetString("lead_16_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_17_industry {
+            get {
+                return ResourceManager.GetString("lead_17_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_18_industry {
+            get {
+                return ResourceManager.GetString("lead_18_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_19_industry {
+            get {
+                return ResourceManager.GetString("lead_19_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_1_industry {
+            get {
+                return ResourceManager.GetString("lead_1_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_20_industry {
+            get {
+                return ResourceManager.GetString("lead_20_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_21_industry {
+            get {
+                return ResourceManager.GetString("lead_21_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_22_industry {
+            get {
+                return ResourceManager.GetString("lead_22_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_23_industry {
+            get {
+                return ResourceManager.GetString("lead_23_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_24_industry {
+            get {
+                return ResourceManager.GetString("lead_24_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_25_industry {
+            get {
+                return ResourceManager.GetString("lead_25_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_26_industry {
+            get {
+                return ResourceManager.GetString("lead_26_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_27_industry {
+            get {
+                return ResourceManager.GetString("lead_27_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_28_industry {
+            get {
+                return ResourceManager.GetString("lead_28_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_29_industry {
+            get {
+                return ResourceManager.GetString("lead_29_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_2_industry {
+            get {
+                return ResourceManager.GetString("lead_2_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_30_industry {
+            get {
+                return ResourceManager.GetString("lead_30_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_31_industry {
+            get {
+                return ResourceManager.GetString("lead_31_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_32_industry {
+            get {
+                return ResourceManager.GetString("lead_32_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_33_industry {
+            get {
+                return ResourceManager.GetString("lead_33_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_3_industry {
+            get {
+                return ResourceManager.GetString("lead_3_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_4_industry {
+            get {
+                return ResourceManager.GetString("lead_4_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_5_industry {
+            get {
+                return ResourceManager.GetString("lead_5_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_6_industry {
+            get {
+                return ResourceManager.GetString("lead_6_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_7_industry {
+            get {
+                return ResourceManager.GetString("lead_7_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_8_industry {
+            get {
+                return ResourceManager.GetString("lead_8_industry", resourceCulture);
+            }
+        }
+        
+        internal static string lead_9_industry {
+            get {
+                return ResourceManager.GetString("lead_9_industry", resourceCulture);
+            }
+        }
+        
+        internal static string chon_localization {
+            get {
+                return ResourceManager.GetString("chon_localization", resourceCulture);
+            }
+        }
+        
+        internal static string co_vbtt_hddc {
+            get {
+                return ResourceManager.GetString("co_vbtt_hddc", resourceCulture);
+            }
+        }
+        
+        internal static string da_thanh_toan_phi_giu_cho {
+            get {
+                return ResourceManager.GetString("da_thanh_toan_phi_giu_cho", resourceCulture);
+            }
+        }
+        
+        internal static string dac_biet {
+            get {
+                return ResourceManager.GetString("dac_biet", resourceCulture);
+            }
+        }
+        
+        internal static string danh_sach_chiet_khau {
+            get {
+                return ResourceManager.GetString("danh_sach_chiet_khau", resourceCulture);
+            }
+        }
+        
+        internal static string dieu_kien_ap_dung {
+            get {
+                return ResourceManager.GetString("dieu_kien_ap_dung", resourceCulture);
+            }
+        }
+        
+        internal static string discount_no {
+            get {
+                return ResourceManager.GetString("discount_no", resourceCulture);
+            }
+        }
+        
+        internal static string loai_chiet_khau {
+            get {
+                return ResourceManager.GetString("loai_chiet_khau", resourceCulture);
+            }
+        }
+        
+        internal static string quyen_uu_tien {
+            get {
+                return ResourceManager.GetString("quyen_uu_tien", resourceCulture);
+            }
+        }
     }
 }
