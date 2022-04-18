@@ -11,21 +11,8 @@ namespace PhuLongCRM.Models
     {
         public Guid bsd_paymentschemedetailid { get; set; }
         public string bsd_name { get; set; }
-       // public DateTime bsd_duedate { get; set; } // ngày đến hạn
-        public DateTime? _bsd_duedate;
-        public DateTime? bsd_duedate
-        {
-            get => this._bsd_duedate;
-            set
-            {
-                if (_bsd_duedate.HasValue)
-                {
-                    _bsd_duedate = value;
-                    OnPropertyChanged(nameof(bsd_duedate));
-                }
-            }
-        }
-        public bool hide_duedate { get { return _bsd_duedate.HasValue ? true : false; } }
+        public DateTime? bsd_duedate { get; set; } // ngày đến hạn
+        public bool hide_duedate { get { return bsd_duedate.HasValue ? true : false; } }
         public int statuscode { get; set; } // tình trạng.
         public string statuscode_format { get => InstallmentsStatusCodeData.GetInstallmentsStatusCodeById(statuscode.ToString()).Name; }
         public string statuscode_color { get => InstallmentsStatusCodeData.GetInstallmentsStatusCodeById(statuscode.ToString()).Background; }
