@@ -200,6 +200,10 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='leadid' alias='lead_id'/>                  
                     <attribute name='fullname' alias='lead_name'/>
                 </link-entity>
+                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                    <attribute name='opportunityid' alias='queue_id'/>                  
+                    <attribute name='name' alias='queue_name'/>
+                </link-entity>
                 <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
                     <attribute name='bsd_name' alias='user_name'/>
                     <attribute name='bsd_employeeid' alias='user_id'/>
@@ -251,8 +255,17 @@ namespace PhuLongCRM.ViewModels
                     Label = data.lead_name
                 };
             }
+            else if (data.queue_id != Guid.Empty)
+            {
+                Customer = new OptionSet
+                {
+                    Title = CodeQueue,
+                    Val = data.queue_id.ToString(),
+                    Label = data.queue_name
+                };
+            }
 
-            if (PhoneCellModel.statecode == 0)
+            if (PhoneCellModel.statecode == 0 || PhoneCellModel.statecode == 3)
                 ShowButton = true;
             else
                 ShowButton = false;

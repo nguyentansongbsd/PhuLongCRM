@@ -5,6 +5,7 @@ using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -35,7 +36,7 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             this.BindingContext = viewModel = new DashboardViewModel();
-           
+
             await Task.WhenAll(
                  viewModel.LoadTasks(),
                  viewModel.LoadMettings(),
@@ -46,13 +47,84 @@ namespace PhuLongCRM.Views
                  viewModel.LoadUnitFourMonths(),
                  viewModel.LoadLeads(),
                  viewModel.LoadCommissionTransactions()
-                ) ;
+                );
+
+            MessagingCenter.Subscribe<ScanQRPage, string>(this, "CallBack", async (sender, e) =>
+            {
+                try
+                {
+                    string[] data = e.Trim().Split(',');
+                    if (data[1] == "lead")
+                    {
+                        LeadDetailPage leadDetail = new LeadDetailPage(Guid.Parse(data[2]), true);
+                        leadDetail.OnCompleted = async (isSuccess) =>
+                        {
+                            if (isSuccess)
+                            {
+                                await Navigation.PushAsync(leadDetail);
+                                LoadingHelper.Hide();
+                            }
+                            else
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                            }
+                        };
+                    }
+                    else if (data[1] == "account")
+                    {
+                        AccountDetailPage accountDetail = new AccountDetailPage(Guid.Parse(data[2]));
+                        accountDetail.OnCompleted = async (isSuccess) =>
+                        {
+                            if (isSuccess)
+                            {
+                                await Navigation.PushAsync(accountDetail);
+                                LoadingHelper.Hide();
+                            }
+                            else
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                            }
+                        };
+                    }
+                    else if (data[1] == "contact")
+                    {
+                        ContactDetailPage contactDetail = new ContactDetailPage(Guid.Parse(data[2]));
+                        contactDetail.OnCompleted = async (isSuccess) =>
+                        {
+                            if (isSuccess)
+                            {
+                                await Navigation.PushAsync(contactDetail);
+                                LoadingHelper.Hide();
+                            }
+                            else
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                            }
+                        };
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.ma_qr_khong_dung);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.LongMessage(ex.Message);
+                }
+
+            });
             LoadingHelper.Hide();
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+
             if (NeedToRefreshQueue == true)
             {
                 LoadingHelper.Show();
@@ -115,14 +187,14 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void ShowMore_Tapped(object sender,EventArgs e)
+        private async void ShowMore_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             await Shell.Current.GoToAsync("//HoatDong");
             LoadingHelper.Hide();
         }
 
-        private async void ActivitiItem_Tapped(object sender,EventArgs e)
+        private void ActivitiItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var item = (ActivitiModel)((sender as ExtendedFrame).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
@@ -131,6 +203,18 @@ namespace PhuLongCRM.Views
                 ActivityPopup.ShowActivityPopup(item.activityid, item.activitytypecode);
             }
             LoadingHelper.Hide();
+        }
+
+        private async void ScanQRCode_Clicked(object sender, EventArgs e)
+        {
+            PermissionStatus camerastatus = await PermissionHelper.RequestCameraPermission();
+            if (camerastatus == PermissionStatus.Granted)
+            {
+                LoadingHelper.Show();
+                ScanQRPage scanQR = new ScanQRPage();
+                await Navigation.PushAsync(scanQR);
+                LoadingHelper.Hide();
+            }
         }
     }
 }

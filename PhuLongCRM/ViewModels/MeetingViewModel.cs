@@ -53,9 +53,7 @@ namespace PhuLongCRM.ViewModels
         public List<OptionSetFilter> Optional { get => _optional; set { _optional = value; OnPropertyChanged(nameof(Optional)); } }
 
         public string CodeAccount = LookUpMultipleTabs.CodeAccount;
-
         public string CodeContac = LookUpMultipleTabs.CodeContac;
-
         public string CodeLead = LookUpMultipleTabs.CodeLead;
         public string CodeQueue = QueuesDetialPage.CodeQueue;
 
@@ -108,6 +106,10 @@ namespace PhuLongCRM.ViewModels
                           <attribute name='leadid' alias='lead_id'/>                  
                           <attribute name='fullname' alias='lead_name'/>
                       </link-entity>
+                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                        <attribute name='opportunityid' alias='queue_id'/>                  
+                        <attribute name='name' alias='queue_name'/>
+                    </link-entity>
                   </entity>
                 </fetch>";
 
@@ -158,8 +160,17 @@ namespace PhuLongCRM.ViewModels
                     Label = data.lead_name
                 };
             }
+            else if (data.queue_id != Guid.Empty)
+            {
+                Customer = new OptionSetFilter
+                {
+                    Title = CodeQueue,
+                    Val = data.queue_id.ToString(),
+                    Label = data.queue_name
+                };
+            }
 
-            if (MeetingModel.statecode == 0)
+            if (MeetingModel.statecode == 0 || MeetingModel.statecode == 3)
                 ShowButton = true;
             else
                 ShowButton = false;
@@ -323,10 +334,6 @@ namespace PhuLongCRM.ViewModels
                 }
                 else if (CustomerMapping.Title == CodeQueue)
                 {
-                    //item_required["partyid_lead@odata.bind"] = "/leads(" + CustomerMapping.Val + ")";
-                    //item_required["participationtypemask"] = 5;
-                    //arrayMeeting.Add(item_required);
-
                     data["regardingobjectid_opportunity_appointment@odata.bind"] = "/opportunities(" + CustomerMapping.Val + ")";
                 }
             }

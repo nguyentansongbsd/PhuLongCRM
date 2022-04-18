@@ -66,6 +66,7 @@ namespace PhuLongCRM.ViewModels
         public bool isLoadMore { get => _isLoadMore; set { _isLoadMore = value; OnPropertyChanged(nameof(isLoadMore)); } }
 
         public string CodeAccount = LookUpMultipleTabs.CodeAccount;
+
         public AccountDetailPageViewModel()
         {
             BusinessTypeOptions = new ObservableCollection<OptionSet>();

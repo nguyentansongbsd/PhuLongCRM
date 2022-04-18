@@ -65,6 +65,10 @@ namespace PhuLongCRM.ViewModels
 	                                <attribute name='leadid' alias='lead_id'/>                  
                                     <attribute name='lastname' alias='lead_name'/>
                                 </link-entity>
+                                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                                    <attribute name='opportunityid' alias='queue_id'/>                  
+                                    <attribute name='name' alias='queue_name'/>
+                                </link-entity>
                               </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<TaskFormModel>>("tasks", fetchXml);
@@ -102,6 +106,14 @@ namespace PhuLongCRM.ViewModels
                 customer.Val = this.TaskFormModel.account_id.ToString();
                 customer.Label = this.TaskFormModel.account_name;
                 customer.Title = "3";
+                this.Customer = customer;
+            }
+            else if (this.TaskFormModel.queue_id != Guid.Empty)
+            {
+                OptionSet customer = new OptionSet();
+                customer.Val = this.TaskFormModel.queue_id.ToString();
+                customer.Label = this.TaskFormModel.queue_name;
+                customer.Title = CodeQueue;
                 this.Customer = customer;
             }
         }

@@ -5404,5 +5404,86 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("quyen_uu_tien", resourceCulture);
             }
         }
+<<<<<<< HEAD
+=======
+        
+        internal static string user_name_khong_dung {
+            get {
+                return ResourceManager.GetString("user_name_khong_dung", resourceCulture);
+            }
+        }
+        
+        internal static string xac_nhan_ma_otp {
+            get {
+                return ResourceManager.GetString("xac_nhan_ma_otp", resourceCulture);
+            }
+        }
+        
+        internal static string otp_duoc_gui_ve_so_dien_thoai {
+            get {
+                return ResourceManager.GetString("otp_duoc_gui_ve_so_dien_thoai", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_nhap_otp_de_xac_nhan_tai_khoan {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_otp_de_xac_nhan_tai_khoan", resourceCulture);
+            }
+        }
+        
+        internal static string ban_chua_nhan_duoc_ma_gui_lai {
+            get {
+                return ResourceManager.GetString("ban_chua_nhan_duoc_ma_gui_lai", resourceCulture);
+            }
+        }
+        
+        internal static string ma_xac_thuc_khong_dung {
+            get {
+                return ResourceManager.GetString("ma_xac_thuc_khong_dung", resourceCulture);
+            }
+        }
+        
+        internal static string mat_khau_khong_khop {
+            get {
+                return ResourceManager.GetString("mat_khau_khong_khop", resourceCulture);
+            }
+        }
+        
+        internal static string xac_nhan_mat_khau {
+            get {
+                return ResourceManager.GetString("xac_nhan_mat_khau", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_nhap_mat_khau {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_mat_khau", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_nhap_xac_nhan_mat_khau {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_xac_nhan_mat_khau", resourceCulture);
+            }
+        }
+        
+        internal static string ma_qr_khong_dung {
+            get {
+                return ResourceManager.GetString("ma_qr_khong_dung", resourceCulture);
+            }
+        }
+        
+        internal static string quen_mat_khau {
+            get {
+                return ResourceManager.GetString("quen_mat_khau", resourceCulture);
+            }
+        }
+        
+        internal static string loi_he_thong {
+            get {
+                return ResourceManager.GetString("loi_he_thong", resourceCulture);
+            }
+        }
+>>>>>>> 2e2e02e571b5217b5f0d00c7755553dc09b14c6c
     }
 }

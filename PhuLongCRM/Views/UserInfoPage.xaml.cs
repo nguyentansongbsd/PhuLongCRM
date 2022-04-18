@@ -191,13 +191,13 @@ namespace PhuLongCRM.Views
             string asw = await DisplayActionSheet(Language.tuy_chon, Language.huy, null, options);
             if (asw == Language.thu_vien)
             {
-                LoadingHelper.Show();
                 await CrossMedia.Current.Initialize();
                 PermissionStatus photostatus = await PermissionHelper.RequestPhotosPermission();
                 if (photostatus == PermissionStatus.Granted)
                 {
                     try
                     {
+                        LoadingHelper.Show();
                         var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions() { PhotoSize = PhotoSize.MaxWidthHeight,MaxWidthHeight=600});
                         if (file != null)
                         {
@@ -233,11 +233,11 @@ namespace PhuLongCRM.Views
             }
             else if (asw == Language.chup_hinh)
             {
-                LoadingHelper.Show();
                 await CrossMedia.Current.Initialize();
                 PermissionStatus camerastatus = await PermissionHelper.RequestCameraPermission();
                 if (camerastatus == PermissionStatus.Granted)
                 {
+                    LoadingHelper.Show();
                     string fileName = $"{Guid.NewGuid()}.jpg";
                     var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
                     {
