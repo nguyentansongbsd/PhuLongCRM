@@ -13,19 +13,34 @@ namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
-        private string _num;
-        public string num { get=>_num; set { _num = value; OnPropertyChanged(nameof(num)); } }
+        //private string _num;
+        //public string num { get => _num; set { _num = value; OnPropertyChanged(nameof(num)); } }
+        public static string tessst { get; set; }
         public BlankPage()
         {
             InitializeComponent();
             //this.BindingContext = this;
            // test.InputValue = num = "840336021479";
-            GetListId();
+            //zxing.OnScanResult += (result) =>
+            //Device.BeginInvokeOnMainThread(() =>
+            //{
+            //    lblResult.Text = result.Text;
+            //});
+
+
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            //zxing.IsScanning = true;
         }
 
-        private async void Button_Clicked(System.Object sender, System.EventArgs e)
+        protected override void OnDisappearing()
         {
-            await DisplayAlert("", test.Mask, "ok");
+            //zxing.IsScanning = false;
+
+            base.OnDisappearing();
         }
 
         public static async Task<GetTokenResponse> getSharePointToken()
@@ -44,23 +59,6 @@ namespace PhuLongCRM
             var body = await response.Content.ReadAsStringAsync();
             GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
             return tokenData;
-        }
-
-        private async void GetListId()
-        {
-            string projectName = "Bcons Plaza Bình Dương_5C7ACF4A31ACEC119841002248585DEE";
-            string token = (await getSharePointToken()).access_token;
-            var client = BsdHttpClient.Instance();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var front_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource +
-                OrgConfig.SharePointSiteName + $"lists(guid'{OrgConfig.SharePointProjectId}')/items?$select=ID,FileRef,FileSystemObjectType&$filter=substringof('{projectName}',FileRef)");
-            var front_result = await client.SendAsync(front_request);
-            if (front_result.IsSuccessStatusCode)
-            {
-                
-            }
         }
     }
 }

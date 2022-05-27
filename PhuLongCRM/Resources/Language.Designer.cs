@@ -151,6 +151,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bạn chưa nhận được mã ? Gửi lại.
+        /// </summary>
+        internal static string ban_chua_nhan_duoc_ma_gui_lai {
+            get {
+                return ResourceManager.GetString("ban_chua_nhan_duoc_ma_gui_lai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bạn có chắc chắn muốn thay đổi PTTT?.
         /// </summary>
         internal static string ban_co_chan_chan_muon_thay_doi_pttt {
@@ -2230,6 +2239,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đăng nhập với User CRM.
+        /// </summary>
+        internal static string dang_nhap_voi_user_crm {
+            get {
+                return ResourceManager.GetString("dang_nhap_voi_user_crm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đang tải.
         /// </summary>
         internal static string dang_tai {
@@ -3832,6 +3850,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Không tìm thấy thông tin chiết khấu..
+        /// </summary>
+        internal static string khong_tim_thay_thong_tin_chiet_khau {
+            get {
+                return ResourceManager.GetString("khong_tim_thay_thong_tin_chiet_khau", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Không tìm thấy thông tin. Vui lòng thử lại..
         /// </summary>
         internal static string khong_tim_thay_thong_tin_vui_long_thu_lai {
@@ -4354,6 +4381,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lỗi hệ thống..
+        /// </summary>
+        internal static string loi_he_thong {
+            get {
+                return ResourceManager.GetString("loi_he_thong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lỗi kết nối đến Server..
         /// </summary>
         internal static string loi_ket_noi_dern_server {
@@ -4462,6 +4498,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã QR không đúng..
+        /// </summary>
+        internal static string ma_qr_khong_dung {
+            get {
+                return ResourceManager.GetString("ma_qr_khong_dung", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mã sản phẩm.
         /// </summary>
         internal static string ma_san_pham {
@@ -4503,6 +4548,15 @@ namespace PhuLongCRM.Resources {
         internal static string ma_su_kien {
             get {
                 return ResourceManager.GetString("ma_su_kien", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã xác thực không đúng.
+        /// </summary>
+        internal static string ma_xac_thuc_khong_dung {
+            get {
+                return ResourceManager.GetString("ma_xac_thuc_khong_dung", resourceCulture);
             }
         }
         
@@ -4575,6 +4629,15 @@ namespace PhuLongCRM.Resources {
         internal static string mat_khau_khong_duong_de_trong {
             get {
                 return ResourceManager.GetString("mat_khau_khong_duong_de_trong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mật khẩu không khớp.
+        /// </summary>
+        internal static string mat_khau_khong_khop {
+            get {
+                return ResourceManager.GetString("mat_khau_khong_khop", resourceCulture);
             }
         }
         
@@ -5668,6 +5731,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OTP được gửi về số điện thoại.
+        /// </summary>
+        internal static string otp_duoc_gui_ve_so_dien_thoai {
+            get {
+                return ResourceManager.GetString("otp_duoc_gui_ve_so_dien_thoai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phạm vi hoạt động.
         /// </summary>
         internal static string pham_vi_hoat_dong {
@@ -5880,6 +5952,15 @@ namespace PhuLongCRM.Resources {
         internal static string quang_cao {
             get {
                 return ResourceManager.GetString("quang_cao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quên mật khẩu ?.
+        /// </summary>
+        internal static string quen_mat_khau {
+            get {
+                return ResourceManager.GetString("quen_mat_khau", resourceCulture);
             }
         }
         
@@ -7414,6 +7495,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Họ tên không đúng..
+        /// </summary>
+        internal static string user_name_khong_dung {
+            get {
+                return ResourceManager.GetString("user_name_khong_dung", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vấn đề.
         /// </summary>
         internal static string van_de {
@@ -7756,6 +7846,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vui lòng nhập mật khẩu.
+        /// </summary>
+        internal static string vui_long_nhap_mat_khau {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_mat_khau", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vui lòng nhập mật khẩu cũ..
         /// </summary>
         internal static string vui_long_nhap_mat_khau_cu {
@@ -7788,6 +7887,15 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_nhap_mo_ta_vn {
             get {
                 return ResourceManager.GetString("vui_long_nhap_mo_ta_vn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vui lòng nhập OTP để xác nhận tài khoản.
+        /// </summary>
+        internal static string vui_long_nhap_otp_de_xac_nhan_tai_khoan {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_otp_de_xac_nhan_tai_khoan", resourceCulture);
             }
         }
         
@@ -7860,6 +7968,15 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_nhap_tieu_de_giu_cho {
             get {
                 return ResourceManager.GetString("vui_long_nhap_tieu_de_giu_cho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vui lòng nhập xác nhận mật khẩu.
+        /// </summary>
+        internal static string vui_long_nhap_xac_nhan_mat_khau {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_xac_nhan_mat_khau", resourceCulture);
             }
         }
         
@@ -7945,11 +8062,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Xác nhận mã OTP.
+        /// </summary>
+        internal static string xac_nhan_ma_otp {
+            get {
+                return ResourceManager.GetString("xac_nhan_ma_otp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Xác nhận mật khẩu không đúng..
         /// </summary>
         internal static string xac_nhan_mat_khai_khong_dung {
             get {
                 return ResourceManager.GetString("xac_nhan_mat_khai_khong_dung", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xác nhận mật khẩu.
+        /// </summary>
+        internal static string xac_nhan_mat_khau {
+            get {
+                return ResourceManager.GetString("xac_nhan_mat_khau", resourceCulture);
             }
         }
         

@@ -38,11 +38,11 @@ namespace PhuLongCRM.Helper
             {
                 if (Device.iOS == Device.RuntimePlatform)
                 {
-                    photoStatus = await RequestPermission<Permissions.Photos>("Thư Viện", "Insight Land cần quyền truy cập vào thư viện", firstPermission);
+                    photoStatus = await RequestPermission<Permissions.Photos>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", firstPermission);
                 }
                 else
                 {
-                    photoStatus = await RequestPermission<Permissions.StorageRead>("Thư Viện", "Insight Land cần quyền truy cập vào thư viện", firstPermission);
+                    photoStatus = await RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", firstPermission);
                 }
             }
             return photoStatus;
@@ -60,7 +60,7 @@ namespace PhuLongCRM.Helper
             PermissionStatus firstPermission = cameraStatus; // chi su dung tren ios. 
             if (cameraStatus != PermissionStatus.Granted)
             {
-                cameraStatus = await PermissionHelper.RequestPermission<Camera>("Quyền truy cập máy ảnh", "Insight Land cần quyền truy cập vào máy ảnh", firstPermission);
+                cameraStatus = await PermissionHelper.RequestPermission<Camera>("Quyền truy cập máy ảnh", "PhuLongCRM cần quyền truy cập vào máy ảnh", firstPermission);
             }
 
             if (Device.RuntimePlatform == Device.Android)
@@ -71,7 +71,7 @@ namespace PhuLongCRM.Helper
 
                     if (cameraStatus != PermissionStatus.Granted)
                     {
-                        cameraStatus = await RequestPermission<Permissions.StorageRead>("Thư Viện", "Insight Land cần quyền truy cập vào thư viện", firstPermission);
+                        cameraStatus = await RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", firstPermission);
                     }
                 }
             }

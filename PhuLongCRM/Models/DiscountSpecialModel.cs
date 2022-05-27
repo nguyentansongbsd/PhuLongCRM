@@ -12,6 +12,8 @@ namespace PhuLongCRM.Models
         public string bsd_name { get; set; }
         public decimal bsd_percentdiscount { get; set; }
         public string percentdiscount_format { get { return StringFormatHelper.FormatPercent(bsd_percentdiscount) + "%"; } }
+        public decimal bsd_totalamount { get; set; }
+        public string totalamount_format { get { return StringFormatHelper.FormatCurrency(bsd_totalamount) + " đ"; } }
         public string statuscode { get; set; }
         public string statuscode_format { get { return statuscode != string.Empty ? DiscountSpecialStatus.GetDiscountSpecialStatusById(statuscode)?.Name : null; } }
         public string statuscode_color { get { return statuscode != string.Empty ? DiscountSpecialStatus.GetDiscountSpecialStatusById(statuscode)?.Background : "#f1f1f1"; } }

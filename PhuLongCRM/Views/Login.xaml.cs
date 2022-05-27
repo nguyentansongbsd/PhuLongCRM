@@ -318,5 +318,17 @@ namespace PhuLongCRM.Views
             data["bsd_imeinumber"] = ImeiNum;
             return data;
         }
+
+        private async void ForgotPassword_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            await Navigation.PushAsync(new ForgotPassWordPage());
+            LoadingHelper.Hide();
+        }
+
+        private async void LoginUserCRM_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new LoginByUserCRMPage());
+        }
     }
 }
