@@ -7,20 +7,5 @@
     xmlns:controls="clr-namespace:PhuLongCRM.Controls"
     xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
     x:Class="PhuLongCRM.BlankPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <zxing:ZXingScannerView x:Name="zxing"
-                                VerticalOptions="FillAndExpand"/>
-        <zxing:ZXingDefaultOverlay TopText="Hold your phone up to the barcode"
-                                   BottomText="Scanning will happen automatically"/>
-        <Label x:Name="lblResult"
-               Grid.Row="1"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               HorizontalTextAlignment="Center"
-               VerticalTextAlignment="Center"/>
-    </Grid>
+    <Label Text="Trang chu" TextColor="Black" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center"/>
 </ContentPage>

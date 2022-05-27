@@ -325,5 +325,10 @@ namespace PhuLongCRM.Views
             await Navigation.PushAsync(new ForgotPassWordPage());
             LoadingHelper.Hide();
         }
+
+        private async void LoginUserCRM_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new LoginByUserCRMPage());
+        }
     }
 }

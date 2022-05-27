@@ -2835,4 +2835,7 @@
 	<data name="loi_he_thong">
         <value>System error.</value>
     </data>
+	<data name="dang_nhap_voi_user_crm">
+        <value>Login by User CRM</value>
+    </data>
 </root>

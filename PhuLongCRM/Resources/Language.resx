@@ -2818,7 +2818,7 @@
 		<value>Mật khẩu không khớp</value>
 	</data>
 	<data name="xac_nhan_mat_khau">
-		<value>Mật khẩu không khớp</value>
+		<value>Xác nhận mật khẩu</value>
 	</data>
 	<data name="vui_long_nhap_mat_khau">
         <value>Vui lòng nhập mật khẩu</value>
@@ -2834,5 +2834,8 @@
     </data>
 	<data name="loi_he_thong">
         <value>Lỗi hệ thống.</value>
+    </data>
+	<data name="dang_nhap_voi_user_crm">
+        <value>Đăng nhập với User CRM</value>
     </data>
 </root>

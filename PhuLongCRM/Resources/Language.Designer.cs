@@ -5482,5 +5482,11 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("loi_he_thong", resourceCulture);
             }
         }
+        
+        internal static string dang_nhap_voi_user_crm {
+            get {
+                return ResourceManager.GetString("dang_nhap_voi_user_crm", resourceCulture);
+            }
+        }
     }
 }
