@@ -15,7 +15,7 @@ namespace PhuLongCRM
             InitializeComponent();
             CultureInfo cultureInfo = new CultureInfo(UserLogged.Language);
             Language.Culture = cultureInfo;
-            MainPage = new Login();
+            MainPage = new BlankPage();
 
         }
 

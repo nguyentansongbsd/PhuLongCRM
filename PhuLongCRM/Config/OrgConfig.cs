@@ -10,14 +10,14 @@ namespace PhuLongCRM.Config
         //public const string VerApp = "PL.CRM - Version 0.1.0";
 
         //public const string GraphApi = "https://graph.microsoft.com/v1.0/sites/";
-        //public const string GraphReSource = "https://graph.microsoft.com";
-        //public const  string SharepointSiteId= "conasivn.sharepoint.com,453175f4-014c-4ed4-a4a6-d60395aad6a6,c2ad48c4-e00e-4321-ac9a-8c53d05c6152";
-        //public const string SharePointProjectId = "0316d345-0ef0-4570-bef4-8432db7f8707";
+        public const string GraphReSource = "https://graph.microsoft.com";
+        public const  string SharepointSiteId= "conasivn.sharepoint.com,453175f4-014c-4ed4-a4a6-d60395aad6a6,c2ad48c4-e00e-4321-ac9a-8c53d05c6152";
+        public const string SharePointProjectId = "614ac679-4590-4871-920f-7563b5fbc2fd";
         //public const string SharePointContact_CMNDId = "b3e93b2a-6fe4-448f-bad8-6653f99ff20a";
-        //public const string SharePointUnitId = "a9ae01d8-effe-47f7-88de-609391e49113";
+        public const string SharePointUnitId = "aed4b572-0c23-4ae5-908b-04187fc12bc8";
 
-        //public const string SharePointResource = "https://conasivn.sharepoint.com";
-        //public const string SharePointSiteName = "Conasi";
+        public const string SharePointResource = "https://diaocphulong.sharepoint.com/";
+        public const string SharePointSiteName = "sites/demo/_api/web/";
 
         public const string ApiUrl = "https://phulongdev.api.crm5.dynamics.com/api/data/v9.1";
 
