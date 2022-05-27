@@ -13,11 +13,11 @@ namespace PhuLongCRM
         public BlankPage()
         {
             InitializeComponent();
-            zxing.OnScanResult += (result) =>
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                lblResult.Text = result.Text;
-            });
+            //zxing.OnScanResult += (result) =>
+            //Device.BeginInvokeOnMainThread(() =>
+            //{
+            //    lblResult.Text = result.Text;
+            //});
 
 
         }
@@ -25,12 +25,12 @@ namespace PhuLongCRM
         {
             base.OnAppearing();
 
-            zxing.IsScanning = true;
+            //zxing.IsScanning = true;
         }
 
         protected override void OnDisappearing()
         {
-            zxing.IsScanning = false;
+            //zxing.IsScanning = false;
 
             base.OnDisappearing();
         }
