@@ -2838,4 +2838,7 @@
 	<data name="dang_nhap_voi_user_crm">
         <value>Đăng nhập với User CRM</value>
     </data>
+	<data name="khong_tim_thay_thong_tin_chiet_khau" xml:space="preserve">
+    <value>Không tìm thấy thông tin chiết khấu.</value>
+  </data>
 </root>

@@ -4,6 +4,7 @@
        xmlns:converters="clr-namespace:PhuLongCRM.Converters"
        xmlns:controls="clr-namespace:PhuLongCRM.Controls"
        xmlns:views="clr-namespace:PhuLongCRM.Views"
+       xmlns:plcrm="clr-namespace:PhuLongCRM"
        xmlns:lang="clr-namespace:PhuLongCRM.Resources"
        xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
        xmlns:ffimageTranformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"

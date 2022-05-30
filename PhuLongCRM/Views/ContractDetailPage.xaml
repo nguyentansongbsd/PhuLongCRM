@@ -59,11 +59,11 @@
                     </telerikPrimitives:RadBorder>
                     <Grid ColumnDefinitions="*,*,*,*" Margin="0,5,0,0">
                         <BoxView HeightRequest="0.5" BackgroundColor="#939393" Grid.ColumnSpan="4" VerticalOptions="End" />
-                        <telerikPrimitives:RadBorder x:Name="radBorderTongHop" Grid.Column="0" Style="{StaticResource rabBorder_Tab}">
+                        <telerikPrimitives:RadBorder x:Name="radBorderChinhSach" Grid.Column="0" Style="{StaticResource rabBorder_Tab}">
                             <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TongHop_Tapped"/>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ChinhSach_Tapped"/>
                             </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lbTongHop" Text="{x:Static lang:Language.tong_hop}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
+                            <Label x:Name="lbChinhSach" Text="{x:Static lang:Language.chinh_sach}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
                         </telerikPrimitives:RadBorder>
                         <telerikPrimitives:RadBorder x:Name="radBorderChiTiet" Grid.Column="1" Style="{StaticResource rabBorder_Tab}">
                             <telerikPrimitives:RadBorder.GestureRecognizers>
@@ -71,11 +71,11 @@
                             </telerikPrimitives:RadBorder.GestureRecognizers>
                             <Label x:Name="lbChiTiet" Text="{x:Static lang:Language.chi_tiet}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
                         </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="radBorderChinhSach" Grid.Column="2" Style="{StaticResource rabBorder_Tab}">
+                        <telerikPrimitives:RadBorder x:Name="radBorderTongHop" Grid.Column="2" Style="{StaticResource rabBorder_Tab}">
                             <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ChinhSach_Tapped"/>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TongHop_Tapped"/>
                             </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lbChinhSach" Text="{x:Static lang:Language.chinh_sach}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
+                            <Label x:Name="lbTongHop" Text="{x:Static lang:Language.tong_hop}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
                         </telerikPrimitives:RadBorder>
                         <telerikPrimitives:RadBorder x:Name="radBorderLich" Grid.Column="3" Style="{StaticResource rabBorder_Tab}">
                             <telerikPrimitives:RadBorder.GestureRecognizers>
@@ -150,31 +150,6 @@
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
-
-                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
-                                <telerikPrimitives:RadExpander.Header>
-                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.dong_so_huu}"/>
-                                    </telerikPrimitives:ExpanderHeader>
-                                </telerikPrimitives:RadExpander.Header>
-                                <telerikPrimitives:RadExpander.Content>
-                                    <StackLayout BindableLayout.ItemsSource="{Binding CoownerList}" BackgroundColor="White" Spacing="1">
-                                        <BindableLayout.EmptyViewTemplate>
-                                            <DataTemplate>
-                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
-                                            </DataTemplate>
-                                        </BindableLayout.EmptyViewTemplate>
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
-                                                <telerikPrimitives:RadBorder BorderColor="#f3f3f3" BorderThickness="0,0,0,1">
-                                                    <Label Text="{Binding customer}" Padding="25,10" FontAttributes="Bold" TextColor="#1399D5" FontSize="15"/>
-                                                </telerikPrimitives:RadBorder>
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </StackLayout>
-                                </telerikPrimitives:RadExpander.Content>
-                            </telerikPrimitives:RadExpander>
-
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
@@ -316,7 +291,7 @@
                             </telerikPrimitives:RadExpander>
                         </StackLayout>
                         <!--tab chính sách-->
-                        <Grid x:Name="TabChinhSach" IsVisible="true" Margin="0,5,0,0" BackgroundColor="#F1F1F1">
+                        <StackLayout x:Name="TabChinhSach" IsVisible="true" Margin="0,5,0,0" BackgroundColor="#F1F1F1">
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
@@ -325,33 +300,93 @@
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.dieu_kien_ban_giao}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Contract.handovercondition_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End"/>
+                                        <StackLayout BackgroundColor="White" Padding="25,10">
+                                            <controls:FormLabel Text="{x:Static lang:Language.dieu_kien_ban_giao}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                            <controls:FormLabelValue Text="{Binding Contract.handovercondition_name}" Margin="20,0,0,0" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalTextAlignment="End">
+                                                <controls:FormLabelValue.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="HandoverConditionItem_Tapped"/>
+                                                </controls:FormLabelValue.GestureRecognizers>
+                                            </controls:FormLabelValue>
+                                        </StackLayout>
+                                        <StackLayout BackgroundColor="White" Padding="25,10">
+                                            <controls:FormLabel Text="{x:Static lang:Language.phuong_thuc_thanh_toan}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                            <controls:FormLabelValue Text="{Binding Contract.paymentscheme_name}" Margin="20,0,0,0" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalTextAlignment="End"/>
+                                        </StackLayout>
+                                        <Grid RowDefinitions="Auto,Auto" BackgroundColor="White" Padding="25,10">
+                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau}" Grid.Row="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                            <StackLayout Grid.Row="1" BindableLayout.ItemsSource="{Binding ListDiscount}" BackgroundColor="#eeeeee" Spacing="1">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding bsd_discountid}"/>
+                                                            </Label.GestureRecognizers>
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                                    <Binding Path="bsd_discountnumber" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="{x:Static lang:Language.phuong_thuc_thanh_toan}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Contract.paymentscheme_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau}" Grid.Row="0" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Contract.discountlist_name}" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End"/>
-                                            <ScrollView x:Name="scrolltDiscount" Orientation="Horizontal" HorizontalScrollBarVisibility="Always" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="25,0,25,10">
-                                                <StackLayout x:Name="stackLayoutDiscount" HorizontalOptions="End" Orientation="Horizontal"/>
-                                            </ScrollView>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,Auto" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_dac_biet}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <StackLayout x:Name="stackLayoutSpecialDiscount" IsVisible="false" Grid.Column="2" HorizontalOptions="End" Orientation="Vertical" Padding="0,10,25,10" Spacing="10"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,Auto" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.khuyen_mai}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10" VerticalOptions="Start"/>
-                                            <StackLayout x:Name="stackLayoutPromotions" IsVisible="false" Grid.Column="2" HorizontalOptions="End" Orientation="Vertical" Padding="0,10,25,10" Spacing="10"/>
-                                        </Grid>
+                                        <StackLayout Padding="25,10" BackgroundColor="White" >
+                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_dac_biet}" Grid.Column="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                            <StackLayout x:Name="stackLayoutSpecialDiscount" BackgroundColor="#eeeeee" BindableLayout.ItemsSource="{Binding ListSpecialDiscount}" HorizontalOptions="End" Spacing="1">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Label Text="{Binding Label}" BackgroundColor="White" Padding="0,4" TextColor="#1399D5" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="stackLayoutSpecialDiscount_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                        </Label>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </StackLayout>
+                                        <StackLayout Padding="25,10" BackgroundColor="White" >
+                                            <controls:FormLabel Text="{x:Static lang:Language.khuyen_mai}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                            <StackLayout x:Name="stackLayoutPromotions" BindableLayout.ItemsSource="{Binding ListPromotion}" HorizontalOptions="End" Spacing="1" BackgroundColor="#eeeeee">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Label Text="{Binding Label}" BackgroundColor="White" Padding="0,4" TextColor="#1399D5" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="stackLayoutPromotions_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                        </Label>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </StackLayout>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
-                        </Grid>
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.dong_so_huu}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BindableLayout.ItemsSource="{Binding CoownerList}" BackgroundColor="White" Spacing="1">
+                                        <BindableLayout.EmptyViewTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                            </DataTemplate>
+                                        </BindableLayout.EmptyViewTemplate>
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <telerikPrimitives:RadBorder BorderColor="#f3f3f3" BorderThickness="0,0,0,1">
+                                                    <Label Text="{Binding customer}" Padding="25,10" FontAttributes="Bold" TextColor="#1399D5" FontSize="15"/>
+                                                </telerikPrimitives:RadBorder>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+                        </StackLayout>
                         <!--tab lịch-->
                         <StackLayout x:Name="TabLich" IsVisible="false">
                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" IsVisible="{Binding ShowInstallmentList}" >
@@ -375,23 +410,33 @@
                                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}">
                                                             <Label Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                         </telerikPrimitives:RadBorder>
-                                                        <Label Grid.Column="1" Text="{Binding bsd_name}" TextColor="#1C78C2" FontSize="15" FontAttributes="Bold" VerticalOptions="Center"/>
+                                                        <Label Grid.Column="1" Text="{Binding bsd_name_format}" TextColor="#1C78C2" FontSize="15" FontAttributes="Bold" VerticalOptions="Center"/>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,*">
-                                                        <Label Text="{Binding Source={x:Static lang:Language.ngay_het_han},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding hide_duedate}">
+                                                        <Label Text="{Binding Source={x:Static lang:Language.ngay_den_han},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_duedate,StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
                                                     <Grid ColumnDefinitions="Auto,*">
                                                         <Label Text="{Binding Source={x:Static lang:Language.tien_dot},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_amountofthisphase_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding bsd_depositamount_format,Converter={StaticResource NullToHideConverter}}" >
+                                                    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding bsd_depositamount_hide}" >
                                                         <Label Text="{Binding Source={x:Static lang:Language.tien_dat_coc},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_depositamount_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
                                                     <Grid ColumnDefinitions="Auto,*">
                                                         <Label Text="{Binding Source={x:Static lang:Language.da_thanh_toan},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_amountwaspaid_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_maintenanceamount_hide}" >
+                                                        <Label Grid.Column="0" Text="&#xf192;" TextColor="#b2b2b2" VerticalOptions="Center" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
+                                                        <Label Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                                        <Label Text="{Binding bsd_maintenanceamount_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_managementamount_hide}" >
+                                                        <Label Grid.Column="0" Text="&#xf192;" VerticalOptions="Center" TextColor="#b2b2b2" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
+                                                        <Label Text="{Binding Source={x:Static lang:Language.phi_quan_ly},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                                        <Label Text="{Binding bsd_managementamount_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
                                                     </Grid>
                                                 </StackLayout>
                                             </telerikPrimitives:RadBorder>
@@ -403,6 +448,291 @@
                     </Grid>
                 </StackLayout>
             </ScrollView>
+
+            <ContentView x:Name="ContentPromotion" IsVisible="false" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000" Padding="20">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentPromotion_Tapped"/>
+                </ContentView.GestureRecognizers>
+                <telerikPrimitives:RadBorder VerticalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="White" Padding="10">
+                    <Grid Grid.Row="0" Margin="0" RowDefinitions="Auto,*">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                            <Label Grid.Column="0" Text="{x:Static lang:Language.khuyen_mai_title}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="17" Padding="2" TextColor="#666666">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentPromotion_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                        <StackLayout Grid.Row="1" Padding="10,0">
+                            <Label Text="{Binding PromotionItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
+
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.gia_tri}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding PromotionItem.bsd_values_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*" IsVisible="{Binding PromotionItem.hide_startdate}">
+                                <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_bat_dau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding PromotionItem.bsd_startdate,StringFormat='{0:dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*" IsVisible="{Binding PromotionItem.hide_enddate}">
+                                <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding PromotionItem.bsd_enddate,StringFormat='{0:dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding PromotionItem.bsd_description}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+                        </StackLayout>
+                    </Grid>
+                </telerikPrimitives:RadBorder>
+            </ContentView>
+
+            <ContentView x:Name="ContentSpecialDiscount" IsVisible="false" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000" Padding="20">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ContentSpecialDiscount_Tapped"/>
+                </ContentView.GestureRecognizers>
+                <telerikPrimitives:RadBorder VerticalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="White" Padding="10,10,10,30">
+                    <Grid Grid.Row="0" Margin="0" RowDefinitions="Auto,*">
+                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding DiscountSpecialItem.statuscode_color}" Grid.Column="0">
+                                <Label Text="{Binding DiscountSpecialItem.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                            </telerikPrimitives:RadBorder>
+                            <Label Grid.Column="1" Text="{x:Static lang:Language.chiet_khau_dac_biet_title}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Label Grid.Column="2" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="17" Padding="2" TextColor="#666666">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ContentSpecialDiscount_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                        <StackLayout Grid.Row="1" Padding="10,0">
+                            <Label Text="{Binding DiscountSpecialItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.phan_tram_giam}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding DiscountSpecialItem.percentdiscount_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.tong_tien}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding DiscountSpecialItem.totalamount_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+                        </StackLayout>
+                    </Grid>
+                </telerikPrimitives:RadBorder>
+            </ContentView>
+
+            <ContentView x:Name="ContentDiscount" IsVisible="false" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000" Padding="20">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentDiscount_Tapped"/>
+                </ContentView.GestureRecognizers>
+                <telerikPrimitives:RadBorder VerticalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="White" Padding="10,10,10,30">
+                    <ScrollView>
+                        <Grid Grid.Row="0" Margin="0" RowDefinitions="Auto,*">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                                <Label Grid.Column="0" Text="{x:Static lang:Language.chiet_khau_chung}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="17" Padding="2" TextColor="#666666">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentDiscount_Tapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                            <StackLayout Grid.Row="1" Padding="10,0">
+                                <Label Text="{Binding Discount.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
+
+                                <!--task 602 yêu cầu xóa-->
+                                <!--<Grid ColumnDefinitions="4*,6*">
+                                    <controls:FormLabel Text="{x:Static lang:Language.discount_no}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Discount.bsd_discountnumber}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+
+                                <Grid ColumnDefinitions="4*,6*">
+                                    <controls:FormLabel Text="{x:Static lang:Language.loai_chiet_khau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Discount.discounttype_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+
+                                <Grid ColumnDefinitions="4*,6*">
+                                    <controls:FormLabel Text="{x:Static lang:Language.quyen_uu_tien}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Discount.bsd_priority}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>-->
+
+                                <Grid ColumnDefinitions="4*,6*" >
+                                    <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_bat_dau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Discount.bsd_startdate,StringFormat='{0:dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+
+                                <Grid ColumnDefinitions="4*,6*" >
+                                    <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Discount.bsd_enddate,StringFormat='{0:dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+
+                                <!--task 602 yêu cầu xóa-->
+                                <!--<Grid ColumnDefinitions="4*,6*">
+                                    <controls:FormLabel Text="{x:Static lang:Language.dac_biet}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Discount.bsd_special_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>-->
+
+                                <Grid ColumnDefinitions="4*,6*">
+                                    <controls:FormLabel Text="{x:Static lang:Language.phuong_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Discount.bsd_method_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+
+                                <Grid ColumnDefinitions="4*,6*">
+                                    <controls:FormLabel Text="{x:Static lang:Language.gia_tri}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Discount.value_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+                                <StackLayout IsVisible="{Binding Discount.bsd_isconditionsapplied}">
+                                    <Grid ColumnDefinitions="4*,6*">
+                                        <controls:FormLabel Text="{x:Static lang:Language.dieu_kien_ap_dung}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                        <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                            <Label Text="{Binding Discount.conditionsapply_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
+                                    </Grid>
+                                    <StackLayout IsVisible="{Binding Discount.hide_list_price}">
+                                        <Grid ColumnDefinitions="4*,6*">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tu}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                            <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                                <Label Text="{Binding Discount.bsd_fromvalue_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </telerikPrimitives:RadBorder>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="4*,6*">
+                                            <controls:FormLabel Text="{x:Static lang:Language.den}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                            <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                                <Label Text="{Binding Discount.bsd_tovalue_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </telerikPrimitives:RadBorder>
+                                        </Grid>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding Discount.hide_byunit}">
+                                        <controls:FormLabel Text="{x:Static lang:Language.danh_sach_chiet_khau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                        <StackLayout BindableLayout.ItemsSource="{Binding Discount.distcount_list}" BackgroundColor="White" Spacing="1">
+                                            <BindableLayout.EmptyViewTemplate>
+                                                <DataTemplate>
+                                                    <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                                </DataTemplate>
+                                            </BindableLayout.EmptyViewTemplate>
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate>
+                                                    <telerikPrimitives:RadBorder BorderColor="#f3f3f3" BorderThickness="0,0,0,1">
+                                                        <Label Text="{Binding Label}" Padding="0,5" FontAttributes="Bold" TextColor="#1399D5" FontSize="15"/>
+                                                    </telerikPrimitives:RadBorder>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </ScrollView>
+                </telerikPrimitives:RadBorder>
+            </ContentView>
+
+            <ContentView x:Name="ContentHandoverCondition" IsVisible="false" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000" Padding="20">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ContentHandoverCondition_Tapped"/>
+                </ContentView.GestureRecognizers>
+                <telerikPrimitives:RadBorder VerticalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="White" Padding="10">
+                    <telerikPrimitives:RadBorder.GestureRecognizers>
+                        <TapGestureRecognizer/>
+                    </telerikPrimitives:RadBorder.GestureRecognizers>
+                    <Grid Grid.Row="0" Margin="0" RowDefinitions="Auto,*">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                            <Label Grid.Column="0" Text="{x:Static lang:Language.dieu_kien_ban_giao_title}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="17" Padding="2" TextColor="#666666">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ContentHandoverCondition_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                        <StackLayout Grid.Row="1" Padding="10,0">
+                            <Label Text="{Binding HandoverConditionItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
+
+                            <Grid ColumnDefinitions="4*,6*" IsVisible="{Binding HandoverConditionItem.hide_startdate}">
+                                <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_bat_dau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding HandoverConditionItem.bsd_startdate,StringFormat='{0:dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*" IsVisible="{Binding HandoverConditionItem.hide_enddate}">
+                                <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding HandoverConditionItem.bsd_enddate,StringFormat='{0:dd/MM/yyyy}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.loai}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding HandoverConditionItem.type_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.theo_loai_unit}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding HandoverConditionItem.byunittype_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.phuong_thuc}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding HandoverConditionItem.method_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*" IsVisible="{Binding HandoverConditionItem.bsd_byunittype}">
+                                <controls:FormLabel Text="{x:Static lang:Language.loai_unit}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding HandoverConditionItem.name_unit_type}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.gia_tri}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding HandoverConditionItem.amount_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="4*,6*">
+                                <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                                <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding HandoverConditionItem.bsd_description}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+                        </StackLayout>
+                    </Grid>
+                </telerikPrimitives:RadBorder>
+            </ContentView>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

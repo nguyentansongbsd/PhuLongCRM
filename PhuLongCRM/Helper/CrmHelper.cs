@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using PhuLongCRM.Config;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
 using System;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -57,7 +54,7 @@ namespace PhuLongCRM.Helper
                     var a = response.RequestMessage;
                     var body = await response.Content.ReadAsStringAsync();
                     var api_Response = JsonConvert.DeserializeObject<ErrorResponse>(body);
-                    
+
                 }
             }
             catch (Exception ex)
@@ -139,7 +136,7 @@ namespace PhuLongCRM.Helper
                         GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
                         UserLogged.AccessToken = tokenData.access_token;
 
-                        var api_response= await SetNullLookupField(EntityName, Id, FieldName);
+                        var api_response = await SetNullLookupField(EntityName, Id, FieldName);
                         return api_response;
                     }
                     else
@@ -147,7 +144,7 @@ namespace PhuLongCRM.Helper
                         return new CrmApiResponse()
                         {
                             IsSuccess = false,
-                            ErrorResponse = new ErrorResponse() {error = new Error() { message = reLoginResponse.RequestMessage.ToString() } }
+                            ErrorResponse = new ErrorResponse() { error = new Error() { message = reLoginResponse.RequestMessage.ToString() } }
                         };
                     }
                 }

@@ -74,6 +74,11 @@
     <EmbeddedResource Include="Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Plugin.FirebasePushNotification">
+      <HintPath>C:\Users\phamx\Downloads\Microsoft.SkypeApp_kzf8qxf38zg5c!App\All\Plugin.FirebasePushNotification.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Controls\LookUpAddress.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
