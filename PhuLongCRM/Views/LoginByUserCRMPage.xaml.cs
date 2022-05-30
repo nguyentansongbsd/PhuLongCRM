@@ -42,8 +42,7 @@ namespace PhuLongCRM.Views
                     UserLogged.IsLoginByUserCRM = true;
                     UserLogged.IsLogged = true;
 
-                    //Application.Current.MainPage = new AppShell();
-                    await Navigation.PushAsync(new BlankPage());
+                    Application.Current.MainPage = new AppShell();
                     await Task.Delay(1);
                     LoadingHelper.Hide();
                 }
