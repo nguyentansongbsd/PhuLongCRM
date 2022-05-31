@@ -31,7 +31,7 @@ namespace PhuLongCRM.Models
             get
             {
                 if (bsd_method == 100000001)
-                    return "Amount";
+                    return Language.han;//"Amount";
                 else if (bsd_method == 100000000)
                     return "Percent";
                 else

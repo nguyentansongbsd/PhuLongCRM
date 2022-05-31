@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,7 +39,7 @@ namespace PhuLongCRM.Models
         public bool bsd_vippriority { get; set; }
         public string bsd_vippriority_format
         {
-            get => bsd_vippriority == true ? "Yes" : "No";
+            get => bsd_vippriority == true ? Language.co : Language.khong;// "Yes" : "No";
         }
 
         // thong tin dien tich

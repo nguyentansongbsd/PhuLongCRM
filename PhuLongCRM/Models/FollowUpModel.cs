@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -84,10 +85,10 @@ namespace PhuLongCRM.Models
         public string bsd_takeoutmoney_format 
         { get 
             {
-                if (bsd_takeoutmoney == 100000001)
-                    return "Forfeiture";
-                else if (bsd_takeoutmoney == 100000000)
-                    return "Refund";
+                if (bsd_takeoutmoney == 100000001) //takeoutmoney_forfeiture
+                    return Language.takeoutmoney_forfeiture;// "Forfeiture";
+                else if (bsd_takeoutmoney == 100000000) //takeoutmoney_refund
+                    return Language.takeoutmoney_refund;//"Refund";
                 else
                     return "";
             } 

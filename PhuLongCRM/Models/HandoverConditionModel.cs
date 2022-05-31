@@ -78,9 +78,9 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","Price per sqm"),
-                new OptionSet("100000001","Amount"),
-                new OptionSet("100000002","Percent (%)"),
+                new OptionSet("100000000",Language.handover_price_per_sqm_method),// "Price per sqm" // handover_price_per_sqm_method
+                new OptionSet("100000001",Language.handover_amount_method),//"Amount" // handover_amount_method
+                new OptionSet("100000002",Language.handover_percent_method),//"Percent (%)" // handover_percent_method
             };
         }
     }

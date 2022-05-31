@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,11 @@ namespace PhuLongCRM.Models
         {
             return new List<StatusCodeModel>()
             {
-                new StatusCodeModel("1","Active","#06CF79"),
-                new StatusCodeModel("100000000","Approved","#03ACF5"),
-                new StatusCodeModel("100000001","Reject","#FDC206"),
-                new StatusCodeModel("100000002","Canceled","#03ACF5"),
-                new StatusCodeModel("2","Inactive","#FDC206"),
+                new StatusCodeModel("1",Language.discountspecial_active_sts,"#06CF79"), //discountspecial_active_sts Active
+                new StatusCodeModel("100000000",Language.discountspecial_approved_sts,"#03ACF5"), //discountspecial_approved_sts Approved
+                new StatusCodeModel("100000001",Language.discountspecial_reject_sts,"#FDC206"), //discountspecial_reject_sts Reject
+                new StatusCodeModel("100000002",Language.discountspecial_cancelled_sts,"#03ACF5"), //discountspecial_cancelled_sts Canceled
+                new StatusCodeModel("2",Language.discountspecial_inactive_sts,"#FDC206"), //discountspecial_inactive_sts Inactive
                 new StatusCodeModel("0","","#f1f1f1")
             };
         }
