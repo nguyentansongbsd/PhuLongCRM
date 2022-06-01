@@ -32,9 +32,9 @@ namespace PhuLongCRM.Models
             get
             {
                 if (bsd_method == 100000001)
-                    return Language.so_tien;//"Amount";
+                    return Language.handover_amount_method;//"Amount";
                 else if (bsd_method == 100000000)
-                    return Language.phan_tram;
+                    return Language.handover_percent_method;// "Percent";\
                 else
                     return null;
             }

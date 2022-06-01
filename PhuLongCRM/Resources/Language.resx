@@ -166,7 +166,7 @@
     <value>Đã chuyển đổi</value>
   </data>
 	<data name="khong_chuyen_doi" xml:space="preserve">
-    <value>Không chuyển đổi.</value>
+    <value>Không chuyển đổi</value>
   </data>
 	<data name="cong_viec_hom_nay" xml:space="preserve">
     <value>CÔNG VIỆC HÔM NAY</value>
@@ -2413,7 +2413,7 @@
     <value>TT Đủ Đợt 1</value>
   </data>
 	<data name="contract_acceptance_sts" xml:space="preserve">
-    <value>Chấp thuận</value>
+    <value>Nghiệm thu</value>
   </data>
 	<data name="contract_being_payment_sts" xml:space="preserve">
     <value>Đang thanh toán</value>
@@ -2428,7 +2428,7 @@
     <value>Đã hoàn thành</value>
   </data>
 	<data name="contract_confirm_document_sts" xml:space="preserve">
-    <value>Xác nhận tài liệu</value>
+    <value>Xác nhận giấy tờ</value>
   </data>
 	<data name="contract_foreigner_SPA_type" xml:space="preserve">
     <value>HĐMB nước ngoài</value>
@@ -2455,19 +2455,19 @@
     <value>Hoàn tất đặt cọc</value>
   </data>
 	<data name="contract_partial_sts" xml:space="preserve">
-    <value>Partial</value>
+    <value>Phần</value>
   </data>
 	<data name="contract_pending_sts" xml:space="preserve">
-    <value>Pending</value>
+    <value>Đang chờ</value>
   </data>
 	<data name="contract_pink_book_handover_sts" xml:space="preserve">
-    <value>Pink-book handover</value>
+    <value>Bàn giao giấy chứng nhận</value>
   </data>
 	<data name="contract_qualify_sts" xml:space="preserve">
     <value>Đủ điều kiện</value>
   </data>
 	<data name="contract_signed_contract_sts" xml:space="preserve">
-    <value>Đã ký HĐMB</value>
+    <value>Đã ký TTĐC/ VBTT</value>
   </data>
 	<data name="contract_signed_da_sts" xml:space="preserve">
     <value>Đã ký TTĐC</value>
@@ -2848,7 +2848,7 @@
         <value>Công bố</value>
     </data>
 	<data name="project_unpublish_sts">
-        <value>Không công bố</value>
+        <value>Thu hồi</value>
     </data>
 	<data name="project_inactive_sts" xml:space="preserve">
 		<value>Vô hiệu lực</value>
@@ -2922,10 +2922,55 @@
 	<data name="ca_ngay" xml:space="preserve">
 		<value>Cả ngày</value>
 	</data>
-	<data name="so_tien" xml:space="preserve">
-    <value>Số tiền</value>
-  </data>
-  <data name="phan_tram" xml:space="preserve">
-    <value>Phần trăm</value>
-  </data>
+	<data name="document_presentation_type">
+		<value>Bài thuyết trình</value>
+	</data>
+	<data name="document_product_sheet_type" xml:space="preserve">
+		<value>Tờ sản phẩm</value>
+	</data>
+	<data name="document_policies_and_procedures_type">
+		<value>Chính sách và thủ tục</value>
+	</data>
+	<data name="document_sales_literature_type" xml:space="preserve">
+		<value>Tài liệu bán hàng</value>
+	</data>
+	<data name="document_spreadsheets_type">
+		<value>Bảng tính</value>
+	</data>
+	<data name="document_news_type">
+		<value>Tin tức</value>
+	</data>
+	<data name="document_bulletins_type" xml:space="preserve">
+		<value>Bản tin</value>
+	</data>
+	<data name="document_price_sheets_type">
+		<value>Bảng giá</value>
+	</data>
+	<data name="document_manuals_type" xml:space="preserve">
+		<value>Hướng dẫn sử dụng</value>
+	</data>
+	<data name="document_company_background_type" xml:space="preserve">
+		<value>Cơ sở công ty</value>
+	</data>
+	<data name="document_marketing_collateral_type" xml:space="preserve">
+		<value>Tài sản thế chấp tiếp thị</value>
+	</data>
+	<data name="ful_change_contract_type_type" xml:space="preserve">
+		<value>Thay đổi loại hợp đồng</value>
+	</data>
+	<data name="ful_forfeiture_refund_type" xml:space="preserve">
+		<value>Hoàn lại tiền phạt</value>
+	</data>
+	<data name="ful_key_in_error_type" xml:space="preserve">
+		<value>Lỗi nhập liệu</value>
+	</data>
+	<data name="ful_ccr_group" xml:space="preserve">
+		<value>DVKH</value>
+	</data>
+	<data name="ful_fin_group" xml:space="preserve">
+		<value>Kế Toán</value>
+	</data>
+	<data name="ful_sam_group" xml:space="preserve">
+		<value>Kinh Doanh</value>
+	</data>
 </root>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using Xamarin.Forms;
 
@@ -390,15 +391,15 @@ namespace PhuLongCRM.ViewModels
                 numKHDaChuyenDoi = result.value.Where(x => x.Label == "3").Count();
                 numKHKhongChuyenDoi = result.value.Where(x => x.Label == "4" || x.Label == "5" || x.Label == "6" || x.Label == "7").Count();
 
-                chartKHMoi = new ChartModel() { Category = "Khách hàng mới", Value = numKHMoi };
-                chartKHDaChuyenDoi = new ChartModel() { Category = "Đã chuyển đổi", Value = numKHDaChuyenDoi };
-                chartKHKhongChuyenDoi = new ChartModel() { Category = "Không chuyển đổi", Value = numKHKhongChuyenDoi };
+                chartKHMoi = new ChartModel() { Category = Language.khach_hang_moi, Value = numKHMoi };
+                chartKHDaChuyenDoi = new ChartModel() { Category = Language.da_chuyen_doi, Value = numKHDaChuyenDoi };
+                chartKHKhongChuyenDoi = new ChartModel() { Category = Language.khong_chuyen_doi, Value = numKHKhongChuyenDoi };
             }
             else
             {
-                chartKHMoi = new ChartModel() { Category = "Khách hàng mới", Value = 1 };
-                chartKHDaChuyenDoi = new ChartModel() { Category = "Đã chuyển đổi", Value = 1 };
-                chartKHKhongChuyenDoi = new ChartModel() { Category = "Không chuyển đổi", Value = 1 };
+                chartKHMoi = new ChartModel() { Category = Language.khach_hang_moi, Value = 1 };
+                chartKHDaChuyenDoi = new ChartModel() { Category = Language.da_chuyen_doi, Value = 1 };
+                chartKHKhongChuyenDoi = new ChartModel() { Category = Language.khong_chuyen_doi, Value = 1 };
             }
 
             this.LeadsChart.Add(chartKHMoi);
