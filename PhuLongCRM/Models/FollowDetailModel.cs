@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Resources;
+using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,10 +28,11 @@ namespace PhuLongCRM.Models
             {
                 if (bsd_resell == true)
                 {
-                    return "Có";
-                }else if (bsd_resell == false)
+                    return Language.co;
+                }
+                else if (bsd_resell == false)
                 {
-                    return "Không";
+                    return Language.khong;
                 }
                 else
                 {
@@ -44,11 +46,11 @@ namespace PhuLongCRM.Models
             {
                 if (bsd_takeoutmoney == 100000000)
                 {
-                    return "Hoàn tiền";
+                    return Language.takeoutmoney_refund;
                 }
                 else if (bsd_takeoutmoney == 100000001)
                 {
-                    return "Tịch thu";
+                    return Language.takeoutmoney_forfeiture;
                 }
                 else
                 {
@@ -65,35 +67,35 @@ namespace PhuLongCRM.Models
             {
                 if (bsd_type == 100000007)
                 {
-                    return "Sản phẩm";
+                    return Language.units;// "Sản phẩm";
                 }
                 else if (bsd_type == 100000000)
                 {
-                    return "Ký Phiếu đặt cọc";
+                    return Language.dat_coc_sign_off_rf;//"Ký Phiếu đặt cọc";
                 }
                 else if (bsd_type == 100000001)
                 {
-                    return "Đặt cọc";
+                    return Language.dat_coc_tt_du_tien_coc;//"Đặt cọc";
                 }
                 else if (bsd_type == 100000005)
                 {
-                    return "Thanh lý đặt cọc";
+                    return Language.dat_coc_da_thanh_ly;//"Thanh lý đặt cọc";
                 }
                 else if (bsd_type == 100000002)
                 {
-                    return "Thanh toán đợt 1";
+                    return Language.giao_dich_tt_du_dot_1;//"Thanh toán đợt 1";
                 }
                 else if (bsd_type == 100000003)
                 {
-                    return "Hợp đồng";
+                    return Language.giao_dich_da_ky_hdmb;//"Hợp đồng";
                 }
                 else if (bsd_type == 100000004)
                 {
-                    return "Đợt thanh toán";
+                    return Language.giao_dich_installments;//"Đợt thanh toán";
                 }
                 else if (bsd_type == 100000006)
                 {
-                    return "Thanh lý hợp đồng";
+                    return Language.giao_dich_da_thanh_ly;//"Thanh lý hợp đồng";
                 }
                 else { return null; }
             }

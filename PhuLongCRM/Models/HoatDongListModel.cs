@@ -131,11 +131,11 @@ namespace PhuLongCRM.Models
                 switch (prioritycode)
                 {
                     case 0:
-                        return "Low";
+                        return Language.case_low_priority;
                     case 1:
-                        return "Normal";
+                        return Language.case_normal_priority;
                     case 2:
-                        return "High";
+                        return Language.case_high_priority;
                     default:
                         return " ";
                 }

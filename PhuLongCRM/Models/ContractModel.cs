@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -191,9 +192,9 @@ namespace PhuLongCRM.Models
             get
             {
                 if (bsd_contracttype == 100000000)
-                    return "Long Term Lease";
+                    return Language.contract_long_term_lease_type;//"Long Term Lease";
                 else if (bsd_contracttype == 100000001)
-                    return "Purchase";
+                    return Language.contract_purchase_type; //"Purchase"; //contract_purchase_type
                 else
                     return "";
             }

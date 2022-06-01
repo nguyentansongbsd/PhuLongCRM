@@ -2841,4 +2841,85 @@
 <data name="khong_tim_thay_thong_tin_chiet_khau" xml:space="preserve">
     <value>Discount information not found.</value>
   </data>
+	<data name="project_active_sts">
+		<value>Active</value>
+	</data>
+	<data name="project_publish_sts">
+		<value>Publish</value>
+	</data>
+	<data name="project_unpublish_sts">
+		<value>Unpublish</value>
+	</data>
+	<data name="project_inactive_sts" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+	<data name="account_real_estate_os">
+		<value>Real estate</value>
+	</data>
+	<data name="account_finance_os">
+		<value>Finance</value>
+	</data>
+	<data name="account_education_os" xml:space="preserve">
+		<value>Education</value>
+	</data>
+	<data name="case_high_priority">
+		<value>High</value>
+	</data>
+	<data name="case_normal_priority">
+		<value>Normal</value>
+	</data>
+	<data name="case_low_priority" xml:space="preserve">
+		<value>Low</value>
+	</data>
+	<data name="handover_price_per_sqm_method">
+		<value>Price per sqm</value>
+	</data>
+	<data name="handover_amount_method">
+		<value>Amount</value>
+	</data>
+	<data name="handover_percent_method" xml:space="preserve">
+		<value>Percent</value>
+	</data>
+	<data name="handover_bare_shell_type">
+		<value>Bare-shell</value>
+	</data>
+	<data name="handover_basic_finished_type" xml:space="preserve">
+		<value>Basic finished</value>
+	</data>
+	<data name="handover_fully_finished_type">
+		<value>Fully finished</value>
+	</data>
+	<data name="handover_fully_finished_and_bare_shell_type">
+		<value>Fully finished the outside and Bare-shell the inside</value>
+	</data>
+	<data name="handover_add_on_option_type" xml:space="preserve">
+		<value>Add on option</value>
+	</data>
+	<data name="takeoutmoney_forfeiture">
+        <value>Forfeiture</value>
+    </data>
+	<data name="takeoutmoney_refund" xml:space="preserve">
+		<value>Refund</value>
+	</data>
+	<data name="discountspecial_active_sts">
+		<value>Active</value>
+	</data>
+	<data name="discountspecial_approved_sts">
+		<value>Approved</value>
+	</data>
+	<data name="discountspecial_reject_sts" xml:space="preserve">
+		<value>Reject</value>
+	</data>
+	<data name="discountspecial_cancelled_sts">
+        <value>Cancelled</value>
+    </data>
+	<data name="discountspecial_inactive_sts" xml:space="preserve">
+		<value>Inactive</value>
+	</data>
+	<data name="contract_purchase_type" xml:space="preserve">
+		<value>Purchase</value>
+	</data>
+	<data name="ca_ngay" xml:space="preserve">
+		<value>All day</value>
+	</data>
 </root>

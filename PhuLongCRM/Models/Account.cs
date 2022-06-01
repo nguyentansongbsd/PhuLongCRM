@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Resources;
+using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -359,7 +360,7 @@ namespace PhuLongCRM.Models
             _businessType = new OptionSet()
             {
                 Val = "",
-                Label = "Select Business Type"
+                Label = Language.chon_loai_khach_hang //"Select Business Type"
             };
             _localization = new OptionSet();
             _customerGroup = new OptionSet();

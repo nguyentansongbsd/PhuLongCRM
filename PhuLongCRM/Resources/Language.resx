@@ -334,7 +334,7 @@
     <value>Cung cấp thông tin</value>
   </data>
 	<data name="da_huy" xml:space="preserve">
-    <value>Đã hủy.</value>
+    <value>Đã hủy</value>
   </data>
 	<data name="hop_nhat" xml:space="preserve">
     <value>Hợp nhất</value>
@@ -409,7 +409,7 @@
     <value>Nháp</value>
   </data>
 	<data name="hoan_thanh" xml:space="preserve">
-    <value>Hoàn thành.</value>
+    <value>Hoàn thành</value>
   </data>
 	<data name="vo_hieu_luc" xml:space="preserve">
     <value>Vô hiệu lực</value>
@@ -421,7 +421,7 @@
     <value>Giao dịch - Đã ký HĐMB</value>
   </data>
 	<data name="giao_dich_installments" xml:space="preserve">
-    <value>Giao dịch - Installments</value>
+    <value>Giao dịch - Đợt thanh toán</value>
   </data>
 	<data name="giao_dich_da_thanh_ly" xml:space="preserve">
     <value>Giao dịch - Đã thanh lý</value>
@@ -430,13 +430,13 @@
     <value>Đặt cọc - TT đủ tiền cọc</value>
   </data>
 	<data name="dat_coc_sign_off_rf" xml:space="preserve">
-    <value>Đặt cọc - Sign off RF</value>
+    <value>Đặt cọc - Ký PĐC</value>
   </data>
 	<data name="dat_coc_da_thanh_ly" xml:space="preserve">
     <value>Đặt cọc - Đã thanh lý</value>
   </data>
 	<data name="units" xml:space="preserve">
-    <value>Units</value>
+    <value>Sản phẩm</value>
   </data>
 	<data name="chua_thanh_toan" xml:space="preserve">
     <value>Chưa thanh toán</value>
@@ -511,7 +511,7 @@
     <value>Đất nền</value>
   </data>
 	<data name="shophouse_va_officetel" xml:space="preserve">
-    <value>Shophouse và Officetel</value>
+    <value>Căn hộ kinh doanh và Officetel</value>
   </data>
 	<data name="xuong_kho" xml:space="preserve">
     <value>Xưởng/ Kho</value>
@@ -547,10 +547,10 @@
     <value>Từ chối</value>
   </data>
 	<data name="da_ky_rf" xml:space="preserve">
-    <value>Đã ký RF</value>
+    <value>Đã ký PĐC</value>
   </data>
 	<data name="da_het_han_ky_rf" xml:space="preserve">
-    <value>Đã hết hạn ký RF</value>
+    <value>Đã hết hạn ký PĐC</value>
   </data>
 	<data name="chuyen_coc" xml:space="preserve">
     <value>Chuyển cọc</value>
@@ -562,7 +562,7 @@
     <value>Báo giá hết hạn</value>
   </data>
 	<data name="da_ky_phieu_coc" xml:space="preserve">
-    <value>Đã ký phiếu cọc.</value>
+    <value>Đã ký phiếu cọc</value>
   </data>
 	<data name="tt_du_tien_coc" xml:space="preserve">
     <value>TT đủ tiền cọc</value>
@@ -1060,13 +1060,13 @@
     <value>Tổng tiền thanh toán</value>
   </data>
 	<data name="thong_tin_san_dai_ly" xml:space="preserve">
-    <value>Thông Tin Sàn/Đại Lý</value>
+    <value>Thông Tin Sàn/ Đại Lý</value>
   </data>
 	<data name="dai_ly_san_giao_dich" xml:space="preserve">
-    <value>Đại lý/Sàn giao dịch</value>
+    <value>Đại lý/ Sàn giao dịch</value>
   </data>
 	<data name="nhan_vien_dai_ly_san" xml:space="preserve">
-    <value>Nhân viên Đại lý/Sàn</value>
+    <value>Nhân viên Đại lý/ Sàn</value>
   </data>
 	<data name="khach_hang_gioi_thieu" xml:space="preserve">
     <value>Khách hàng giới thiệu</value>
@@ -1438,7 +1438,7 @@
     <value>Cập Nhật Hợp Đồng</value>
   </data>
 	<data name="ngay_spa" xml:space="preserve">
-    <value>Ngày SPA</value>
+    <value>Ngày HĐ</value>
   </data>
 	<data name="ngay_in_hd" xml:space="preserve">
     <value>Ngày in HĐ</value>
@@ -2137,7 +2137,7 @@
     <value>Giá bán gốc</value>
   </data>
 	<data name="chon_dai_ly_san_giao_dich" xml:space="preserve">
-    <value>Chọn Đại lý/Sàn giao dịch</value>
+    <value>Chọn Đại lý/ Sàn giao dịch</value>
   </data>
 	<data name="chon_ngay_bat_dau_tinh_ltt" xml:space="preserve">
     <value>Chọn ngày bắt đầu tính LTT</value>
@@ -2188,13 +2188,13 @@
     <value>Cập nhật đồng sở hữu thành công.</value>
   </data>
 	<data name="nguoi_mua_khong_duoc_trung_voi_dai_ly_san_giao_dich_vui_long_chon_lai" xml:space="preserve">
-    <value>Người mua không được trùng với Đại lý/Sàn giao dịch. Vui lòng chọn lại.</value>
+    <value>Người mua không được trùng với Đại lý/ Sàn giao dịch. Vui lòng chọn lại.</value>
   </data>
 	<data name="khach_hang_coower_va_khach_hang_khong_duoc_trung" xml:space="preserve">
     <value>Khách hàng Co-Owner và khách hàng không được trùng.</value>
   </data>
 	<data name="dai_ly_san_giao_dich_khong_duoc_trung_voi_nguoi_mua_vui_long_chon_lai" xml:space="preserve">
-    <value>Đại lý/Sàn giao dịch không được trùng với Người mua. Vui lòng chọn lại.</value>
+    <value>Đại lý/ Sàn giao dịch không được trùng với Người mua. Vui lòng chọn lại.</value>
   </data>
 	<data name="cong_tac_vien_khong_duoc_trung_voi_nguoi_mua_vui_long_chon_lai" xml:space="preserve">
     <value>Cộng tác viên không được trùng với Người mua. Vui lòng chọn lại.</value>
@@ -2359,7 +2359,7 @@
     <value>Chọn tỉnh thành</value>
   </data>
 	<data name="nhap_so_nha_duong_phuong" xml:space="preserve">
-    <value>Nhập số nhà/đường/phường</value>
+    <value>Nhập số nhà/ đường/ phường</value>
   </data>
 	<data name="quan_huyen" xml:space="preserve">
     <value>Quận huyện</value>
@@ -2374,7 +2374,7 @@
     <value>Tỉnh thành</value>
   </data>
 	<data name="vui_long_nhap_so_nha_duong_phuong" xml:space="preserve">
-    <value>Vui lòng nhập số nhà/đường/phường.</value>
+    <value>Vui lòng nhập số nhà/ đường/ phường.</value>
   </data>
 	<data name="account_nuoc_ngoai_sts" xml:space="preserve">
     <value>Nước ngoài</value>
@@ -2413,7 +2413,7 @@
     <value>TT Đủ Đợt 1</value>
   </data>
 	<data name="contract_acceptance_sts" xml:space="preserve">
-    <value>Acceptance</value>
+    <value>Chấp thuận</value>
   </data>
 	<data name="contract_being_payment_sts" xml:space="preserve">
     <value>Đang thanh toán</value>
@@ -2428,16 +2428,16 @@
     <value>Đã hoàn thành</value>
   </data>
 	<data name="contract_confirm_document_sts" xml:space="preserve">
-    <value>Confirm document</value>
+    <value>Xác nhận tài liệu</value>
   </data>
 	<data name="contract_foreigner_SPA_type" xml:space="preserve">
     <value>HĐMB nước ngoài</value>
   </data>
 	<data name="contract_handover_sts" xml:space="preserve">
-    <value>Quanlify - Units handover</value>
+    <value>Đủ điều kiện - Bàn giao sản phẩm</value>
   </data>
 	<data name="contract_invoiced_sts" xml:space="preserve">
-    <value>Invoiced</value>
+    <value>Đã lập hóa đơn</value>
   </data>
 	<data name="contract_in_progress_sts" xml:space="preserve">
     <value>Đang xử lý</value>
@@ -2449,7 +2449,7 @@
     <value>Cho thuê dài hạn</value>
   </data>
 	<data name="contract_open_sts" xml:space="preserve">
-    <value>Open</value>
+    <value>Đang mở</value>
   </data>
 	<data name="contract_option_sts" xml:space="preserve">
     <value>Hoàn tất đặt cọc</value>
@@ -2464,19 +2464,19 @@
     <value>Pink-book handover</value>
   </data>
 	<data name="contract_qualify_sts" xml:space="preserve">
-    <value>Qualify</value>
+    <value>Đủ điều kiện</value>
   </data>
 	<data name="contract_signed_contract_sts" xml:space="preserve">
     <value>Đã ký HĐMB</value>
   </data>
 	<data name="contract_signed_da_sts" xml:space="preserve">
-    <value>Signed D.A</value>
+    <value>Đã ký TTĐC</value>
   </data>
 	<data name="contract_terminated_sts" xml:space="preserve">
     <value>Đã thanh lý</value>
   </data>
 	<data name="contract_units_handover_sts" xml:space="preserve">
-    <value>Units handover</value>
+    <value>Bàn giao sản phẩm</value>
   </data>
 	<data name="currency_billion" xml:space="preserve">
     <value>tỷ</value>
@@ -2629,10 +2629,10 @@
     <value>Tình trạng (↑)</value>
   </data>
 	<data name="queues_unit" xml:space="preserve">
-    <value>Giữ chỗ/ Unit</value>
+    <value>Giữ chỗ/ Sản phẩm</value>
   </data>
 	<data name="queue_unit_saleman_day" xml:space="preserve">
-    <value>Giữ chỗ/ Unit/ Nhân viên/ Ngày</value>
+    <value>Giữ chỗ/ Sản phẩm/ Nhân viên/ Ngày</value>
   </data>
 	<data name="quy_trinh_ban_title" xml:space="preserve">
     <value>Quy Trình Bán</value>
@@ -2647,7 +2647,7 @@
     <value>Thông Tin Chung</value>
   </data>
 	<data name="units_salesman_day" xml:space="preserve">
-    <value>Units/ Nhân viên/ Ngày</value>
+    <value>Sản phẩm/ Nhân viên/ Ngày</value>
   </data>
 	<data name="chiet_khau_dac_biet_title" xml:space="preserve">
     <value>Chiết Khấu Đặc Biệt</value>
@@ -2680,7 +2680,7 @@
     <value>Sản xuất lâu bền</value>
   </data>
 	<data name="lead_13_industry" xml:space="preserve">
-    <value>Địa điểm ăn Uống</value>
+    <value>Địa điểm ăn uống</value>
   </data>
 	<data name="lead_14_industry" xml:space="preserve">
     <value>Bán lẻ dịch vụ giải trí</value>
@@ -2788,7 +2788,7 @@
     <value>Điều kiện áp dụng</value>
   </data>
 	<data name="discount_no" xml:space="preserve">
-    <value>Discount No.</value>
+    <value>Mã chiết khấu</value>
   </data>
 	<data name="loai_chiet_khau" xml:space="preserve">
     <value>Loại chiết khấu</value>
@@ -2841,4 +2841,85 @@
 	<data name="khong_tim_thay_thong_tin_chiet_khau" xml:space="preserve">
     <value>Không tìm thấy thông tin chiết khấu.</value>
   </data>
+	<data name="project_active_sts">
+        <value>Nháp</value>
+    </data>
+	<data name="project_publish_sts">
+        <value>Công bố</value>
+    </data>
+	<data name="project_unpublish_sts">
+        <value>Không công bố</value>
+    </data>
+	<data name="project_inactive_sts" xml:space="preserve">
+		<value>Vô hiệu lực</value>
+	</data>
+	<data name="account_real_estate_os">
+        <value>Địa ốc</value>
+    </data>
+	<data name="account_finance_os">
+        <value>Tài chính</value>
+    </data>
+	<data name="account_education_os" xml:space="preserve">
+		<value>Giáo dục</value>
+	</data>
+	<data name="case_high_priority">
+        <value>Quan trọng</value>
+    </data>
+	<data name="case_normal_priority">
+        <value>Trung bình</value>
+    </data>
+	<data name="case_low_priority" xml:space="preserve">
+		<value>Thấp</value>
+	</data>
+	<data name="handover_price_per_sqm_method">
+        <value>Giá mỗi m²</value>
+    </data>
+	<data name="handover_amount_method">
+        <value>Số tiền</value>
+    </data>
+	<data name="handover_percent_method" xml:space="preserve">
+		<value>Phần trăm</value>
+	</data>
+	<data name="handover_bare_shell_type">
+        <value>Bàn giao thô</value>
+    </data>
+	<data name="handover_basic_finished_type" xml:space="preserve">
+		<value>Bàn giao cơ bản</value>
+	</data>
+	<data name="handover_fully_finished_type">
+        <value>Bàn giao hoàn thiện</value>
+    </data>
+	<data name="handover_fully_finished_and_bare_shell_type">
+        <value>Hoàn thiện bên ngoài và thô bên trong</value>
+    </data>
+	<data name="handover_add_on_option_type" xml:space="preserve">
+		<value>Thêm tùy chọn</value>
+	</data>
+	<data name="takeoutmoney_forfeiture">
+        <value>Tịch thu</value>
+    </data>
+	<data name="takeoutmoney_refund" xml:space="preserve">
+		<value>Hoàn tiền</value>
+	</data>
+	<data name="discountspecial_active_sts">
+		<value>Nháp</value>
+	</data>
+	<data name="discountspecial_approved_sts">
+		<value>Đã phê duyệt</value>
+	</data>
+	<data name="discountspecial_reject_sts" xml:space="preserve">
+		<value>Từ chối</value>
+	</data>
+	<data name="discountspecial_cancelled_sts">
+        <value>Đã hủy</value>
+    </data>
+	<data name="discountspecial_inactive_sts" xml:space="preserve">
+		<value>Vô hiệu lực</value>
+	</data>
+	<data name="contract_purchase_type" xml:space="preserve">
+		<value>Mua bán</value>
+	</data>
+	<data name="ca_ngay" xml:space="preserve">
+		<value>Cả ngày</value>
+	</data>
 </root>
