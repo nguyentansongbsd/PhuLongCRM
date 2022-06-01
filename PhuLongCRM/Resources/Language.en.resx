@@ -2821,24 +2821,24 @@
 		<value>Confirm password</value>
 	</data>
 	<data name="vui_long_nhap_mat_khau">
-        <value>Please enter your password</value>
-    </data>
+		<value>Please enter your password</value>
+	</data>
 	<data name="vui_long_nhap_xac_nhan_mat_khau">
-        <value>Please enter confirm your password</value>
-    </data>
+		<value>Please enter confirm your password</value>
+	</data>
 	<data name="ma_qr_khong_dung">
-        <value>QR code is not correct.</value>
-    </data>
+		<value>QR code is not correct.</value>
+	</data>
 	<data name="quen_mat_khau">
-        <value>Forgot password ?</value>
-    </data>
+		<value>Forgot password ?</value>
+	</data>
 	<data name="loi_he_thong">
-        <value>System error.</value>
-    </data>
+		<value>System error.</value>
+	</data>
 	<data name="dang_nhap_voi_user_crm">
-        <value>Login by User CRM</value>
-    </data>
-<data name="khong_tim_thay_thong_tin_chiet_khau" xml:space="preserve">
+		<value>Login by User CRM</value>
+	</data>
+	<data name="khong_tim_thay_thong_tin_chiet_khau" xml:space="preserve">
     <value>Discount information not found.</value>
   </data>
 	<data name="project_active_sts">
@@ -2896,8 +2896,8 @@
 		<value>Add on option</value>
 	</data>
 	<data name="takeoutmoney_forfeiture">
-        <value>Forfeiture</value>
-    </data>
+		<value>Forfeiture</value>
+	</data>
 	<data name="takeoutmoney_refund" xml:space="preserve">
 		<value>Refund</value>
 	</data>
@@ -2911,8 +2911,8 @@
 		<value>Reject</value>
 	</data>
 	<data name="discountspecial_cancelled_sts">
-        <value>Cancelled</value>
-    </data>
+		<value>Cancelled</value>
+	</data>
 	<data name="discountspecial_inactive_sts" xml:space="preserve">
 		<value>Inactive</value>
 	</data>
