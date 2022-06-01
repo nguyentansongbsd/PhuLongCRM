@@ -2922,4 +2922,10 @@
 	<data name="ca_ngay" xml:space="preserve">
 		<value>Cả ngày</value>
 	</data>
+	<data name="so_tien" xml:space="preserve">
+    <value>Số tiền</value>
+  </data>
+  <data name="phan_tram" xml:space="preserve">
+    <value>Phần trăm</value>
+  </data>
 </root>
