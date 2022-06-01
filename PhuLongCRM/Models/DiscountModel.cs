@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,9 @@ namespace PhuLongCRM.Models
             get
             {
                 if (bsd_method == 100000001)
-                    return Language.han;//"Amount";
+                    return Language.so_tien;//"Amount";
                 else if (bsd_method == 100000000)
-                    return "Percent";
+                    return Language.phan_tram;
                 else
                     return null;
             }
