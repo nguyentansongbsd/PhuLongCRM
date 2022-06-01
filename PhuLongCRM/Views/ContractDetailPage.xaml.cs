@@ -37,7 +37,9 @@ namespace PhuLongCRM.Views
                     viewModel.LoadCoOwners(ContractId));
            await Task.WhenAll(
                     viewModel.LoadHandoverCondition(this.ContractId),
-                    viewModel.LoadDiscounts());
+                    viewModel.LoadDiscounts(),
+                    viewModel.LoadDiscountsInternel(),
+                    viewModel.LoadDiscountsExChange());
             if (viewModel.Contract.salesorderid != Guid.Empty)
             {
                 OnCompleted?.Invoke(true);
