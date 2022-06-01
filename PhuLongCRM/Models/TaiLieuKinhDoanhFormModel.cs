@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 
 using Xamarin.Forms;
 
@@ -17,27 +18,27 @@ namespace PhuLongCRM.Models
                 switch (literaturetypecode)
                 {
                     case 0:
-                        return "Presentation";
+                        return Language.document_presentation_type;// "Presentation"; //document_presentation_type
                     case 1:
-                        return "Product Sheet";
+                        return Language.document_product_sheet_type;//"Product Sheet"; //document_product_sheet_type
                     case 2:
-                        return "Policies And Procedures";
+                        return Language.document_policies_and_procedures_type;//"Policies And Procedures"; //document_policies_and_procedures_type
                     case 3:
-                        return "Sales Literature";
+                        return Language.document_sales_literature_type;//"Sales Literature"; //document_sales_literature_type
                     case 4:
-                        return "Spreadsheets";
+                        return Language.document_spreadsheets_type;//"Spreadsheets"; //document_spreadsheets_type
                     case 5:
-                        return "News";
+                        return Language.document_news_type;//"News"; //document_news_type
                     case 6:
-                        return "Bulletins";
+                        return Language.document_bulletins_type;//"Bulletins"; //document_bulletins_type
                     case 7:
-                        return "Price Sheets";
+                        return Language.document_price_sheets_type;//"Price Sheets"; //document_price_sheets_type
                     case 8:
-                        return "Manuals";
+                        return Language.document_manuals_type;//"Manuals"; //document_manuals_type
                     case 9:
-                        return "Company Background";
+                        return Language.document_company_background_type;//"Company Background"; //document_company_background_type
                     case 100001:
-                        return "Marketing Collateral";
+                        return Language.document_marketing_collateral_type;//"Marketing Collateral"; //document_marketing_collateral_type
                     default:
                         return " ";
                 }

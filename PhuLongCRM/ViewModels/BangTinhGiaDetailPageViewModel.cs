@@ -769,13 +769,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_isconditionsapplied' />
                                     <attribute name='bsd_conditionsapply' />
                                     <order attribute='bsd_discountnumber' descending='false' />
-                                    <link-entity name='bsd_bsd_discounttype_bsd_discount' from='bsd_discountid' to='bsd_discountid' visible='false' intersect='true'>
-                                      <link-entity name='bsd_discounttype' from='bsd_discounttypeid' to='bsd_discounttypeid' alias='ac'>
-                                        <filter type='and'>
-                                          <condition attribute='bsd_discounttypeid' operator='eq' value='{discount_id}' />
-                                        </filter>
-                                      </link-entity>
-                                    </link-entity>
+                                    <filter type='and'>
+                                      <condition attribute='bsd_discountid' operator='eq' value='{discount_id}'/>
+                                    </filter>
                                   </entity>
                                 </fetch>";
 
@@ -785,7 +781,7 @@ namespace PhuLongCRM.ViewModels
                 return;
             }
             Discount = result.value.FirstOrDefault();
-            await LoadDiscountItems(Discount.bsd_discountid);
+           // await LoadDiscountItems(Discount.bsd_discountid);
         }
         public async Task LoadDiscountItems(Guid discount_id)
         {

@@ -2922,4 +2922,55 @@
 	<data name="ca_ngay" xml:space="preserve">
 		<value>All day</value>
 	</data>
+	<data name="document_presentation_type">
+		<value>Presentation</value>
+	</data>
+	<data name="document_product_sheet_type" xml:space="preserve">
+		<value>Product sheet</value>
+	</data>
+	<data name="document_policies_and_procedures_type">
+		<value>Policies and procedures</value>
+	</data>
+	<data name="document_sales_literature_type" xml:space="preserve">
+		<value>Sales literature</value>
+	</data>
+	<data name="document_spreadsheets_type">
+		<value>Spreadsheets</value>
+	</data>
+	<data name="document_news_type">
+		<value>News</value>
+	</data>
+	<data name="document_bulletins_type" xml:space="preserve">
+		<value>Bulletins</value>
+	</data>
+	<data name="document_price_sheets_type">
+		<value>Price sheets</value>
+	</data>
+	<data name="document_manuals_type" xml:space="preserve">
+		<value>Manuals</value>
+	</data>
+	<data name="document_company_background_type" xml:space="preserve">
+		<value>Company background</value>
+	</data>
+	<data name="document_marketing_collateral_type" xml:space="preserve">
+		<value>Marketing collateral</value>
+	</data>
+	<data name="ful_change_contract_type_type" xml:space="preserve">
+		<value>Change contract type</value>
+	</data>
+	<data name="ful_forfeiture_refund_type" xml:space="preserve">
+		<value>Forfeiture refund</value>
+	</data>
+	<data name="ful_key_in_error_type" xml:space="preserve">
+		<value>Key-in error</value>
+	</data>
+	<data name="ful_ccr_group" xml:space="preserve">
+		<value>CCR</value>
+	</data>
+	<data name="ful_fin_group" xml:space="preserve">
+		<value>FIN</value>
+	</data>
+	<data name="ful_sam_group" xml:space="preserve">
+		<value>S-M</value>
+	</data>
 </root>
