@@ -79,6 +79,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Controls\CenterPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\LookUpAddress.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
