@@ -1492,7 +1492,7 @@
     <value>Successfully transferred.</value>
   </data>
 	<data name="chon_du_an" xml:space="preserve">
-    <value>Chooese project</value>
+    <value>Choose project</value>
   </data>
 	<data name="chon_dot_mo_ban" xml:space="preserve">
     <value>Choose phases launch</value>

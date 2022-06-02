@@ -448,7 +448,7 @@
     <value>Báo</value>
   </data>
 	<data name="staff_phu_long" xml:space="preserve">
-    <value>Staff Phu Long</value>
+    <value>Nhân viên Phú Long</value>
   </data>
 	<data name="thuong_hieu" xml:space="preserve">
     <value>Thương hiệu</value>
@@ -2392,7 +2392,7 @@
     <value>Đang mở</value>
   </data>
 	<data name="activity_scheduled_sts" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>Lịch trình</value>
   </data>
 	<data name="case_gio_sts" xml:space="preserve">
     <value>giờ</value>
