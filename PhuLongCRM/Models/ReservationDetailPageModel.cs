@@ -37,9 +37,11 @@ namespace PhuLongCRM.Models
         public string bsd_exchangediscount { get; set; }
 
         public Guid interneldiscount_id { get; set; }
+
         private string _interneldiscount_name;
         public string interneldiscount_name { get=> _interneldiscount_name; set { _interneldiscount_name = value;OnPropertyChanged(nameof(interneldiscount_name)); } }
         public Guid discountpromotion_id { get; set; }
+
         private string _discountpromotion_name;
         public string discountpromotion_name { get => _discountpromotion_name; set { _discountpromotion_name = value; OnPropertyChanged(nameof(discountpromotion_name)); } }
 
