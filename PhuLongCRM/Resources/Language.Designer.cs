@@ -5398,7 +5398,16 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Người liên quan.
+        ///   Looks up a localized string similar to Người dùng phải từ 18 tuổi..
+        /// </summary>
+        internal static string nguoi_dung_phai_tu_18_tuoi {
+            get {
+                return ResourceManager.GetString("nguoi_dung_phai_tu_18_tuoi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liên quan.
         /// </summary>
         internal static string nguoi_lien_quan {
             get {

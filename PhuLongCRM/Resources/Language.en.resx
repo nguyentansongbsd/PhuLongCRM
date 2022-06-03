@@ -1648,7 +1648,7 @@
     <value>Failed.</value>
   </data>
 	<data name="chon_tieu_de" xml:space="preserve">
-    <value>Chooese title</value>
+    <value>Choose title</value>
   </data>
 	<data name="danh_gia" xml:space="preserve">
     <value>Rating</value>
@@ -2095,7 +2095,7 @@
     <value>Choose internal discount</value>
   </data>
 	<data name="them_khuyen_mai" xml:space="preserve">
-    <value>Chooese Promotions</value>
+    <value>Choose Promotions</value>
   </data>
 	<data name="chon_chiet_khau_quy_doi" xml:space="preserve">
     <value>Choose exchange discount</value>
@@ -2973,4 +2973,7 @@
 	<data name="ful_sam_group" xml:space="preserve">
 		<value>S-M</value>
 	</data>
+	<data name="nguoi_dung_phai_tu_18_tuoi" xml:space="preserve">
+    <value>User must be older than 18 years old.</value>
+  </data>
 </root>

@@ -53,5 +53,6 @@ namespace PhuLongCRM.Models
         public string statuscode { get; set; }
         public string statuscode_format { get { return CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Name; } }
         public string statuscode_color { get { return CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Background; } }
+        public string bsd_customercode { get; set; } // mã khách hàng
     }
 }

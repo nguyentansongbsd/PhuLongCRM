@@ -946,7 +946,7 @@
     <value>Người tham dự không bắt buộc</value>
   </data>
 	<data name="nguoi_lien_quan" xml:space="preserve">
-    <value>Người liên quan</value>
+    <value>Liên quan</value>
   </data>
 	<data name="dia_diem" xml:space="preserve">
     <value>Địa điểm</value>
@@ -2973,4 +2973,7 @@
 	<data name="ful_sam_group" xml:space="preserve">
 		<value>Kinh Doanh</value>
 	</data>
+	<data name="nguoi_dung_phai_tu_18_tuoi" xml:space="preserve">
+    <value>Người dùng phải từ 18 tuổi.</value>
+  </data>
 </root>
