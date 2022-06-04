@@ -32,12 +32,14 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='createdon' />
                     <attribute name='contactid' />
                     <attribute name='statuscode' />
+                    <attribute name='bsd_customercode' />
                     <order attribute='createdon' descending='true' />
                     <filter type='or'>
-                      <condition attribute='bsd_fullname' operator='like' value='%25{Keyword}%25' />
-                      <condition attribute='bsd_identitycardnumber' operator='like' value='%25{Keyword}%25' />
-                      <condition attribute='mobilephone' operator='like' value='%25{Keyword}%25' />
-                      <condition attribute='emailaddress1' operator='like' value='%25{Keyword}%25' />
+                        <condition attribute='bsd_fullname' operator='like' value='%25{Keyword}%25' />
+                        <condition attribute='bsd_identitycardnumber' operator='like' value='%25{Keyword}%25' />
+                        <condition attribute='mobilephone' operator='like' value='%25{Keyword}%25' />
+                        <condition attribute='emailaddress1' operator='like' value='%25{Keyword}%25' />
+                        <condition attribute='bsd_customercode' operator='like' value='%25{Keyword}%25' />
                     </filter>
                     <filter type='and'>
                       <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />

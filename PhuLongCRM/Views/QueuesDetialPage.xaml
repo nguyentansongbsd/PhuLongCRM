@@ -80,14 +80,18 @@
                         <Grid RowDefinitions="*,Auto" RowSpacing="1" BackgroundColor="#808080">
                             <StackLayout Grid.Row="0" BackgroundColor="White" Padding="16">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <Label FontSize="15" TextColor="#999999" Grid.Column="0">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Source={x:Static lang:Language.ma_giu_cho},StringFormat='{0}: '}" FontSize="15" TextColor="#999999" />
+                                        <Label Text="{Binding Queue.bsd_queuenumber}" FontSize="15" TextColor="#999999" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                    <!--<Label FontSize="15" TextColor="#999999" Grid.Column="0">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding Source={x:Static lang:Language.ma_giu_cho},StringFormat='{0}: '}"/>
                                                 <Span Text="{Binding Queue.bsd_queuenumber}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
-                                    </Label>
+                                    </Label>-->
                                     <StackLayout Grid.Column="1" IsVisible="{Binding Queue.bsd_expired_icon}" HorizontalOptions="End" Orientation="Horizontal">
                                         <Label Text="{x:Static lang:Language.da_het_han}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" TextColor="Red"/>
                                         <Label Text="&#xf1da;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="15" TextColor="Red"/>
@@ -100,10 +104,10 @@
                                     <Label Grid.Column="1" Text="{Binding Queue.name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" VerticalTextAlignment="Center"/>
                                     
                                 </Grid>
-                                <StackLayout Orientation="Horizontal">
+                                <!--<StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
                                     <Label Text="{Binding Queue.unit_name}" TextColor="#333333" FontSize="15"/>
-                                </StackLayout>
+                                </StackLayout>-->
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#333333" />
                                     <Label Text="{Binding Customer.Label}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" >

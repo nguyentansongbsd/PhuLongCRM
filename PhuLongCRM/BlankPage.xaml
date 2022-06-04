@@ -8,9 +8,6 @@
     xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
     x:Class="PhuLongCRM.BlankPage">
     <!--<Label Text="Trang chu" TextColor="Black" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center"/>-->
-    <controls:CenterPopup BackgroundColor="Red">
-        <controls:CenterPopup.Content>
-            <Label Text="Trang chu" TextColor="Black" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center"/>
-        </controls:CenterPopup.Content>
-    </controls:CenterPopup>
+    <ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

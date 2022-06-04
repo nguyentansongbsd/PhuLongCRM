@@ -56,6 +56,8 @@ namespace PhuLongCRM.Views
                     viewModel.Customer = ContactDetailPage.FromCustomer;
                     Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
+                    Lookup_CallTo.IsVisible = false;
+                    CustomerMapping2.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
                 }
                 else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
@@ -64,6 +66,8 @@ namespace PhuLongCRM.Views
                     viewModel.Customer = AccountDetailPage.FromCustomer;
                     Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
+                    Lookup_CallTo.IsVisible = false;
+                    CustomerMapping2.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
                 }
                 else if (page_before == "LeadDetailPage" && LeadDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(LeadDetailPage.FromCustomer.Val))
@@ -72,24 +76,32 @@ namespace PhuLongCRM.Views
                     viewModel.Customer = LeadDetailPage.FromCustomer;
                     Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
+                    Lookup_CallTo.IsVisible = false;
+                    CustomerMapping2.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
                 }
                 else if (page_before == "QueuesDetialPage" && QueuesDetialPage.FromQueue != null && !string.IsNullOrWhiteSpace(QueuesDetialPage.FromQueue.Val))
                 {
                     viewModel.Customer = QueuesDetialPage.FromQueue;
                     Lookup_Customer.IsVisible = false;
-                    CustomerMapping.IsVisible = true;
+                    CustomerMapping2.IsVisible = true;
+                    Lookup_CallTo.IsVisible = true;
+                    CustomerMapping.IsVisible = false;
                 }
                 else
                 {
                     Lookup_Customer.IsVisible = true;
                     CustomerMapping.IsVisible = false;
+                    Lookup_CallTo.IsVisible = true;
+                    CustomerMapping2.IsVisible = false;
                 }
             }
             else
             {
                 Lookup_Customer.IsVisible = true;
                 CustomerMapping.IsVisible = false;
+                Lookup_CallTo.IsVisible = true;
+                CustomerMapping2.IsVisible = false;
             }
         }
 

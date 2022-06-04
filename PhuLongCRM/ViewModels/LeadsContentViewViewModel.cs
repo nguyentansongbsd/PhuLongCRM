@@ -22,12 +22,14 @@ namespace PhuLongCRM.ViewModels
                 string filter_name = string.Empty;
                 string filter_phone = string.Empty;
                 string filter_subject = string.Empty;
+                string filter_customercode = string.Empty;
                 string sort = string.Empty;
                 if (!string.IsNullOrWhiteSpace(Keyword))
                 {
                     filter_name = $@"<condition attribute='lastname' operator='like' value='%25{Keyword}%25' />";
                     filter_phone = $@"<condition attribute='mobilephone' operator='like' value='%25{Keyword}%25' />";
                     filter_subject = $@"<condition entityname='Topic' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />";
+                    filter_customercode = $@"<condition attribute='bsd_customercode' operator='like' value='%25{Keyword}%25' />";
                 }
                 if (!string.IsNullOrWhiteSpace(KeySort))
                 {
@@ -70,13 +72,15 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='createdon' />
                         <attribute name='leadid' />
                         <attribute name='leadqualitycode' />
+                        <attribute name='bsd_customercode' />
                         {sort}
                         <filter type='and'>
                              <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                              <filter type='or'>
                                  '" + filter_name + @"'
                                  '" + filter_phone + @"'
-                                 '" + filter_subject + @"'  
+                                 '" + filter_subject + @"'
+                                 '" + filter_customercode + @"'
                              </filter>
                         </filter>
                         <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' link-type='inner' alias='Topic'>
