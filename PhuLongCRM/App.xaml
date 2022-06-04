@@ -27,7 +27,7 @@
                         <VisualStateGroup>
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter Property="BorderColor" Value="Transparent"/>
+                                    <Setter Property="BorderColor" Value="Gray"/>
                                     <Setter Property="BorderThickness" Value="0,0,0,0"/>
                                 </VisualState.Setters>
                             </VisualState>

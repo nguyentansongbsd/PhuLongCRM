@@ -132,6 +132,7 @@ namespace PhuLongCRM.Views
                 if (await viewModel.UpdateCase())
                 {
                     await viewModel.LoadCase(viewModel.Case.incidentid);
+                    if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 }
@@ -180,6 +181,7 @@ namespace PhuLongCRM.Views
             if (await viewModel.UpdateCaseResolution())
             {
                 await viewModel.LoadCase(viewModel.Case.incidentid);
+                if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.phan_hoi_da_duoc_giai_quyet);
             }
@@ -198,6 +200,7 @@ namespace PhuLongCRM.Views
             if (await viewModel.UpdateCase())
             {
                 await viewModel.LoadCase(viewModel.Case.incidentid);
+                if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.da_mo_lai_phan_hoi);
             }

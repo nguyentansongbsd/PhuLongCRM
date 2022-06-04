@@ -2974,6 +2974,27 @@
 		<value>Kinh Doanh</value>
 	</data>
 	<data name="nguoi_dung_phai_tu_18_tuoi" xml:space="preserve">
-    <value>Người dùng phải từ 18 tuổi.</value>
-  </data>
+		<value>Người dùng phải từ 18 tuổi.</value>
+	</data>
+	<data name="case_products_sub" xml:space="preserve">
+		<value>Sản phẩm</value>
+	</data>
+	<data name="case_query_sub" xml:space="preserve">
+		<value>Câu hỏi</value>
+	</data>
+	<data name="case_service_sub" xml:space="preserve">
+		<value>Dịch vụ</value>
+	</data>
+	<data name="case_delivery_sub" xml:space="preserve">
+		<value>Vận chuyển</value>
+	</data>
+	<data name="case_maintenance_sub" xml:space="preserve">
+		<value>Bảo trì</value>
+	</data>
+	<data name="case_information_sub" xml:space="preserve">
+		<value>Thông tin</value>
+	</data>
+	<data name="case_default_subject_sub" xml:space="preserve">
+		<value>Chủ đề mặc định</value>
+	</data>
 </root>

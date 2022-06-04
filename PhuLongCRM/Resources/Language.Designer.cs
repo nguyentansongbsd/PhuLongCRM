@@ -547,6 +547,24 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chủ đề mặc định.
+        /// </summary>
+        internal static string case_default_subject_sub {
+            get {
+                return ResourceManager.GetString("case_default_subject_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vận chuyển.
+        /// </summary>
+        internal static string case_delivery_sub {
+            get {
+                return ResourceManager.GetString("case_delivery_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to giờ.
         /// </summary>
         internal static string case_gio_sts {
@@ -574,11 +592,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thông tin.
+        /// </summary>
+        internal static string case_information_sub {
+            get {
+                return ResourceManager.GetString("case_information_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thấp.
         /// </summary>
         internal static string case_low_priority {
             get {
                 return ResourceManager.GetString("case_low_priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bảo trì.
+        /// </summary>
+        internal static string case_maintenance_sub {
+            get {
+                return ResourceManager.GetString("case_maintenance_sub", resourceCulture);
             }
         }
         
@@ -615,6 +651,33 @@ namespace PhuLongCRM.Resources {
         internal static string case_problem_solved_sts {
             get {
                 return ResourceManager.GetString("case_problem_solved_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sản phẩm.
+        /// </summary>
+        internal static string case_products_sub {
+            get {
+                return ResourceManager.GetString("case_products_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Câu hỏi.
+        /// </summary>
+        internal static string case_query_sub {
+            get {
+                return ResourceManager.GetString("case_query_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dịch vụ.
+        /// </summary>
+        internal static string case_service_sub {
+            get {
+                return ResourceManager.GetString("case_service_sub", resourceCulture);
             }
         }
         

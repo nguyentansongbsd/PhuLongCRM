@@ -58,11 +58,15 @@
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                <Label Grid.Column="1" Text="{Binding Reservation.unit_name}" TextColor="#444444" FontSize="15"/>
+                                <Label Grid.Column="1" Text="{Binding Reservation.unit_name}" TextColor="#1399D5" FontSize="15">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Unit_Tapped" CommandParameter="{Binding Reservation.unit_id}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.phi_dat_coc},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                <Label Grid.Column="1" Text="{Binding Reservation.bsd_depositfee_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15"/>
+                                <Label Grid.Column="1" Text="{Binding Reservation.bsd_depositfee_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" FontAttributes="Bold"/>
                             </Grid>
                         </StackLayout>
                     </telerikPrimitives:RadBorder>
@@ -557,7 +561,7 @@
             </ScrollView>
             <controls:FloatingButtonGroup x:Name="floatingButtonGroup" IsVisible="{Binding ShowFloatingButtonGroup}" ItemsSource="{Binding BindingContext.ButtonCommandList,Source={x:Reference this}}"/>
             <!--popup-->
-            <controls:CenterPopup Title="{x:Static lang:Language.khuyen_mai_title}">
+            <controls:CenterPopup x:Name="KhuyenMai_CenterPopup" Title="{x:Static lang:Language.khuyen_mai_title}">
                 <controls:CenterPopup.Body>
                     <StackLayout Padding="10,0">
                         <Label Text="{Binding PromotionItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>

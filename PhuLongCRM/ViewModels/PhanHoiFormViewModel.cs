@@ -257,6 +257,10 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("subjects", fetchXml);
             if (result == null || result.value.Count == 0) return;
             this.Subjects = result.value;
+            foreach(var item in Subjects)
+            {
+                item.Label = CaseSubjectData.GetCaseSubjectById(item.Val).Label;
+            }
         }
 
         public async Task LoadCaseLienQuan(string notContantIncidentId = null)
