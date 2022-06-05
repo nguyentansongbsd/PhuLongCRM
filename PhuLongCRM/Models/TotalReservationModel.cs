@@ -10,7 +10,7 @@ namespace PhuLongCRM.Models
         public decimal ListedPrice { get => _listedPrice; set { _listedPrice = value;OnPropertyChanged(nameof(ListedPrice)); } }
 
         private string _listedPrice_format;
-        public string ListedPrice_format { get => _listedPrice_format; set { _listedPrice_format = value; OnPropertyChanged(nameof(ListedPrice_format)); } }
+        public string ListedPrice_format { get => _listedPrice_format; set { _listedPrice_format = value; OnPropertyChanged(nameof(ListedPrice_format)); OnPropertyChanged(nameof(ListedPrice)); } }
 
         private decimal _discount;
         public decimal Discount { get => _discount; set { _discount = value; OnPropertyChanged(nameof(Discount)); } }

@@ -544,6 +544,24 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default subject.
+        /// </summary>
+        internal static string case_default_subject_sub {
+            get {
+                return ResourceManager.GetString("case_default_subject_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delivery.
+        /// </summary>
+        internal static string case_delivery_sub {
+            get {
+                return ResourceManager.GetString("case_delivery_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to hour.
         /// </summary>
         internal static string case_gio_sts {
@@ -571,11 +589,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        internal static string case_information_sub {
+            get {
+                return ResourceManager.GetString("case_information_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Low.
         /// </summary>
         internal static string case_low_priority {
             get {
                 return ResourceManager.GetString("case_low_priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maintenance.
+        /// </summary>
+        internal static string case_maintenance_sub {
+            get {
+                return ResourceManager.GetString("case_maintenance_sub", resourceCulture);
             }
         }
         
@@ -612,6 +648,33 @@ namespace PhuLongCRM.Resources {
         internal static string case_problem_solved_sts {
             get {
                 return ResourceManager.GetString("case_problem_solved_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products.
+        /// </summary>
+        internal static string case_products_sub {
+            get {
+                return ResourceManager.GetString("case_products_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query.
+        /// </summary>
+        internal static string case_query_sub {
+            get {
+                return ResourceManager.GetString("case_query_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service.
+        /// </summary>
+        internal static string case_service_sub {
+            get {
+                return ResourceManager.GetString("case_service_sub", resourceCulture);
             }
         }
         
@@ -949,7 +1012,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chooese project.
+        ///   Looks up a localized string similar to Choose project.
         /// </summary>
         internal static string chon_du_an {
             get {
@@ -1336,7 +1399,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chooese title.
+        ///   Looks up a localized string similar to Choose title.
         /// </summary>
         internal static string chon_tieu_de {
             get {
@@ -5413,6 +5476,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User must be older than 18 years old..
+        /// </summary>
+        internal static string nguoi_dung_phai_tu_18_tuoi {
+            get {
+                return ResourceManager.GetString("nguoi_dung_phai_tu_18_tuoi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regarding.
         /// </summary>
         internal static string nguoi_lien_quan {
@@ -7195,7 +7267,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chooese Promotions.
+        ///   Looks up a localized string similar to Choose Promotions.
         /// </summary>
         internal static string them_khuyen_mai {
             get {

@@ -561,7 +561,7 @@
             </ScrollView>
             <controls:FloatingButtonGroup x:Name="floatingButtonGroup" IsVisible="{Binding ShowFloatingButtonGroup}" ItemsSource="{Binding BindingContext.ButtonCommandList,Source={x:Reference this}}"/>
             <!--popup-->
-            <controls:CenterPopup x:Name="KhuyenMai_CenterPopup" Title="{x:Static lang:Language.khuyen_mai_title}">
+            <!--<controls:CenterPopup x:Name="KhuyenMai_CenterPopup" Title="{x:Static lang:Language.khuyen_mai_title}">
                 <controls:CenterPopup.Body>
                     <StackLayout Padding="10,0">
                         <Label Text="{Binding PromotionItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,5"/>
@@ -595,7 +595,7 @@
                         </Grid>
                     </StackLayout>
                 </controls:CenterPopup.Body>
-            </controls:CenterPopup>
+            </controls:CenterPopup>-->
             <ContentView x:Name="ContentPromotion" IsVisible="false" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000" Padding="20">
                 <ContentView.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentPromotion_Tapped"/>

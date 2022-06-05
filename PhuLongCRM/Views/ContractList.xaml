@@ -33,7 +33,7 @@
                                         <Label Text="{Binding project_name}" TextColor="#000000" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                        <Label Text="{x:Binding Source={x:Static lang:Language.ma_hop_dong},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{x:Binding Source={x:Static lang:Language.ma_hop_dong},StringFormat='{0}: '}" TextColor="Gray" FontSize="15" Grid.Column="0"/>
                                         <Label Text="{Binding bsd_contractnumber}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="4">

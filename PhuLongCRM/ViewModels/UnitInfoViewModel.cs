@@ -387,7 +387,14 @@ namespace PhuLongCRM.ViewModels
             {
                 if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
                 {
-                    IsShowBtnBangTinhGia = true;
+                    if (UnitInfo.statuscode == 100000000 || UnitInfo.statuscode == 100000004)
+                    {
+                        IsShowBtnBangTinhGia = true;
+                    }
+                    else
+                    {
+                        IsShowBtnBangTinhGia = false;
+                    }
                     return;
                 }
                 else
@@ -461,6 +468,7 @@ namespace PhuLongCRM.ViewModels
             //    }
             //}
         }
+
         public async Task LoadDataEvent()
         {
             if (UnitInfo == null || UnitInfo.event_id == Guid.Empty) return;

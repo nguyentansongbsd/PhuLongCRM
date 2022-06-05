@@ -331,6 +331,12 @@ namespace PhuLongCRM.ViewModels
             this.Quote.interneldiscount_name = data.interneldiscount_name;
             this.Quote.discountpromotion_id = data.discountpromotion_id;
             this.Quote.discountpromotion_name = data.discountpromotion_name;
+            this.Quote.bsd_constructionarea_format = StringFormatHelper.FormatPercent(Quote.bsd_constructionarea);
+            this.Quote.bsd_netusablearea_format = StringFormatHelper.FormatPercent(Quote.bsd_netusablearea);
+            this.Quote.bsd_actualarea_format = StringFormatHelper.FormatPercent(Quote.bsd_actualarea);
+            this.Quote.bsd_bookingfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_bookingfee);
+            this.Quote.bsd_depositfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_depositfee);
+            this.Quote.bsd_managementfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_managementfee);
 
             this.Buyer = this.Quote.contact_id != Guid.Empty ? new OptionSet(this.Quote.contact_id.ToString(), this.Quote.contact_name) { Title = "2" } : new OptionSet(this.Quote.account_id.ToString(), this.Quote.account_name) { Title = "3" };
             this.Queue = this.Quote.queue_id != Guid.Empty ? new OptionSet(this.Quote.queue_id.ToString(), this.Quote.queue_name) : null;
@@ -511,13 +517,18 @@ namespace PhuLongCRM.ViewModels
             this.Quote.unit_id = UnitInfor.productid;
             this.Quote.name = this.Quote.unit_name = UnitInfor.name;
             this.Quote.bsd_constructionarea = UnitInfor.bsd_constructionarea;
+            this.Quote.bsd_constructionarea_format = StringFormatHelper.FormatPercent(UnitInfor.bsd_constructionarea);
             this.Quote.bsd_netusablearea = UnitInfor.bsd_netsaleablearea;
+            this.Quote.bsd_netusablearea_format = StringFormatHelper.FormatPercent(UnitInfor.bsd_netsaleablearea);
             this.Quote.bsd_actualarea = UnitInfor.bsd_actualarea;
+            this.Quote.bsd_actualarea_format = StringFormatHelper.FormatPercent(UnitInfor.bsd_actualarea);
             this.Quote._bsd_projectcode_value = UnitInfor._bsd_projectcode_value;
             this.Quote.project_name = UnitInfor.project_name;
             this.Quote.project_id = UnitInfor.project_id;
             this.Quote.bsd_bookingfee = UnitInfor.bsd_queuingfee;
+            this.Quote.bsd_bookingfee_format = StringFormatHelper.FormatCurrency(UnitInfor.bsd_queuingfee);
             this.Quote.bsd_depositfee = UnitInfor.bsd_depositamount;
+            this.Quote.bsd_depositfee_format = StringFormatHelper.FormatCurrency(UnitInfor.bsd_depositamount);
             this.Quote._bsd_phaseslaunchid_value = UnitInfor._bsd_phaseslaunchid_value;
             this.Quote.phaseslaunch_name = UnitInfor.phaseslaunch_name;
             this.Quote.bsd_detailamount = UnitInfor.price;
@@ -525,6 +536,7 @@ namespace PhuLongCRM.ViewModels
             this.Quote.bsd_unitstatus = UnitInfor.statuscode;
             this.Quote.pricelist_apply_id = Guid.Parse(PriceListApply.Val);
             this.Quote.bsd_managementfee = this.UnitInfor.bsd_managementamountmonth * this.UnitInfor.bsd_netsaleablearea * this.UnitInfor.bsd_numberofmonthspaidmf * (decimal)1.1;
+            this.Quote.bsd_managementfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_managementfee);
             this.UnitType = UnitInfor._bsd_unittype_value;
             this.PhasesLaunchId = this.UnitInfor._bsd_phaseslaunchid_value;
         }
@@ -939,7 +951,7 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var item in result.value)
             {
-                if (item.bsd_startdate?.Date < DateTime.Now.Date && item.bsd_enddate?.Date > DateTime.Now.Date)
+                if (DateTime.Parse(item.bsd_startdate).Date < DateTime.Now.Date && DateTime.Parse(item.bsd_enddate).Date > DateTime.Now.Date)
                 {
                     this.Promotions.Add(item);
                 }

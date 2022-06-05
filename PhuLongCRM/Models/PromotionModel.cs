@@ -16,47 +16,41 @@ namespace PhuLongCRM.Models
         private string _bsd_description;
         public string bsd_description { get => _bsd_description; set { _bsd_description = value; OnPropertyChanged(nameof(bsd_description)); } }
 
-        public DateTime? _bsd_startdate;
-        public DateTime? bsd_startdate
+        public string _bsd_startdate;
+        public string bsd_startdate
         {
             get => this._bsd_startdate;
             set
             {
-                if (_bsd_startdate.HasValue)
-                {
-                    _bsd_startdate = value;
-                    OnPropertyChanged(nameof(bsd_startdate));
-                }
+                _bsd_startdate = value;
+                OnPropertyChanged(nameof(bsd_startdate));
             }
         }
         public bool hide_startdate
         {
             get
             {
-                if (_bsd_startdate.HasValue)
+                if (!string.IsNullOrWhiteSpace(_bsd_startdate))
                     return true;
                 else
                     return false;
             }
         }
-        public DateTime? _bsd_enddate;
-        public DateTime? bsd_enddate
+        public string _bsd_enddate;
+        public string bsd_enddate
         {
             get => this._bsd_enddate;
             set
             {
-                if (_bsd_enddate.HasValue)
-                {
-                    _bsd_enddate = value;
-                    OnPropertyChanged(nameof(bsd_enddate));
-                }
+                _bsd_enddate = value;
+                OnPropertyChanged(nameof(bsd_enddate));
             }
         }
         public bool hide_enddate
         {
             get
             {
-                if (_bsd_enddate.HasValue)
+                if (!string.IsNullOrWhiteSpace(_bsd_enddate))
                     return true;
                 else
                     return false;
