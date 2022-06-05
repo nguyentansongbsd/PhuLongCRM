@@ -28,7 +28,8 @@ namespace PhuLongCRM.Controls
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(CenterPopup), null, BindingMode.TwoWay);
         public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
 
-        public event EventHandler Show;
+        public event EventHandler Open;
+        public event EventHandler Close;
         public CenterPopup()
         {
             InitializeComponent();
@@ -47,13 +48,15 @@ namespace PhuLongCRM.Controls
 
         public void ShowCenterPopup()
         {
-            EventHandler eventHandler = Show;
+            EventHandler eventHandler = Open;
             eventHandler?.Invoke((object)this, EventArgs.Empty);
             this.IsVisible = true;
         }
 
         private void CloseContent_Tapped(object sender, EventArgs e)
         {
+            EventHandler eventHandler = Close;
+            eventHandler?.Invoke((object)this, EventArgs.Empty);
             this.IsVisible = false;
         }
     }

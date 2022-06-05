@@ -2974,6 +2974,27 @@
 		<value>S-M</value>
 	</data>
 	<data name="nguoi_dung_phai_tu_18_tuoi" xml:space="preserve">
-    <value>User must be older than 18 years old.</value>
-  </data>
+		<value>User must be older than 18 years old.</value>
+	</data>
+	<data name="case_products_sub" xml:space="preserve">
+		<value>Products</value>
+	</data>
+	<data name="case_query_sub" xml:space="preserve">
+		<value>Query</value>
+	</data>
+	<data name="case_service_sub" xml:space="preserve">
+		<value>Service</value>
+	</data>
+	<data name="case_delivery_sub" xml:space="preserve">
+		<value>Delivery</value>
+	</data>
+	<data name="case_maintenance_sub" xml:space="preserve">
+		<value>Maintenance</value>
+	</data>
+	<data name="case_information_sub" xml:space="preserve">
+		<value>Information</value>
+	</data>
+	<data name="case_default_subject_sub" xml:space="preserve">
+		<value>Default subject</value>
+	</data>
 </root>

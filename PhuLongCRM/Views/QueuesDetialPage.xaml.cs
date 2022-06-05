@@ -93,19 +93,22 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Queue != null)
             {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+                if (viewModel.ShowCare)
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+                }
 
                 viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();
                 if (viewModel.QueueProject == Language.co)
                     viewModel.ShowBtnBangTinhGia = false;
 
-                if(viewModel.ShowButtons)
+                if (viewModel.ShowButtons)
                 {
-                    if(viewModel.ShowBtnBangTinhGia)
+                    if (viewModel.ShowBtnBangTinhGia)
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.bang_tinh_gia_btn, "FontAwesomeRegular", "\uf0fe", null, TaoBTG));
-                    if(viewModel.ShowBtnHuyGiuCho)
+                    if (viewModel.ShowBtnHuyGiuCho)
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_giu_cho, "FontAwesomeSolid", "\uf05e", null, HuyGC));
                 }
             }

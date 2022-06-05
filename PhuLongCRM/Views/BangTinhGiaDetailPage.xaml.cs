@@ -676,7 +676,7 @@ namespace PhuLongCRM.Views
                 }
             }
             if (viewModel.PromotionItem != null)
-                ContentPromotion.IsVisible = true;
+                KhuyenMai_CenterPopup.ShowCenterPopup();
             LoadingHelper.Hide();
         }
         private void ContentHandoverCondition_Tapped(object sender, EventArgs e)
@@ -733,6 +733,26 @@ namespace PhuLongCRM.Views
             if (viewModel.Discount != null)
                 ContentDiscount.IsVisible = true;
             LoadingHelper.Hide();
+        }
+
+        private void Unit_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var unitId = (Guid)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            UnitInfo unit = new UnitInfo(unitId);
+            unit.OnCompleted = async (isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(unit);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
     }
 }
