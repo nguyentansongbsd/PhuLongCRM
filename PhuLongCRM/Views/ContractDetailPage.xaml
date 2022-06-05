@@ -37,22 +37,33 @@
                                 <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding Contract.statuscode_color}">
                                     <Label Grid.Column="0" Text="{Binding Contract.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                 </telerikPrimitives:RadBorder>
-                                <Label Grid.Column="1" Text="{Binding Contract.salesorder_name}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding Contract.unit_name}" TextColor="#4BA8F1" FontAttributes="Bold" FontSize="15">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnitDetail_Tapped" CommandParameter="{Binding Contract.unit_id}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                 <Label Grid.Column="1" Text="{Binding Contract.customer_name}" TextColor="#4BA8F1" FontAttributes="Bold" FontSize="15"/>
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
-                                <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.hop_dong},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                <Label Grid.Column="1" Text="{Binding Contract.ordernumber}" TextColor="#444444" FontSize="15"/>
+                                <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.ma_hop_dong},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
+                                <Label Grid.Column="1" Text="{Binding Contract.bsd_contractnumber}" TextColor="#444444" FontSize="15"/>
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
-                                <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                <Label Grid.Column="1" Text="{Binding Contract.unit_name}" TextColor="#4BA8F1" FontAttributes="Bold" FontSize="15">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnitDetail_Tapped" CommandParameter="{Binding Contract.unit_id}"/>
-                                    </Label.GestureRecognizers>
+                                <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
+                                <Label Grid.Column="1" Text="{Binding Contract.bsd_totalamount_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.da_thanh_toan_contract},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
+                                <Label Grid.Column="1" TextColor="Red" FontSize="15">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} đ /  {1} %">
+                                            <Binding Path="Contract.bsd_totalamountpaidinstallment_format" />
+                                            <Binding Path="Contract.totalpercent_Format" />
+                                        </MultiBinding>
+                                    </Label.Text>
                                 </Label>
                             </Grid>
                         </StackLayout>
@@ -176,7 +187,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_hop_dong}"/>
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.title_hop_dong_mua_ban}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>

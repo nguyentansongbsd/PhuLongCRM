@@ -305,7 +305,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                   // ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
         }

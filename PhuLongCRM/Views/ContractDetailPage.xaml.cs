@@ -35,11 +35,11 @@ namespace PhuLongCRM.Views
                     viewModel.LoadPromotions(this.ContractId),
                     viewModel.LoadSpecialDiscount(this.ContractId),
                     viewModel.LoadCoOwners(ContractId));
-           await Task.WhenAll(
-                    viewModel.LoadHandoverCondition(this.ContractId),
-                    viewModel.LoadDiscounts(),
-                    viewModel.LoadDiscountsInternel(),
-                    viewModel.LoadDiscountsExChange());
+            await Task.WhenAll(
+                     viewModel.LoadHandoverCondition(this.ContractId),
+                     viewModel.LoadDiscounts(),
+                     viewModel.LoadDiscountsInternel(),
+                     viewModel.LoadDiscountsExChange());
             if (viewModel.Contract.salesorderid != Guid.Empty)
             {
                 OnCompleted?.Invoke(true);

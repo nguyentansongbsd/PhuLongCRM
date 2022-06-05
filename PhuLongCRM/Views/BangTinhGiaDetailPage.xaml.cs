@@ -676,7 +676,7 @@ namespace PhuLongCRM.Views
                 }
             }
             if (viewModel.PromotionItem != null)
-                KhuyenMai_CenterPopup.ShowCenterPopup();
+                ContentPromotion.IsVisible= true;
             LoadingHelper.Hide();
         }
         private void ContentHandoverCondition_Tapped(object sender, EventArgs e)

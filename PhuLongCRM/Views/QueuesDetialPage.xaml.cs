@@ -106,9 +106,9 @@ namespace PhuLongCRM.Views
 
                 if (viewModel.ShowButtons)
                 {
-                    if (viewModel.ShowBtnBangTinhGia)
-                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.bang_tinh_gia_btn, "FontAwesomeRegular", "\uf0fe", null, TaoBTG));
-                    if (viewModel.ShowBtnHuyGiuCho)
+                    if(viewModel.ShowBtnBangTinhGia)
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_bang_tinh_gia, "FontAwesomeRegular", "\uf0fe", null, TaoBTG));
+                    if(viewModel.ShowBtnHuyGiuCho)
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_giu_cho, "FontAwesomeSolid", "\uf05e", null, HuyGC));
                 }
             }
