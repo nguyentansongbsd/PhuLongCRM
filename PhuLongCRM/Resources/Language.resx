@@ -1357,7 +1357,7 @@
     <value>Vui lòng nhập số CMND.</value>
   </data>
 	<data name="so_cmnd_da_duoc_su_dung" xml:space="preserve">
-    <value>Số CMNND đã được sử dụng.</value>
+    <value>Số CMND đã được sử dụng.</value>
   </data>
 	<data name="so_ho_chieu_da_duoc_su_sung" xml:space="preserve">
     <value>Số hộ chiếu đã được sử dụng.</value>
@@ -1408,7 +1408,7 @@
     <value>Tỷ giá</value>
   </data>
 	<data name="ban_giao_du_kien_hd" xml:space="preserve">
-    <value>Bàn giao dự kiến (HĐ)</value>
+    <value>Bàn giao dự kiến</value>
   </data>
 	<data name="thu_thanh_ly" xml:space="preserve">
     <value>Thư thanh lý</value>
@@ -1417,7 +1417,7 @@
     <value>Đồng Sở Hữu</value>
   </data>
 	<data name="ttdc_vbtt" xml:space="preserve">
-    <value>TTĐC/VBTT</value>
+    <value>Deposit Agreement</value>
   </data>
 	<data name="ngay_ttdc_vbtt" xml:space="preserve">
     <value>Ngày TTĐC/VBTT</value>
@@ -2662,7 +2662,7 @@
     <value>Khuyến Mãi</value>
   </data>
 	<data name="phan_tram_giam" xml:space="preserve">
-    <value>Phần trăm giảm</value>
+    <value>Phần trăm</value>
   </data>
 	<data name="phuong_thuc" xml:space="preserve">
     <value>Phương thức</value>
@@ -2821,83 +2821,83 @@
 		<value>Xác nhận mật khẩu</value>
 	</data>
 	<data name="vui_long_nhap_mat_khau">
-        <value>Vui lòng nhập mật khẩu</value>
-    </data>
+		<value>Vui lòng nhập mật khẩu</value>
+	</data>
 	<data name="vui_long_nhap_xac_nhan_mat_khau">
-        <value>Vui lòng nhập xác nhận mật khẩu</value>
-    </data>
+		<value>Vui lòng nhập xác nhận mật khẩu</value>
+	</data>
 	<data name="ma_qr_khong_dung">
-        <value>Mã QR không đúng.</value>
-    </data>
+		<value>Mã QR không đúng.</value>
+	</data>
 	<data name="quen_mat_khau">
-        <value>Quên mật khẩu ?</value>
-    </data>
+		<value>Quên mật khẩu ?</value>
+	</data>
 	<data name="loi_he_thong">
-        <value>Lỗi hệ thống.</value>
-    </data>
+		<value>Lỗi hệ thống.</value>
+	</data>
 	<data name="dang_nhap_voi_user_crm">
-        <value>Đăng nhập với User CRM</value>
-    </data>
+		<value>Đăng nhập với User CRM</value>
+	</data>
 	<data name="khong_tim_thay_thong_tin_chiet_khau" xml:space="preserve">
     <value>Không tìm thấy thông tin chiết khấu.</value>
   </data>
 	<data name="project_active_sts">
-        <value>Nháp</value>
-    </data>
+		<value>Nháp</value>
+	</data>
 	<data name="project_publish_sts">
-        <value>Công bố</value>
-    </data>
+		<value>Công bố</value>
+	</data>
 	<data name="project_unpublish_sts">
-        <value>Thu hồi</value>
-    </data>
+		<value>Thu hồi</value>
+	</data>
 	<data name="project_inactive_sts" xml:space="preserve">
 		<value>Vô hiệu lực</value>
 	</data>
 	<data name="account_real_estate_os">
-        <value>Địa ốc</value>
-    </data>
+		<value>Địa ốc</value>
+	</data>
 	<data name="account_finance_os">
-        <value>Tài chính</value>
-    </data>
+		<value>Tài chính</value>
+	</data>
 	<data name="account_education_os" xml:space="preserve">
 		<value>Giáo dục</value>
 	</data>
 	<data name="case_high_priority">
-        <value>Quan trọng</value>
-    </data>
+		<value>Quan trọng</value>
+	</data>
 	<data name="case_normal_priority">
-        <value>Trung bình</value>
-    </data>
+		<value>Trung bình</value>
+	</data>
 	<data name="case_low_priority" xml:space="preserve">
 		<value>Thấp</value>
 	</data>
 	<data name="handover_price_per_sqm_method">
-        <value>Giá mỗi m²</value>
-    </data>
+		<value>Giá mỗi m²</value>
+	</data>
 	<data name="handover_amount_method">
-        <value>Số tiền</value>
-    </data>
+		<value>Số tiền</value>
+	</data>
 	<data name="handover_percent_method" xml:space="preserve">
 		<value>Phần trăm</value>
 	</data>
 	<data name="handover_bare_shell_type">
-        <value>Bàn giao thô</value>
-    </data>
+		<value>Bàn giao thô</value>
+	</data>
 	<data name="handover_basic_finished_type" xml:space="preserve">
 		<value>Bàn giao cơ bản</value>
 	</data>
 	<data name="handover_fully_finished_type">
-        <value>Bàn giao hoàn thiện</value>
-    </data>
+		<value>Bàn giao hoàn thiện</value>
+	</data>
 	<data name="handover_fully_finished_and_bare_shell_type">
-        <value>Hoàn thiện bên ngoài và thô bên trong</value>
-    </data>
+		<value>Hoàn thiện bên ngoài và thô bên trong</value>
+	</data>
 	<data name="handover_add_on_option_type" xml:space="preserve">
 		<value>Thêm tùy chọn</value>
 	</data>
 	<data name="takeoutmoney_forfeiture">
-        <value>Tịch thu</value>
-    </data>
+		<value>Tịch thu</value>
+	</data>
 	<data name="takeoutmoney_refund" xml:space="preserve">
 		<value>Hoàn tiền</value>
 	</data>
@@ -2911,8 +2911,8 @@
 		<value>Từ chối</value>
 	</data>
 	<data name="discountspecial_cancelled_sts">
-        <value>Đã hủy</value>
-    </data>
+		<value>Đã hủy</value>
+	</data>
 	<data name="discountspecial_inactive_sts" xml:space="preserve">
 		<value>Vô hiệu lực</value>
 	</data>
@@ -2973,4 +2973,13 @@
 	<data name="ful_sam_group" xml:space="preserve">
 		<value>Kinh Doanh</value>
 	</data>
+	<data name="ma_hop_dong" xml:space="preserve">
+		<value>Mã hợp đồng</value>
+	</data>
+	<data name="da_thanh_toan_contract" xml:space="preserve">
+    <value>Đã thanh toán</value>
+  </data>
+  <data name="title_hop_dong_mua_ban" xml:space="preserve">
+    <value>Hợp Đồng Mua Bán</value>
+  </data>
 </root>

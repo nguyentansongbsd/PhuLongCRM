@@ -355,5 +355,10 @@ namespace PhuLongCRM.Models
         public string discountpromotion_name { get => _discountpromotion_name; set { _discountpromotion_name = value; OnPropertyChanged(nameof(discountpromotion_name)); } }
         public string bsd_exchangediscount { get; set; }
         public string bsd_interneldiscount { get; set; }
+
+        public decimal bsd_totalamountpaidinstallment { get; set; }
+        public string bsd_totalamountpaidinstallment_format { get => StringFormatHelper.FormatCurrency(bsd_totalamountpaidinstallment); }
+        public decimal bsd_totalpercent { get; set; }
+        public string totalpercent_Format { get => StringFormatHelper.FormatCurrency(bsd_totalpercent); }
     }
 }

@@ -8,6 +8,27 @@ namespace PhuLongCRM.Models
     {
         public string bsd_fullname { get; set; }
         public string mobilephone { get; set; }
+        public string mobilephone_format {
+            get
+            {
+                if (mobilephone != null && mobilephone.Contains("-"))
+                {
+                    return mobilephone.Split('-')[1].StartsWith("84") ? mobilephone.Replace("84", "+84-") : mobilephone;
+                }
+                else if (mobilephone != null && mobilephone.Contains("+84"))
+                {
+                    return mobilephone.Replace("+84", "+84-");
+                }
+                else if (mobilephone != null && mobilephone.StartsWith("84"))
+                {
+                    return mobilephone.Replace("84", "+84-");
+                }
+                else
+                {
+                    return mobilephone;
+                }
+            }
+        }
         public DateTime? birthdate { get; set; }
         public string birthdate_format
         {

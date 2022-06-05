@@ -50,7 +50,7 @@ namespace PhuLongCRM
             }
         }
 
-        private async void UserInfor_Tapped(object sender, EventArgs e)
+        private void UserInfor_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             if (UserLogged.ContactId == Guid.Empty)
@@ -60,9 +60,24 @@ namespace PhuLongCRM
                 return;
             }
 
-            await Shell.Current.Navigation.PushAsync(new UserInfoPage());
+            UserInfoPage userInfo = new UserInfoPage();
+            userInfo.OnCompleted = async (isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(userInfo);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
+                }
+            };
+
+            //await Shell.Current.Navigation.PushAsync(new UserInfoPage());
             this.FlyoutIsPresented = false;
-            LoadingHelper.Hide();
+            //LoadingHelper.Hide();
         }
 
         private async void Logout_Clicked(System.Object sender, System.EventArgs e)

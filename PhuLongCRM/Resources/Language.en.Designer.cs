@@ -256,7 +256,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Estimate handover date (Contract).
+        ///   Looks up a localized string similar to Estimate handover date.
         /// </summary>
         internal static string ban_giao_du_kien_hd {
             get {
@@ -2137,6 +2137,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total amount.
+        /// </summary>
+        internal static string da_thanh_toan_contract {
+            get {
+                return ResourceManager.GetString("da_thanh_toan_contract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collected queuing fee.
         /// </summary>
         internal static string da_thanh_toan_phi_giu_cho {
@@ -2749,6 +2758,105 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bulletins.
+        /// </summary>
+        internal static string document_bulletins_type {
+            get {
+                return ResourceManager.GetString("document_bulletins_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company background.
+        /// </summary>
+        internal static string document_company_background_type {
+            get {
+                return ResourceManager.GetString("document_company_background_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manuals.
+        /// </summary>
+        internal static string document_manuals_type {
+            get {
+                return ResourceManager.GetString("document_manuals_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Marketing collateral.
+        /// </summary>
+        internal static string document_marketing_collateral_type {
+            get {
+                return ResourceManager.GetString("document_marketing_collateral_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News.
+        /// </summary>
+        internal static string document_news_type {
+            get {
+                return ResourceManager.GetString("document_news_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Policies and procedures.
+        /// </summary>
+        internal static string document_policies_and_procedures_type {
+            get {
+                return ResourceManager.GetString("document_policies_and_procedures_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Presentation.
+        /// </summary>
+        internal static string document_presentation_type {
+            get {
+                return ResourceManager.GetString("document_presentation_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price sheets.
+        /// </summary>
+        internal static string document_price_sheets_type {
+            get {
+                return ResourceManager.GetString("document_price_sheets_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product sheet.
+        /// </summary>
+        internal static string document_product_sheet_type {
+            get {
+                return ResourceManager.GetString("document_product_sheet_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales literature.
+        /// </summary>
+        internal static string document_sales_literature_type {
+            get {
+                return ResourceManager.GetString("document_sales_literature_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spreadsheets.
+        /// </summary>
+        internal static string document_spreadsheets_type {
+            get {
+                return ResourceManager.GetString("document_spreadsheets_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change avatar successed..
         /// </summary>
         internal static string doi_hinh_dai_dien_thanh_cong {
@@ -2839,7 +2947,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Co_Owner.
+        ///   Looks up a localized string similar to Co-Owner.
         /// </summary>
         internal static string dong_so_huu {
             get {
@@ -2956,11 +3064,65 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CCR.
+        /// </summary>
+        internal static string ful_ccr_group {
+            get {
+                return ResourceManager.GetString("ful_ccr_group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change contract type.
+        /// </summary>
+        internal static string ful_change_contract_type_type {
+            get {
+                return ResourceManager.GetString("ful_change_contract_type_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FIN.
+        /// </summary>
+        internal static string ful_fin_group {
+            get {
+                return ResourceManager.GetString("ful_fin_group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forfeiture refund.
+        /// </summary>
+        internal static string ful_forfeiture_refund_type {
+            get {
+                return ResourceManager.GetString("ful_forfeiture_refund_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key-in error.
+        /// </summary>
+        internal static string ful_key_in_error_type {
+            get {
+                return ResourceManager.GetString("ful_key_in_error_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Active.
         /// </summary>
         internal static string ful_nhap {
             get {
                 return ResourceManager.GetString("ful_nhap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to S-M.
+        /// </summary>
+        internal static string ful_sam_group {
+            get {
+                return ResourceManager.GetString("ful_sam_group", resourceCulture);
             }
         }
         
@@ -4675,6 +4837,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contract number.
+        /// </summary>
+        internal static string ma_hop_dong {
+            get {
+                return ResourceManager.GetString("ma_hop_dong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer code.
         /// </summary>
         internal static string ma_khach_hang {
@@ -5980,15 +6151,6 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Percent.
-        /// </summary>
-        internal static string phan_tram {
-            get {
-                return ResourceManager.GetString("phan_tram", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Deposit percent (D.A).
         /// </summary>
         internal static string phan_tram_coc {
@@ -6529,15 +6691,6 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Amount.
-        /// </summary>
-        internal static string so_tien {
-            get {
-                return ResourceManager.GetString("so_tien", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Priority number.
         /// </summary>
         internal static string so_uu_tien {
@@ -6673,7 +6826,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Quation.
+        ///   Looks up a localized string similar to Create Quotation.
         /// </summary>
         internal static string tao_bang_tinh_gia {
             get {
@@ -7555,6 +7708,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sale - Purchase Agreement (SPA).
+        /// </summary>
+        internal static string title_hop_dong_mua_ban {
+            get {
+                return ResourceManager.GetString("title_hop_dong_mua_ban", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Block.
         /// </summary>
         internal static string toa_nha_khu {
@@ -7690,7 +7852,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TTĐC/VBTT.
+        ///   Looks up a localized string similar to Deposit Agreement.
         /// </summary>
         internal static string ttdc_vbtt {
             get {

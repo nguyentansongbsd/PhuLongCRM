@@ -1408,16 +1408,16 @@
     <value>Applying exchange rate</value>
   </data>
 	<data name="ban_giao_du_kien_hd" xml:space="preserve">
-    <value>Estimate handover date (Contract)</value>
+    <value>Estimate handover date</value>
   </data>
 	<data name="thu_thanh_ly" xml:space="preserve">
     <value>Termination letter</value>
   </data>
 	<data name="dong_so_huu" xml:space="preserve">
-    <value>Co_Owner</value>
+    <value>Co-Owner</value>
   </data>
 	<data name="ttdc_vbtt" xml:space="preserve">
-    <value>TTĐC/VBTT</value>
+    <value>Deposit Agreement</value>
   </data>
 	<data name="ngay_ttdc_vbtt" xml:space="preserve">
     <value>DA date</value>
@@ -2056,7 +2056,7 @@
     <value>Cancel Queue</value>
   </data>
 	<data name="tao_bang_tinh_gia" xml:space="preserve">
-    <value>Create Quation</value>
+    <value>Create Quotation</value>
   </data>
 	<data name="khong_co_so_dien_thoai" xml:space="preserve">
     <value>No phone number</value>
@@ -2973,4 +2973,13 @@
 	<data name="ful_sam_group" xml:space="preserve">
 		<value>S-M</value>
 	</data>
+	<data name="ma_hop_dong" xml:space="preserve">
+    <value>Contract number</value>
+  </data>
+  <data name="da_thanh_toan_contract" xml:space="preserve">
+    <value>Total amount</value>
+  </data>
+  <data name="title_hop_dong_mua_ban" xml:space="preserve">
+    <value>Sale - Purchase Agreement (SPA)</value>
+  </data>
 </root>

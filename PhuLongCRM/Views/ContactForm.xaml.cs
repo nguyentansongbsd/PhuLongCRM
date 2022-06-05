@@ -419,7 +419,7 @@ namespace PhuLongCRM.Views
             popup_detailCMNDImage.IsVisible = false;
         }
 
-        private void CMND_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
+        private void CMND_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
             if (viewModel.singleContact.bsd_identitycardnumber.Length != 9)
             {
@@ -442,5 +442,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
         }
+
+        
     }
 }

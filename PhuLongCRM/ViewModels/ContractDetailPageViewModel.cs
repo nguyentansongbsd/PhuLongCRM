@@ -92,8 +92,10 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_managementfee' />
                                     <attribute name='bsd_waivermanafeemonth' />
                                     <attribute name='bsd_discounts' />
-<attribute name='bsd_interneldiscount' />
-<attribute name='bsd_exchangediscount' />
+                                    <attribute name='bsd_interneldiscount' />
+                                    <attribute name='bsd_exchangediscount' />
+                                    <attribute name='bsd_totalamountpaidinstallment' />
+                                    <attribute name='bsd_totalpercent' />
                                     <order attribute='ordernumber' descending='false' />
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
                                        <attribute name='bsd_projectid' alias='project_id'/>

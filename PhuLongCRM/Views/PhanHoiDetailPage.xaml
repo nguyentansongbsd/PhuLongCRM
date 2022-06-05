@@ -37,10 +37,10 @@
                                     </Label.GestureRecognizers>
                                 </Label>
                             </Grid>
-                            <Grid ColumnDefinitions="Auto,*">
+                            <!--<Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.doi_tuong},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                 <Label Grid.Column="1" Text="{Binding Case.unitName}" TextColor="#444444" FontSize="15"/>
-                            </Grid>
+                            </Grid>-->
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                 <Label Grid.Column="1" Text="{Binding Case.unitName}" TextColor="#444444" FontSize="15"/>

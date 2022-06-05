@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             BackgroundColor="White"
@@ -64,7 +64,8 @@
                                 <controls:LookUp x:Name="lookUpTinhTrang" Placeholder="{x:Static lang:Language.chon_tinh_trang}" BottomModal="{Reference BottomModal}" NameDisplay="Label" ItemsSource="{Binding CustomerStatusReasons}" SelectedItem="{Binding CustomerStatusReason}"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}" Text="{Binding singleContact.mobilephone}" FontSize="15" Keyboard="Numeric" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:PhoneEntryControl PhoneNum="{Binding singleContact.mobilephone}" Keyboard="Numeric" FontSize="15" Placeholder="+84-033XXXXXXX" IsEnabled="{Binding IsOfficial}"/>
+                                <!--<controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}" Text="{Binding singleContact.mobilephone}" FontSize="15" Keyboard="Numeric" />-->
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.gioi_tinh}" Margin="0,10,0,0"/>
                                 <controls:LookUp x:Name="Lookup_GenderOptions" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding singleGender}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label" />
@@ -127,7 +128,7 @@
                                 </Grid>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.so_cmnd}" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_cmnd}" Text="{Binding singleContact.bsd_identitycardnumber}" FontSize="15" Keyboard="Numeric" TextChanged="CMND_TextChanged" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_cmnd}" Text="{Binding singleContact.bsd_identitycardnumber}" FontSize="15" Keyboard="Numeric" Unfocused="CMND_Unfocused" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" Margin="0,10,0,0"/>
                                 <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" />

@@ -30,7 +30,7 @@
                                     </Grid>
                                     <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="Auto,*">
                                         <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.so_dien_thoai},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                        <Label Grid.Column="1" Text="{Binding mobilephone}" FontSize="15" TextColor="#444444"/>
+                                        <Label Grid.Column="1" Text="{Binding mobilephone_format}" FontSize="15" TextColor="#444444"/>
                                     </Grid>
                                     <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="Auto,*">
                                         <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.dia_chi},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
