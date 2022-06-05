@@ -89,10 +89,10 @@
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_dien_thoai_kinh_doanh}" Text="{Binding singleContact.telephone1}" FontSize="15" Keyboard="Numeric" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_lien_lac}" Margin="0,10,0,0"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_thuong_tru}" Margin="0,10,0,0"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
                     </telerikPrimitives:RadExpander>
@@ -137,7 +137,7 @@
                                 <controls:MainEntry Text="{Binding singleContact.bsd_placeofissue}" Placeholder="{x:Static lang:Language.nhap_noi_cap}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.so_ho_chieu}" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_ho_chieu}" Text="{Binding singleContact.bsd_passport}" FontSize="15" Keyboard="Numeric" TextChanged="PassPort_TextChanged" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_ho_chieu}" Text="{Binding singleContact.bsd_passport}" FontSize="15" TextChanged="PassPort_TextChanged" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap_ho_chieu}" Margin="0,10,0,0"/>
                                 <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_issuedonpassport}" Placeholder="{x:Static lang:Language.chon_ngay_cap_ho_chieu}"/>

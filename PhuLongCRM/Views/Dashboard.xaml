@@ -39,13 +39,13 @@
                         <Grid ColumnDefinitions="*,*" Margin="14,6">
                             <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
-                                    <Label Text="{Binding TotalCommission}" FontSize="18" TextColor="#7C0617" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding TotalCommission}" FontSize="18" TextColor="#D42A16" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
-                                    <Label Text="{Binding TotalPaidCommission}" FontSize="18" TextColor="#017914" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding TotalPaidCommission}" FontSize="18" TextColor="#2196F3" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.da_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>

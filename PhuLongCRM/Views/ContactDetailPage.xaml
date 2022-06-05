@@ -128,7 +128,7 @@
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                     <Label Text="{Binding Source={x:Static lang:Language.ma_khach_hang},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                    <Label Text="{Binding singleContact.bsd_customercode}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
+                                    <Label Text="{Binding singleContact.bsd_customercode}" Grid.Column="1" FontSize="15" TextColor="#444444" FontAttributes="Bold"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
                                     <Label Text="{Binding Source={x:Static lang:Language.email},StringFormat='{0}: '}" Grid.Column="0" FontSize="15" TextColor="#444444"/>

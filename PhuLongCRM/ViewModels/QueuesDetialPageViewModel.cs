@@ -59,6 +59,9 @@ namespace PhuLongCRM.ViewModels
         private bool _showMoreCase;
         public bool ShowMoreCase { get => _showMoreCase; set { _showMoreCase = value; OnPropertyChanged(nameof(ShowMoreCase)); } }
 
+        private bool _showCare;
+        public bool ShowCare { get => _showCare; set { _showCare = value; OnPropertyChanged(nameof(ShowCare)); } }
+
         public int PageBangTinhGia { get; set; } = 1;
         public int PageDatCoc { get; set; } = 1;
         public int PageHopDong { get; set; } = 1;
@@ -170,7 +173,8 @@ namespace PhuLongCRM.ViewModels
 
             ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
 //            ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
-            ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||     
+            ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
+            ShowCare = (data.statuscode == 1 || data.statuscode == 4 || data.statuscode == 5) ? false : true;
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
             this.Queue = data;
         }

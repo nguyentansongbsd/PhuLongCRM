@@ -421,7 +421,7 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Address2.district_id + ")"; /////Lookup Field _bsd_permanentdistrict_value
             }
 
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.Id != Guid.Empty) //id_user_crm
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }

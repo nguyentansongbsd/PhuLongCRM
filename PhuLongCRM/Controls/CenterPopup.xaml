@@ -1,5 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PhuLongCRM.Controls.CenterPopup">
-</StackLayout>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             x:Class="PhuLongCRM.Controls.CenterPopup"
+             IsVisible="false">
+  <ContentView.Content>
+        <AbsoluteLayout>
+            <telerikPrimitives:RadBorder VerticalOptions="CenterAndExpand" CornerRadius="10" BackgroundColor="White" Padding="10">
+                <Grid Grid.Row="0" Margin="0" RowDefinitions="Auto,*">
+                    <Grid x:Name="grid_body" ColumnDefinitions="*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
+                        <Label x:Name="title" Text="{Binding Title}" Grid.Column="0" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="17" Padding="2" TextColor="#666666">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContent_Tapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                </Grid>
+            </telerikPrimitives:RadBorder>
+        </AbsoluteLayout>
+  </ContentView.Content>
+</ContentView>

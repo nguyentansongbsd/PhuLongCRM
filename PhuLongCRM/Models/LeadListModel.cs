@@ -26,5 +26,6 @@ namespace PhuLongCRM.Models
         }
         public string statuscode_format { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Name : null; } }
         public string statuscode_color { get { return statuscode != null ? LeadStatusCodeData.GetLeadStatusCodeById(statuscode)?.Background : "#808080"; } }
+        public string bsd_customercode { get; set; } // mã khách hàng
     }
 }

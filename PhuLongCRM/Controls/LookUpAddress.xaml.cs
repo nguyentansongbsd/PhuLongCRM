@@ -61,7 +61,11 @@ namespace PhuLongCRM.Controls
             control.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = control, Converter = new Converters.NullToHideConverter() });
         }
 
-        public AddressModel AddressCopy { get => (AddressModel)GetValue(AddressCopyProperty); set { SetValue(AddressCopyProperty, value); } }        
+        public AddressModel AddressCopy { get => (AddressModel)GetValue(AddressCopyProperty); set { SetValue(AddressCopyProperty, value); } }
+
+        public static readonly BindableProperty EnableCopyAddressProperty = BindableProperty.Create(nameof(EnableCopyAddress), typeof(bool), typeof(LookUpAddress), false, BindingMode.TwoWay);
+        public bool EnableCopyAddress { get => (bool)GetValue(EnableCopyAddressProperty); set => SetValue(EnableCopyAddressProperty, value); }
+
         public LookUpAddress()
         {
             InitializeComponent();
@@ -363,6 +367,23 @@ namespace PhuLongCRM.Controls
                 LineAddress = SelectedItem.lineaddress;
             if (!string.IsNullOrWhiteSpace(SelectedItem.address))
                 Address = SelectedItem.address;
+            if (EnableCopyAddress == true)
+                AddressCopy = new AddressModel
+                {
+                    country_id = SelectedItem.country_id,
+                    country_name = SelectedItem.country_name,
+                    country_name_en = SelectedItem.country_name_en,
+                    province_id = SelectedItem.province_id,
+                    province_name = SelectedItem.province_name,
+                    province_name_en = SelectedItem.province_name_en,
+                    district_id = SelectedItem.district_id,
+                    district_name = SelectedItem.district_name,
+                    district_name_en = SelectedItem.district_name_en,
+                    address = SelectedItem.address,
+                    address_en = SelectedItem.address_en,
+                    lineaddress = SelectedItem.lineaddress,
+                    lineaddress_en = SelectedItem.lineaddress_en
+                };
         }
         public void Footer()
         {
@@ -461,22 +482,23 @@ namespace PhuLongCRM.Controls
             }
             Address = SelectedItem.address = string.Join(", ", _address);
             SelectedItem.address_en = string.Join(", ", _address_en);
-            AddressCopy = new AddressModel
-            {
-                country_id = SelectedItem.country_id,
-                country_name = SelectedItem.country_name,
-                country_name_en = SelectedItem.country_name_en,
-                province_id = SelectedItem.province_id,
-                province_name = SelectedItem.province_name,
-                province_name_en = SelectedItem.province_name_en,
-                district_id = SelectedItem.district_id,
-                district_name = SelectedItem.district_name,
-                district_name_en = SelectedItem.district_name_en,
-                address = SelectedItem.address,
-                address_en = SelectedItem.address_en,
-                lineaddress = SelectedItem.lineaddress,
-                lineaddress_en = SelectedItem.lineaddress_en
-            };
+            if (EnableCopyAddress == true)
+                AddressCopy = new AddressModel
+                {
+                    country_id = SelectedItem.country_id,
+                    country_name = SelectedItem.country_name,
+                    country_name_en = SelectedItem.country_name_en,
+                    province_id = SelectedItem.province_id,
+                    province_name = SelectedItem.province_name,
+                    province_name_en = SelectedItem.province_name_en,
+                    district_id = SelectedItem.district_id,
+                    district_name = SelectedItem.district_name,
+                    district_name_en = SelectedItem.district_name_en,
+                    address = SelectedItem.address,
+                    address_en = SelectedItem.address_en,
+                    lineaddress = SelectedItem.lineaddress,
+                    lineaddress_en = SelectedItem.lineaddress_en
+                };
             await CenterModal.Hide();
         }
 

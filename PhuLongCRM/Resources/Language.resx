@@ -448,7 +448,7 @@
     <value>Báo</value>
   </data>
 	<data name="staff_phu_long" xml:space="preserve">
-    <value>Staff Phu Long</value>
+    <value>Nhân viên Phú Long</value>
   </data>
 	<data name="thuong_hieu" xml:space="preserve">
     <value>Thương hiệu</value>
@@ -946,7 +946,7 @@
     <value>Người tham dự không bắt buộc</value>
   </data>
 	<data name="nguoi_lien_quan" xml:space="preserve">
-    <value>Người liên quan</value>
+    <value>Liên quan</value>
   </data>
 	<data name="dia_diem" xml:space="preserve">
     <value>Địa điểm</value>
@@ -2392,7 +2392,7 @@
     <value>Đang mở</value>
   </data>
 	<data name="activity_scheduled_sts" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>Lịch trình</value>
   </data>
 	<data name="case_gio_sts" xml:space="preserve">
     <value>giờ</value>
@@ -2982,4 +2982,28 @@
   <data name="title_hop_dong_mua_ban" xml:space="preserve">
     <value>Hợp Đồng Mua Bán</value>
   </data>
+	<data name="nguoi_dung_phai_tu_18_tuoi" xml:space="preserve">
+		<value>Người dùng phải từ 18 tuổi.</value>
+	</data>
+	<data name="case_products_sub" xml:space="preserve">
+		<value>Sản phẩm</value>
+	</data>
+	<data name="case_query_sub" xml:space="preserve">
+		<value>Câu hỏi</value>
+	</data>
+	<data name="case_service_sub" xml:space="preserve">
+		<value>Dịch vụ</value>
+	</data>
+	<data name="case_delivery_sub" xml:space="preserve">
+		<value>Vận chuyển</value>
+	</data>
+	<data name="case_maintenance_sub" xml:space="preserve">
+		<value>Bảo trì</value>
+	</data>
+	<data name="case_information_sub" xml:space="preserve">
+		<value>Thông tin</value>
+	</data>
+	<data name="case_default_subject_sub" xml:space="preserve">
+		<value>Chủ đề mặc định</value>
+	</data>
 </root>

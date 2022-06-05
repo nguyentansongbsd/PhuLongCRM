@@ -140,12 +140,7 @@ namespace PhuLongCRM.Views
         private async void LeadQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            if (!await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid, viewModel.singleLead.leadid.ToString()))
-            {
-                ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
-                //LoadingHelper.Hide();
-                //return;
-            }
+            bool _isID = await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid, viewModel.singleLead.leadid.ToString());
             CrmApiResponse apiResponse = await viewModel.Qualify(viewModel.singleLead.leadid);
             if (apiResponse.IsSuccess == true)
             {
@@ -157,7 +152,10 @@ namespace PhuLongCRM.Views
                 viewModel.ButtonCommandList.Clear();
                 SetButtonFloatingButton();
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                if (_isID)
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                else
+                    ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
             }
             else
             {

@@ -305,7 +305,6 @@ namespace PhuLongCRM.Controls
                 ListAccount.IsVisible = false;
         }
         public RadBorder CreateTabs(string NameTab)
-
         {
             RadBorder rd = new RadBorder();
             rd.Style = (Style)Application.Current.Resources["rabBorder_Tab"];

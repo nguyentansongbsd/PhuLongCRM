@@ -166,6 +166,12 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (DateTime.Now.Year - DateTime.Parse(viewModel.ContactModel.birthdate.ToString()).Year < 18)
+            {
+                ToastMessageHelper.ShortMessage(Language.nguoi_dung_phai_tu_18_tuoi);
+                return;
+            }
+
             if (viewModel.Gender == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_gioi_tinh);
