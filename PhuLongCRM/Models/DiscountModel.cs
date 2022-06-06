@@ -14,6 +14,9 @@ namespace PhuLongCRM.Models
         public Guid bsd_discountid { get; set; }
         public string bsd_discountnumber { get; set; }
         public string bsd_name { get; set; }
+        public string discount_name { get {
+                return !string.IsNullOrWhiteSpace(bsd_discountnumber) ? bsd_discountnumber : bsd_name;
+            } }
         public string bsd_discounttype { get; set; }
         public string discounttype_format { get { return bsd_discounttype != string.Empty ? DiscountType.GetDiscountTypeById(bsd_discounttype)?.Name : null; } }
         public int bsd_priority { get; set; }

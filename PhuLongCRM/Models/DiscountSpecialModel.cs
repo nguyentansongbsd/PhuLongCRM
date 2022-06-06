@@ -11,8 +11,24 @@ namespace PhuLongCRM.Models
     {
         public Guid bsd_discountspecialid { get; set; }
         public string bsd_name { get; set; }
+
+        public string bsd_cchtnh { get; set; }
+        public decimal bsd_amountdiscount { get; set; }
+        public string bsd_amountdiscount_format { get => StringFormatHelper.FormatCurrency(bsd_amountdiscount) + " đ"; }
         public decimal bsd_percentdiscount { get; set; }
         public string percentdiscount_format { get { return StringFormatHelper.FormatPercent(bsd_percentdiscount) + "%"; } }
+
+        public string value_format { get {
+                if (bsd_cchtnh == "100000000") // amount
+                {
+                    return StringFormatHelper.FormatCurrency(bsd_amountdiscount) + " đ";
+                }
+                else // percent
+                {
+                    return StringFormatHelper.FormatPercent(bsd_percentdiscount) + "%";
+                }
+            } }
+
         public decimal bsd_totalamount { get; set; }
         public string totalamount_format { get { return StringFormatHelper.FormatCurrency(bsd_totalamount) + " đ"; } }
         public string statuscode { get; set; }
