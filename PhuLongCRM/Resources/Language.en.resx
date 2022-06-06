@@ -142,8 +142,8 @@
     <value>Received</value>
   </data>
 	<data name="giao_dich" xml:space="preserve">
-    <value>Transaction</value>
-  </data>
+		<value>Transaction</value>
+	</data>
 	<data name="giu_cho" xml:space="preserve">
     <value>Queuing</value>
   </data>
@@ -1408,16 +1408,16 @@
     <value>Applying exchange rate</value>
   </data>
 	<data name="ban_giao_du_kien_hd" xml:space="preserve">
-    <value>Estimate handover date (Contract)</value>
+    <value>Estimate handover date</value>
   </data>
 	<data name="thu_thanh_ly" xml:space="preserve">
     <value>Termination letter</value>
   </data>
 	<data name="dong_so_huu" xml:space="preserve">
-    <value>Co_Owner</value>
+    <value>Co-Owner</value>
   </data>
 	<data name="ttdc_vbtt" xml:space="preserve">
-    <value>TTĐC/VBTT</value>
+    <value>Deposit Agreement</value>
   </data>
 	<data name="ngay_ttdc_vbtt" xml:space="preserve">
     <value>DA date</value>
@@ -2056,7 +2056,7 @@
     <value>Cancel Queue</value>
   </data>
 	<data name="tao_bang_tinh_gia" xml:space="preserve">
-    <value>Create Quation</value>
+    <value>Create Quotation</value>
   </data>
 	<data name="khong_co_so_dien_thoai" xml:space="preserve">
     <value>No phone number</value>
@@ -2973,6 +2973,15 @@
 	<data name="ful_sam_group" xml:space="preserve">
 		<value>S-M</value>
 	</data>
+	<data name="ma_hop_dong" xml:space="preserve">
+    <value>Contract number</value>
+  </data>
+  <data name="da_thanh_toan_contract" xml:space="preserve">
+    <value>Total amount</value>
+  </data>
+  <data name="title_hop_dong_mua_ban" xml:space="preserve">
+    <value>Sale - Purchase Agreement (SPA)</value>
+  </data>
 	<data name="nguoi_dung_phai_tu_18_tuoi" xml:space="preserve">
 		<value>User must be older than 18 years old.</value>
 	</data>
@@ -2996,5 +3005,86 @@
 	</data>
 	<data name="case_default_subject_sub" xml:space="preserve">
 		<value>Default subject</value>
+	</data>
+	<data name="thong_tin_title" xml:space="preserve">
+		<value>Information</value>
+	</data>
+	<data name="giao_dich_title" xml:space="preserve">
+		<value>Transaction</value>
+	</data>
+	<data name="thong_tin_san_pham_title" xml:space="preserve">
+		<value>Unit Information</value>
+	</data>
+	<data name="thong_tin_giu_cho_title" xml:space="preserve">
+		<value>Queue Information</value>
+	</data>
+	<data name="thong_tin_san_dai_ly_title" xml:space="preserve">
+		<value>Sale Agent Company Information</value>
+	</data>
+	<data name="bang_tinh_gia_title" xml:space="preserve">
+		<value>Quotation</value>
+	</data>
+	<data name="dat_coc_title" xml:space="preserve">
+		<value>Reservation</value>
+	</data>
+	<data name="hop_dong_title" xml:space="preserve">
+		<value>Contract</value>
+	</data>
+	<data name="cham_soc_khach_hang_title" xml:space="preserve">
+		<value>Customer Care</value>
+	</data>
+	<data name="ma_dat_coc" xml:space="preserve">
+		<value>Reservation no</value>
+	</data>
+	<data name="ma_bang_tinh_gia" xml:space="preserve">
+		<value>Quotation no</value>
+	</data>
+	<data name="chinh_sach_title" xml:space="preserve">
+		<value>Policy</value>
+	</data>
+	<data name="tong_hop_title" xml:space="preserve">
+		<value>Sumarry</value>
+	</data>
+	<data name="chi_tiet_title" xml:space="preserve">
+		<value>Detail</value>
+	</data>
+	<data name="lich_title" xml:space="preserve">
+		<value>Installment</value>
+	</data>
+	<data name="nguoi_dong_so_huu_title" xml:space="preserve">
+		<value>Co-Owner</value>
+	</data>
+	<data name="thong_tin_ban_hang_title" xml:space="preserve">
+		<value>Sales Information</value>
+	</data>
+	<data name="thong_tin_chi_tiet_title" xml:space="preserve">
+		<value>Detail Information</value>
+	</data>
+	<data name="thong_tin_bang_tinh_gia_title" xml:space="preserve">
+		<value>Quotation Information</value>
+	</data>
+	<data name="thong_tin_hop_dong_title" xml:space="preserve">
+		<value>Contract Information</value>
+	</data>
+	<data name="thong_tin_phieu_dat_coc_title" xml:space="preserve">
+		<value>Reservation Information</value>
+	</data>
+	<data name="thong_tin_gia_title" xml:space="preserve">
+		<value>Price Information</value>
+	</data>
+	<data name="phi_quan_ly_title" xml:space="preserve">
+		<value>Management</value>
+	</data>
+	<data name="rf_not_print_rf_sts" xml:space="preserve">
+		<value>Not print RF</value>
+	</data>
+	<data name="rf_printed_rf_sts" xml:space="preserve">
+		<value>Printed RF</value>
+	</data>
+	<data name="rf_signed_rf_sts" xml:space="preserve">
+		<value>Signed RF</value>
+	</data>
+	<data name="rf_expired_rf_sts" xml:space="preserve">
+		<value>Expired RF</value>
 	</data>
 </root>

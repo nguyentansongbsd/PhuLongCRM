@@ -429,17 +429,17 @@
                                     <StackLayout BackgroundColor="#eeeeee" Spacing="1">
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <Label Text="{x:Static lang:Language.gia_ban_goc}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
-                                            <Label Text="{Binding TotalReservation.ListedPrice_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.ListedPrice_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
                                         </Grid>
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <Label Text="{Binding Source={x:Static lang:Language.chiet_khau},StringFormat='(-) {0}'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
-                                            <Label Text="{Binding TotalReservation.Discount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.Discount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
                                         </Grid>
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <Label Text="{Binding Source={x:Static lang:Language.tong_tien_dkbg},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
-                                            <Label Text="{Binding TotalReservation.HandoverAmount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding TotalReservation.HandoverAmount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
                                         </Grid>
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">

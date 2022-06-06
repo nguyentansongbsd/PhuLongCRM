@@ -19,15 +19,15 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefresh = null; 
         public static bool? NeedToRefreshInstallment = null;
 
-        public BangTinhGiaDetailPage(Guid id)
+        public BangTinhGiaDetailPage(Guid id, bool isContract = false)
         {
             InitializeComponent();
             ReservationId = id;
             BindingContext = viewModel = new BangTinhGiaDetailPageViewModel();
             NeedToRefresh = false;
             NeedToRefreshInstallment = false;
-            Tab_Tapped(1);
             Init();
+            InitContract(isContract);
         }
 
         public async void Init()
@@ -89,7 +89,6 @@ namespace PhuLongCRM.Views
         }
 
         //tab chinh sach
-
         private async Task LoadDataChinhSach(Guid id)
         {
             if (id != Guid.Empty)
@@ -121,83 +120,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-
-        private void ChinhSach_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-
-        private void TongHop_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-        }
-
-        private void ChiTiet_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(3);
-        }
-
-        private void Lich_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(4);
-            if (viewModel.InstallmentList.Count == 0)
-            {
-                LoadInstallmentList(ReservationId);
-            }
-        }
-
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
-            {
-                VisualStateManager.GoToState(radBorderChinhSach, "Selected");
-                VisualStateManager.GoToState(lbChinhSach, "Selected");
-                TabChinhSach.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderChinhSach, "Normal");
-                VisualStateManager.GoToState(lbChinhSach, "Normal");
-                TabChinhSach.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderTongHop, "Selected");
-                VisualStateManager.GoToState(lbTongHop, "Selected");
-                TabTongHop.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderTongHop, "Normal");
-                VisualStateManager.GoToState(lbTongHop, "Normal");
-                TabTongHop.IsVisible = false;
-            }
-            if (tab == 3)
-            {
-                VisualStateManager.GoToState(radBorderChiTiet, "Selected");
-                VisualStateManager.GoToState(lbChiTiet, "Selected");
-                TabChiTiet.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderChiTiet, "Normal");
-                VisualStateManager.GoToState(lbChiTiet, "Normal");
-                TabChiTiet.IsVisible = false;
-            }
-            if (tab == 4)
-            {
-                VisualStateManager.GoToState(radBorderLich, "Selected");
-                VisualStateManager.GoToState(lbLich, "Selected");
-                TabLich.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderLich, "Normal");
-                VisualStateManager.GoToState(lbLich, "Normal");
-                TabLich.IsVisible = false;
-            }
-        }
-
         private void SetUpButtonGroup()
         {
             //if (viewModel.Reservation.statuscode == 100000007 || viewModel.Reservation.statuscode == 100000000)
@@ -238,6 +160,22 @@ namespace PhuLongCRM.Views
             {
                 floatingButtonGroup.IsVisible = false;
             }
+        }
+        private void InitContract(bool _isContract)
+        {
+            if (_isContract)
+            {
+                ma_dat_coc.IsVisible = true;
+                ma_bang_tinh_gia.IsVisible = false;
+                this.Title = Language.dat_coc_title;
+            }
+            else
+            {
+                ma_dat_coc.IsVisible = false;
+                ma_bang_tinh_gia.IsVisible = true;
+                this.Title = Language.bang_tinh_gia_title;
+            }
+
         }
 
         private async void CancelInstallment(object sender, EventArgs e)
@@ -676,7 +614,7 @@ namespace PhuLongCRM.Views
                 }
             }
             if (viewModel.PromotionItem != null)
-                KhuyenMai_CenterPopup.ShowCenterPopup();
+                ContentPromotion.IsVisible= true;
             LoadingHelper.Hide();
         }
         private void ContentHandoverCondition_Tapped(object sender, EventArgs e)
@@ -753,6 +691,43 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
+        }
+
+        private void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabChinhSach.IsVisible = true;
+                    TabTongHop.IsVisible = false;
+                    TabChiTiet.IsVisible = false;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabTongHop.IsVisible = true;
+                    TabChiTiet.IsVisible = false;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabTongHop.IsVisible = false;
+                    TabChiTiet.IsVisible = true;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 3)
+                {
+                    if (viewModel.InstallmentList.Count == 0)
+                        LoadInstallmentList(ReservationId);
+                    TabChinhSach.IsVisible = false;
+                    TabTongHop.IsVisible = false;
+                    TabChiTiet.IsVisible = false;
+                    TabLich.IsVisible = true;
+                }
+            }
         }
     }
 }

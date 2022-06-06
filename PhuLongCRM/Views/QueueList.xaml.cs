@@ -30,10 +30,10 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private async void listView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void listView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            QueuesModel val = e.Item as QueuesModel;
             LoadingHelper.Show();
+            QueuesModel val = e.Item as QueuesModel;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(val.opportunityid);
             queuesDetialPage.OnCompleted = async (isSuccess) => {
                 if (isSuccess)
@@ -47,7 +47,6 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
-            LoadingHelper.Hide();
         }
 
         private async void SearchBar_SearchButtonPressed(System.Object sender, System.EventArgs e)

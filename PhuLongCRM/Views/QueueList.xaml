@@ -28,7 +28,7 @@
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
                                     <Grid ColumnDefinitions="*,Auto" Grid.Row="0">
                                         <Grid ColumnDefinitions="Auto,*" HorizontalOptions="Start" Grid.Column="0">
                                             <Label Text="{Binding Source={x:Static lang:Language.ma},StringFormat='{0}: '}" TextColor="Gray" FontSize="14" Grid.Column="0"/>
@@ -42,15 +42,8 @@
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="1" Text="{Binding name}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                     </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                        <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding customername}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,Auto,*" Grid.Row="3">
-                                        <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}" TextColor="#444444" FontSize="15" Grid.Column="1" />
-                                        <Label Text="{Binding bsd_queuingexpired ,StringFormat=' {0:HH:mm}'}" TextColor="#444444" FontSize="15" Grid.Column="2" />
-                                    </Grid>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customername}" Grid.Row="2"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_het_han}" Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" Grid.Row="3"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

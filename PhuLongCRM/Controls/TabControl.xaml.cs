@@ -1,6 +1,8 @@
 ﻿using PhuLongCRM.Models;
+using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Resources;
 using System.Text;
@@ -115,7 +117,7 @@ namespace PhuLongCRM.Controls
         }
         private string GetStringByKey(string key)
         {
-            var value = resourceManager.GetString(key, resourceCulture);
+            var value = resourceManager.GetString(key, new CultureInfo(UserLogged.Language));
             if (!string.IsNullOrWhiteSpace(value))
                 return value;
             else

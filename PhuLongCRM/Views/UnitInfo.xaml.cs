@@ -32,10 +32,8 @@ namespace PhuLongCRM.Views
         }
         public async void Init()
         {
-            await Task.WhenAll(
-                viewModel.LoadUnit(),
-                viewModel.CheckShowBtnBangTinhGia()
-                );
+            await viewModel.LoadUnit();
+            await viewModel.CheckShowBtnBangTinhGia();
             
             if (viewModel.UnitInfo != null)
             {
@@ -55,7 +53,7 @@ namespace PhuLongCRM.Views
                     viewModel.View = ViewData.GetViewByIds(viewModel.UnitInfo.bsd_viewphulong);
                 }
 
-                if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004)
+                if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004 || viewModel.UnitInfo.statuscode == 100000006 || viewModel.UnitInfo.statuscode == 100000007)
                 {
                     btnGiuCho.IsVisible = viewModel.UnitInfo.bsd_vippriority ? false : true;
                     if (viewModel.UnitInfo.statuscode != 1 && viewModel.IsShowBtnBangTinhGia == true)
@@ -263,7 +261,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId, true);
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
             {
                 if (isSuccess)

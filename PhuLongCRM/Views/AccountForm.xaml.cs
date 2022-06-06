@@ -48,6 +48,7 @@ namespace PhuLongCRM.Views
             btnSave.Text = Language.tao_moi;
             btnSave.Clicked += CreateContact_Clicked;
             viewModel.BusinessType = viewModel.BusinessTypeOptionList.SingleOrDefault(x => x.Val == "100000000");
+            viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById("1");//mac dinh la KH tiem nang
         }
 
         private void CreateContact_Clicked(object sender, EventArgs e)
@@ -61,7 +62,6 @@ namespace PhuLongCRM.Views
             this.Title = Language.cap_nhat_khach_hang_doanh_nghiep;
             btnSave.Text = Language.cap_nhat;
             btnSave.Clicked += UpdateContact_Clicked;
-            lookUpTinhTrang.IsEnabled = false;
 
             await viewModel.LoadOneAccount(this.AccountId);
 
@@ -127,11 +127,11 @@ namespace PhuLongCRM.Views
 
         public void SetPreOpen()
         {
-            lookUpTinhTrang.PreOpenAsync = async () => {
-                LoadingHelper.Show();
-                viewModel.CustomerStatusReasons = CustomerStatusReasonData.CustomerStatusReasons();
-                LoadingHelper.Hide();
-            };
+            //lookUpTinhTrang.PreOpenAsync = async () => {
+            //    LoadingHelper.Show();
+            //    viewModel.CustomerStatusReasons = CustomerStatusReasonData.CustomerStatusReasons();
+            //    LoadingHelper.Hide();
+            //};
 
             lookUpOperationScope.PreOpenAsync = async () => {
                 LoadingHelper.Show();

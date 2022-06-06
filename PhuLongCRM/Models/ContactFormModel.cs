@@ -31,7 +31,8 @@ namespace PhuLongCRM.Models
         public string jobtitle { get { return _jobtitle; } set { _jobtitle = value; OnPropertyChanged(nameof(jobtitle)); } }
 
         private DateTime? _birthdate;
-        public DateTime? birthdate {
+        public DateTime? birthdate
+        {
             get { return _birthdate; }
             set
             {
@@ -41,7 +42,28 @@ namespace PhuLongCRM.Models
         }
 
         private string _mobilephone;
-        public string mobilephone { get { return _mobilephone != null && _mobilephone.Contains("+84-")? _mobilephone : (_mobilephone != null && _mobilephone.Contains("+84") ? "+84-" : "+84-" + _mobilephone); } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
+        public string mobilephone { get { return _mobilephone; } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); }}
+        public string mobilephone_format {
+            get
+            {
+                if (mobilephone != null && mobilephone.Contains("-"))
+                {
+                    return mobilephone.Split('-')[1].StartsWith("84") ? mobilephone.Replace("84", "+84-") : mobilephone;
+                }
+                else if (mobilephone != null && mobilephone.Contains("+84"))
+                {
+                    return mobilephone.Replace("+84", "+84-");
+                }
+                else if (mobilephone != null && mobilephone.StartsWith("84"))
+                {
+                    return mobilephone.Replace("84", "+84-");
+                }
+                else
+                {
+                    return mobilephone;
+                }
+            }
+        }
 
         private string _createdon;
         public string createdon { get { return _createdon; } set { _createdon = value; OnPropertyChanged(nameof(createdon)); } }
@@ -95,7 +117,8 @@ namespace PhuLongCRM.Models
         public string bsd_passport { get { return _bsd_passport; } set { _bsd_passport = value; OnPropertyChanged(nameof(bsd_passport)); } }
 
         private DateTime? _bsd_issuedonpassport;
-        public DateTime? bsd_issuedonpassport {
+        public DateTime? bsd_issuedonpassport
+        {
             get { return _bsd_issuedonpassport; }
             set
             {
@@ -306,7 +329,8 @@ namespace PhuLongCRM.Models
         public string bsd_idcard { get { return _bsd_idcard; } set { _bsd_idcard = value; OnPropertyChanged(nameof(bsd_idcard)); } }
 
         private DateTime? _bsd_issuedateidcard;
-        public DateTime? bsd_issuedateidcard {
+        public DateTime? bsd_issuedateidcard
+        {
             get { return _bsd_issuedateidcard; }
             set
             {
@@ -319,7 +343,7 @@ namespace PhuLongCRM.Models
         public string bsd_placeofissueidcar { get { return _bsd_placeofissueidcar; } set { _bsd_placeofissueidcar = value; OnPropertyChanged(nameof(bsd_placeofissueidcar)); } }
 
         private decimal? _bsd_birthdate;
-        public decimal? bsd_birthdate{get {return _bsd_birthdate;} set{_bsd_birthdate = value; OnPropertyChanged(nameof(bsd_birthdate)); }}
+        public decimal? bsd_birthdate { get { return _bsd_birthdate; } set { _bsd_birthdate = value; OnPropertyChanged(nameof(bsd_birthdate)); } }
 
         private decimal? _bsd_birthmonth;
         public decimal? bsd_birthmonth { get { return _bsd_birthmonth; } set { _bsd_birthmonth = value; OnPropertyChanged(nameof(bsd_birthmonth)); } }
@@ -365,7 +389,7 @@ namespace PhuLongCRM.Models
         public ImageSource bsd_mattruoccmnd_source { get => _bsd_mattruoccmnd_source; set { _bsd_mattruoccmnd_source = value; OnPropertyChanged(nameof(bsd_mattruoccmnd_source)); } }
 
         private ImageSource _bsd_matsaucmnd_source;
-        public ImageSource bsd_matsaucmnd_source { get => _bsd_matsaucmnd_source; set { _bsd_matsaucmnd_source = value;  OnPropertyChanged(nameof(bsd_matsaucmnd_source)); } }
+        public ImageSource bsd_matsaucmnd_source { get => _bsd_matsaucmnd_source; set { _bsd_matsaucmnd_source = value; OnPropertyChanged(nameof(bsd_matsaucmnd_source)); } }
 
         private string _bsd_postalcode;
         public string bsd_postalcode { get { return _bsd_postalcode; } set { _bsd_postalcode = value; OnPropertyChanged(nameof(bsd_postalcode)); } }

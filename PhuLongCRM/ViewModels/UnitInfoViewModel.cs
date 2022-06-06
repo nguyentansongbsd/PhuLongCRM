@@ -327,6 +327,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_project' alias='project_id'/>
                                     <attribute name='salesorderid' />
                                     <attribute name='ordernumber' />
+                                    <attribute name='bsd_contractnumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
                                         <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
@@ -386,7 +387,14 @@ namespace PhuLongCRM.ViewModels
             {
                 if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
                 {
-                    IsShowBtnBangTinhGia = true;
+                    if (UnitInfo.statuscode == 100000000 || UnitInfo.statuscode == 100000004)
+                    {
+                        IsShowBtnBangTinhGia = true;
+                    }
+                    else
+                    {
+                        IsShowBtnBangTinhGia = false;
+                    }
                     return;
                 }
                 else
@@ -460,6 +468,7 @@ namespace PhuLongCRM.ViewModels
             //    }
             //}
         }
+
         public async Task LoadDataEvent()
         {
             if (UnitInfo == null || UnitInfo.event_id == Guid.Empty) return;

@@ -6,7 +6,7 @@
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              x:Class="PhuLongCRM.Views.DatCocList"
-             Title="{x:Static lang:Language.danh_sach_dat_coc}">
+             Title="{x:Static lang:Language.dat_coc_title}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
@@ -30,22 +30,10 @@
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="1" Text="{Binding name}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" VerticalOptions="Center"/>
                                     </Grid>
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="Gray"/>
-                                        <Label Grid.Column="1" Text="{Binding purchaser}" FontSize="15" TextColor="#000000"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}" FontSize="15" TextColor="Gray"/>
-                                        <Label Grid.Column="1" Text="{Binding bsd_project_name}" FontSize="15" TextColor="#000000"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="Gray"/>
-                                        <Label Grid.Column="1" Text="{Binding bsd_unitno_name}" FontSize="15" TextColor="#000000"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" FontSize="15" TextColor="Gray"/>
-                                        <Label Grid.Column="1" Text="{Binding totalamount_format, StringFormat='{0} đ'}" FontSize="15" TextColor="Red" FontAttributes="Bold"/>
-                                    </Grid>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding purchaser}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding bsd_project_name}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.san_pham}" Text="{Binding bsd_unitno_name}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.tong_tien}" Text="{Binding totalamount_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

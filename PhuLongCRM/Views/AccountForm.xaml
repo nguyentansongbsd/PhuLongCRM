@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BackgroundColor="White"
@@ -28,7 +28,10 @@
                     <!--<controls:LookUpMultipleOptions x:Name="Lookup_BusinessType" Placeholder="Chọn nhóm khách hàng" ItemsSource="{Binding BusinessTypeOptionList}" SelectedIds="{Binding BusinessType}" CenterModal="{x:Reference CenterModal}" ShowClearButton="False" ShowCloseButton="False" IsEnabled="False"/>-->
 
                     <controls:FormLabel Text="{x:Static lang:Language.tinh_trang}" FontSize="15" Margin="0,10,0,0"/>
-                    <controls:LookUp x:Name="lookUpTinhTrang" Placeholder="{x:Static lang:Language.chon_tinh_trang}" BottomModal="{Reference BottomModal}" NameDisplay="Label" ItemsSource="{Binding CustomerStatusReasons}" SelectedItem="{Binding CustomerStatusReason}"/>
+                    <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                        <Label Text="{Binding CustomerStatusReason.Label}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                    </telerikPrimitives:RadBorder>
+                    <!--<controls:LookUp x:Name="lookUpTinhTrang" Placeholder="{x:Static lang:Language.chon_tinh_trang}" BottomModal="{Reference BottomModal}" NameDisplay="Label" ItemsSource="{Binding CustomerStatusReasons}" SelectedItem="{Binding CustomerStatusReason}"/>-->
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.ten_cong_ty}" Margin="0,10,0,0"/>
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_ten_cong_ty}" Text="{Binding singleAccount.bsd_name}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>

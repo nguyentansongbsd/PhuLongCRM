@@ -17,12 +17,12 @@ namespace PhuLongCRM.Views
     public partial class UserInfoPage : ContentPage
     {
         public UserInfoPageViewModel viewModel;
+        public Action<bool> OnCompleted;
+
         public UserInfoPage()
         {
-            LoadingHelper.Show();
             InitializeComponent();
             Init();
-            
         }
 
         private async void Init()
@@ -30,7 +30,14 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new UserInfoPageViewModel();
             centerModelPassword.Body.BindingContext = viewModel;
             await viewModel.LoadContact();
-            LoadingHelper.Hide();
+            if (viewModel.ContactModel != null)
+            {
+                OnCompleted?.Invoke(true);
+            }
+            else
+            {
+                OnCompleted?.Invoke(false);
+            }
         }
 
         private async void ChangePassword_Tapped(object sender, EventArgs e)
