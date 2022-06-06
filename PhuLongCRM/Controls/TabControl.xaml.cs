@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
@@ -13,21 +14,25 @@ namespace PhuLongCRM.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TabControl : Grid
     {
-        public static readonly BindableProperty ListTabProperty = BindableProperty.Create(nameof(ListTab), typeof(List<string>), typeof(TabControl), null, propertyChanged: ListTabChanged);
+        public static readonly BindableProperty ListTabProperty = BindableProperty.Create(nameof(ListTab), typeof(string), typeof(TabControl), null, propertyChanged: ListTabChanged);
         private static void ListTabChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (newValue == null) return;
             TabControl control = (TabControl)bindable;
             control.SetUpTab();
         }
-        public List<string> ListTab
+        public string ListTab
         {
-            get { return (List<string>)GetValue(ListTabProperty); }
+            get { return (string)GetValue(ListTabProperty); }
             set { SetValue(ListTabProperty, value); }
         }
-        List<RadBorder> tabs = new List<RadBorder>();
 
         public event EventHandler<LookUpChangeEvent> IndexTab;
+
+        //ngôn ngữ
+        private static System.Globalization.CultureInfo resourceCulture;
+
+        ResourceManager resourceManager = new ResourceManager("PhuLongCRM.Resources.Language", typeof(Resources.Language).Assembly);      
 
         public TabControl()
         {
@@ -36,35 +41,37 @@ namespace PhuLongCRM.Controls
 
         private void SetUpTab()
         {
-            if (ListTab != null && ListTab.Count > 0)
+            if (!string.IsNullOrWhiteSpace(ListTab))
             {
-                for (int i = 0; i < ListTab.Count; i++)
+                var tabs = ListTab.Split(',').ToList();
+                if (tabs != null && tabs.Count > 0)
                 {
-                    var tab = CreateTabs(ListTab[i]);
-                    this.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-                    this.Children.Add(tab);
-                    Grid.SetColumn(tab, i);
-                    Grid.SetRow(tab, 0);
-                    TapGestureRecognizer tapped = new TapGestureRecognizer();
-                    // tapped.SetBinding(TapGestureRecognizer.CommandParameterProperty,".");
-                    tapped.Tapped += Tapped_Tapped;
-                    tab.GestureRecognizers.Add(tapped);
+                    for (int i = 0; i < tabs.Count; i++)
+                    {
+                        var tab = CreateTabs(tabs[i]);
+                        this.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                        this.Children.Add(tab);
+                        Grid.SetColumn(tab, i);
+                        Grid.SetRow(tab, 0);
+                        TapGestureRecognizer tapped = new TapGestureRecognizer();
+                        tapped.Tapped += Tapped_Tapped;
+                        tab.GestureRecognizers.Add(tapped);
+                    }
+                    BoxView boxView = new BoxView();
+                    boxView.HeightRequest = 1;
+                    boxView.BackgroundColor = Color.FromHex("939393");
+                    boxView.VerticalOptions = LayoutOptions.EndAndExpand;
+                    this.Children.Add(boxView);
+                    Grid.SetColumn(boxView, 0);
+                    Grid.SetRow(boxView, 0);
+                    Grid.SetColumnSpan(boxView, tabs.Count);
+                    Tab_Tapped(this.Children[0] as RadBorder);
                 }
-                BoxView boxView = new BoxView();
-                boxView.HeightRequest = 1;
-                boxView.BackgroundColor = Color.FromHex("939393");
-                boxView.VerticalOptions = LayoutOptions.EndAndExpand;
-                this.Children.Add(boxView);
-                Grid.SetColumn(boxView, 0);
-                Grid.SetRow(boxView, 0);
-                Grid.SetColumnSpan(boxView, ListTab.Count);
-                Tab_Tapped(this.Children[0] as RadBorder);
             }
         }
 
         private void Tapped_Tapped(object sender, EventArgs e)
         {
-           // var itemId = (string)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             Tab_Tapped(sender as RadBorder);
         }
 
@@ -72,9 +79,10 @@ namespace PhuLongCRM.Controls
         {
             RadBorder rd = new RadBorder();
             rd.Style = (Style)Application.Current.Resources["rabBorder_Tab"]; // UI trong app.xaml
+
             Label lb = new Label();
             lb.Style = (Style)Application.Current.Resources["Lb_Tab"];// UI trong app.xaml
-            lb.Text = NameTab;
+            lb.Text = GetStringByKey(NameTab);
             lb.LineBreakMode = LineBreakMode.TailTruncation;
             rd.Content = lb;
             return rd;
@@ -104,6 +112,14 @@ namespace PhuLongCRM.Controls
                     }
                 }
             }
+        }
+        private string GetStringByKey(string key)
+        {
+            var value = resourceManager.GetString(key, resourceCulture);
+            if (!string.IsNullOrWhiteSpace(value))
+                return value;
+            else
+                return key;
         }
     }
 }
