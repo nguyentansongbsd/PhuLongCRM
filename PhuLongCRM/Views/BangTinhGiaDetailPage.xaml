@@ -118,77 +118,93 @@
                                         </StackLayout>
                                         <StackLayout BackgroundColor="White" Padding="25,10">
                                             <controls:FormLabel Text="{x:Static lang:Language.phuong_thuc_thanh_toan}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.paymentscheme_name}" Margin="20,0,0,0" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalTextAlignment="End"/>
-                                            <!--<ScrollView  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="25,0,25,10">
-                                                <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountPaymentScheme}" HorizontalOptions="End" Orientation="Horizontal">
-                                                    <BindableLayout.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
-                                                                <Label Text="{Binding Label}" FontSize="15" TextColor="#1399D5" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                                            </telerikPrimitives:RadBorder>
-                                                        </DataTemplate>
-                                                    </BindableLayout.ItemTemplate>
-                                                </StackLayout>
-                                            </ScrollView>-->
+                                            <controls:FormLabelValue Text="{Binding Reservation.paymentscheme_name}" Margin="20,0,0,0" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalTextAlignment="End"/>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountPaymentScheme}" BackgroundColor="#eeeeee" Spacing="1">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                                    <Binding Path="discount_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
                                         </StackLayout>
                                         <StackLayout BackgroundColor="White" Padding="25,10">
                                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.discountlist_name}" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalOptions="End"/>
-                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscount}" BackgroundColor="White" Spacing="2" HorizontalOptions="End">
+                                            <controls:FormLabelValue Text="{Binding Reservation.discountlist_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscount}" BackgroundColor="#eeeeee" Spacing="1">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
-                                                            <Label FontSize="15" BackgroundColor="White" TextColor="#1399D5" VerticalOptions="Center" HorizontalTextAlignment="End">
-                                                                <Label.GestureRecognizers>
-                                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding bsd_discountid}"/>
-                                                                </Label.GestureRecognizers>
-                                                                <Label.Text>
-                                                                    <MultiBinding StringFormat="{}{0} ({1})">
-                                                                        <Binding Path="bsd_name" />
-                                                                        <!--bsd_discountnumber-->
-                                                                        <Binding Path="value_format" />
-                                                                    </MultiBinding>
-                                                                </Label.Text>
-                                                            </Label>
-                                                        </telerikPrimitives:RadBorder>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                                    <Binding Path="discount_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout Padding="25,10" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_noi_bo}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.interneldiscount_name}" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalOptions="End"/>
-                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountInternel}" HorizontalOptions="End" Spacing="2">
+                                            <controls:FormLabelValue Text="{Binding Reservation.interneldiscount_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountInternel}" BackgroundColor="#eeeeee" Spacing="1">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
-                                                            <Label Text="{Binding Label}" FontSize="15" TextColor="#1399D5" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                                        </telerikPrimitives:RadBorder>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                                    <Binding Path="discount_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout Padding="25,10" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_dac_biet}" Grid.Column="0" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <StackLayout x:Name="stackLayoutSpecialDiscount" BackgroundColor="#eeeeee" BindableLayout.ItemsSource="{Binding ListSpecialDiscount}" HorizontalOptions="End" Spacing="2">
+                                            <StackLayout x:Name="stackLayoutSpecialDiscount" BackgroundColor="#eeeeee" BindableLayout.ItemsSource="{Binding ListSpecialDiscount}" Spacing="1">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
-                                                            <Label Text="{Binding Label}" BackgroundColor="White" Padding="0,4" TextColor="#1399D5" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="End"/>
-                                                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End" >
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="bsd_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                            <Label.GestureRecognizers>
                                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="stackLayoutSpecialDiscount_Tapped" CommandParameter="{Binding .}"/>
-                                                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                                                        </telerikPrimitives:RadBorder>
+                                                            </Label.GestureRecognizers>
+                                                        </Label>
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout Padding="25,10" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.khuyen_mai}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <StackLayout x:Name="stackLayoutPromotions" BindableLayout.ItemsSource="{Binding ListPromotion}" HorizontalOptions="End" Spacing="1" BackgroundColor="#eeeeee">
+                                            <StackLayout x:Name="stackLayoutPromotions" BindableLayout.ItemsSource="{Binding ListPromotion}" Spacing="1" BackgroundColor="#eeeeee">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Label Text="{Binding Label}" BackgroundColor="White" Padding="0,4" TextColor="#1399D5" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                        <Label Text="{Binding Label}" BackgroundColor="White" Padding="0,4" TextColor="#1399D5" FontSize="15" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
                                                             <Label.GestureRecognizers>
                                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="stackLayoutPromotions_Tapped" CommandParameter="{Binding .}"/>
                                                             </Label.GestureRecognizers>
@@ -199,13 +215,21 @@
                                         </StackLayout>
                                         <StackLayout Padding="25,10" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_quy_doi}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.discountpromotion_name}" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalOptions="End"/>
-                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountExchange}" HorizontalOptions="End" Spacing="2">
+                                            <controls:FormLabelValue Text="{Binding Reservation.discountpromotion_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountExchange}" Spacing="1" BackgroundColor="#eeeeee">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
-                                                            <Label Text="{Binding Label}" FontSize="15" TextColor="#1399D5" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                                        </telerikPrimitives:RadBorder>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                                    <Binding Path="discount_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
                                             </StackLayout>
@@ -221,13 +245,13 @@
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout BindableLayout.ItemsSource="{Binding CoownerList}" BackgroundColor="White" Spacing="1">
-                                            <BindableLayout.EmptyViewTemplate>
-                                                <DataTemplate>
-                                                    <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
-                                                </DataTemplate>
-                                            </BindableLayout.EmptyViewTemplate>
-                                            <BindableLayout.ItemTemplate>
-                                                <DataTemplate>
+                                        <BindableLayout.EmptyViewTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                            </DataTemplate>
+                                        </BindableLayout.EmptyViewTemplate>
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
                                                 <telerikPrimitives:RadBorder BorderColor="#f3f3f3" BorderThickness="0,0,0,1">
                                                     <StackLayout>
                                                         <Label Text="{Binding customer}" Padding="25,10,0,0" FontAttributes="Bold" TextColor="#1399D5" FontSize="15"/>
@@ -238,8 +262,8 @@
                                                     </StackLayout>
                                                 </telerikPrimitives:RadBorder>
                                             </DataTemplate>
-                                            </BindableLayout.ItemTemplate>
-                                        </StackLayout>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
                         </Grid>
@@ -766,7 +790,7 @@
                     <ScrollView>
                         <Grid Grid.Row="0" Margin="0" RowDefinitions="Auto,*">
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
-                                <Label Grid.Column="0" Text="{x:Static lang:Language.chiet_khau_chung}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label x:Name="lblTitleContentDiscount" Grid.Column="0" Text="{x:Static lang:Language.chiet_khau_chung}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                 <Label Grid.Column="1" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="17" Padding="2" TextColor="#666666">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentDiscount_Tapped"/>

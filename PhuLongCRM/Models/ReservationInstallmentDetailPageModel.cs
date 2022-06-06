@@ -22,18 +22,19 @@ namespace PhuLongCRM.Models
         public string bsd_amountwaspaid_format { get => StringFormatHelper.FormatCurrency(bsd_amountwaspaid); }
         public decimal bsd_depositamount { get; set; } // số tiền đặt cọc
         public string bsd_depositamount_format { get => StringFormatHelper.FormatCurrency(bsd_depositamount); }
+
+        public int bsd_ordernumber { get; set; } // đợt
         public bool bsd_depositamount_hide
         {
             get
             {
-                if (bsd_depositamount == 0)
-                    return false;
-                else
+                if (bsd_ordernumber == 1) // tien dat coc chi hien thi o dot 1
                     return true;
+                else
+                    return false;
             }
         }
 
-        public int bsd_ordernumber { get; set; } // đợt
         public decimal bsd_amountpercent { get; set; }  // phần trăm thah toán
 
         public string bsd_name_format

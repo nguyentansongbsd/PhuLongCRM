@@ -54,12 +54,15 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Show();
 
                 viewModel.CoownerList.Clear();
+                viewModel.ListDiscountPaymentScheme.Clear();
                 viewModel.ListDiscount.Clear();
                 viewModel.ListPromotion.Clear();
+                viewModel.ListDiscountInternel.Clear();
+                viewModel.ListDiscountExchange.Clear();
+                viewModel.InstallmentList.Clear();
                 viewModel.ShowInstallmentList = false;
                 viewModel.NumberInstallment = 0;
-                viewModel.InstallmentList.Clear();
-
+                
                 await Task.WhenAll(
                     LoadDataChinhSach(ReservationId),
                     viewModel.LoadCoOwners(ReservationId)
@@ -637,24 +640,26 @@ namespace PhuLongCRM.Views
                 }
             }
         }
+
         private void SutUpSpecialDiscount()
         {
-            if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
-            {
-                stackLayoutSpecialDiscount.IsVisible = true;
-                foreach (var item in viewModel.ListSpecialDiscount)
-                {
-                    if (!string.IsNullOrEmpty(item.Label))
-                    {
-                        stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
-                    }
-                }
-            }
-            else
-            {
-                stackLayoutSpecialDiscount.IsVisible = false;
-            }
+            //if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
+            //{
+            //    stackLayoutSpecialDiscount.IsVisible = true;
+            //    foreach (var item in viewModel.ListSpecialDiscount)
+            //    {
+            //        if (!string.IsNullOrEmpty(item.Label))
+            //        {
+            //            stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    stackLayoutSpecialDiscount.IsVisible = false;
+            //}
         }
+
         private void CloseContentPromotion_Tapped(object sender, EventArgs e)
         {
             ContentPromotion.IsVisible = false;
@@ -679,6 +684,7 @@ namespace PhuLongCRM.Views
                 ContentPromotion.IsVisible= true;
             LoadingHelper.Hide();
         }
+
         private void ContentHandoverCondition_Tapped(object sender, EventArgs e)
         {
             ContentHandoverCondition.IsVisible = false;
@@ -695,6 +701,7 @@ namespace PhuLongCRM.Views
                 ContentHandoverCondition.IsVisible = true;
             LoadingHelper.Hide();
         }
+
         private void ContentSpecialDiscount_Tapped(object sender, EventArgs e)
         {
             ContentSpecialDiscount.IsVisible = false;
@@ -703,16 +710,16 @@ namespace PhuLongCRM.Views
         private async void stackLayoutSpecialDiscount_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as OptionSet;
-            if (item != null && item.Val != string.Empty)
+            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as DiscountSpecialModel;
+            if (item != null && item.bsd_discountspecialid != Guid.Empty)
             {
                 if (viewModel.DiscountSpecialItem == null)
                 {
-                    await viewModel.LoadDiscountSpecialItem(item.Val);
+                    await viewModel.LoadDiscountSpecialItem(item.bsd_discountspecialid.ToString());
                 }
-                else if (viewModel.DiscountSpecialItem.bsd_discountspecialid.ToString() != item.Val)
+                else if (viewModel.DiscountSpecialItem.bsd_discountspecialid != item.bsd_discountspecialid)
                 {
-                    await viewModel.LoadDiscountSpecialItem(item.Val);
+                    await viewModel.LoadDiscountSpecialItem(item.bsd_discountspecialid.ToString());
                 }
             }
             if (viewModel.DiscountSpecialItem != null)
@@ -728,8 +735,16 @@ namespace PhuLongCRM.Views
         private async void Discount_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var item = (Guid)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            await viewModel.LoadDiscountItem(item);
+            var item = (DiscountModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.bsd_discounttype == "100000000")
+                lblTitleContentDiscount.Text = Language.chiet_khau_chung;
+            else if(item.bsd_discounttype == "100000004")
+                lblTitleContentDiscount.Text = Language.chiet_khau_noi_bo;
+            else if(item.bsd_discounttype == "100000002")
+                lblTitleContentDiscount.Text = Language.phuong_thuc_thanh_toan;
+            else if (item.bsd_discounttype == "100000006")
+                lblTitleContentDiscount.Text = Language.chiet_khau_quy_doi;
+            await viewModel.LoadDiscountItem(item.bsd_discountid);
             if (viewModel.Discount != null)
                 ContentDiscount.IsVisible = true;
             LoadingHelper.Hide();
