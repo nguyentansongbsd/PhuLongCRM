@@ -213,7 +213,7 @@ namespace PhuLongCRM.Models
 
         // thông tin đặt cọc
         public int bsd_reservationformstatus { get; set; } // trạng thái pđc
-        public string bsd_reservationformstatus_format { get => QuoteStatusCodeData.GetQuoteStatusCodeById(bsd_reservationformstatus.ToString())?.Name; }
+        public string bsd_reservationformstatus_format { get => ReservationFormStatus.GetRFStatusById(bsd_reservationformstatus.ToString())?.Label; }
 
         public DateTime? _bsd_reservationprinteddate; // ngày in
         public DateTime? bsd_reservationprinteddate

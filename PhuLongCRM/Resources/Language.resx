@@ -1546,11 +1546,11 @@
     <value>Giữ Chỗ</value>
   </data>
 	<data name="bang_tinh_gia_btn" xml:space="preserve">
-    <value>Bảng tính giá</value>
-  </data>
+		<value>Bảng tính giá</value>
+	</data>
 	<data name="khong_tim_thay_san_pham" xml:space="preserve">
-    <value>Không tìm thấy sản phẩm.</value>
-  </data>
+		<value>Không tìm thấy sản phẩm.</value>
+	 </data>
 	<data name="san_pham_khong_the_tao_bang_tinh_gia" xml:space="preserve">
     <value>Sản phẩm không thể tạo bảng tính giá.</value>
   </data>
@@ -3005,5 +3005,86 @@
 	</data>
 	<data name="case_default_subject_sub" xml:space="preserve">
 		<value>Chủ đề mặc định</value>
+	</data>
+	<data name="thong_tin_title" xml:space="preserve">
+		<value>Thông Tin</value>
+	</data>
+	<data name="giao_dich_title" xml:space="preserve">
+		<value>Giao Dịch</value>
+	</data>
+	<data name="thong_tin_san_pham_title" xml:space="preserve">
+		<value>Thông Tin Sản Phẩm</value>
+	</data>
+	<data name="thong_tin_giu_cho_title" xml:space="preserve">
+		<value>Thông Tin Giữ Chỗ</value>
+	</data>
+	<data name="thong_tin_san_dai_ly_title" xml:space="preserve">
+		<value>Thông Tin Sàn/ Đại Lý</value>
+	</data>
+	<data name="bang_tinh_gia_title" xml:space="preserve">
+		<value>Bảng Tính Giá</value>
+	</data>
+	<data name="dat_coc_title" xml:space="preserve">
+		<value>Đặt Cọc</value>
+	</data>
+	<data name="hop_dong_title" xml:space="preserve">
+		<value>Hợp Đồng</value>
+	</data>
+	<data name="cham_soc_khach_hang_title" xml:space="preserve">
+		<value>Chăm Sóc Khách Hàng</value>
+	</data>
+	<data name="ma_dat_coc" xml:space="preserve">
+		<value>Mã đặt cọc</value>
+	</data>
+	<data name="ma_bang_tinh_gia" xml:space="preserve">
+		<value>Mã bảng tính giá</value>
+	</data>
+	<data name="chinh_sach_title" xml:space="preserve">
+		<value>Chính Sách</value>
+	</data>
+	<data name="tong_hop_title" xml:space="preserve">
+		<value>Tổng Hợp</value>
+	</data>
+	<data name="chi_tiet_title" xml:space="preserve">
+		<value>Chi Tiết</value>
+	</data>
+	<data name="lich_title" xml:space="preserve">
+		<value>Lịch</value>
+	</data>
+	<data name="nguoi_dong_so_huu_title" xml:space="preserve">
+		<value>Người Đồng Sở Hữu</value>
+	</data>
+	<data name="thong_tin_ban_hang_title" xml:space="preserve">
+		<value>Thông Tin Bán Hàng</value>
+	</data>
+	<data name="thong_tin_chi_tiet_title" xml:space="preserve">
+		<value>Thông Tin Chi Tiết</value>
+	</data>
+	<data name="thong_tin_bang_tinh_gia_title" xml:space="preserve">
+		<value>Thông Tin Bảng Tính Giá</value>
+	</data>
+	<data name="thong_tin_hop_dong_title" xml:space="preserve">
+		<value>Thông Tin Hợp Đồng</value>
+	</data>
+	<data name="thong_tin_phieu_dat_coc_title" xml:space="preserve">
+		<value>Thông Tin Phiếu Đặt Cọc</value>
+	</data>
+	<data name="thong_tin_gia_title" xml:space="preserve">
+		<value>Thông Tin Giá</value>
+	</data>
+	<data name="phi_quan_ly_title" xml:space="preserve">
+		<value>Phí Quản Lý</value>
+	</data>
+	<data name="rf_not_print_rf_sts" xml:space="preserve">
+		<value>Chưa in PĐC</value>
+	</data>
+	<data name="rf_printed_rf_sts" xml:space="preserve">
+		<value>Đã in PĐC</value>
+	</data>
+	<data name="rf_signed_rf_sts" xml:space="preserve">
+		<value>Đã ký PĐC</value>
+	</data>
+	<data name="rf_expired_rf_sts" xml:space="preserve">
+		<value>Hết hạn</value>
 	</data>
 </root>

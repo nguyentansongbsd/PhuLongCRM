@@ -36,12 +36,6 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await viewModel.LoadQueue();
-            
-            VisualStateManager.GoToState(radBorderThongTin, "Active");
-            VisualStateManager.GoToState(radBorderGiaoDich, "InActive");
-            VisualStateManager.GoToState(lbThongTin, "Active");
-            VisualStateManager.GoToState(lbGiaoDich, "InActive");
-
             if (viewModel.Queue != null)
             {
                 FromQueue = new OptionSet { Val = viewModel.Queue.opportunityid.ToString(), Label = viewModel.Queue.name, Title = CodeQueue };
@@ -111,6 +105,8 @@ namespace PhuLongCRM.Views
                     if(viewModel.ShowBtnHuyGiuCho)
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_giu_cho, "FontAwesomeSolid", "\uf05e", null, HuyGC));
                 }
+                if (viewModel.ShowBtnBangTinhGia == false && viewModel.ShowBtnHuyGiuCho == false && viewModel.ShowCare == false)
+                    floatingButtonGroup.IsVisible = false;
             }
         }
         private void GoToProject_Tapped(object sender, EventArgs e)
@@ -327,38 +323,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-        private void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radBorderThongTin, "Active");
-            VisualStateManager.GoToState(radBorderGiaoDich, "InActive");
-            VisualStateManager.GoToState(lbThongTin, "Active");
-            VisualStateManager.GoToState(lbGiaoDich, "InActive");
-            stThongTin.IsVisible = true;
-            stGiaoDich.IsVisible = false;
-        }
-        private async void GiaoDich_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radBorderThongTin, "InActive");
-            VisualStateManager.GoToState(radBorderGiaoDich, "Active");
-            VisualStateManager.GoToState(lbThongTin, "InActive");
-            VisualStateManager.GoToState(lbGiaoDich, "Active");
-            stThongTin.IsVisible = false;
-            stGiaoDich.IsVisible = true;
-            LoadingHelper.Show();
-            if (viewModel.BangTinhGiaList == null && viewModel.DatCocList == null && viewModel.HopDongList == null)
-            {
-                viewModel.BangTinhGiaList = new ObservableCollection<ReservationListModel>();
-                viewModel.DatCocList = new ObservableCollection<ReservationListModel>();
-                viewModel.HopDongList = new ObservableCollection<ContractModel>();
-                await Task.WhenAll(
-                    viewModel.LoadDanhSachBangTinhGia(),
-                    viewModel.LoadDanhSachDatCoc(),
-                    viewModel.LoadDanhSachHopDong(),
-                    viewModel.LoadCaseForQueue()
-                    );
-            }
-            LoadingHelper.Hide();
-        }
+        
         private async void ShowMoreBangTinhGia_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -627,6 +592,37 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
                 }
             };
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if(e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    stThongTin.IsVisible = true;
+                    stGiaoDich.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    stThongTin.IsVisible = false;
+                    stGiaoDich.IsVisible = true;
+                    LoadingHelper.Show();
+                    if (viewModel.BangTinhGiaList == null && viewModel.DatCocList == null && viewModel.HopDongList == null)
+                    {
+                        viewModel.BangTinhGiaList = new ObservableCollection<ReservationListModel>();
+                        viewModel.DatCocList = new ObservableCollection<ReservationListModel>();
+                        viewModel.HopDongList = new ObservableCollection<ContractModel>();
+                        await Task.WhenAll(
+                            viewModel.LoadDanhSachBangTinhGia(),
+                            viewModel.LoadDanhSachDatCoc(),
+                            viewModel.LoadDanhSachHopDong(),
+                            viewModel.LoadCaseForQueue()
+                            );
+                    }
+                    LoadingHelper.Hide();
+                }
+            }    
         }
     }
 }

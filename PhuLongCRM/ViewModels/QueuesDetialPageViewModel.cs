@@ -174,7 +174,7 @@ namespace PhuLongCRM.ViewModels
             ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
 //            ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
             ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
-            ShowCare = (data.statuscode == 1 || data.statuscode == 4 || data.statuscode == 5) ? false : true;
+            ShowCare = (data.statuscode == 1 || data.statuscode == 4 || data.statuscode == 5 || data.statuscode == 100000003) ? false : true;
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
             this.Queue = data;
         }
