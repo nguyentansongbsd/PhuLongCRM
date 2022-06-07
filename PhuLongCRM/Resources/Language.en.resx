@@ -3087,4 +3087,19 @@
 	<data name="rf_expired_rf_sts" xml:space="preserve">
 		<value>Expired RF</value>
 	</data>
+	<data name="ma_du_an" xml:space="preserve">
+		<value>Project code</value>
+	</data>
+	<data name="mo_hinh" xml:space="preserve">
+		<value>Business model</value>
+	</data>
+	<data name="thong_tin_du_an_title" xml:space="preserve">
+		<value>Project Information</value>
+	</data>
+	<data name="thong_ke_title" xml:space="preserve">
+		<value>Statistical</value>
+	</data>
+	<data name="giu_cho_title" xml:space="preserve">
+		<value>Queues</value>
+	</data>
 </root>

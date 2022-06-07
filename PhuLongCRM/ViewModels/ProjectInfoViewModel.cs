@@ -353,7 +353,7 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadGiuCho()
         {
             IsLoadedGiuCho = true;
-            string fetchXml = $@"<fetch version='1.0' count='10' page='{PageListGiuCho}' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='5' page='{PageListGiuCho}' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='opportunity'>
                                 <attribute name='name' />
                                 <attribute name='customerid' alias='customer_id'/>

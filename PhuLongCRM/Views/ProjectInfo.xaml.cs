@@ -33,13 +33,6 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
-            VisualStateManager.GoToState(radborderThongKe, "Active");
-            VisualStateManager.GoToState(radborderThongTin, "InActive");
-            VisualStateManager.GoToState(radborderGiuCho, "InActive");
-            VisualStateManager.GoToState(lblThongKe, "Active");
-            VisualStateManager.GoToState(lblThongTin, "InActive");
-            VisualStateManager.GoToState(lblGiuCho, "InActive");
-
             await Task.WhenAll(
                 viewModel.LoadData(),
                 viewModel.LoadAllCollection(),
@@ -49,6 +42,14 @@ namespace PhuLongCRM.Views
                 viewModel.LoadThongKeHopDong(),
                 viewModel.LoadThongKeBangTinhGia()
             ) ;
+            if(viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
+            {
+                viewModel.IsShowBtnGiuCho = true;
+            }    
+            else
+            {
+                viewModel.IsShowBtnGiuCho = false;
+            }
 
             if (viewModel.Project != null)
             {
@@ -87,51 +88,6 @@ namespace PhuLongCRM.Views
                 NeedToRefreshNumQueue = false;
                 LoadingHelper.Hide();
             }
-        }
-
-        private async void ThongKe_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radborderThongKe, "Active");
-            VisualStateManager.GoToState(radborderThongTin, "InActive");
-            VisualStateManager.GoToState(radborderGiuCho, "InActive");
-            VisualStateManager.GoToState(lblThongKe, "Active");
-            VisualStateManager.GoToState(lblThongTin, "InActive");
-            VisualStateManager.GoToState(lblGiuCho, "InActive");
-            stackThongKe.IsVisible = true;
-            stackThongTin.IsVisible = false;
-            stackGiuCho.IsVisible = false;
-        }
-
-        private async void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radborderThongKe, "InActive");
-            VisualStateManager.GoToState(radborderThongTin, "Active");
-            VisualStateManager.GoToState(radborderGiuCho, "InActive");
-            VisualStateManager.GoToState(lblThongKe, "InActive");
-            VisualStateManager.GoToState(lblThongTin, "Active");
-            VisualStateManager.GoToState(lblGiuCho, "InActive");
-            stackThongKe.IsVisible = false;
-            stackThongTin.IsVisible = true;
-            stackGiuCho.IsVisible = false;
-        }
-
-        private async void GiuCho_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            VisualStateManager.GoToState(radborderThongKe, "InActive");
-            VisualStateManager.GoToState(radborderThongTin, "InActive");
-            VisualStateManager.GoToState(radborderGiuCho, "Active");
-            VisualStateManager.GoToState(lblThongKe, "InActive");
-            VisualStateManager.GoToState(lblThongTin, "InActive");
-            VisualStateManager.GoToState(lblGiuCho, "Active");
-            stackThongKe.IsVisible = false;
-            stackThongTin.IsVisible = false;
-            stackGiuCho.IsVisible = true;
-            if (viewModel.IsLoadedGiuCho == false)
-            {
-                await viewModel.LoadGiuCho();
-            }            
-            LoadingHelper.Hide();
         }
 
         private void GiuCho_Clicked(object sender, EventArgs e)
@@ -182,7 +138,7 @@ namespace PhuLongCRM.Views
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var itemId = (Guid)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
             queuesDetialPage.OnCompleted = async (IsSuccess) => {
                 if (IsSuccess)
@@ -259,6 +215,37 @@ namespace PhuLongCRM.Views
         private void CloseContentEvent_Tapped(object sender, EventArgs e)
         {
             ContentEvent.IsVisible = false;
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if(e.Item != null)
+            {
+                if((int)e.Item == 0)
+                {
+                    stackThongKe.IsVisible = true;
+                    stackThongTin.IsVisible = false;
+                    stackGiuCho.IsVisible = false;
+                }    
+                else if ((int)e.Item == 1)
+                {
+                    stackThongKe.IsVisible = false;
+                    stackThongTin.IsVisible = true;
+                    stackGiuCho.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    stackThongKe.IsVisible = false;
+                    stackThongTin.IsVisible = false;
+                    stackGiuCho.IsVisible = true;
+                    LoadingHelper.Show();
+                    if (viewModel.IsLoadedGiuCho == false)
+                    {
+                        await viewModel.LoadGiuCho();
+                    }
+                    LoadingHelper.Hide();
+                }
+            }    
         }
     }
 }

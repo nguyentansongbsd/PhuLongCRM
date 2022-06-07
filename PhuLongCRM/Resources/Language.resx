@@ -3087,4 +3087,19 @@
 	<data name="rf_expired_rf_sts" xml:space="preserve">
 		<value>Hết hạn</value>
 	</data>
+	<data name="ma_du_an" xml:space="preserve">
+		<value>Mã dự án</value>
+	</data>
+	<data name="mo_hinh" xml:space="preserve">
+		<value>Mô hình</value>
+	</data>
+	<data name="thong_tin_du_an_title" xml:space="preserve">
+		<value>Thông Tin Dự Án</value>
+	</data>
+	<data name="thong_ke_title" xml:space="preserve">
+		<value>Thống Kê</value>
+	</data>
+	<data name="giu_cho_title" xml:space="preserve">
+		<value>Giữ Chỗ</value>
+	</data>
 </root>
