@@ -53,7 +53,7 @@ namespace PhuLongCRM.Views
                     viewModel.View = ViewData.GetViewByIds(viewModel.UnitInfo.bsd_viewphulong);
                 }
 
-                if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004 || viewModel.UnitInfo.statuscode == 100000006 || viewModel.UnitInfo.statuscode == 100000007)
+                if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004 || viewModel.UnitInfo.statuscode == 100000007)
                 {
                     btnGiuCho.IsVisible = viewModel.UnitInfo.bsd_vippriority ? false : true;
                     if (viewModel.UnitInfo.statuscode != 1 && viewModel.IsShowBtnBangTinhGia == true)

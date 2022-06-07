@@ -390,9 +390,9 @@ namespace PhuLongCRM.Views
             {
                 viewModel.UnitView = null;
             }
-            // hiện btn giữ chỗ availabe, queuing, preparing, booking, reserve
+            // hiện btn giữ chỗ availabe, queuing, preparing, booking
             if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004"
-                || viewModel.UnitStatusCode.Id == "100000006" || viewModel.UnitStatusCode.Id == "100000007")
+                || viewModel.UnitStatusCode.Id == "100000007")
             {
                 btnGiuCho.IsVisible = true;
             }

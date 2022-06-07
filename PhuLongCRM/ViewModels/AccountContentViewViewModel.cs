@@ -10,10 +10,21 @@ namespace PhuLongCRM.ViewModels
     public class AccountContentViewViewModel : ListViewBaseViewModel2<AccountListModel>
     {
         public string Keyword { get; set; }
+        public string KeyFilter { get; set; }
         public AccountContentViewViewModel()
         {
             PreLoadData = new Command(() =>
             {
+                string filter = string.Empty;
+                if (!string.IsNullOrWhiteSpace(KeyFilter))
+                {
+                    if (KeyFilter == "1")
+                        filter = "<condition attribute='statuscode' operator='eq' value='100000000' />";
+                    else if (KeyFilter == "2")
+                        filter = "<condition attribute='statuscode' operator='eq' value='1' />";
+                    else
+                        filter = string.Empty;
+                }
                 EntityName = "accounts";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='account'>
@@ -45,7 +56,8 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_name' alias='country_name' />                                      
                     </link-entity>
                     <filter type='and'>
-                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                        {filter}
                        </filter>
                   </entity>
                 </fetch>";
