@@ -76,7 +76,7 @@ namespace PhuLongCRM.Views
             var item = (TapGestureRecognizer)((Label)sender).GestureRecognizers[0];
             viewModel.KeyFilter = item.CommandParameter as string;
             // thay đổi icon
-            if (viewModel.KeyFilter == "1")
+            if(viewModel.KeyFilter == "1")
             {
                 label_official.FontAttributes = FontAttributes.Bold;
                 label_potential.FontAttributes = FontAttributes.None;
