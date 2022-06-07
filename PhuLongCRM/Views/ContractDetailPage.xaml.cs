@@ -34,7 +34,8 @@ namespace PhuLongCRM.Views
                     viewModel.LoadContract(ContractId),
                     viewModel.LoadPromotions(this.ContractId),
                     viewModel.LoadSpecialDiscount(this.ContractId),
-                    viewModel.LoadCoOwners(ContractId));
+                    viewModel.LoadCoOwners(ContractId),
+                    viewModel.LoadDiscountsPaymentScheme());
             await Task.WhenAll(
                      viewModel.LoadHandoverCondition(this.ContractId),
                      viewModel.LoadDiscounts(),
@@ -356,8 +357,17 @@ namespace PhuLongCRM.Views
         private async void Discount_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var item = (Guid)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            await viewModel.LoadDiscountItem(item);
+            var item = (DiscountModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.bsd_discounttype == "100000000")
+                lblTitleContentCK.Text = Language.chiet_khau_chung;
+            else if (item.bsd_discounttype == "100000004")
+                lblTitleContentCK.Text = Language.chiet_khau_noi_bo;
+            else if (item.bsd_discounttype == "100000002")
+                lblTitleContentCK.Text = Language.phuong_thuc_thanh_toan;
+            else if (item.bsd_discounttype == "100000006")
+                lblTitleContentCK.Text = Language.chiet_khau_quy_doi;
+
+            await viewModel.LoadDiscountItem(item.bsd_discountid);
             if (viewModel.Discount != null)
             {
                 ContentDiscount.IsVisible = true;

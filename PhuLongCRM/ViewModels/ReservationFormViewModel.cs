@@ -1054,7 +1054,7 @@ namespace PhuLongCRM.ViewModels
                         if (SalesAgents != null)
                         {
                             SalesAgents.AddRange(await LoadAccuntSales(all));
-                            SalesAgents.AddRange(await LoadAccuntSales(develop));
+                            //SalesAgents.AddRange(await LoadAccuntSales(develop));
                         }
                     }
                     else

@@ -253,7 +253,7 @@
     <value>Lịch Làm Việc</value>
   </data>
 	<data name="hoat_dong" xml:space="preserve">
-    <value>Hoạt động</value>
+    <value>Hoạt Động</value>
   </data>
 	<data name="dang_xuat" xml:space="preserve">
     <value>Đăng xuất</value>
@@ -796,7 +796,7 @@
     <value>Thông Tin Công Ty</value>
   </data>
 	<data name="dai_dien_phap_luat" xml:space="preserve">
-    <value>Đại diện pháp luật</value>
+    <value>Đại Diện Pháp Luật</value>
   </data>
 	<data name="loai_khach_hang" xml:space="preserve">
     <value>Loại khách hàng</value>

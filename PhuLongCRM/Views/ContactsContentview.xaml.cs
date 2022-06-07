@@ -69,29 +69,42 @@ namespace PhuLongCRM.Views
         {
             FilterView.IsVisible = !FilterView.IsVisible;
         }
+
         private async void SelectFilter_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var item = (TapGestureRecognizer)((Label)sender).GestureRecognizers[0];
             viewModel.KeyFilter = item.CommandParameter as string;
             // thay đổi icon
-            if (viewModel.KeyFilter == "0")
+            if(viewModel.KeyFilter == "1")
             {
-                label_all.TextColor = Color.FromHex("1399D5");
-                label_official.TextColor = Color.FromHex("444444");
-                label_potential.TextColor = Color.FromHex("444444");
-            }
-            else if(viewModel.KeyFilter == "1")
-            {
-                label_all.TextColor = Color.FromHex("444444");
+                label_official.FontAttributes = FontAttributes.Bold;
+                label_potential.FontAttributes = FontAttributes.None;
+                label_All.FontAttributes = FontAttributes.None;
+
                 label_official.TextColor = Color.FromHex("1399D5");
                 label_potential.TextColor = Color.FromHex("444444");
+                label_All.TextColor = Color.FromHex("444444");
             }
             else if (viewModel.KeyFilter == "2")
             {
-                label_all.TextColor = Color.FromHex("444444");
+                label_potential.FontAttributes = FontAttributes.Bold;
+                label_official.FontAttributes = FontAttributes.None;
+                label_All.FontAttributes = FontAttributes.None;
+
                 label_potential.TextColor = Color.FromHex("1399D5");
                 label_official.TextColor = Color.FromHex("444444");
+                label_All.TextColor = Color.FromHex("444444");
+            }
+            else if (viewModel.KeyFilter == "0")
+            {
+                label_All.FontAttributes = FontAttributes.Bold;
+                label_potential.FontAttributes = FontAttributes.None;
+                label_official.FontAttributes = FontAttributes.None;
+
+                label_potential.TextColor = Color.FromHex("444444");
+                label_official.TextColor = Color.FromHex("444444");
+                label_All.TextColor = Color.FromHex("1399D5");
             }
             await viewModel.LoadOnRefreshCommandAsync();
             FilterView.IsVisible = false;
