@@ -434,8 +434,6 @@ namespace PhuLongCRM.ViewModels
 
         public async Task<bool> UpdateMeeting(Guid meetingid)
         {
-            MeetingModel.statecode = 0;
-            MeetingModel.statuscode = 1;
             var actualdurationminutes = Math.Round((MeetingModel.scheduledend.Value - MeetingModel.scheduledstart.Value).TotalMinutes);
             MeetingModel.scheduleddurationminutes = int.Parse(actualdurationminutes.ToString());
             string path = "/appointments(" + meetingid + ")";

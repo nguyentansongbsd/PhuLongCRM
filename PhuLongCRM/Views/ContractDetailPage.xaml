@@ -321,21 +321,38 @@
                                         </StackLayout>
                                         <StackLayout BackgroundColor="White" Padding="25,10">
                                             <controls:FormLabel Text="{x:Static lang:Language.phuong_thuc_thanh_toan}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Contract.paymentscheme_name}" Margin="20,0,0,0" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalTextAlignment="End"/>
-                                        </StackLayout>
-                                        <StackLayout BackgroundColor="White" Padding="25,10">
-                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Contract.discountlist_name}" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalOptions="End"/>
-                                            <StackLayout Grid.Row="1" BindableLayout.ItemsSource="{Binding ListDiscount}" BackgroundColor="#eeeeee" Spacing="2" HorizontalOptions="End">
+                                            <controls:FormLabelValue Text="{Binding Contract.paymentscheme_name}" Margin="20,0,0,0" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalTextAlignment="End"/>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountPaymentScheme}" BackgroundColor="#eeeeee" Spacing="1">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Label FontSize="15" BackgroundColor="White" TextColor="#1399D5" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
                                                             <Label.GestureRecognizers>
-                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding bsd_discountid}"/>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding .}"/>
                                                             </Label.GestureRecognizers>
                                                             <Label.Text>
                                                                 <MultiBinding StringFormat="{}{0} ({1})">
-                                                                    <Binding Path="bsd_discountnumber" />
+                                                                    <Binding Path="discount_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </StackLayout>
+                                        <StackLayout BackgroundColor="White" Padding="25,10">
+                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                            <controls:FormLabelValue Text="{Binding Contract.discountlist_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscount}" BackgroundColor="#eeeeee" Spacing="1">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                                    <Binding Path="discount_name" />
                                                                     <Binding Path="value_format" />
                                                                 </MultiBinding>
                                                             </Label.Text>
@@ -346,13 +363,21 @@
                                         </StackLayout>
                                         <StackLayout Padding="25,10" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_noi_bo}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Contract.interneldiscount_name}" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalOptions="EndAndExpand"/>
-                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountInternel}" HorizontalOptions="End" Orientation="Vertical" Spacing="2">
+                                            <controls:FormLabelValue Text="{Binding Contract.interneldiscount_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountInternel}" BackgroundColor="#eeeeee" Spacing="1">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
-                                                            <Label Text="{Binding Label}" FontSize="15" TextColor="#1399D5" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                                        </telerikPrimitives:RadBorder>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                                    <Binding Path="discount_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
                                             </StackLayout>
@@ -362,7 +387,13 @@
                                             <StackLayout x:Name="stackLayoutSpecialDiscount" BackgroundColor="#eeeeee" BindableLayout.ItemsSource="{Binding ListSpecialDiscount}" HorizontalOptions="End" Spacing="1">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Label Text="{Binding Label}" BackgroundColor="White" Padding="0,4" TextColor="#1399D5" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End" >
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="bsd_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
                                                             <Label.GestureRecognizers>
                                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="stackLayoutSpecialDiscount_Tapped" CommandParameter="{Binding .}"/>
                                                             </Label.GestureRecognizers>
@@ -376,7 +407,7 @@
                                             <StackLayout x:Name="stackLayoutPromotions" BindableLayout.ItemsSource="{Binding ListPromotion}" HorizontalOptions="End" Spacing="1" BackgroundColor="#eeeeee">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Label Text="{Binding Label}" BackgroundColor="White" Padding="0,4" TextColor="#1399D5" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                        <Label Text="{Binding Label}" BackgroundColor="White" Padding="0,4" TextColor="#1399D5" FontSize="15" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
                                                             <Label.GestureRecognizers>
                                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="stackLayoutPromotions_Tapped" CommandParameter="{Binding .}"/>
                                                             </Label.GestureRecognizers>
@@ -387,13 +418,21 @@
                                         </StackLayout>
                                         <StackLayout Padding="25,10" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_quy_doi}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
-                                            <controls:FormLabelValue Text="{Binding Contract.discountpromotion_name}" FontAttributes="Bold" FontSize="15" TextColor="#1399D5" HorizontalOptions="End"/>
-                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountExchange}" HorizontalOptions="End" Orientation="Vertical" Spacing="2">
+                                            <controls:FormLabelValue Text="{Binding Contract.discountpromotion_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ListDiscountExchange}" Spacing="1" BackgroundColor="#eeeeee">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <telerikPrimitives:RadBorder CornerRadius="5" BorderColor="#f1f1f1" BorderThickness="1" Padding="5">
-                                                            <Label Text="{Binding Label}" FontSize="15" TextColor="#1399D5" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                                        </telerikPrimitives:RadBorder>
+                                                        <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Discount_Tapped" CommandParameter="{Binding .}"/>
+                                                            </Label.GestureRecognizers>
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                                    <Binding Path="discount_name" />
+                                                                    <Binding Path="value_format" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
                                             </StackLayout>
@@ -580,7 +619,7 @@
                     <ScrollView>
                         <Grid Grid.Row="0" Margin="0" RowDefinitions="Auto,*">
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
-                                <Label Grid.Column="0" Text="{x:Static lang:Language.chiet_khau_chung}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label x:Name="lblTitleContentCK" Grid.Column="0" Text="{x:Static lang:Language.chiet_khau_chung}" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                 <Label Grid.Column="1" Text="&#xf057;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="17" Padding="2" TextColor="#666666">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContentDiscount_Tapped"/>

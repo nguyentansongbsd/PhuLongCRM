@@ -20,6 +20,8 @@ namespace PhuLongCRM.ViewModels
                         filter = "<condition attribute='statuscode' operator='eq' value='100000000' />";
                     else if (KeyFilter == "2")
                         filter = "<condition attribute='statuscode' operator='eq' value='1' />";
+                    else
+                        filter = string.Empty;
                 }
                 EntityName = "contacts";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>

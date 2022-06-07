@@ -360,5 +360,8 @@ namespace PhuLongCRM.Models
         public string bsd_totalamountpaidinstallment_format { get => StringFormatHelper.FormatCurrency(bsd_totalamountpaidinstallment); }
         public decimal bsd_totalpercent { get; set; }
         public string totalpercent_Format { get => StringFormatHelper.FormatCurrency(bsd_totalpercent); }
+
+        public string bsd_chietkhautheopttt { get; set; }
+        public string bsd_selectedchietkhaupttt { get; set; }
     }
 }
