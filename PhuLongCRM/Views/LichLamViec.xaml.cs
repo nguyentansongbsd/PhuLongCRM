@@ -20,7 +20,7 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
-            data = new List<OptionSet>() { new OptionSet("1",Language.lich_lam_viec_theo_thang), new OptionSet("2", Language.lich_lam_viec_theo_tuan), new OptionSet("3", Language.lich_lam_viec_theo_tuan),};
+            data = new List<OptionSet>() { new OptionSet("1",Language.lich_lam_viec_theo_thang), new OptionSet("2", Language.lich_lam_viec_theo_tuan), new OptionSet("3", Language.lich_lam_viec_theo_ngay),};
             listView.ItemsSource = data;
         }
 

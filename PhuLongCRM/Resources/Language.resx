@@ -3102,4 +3102,7 @@
 	<data name="giu_cho_title" xml:space="preserve">
 		<value>Giữ Chỗ</value>
 	</data>
+	<data name="can_ho_phai_o_tinh_trang_san_sang_hoac_giu_cho" xml:space="preserve">
+		<value>Căn hộ phải ở tình trạng sẵn sàng hoặc giữ chỗ.</value>
+	</data>
 </root>
