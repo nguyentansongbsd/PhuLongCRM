@@ -129,6 +129,10 @@ namespace PhuLongCRM.Views
             //{
             //    viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy Đặt Cọc", "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
             //}
+            if (viewModel.Reservation.statuscode == 3)// show khi statuscode == 3(Deposited)
+            {
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.de_nghi_thanh_ly, "FontAwesomeSolid", "\uf560", null, FULTerminate));
+            }
 
             if (viewModel.Reservation.statuscode == 100000007)
             {
@@ -179,6 +183,37 @@ namespace PhuLongCRM.Views
                 this.Title = Language.bang_tinh_gia_title;
             }
 
+        }
+        private async void FULTerminate(object sender, EventArgs e)
+        {
+            if (viewModel.Reservation != null && viewModel.Reservation.quoteid != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                var fulid = await viewModel.FULTerminate();
+                if (fulid != Guid.Empty)
+                {
+                    FollowUpListForm newPage = new FollowUpListForm(fulid);
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == true)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
+                    ToastMessageHelper.ShortMessage(Language.da_tao_danh_sach_theo_doi);
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.de_nghi_thanh_ly_that_bai);
+                }
+            }
         }
 
         private async void CancelInstallment(object sender, EventArgs e)

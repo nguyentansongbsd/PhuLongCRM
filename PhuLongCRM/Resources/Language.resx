@@ -3102,4 +3102,76 @@
 	<data name="giu_cho_title" xml:space="preserve">
 		<value>Giữ Chỗ</value>
 	</data>
+	<data name="de_nghi_thanh_ly" xml:space="preserve">
+		<value>Đề nghị thanh lý</value>
+	</data>
+	<data name="de_nghi_thanh_ly_that_bai" xml:space="preserve">
+		<value>Đề nghị thanh lý thất bại.</value>
+	</data>
+	<data name="da_tao_danh_sach_theo_doi" xml:space="preserve">
+		<value>Đã tạo danh sách theo dõi.</value>
+	</data>
+	<data name="cap_nhat_thong_tin_title" xml:space="preserve">
+		<value>Cập Nhật Thông Tin</value>
+	</data>
+	<data name="ful_refund_takeoutmoney" xml:space="preserve">
+		<value>Hoàn tiền</value>
+	</data>
+	<data name="ful_forfeiture_takeoutmoney" xml:space="preserve">
+		<value>Tịch thu</value>
+	</data>
+	<data name="vui_long_chon_loai" xml:space="preserve">
+		<value>Vui lòng chọn loại.</value>
+	</data>
+	<data name="vui_long_chon_loai_thanh_ly" xml:space="preserve">
+		<value>Vui lòng chọn loại thanh lý.</value>
+	</data>
+	<data name="vui_long_chon_nhom" xml:space="preserve">
+		<value>Vui lòng chọn nhóm.</value>
+	</data>
+	<data name="vui_long_chon_phuong_thuc_phat" xml:space="preserve">
+		<value>Vui lòng chọn phương thức phạt.</value>
+	</data>
+	<data name="vui_long_nhap_so_tien_hoan_lai" xml:space="preserve">
+		<value>Vui lòng nhập số tiền hoàn lại.</value>
+	</data>
+	<data name="vui_long_nhap_gia_tri_tu_0_den_100" xml:space="preserve">
+		<value>Vui lòng nhập giá trị từ 0 đến 100.</value>
+	</data>
+	<data name="vui_long_chon_dot_mo_ban" xml:space="preserve">
+		<value>Vui lòng chọn đợt mở bán.</value>
+	</data>
+	<data name="cap_nhat_danh_sach_theo_doi_thanh_cong" xml:space="preserve">
+		<value>Cập nhật danh sách theo dõi thành công.</value>
+	</data>
+	<data name="cap_nhat_danh_sach_theo_doi_that_bai" xml:space="preserve">
+		<value>Cập nhật danh sách theo dõi thất bại.</value>
+	</data>
+	<data name="ma_dstd" xml:space="preserve">
+		<value>Mã DSTD</value>
+	</data>
+	<data name="ten" xml:space="preserve">
+		<value>Tên</value>
+	</data>
+	<data name="chon_loai_thanh_ly" xml:space="preserve">
+		<value>Chọn loại thanh lý</value>
+	</data>
+	<data name="chon_nhom" xml:space="preserve">
+		<value>Chọn nhóm</value>
+	</data>
+	<data name="gia_tri_thanh_ly_title" xml:space="preserve">
+		<value>Giá Trị Thanh Lý</value>
+	</data>
+	<data name="nhap_so_tien" xml:space="preserve">
+		<value>Nhập số tiền</value>
+	</data>
+	<data name="thanh_ly_title" xml:space="preserve">
+		<value>Thanh Lý</value>
+	</data>
+	<data name="binh_luan_quyet_dinh_title" xml:space="preserve">
+		<value>Bình Luận - Quyết Định</value>
+	</data>
+	<data name="chon_cuoc_hop_dinh_ky" xml:space="preserve">
+		<value>Chọn cuộc họp định kỳ</value>
+	</data>
 </root>

@@ -3102,4 +3102,76 @@
 	<data name="giu_cho_title" xml:space="preserve">
 		<value>Queues</value>
 	</data>
+	<data name="de_nghi_thanh_ly" xml:space="preserve">
+		<value>FUL (Terminate)</value>
+	</data>
+	<data name="de_nghi_thanh_ly_that_bai" xml:space="preserve">
+		<value>Failed to FUL (Terminate).</value>
+	</data>
+	<data name="da_tao_danh_sach_theo_doi" xml:space="preserve">
+		<value>Follow up list created successfully.</value>
+	</data>
+	<data name="cap_nhat_thong_tin_title" xml:space="preserve">
+		<value>Update Information</value>
+	</data>
+	<data name="ful_refund_takeoutmoney" xml:space="preserve">
+		<value>Refund</value>
+	</data>
+	<data name="ful_forfeiture_takeoutmoney" xml:space="preserve">
+		<value>Forfeiture</value>
+	</data>
+	<data name="vui_long_chon_loai" xml:space="preserve">
+		<value>Please choose type.</value>
+	</data>
+	<data name="vui_long_chon_loai_thanh_ly" xml:space="preserve">
+		<value>Please choose termination type.</value>
+	</data>
+	<data name="vui_long_chon_nhom" xml:space="preserve">
+		<value>Please choose group.</value>
+	</data>
+	<data name="vui_long_chon_phuong_thuc_phat" xml:space="preserve">
+		<value>Please choose take out money.</value>
+	</data>
+	<data name="vui_long_nhap_so_tien_hoan_lai" xml:space="preserve">
+		<value>Please enter refund amount.</value>
+	</data>
+	<data name="vui_long_nhap_gia_tri_tu_0_den_100" xml:space="preserve">
+		<value>Please enter take out money between 0 and 100.</value>
+	</data>
+	<data name="vui_long_chon_dot_mo_ban" xml:space="preserve">
+		<value>Please choose phase launch.</value>
+	</data>
+	<data name="cap_nhat_danh_sach_theo_doi_thanh_cong" xml:space="preserve">
+		<value>Follow up list has been updated successfully.</value>
+	</data>
+	<data name="cap_nhat_danh_sach_theo_doi_that_bai" xml:space="preserve">
+		<value>Failed to update follow up list.</value>
+	</data>
+	<data name="ma_dstd" xml:space="preserve">
+		<value>FUL code</value>
+	</data>
+	<data name="ten" xml:space="preserve">
+		<value>Name</value>
+	</data>
+	<data name="chon_loai_thanh_ly" xml:space="preserve">
+		<value>Choose termination type</value>
+	</data>
+	<data name="chon_nhom" xml:space="preserve">
+		<value>Choose group</value>
+	</data>
+	<data name="gia_tri_thanh_ly_title" xml:space="preserve">
+		<value>Values</value>
+	</data>
+	<data name="nhap_so_tien" xml:space="preserve">
+		<value>Enter amount</value>
+	</data>
+	<data name="thanh_ly_title" xml:space="preserve">
+		<value>Termination</value>
+	</data>
+	<data name="binh_luan_quyet_dinh_title" xml:space="preserve">
+		<value>Comment - Decision</value>
+	</data>
+	<data name="chon_cuoc_hop_dinh_ky" xml:space="preserve">
+		<value>Choose collection meeting</value>
+	</data>
 </root>

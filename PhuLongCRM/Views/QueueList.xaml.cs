@@ -12,11 +12,13 @@ namespace PhuLongCRM.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QueueList : ContentPage
     {
+        public static bool? NeedToRefresh = null;
         private readonly QueuListViewModel viewModel;
         public QueueList()
         {
             InitializeComponent();
             LoadingHelper.Show();
+            NeedToRefresh = false;
             BindingContext = viewModel = new QueuListViewModel();
             Init();
         }
@@ -29,7 +31,17 @@ namespace PhuLongCRM.Views
             viewModel.LoadStatus();
             LoadingHelper.Hide();
         }
-
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedToRefresh != null && NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadOnRefreshCommandAsync();
+                NeedToRefresh = false;
+                LoadingHelper.Hide();
+            }
+        }
         private void listView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             LoadingHelper.Show();

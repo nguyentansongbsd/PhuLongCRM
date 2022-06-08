@@ -18,11 +18,12 @@ namespace PhuLongCRM.Views
     {
         public FollowDetailPageViewModel viewModel;
         public Action<bool> OnLoaded;
-
+        public static bool? NeedToRefresh = null;
         public FollowDetailPage(Guid id)
         {
             InitializeComponent();
             this.BindingContext = viewModel = new FollowDetailPageViewModel();
+            NeedToRefresh = false;
             Init(id);            
         }
 
@@ -46,6 +47,15 @@ namespace PhuLongCRM.Views
             else
             {
                 OnLoaded?.Invoke(false);
+            }
+        }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedToRefresh == true && viewModel.FollowDetail != null && viewModel.FollowDetail.bsd_followuplistid != Guid.Empty)
+            {
+                await viewModel.Load(viewModel.FollowDetail.bsd_followuplistid);
+                NeedToRefresh = false;
             }
         }
 

@@ -38,7 +38,8 @@ namespace PhuLongCRM.Models
         public string bsd_units { get; set; }
         public Guid bsd_reservation_id { get; set; }
         public string name_reservation { get; set; } // đặt cọc
-
+        public Guid bsd_optionentry_id { get; set; }
+        public string name_optionentry { get; set; }
         public Guid contact_id_oe { get; set; } // id khách hàng Option Entry
         public Guid account_id_oe { get; set; } // id khách hàng Option Entry
         public Guid contact_id_re { get; set; } // id khách hàng Reservation
@@ -121,9 +122,36 @@ namespace PhuLongCRM.Models
         public string bsd_termination_format { get { return BoolToStringData.GetStringByBool(bsd_termination); } }
         public bool bsd_resell { get; set; } // bán lại
         public string bsd_resell_format { get { return BoolToStringData.GetStringByBool(bsd_resell); } }
+        public Guid phaseslaunch_id { get; set; }
         public string phaseslaunch_name { get; set; } // đợt mở bán
         public Guid bsd_collectionmeeting_id { get; set; }
         public string bsd_collectionmeeting_subject { get; set; } // cuộc họp
         public string bsd_description { get; set; } //bình luận và quyết định nội dung
+        public decimal bsd_depositfee { get; set; }
+        public string project_code { get; set; }
+        public decimal bsd_totalforfeitureamount_calculator // tổng tiền phạt
+        {
+            get
+            {
+                if (bsd_takeoutmoney == 100000000 && bsd_forfeitureamount != 0)
+                {
+                    var totalforfeiture = bsd_depositfee - bsd_forfeitureamount;
+                    return totalforfeiture;
+                }
+                else
+                {
+                    if (bsd_takeoutmoney == 100000001 && bsd_forfeiturepercent != 0)
+                    {
+
+                        var totalforfeiture = (bsd_depositfee * bsd_forfeitureamount) / 100;
+                        return totalforfeiture;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
     }
 }
