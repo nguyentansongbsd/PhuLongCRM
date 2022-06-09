@@ -843,7 +843,7 @@ namespace PhuLongCRM.ViewModels
             }
 
             data["bsd_group"] = 100000000;
-            // parameters["bsd_date"] = new Date().toISOString();
+            data["bsd_date"] = DateTime.Now.ToLocalTime();
 
             if (Reservation.statuscode == 3)
                 data["bsd_type"] = 100000005;
@@ -854,6 +854,7 @@ namespace PhuLongCRM.ViewModels
             else if (Reservation.statuscode == 100000000)
                 data["bsd_type"] = 100000000;
 
+            data["bsd_name"] = "Termination_"+ Reservation.quotenumber + "_CCR";
             data["bsd_reservation@odata.bind"] = "/quotes(" + Reservation.quoteid + ")";
             data["bsd_depositfee"] = Reservation.bsd_depositfee;
             if (Reservation.unit_id != Guid.Empty)
@@ -862,7 +863,7 @@ namespace PhuLongCRM.ViewModels
             }
             if (UserLogged.Id != Guid.Empty)
             {
-                //data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")"; lỗi field này
+                data["bsd_Employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
             if (UserLogged.ManagerId != Guid.Empty)
             {
@@ -872,6 +873,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_sellingprice"] = Reservation.totalamount;
             data["bsd_totalamount"] = Reservation.totalamount;
             data["bsd_totalamountpaid"] = Reservation.bsd_totalamountpaid;
+            data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)"; // Don vi tien te mac dinh la "đ"
 
             string path = "/bsd_followuplists";
             CrmApiResponse result = await CrmHelper.PostData(path, data);

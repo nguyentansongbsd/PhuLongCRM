@@ -129,7 +129,7 @@ namespace PhuLongCRM.Views
             //{
             //    viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy Đặt Cọc", "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
             //}
-            if (viewModel.Reservation.statuscode == 3)// show khi statuscode == 3(Deposited)
+            if (viewModel.Reservation.statuscode == 3 && viewModel.Reservation.bsd_followuplist == false)// show khi statuscode == 3(Deposited)
             {
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.de_nghi_thanh_ly, "FontAwesomeSolid", "\uf560", null, FULTerminate));
             }

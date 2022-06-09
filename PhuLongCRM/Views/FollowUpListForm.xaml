@@ -159,9 +159,12 @@
                             <StackLayout BackgroundColor="White" Padding="10">
                                 <controls:FormLabel Text="{x:Static lang:Language.hop_dinh_ky}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:LookUp x:Name="Lookup_Meeting" Placeholder="{x:Static lang:Language.chon_cuoc_hop_dinh_ky}" ItemsSource="{Binding ListMeeting}" SelectedItem="{Binding Meeting}" BottomModal="{x:Reference BottomModal}" NameDisplay="Name"/>
-
+                                <!--bsd_salecomment-->
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_dung}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_noi_dung}" Text="{Binding FULDetail.bsd_description}" FontSize="15"/>
+
+                                <controls:FormLabel Text="{x:Static lang:Language.sale_marketing_comment}" FontSize="15" Margin="0,10,0,0"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_sale_marketing_comment}" Text="{Binding FULDetail.bsd_salecomment}" FontSize="15"/>
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
                     </telerikPrimitives:RadExpander>

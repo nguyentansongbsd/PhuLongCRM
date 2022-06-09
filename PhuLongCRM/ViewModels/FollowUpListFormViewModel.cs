@@ -291,6 +291,7 @@ namespace PhuLongCRM.ViewModels
                 await DeletLookup("bsd_collectionmeeting", FULDetail.bsd_followuplistid);
 
             data["bsd_description"] = FULDetail.bsd_description;
+            data["bsd_salecomment"] = FULDetail.bsd_salecomment;
             return data;
         }
     }

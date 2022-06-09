@@ -31,7 +31,8 @@ namespace PhuLongCRM.ViewModels
         public ContactFormModel PrimaryContact { get => _PrimaryContact; set { if (_PrimaryContact != value) { this._PrimaryContact = value; OnPropertyChanged(nameof(PrimaryContact)); } } }        
 
         public ObservableCollection<QueueFormModel> list_thongtinqueing { get; set; }
-        public ObservableCollection<ReservationListModel> list_thongtinquotation { get; set; }
+
+        public ObservableCollection<ReservationListModel> list_thongtinquotation { get; set; } = new ObservableCollection<ReservationListModel>();
         public ObservableCollection<ContractModel> list_thongtincontract { get; set; }
         public ObservableCollection<HoatDongListModel> list_thongtincase { get; set; }
 
@@ -76,7 +77,6 @@ namespace PhuLongCRM.ViewModels
             BusinessTypeOptions.Add(new OptionSet("100000003", Language.chu_dau_tu));
 
             list_thongtinqueing = new ObservableCollection<QueueFormModel>();
-            list_thongtinquotation = new ObservableCollection<ReservationListModel>();
             list_thongtincontract = new ObservableCollection<ContractModel>();
             list_thongtincase = new ObservableCollection<HoatDongListModel>();
             list_MandatorySecondary = new ObservableCollection<MandatorySecondaryModel>();
@@ -253,7 +253,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadDSQuotationAccount(Guid accountid)
         {
-            string fetch = $@"<fetch version='1.0' count='3' page='{PageQuotation}' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' count='5' page='{PageQuotation}' output-format='xml-platform' mapping='logical' distinct='false'>
                             <entity name='quote'>
                                 <attribute name='name' />
                                 <attribute name='totalamount' />
@@ -274,6 +274,7 @@ namespace PhuLongCRM.ViewModels
                                             <value>861450002</value>
                                             <value>4</value>                
                                             <value>3</value>
+                                            <value>100000007</value>
                                        </condition>
                                        <filter type='and'>
                                            <condition attribute='statuscode' operator='in'>
@@ -301,7 +302,8 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ReservationListModel>>("quotes", fetch);
             if (result == null || result.value.Any() == false) return;
             var data = result.value;
-            ShowMoreQuotation = data.Count < 3 ? false : true;
+            ShowMoreQuotation = data.Count < 5 ? false : true;
+            List<ReservationListModel> aa = new List<ReservationListModel>();
             foreach (var item in data)
             {
                 list_thongtinquotation.Add(item);
