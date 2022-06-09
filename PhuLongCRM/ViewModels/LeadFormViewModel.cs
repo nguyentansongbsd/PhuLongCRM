@@ -374,7 +374,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_registrationcode"] = singleLead.bsd_registrationcode;
 
             data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone : null;
-            data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1)? singleLead.telephone1 : null;
+            data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1)? singleLead.telephone1 : "+84";
 
             if (!string.IsNullOrWhiteSpace(singleLead.numberofemployees))
             {

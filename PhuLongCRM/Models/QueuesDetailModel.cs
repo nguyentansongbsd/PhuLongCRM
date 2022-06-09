@@ -10,6 +10,7 @@ namespace PhuLongCRM.Models
         public string description { get; set; }
         public Guid _bsd_units_value { get; set; }
         public string unit_name { get; set; }
+        public string unit_status { get; set; }
         public Guid _bsd_project_value { get; set; }
         public string project_name { get; set; }
         public string bsd_queuenumber { get; set; }

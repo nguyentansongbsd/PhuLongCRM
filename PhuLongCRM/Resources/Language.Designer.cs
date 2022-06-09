@@ -421,6 +421,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Căn hộ phải ở tình trạng sẵn sàng hoặc giữ chỗ..
+        /// </summary>
+        internal static string can_ho_phai_o_tinh_trang_san_sang_hoac_giu_cho {
+            get {
+                return ResourceManager.GetString("can_ho_phai_o_tinh_trang_san_sang_hoac_giu_cho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cập Nhật Công Việc.
         /// </summary>
         internal static string cap_nhap_cong_viec {

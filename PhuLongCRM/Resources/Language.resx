@@ -3173,5 +3173,8 @@
 	</data>
 	<data name="chon_cuoc_hop_dinh_ky" xml:space="preserve">
 		<value>Chọn cuộc họp định kỳ</value>
+    </data>
+	<data name="can_ho_phai_o_tinh_trang_san_sang_hoac_giu_cho" xml:space="preserve">
+		<value>Căn hộ phải ở tình trạng sẵn sàng hoặc giữ chỗ.</value>
 	</data>
 </root>

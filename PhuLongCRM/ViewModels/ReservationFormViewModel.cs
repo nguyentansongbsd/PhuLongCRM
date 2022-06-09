@@ -1359,6 +1359,15 @@ namespace PhuLongCRM.ViewModels
             return response;
         }
 
+        public async Task<CrmApiResponse> UpdateQuote_HasLichThanhToan()
+        {
+            string path = $"/quotes({this.Quote.quoteid})";
+            var content = await GetContentUpdateQuote_HasLichThanhToan();
+            CrmApiResponse response = await CrmHelper.PatchData(path, content);
+            return response;
+        }
+
+
         public async Task<CrmApiResponse> UpdatePaymentShemes()
         {
             string path = $"/quotes({this.Quote.quoteid})";
@@ -1575,7 +1584,28 @@ namespace PhuLongCRM.ViewModels
             return data;
         }
 
+        public async Task<object> GetContentUpdateQuote_HasLichThanhToan()
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
 
+            data["name"] = this.Quote.name;
+            //data["bsd_exchangediscount"] = string.Join(",", ckQuyDoiIds);
+            data["bsd_paymentschemestype"] = this.PaymentSchemeType?.Val;
+            if (this.Quote.bsd_startingdatecalculateofps.HasValue)
+            {
+                data["bsd_startingdatecalculateofps"] = this.Quote.bsd_startingdatecalculateofps.Value.Date;
+            }
+
+            if (this.DiscountExchangeList != null)
+            {
+                data["bsd_exchangediscountlist@odata.bind"] = $"/bsd_discountpromotions({this.DiscountExchangeList.Val})";
+            }
+            else
+            {
+                await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_exchangediscountlist");
+            }
+            return data;
+        }
 
         public async Task<CrmApiResponse> CreateQuoteProduct()
         {

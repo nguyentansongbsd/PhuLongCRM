@@ -537,6 +537,11 @@ namespace PhuLongCRM.Views
         }
         private void TaoBTG(object sender, EventArgs e)
         {
+            if (viewModel.Queue.unit_status != "100000000" && viewModel.Queue.unit_status != "100000004") //queueing, available
+            {
+                ToastMessageHelper.ShortMessage(Language.can_ho_phai_o_tinh_trang_san_sang_hoac_giu_cho);
+                return;
+            }
             LoadingHelper.Show();
             OptionSet Queue = new OptionSet(viewModel.Queue.opportunityid.ToString(), viewModel.Queue.name);
             OptionSet SaleAgentCompany = new OptionSet(viewModel.Queue._bsd_salesagentcompany_value.ToString(), viewModel.Queue.salesagentcompany_name);

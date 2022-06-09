@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using Xamarin.Forms;
 
@@ -60,7 +61,7 @@ namespace PhuLongCRM.ViewModels
                 if (this.selectedDate.HasValue)
                 {
                     var date = selectedDate.Value;
-                    var result = string.Format("{0}, {1} {2}", CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(date.DayOfWeek), CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month), date.Day);
+                    var result = string.Format("{0}, {1} - {2}", CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(date.DayOfWeek),date.Day, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month));
 
                     if (Device.RuntimePlatform == Device.Android)
                     {

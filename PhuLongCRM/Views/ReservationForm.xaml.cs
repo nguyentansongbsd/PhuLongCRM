@@ -136,6 +136,8 @@ namespace PhuLongCRM.Views
                     lookupDieuKienBanGiao.IsEnabled = true;
                     lookupPhuongThucThanhToan.IsEnabled = true;
                     lookupChieuKhau.IsEnabled = true;
+                    lookupChieuKhauNoiBo.HideClearButton();
+                    lookupChieuKhauQuyDoi.HideClearButton();
                 }
                 if (!string.IsNullOrWhiteSpace(viewModel.Quote.bsd_discounts))
                 {
@@ -212,6 +214,8 @@ namespace PhuLongCRM.Views
             {
                 lookupDieuKienBanGiao.PreOpenOneTime = false;
                 lookupPhuongThucThanhToan.PreOpenOneTime = false;
+                lookupChieuKhauNoiBo.PreOpenOneTime = false;
+                lookupChieuKhauQuyDoi.PreOpenOneTime = false;
                 lookupChieuKhau.HideClearButton();
 
                 lookupDieuKienBanGiao.PreOpen = () =>
@@ -225,6 +229,16 @@ namespace PhuLongCRM.Views
                 };
 
                 lookupChieuKhau.PreOpen = () =>
+                {
+                    ToastMessageHelper.ShortMessage(Language.da_co_lich_thanh_toan_khong_duoc_chinh_sua);
+                };
+
+                lookupChieuKhauNoiBo.PreOpen = () =>
+                {
+                    ToastMessageHelper.ShortMessage(Language.da_co_lich_thanh_toan_khong_duoc_chinh_sua);
+                };
+
+                lookupChieuKhauQuyDoi.PreOpen = () =>
                 {
                     ToastMessageHelper.ShortMessage(Language.da_co_lich_thanh_toan_khong_duoc_chinh_sua);
                 };
@@ -259,19 +273,21 @@ namespace PhuLongCRM.Views
                     }
                     LoadingHelper.Hide();
                 };
+
+                lookupChieuKhauQuyDoi.PreOpenAsync = async () =>
+                {
+                    LoadingHelper.Show();
+                    await viewModel.LoadDiscountExchangeList();
+                    LoadingHelper.Hide();
+                };
+
+                lookupChieuKhauNoiBo.PreOpenAsync = async () =>
+                {
+                    LoadingHelper.Show();
+                    await viewModel.LoadDiscountInternelList();
+                    LoadingHelper.Hide();
+                };
             }
-
-            lookupChieuKhauQuyDoi.PreOpenAsync = async () => {
-                LoadingHelper.Show();
-                await viewModel.LoadDiscountExchangeList();
-                LoadingHelper.Hide();
-            };
-
-            lookupChieuKhauNoiBo.PreOpenAsync = async () => {
-                LoadingHelper.Show();
-                await viewModel.LoadDiscountInternelList();
-                LoadingHelper.Hide();
-            };
 
             lookupLoaiGopDot.PreOpenAsync = async () => {
                 LoadingHelper.Show();
@@ -449,6 +465,11 @@ namespace PhuLongCRM.Views
 
         private void DiscountChildPaymentSchemeItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsHadLichThanhToan == true)
+            {
+                ToastMessageHelper.ShortMessage(Language.da_co_lich_thanh_toan_khong_duoc_chinh_sua);
+                return;
+            }
             var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item.IsExpired == true || item.IsNotApplied == true) return;
 
@@ -496,6 +517,11 @@ namespace PhuLongCRM.Views
 
         private void DiscountChildItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsHadLichThanhToan == true)
+            {
+                ToastMessageHelper.ShortMessage(Language.da_co_lich_thanh_toan_khong_duoc_chinh_sua);
+                return;
+            }
             var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item.IsExpired == true || item.IsNotApplied == true) return;
 
@@ -532,6 +558,11 @@ namespace PhuLongCRM.Views
 
         private void DiscountChildInternelItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsHadLichThanhToan == true)
+            {
+                ToastMessageHelper.ShortMessage(Language.da_co_lich_thanh_toan_khong_duoc_chinh_sua);
+                return;
+            }
             var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item.IsExpired == true || item.IsNotApplied == true) return;
 
@@ -729,6 +760,11 @@ namespace PhuLongCRM.Views
 
         private void DiscountChildExchangeItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsHadLichThanhToan == true)
+            {
+                ToastMessageHelper.ShortMessage(Language.da_co_lich_thanh_toan_khong_duoc_chinh_sua);
+                return;
+            }
             var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item.IsExpired == true || item.IsNotApplied == true) return;
 
@@ -1089,53 +1125,11 @@ namespace PhuLongCRM.Views
             }
             else
             {
-                CrmApiResponse responseGetTotal = await viewModel.GetTotal(viewModel.Quote.quoteid.ToString());
-                if (responseGetTotal.IsSuccess)
+                if (viewModel.IsHadLichThanhToan)
                 {
-                    viewModel.TotalReservation = JsonConvert.DeserializeObject<TotalReservationModel>(responseGetTotal.Content);
-                    viewModel.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.ListedPrice);
-                    viewModel.TotalReservation.Discount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.Discount);
-                    viewModel.TotalReservation.HandoverAmount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.HandoverAmount);
-                    viewModel.TotalReservation.NetSellingPrice_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.NetSellingPrice);
-                    viewModel.TotalReservation.LandValue_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.LandValue);
-                    viewModel.TotalReservation.TotalTax_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.TotalTax);
-                    viewModel.TotalReservation.MaintenanceFee_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.MaintenanceFee);
-                    viewModel.TotalReservation.NetSellingPriceAfterVAT_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.NetSellingPriceAfterVAT);
-                    viewModel.TotalReservation.TotalAmount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.TotalAmount);
-
-                    if (viewModel.HandoverCondition_Update != null && (viewModel.HandoverCondition_Update?.Val != viewModel.HandoverCondition.Val))
-                    {
-                        var response = await CrmHelper.DeleteRecord($"/quotes({viewModel.QuoteId})/bsd_quote_bsd_packageselling({viewModel.HandoverCondition_Update.Val})/$ref");
-                        if (response.IsSuccess)
-                        {
-                            bool isSuccess_Update = await viewModel.AddHandoverCondition();
-                            if (isSuccess_Update)
-                            {
-                                viewModel.HandoverCondition_Update = viewModel.HandoverCondition;
-                            }
-                            else
-                            {
-                                LoadingHelper.Hide();
-                                ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            viewModel.HandoverCondition = viewModel.HandoverCondition_Update;
-                        }
-                    }
-
-                    CrmApiResponse apiResponse = await viewModel.UpdateQuote();
+                    CrmApiResponse apiResponse = await viewModel.UpdateQuote_HasLichThanhToan();
                     if (apiResponse.IsSuccess)
                     {
-                        CrmApiResponse apiResponseQuoteProduct = await viewModel.UpdateQuoteProduct();
-                        if (apiResponseQuoteProduct.IsSuccess == false)
-                        {
-                            ToastMessageHelper.LongMessage(apiResponseQuoteProduct.ErrorResponse.error.message);
-                            LoadingHelper.Hide();
-                            return;
-                        }
                         if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                         if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                         if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
@@ -1152,9 +1146,74 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.LongMessage(responseGetTotal.ErrorResponse.error.message);
+                    CrmApiResponse responseGetTotal = await viewModel.GetTotal(viewModel.Quote.quoteid.ToString());
+                    if (responseGetTotal.IsSuccess)
+                    {
+                        viewModel.TotalReservation = JsonConvert.DeserializeObject<TotalReservationModel>(responseGetTotal.Content);
+                        viewModel.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.ListedPrice);
+                        viewModel.TotalReservation.Discount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.Discount);
+                        viewModel.TotalReservation.HandoverAmount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.HandoverAmount);
+                        viewModel.TotalReservation.NetSellingPrice_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.NetSellingPrice);
+                        viewModel.TotalReservation.LandValue_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.LandValue);
+                        viewModel.TotalReservation.TotalTax_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.TotalTax);
+                        viewModel.TotalReservation.MaintenanceFee_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.MaintenanceFee);
+                        viewModel.TotalReservation.NetSellingPriceAfterVAT_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.NetSellingPriceAfterVAT);
+                        viewModel.TotalReservation.TotalAmount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.TotalAmount);
+
+                        if (viewModel.HandoverCondition_Update != null && (viewModel.HandoverCondition_Update?.Val != viewModel.HandoverCondition.Val))
+                        {
+                            var response = await CrmHelper.DeleteRecord($"/quotes({viewModel.QuoteId})/bsd_quote_bsd_packageselling({viewModel.HandoverCondition_Update.Val})/$ref");
+                            if (response.IsSuccess)
+                            {
+                                bool isSuccess_Update = await viewModel.AddHandoverCondition();
+                                if (isSuccess_Update)
+                                {
+                                    viewModel.HandoverCondition_Update = viewModel.HandoverCondition;
+                                }
+                                else
+                                {
+                                    LoadingHelper.Hide();
+                                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                viewModel.HandoverCondition = viewModel.HandoverCondition_Update;
+                            }
+                        }
+
+                        CrmApiResponse apiResponse = await viewModel.UpdateQuote();
+                        if (apiResponse.IsSuccess)
+                        {
+                            CrmApiResponse apiResponseQuoteProduct = await viewModel.UpdateQuoteProduct();
+                            if (apiResponseQuoteProduct.IsSuccess == false)
+                            {
+                                ToastMessageHelper.LongMessage(apiResponseQuoteProduct.ErrorResponse.error.message);
+                                LoadingHelper.Hide();
+                                return;
+                            }
+                            if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
+                            if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
+                            if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
+                            if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
+                            this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia;
+                            ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
+                            LoadingHelper.Hide();
+                        }
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.LongMessage(responseGetTotal.ErrorResponse.error.message);
+                    }
                 }
+                
             }
         }
 
