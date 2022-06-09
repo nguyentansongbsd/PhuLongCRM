@@ -3185,5 +3185,14 @@
 	</data>
 	<data name="btg_dat_coc_title" xml:space="preserve">
 		<value>Quotation And Reservation</value>
+  </data>
+	<data name="tao_qr_code" xml:space="preserve">
+		<value>Generate QR Code</value>
+	</data>
+	<data name="tao_qr_code_thanh_cong" xml:space="preserve">
+		<value>Generate qr code successed</value>
+	</data>
+	<data name="tao_qr_code_that_bai" xml:space="preserve">
+		<value>Generate qr code failed</value>
 	</data>
 </root>

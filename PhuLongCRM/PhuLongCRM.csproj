@@ -16,6 +16,7 @@
     <None Remove="ZXing.Net.Mobile" />
     <None Remove="ZXing.Net" />
     <None Remove="ZXing.Net.Mobile.Forms" />
+    <None Remove="JWTDecoder.Xamarin" />
   </ItemGroup>
 
   <ItemGroup>

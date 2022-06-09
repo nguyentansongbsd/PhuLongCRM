@@ -130,6 +130,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_accountaddressvn' />
                                     <attribute name='bsd_permanentaddress1' />
                                     <attribute name='bsd_contactaddress' />
+                                    <attribute name='bsd_qrcode' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='leadid' operator='eq' value='{" + leadid + @"}' />
@@ -659,6 +660,22 @@ namespace PhuLongCRM.ViewModels
             {
                 list_customercare.Add(x);
             }
+        }
+
+        // Save qrcode
+        public async Task<bool> SaveQRCode(string qrCode)
+        {
+            string path = "/leads(" + this.singleLead.leadid + ")";
+            object content = new
+            {
+                bsd_qrcode = qrCode,
+            };
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            if (result.IsSuccess)
+                return true;
+            else
+                return false;
         }
     }
 }
