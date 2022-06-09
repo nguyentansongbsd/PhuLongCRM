@@ -257,45 +257,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(ex.Message);
             }
         }
-        private async void HuyGiuCho_Clicked(object sender, EventArgs e)
-        {
-            bool confirm = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_huy_giu_cho_nay_khong, Language.dong_y, Language.huy);
-            if (confirm == false) return;
-
-            string url_action = "";
-            if (viewModel.Queue != null)
-            {
-                if (viewModel.Queue.statuscode == 100000002)
-                {
-                    url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
-                }
-                else if (viewModel.Queue.statuscode == 100000000)
-                {
-                    if (await viewModel.CheckQuote())
-                    {
-                        Message(false);
-                        return;
-                    }
-                    else
-                        url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Queue_CancelQueuing";
-                }
-                else if (viewModel.Queue.statuscode == 100000008)
-                {
-                    url_action = $"/opportunities({this.viewModel.QueueId})/Microsoft.Dynamics.CRM.bsd_Action_Opportunity_HuyGiuChoCoTien";
-                }
-            }
-
-            LoadingHelper.Show();
-            var data = new
-            {
-                input = "Yes"
-            };
-            CrmApiResponse res = await CrmHelper.PostData(url_action, data);
-            if (res.IsSuccess == true)
-                Message(res.IsSuccess);
-            else
-                ToastMessageHelper.ShortMessage(res.ErrorResponse?.error.message);
-        }
         private void CreateQuotation_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -466,6 +427,7 @@ namespace PhuLongCRM.Views
                 //await viewModel.updateStatusUnit();
                 //await viewModel.LoadQueue();
                 SetButtons();
+                if (QueueList.NeedToRefresh.HasValue) QueueList.NeedToRefresh = true;
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                 if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
                 if (ProjectInfo.NeedToRefreshNumQueue.HasValue) ProjectInfo.NeedToRefreshNumQueue = true;
@@ -562,7 +524,14 @@ namespace PhuLongCRM.Views
             };
             CrmApiResponse res = await CrmHelper.PostData(url_action, data);
             if (res.IsSuccess == true)
+            {
                 Message(res.IsSuccess);
+                if (res.IsSuccess)
+                {
+                    NeedToRefreshBTG = true;
+                    OnAppearing();
+                }
+            }
             else
                 ToastMessageHelper.ShortMessage(res.ErrorResponse?.error.message);
         }

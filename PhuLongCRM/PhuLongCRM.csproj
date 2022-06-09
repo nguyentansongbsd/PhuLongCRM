@@ -37,7 +37,6 @@
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\" />
     <Folder Include="Converters\" />
     <Folder Include="Settings\" />
     <Folder Include="IServices\" />
@@ -101,6 +100,9 @@
     <EmbeddedResource Update="Resources\Language.en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FollowUpListForm.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

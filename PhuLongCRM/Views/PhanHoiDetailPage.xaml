@@ -20,7 +20,7 @@
                     <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Margin="10,20,10,0">
                         <StackLayout Padding="15,10" Spacing="10">
                             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
-                                <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding Case.statuscode,Converter={StaticResource StatucToColor}}">
+                                <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding Case.statuscode,Converter={StaticResource StatucToColor}}" VerticalOptions="Start">
                                     <Label Grid.Column="0" Text="{Binding StatusCode.Label}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                 </telerikPrimitives:RadBorder>
                                 <Label Grid.Column="1" Text="{Binding Case.title}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>

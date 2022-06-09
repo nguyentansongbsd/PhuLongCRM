@@ -124,7 +124,7 @@ namespace PhuLongCRM.Views
         private async void CancelCase(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string options = await DisplayActionSheet(Language.huy_phan_hoi, Language.khong, Language.co, Language.xac_nhan_huy_phan_hoi);
+            string options = await DisplayActionSheet(Language.xac_nhan_huy_phan_hoi, Language.khong, Language.co);
             if (options == Language.co)
             {
                 viewModel.Case.statecode = 2;
