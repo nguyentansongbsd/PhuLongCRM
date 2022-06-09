@@ -111,6 +111,7 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity>
                                 <link-entity name='product' from='productid' to='bsd_units' visible='false' link-type='outer' alias='a_ba2436e819dbeb11bacb002248168cad'>
                                     <attribute name='name'  alias='unit_name'/>
+                                    <attribute name='statuscode'  alias='unit_status'/>
                                 </link-entity>
                                 <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
                                     <attribute name='bsd_name' alias='account_name'/>
@@ -174,7 +175,7 @@ namespace PhuLongCRM.ViewModels
             ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
 //            ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
             ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
-            ShowCare = (data.statuscode == 1 || data.statuscode == 4 || data.statuscode == 5 || data.statuscode == 100000003) ? false : true;
+            ShowCare = (data.statuscode == 1 || data.statuscode == 4 || data.statuscode == 5 || data.statuscode == 100000003 || data.statuscode == 100000008) ? false : true;
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
             this.Queue = data;
         }

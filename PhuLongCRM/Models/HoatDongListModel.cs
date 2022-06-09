@@ -40,7 +40,7 @@ namespace PhuLongCRM.Models
                     }
                 }
 
-                    if (activitytypecode == "phonecall")
+                if (activitytypecode == "phonecall")
                 {
                     if (this.callto_contact_name != null)
                     {

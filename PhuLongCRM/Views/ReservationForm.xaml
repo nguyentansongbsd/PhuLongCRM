@@ -176,7 +176,6 @@
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
 
-
                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_chung}" Margin="0,10,0,0"/>
                             <controls:LookUp x:Name="lookupChieuKhau" Placeholder="{x:Static lang:Language.chon_chiet_khau_chung}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" SelectedItemChange="DiscountListItem_Changed"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChilds}">
