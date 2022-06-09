@@ -3177,4 +3177,13 @@
 	<data name="can_ho_phai_o_tinh_trang_san_sang_hoac_giu_cho" xml:space="preserve">
 		<value>Unit must be available or queueing.</value>
 	</data>
+	<data name="sale_marketing_comment" xml:space="preserve">
+		<value>S-M comment</value>
+	</data>
+	<data name="nhap_sale_marketing_comment" xml:space="preserve">
+		<value>Enter Sale and marketing comment</value>
+	</data>
+	<data name="btg_dat_coc_title" xml:space="preserve">
+		<value>Quotation And Reservation</value>
+	</data>
 </root>

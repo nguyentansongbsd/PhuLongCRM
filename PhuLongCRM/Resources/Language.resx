@@ -3177,4 +3177,13 @@
 	<data name="can_ho_phai_o_tinh_trang_san_sang_hoac_giu_cho" xml:space="preserve">
 		<value>Căn hộ phải ở tình trạng sẵn sàng hoặc giữ chỗ.</value>
 	</data>
+	<data name="sale_marketing_comment" xml:space="preserve">
+		<value>P.Kinh doanh bình luận</value>
+	</data>
+	<data name="nhap_sale_marketing_comment" xml:space="preserve">
+		<value>Nhập bình luận</value>
+	</data>
+	<data name="btg_dat_coc_title" xml:space="preserve">
+		<value>Bảng Tính Giá Và Đặt Cọc</value>
+	</data>
 </root>

@@ -394,6 +394,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bảng Tính Giá Và Đặt Cọc.
+        /// </summary>
+        internal static string btg_dat_coc_title {
+            get {
+                return ResourceManager.GetString("btg_dat_coc_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cả ngày.
         /// </summary>
         internal static string ca_ngay {
@@ -6172,6 +6181,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nhập bình luận.
+        /// </summary>
+        internal static string nhap_sale_marketing_comment {
+            get {
+                return ResourceManager.GetString("nhap_sale_marketing_comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nhập số CMND.
         /// </summary>
         internal static string nhap_so_cmnd {
@@ -6798,6 +6816,15 @@ namespace PhuLongCRM.Resources {
         internal static string rf_signed_rf_sts {
             get {
                 return ResourceManager.GetString("rf_signed_rf_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to P.Kinh doanh bình luận.
+        /// </summary>
+        internal static string sale_marketing_comment {
+            get {
+                return ResourceManager.GetString("sale_marketing_comment", resourceCulture);
             }
         }
         

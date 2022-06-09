@@ -40,5 +40,6 @@ namespace PhuLongCRM.Models
 
         public int statuscode { get; set; }
         public string statuscode_format { get => QuoteStatusCodeData.GetQuoteStatusCodeById(statuscode.ToString())?.Name; }
+        public string statuscode_color { get => QuoteStatusCodeData.GetQuoteStatusCodeById(statuscode.ToString())?.Background; }
     }
 }

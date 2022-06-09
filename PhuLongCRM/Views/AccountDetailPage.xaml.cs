@@ -226,9 +226,14 @@ namespace PhuLongCRM.Views
 
         private void ChiTietDatCoc_Tapped(object sender, EventArgs e)
         {
+            var item = (ReservationListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item == null) return;
+
             LoadingHelper.Show();
-            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
+            bool isReservation = false;
+            if (item.statuscode != 100000007)
+                isReservation = true;
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(item.quoteid, isReservation);
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
             {
                 if (isSuccess)

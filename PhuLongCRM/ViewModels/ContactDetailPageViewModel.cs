@@ -203,7 +203,7 @@ namespace PhuLongCRM.ViewModels
         // DANH SACH DAT COC
         public async Task LoadReservationForContactForm(string customerId)
         {
-            string fetch = $@"<fetch version='1.0' count='3' page='{PageDanhSachDatCoc}' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' count='5' page='{PageDanhSachDatCoc}' output-format='xml-platform' mapping='logical' distinct='false'>
                           <entity name='quote'>
                                 <attribute name='name' />
                                 <attribute name='totalamount' />
@@ -224,6 +224,7 @@ namespace PhuLongCRM.ViewModels
                                             <value>861450002</value>
                                             <value>4</value>                
                                             <value>3</value>
+                                            <value>100000007</value>
                                        </condition>
                                        <filter type='and'>
                                            <condition attribute='statuscode' operator='in'>
@@ -257,7 +258,7 @@ namespace PhuLongCRM.ViewModels
             }
             var data = result.value;
 
-            if (data.Count < 3)
+            if (data.Count < 5)
             {
                 ShowMoreDanhSachDatCoc = false;
             }

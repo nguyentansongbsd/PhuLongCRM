@@ -153,5 +153,6 @@ namespace PhuLongCRM.Models
                 }
             }
         }
+        public string bsd_salecomment { get; set; } //s&m comment
     }
 }
