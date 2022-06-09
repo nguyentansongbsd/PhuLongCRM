@@ -14,9 +14,16 @@ namespace PhuLongCRM.Converters
             if (value != null && !string.IsNullOrWhiteSpace(value.ToString()) && value is string)
             {
                 image = null;
-                byte[] bytes = System.Convert.FromBase64String(value.ToString());
-                image = ImageSource.FromStream(() => new MemoryStream(bytes));
-                return image;
+                if (value.ToString().StartsWith("https://"))
+                {
+                    return image = value.ToString();
+                }
+                else
+                {
+                    byte[] bytes = System.Convert.FromBase64String(value.ToString());
+                    image = ImageSource.FromStream(() => new MemoryStream(bytes));
+                    return image;
+                }
             }
             else
             {

@@ -243,6 +243,7 @@ namespace PhuLongCRM.Views
                         UserLogged.ManagerName = employeeModel.manager_name;
                         UserLogged.IsSaveInforUser = checkboxRememberAcc.IsChecked;
                         UserLogged.IsLogged = true;
+                        UserLogged.IsLoginByUserCRM = false;
 
                         Application.Current.MainPage = new AppShell();
                         await Task.Delay(1);

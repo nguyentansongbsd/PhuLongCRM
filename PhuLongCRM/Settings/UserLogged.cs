@@ -92,8 +92,8 @@ namespace PhuLongCRM.Settings
         }
         public static bool IsLoginByUserCRM
         {
-            get => AppSettings.GetValueOrDefault(nameof(IsLogged), false);
-            set => AppSettings.AddOrUpdateValue(nameof(IsLogged), value);
+            get => AppSettings.GetValueOrDefault(nameof(IsLoginByUserCRM), false);
+            set => AppSettings.AddOrUpdateValue(nameof(IsLoginByUserCRM), value);
         }
     }
 }
