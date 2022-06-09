@@ -1,9 +1,13 @@
-﻿using PhuLongCRM.Helper;
+﻿using FFImageLoading.Forms;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -79,6 +83,11 @@ namespace PhuLongCRM.Views
 
         private void SetButtonFloatingButton()
         {
+            if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_qrcode))
+            {
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeRegular", "\uf029", null, GenerateQRCode));
+            }
+            
             if (viewModel.singleLead.statuscode == "3") // qualified
             {
                 floatingButtonGroup.IsVisible = false;
@@ -453,5 +462,32 @@ namespace PhuLongCRM.Views
                 TabCustomerCare.IsVisible = false;
             }           
         }
+
+        private async void GenerateQRCode(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            List<string> info = new List<string>();
+            info.Add(viewModel.singleLead.bsd_customercode);
+            info.Add("lead");
+            info.Add(viewModel.singleLead.leadid.ToString());
+            string uriQrCode = $"https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data={string.Join(",",info)}";
+
+            var bytearr = await DowloadImageToByteArrHelper.Download(uriQrCode);
+            string base64 = System.Convert.ToBase64String(bytearr);
+
+            bool isSuccess = await viewModel.SaveQRCode(base64);
+            if (isSuccess)
+            {
+                viewModel.singleLead.bsd_qrcode = uriQrCode;
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_that_bai);
+            }
+        }
+
     }
 }

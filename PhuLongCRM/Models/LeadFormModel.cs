@@ -317,5 +317,8 @@ namespace PhuLongCRM.Models
         public string bsd_accountdistrict_name_en { get; set; }
         public Guid account_id { get; set; }
         public Guid contact_id { get; set; }
+
+        private string _bsd_qrcode;
+        public string bsd_qrcode { get=>_bsd_qrcode; set { _bsd_qrcode = value;OnPropertyChanged(nameof(bsd_qrcode)); } }
     }
 }
