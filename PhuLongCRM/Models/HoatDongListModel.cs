@@ -14,6 +14,7 @@ namespace PhuLongCRM.Models
         public string accounts_bsd_name { get; set; }
         public string contact_bsd_fullname { get; set; }
         public string lead_fullname { get; set; }
+        public string queue_name { get; set; }
         public string systemsetup_bsd_name { get; set; }
         public string regarding_name
         {
@@ -33,6 +34,10 @@ namespace PhuLongCRM.Models
                     else if (this.lead_fullname != null)
                     {
                         return this.lead_fullname;
+                    }
+                    else if (this.queue_name != null)
+                    {
+                        return this.queue_name;
                     }
                     else
                     {
@@ -72,6 +77,10 @@ namespace PhuLongCRM.Models
                     else if (this.lead_fullname != null)
                     {
                         return this.lead_fullname;
+                    }
+                    else if (this.queue_name != null)
+                    {
+                        return this.queue_name;
                     }
                     else if (this.systemsetup_bsd_name != null)
                     {
@@ -185,5 +194,6 @@ namespace PhuLongCRM.Models
 
         public string _customer;
         public string customer { get => _customer; set { _customer = value; OnPropertyChanged(nameof(customer)); } }
+        public bool is_appointment { get => activitytypecode == "appointment" ? true : false; }
     }
 }

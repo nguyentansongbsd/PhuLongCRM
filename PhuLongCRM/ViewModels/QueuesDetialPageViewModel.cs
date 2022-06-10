@@ -530,6 +530,9 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
                                         <attribute name='fullname' alias='lead_fullname'/>
                                     </link-entity>
+                                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+                                        <attribute name='name' alias='queue_name'/>
+                                    </link-entity>
                                     {forphonecall}
                                 </entity>
                             </fetch>";

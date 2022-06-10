@@ -3195,4 +3195,13 @@
 	<data name="tao_qr_code_that_bai" xml:space="preserve">
 		<value>Generate qr code failed</value>
 	</data>
+	<data name="thong_tin_user_title" xml:space="preserve">
+		<value>User Information</value>
+	</data>
+	<data name="ten_user" xml:space="preserve">
+		<value>User Name</value>
+	</data>
+	<data name="don_vi_kinh_doanh" xml:space="preserve">
+		<value>Business unit</value>
+	</data>
 </root>

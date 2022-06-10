@@ -70,6 +70,7 @@
             </Style>
             <converters:NullToHideConverter x:Key="NullToHideConverter"/>
             <converters:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
+            <converters:RegardingConverter x:Key="RegardingConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
