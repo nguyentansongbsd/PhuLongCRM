@@ -155,5 +155,43 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.cap_nhat_danh_sach_theo_doi_that_bai);
             }
         }
+
+        private void Lookup_TakeOut_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if (viewModel.TakeOutMoney == null) return;
+
+            lb_so_tien.IsVisible = true;
+            entry_so_tien.IsVisible = true;
+
+            if (viewModel.TakeOutMoney.Id == "100000000") //refund
+            {
+                lb_so_tien.Text = Language.hoan_tien;
+            }
+            else if (viewModel.TakeOutMoney.Id == "100000001")
+            {
+                lb_so_tien.Text = Language.tien_phat_thanh_ly;
+            }
+        }
+
+        private void entry_so_tien_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (viewModel.TakeOutMoney == null) return;
+
+            if (viewModel.TakeOutMoney.Id == "100000000") //refund
+            {
+                if (viewModel.FULDetail.bsd_totalamountpaid < viewModel.Refund)
+                {
+                    ToastMessageHelper.ShortMessage(Language.hoan_tien_phai_nho_hon_tien_da_thanh_toan);
+                    return;
+                }   
+                viewModel.FULDetail.bsd_totalforfeitureamount_new = viewModel.FULDetail.bsd_totalamountpaid - viewModel.Refund;
+                viewModel.FULDetail.bsd_totalforfeitureamount_format = StringFormatHelper.FormatCurrency(viewModel.FULDetail.bsd_totalforfeitureamount_new) + " đ";
+            }
+            else if (viewModel.TakeOutMoney.Id == "100000001")
+            {
+                viewModel.FULDetail.bsd_totalforfeitureamount_new = (viewModel.FULDetail.bsd_depositfee * viewModel.Refund) / 100;
+                viewModel.FULDetail.bsd_totalforfeitureamount_format = StringFormatHelper.FormatCurrency(viewModel.FULDetail.bsd_totalforfeitureamount_new) + " đ";
+            }
+        }
     }
 }

@@ -14,7 +14,6 @@ namespace PhuLongCRM.Models
                 new StatusCodeModel("100000002","Change Contract Type","#FDC206"), //ful_change_contract_type_type
                 new StatusCodeModel("100000001","Forfeiture Refund","#06CF79"),//ful_forfeiture_refund_type
                 new StatusCodeModel("100000000","Key-in Error","#03ACF5"),//ful_key_in_error_type
-                new StatusCodeModel("0","","#333333"),
             };
         }
 

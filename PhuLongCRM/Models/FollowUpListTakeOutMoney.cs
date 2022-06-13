@@ -13,8 +13,7 @@ namespace PhuLongCRM.Models
             return new List<StatusCodeModel>()
             {
                 new StatusCodeModel("100000000", Language.ful_refund_takeoutmoney,"#03ACF5"),
-                new StatusCodeModel("100000001",Language.ful_forfeiture_takeoutmoney,"#06CF79"),
-                new StatusCodeModel("0","","#333333")
+                new StatusCodeModel("100000001",Language.ful_forfeiture_takeoutmoney,"#06CF79")
             };
         }
 
