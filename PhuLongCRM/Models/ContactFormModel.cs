@@ -42,8 +42,9 @@ namespace PhuLongCRM.Models
         }
 
         private string _mobilephone;
-        public string mobilephone { get { return _mobilephone; } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); }}
-        public string mobilephone_format {
+        public string mobilephone { get => _mobilephone; set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
+        public string mobilephone_format
+        {
             get
             {
                 if (mobilephone != null && mobilephone.Contains("-"))

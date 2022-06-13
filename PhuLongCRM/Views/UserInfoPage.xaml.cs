@@ -152,11 +152,32 @@ namespace PhuLongCRM.Views
             }
         }
 
+        private void PhoneNum_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.PhoneNumber)) return;
+            string phone = string.Empty;
+            phone = viewModel.PhoneNumber.Contains("-") ? viewModel.PhoneNumber.Split('-')[1] : viewModel.PhoneNumber;
+
+            if (phone.Length != 10)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+            }
+        }
+
         private async void SaveUserInfor_Clicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(viewModel.ContactModel.mobilephone))
+            if (string.IsNullOrWhiteSpace(viewModel.PhoneNumber))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);
+                return;
+            }
+
+            string phone = string.Empty;
+            phone = viewModel.PhoneNumber.Contains("-") ? viewModel.PhoneNumber.Split('-')[1] : viewModel.PhoneNumber;
+
+            if (phone.Length != 10)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 return;
             }
 
