@@ -69,13 +69,6 @@ namespace PhuLongCRM
 
         private void UserInfor_Tapped(object sender, EventArgs e)
         {
-            if (UserLogged.IsLoginByUserCRM)
-            {
-                ToastMessageHelper.ShortMessage("Tính năng đang phát triển");
-                this.FlyoutIsPresented = false;
-                return;
-            }
-
             LoadingHelper.Show();
             if (UserLogged.ContactId == Guid.Empty)
             {
@@ -83,22 +76,40 @@ namespace PhuLongCRM
                 LoadingHelper.Hide();
                 return;
             }
-
-            UserInfoPage userInfo = new UserInfoPage();
-            userInfo.OnCompleted = async (isSuccess) =>
+            if (UserLogged.IsLoginByUserCRM)
             {
-                if (isSuccess)
+                UserCRMInfoPage userCRMInfo = new UserCRMInfoPage();
+                userCRMInfo.OnCompleted = async (isSuccess) =>
                 {
-                    await Navigation.PushAsync(userInfo);
-                    LoadingHelper.Hide();
-                }
-                else
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(userCRMInfo);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
+                    }
+                };
+            }
+            else
+            {
+                UserInfoPage userInfo = new UserInfoPage();
+                userInfo.OnCompleted = async (isSuccess) =>
                 {
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
-                }
-            };
-
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(userInfo);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
+                    }
+                };
+            }
             //await Shell.Current.Navigation.PushAsync(new UserInfoPage());
             this.FlyoutIsPresented = false;
             //LoadingHelper.Hide();

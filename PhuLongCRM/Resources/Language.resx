@@ -3195,4 +3195,13 @@
 	<data name="tao_qr_code_that_bai" xml:space="preserve">
 		<value>Tạo qr code thất bại</value>
 	</data>
+	<data name="thong_tin_user_title" xml:space="preserve">
+		<value>Thông Tin User</value>
+	</data>
+	<data name="ten_user" xml:space="preserve">
+		<value>Tên user</value>
+	</data>
+	<data name="don_vi_kinh_doanh" xml:space="preserve">
+		<value>Đơn vị kinh doanh</value>
+	</data>
 </root>
