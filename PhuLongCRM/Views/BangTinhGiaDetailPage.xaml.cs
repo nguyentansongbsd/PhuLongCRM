@@ -123,13 +123,10 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-        private void SetUpButtonGroup()
+        private async void SetUpButtonGroup()
         {
-            //if (viewModel.Reservation.statuscode == 100000007 || viewModel.Reservation.statuscode == 100000000)
-            //{
-            //    viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy Đặt Cọc", "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
-            //}
-            if (viewModel.Reservation.statuscode == 3 && viewModel.Reservation.bsd_followuplist == false)// show khi statuscode == 3(Deposited)
+            var checkFul = await viewModel.CheckFUL();
+            if (viewModel.Reservation.statuscode == 3 && checkFul == true)// show khi statuscode == 3(Deposited)
             {
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.de_nghi_thanh_ly, "FontAwesomeSolid", "\uf560", null, FULTerminate));
             }

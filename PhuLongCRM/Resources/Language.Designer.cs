@@ -3328,7 +3328,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tịch thu.
+        ///   Looks up a localized string similar to Tiền phạt thanh lý.
         /// </summary>
         internal static string ful_forfeiture_takeoutmoney {
             get {
@@ -3882,6 +3882,15 @@ namespace PhuLongCRM.Resources {
         internal static string hoan_tien_percent {
             get {
                 return ResourceManager.GetString("hoan_tien_percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Số tiền hoàn lại phải nhỏ hơn hoặc bằng số tiền đã thanh toán..
+        /// </summary>
+        internal static string hoan_tien_phai_nho_hon_tien_da_thanh_toan {
+            get {
+                return ResourceManager.GetString("hoan_tien_phai_nho_hon_tien_da_thanh_toan", resourceCulture);
             }
         }
         
@@ -8238,6 +8247,15 @@ namespace PhuLongCRM.Resources {
         internal static string tien_giu_cho {
             get {
                 return ResourceManager.GetString("tien_giu_cho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiền phạt thanh lý (%).
+        /// </summary>
+        internal static string tien_phat_thanh_ly {
+            get {
+                return ResourceManager.GetString("tien_phat_thanh_ly", resourceCulture);
             }
         }
         

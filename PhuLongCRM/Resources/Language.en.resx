@@ -3204,4 +3204,10 @@
 	<data name="don_vi_kinh_doanh" xml:space="preserve">
 		<value>Business unit</value>
 	</data>
+	<data name="tien_phat_thanh_ly" xml:space="preserve">
+		<value>Forfeiture amount</value>
+	</data>
+	<data name="hoan_tien_phai_nho_hon_tien_da_thanh_toan" xml:space="preserve">
+		<value>Refund amount must be greater than total amount paid.</value>
+	</data>
 </root>

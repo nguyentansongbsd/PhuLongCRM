@@ -85,6 +85,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_terminateletter' />
                                     <attribute name='bsd_termination' />
                                     <attribute name='bsd_resell' />
+                                    <attribute name='bsd_depositfee' />
                                     <attribute name='bsd_description' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
@@ -275,6 +276,7 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_forfeiturepercent"] = Refund;
                 data["bsd_forfeitureamount"] = 0;
             }
+            data["bsd_totalforfeitureamount_new"] = FULDetail.bsd_totalforfeitureamount_new;
 
             data["bsd_terminateletter"] = FULDetail.bsd_terminateletter;
             data["bsd_termination"] = FULDetail.bsd_termination;

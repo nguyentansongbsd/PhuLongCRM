@@ -886,5 +886,24 @@ namespace PhuLongCRM.ViewModels
                 return Guid.Empty;
             }
         }
+        public async Task<bool> CheckFUL()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                    <entity name='bsd_followuplist'>
+                                        <attribute name='bsd_followuplistid' />
+                                        <order attribute='createdon' descending='true' />
+                                        <filter type='and'>
+                                            <condition attribute='statuscode' operator='eq' value='1' />
+                                            <condition attribute='bsd_reservation' operator='eq' value='{Reservation.quoteid}' />
+                                        </filter>
+                                    </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<FollowUpModel>>("bsd_followuplists", fetchXml);
+            if (result == null || result.value.Count == 0)
+                return true;// retrun true khi danh sách k có ful nào đang có hiệu lực
+            else
+                return false;
+        }
     }
 }

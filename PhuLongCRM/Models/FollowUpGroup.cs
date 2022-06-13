@@ -15,7 +15,6 @@ namespace PhuLongCRM.Models
                 new StatusCodeModel("100000001",Language.ful_ccr_group,"#FDC206" ),//ful_ccr_group
                 new StatusCodeModel("100000002",Language.ful_fin_group,"#06CF79"),//ful_fin_group
                 new StatusCodeModel("100000000",Language.ful_sam_group,"#06CF79"),//ful_sam_group
-                new StatusCodeModel("0","","#333333"),
             };
         }
 

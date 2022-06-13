@@ -31,7 +31,7 @@ namespace PhuLongCRM.Models
                     OnPropertyChanged(nameof(bsd_expiredate));
                 }
             }
-        } 
+        }
         public int statuscode { get; set; }
         public string bsd_followuplistcode { get; set; }
         public Guid product_id { get; set; }
@@ -48,7 +48,7 @@ namespace PhuLongCRM.Models
         public string account_name_oe { get; set; } // khách hàng Option Entry
         public string contact_name_re { get; set; } // khách hàng Reservation
         public string account_name_re { get; set; } // khách hàng Reservation
-        public string customer 
+        public string customer
         {
             get
             {
@@ -62,14 +62,14 @@ namespace PhuLongCRM.Models
                     return account_name_re;
             }
         }
-        public string statuscode_format { get { return FollowUpStatusData.GetFollowUpStatusCodeById(statuscode.ToString()).Name; } }
-        public string statuscode_color { get { return FollowUpStatusData.GetFollowUpStatusCodeById(statuscode.ToString()).Background; } }
+        public string statuscode_format { get { return FollowUpStatusData.GetFollowUpStatusCodeById(statuscode.ToString())?.Name; } }
+        public string statuscode_color { get { return FollowUpStatusData.GetFollowUpStatusCodeById(statuscode.ToString())?.Background; } }
         public int bsd_type { get; set; }
-        public string bsd_type_format { get { return FollowUpType.GetFollowUpTypeById(bsd_type.ToString()).Name; } }
+        public string bsd_type_format { get { return FollowUpType.GetFollowUpTypeById(bsd_type.ToString())?.Name; } }
         public int bsd_terminationtype { get; set; }
-        public string bsd_terminationtype_format { get { return FollowUpTerminationType.GetFollowUpTerminationTypeById(bsd_terminationtype.ToString()).Name; } }
+        public string bsd_terminationtype_format { get { return FollowUpTerminationType.GetFollowUpTerminationTypeById(bsd_terminationtype.ToString())?.Name; } }
         public int bsd_group { get; set; }
-        public string bsd_group_format { get { return FollowUpGroup.GetFollowUpGroupById(bsd_group.ToString()).Name; } }
+        public string bsd_group_format { get { return FollowUpGroup.GetFollowUpGroupById(bsd_group.ToString())?.Name; } }
         public Guid project_id { get; set; }
         public string project_name { get; set; }
         public decimal bsd_sellingprice { get; set; } // giá bán
@@ -79,12 +79,12 @@ namespace PhuLongCRM.Models
         public decimal bsd_totalamountpaid { get; set; } // tổng tiền thanh toán 
         public string bsd_totalamountpaid_format { get => StringFormatHelper.FormatCurrency(bsd_totalamountpaid); }
         public decimal bsd_totalforfeitureamount { get; set; } // tổng tiền phạt
-        public string bsd_totalforfeitureamount_format { get => StringFormatHelper.FormatCurrency(bsd_totalforfeitureamount); }
         public decimal bsd_forfeitureamount { get; set; } // hoàn tiền
         public string bsd_forfeitureamount_format { get => StringFormatHelper.FormatCurrency(bsd_forfeitureamount); }
         public int bsd_takeoutmoney { get; set; } // phương thức phạt
-        public string bsd_takeoutmoney_format 
-        { get 
+        public string bsd_takeoutmoney_format
+        {
+            get
             {
                 if (bsd_takeoutmoney == 100000001) //takeoutmoney_forfeiture
                     return Language.takeoutmoney_forfeiture;// "Forfeiture";
@@ -92,7 +92,7 @@ namespace PhuLongCRM.Models
                     return Language.takeoutmoney_refund;//"Refund";
                 else
                     return "";
-            } 
+            }
         }
         public decimal bsd_forfeiturepercent { get; set; } // hoàn tiền
         public string bsd_forfeiturepercent_format { get => StringFormatHelper.FormatCurrency(bsd_forfeiturepercent); }
@@ -129,30 +129,12 @@ namespace PhuLongCRM.Models
         public string bsd_description { get; set; } //bình luận và quyết định nội dung
         public decimal bsd_depositfee { get; set; }
         public string project_code { get; set; }
-        public decimal bsd_totalforfeitureamount_calculator // tổng tiền phạt
-        {
-            get
-            {
-                if (bsd_takeoutmoney == 100000000 && bsd_forfeitureamount != 0)
-                {
-                    var totalforfeiture = bsd_depositfee - bsd_forfeitureamount;
-                    return totalforfeiture;
-                }
-                else
-                {
-                    if (bsd_takeoutmoney == 100000001 && bsd_forfeiturepercent != 0)
-                    {
 
-                        var totalforfeiture = (bsd_depositfee * bsd_forfeitureamount) / 100;
-                        return totalforfeiture;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                }
-            }
-        }
+        private decimal _bsd_totalforfeitureamount_new;// tổng tiền phạt
+        public decimal bsd_totalforfeitureamount_new { get { return _bsd_totalforfeitureamount_new; } set { _bsd_totalforfeitureamount_new = value; OnPropertyChanged(nameof(bsd_totalforfeitureamount_new)); } }
+
+        private string _bsd_totalforfeitureamount_format;// tổng tiền phạt format
+        public string bsd_totalforfeitureamount_format { get { return _bsd_totalforfeitureamount_format; } set { _bsd_totalforfeitureamount_format = value; OnPropertyChanged(nameof(bsd_totalforfeitureamount_format)); } }
         public string bsd_salecomment { get; set; } //s&m comment
     }
 }

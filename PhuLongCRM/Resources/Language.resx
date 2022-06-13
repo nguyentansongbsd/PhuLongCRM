@@ -3118,7 +3118,7 @@
 		<value>Hoàn tiền</value>
 	</data>
 	<data name="ful_forfeiture_takeoutmoney" xml:space="preserve">
-		<value>Tịch thu</value>
+		<value>Tiền phạt thanh lý</value>
 	</data>
 	<data name="vui_long_chon_loai" xml:space="preserve">
 		<value>Vui lòng chọn loại.</value>
@@ -3203,5 +3203,11 @@
 	</data>
 	<data name="don_vi_kinh_doanh" xml:space="preserve">
 		<value>Đơn vị kinh doanh</value>
+	</data>
+	<data name="tien_phat_thanh_ly" xml:space="preserve">
+		<value>Tiền phạt thanh lý (%)</value>
+	</data>
+	<data name="hoan_tien_phai_nho_hon_tien_da_thanh_toan" xml:space="preserve">
+		<value>Số tiền hoàn lại phải nhỏ hơn hoặc bằng số tiền đã thanh toán.</value>
 	</data>
 </root>
