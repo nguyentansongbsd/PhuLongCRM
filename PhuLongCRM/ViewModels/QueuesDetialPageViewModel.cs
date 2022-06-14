@@ -187,7 +187,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='name' alias='Label'/>
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                             <condition attribute='statuscode' operator='in'>
                                    <value>100000000</value>
                                    <value>100000001</value>
@@ -221,7 +221,7 @@ namespace PhuLongCRM.ViewModels
                         <order attribute='createdon' descending='true' />
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>
@@ -273,7 +273,7 @@ namespace PhuLongCRM.ViewModels
                         <order attribute='createdon' descending='true' />
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                              <filter type='or'>
                                <condition attribute='statuscode' operator='in'>
                                    <value>100000000</value>
@@ -332,7 +332,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='ordernumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
-                                        <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                         <condition attribute='opportunityid' operator='eq' value='{this.Queue.opportunityid}'/>                
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
@@ -518,7 +518,7 @@ namespace PhuLongCRM.ViewModels
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='regardingobjectid' operator='eq' value='{queueID}' />
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>

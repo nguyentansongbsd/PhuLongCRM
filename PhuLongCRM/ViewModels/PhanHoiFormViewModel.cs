@@ -146,12 +146,12 @@ namespace PhuLongCRM.ViewModels
                 data["productid@odata.bind"] = "/products(" + Unit.Val + ")";
             }
 
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
 
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -274,7 +274,7 @@ namespace PhuLongCRM.ViewModels
                                     <order attribute='createdon' descending='false' />
                                     <filter type='and'>
                                        {codition}
-                                       <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
+                                       <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -291,7 +291,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='contactid' alias = 'Val' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -313,7 +313,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='accountid' alias='Val'/>
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -375,7 +375,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='opportunityid' alias='Val'/>
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' uiname='ngsong' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                         <filter type='or'>
                                           <condition attribute='parentaccountid' operator='eq' uitype='account' value='{Customer.Val}' />
                                           <condition attribute='parentcontactid' operator='eq' uitype='contact' value='{Customer.Val}' />
@@ -398,7 +398,7 @@ namespace PhuLongCRM.ViewModels
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='customerid' operator='eq' value='{Customer.Val}' />
-                                      <condition attribute='bsd_employee' operator='eq' value ='{UserLogged.Id}'/>
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value ='{UserLogged.Id}'/>
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -416,7 +416,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='salesorderid' alias='Val'/>
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                       <condition attribute='customerid' operator='eq' value='{Customer.Val}' />
                                     </filter>
                                   </entity>

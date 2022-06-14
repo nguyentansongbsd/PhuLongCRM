@@ -161,7 +161,7 @@ namespace PhuLongCRM.ViewModels
                         <order attribute='statecode' descending='false' />
                         <order attribute='statuscode' descending='true' />
                         <filter type='and'>
-                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                           <condition attribute='bsd_units' operator='eq' value='{UnitInfo.productid}' />
                         </filter>
                         <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer'>
@@ -209,7 +209,7 @@ namespace PhuLongCRM.ViewModels
                         <order attribute='createdon' descending='true' />
                         <filter type='and'>
                             <condition attribute='bsd_unitno' operator='eq' value='{UnitInfo.productid}'/>
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>
@@ -261,7 +261,7 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     <condition attribute='bsd_unitno' operator='eq' value='{UnitInfo.productid}'/>
-                                    <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
                                             <value>100000000</value>
@@ -323,7 +323,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_contractnumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
-                                        <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                         <condition attribute='bsd_unitnumber' operator='eq' value='{UnitInfo.productid}'/>                
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
