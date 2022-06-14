@@ -11,6 +11,7 @@ using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using System.Linq;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Controls;
 
 namespace PhuLongCRM.Views
 {
@@ -116,11 +117,22 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_ho_ten);
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(viewModel.singleContact.mobilephone))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);               
                 return;
             }
+
+            string phone = string.Empty;
+            phone = viewModel.singleContact.mobilephone.Contains("-") ? viewModel.singleContact.mobilephone.Split('-')[1] : viewModel.singleContact.mobilephone;
+
+            if (phone.Length != 10)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
+
             if (viewModel.singleGender == null || viewModel.singleGender.Val == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_gioi_tinh);
@@ -176,7 +188,7 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_da_duoc_su_dung);
                 viewModel.checkCMND = viewModel.singleContact.bsd_identitycardnumber;
-               // return;
+                return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && !await viewModel.CheckPassport(viewModel.singleContact.bsd_passport, id))
             {
@@ -302,7 +314,8 @@ namespace PhuLongCRM.Views
             var tmpHeight = width * 2 / 3;
             MatTruocCMND.HeightRequest = tmpHeight;
             MatSauCMND.HeightRequest = tmpHeight;
-        }     
+        }
+
         public void MatTruocCMND_Tapped(object sender, System.EventArgs e)
         {
             List<OptionSet> menuItem = new List<OptionSet>();
@@ -443,6 +456,19 @@ namespace PhuLongCRM.Views
             }
         }
 
-        
+        private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            var num = sender as PhoneEntryControl;
+            if (!string.IsNullOrWhiteSpace(num.Text))
+            {
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
+            }
+        }
     }
 }

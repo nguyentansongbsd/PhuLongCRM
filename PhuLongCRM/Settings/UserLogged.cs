@@ -95,5 +95,10 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(IsLoginByUserCRM), false);
             set => AppSettings.AddOrUpdateValue(nameof(IsLoginByUserCRM), value);
         }
+        public static string asdasd()
+        {
+            "";
+
+        }
     }
 }

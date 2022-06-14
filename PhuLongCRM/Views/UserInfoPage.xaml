@@ -46,8 +46,8 @@
                     <controls:MainEntry Text="{Binding ContactModel.emailaddress1}" Placeholder="{x:Static lang:Language.nhap_email}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}"/>
-                    <controls:PhoneEntryControl PhoneNum="{Binding ContactModel.mobilephone}" Keyboard="Numeric" FontSize="15" Placeholder="+84-033XXXXXXX"/>
-                    <!--<controls:MainEntry Text="{Binding ContactModel.mobilephone_format}" Keyboard="Numeric" Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}"/>-->
+                    <controls:PhoneEntryControl Text="{Binding PhoneNumber}" Keyboard="Numeric" Unfocused="PhoneNum_Unfocused" FontSize="15" Placeholder="+84-033XXXXXXX"/>
+                    <!--<controls:MainEntry Text="{Binding PhoneNumber}" Keyboard="Numeric" Unfocused="PhoneNum_Unfocused" Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}"/>-->
 
                     <controls:FormLabel Text="{x:Static lang:Language.mat_khau}"/>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="0">

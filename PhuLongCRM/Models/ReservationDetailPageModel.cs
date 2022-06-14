@@ -58,7 +58,10 @@ namespace PhuLongCRM.Models
         public Guid queue_id { get; set; } // id đặt chỗ
         public string queue_name { get; set; } // tên đặt chỗ
         public bool bsd_followuplist { get; set; } // danh sách theo dõi
-        public string bsd_followuplist_format { get { return BoolToStringData.GetStringByBool(bsd_followuplist); } }
+
+        private string _bsd_followuplist_format;
+        public string bsd_followuplist_format { get => _bsd_followuplist_format; set { _bsd_followuplist_format = value; OnPropertyChanged(nameof(bsd_followuplist_format)); } }
+        //public string bsd_followuplist_format { get { return BoolToStringData.GetStringByBool(bsd_followuplist); } }
         // thông tin sản phẩm
         public int bsd_unitstatus { get; set; } // tình trạng sản phẩm
         public string bsd_unitstatus_format { get => StatusCodeUnit.GetStatusCodeById(bsd_unitstatus.ToString()).Name; }

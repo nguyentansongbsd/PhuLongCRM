@@ -37,6 +37,9 @@ namespace PhuLongCRM.ViewModels
         private string _confirmNewPassword;
         public string ConfirmNewPassword { get => _confirmNewPassword; set { _confirmNewPassword = value; OnPropertyChanged(nameof(ConfirmNewPassword)); } }
 
+        private string _phoneNumber;
+        public string PhoneNumber { get => _phoneNumber; set { _phoneNumber = value; OnPropertyChanged(nameof(PhoneNumber)); } }
+
         private OptionSet _gender;
         public OptionSet Gender { get => _gender; set { _gender = value;OnPropertyChanged(nameof(Gender)); } }
 
@@ -93,6 +96,24 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
 
             this.ContactModel = result.value.SingleOrDefault();
+
+            if (ContactModel.mobilephone != null && ContactModel.mobilephone.Contains("-"))
+            {
+                this.PhoneNumber = ContactModel.mobilephone.Split('-')[1].StartsWith("84") ? ContactModel.mobilephone.Split('-')[1].Replace("84", "+84-") : ContactModel.mobilephone;
+            }
+            else if (ContactModel.mobilephone != null && ContactModel.mobilephone.Contains("+84"))
+            {
+                this.PhoneNumber = ContactModel.mobilephone.Replace("+84", "+84-");
+            }
+            else if (ContactModel.mobilephone != null && ContactModel.mobilephone.StartsWith("84"))
+            {
+                this.PhoneNumber = ContactModel.mobilephone.Replace("84", "+84-");
+            }
+            else
+            {
+                this.PhoneNumber = ContactModel.mobilephone;
+            }
+
             this.Gender = this.Genders.SingleOrDefault(x => x.Val == ContactModel.gendercode);
             AddressContact = new AddressModel
             {
@@ -174,7 +195,7 @@ namespace PhuLongCRM.ViewModels
             //data["lastname"] = this.ContactModel.bsd_fullname;
             //data["bsd_fullname"] = this.ContactModel.bsd_fullname;
             data["emailaddress1"] = this.ContactModel.emailaddress1;
-            data["mobilephone"] = this.ContactModel.mobilephone;
+            data["mobilephone"] = PhoneNumber.Contains("+") ? PhoneNumber.Replace("+","").Replace("-",""): PhoneNumber;
             data["birthdate"] = (DateTime.Parse(this.ContactModel.birthdate.ToString()).ToLocalTime()).ToString("yyyy-MM-dd");
             data["gendercode"] = this.Gender?.Val;
             data["bsd_postalcode"] = this.ContactModel.bsd_postalcode;

@@ -85,6 +85,7 @@
         </Style>
         <converter:MandatorySecondaryStatusCodeConverter x:Key="MandatorySecondaryStatusCodeConverter"/>
         <converter:MandatorySecondaryStatusCodeConverterColor x:Key="MandatorySecondaryStatusCodeConverterColor"/>
+        <converter:PhoneFormatConverter x:Key="PhoneFormatConverter"/>
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
@@ -126,7 +127,7 @@
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="6">
                                     <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dien_thoai},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                    <controls:FormLabelValue Text="{Binding singleAccount.telephone1}" Grid.Column="1" FontSize="15" TextColor="#444444" />
+                                    <controls:FormLabelValue Text="{Binding singleAccount.telephone1,Converter={StaticResource PhoneFormatConverter}}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                 </Grid>
                             </Grid>
                             <BoxView HeightRequest="1" BackgroundColor="#939393" Grid.Row="1"/>
@@ -191,7 +192,7 @@
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.dien_thoai}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <controls:FormLabelValue Text="{Binding singleAccount.telephone1}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding singleAccount.telephone1,Converter={StaticResource PhoneFormatConverter}}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.email}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>

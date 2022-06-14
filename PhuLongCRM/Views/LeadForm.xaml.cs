@@ -7,6 +7,7 @@ using PhuLongCRM.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Controls;
 
 namespace PhuLongCRM.Views
 {
@@ -232,17 +233,31 @@ namespace PhuLongCRM.Views
 
         private void mobilephone_text_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.singleLead.mobilephone?.Length != 14)
+            var num = sender as PhoneEntryControl;
+            if (!string.IsNullOrWhiteSpace(num.Text))
             {
-                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
             }
         }
 
         private void telephone1_text_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.singleLead.telephone1?.Length != 14)
+            var num = sender as PhoneEntryControl;
+            if (!string.IsNullOrWhiteSpace(num.Text))
             {
-                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.Views;
 using System;
@@ -901,9 +902,15 @@ namespace PhuLongCRM.ViewModels
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<FollowUpModel>>("bsd_followuplists", fetchXml);
             if (result == null || result.value.Count == 0)
+            {
+                Reservation.bsd_followuplist_format = Language.co;
                 return true;// retrun true khi danh sách k có ful nào đang có hiệu lực
+            }
             else
+            {
+                Reservation.bsd_followuplist_format = Language.khong;
                 return false;
+            }
         }
     }
 }
