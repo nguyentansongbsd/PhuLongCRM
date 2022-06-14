@@ -33,7 +33,7 @@
 	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.0</string>
+	<string>0.1.1</string>
 	<key>NSCameraUsageDescription</key>
 	<string>PhuLongCRM cần truy cập vào máy ảnh của bạn để chụp hình làm ảnh đại diện hoặc quét mã QR.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -49,6 +49,6 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleVersion</key>
-	<string>19</string>
+	<string>22</string>
 </dict>
 </plist>

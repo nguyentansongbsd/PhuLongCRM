@@ -75,7 +75,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_customercode' />
                         {sort}
                         <filter type='and'>
-                             <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                             <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                              <filter type='or'>
                                  '" + filter_name + @"'
                                  '" + filter_phone + @"'

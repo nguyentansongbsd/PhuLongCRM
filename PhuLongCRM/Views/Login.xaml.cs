@@ -202,6 +202,7 @@ namespace PhuLongCRM.Views
                     var body = await response.Content.ReadAsStringAsync();
                     GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
                     UserLogged.AccessToken = tokenData.access_token;
+                    UserLogged.UserAttribute = "bsd_employee";
 
                     EmployeeModel employeeModel = await LoginUser();
                     if (employeeModel != null)
