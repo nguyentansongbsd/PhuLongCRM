@@ -41,6 +41,8 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_termination' />
                                     <attribute name='bsd_resell' />
                                     <attribute name='bsd_description' />
+                                    <attribute name='bsd_depositfee' />
+                                    <attribute name='bsd_totalforfeitureamount_new' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                        <condition attribute='bsd_followuplistid' operator='eq' value='{id}'/>
@@ -88,6 +90,15 @@ namespace PhuLongCRM.ViewModels
             if (result != null)
             {
                 FollowDetail = result.value.FirstOrDefault();
+                if (FollowDetail.bsd_forfeitureamount != 0)
+                    FollowDetail.isRefund = true;
+                else
+                    FollowDetail.isRefund = false;
+
+                if (FollowDetail.bsd_forfeiturepercent != 0)
+                    FollowDetail.isForfeiture = true;
+                else
+                    FollowDetail.isForfeiture = false;
             }
         }
     }

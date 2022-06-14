@@ -7234,7 +7234,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tịch thu.
+        ///   Looks up a localized string similar to Tiền phạt thanh lý.
         /// </summary>
         internal static string takeoutmoney_forfeiture {
             get {

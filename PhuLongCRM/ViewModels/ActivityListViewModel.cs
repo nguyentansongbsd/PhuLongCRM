@@ -72,20 +72,20 @@ namespace PhuLongCRM.ViewModels
 
                 if(entity == "appointment")
                 {
-                    callto = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
-                                        <filter type='and'>
-                                            <condition attribute='participationtypemask' operator='eq' value='5' />
-                                        </filter>
-                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
-                                            <attribute name='fullname' alias='callto_contact_name'/>
-                                        </link-entity>
-                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
-                                            <attribute name='bsd_name' alias='callto_accounts_name'/>
-                                        </link-entity>
-                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
-                                            <attribute name='fullname' alias='callto_lead_name'/>
-                                        </link-entity>
-                                    </link-entity>";
+                    //callto = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
+                    //                    <filter type='and'>
+                    //                        <condition attribute='participationtypemask' operator='eq' value='5' />
+                    //                    </filter>
+                    //                    <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
+                    //                        <attribute name='fullname' alias='callto_contact_name'/>
+                    //                    </link-entity>
+                    //                    <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
+                    //                        <attribute name='bsd_name' alias='callto_accounts_name'/>
+                    //                    </link-entity>
+                    //                    <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
+                    //                        <attribute name='fullname' alias='callto_lead_name'/>
+                    //                    </link-entity>
+                    //                </link-entity>";
                 }    
 
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='true'>
@@ -109,6 +109,9 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
                                         <attribute name='fullname' alias='lead_fullname'/>
+                                    </link-entity>
+                                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+                                        <attribute name='name' alias='queue_name'/>
                                     </link-entity>
                                     {callto}
                                   </entity>

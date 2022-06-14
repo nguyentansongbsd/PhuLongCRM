@@ -96,26 +96,6 @@ namespace PhuLongCRM.Models
         }
         public decimal bsd_forfeiturepercent { get; set; } // hoàn tiền
         public string bsd_forfeiturepercent_format { get => StringFormatHelper.FormatCurrency(bsd_forfeiturepercent); }
-        public bool isRefund
-        {
-            get
-            {
-                if (bsd_forfeitureamount != 0)
-                    return true;
-                else
-                    return false;
-            }
-        }
-        public bool isForfeiture
-        {
-            get
-            {
-                if (bsd_forfeiturepercent != 0)
-                    return true;
-                else
-                    return false;
-            }
-        }
         public bool bsd_terminateletter { get; set; } // thư thanh lý
         public string bsd_terminateletter_format { get { return BoolToStringData.GetStringByBool(bsd_terminateletter); } }
         public bool bsd_termination { get; set; } // thanh lý
@@ -128,6 +108,7 @@ namespace PhuLongCRM.Models
         public string bsd_collectionmeeting_subject { get; set; } // cuộc họp
         public string bsd_description { get; set; } //bình luận và quyết định nội dung
         public decimal bsd_depositfee { get; set; }
+        public string bsd_depositfee_format { get => StringFormatHelper.FormatCurrency(bsd_depositfee); }
         public string project_code { get; set; }
 
         private decimal _bsd_totalforfeitureamount_new;// tổng tiền phạt
@@ -135,6 +116,13 @@ namespace PhuLongCRM.Models
 
         private string _bsd_totalforfeitureamount_format;// tổng tiền phạt format
         public string bsd_totalforfeitureamount_format { get { return _bsd_totalforfeitureamount_format; } set { _bsd_totalforfeitureamount_format = value; OnPropertyChanged(nameof(bsd_totalforfeitureamount_format)); } }
+        public string totalforfeitureamount { get => StringFormatHelper.FormatCurrency(bsd_totalforfeitureamount_new); }
         public string bsd_salecomment { get; set; } //s&m comment
+
+        private bool _isForfeiture;
+        public bool isForfeiture { get { return _isForfeiture; } set { _isForfeiture = value; OnPropertyChanged(nameof(isForfeiture)); } }
+
+        private bool _isRefund;
+        public bool isRefund { get { return _isRefund; } set { _isRefund = value; OnPropertyChanged(nameof(isRefund)); } }
     }
 }

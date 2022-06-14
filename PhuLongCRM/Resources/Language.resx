@@ -2896,7 +2896,7 @@
 		<value>Thêm tùy chọn</value>
 	</data>
 	<data name="takeoutmoney_forfeiture">
-		<value>Tịch thu</value>
+		<value>Tiền phạt thanh lý</value>
 	</data>
 	<data name="takeoutmoney_refund" xml:space="preserve">
 		<value>Hoàn tiền</value>
