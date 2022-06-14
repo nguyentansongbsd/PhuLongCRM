@@ -102,7 +102,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadOneLead()
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                           <entity name='lead'>
                             <attribute name='lastname' />
                             <attribute name='companyname' />
@@ -146,15 +146,10 @@ namespace PhuLongCRM.ViewModels
                             <attribute name='bsd_contactaddress' />
                             <order attribute='createdon' descending='true' />
                             <filter type='and'>
-                                <condition attribute='leadid' operator='eq' value='{" + LeadId + @"}' />
-                                <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                <condition attribute='leadid' operator='eq' value='{LeadId}' />
                             </filter>
                             <link-entity name='transactioncurrency' from='transactioncurrencyid' to='transactioncurrencyid' visible='false' link-type='outer'>
                                 <attribute name='currencyname'  alias='transactioncurrencyid_label'/>
-                            </link-entity>
-                            <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
-                                <attribute name='campaignid'  alias='_campaignid_value'/>
-                                <attribute name='name'  alias='campaignid_label'/>
                             </link-entity>
                             <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' visible='false' link-type='outer' alias='a_533be24fba81e911a83b000d3a07be23'>
                                 <attribute name='bsd_name' alias='bsd_topic_label' />
@@ -162,6 +157,10 @@ namespace PhuLongCRM.ViewModels
                             </link-entity>
                           </entity>
                         </fetch>";
+            //$@"<link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
+            //                    <attribute name='campaignid'  alias='_campaignid_value'/>
+            //                    <attribute name='name'  alias='campaignid_label'/>
+            //                </link-entity>" lỗi
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
             if (result == null || result.value.Count == 0)
@@ -179,7 +178,6 @@ namespace PhuLongCRM.ViewModels
                             <order attribute='createdon' descending='true' />
                             <filter type='and'>
                                 <condition attribute='leadid' operator='eq' value='{" + LeadId + @"}' />
-                                <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                             </filter>
                              <link-entity name='bsd_country' from='bsd_countryid' to='bsd_accountcountry' link-type='outer' alias='aa'>
                                     <attribute name='bsd_countryid' alias='bsd_accountcountry_id' />
@@ -415,11 +413,11 @@ namespace PhuLongCRM.ViewModels
             {
                 data["campaignid@odata.bind"] = "/campaigns(" + singleLead._campaignid_value + ")"; /////Lookup Field
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }

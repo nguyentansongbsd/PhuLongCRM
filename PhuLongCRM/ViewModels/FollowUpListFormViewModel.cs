@@ -217,7 +217,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{fulid}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{fulid}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                                     </filter>
                                 </entity>
                             </fetch>";

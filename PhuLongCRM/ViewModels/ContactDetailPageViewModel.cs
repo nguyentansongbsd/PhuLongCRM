@@ -87,9 +87,6 @@ namespace PhuLongCRM.ViewModels
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
                                           <attribute name='bsd_name' alias='parentcustomerid_label' />
                                     </link-entity>
-                                    <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' visible='false' link-type='outer' alias='a_cf81d7378befeb1194ef000d3a81fcba'>
-                                      <attribute name='bsd_employeeid' alias='employee_id'/>
-                                    </link-entity>
                                     <filter type='and'>
                                         <condition attribute='contactid' operator='eq' value='" + id + @"' />
                                     </filter>
@@ -164,7 +161,7 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='parentcontactid' operator='eq' uitype='contact' value='{customerId}' />
-                                  <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                  <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                 </filter> 
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
                                     <attribute name='bsd_name' alias='bsd_project_name'/>
@@ -214,7 +211,7 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='customerid' operator='eq' value='{customerId}' />
-                                  <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                  <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
                                            <value>100000000</value>
@@ -288,7 +285,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='ordernumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
-                                        <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                         <condition attribute='customerid' operator='eq' value='{customerId}' />               
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
@@ -372,7 +369,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
@@ -413,7 +410,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                      <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>
@@ -464,7 +461,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                    <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>
@@ -550,7 +547,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                      <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>

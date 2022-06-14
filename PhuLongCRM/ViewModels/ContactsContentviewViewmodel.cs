@@ -46,7 +46,7 @@ namespace PhuLongCRM.ViewModels
                         <condition attribute='bsd_customercode' operator='like' value='%25{Keyword}%25' />
                     </filter>
                     <filter type='and'>
-                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                       {filter}
                     </filter>
                   </entity>

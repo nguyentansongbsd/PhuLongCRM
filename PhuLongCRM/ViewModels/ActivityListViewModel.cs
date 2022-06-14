@@ -99,7 +99,7 @@ namespace PhuLongCRM.ViewModels
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='subject' operator='like' value='%25{Keyword}%25' />
-                                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>

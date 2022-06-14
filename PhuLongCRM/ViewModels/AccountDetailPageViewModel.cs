@@ -140,12 +140,12 @@ namespace PhuLongCRM.ViewModels
                                    <link-entity name='bsd_country' from='bsd_countryid' to='bsd_nation' link-type='outer' alias='as'>
                                         <attribute name='bsd_name' alias='country_name' />                                      
                                     </link-entity>
-                                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' visible='false' link-type='outer' alias='a_cf81d7378befeb1194ef000d3a81fcba'>
-                                  <attribute name='bsd_employeeid' alias='employee_id'/>
-                                  <attribute name='bsd_name' alias='employee_name'/>
-                                </link-entity>
                               </entity>
-                            </fetch>";
+                            </fetch>"; 
+            //<link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' visible='false' link-type='outer' alias='a_cf81d7378befeb1194ef000d3a81fcba'>
+            //                      <attribute name='bsd_employeeid' alias='employee_id'/>
+            //                      <attribute name='bsd_name' alias='employee_name'/>
+            //                    </link-entity> // bị lỗi khi load theo user crm nhưng k thấy sài
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<AccountFormModel>>("accounts", fetch);
             if (result == null)
                 return;
@@ -211,14 +211,10 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     <condition attribute='parentaccountid' operator='eq' uitype='account' value='{accountid}' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                 </filter>  
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
                                     <attribute name='bsd_name' alias='bsd_project_name'/>
-                                </link-entity>
-                                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='inner' alias='ac'>
-                                  <filter type='and'>
-                                    <condition attribute='bsd_employeeid' operator='eq' value='{UserLogged.Id}' />
-                                  </filter>
                                 </link-entity>
                                 <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
                                   <attribute name='name' alias='account_name'/>
@@ -264,7 +260,7 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='customerid' operator='eq' value='{accountid}' />
-                                  <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                  <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
                                            <value>100000000</value>
@@ -324,7 +320,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='ordernumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
-                                        <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                         <condition attribute='customerid' operator='eq' value='{accountid}' />               
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
@@ -399,7 +395,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{accountID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{accountID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>

@@ -421,11 +421,11 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Address2.district_id + ")"; /////Lookup Field _bsd_permanentdistrict_value
             }
 
-            if (UserLogged.Id != Guid.Empty) //id_user_crm
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM) //id_user_crm
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -440,7 +440,7 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='fullname' alias='Name' />
                     <order attribute='fullname' descending='false' />
                     <filter type='and'>
-                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                     </filter>
                   </entity>
                 </fetch>";
