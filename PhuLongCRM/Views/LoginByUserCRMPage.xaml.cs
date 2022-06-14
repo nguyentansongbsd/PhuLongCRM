@@ -41,6 +41,7 @@ namespace PhuLongCRM.Views
                     UserLogged.AccessToken = tokenData.access_token;
                     UserLogged.IsLoginByUserCRM = true;
                     UserLogged.IsLogged = true;
+                    UserLogged.UserAttribute = "ownerid";
 
                     Application.Current.MainPage = new AppShell(true);
                     await Task.Delay(1);

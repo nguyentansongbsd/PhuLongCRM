@@ -1,19 +1,12 @@
-﻿using PhuLongCRM.Config;
-using PhuLongCRM.Helper;
-using PhuLongCRM.IServices;
+﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
-using Newtonsoft.Json;
 using Stormlion.PhotoBrowser;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -168,7 +161,7 @@ namespace PhuLongCRM.ViewModels
                         <order attribute='statecode' descending='false' />
                         <order attribute='statuscode' descending='true' />
                         <filter type='and'>
-                          <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                           <condition attribute='bsd_units' operator='eq' value='{UnitInfo.productid}' />
                         </filter>
                         <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer'>
