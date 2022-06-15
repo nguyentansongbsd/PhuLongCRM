@@ -137,8 +137,8 @@ namespace PhuLongCRM.ViewModels
                                   <attribute name='bsd_fullname' alias='case_namecontact'/>
                                 </link-entity>                               
                                 <filter type='and'>
-                                    <condition attribute='parentcaseid' operator='eq' uitype='incident' value='" + CaseId + @"' />
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='"+UserLogged.Id+@"' />
+                                    <condition attribute='parentcaseid' operator='eq' uitype='incident' value='{CaseId}' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id+@"' />
                                 </filter>
                                   </entity>
                                 </fetch>";

@@ -993,7 +993,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='opportunityid' alias='Val'/>
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -1137,13 +1137,13 @@ namespace PhuLongCRM.ViewModels
         // Load cong tac vien
         public async Task LoadCollaboratorLookUp()
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
                     <attribute name='contactid' alias='Id' />
                     <attribute name='fullname' alias='Name' />
                     <order attribute='createdon' descending='true' />                   
                     <filter type='and'>
-                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                         <condition attribute='bsd_type' operator='eq' value='100000001' />
                     </filter>
                   </entity>
@@ -1161,13 +1161,13 @@ namespace PhuLongCRM.ViewModels
         // Load khach hang gioi thieu
         public async Task LoadCustomerReferralLookUp()
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
                     <attribute name='contactid' alias='Id' />
                     <attribute name='fullname' alias='Name' />
                     <order attribute='createdon' descending='true' />                   
                     <filter type='and'>
-                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                         <condition attribute='bsd_type' operator='eq' value='100000000' />
                     </filter>
                   </entity>
@@ -1464,11 +1464,11 @@ namespace PhuLongCRM.ViewModels
                 //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_contact");
             }
 
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }

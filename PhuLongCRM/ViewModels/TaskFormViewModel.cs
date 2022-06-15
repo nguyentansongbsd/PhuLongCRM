@@ -178,11 +178,11 @@ namespace PhuLongCRM.ViewModels
                 data["regardingobjectid_opportunity_task@odata.bind"] = "/opportunities(" + Customer.Val + ")";
             }
 
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
             {
                 data["bsd_employee_Task@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }

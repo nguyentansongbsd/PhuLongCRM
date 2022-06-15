@@ -31,7 +31,7 @@ namespace PhuLongCRM.ViewModels
                               <condition attribute='bsd_quotationnumber' operator='like' value='%25{Keyword}%25' />
                               <condition attribute='name' operator='like' value='%25{Keyword}%25' />
                             </filter>
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>

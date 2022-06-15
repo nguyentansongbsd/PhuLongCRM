@@ -117,11 +117,11 @@ namespace PhuLongCRM.ViewModels
 
             data["phonecall_activity_parties"] = dataFromTo;
 
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
             {
                 data["bsd_employee_PhoneCall@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }

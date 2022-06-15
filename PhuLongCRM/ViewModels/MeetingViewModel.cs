@@ -401,11 +401,11 @@ namespace PhuLongCRM.ViewModels
             }
             data["appointment_activity_parties"] = arrayMeeting;
 
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
             {
                 data["bsd_employee_Appointment@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
@@ -453,14 +453,14 @@ namespace PhuLongCRM.ViewModels
         {
             LeadsLookUpRequired = new List<OptionSetFilter>();
             LeadsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='lead'>
                                 <attribute name='fullname' alias='Label' />
                                 <attribute name='leadid' alias='Val' />
                                 <attribute name='mobilephone' alias='SDT' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                                 </filter>
                               </entity>
                             </fetch>";
@@ -480,7 +480,7 @@ namespace PhuLongCRM.ViewModels
         {
             ContactsLookUpRequired = new List<OptionSetFilter>();
             ContactsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
                     <attribute name='contactid' alias='Val' />
                     <attribute name='fullname' alias='Label' />
@@ -489,7 +489,7 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='bsd_passport' alias='HC' />
                     <order attribute='fullname' descending='false' />                   
                     <filter type='and'>
-                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                     </filter>
                   </entity>
                 </fetch>";
@@ -509,7 +509,7 @@ namespace PhuLongCRM.ViewModels
         {
             AccountsLookUpRequired = new List<OptionSetFilter>();
             AccountsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='account'>
                                 <attribute name='name' alias='Label'/>
                                 <attribute name='accountid' alias='Val'/>
@@ -517,7 +517,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_registrationcode' alias='SoGPKD'/>
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                                 </filter>
                               </entity>
                             </fetch>";

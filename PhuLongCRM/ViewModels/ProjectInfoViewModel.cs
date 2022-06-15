@@ -363,6 +363,8 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='opportunityid' />
                                 <order attribute='bsd_bookingtime' descending='false' />
                                 <filter type='and'>
+                                    <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value{UserLogged.Id}/>
                                   <condition attribute='statuscode' operator='in'>
                                     <value>100000002</value>
                                     <value>100000000</value>
@@ -370,14 +372,6 @@ namespace PhuLongCRM.ViewModels
                                 </filter>
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
                                     <attribute name='bsd_name' alias='project_name'/>
-                                  <filter type='and'>
-                                    <condition attribute='bsd_projectid' operator='eq' value='{ProjectId}'/>
-                                  </filter>
-                                </link-entity>
-                                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='inner' alias='ac'>
-                                  <filter type='and'>
-                                    <condition attribute='bsd_employeeid' operator='eq' value='{UserLogged.Id}' />
-                                  </filter>
                                 </link-entity>
                                 <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
                                   <attribute name='name' alias='account_name'/>
