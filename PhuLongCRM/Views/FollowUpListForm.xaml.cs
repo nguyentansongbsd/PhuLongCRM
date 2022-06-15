@@ -145,6 +145,7 @@ namespace PhuLongCRM.Views
             if (updated)
             {
                 if (FollowDetailPage.NeedToRefresh.HasValue) FollowDetailPage.NeedToRefresh = true;
+                if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                 await Navigation.PopAsync();
                 ToastMessageHelper.ShortMessage(Language.cap_nhat_danh_sach_theo_doi_thanh_cong);
                 LoadingHelper.Hide();

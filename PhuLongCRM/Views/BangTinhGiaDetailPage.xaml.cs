@@ -67,11 +67,7 @@ namespace PhuLongCRM.Views
                     LoadDataChinhSach(ReservationId),
                     viewModel.LoadCoOwners(ReservationId)
                 );
-                viewModel.ButtonCommandList.Clear();
-                SetUpButtonGroup();
                 if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
-                NeedToRefresh = false;
-
                 LoadingHelper.Hide();
             }
             if (NeedToRefreshInstallment == true)
@@ -81,13 +77,16 @@ namespace PhuLongCRM.Views
                 viewModel.ShowInstallmentList = false;
                 viewModel.NumberInstallment = 0;
                 viewModel.InstallmentList.Clear();
+                
+                await viewModel.LoadInstallmentList(ReservationId);
+                LoadingHelper.Hide();
+            }
+            if (NeedToRefreshInstallment == true || NeedToRefresh == true)
+            {
                 viewModel.ButtonCommandList.Clear();
-
-                await viewModel.LoadInstallmentList(ReservationId);    
                 SetUpButtonGroup();
                 NeedToRefreshInstallment = false;
-
-                LoadingHelper.Hide();
+                NeedToRefresh = false;
             }
         }
 
@@ -134,11 +133,14 @@ namespace PhuLongCRM.Views
             if (viewModel.Reservation.statuscode == 100000007)
             {
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat_bang_tinh_gia, "FontAwesomeRegular", "\uf044", null, EditQuotes));
-                if (viewModel.InstallmentList.Count == 0)
+                if (viewModel.InstallmentList?.Count == 0)
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_lich_thanh_toan, "FontAwesomeRegular", "\uf271", null, CreatePaymentScheme));
                 }
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xoa_lich_thanh_toan, "FontAwesomeRegular", "\uf1c3", null, CancelInstallment));
+                if (viewModel.InstallmentList?.Count > 0)
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xoa_lich_thanh_toan, "FontAwesomeRegular", "\uf1c3", null, CancelInstallment));
+                }
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeRegular", "\uf273", null, CancelQuotes));
                 if (viewModel.InstallmentList.Count > 0 && viewModel.Reservation.bsd_quotationprinteddate != null)
