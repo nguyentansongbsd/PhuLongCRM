@@ -49,10 +49,10 @@ namespace PhuLongCRM.Views
                 if (viewModel.singleContact.statuscode != "100000000")
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
 
-                if (viewModel.singleContact.employee_id != UserLogged.Id)
-                {
-                    floatingButtonGroup.IsVisible = false;
-                }
+                //if (viewModel.singleContact.employee_id != UserLogged.Id)
+                //{
+                //    floatingButtonGroup.IsVisible = false;
+                //}
                 FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
                 OnCompleted(true);
             }

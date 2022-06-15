@@ -350,7 +350,8 @@ namespace PhuLongCRM.Controls
                     <attribute name='bsd_passport' alias='HC' />
                     <order attribute='fullname' descending='false' />                   
                     <filter type='and'>
-                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='statecode' operator='eq' value='0' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                     </filter>
                   </entity>
                 </fetch>";
@@ -386,8 +387,8 @@ namespace PhuLongCRM.Controls
                                 <attribute name='mobilephone' alias='SDT' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                    " + loadNewLead + @"
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    {loadNewLead}
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                                 </filter>
                               </entity>
                             </fetch>";
@@ -417,7 +418,8 @@ namespace PhuLongCRM.Controls
                                 <attribute name='bsd_registrationcode' alias='SoGPKD'/>
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    <condition attribute='statecode' operator='eq' value='0' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                                 </filter>
                               </entity>
                             </fetch>";
