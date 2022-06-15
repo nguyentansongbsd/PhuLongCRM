@@ -85,7 +85,7 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_qrcode))
             {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeRegular", "\uf029", null, GenerateQRCode));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
             }
             
             if (viewModel.singleLead.statuscode == "3") // qualified

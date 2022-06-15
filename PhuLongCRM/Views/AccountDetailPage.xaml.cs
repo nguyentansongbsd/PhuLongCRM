@@ -41,26 +41,20 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await LoadDataThongTin(AccountId.ToString());
-            
+
             if (viewModel.singleAccount.accountid != Guid.Empty)
             {
-                if ((viewModel.singleAccount.employee_id != Guid.Empty && !string.IsNullOrWhiteSpace(viewModel.singleAccount.employee_name)) && (viewModel.singleAccount.employee_id == UserLogged.Id && viewModel.singleAccount.employee_name == UserLogged.User))
-                {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
 
-                    if (viewModel.singleAccount.statuscode != "100000000")
-                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
-                }
-                else
-                {
-                    floatingButtonGroup.IsVisible = false;
-                }
-                FromCustomer = new OptionSet {Val= viewModel.singleAccount.accountid.ToString(),Label=viewModel.singleAccount.bsd_name, Title = viewModel.CodeAccount };
+                if (viewModel.singleAccount.statuscode != "100000000")
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
+
+                FromCustomer = new OptionSet { Val = viewModel.singleAccount.accountid.ToString(), Label = viewModel.singleAccount.bsd_name, Title = viewModel.CodeAccount };
                 OnCompleted?.Invoke(true);
             }
-                
+
             else
                 OnCompleted?.Invoke(false);
             LoadingHelper.Hide();
