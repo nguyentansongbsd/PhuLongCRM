@@ -368,11 +368,11 @@ namespace PhuLongCRM.ViewModels
             {
                 data["bsd_permanentdistrict@odata.bind"] = "/new_districts(" + Address2.district_id + ")"; /////Lookup Field
             }
-            if (UserLogged.Id != null)
+            if (UserLogged.Id != null && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -382,12 +382,12 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadAccountsLookup()
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                     <entity name='account'>
                                         <attribute name='name' alias='Name'/>
                                         <attribute name='accountid' alias='Id'/>
                                         <filter type='and'>
-                                          <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                                         </filter>
                                     </entity>
                                 </fetch>";

@@ -98,7 +98,7 @@
                                     <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding singleAccount.statuscode_color}" VerticalOptions="StartAndExpand">
                                         <Label Grid.Column="0" Text="{Binding singleAccount.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                     </telerikPrimitives:RadBorder>
-                                    <Label Grid.Column="1" Text="{Binding singleAccount.bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                    <Label Grid.Column="1" Text="{Binding singleAccount.bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                     <Label Text="{Binding Source={x:Static lang:Language.ma_khach_hang},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
@@ -315,7 +315,7 @@
                                                         <Label FontSize="15" TextColor="#333333">
                                                             <Label.FormattedText>
                                                                 <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.dia_chi_thuong_tru},StringFormat='{0}:'}"/>
+                                                                    <Span Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}:'}"/>
                                                                     <Span Text=" "/>
                                                                     <Span Text="{Binding customer_name}"/>
                                                                 </FormattedString>

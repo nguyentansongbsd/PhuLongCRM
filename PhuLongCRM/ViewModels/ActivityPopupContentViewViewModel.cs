@@ -83,12 +83,12 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='opportunityid' alias='queue_id'/>                  
                     <attribute name='name' alias='queue_name'/>
                 </link-entity>
-                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
-                    <attribute name='bsd_name' alias='user_name'/>
-                    <attribute name='bsd_employeeid' alias='user_id'/>
-                </link-entity>
             </entity>
           </fetch>";
+            //"<link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
+            //        <attribute name='bsd_name' alias='user_name'/>
+            //        <attribute name='bsd_employeeid' alias='user_id'/>
+            //    </link-entity>"
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhoneCellModel>>("phonecalls", fetch);
             if (result == null || result.value == null)
@@ -255,11 +255,11 @@ namespace PhuLongCRM.ViewModels
     	                            <attribute name='bsd_name' alias='account_name'/>
                                 </link-entity>
                                 <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='ai'>
-	                            <attribute name='contactid' alias='contact_id' />                  
+	                                <attribute name='contactid' alias='contact_id' />                  
                                     <attribute name='fullname' alias='contact_name'/>
                                 </link-entity>
                                 <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='aj'>
-	                            <attribute name='leadid' alias='lead_id'/>                  
+	                                <attribute name='leadid' alias='lead_id'/>                  
                                     <attribute name='fullname' alias='lead_name'/>
                                 </link-entity>
                                 <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>

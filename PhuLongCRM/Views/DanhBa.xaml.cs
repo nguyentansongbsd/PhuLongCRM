@@ -221,11 +221,11 @@ namespace PhuLongCRM.Views
                 data["mobilephone"] = leadFormModel.mobilephone;
             }
             
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
                 //data["bsd_importer@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";

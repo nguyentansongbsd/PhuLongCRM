@@ -83,8 +83,8 @@ namespace PhuLongCRM.ViewModels
             string filterEmployee = string.Empty;
             if (IsFromQRCode == false)
             {
-                filterEmployee = @"<filter type='and'>
-                                          <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                filterEmployee = $@"<filter type='and'>
+                                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{ UserLogged.Id}' />
                                     </filter>";
             }
             singleLead = new LeadFormModel();
@@ -138,9 +138,6 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='transactioncurrency' from='transactioncurrencyid' to='transactioncurrencyid' visible='false' link-type='outer'>
                                         <attribute name='currencyname'  alias='transactioncurrencyid_label'/>
                                     </link-entity>
-                                    <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
-                                        <attribute name='name'  alias='campaignid_label'/>
-                                    </link-entity>
                                     <link-entity name='account' from='originatingleadid' to='leadid' link-type='outer'>
                                         <attribute name='accountid' alias='account_id'/>
                                     </link-entity>
@@ -150,6 +147,9 @@ namespace PhuLongCRM.ViewModels
                                     " + filterEmployee + @"
                                 </entity>
                             </fetch>";
+            //$@"<link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
+            //                            <attribute name='name'  alias='campaignid_label'/>
+            //                        </link-entity>"
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
             if (result == null)
             {
@@ -402,11 +402,11 @@ namespace PhuLongCRM.ViewModels
             data["birthdate"] = singleLead.new_birthday.HasValue ? (DateTime.Parse(singleLead.new_birthday.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
             data["gendercode"] = singleLead.new_gender;
 
-            if (UserLogged.Id != null)
+            if (UserLogged.Id != null && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -481,11 +481,11 @@ namespace PhuLongCRM.ViewModels
             {
                 data["bsd_district@odata.bind"] = "/new_districts(" + District.Id + ")"; /////Lookup Field
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -636,7 +636,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{leadID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{leadID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>

@@ -229,7 +229,7 @@ namespace PhuLongCRM.ViewModels
                                                     <value>100000002</value>
                                                     <value>100000000</value>
                                                 </condition>
-                                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
+                                                <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                             </filter>
                                     </entity>
                                 </fetch>";
@@ -266,7 +266,7 @@ namespace PhuLongCRM.ViewModels
                                         <value>4</value>
                                       </condition>
                                       <condition attribute='bsd_deposittime' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -307,7 +307,7 @@ namespace PhuLongCRM.ViewModels
                                       </condition>
                                       <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                       <condition attribute='bsd_signedcontractdate' operator='null' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -380,7 +380,7 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                       <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                       <condition attribute='statuscode' operator='ne' value='2'/>
-                                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -421,7 +421,7 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                       <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
                                     <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer' alias='a_48f82b1a8ad844bd90d915e7b3c4f263'>
                                           <attribute name='fullname' alias='contact_name'/>
@@ -475,7 +475,7 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                       <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
                                     <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer' alias='a_48f82b1a8ad844bd90d915e7b3c4f263'>
                                         <attribute name='fullname' alias='contact_name'/>
@@ -564,7 +564,7 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                       <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
                                     <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer' alias='a_48f82b1a8ad844bd90d915e7b3c4f263'>
                                         <attribute name='fullname' alias='contact_name'/>

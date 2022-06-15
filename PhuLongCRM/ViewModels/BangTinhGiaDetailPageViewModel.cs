@@ -862,11 +862,11 @@ namespace PhuLongCRM.ViewModels
             {
                 data["bsd_Units@odata.bind"] = "/products(" + Reservation.unit_id + ")";
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_Employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }

@@ -28,7 +28,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_contractnumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>
-                                        <condition attribute = 'bsd_employee' operator= 'eq' value = '{UserLogged.Id}' />  
+                                        <condition attribute = '{UserLogged.UserAttribute}' operator= 'eq' value = '{UserLogged.Id}' />  
                                         <filter type='or'>      
                                             <condition attribute='customeridname' operator='like' value ='%25{Keyword}%25' />          
                                             <condition attribute='bsd_projectname' operator='like' value ='%25{Keyword}%25' />              
