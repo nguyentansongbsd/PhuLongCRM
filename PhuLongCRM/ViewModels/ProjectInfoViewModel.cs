@@ -364,7 +364,7 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='bsd_bookingtime' descending='false' />
                                 <filter type='and'>
                                     <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
-                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value{UserLogged.Id}/>
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                   <condition attribute='statuscode' operator='in'>
                                     <value>100000002</value>
                                     <value>100000000</value>

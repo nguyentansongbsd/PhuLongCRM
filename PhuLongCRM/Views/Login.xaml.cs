@@ -1,7 +1,6 @@
 ﻿
 using Newtonsoft.Json;
 using PhuLongCRM.Helper;
-using PhuLongCRM.Helper;
 using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
