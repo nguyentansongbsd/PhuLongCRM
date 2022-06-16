@@ -7306,11 +7306,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tạo cuộc gọi thành công..
+        /// </summary>
+        internal static string tao_cuoc_goi_thanh_cong {
+            get {
+                return ResourceManager.GetString("tao_cuoc_goi_thanh_cong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tạo Cuộc họp.
         /// </summary>
         internal static string tao_cuoc_hop {
             get {
                 return ResourceManager.GetString("tao_cuoc_hop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tạo cuộc họp thành công..
+        /// </summary>
+        internal static string tao_cuoc_hop_thanh_cong {
+            get {
+                return ResourceManager.GetString("tao_cuoc_hop_thanh_cong", resourceCulture);
             }
         }
         

@@ -92,8 +92,16 @@ namespace PhuLongCRM.ViewModels
             List<object> dataFromTo = new List<object>();
 
             IDictionary<string, object> item_from = new Dictionary<string, object>();
-            item_from["partyid_systemuser@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
-            item_from["participationtypemask"] = 1;
+            if (!UserLogged.IsLoginByUserCRM && UserLogged.Id != Guid.Empty)
+            {
+                item_from["partyid_systemuser@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
+                item_from["participationtypemask"] = 1;
+            }
+            else
+            {
+                item_from["partyid_systemuser@odata.bind"] = "/systemusers(" + UserLogged.Id + ")";
+                item_from["participationtypemask"] = 1;
+            }
 
             dataFromTo.Add(item_from);
 

@@ -191,7 +191,7 @@ namespace PhuLongCRM.Views
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
                     if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage(Language.da_them_cuoc_goi);                   
+                    ToastMessageHelper.ShortMessage(Language.tao_cuoc_goi_thanh_cong);                   
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }

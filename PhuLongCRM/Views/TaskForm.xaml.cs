@@ -91,7 +91,7 @@ namespace PhuLongCRM.Views
             await viewModel.LoadTask();
             if (viewModel.TaskFormModel != null)
             {
-                btnSave.Text = viewModel.Title = Language.cap_nhap_cong_viec;
+                btnSave.Text = viewModel.Title = Language.cap_nhat;
                 CheckTaskForm?.Invoke(true);
             }
             else
