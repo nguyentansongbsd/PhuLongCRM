@@ -20,7 +20,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshNumQueue = null;
         public ProjectInfoViewModel viewModel;
 
-        public ProjectInfo(Guid projectId,string projectName = null)
+        public ProjectInfo(Guid projectId, string projectName = null)
         {
             InitializeComponent();
             this.BindingContext = viewModel = new ProjectInfoViewModel();
@@ -40,12 +40,13 @@ namespace PhuLongCRM.Views
                 viewModel.LoadThongKe(),
                 viewModel.LoadThongKeGiuCho(),
                 viewModel.LoadThongKeHopDong(),
-                viewModel.LoadThongKeBangTinhGia()
-            ) ;
-            if(viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
+                viewModel.LoadThongKeBangTinhGia(),
+                viewModel.CheckPhasesLaunch()
+            );
+            if (viewModel.IsHasPhasesLaunch == false && viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
             {
                 viewModel.IsShowBtnGiuCho = true;
-            }    
+            }
             else
             {
                 viewModel.IsShowBtnGiuCho = false;
@@ -70,7 +71,7 @@ namespace PhuLongCRM.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if(NeedToRefreshQueue == true)
+            if (NeedToRefreshQueue == true)
             {
                 LoadingHelper.Show();
                 viewModel.PageListGiuCho = 1;
@@ -94,7 +95,8 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             QueueForm queue = new QueueForm(viewModel.ProjectId, false);
-            queue.OnCompleted = async (IsSuccess) => {
+            queue.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(queue);
@@ -121,7 +123,8 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             var id = (Guid)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             AccountDetailPage accountDetailPage = new AccountDetailPage(id);
-            accountDetailPage.OnCompleted= async (IsSuccess) => {
+            accountDetailPage.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(accountDetailPage);
@@ -140,7 +143,8 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
-            queuesDetialPage.OnCompleted = async (IsSuccess) => {
+            queuesDetialPage.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(queuesDetialPage);
@@ -219,14 +223,14 @@ namespace PhuLongCRM.Views
 
         private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
         {
-            if(e.Item != null)
+            if (e.Item != null)
             {
-                if((int)e.Item == 0)
+                if ((int)e.Item == 0)
                 {
                     stackThongKe.IsVisible = true;
                     stackThongTin.IsVisible = false;
                     stackGiuCho.IsVisible = false;
-                }    
+                }
                 else if ((int)e.Item == 1)
                 {
                     stackThongKe.IsVisible = false;
@@ -245,7 +249,7 @@ namespace PhuLongCRM.Views
                     }
                     LoadingHelper.Hide();
                 }
-            }    
+            }
         }
     }
 }

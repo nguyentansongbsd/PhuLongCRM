@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
@@ -83,7 +83,7 @@
                                       AppointmentsSource="{Binding lstEvents, Mode=TwoWay}"
                                       AppointmentTapped="Handle_AppointmentTapped" DisplayDateChanged="Handle_DisplayDateChanged">
                     <telerikInput:RadCalendar.DayViewSettings>
-                        <telerikInput:DayViewSettings DayStartTime="06:00:00"
+                        <telerikInput:DayViewSettings DayStartTime="00:00:00"
                                                   DayEndTime="23:59:59"
                                                   TimelineInterval="00:30"/>
                     </telerikInput:RadCalendar.DayViewSettings>
