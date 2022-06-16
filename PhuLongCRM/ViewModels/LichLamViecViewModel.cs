@@ -125,6 +125,7 @@ namespace PhuLongCRM.ViewModels
                               </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ListActivitiesAcc>>(EntityName, fetch);
+            if (result == null || result.value.Count == 0) return;
             var data = result.value;
             if (data.Any())
             {

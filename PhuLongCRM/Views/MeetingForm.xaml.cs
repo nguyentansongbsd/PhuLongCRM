@@ -232,7 +232,7 @@ namespace PhuLongCRM.Views
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
                     if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                    ToastMessageHelper.ShortMessage(Language.tao_cuoc_hop_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }

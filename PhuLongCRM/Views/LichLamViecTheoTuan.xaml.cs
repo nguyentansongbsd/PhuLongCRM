@@ -28,7 +28,9 @@ namespace PhuLongCRM.Views
             if (NeedToRefresh == true)
             {
                 LoadingHelper.Show();
+                viewModel.lstEvents?.Clear();
                 await viewModel.loadAllActivities();
+                ActivityPopup.Refresh();
                 NeedToRefresh = false;
                 LoadingHelper.Hide();
             }

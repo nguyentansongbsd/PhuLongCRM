@@ -3210,4 +3210,10 @@
 	<data name="hoan_tien_phai_nho_hon_tien_da_thanh_toan" xml:space="preserve">
 		<value>Refund amount must be greater than total amount paid.</value>
 	</data>
+	<data name="tao_cuoc_goi_thanh_cong" xml:space="preserve">
+		<value>Create phone call successed.</value>
+	</data>
+	<data name="tao_cuoc_hop_thanh_cong" xml:space="preserve">
+		<value>Create meeting successed.</value>
+	</data>
 </root>

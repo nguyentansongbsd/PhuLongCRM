@@ -3210,4 +3210,10 @@
 	<data name="hoan_tien_phai_nho_hon_tien_da_thanh_toan" xml:space="preserve">
 		<value>Số tiền hoàn lại phải nhỏ hơn hoặc bằng số tiền đã thanh toán.</value>
 	</data>
+	<data name="tao_cuoc_goi_thanh_cong" xml:space="preserve">
+		<value>Tạo cuộc gọi thành công.</value>
+	</data>
+	<data name="tao_cuoc_hop_thanh_cong" xml:space="preserve">
+		<value>Tạo cuộc họp thành công.</value>
+	</data>
 </root>
