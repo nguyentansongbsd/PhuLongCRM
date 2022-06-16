@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Xamarin.Forms;
 using PhuLongCRM.IServices;
+using AndroidX.AppCompat.App;
 
 namespace PhuLongCRM.Droid
 {
@@ -26,6 +27,8 @@ namespace PhuLongCRM.Droid
             
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            //AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
 
             LoadApplication(new App());
             DependencyService.Get<ILoadingService>().Initilize();

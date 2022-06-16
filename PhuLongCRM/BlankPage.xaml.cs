@@ -13,9 +13,13 @@ namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
+        private DateTime? _date;
+        public DateTime? Date { get => _date; set { _date = value;OnPropertyChanged(nameof(Date)); } }
         public BlankPage()
         {
             InitializeComponent();
+            this.BindingContext = this;
+            Date = DateTime.Now;
         }
     }
 }

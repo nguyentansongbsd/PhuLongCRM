@@ -101,6 +101,8 @@ namespace PhuLongCRM.ViewModels
         private StatusCodeModel _statusCode;
         public StatusCodeModel StatusCode { get => _statusCode; set { _statusCode = value; OnPropertyChanged(nameof(StatusCode)); } }
 
+        public bool IsHasPhasesLaunch { get; set; }
+
         public ProjectInfoViewModel()
         {
             ListGiuCho = new ObservableCollection<QueuesModel>();
@@ -474,6 +476,23 @@ namespace PhuLongCRM.ViewModels
                 Event.bsd_startdate = Event.bsd_startdate.Value.ToLocalTime();
                 Event.bsd_enddate = Event.bsd_enddate.Value.ToLocalTime();
             }
+        }
+        public async Task CheckPhasesLaunch()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_phaseslaunch'>
+                                    <attribute name='bsd_phaseslaunchid' alias='Val'/>
+                                    <order attribute='createdon' descending='true' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_projectid' operator='eq' value='{this.ProjectId}' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_phaseslaunchs", fetchXml);
+            if (result != null && result.value.Count > 0)
+                this.IsHasPhasesLaunch = true;
+            else
+                this.IsHasPhasesLaunch = false;
         }
     }
 }
