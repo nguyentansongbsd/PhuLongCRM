@@ -26,12 +26,6 @@ namespace PhuLongCRM.Views
         }
         public async void Init()
         {
-            VisualStateManager.GoToState(radBorderLead, "Active");
-            VisualStateManager.GoToState(radBorderAccount, "InActive");
-            VisualStateManager.GoToState(radBorderContact, "InActive");
-            VisualStateManager.GoToState(lblLead, "Active");
-            VisualStateManager.GoToState(lblAccount, "InActive");
-            VisualStateManager.GoToState(lblContact, "InActive");
             if (LeadsContentView == null)
             {
                 LeadsContentView = new LeadsContentView();
@@ -71,77 +65,6 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private void Lead_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radBorderLead, "Active");
-            VisualStateManager.GoToState(radBorderAccount, "InActive");
-            VisualStateManager.GoToState(radBorderContact, "InActive");
-            VisualStateManager.GoToState(lblLead, "Active");
-            VisualStateManager.GoToState(lblAccount, "InActive");
-            VisualStateManager.GoToState(lblContact, "InActive");
-            LeadsContentView.IsVisible = true;
-            if (AccountsContentView != null)
-            {
-                AccountsContentView.IsVisible = false;
-            }
-            if (ContactsContentview != null)
-            {
-                ContactsContentview.IsVisible = false;
-            }
-        }
-
-        private void Account_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radBorderLead, "InActive");
-            VisualStateManager.GoToState(radBorderAccount, "Active");
-            VisualStateManager.GoToState(radBorderContact, "InActive");
-            VisualStateManager.GoToState(lblLead, "InActive");
-            VisualStateManager.GoToState(lblAccount, "Active");
-            VisualStateManager.GoToState(lblContact, "InActive");
-            if (AccountsContentView == null)
-            {
-                LoadingHelper.Show();
-                AccountsContentView = new AccountsContentView();
-            }
-            AccountsContentView.OnCompleted = (IsSuccess) =>
-            {
-                CustomerContentView.Children.Add(AccountsContentView);
-                LoadingHelper.Hide();
-            };
-            LeadsContentView.IsVisible = false;
-            AccountsContentView.IsVisible = true;
-            if (ContactsContentview != null)
-            {
-                ContactsContentview.IsVisible = false;
-            }
-        }
-
-        private void Contact_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radBorderLead, "InActive");
-            VisualStateManager.GoToState(radBorderAccount, "InActive");
-            VisualStateManager.GoToState(radBorderContact, "Active");
-            VisualStateManager.GoToState(lblLead, "InActive");
-            VisualStateManager.GoToState(lblAccount, "InActive");
-            VisualStateManager.GoToState(lblContact, "Active");
-            if (ContactsContentview == null)
-            {
-                LoadingHelper.Show();
-                ContactsContentview = new ContactsContentview();
-            }
-            ContactsContentview.OnCompleted = (IsSuccess) =>
-            {
-                CustomerContentView.Children.Add(ContactsContentview);
-                LoadingHelper.Hide();
-            };
-            LeadsContentView.IsVisible = false;
-            ContactsContentview.IsVisible = true;
-            if (AccountsContentView != null)
-            {
-                AccountsContentView.IsVisible = false;
-            }
-        }
-
         private async void NewCustomer_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -160,6 +83,66 @@ namespace PhuLongCRM.Views
                 await Navigation.PushAsync(new AccountForm());
             }
             LoadingHelper.Hide();
+        }
+
+        private void TabControl_IndexTab(object sender, Models.LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    if (LeadsContentView != null)
+                    {
+                        LeadsContentView.IsVisible = true;
+                    }
+                    if (AccountsContentView != null)
+                    {
+                        AccountsContentView.IsVisible = false;
+                    }
+                    if (ContactsContentview != null)
+                    {
+                        ContactsContentview.IsVisible = false;
+                    }
+                }
+                else if ((int)e.Item == 1)
+                {
+                    if (ContactsContentview == null)
+                    {
+                        LoadingHelper.Show();
+                        ContactsContentview = new ContactsContentview();
+                    }
+                    ContactsContentview.OnCompleted = (IsSuccess) =>
+                    {
+                        CustomerContentView.Children.Add(ContactsContentview);
+                        LoadingHelper.Hide();
+                    };
+                    LeadsContentView.IsVisible = false;
+                    ContactsContentview.IsVisible = true;
+                    if (AccountsContentView != null)
+                    {
+                        AccountsContentView.IsVisible = false;
+                    }
+                }
+                else if ((int)e.Item == 2)
+                {
+                    if (AccountsContentView == null)
+                    {
+                        LoadingHelper.Show();
+                        AccountsContentView = new AccountsContentView();
+                    }
+                    AccountsContentView.OnCompleted = (IsSuccess) =>
+                    {
+                        CustomerContentView.Children.Add(AccountsContentView);
+                        LoadingHelper.Hide();
+                    };
+                    LeadsContentView.IsVisible = false;
+                    AccountsContentView.IsVisible = true;
+                    if (ContactsContentview != null)
+                    {
+                        ContactsContentview.IsVisible = false;
+                    }
+                }
+            }  
         }
     }
 }

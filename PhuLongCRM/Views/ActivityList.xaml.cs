@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Extended;
 using Xamarin.Forms.Xaml;
 
 namespace PhuLongCRM.Views
@@ -35,13 +36,6 @@ namespace PhuLongCRM.Views
         {
             viewModel.EntityName = "tasks";
             viewModel.entity = "task";
-            VisualStateManager.GoToState(radBorderTask, "Active");
-            VisualStateManager.GoToState(radBorderMeeting, "InActive");
-            VisualStateManager.GoToState(radBorderPhoneCall, "InActive");
-            VisualStateManager.GoToState(lblTask, "Active");
-            VisualStateManager.GoToState(lblMeeting, "InActive");
-            VisualStateManager.GoToState(lblPhoneCall, "InActive");
-
             await viewModel.LoadData();
             if (viewModel.Data.Count > 0)
             {
@@ -132,121 +126,54 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Hide();
         }
-
-        private async void Task_Tapped(object sender,EventArgs e)
-        {
-            LoadingHelper.Show();
-            VisualStateManager.GoToState(radBorderTask, "Active");
-            VisualStateManager.GoToState(radBorderMeeting, "InActive");
-            VisualStateManager.GoToState(radBorderPhoneCall, "InActive");
-            VisualStateManager.GoToState(lblTask, "Active");
-            VisualStateManager.GoToState(lblMeeting, "InActive");
-            VisualStateManager.GoToState(lblPhoneCall, "InActive");
-
-            if (viewModel.entity != "task")
-            {
-                viewModel.EntityName = "tasks";
-                viewModel.entity = "task";
-                await viewModel.LoadOnRefreshCommandAsync();
-               // listView.ItemsSource = viewModel.Data;
-            }
-            LoadingHelper.Hide();
-        }
-
-        private async void Meeting_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            VisualStateManager.GoToState(radBorderTask, "InActive");
-            VisualStateManager.GoToState(radBorderMeeting, "Active");
-            VisualStateManager.GoToState(radBorderPhoneCall, "InActive");
-            VisualStateManager.GoToState(lblTask, "InActive");
-            VisualStateManager.GoToState(lblMeeting, "Active");
-            VisualStateManager.GoToState(lblPhoneCall, "InActive");
-
-            if (viewModel.entity != "appointment")
-            {
-                viewModel.EntityName = "appointments";
-                viewModel.entity = "appointment";
-                await viewModel.LoadOnRefreshCommandAsync();
-
-                if(viewModel.Data != null && viewModel.Data.Count > 0)
-                {
-                    List<HoatDongListModel> list = new List<HoatDongListModel>();
-                    foreach (var item in viewModel.Data)
-                    {
-                        var meet = list.FirstOrDefault(x => x.activityid == item.activityid);
-                        if (meet != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(item.callto_contact_name))
-                            {
-                                string new_customer = ", " + item.callto_contact_name;
-                                meet.customer += new_customer;
-                            }
-                            if (!string.IsNullOrWhiteSpace(item.callto_account_name))
-                            {
-                                string new_customer = ", " + item.callto_account_name;
-                                meet.customer += new_customer;
-                            }
-                            if (!string.IsNullOrWhiteSpace(item.callto_lead_name))
-                            {
-                                string new_customer = ", " + item.callto_lead_name;
-                                meet.customer += new_customer;
-                            }
-                        }
-                        else
-                        {
-                            item.scheduledstart = item.scheduledstart.ToLocalTime();
-                            item.scheduledend = item.scheduledend.ToLocalTime();
-                            if (!string.IsNullOrWhiteSpace(item.callto_contact_name))
-                            {
-                                item.customer = item.callto_contact_name;
-                            }
-                            if (!string.IsNullOrWhiteSpace(item.callto_account_name))
-                            {
-                                item.customer = item.callto_account_name;
-                            }
-                            if (!string.IsNullOrWhiteSpace(item.callto_lead_name))
-                            {
-                                item.customer = item.callto_lead_name;
-                            }
-                            list.Add(item);
-                        }
-                    }
-                    viewModel.Data.Clear();
-                    foreach (var item in list)
-                    {
-                        viewModel.Data.Add(item);
-                    }
-                    //= new Xamarin.Forms.Extended.InfiniteScrollCollection<HoatDongListModel>(list);
-                }
-            }
-            
-            LoadingHelper.Hide();
-        }
-
-        private async void PhoneCall_Tapped(object sender,EventArgs e)
-        {
-            LoadingHelper.Show();
-            VisualStateManager.GoToState(radBorderTask, "InActive");
-            VisualStateManager.GoToState(radBorderMeeting, "InActive");
-            VisualStateManager.GoToState(radBorderPhoneCall, "Active");
-            VisualStateManager.GoToState(lblTask, "InActive");
-            VisualStateManager.GoToState(lblMeeting, "InActive");
-            VisualStateManager.GoToState(lblPhoneCall, "Active");
-
-            if (viewModel.entity != "phonecall")
-            {
-                viewModel.EntityName = "phonecalls";
-                viewModel.entity = "phonecall";
-                await viewModel.LoadOnRefreshCommandAsync();
-            }
-
-            LoadingHelper.Hide();
-        }
-
         private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
         {
             OnAppearing();
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    LoadingHelper.Show();
+                    if (viewModel.entity != "task")
+                    {
+                        viewModel.EntityName = "tasks";
+                        viewModel.entity = "task";
+                        await viewModel.LoadOnRefreshCommandAsync();
+                    }
+                    LoadingHelper.Hide();
+                }
+                else if ((int)e.Item == 1)
+                {
+                    LoadingHelper.Show();
+                    if (viewModel.entity != "appointment")
+                    {
+                        viewModel.EntityName = "appointments";
+                        viewModel.entity = "appointment";
+                        await viewModel.LoadOnRefreshCommandAsync();
+                    }
+
+                    LoadingHelper.Hide();
+                }
+                else if ((int)e.Item == 2)
+                {
+                    LoadingHelper.Show();
+                    if (viewModel.entity != "phonecall")
+                    {
+                        viewModel.EntityName = "phonecalls";
+                        viewModel.entity = "phonecall";
+                        await viewModel.LoadOnRefreshCommandAsync();
+                        foreach (var item in viewModel.Data)
+                        {
+                            item.customer = item.regarding_name;
+                        }
+                    }
+                    LoadingHelper.Hide();
+                }
+            }
         }
     }
 }

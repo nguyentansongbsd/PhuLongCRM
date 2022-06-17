@@ -14,6 +14,28 @@ namespace PhuLongCRM.Models
         public string bsd_companycode { get; set; }
         public string primarycontact_name { get; set; }
         public string telephone1 { get; set; }
+        public string telephone1_format
+        {
+            get
+            {
+                if (telephone1 != null && telephone1.Contains("-"))
+                {
+                    return telephone1.Split('-')[1].StartsWith("84") ? telephone1.Replace("84", "+84-") : telephone1;
+                }
+                else if (telephone1 != null && telephone1.Contains("+84"))
+                {
+                    return telephone1.Replace("+84", "+84-");
+                }
+                else if (telephone1 != null && telephone1.StartsWith("84"))
+                {
+                    return telephone1.Replace("84", "+84-");
+                }
+                else
+                {
+                    return telephone1;
+                }
+            }
+        }
         public string bsd_postalcode { get; set; }
         public string bsd_housenumberstreet { get; set; }
         public string district_name { get; set; }

@@ -412,7 +412,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cá nhân.
+        ///   Looks up a localized string similar to Cá Nhân.
         /// </summary>
         internal static string ca_nhan {
             get {
@@ -2959,7 +2959,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Doanh nghiệp.
+        ///   Looks up a localized string similar to Doanh Nghiệp.
         /// </summary>
         internal static string doanh_nghiep {
             get {
@@ -4350,6 +4350,15 @@ namespace PhuLongCRM.Resources {
         internal static string khach_hang_tiem_nang_tu_danh_ba {
             get {
                 return ResourceManager.GetString("khach_hang_tiem_nang_tu_danh_ba", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khách Hàng.
+        /// </summary>
+        internal static string khach_hang_title {
+            get {
+                return ResourceManager.GetString("khach_hang_title", resourceCulture);
             }
         }
         
@@ -8107,6 +8116,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thông Tin Khách Hàng.
+        /// </summary>
+        internal static string thong_tin_khach_hang_title {
+            get {
+                return ResourceManager.GetString("thong_tin_khach_hang_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thông Tin Phí Quản lý.
         /// </summary>
         internal static string thong_tin_phi_quan_ly {
@@ -8224,7 +8242,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tiềm năng.
+        ///   Looks up a localized string similar to Tiềm Năng.
         /// </summary>
         internal static string tiem_nang {
             get {
