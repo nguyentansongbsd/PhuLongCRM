@@ -34,7 +34,6 @@ namespace PhuLongCRM.Views
             NeedToRefreshMandatory = false;
             NeedToRefreshActivity = false;
             LoadingHelper.Show();
-            Tab_Tapped(1);
             Init();
         }
 
@@ -356,60 +355,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-        private void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-        private async void GiaoDich_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-            await LoadDataGiaoDich(AccountId.ToString());
-        }
-        private async void NguoiUyQuyen_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(3);
-            await LoadDataNguoiUyQuyen(AccountId.ToString());
-            SetHeightListView();
-        }
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Selected");
-                VisualStateManager.GoToState(lbThongTin, "Selected");
-                TabThongTin.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Normal");
-                VisualStateManager.GoToState(lbThongTin, "Normal");
-                TabThongTin.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderGiaoDich, "Selected");
-                VisualStateManager.GoToState(lbGiaoDich, "Selected");
-                TabGiaoDich.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderGiaoDich, "Normal");
-                VisualStateManager.GoToState(lbGiaoDich, "Normal");
-                TabGiaoDich.IsVisible = false;
-            }
-            if (tab == 3)
-            {
-                VisualStateManager.GoToState(radBorderNguoiUyQuyen, "Selected");
-                VisualStateManager.GoToState(lbNguoiUyQuyen, "Selected");
-                TabNguoiUyQuyen.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderNguoiUyQuyen, "Normal");
-                VisualStateManager.GoToState(lbNguoiUyQuyen, "Normal");
-                TabNguoiUyQuyen.IsVisible = false;
-            }
-        }
         private void NguoiDaiDien_Tapped(object sender, EventArgs e)
         {
             if (viewModel.PrimaryContact.contactid != null)
@@ -549,6 +494,34 @@ namespace PhuLongCRM.Views
         private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
         {
             OnAppearing();
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabThongTin.IsVisible = true;
+                    TabGiaoDich.IsVisible = false;
+                    TabNguoiUyQuyen.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    await LoadDataGiaoDich(AccountId.ToString());
+                    TabThongTin.IsVisible = false;
+                    TabGiaoDich.IsVisible = true;
+                    TabNguoiUyQuyen.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    await LoadDataNguoiUyQuyen(AccountId.ToString());
+                    SetHeightListView();
+                    TabThongTin.IsVisible = false;
+                    TabGiaoDich.IsVisible = false;
+                    TabNguoiUyQuyen.IsVisible = true;
+                }
+            }
         }
     }
 }

@@ -31,14 +31,14 @@
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                <StackLayout BackgroundColor ="White" Padding="20" Margin="0,1">
                                     <!--<Grid Grid.Row="0" ColumnDefinitions="Auto,*">
                                         <Label Text="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" BackgroundColor="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Padding="3,0" Margin="0,2" FontSize="11" FontAttributes="Bold" TextColor="White" Grid.Column="0" VerticalTextAlignment="Center"/>
                                         <Label Text="{Binding fullname}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Column="1"/>
                                     </Grid>-->
                                     <Grid ColumnDefinitions="Auto,Auto,Auto,*" Grid.Row="0">
-                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Grid.Column="0">
-                                            <Label Text="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding leadqualitycode_color}" Grid.Column="0">
+                                            <Label Text="{Binding leadqualitycode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                         </telerikPrimitives:RadBorder>
                                         <BoxView Grid.Column="1" WidthRequest="1" HeightRequest="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Gray"/>
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" Grid.Column="2">
@@ -46,19 +46,10 @@
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="3" Text="{Binding fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
                                     </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                                        <Label Text="{Binding Source={x:Static lang:Language.ma_khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding bsd_customercode}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                        <Label Text="{Binding Source={x:Static lang:Language.tieu_de},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding subject}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                        <Label Text="{Binding Source={x:Static lang:Language.so_dien_thoai},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding mobilephone, Converter={StaticResource PhoneConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                    </Grid>
-                                </Grid>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.ma_khach_hang}" Text="{Binding bsd_customercode}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.tieu_de}" Text="{Binding subject}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.so_dien_thoai}" Text="{Binding mobilephone_format}"/>
+                                </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </controls:BsdListView.ItemTemplate>

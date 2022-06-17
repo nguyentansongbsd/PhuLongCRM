@@ -289,13 +289,13 @@
     <value>Đủ điều kiện</value>
   </data>
 	<data name="tiem_nang" xml:space="preserve">
-    <value>Tiềm năng</value>
+    <value>Tiềm Năng</value>
   </data>
 	<data name="ca_nhan" xml:space="preserve">
-    <value>Cá nhân</value>
+    <value>Cá Nhân</value>
   </data>
 	<data name="doanh_nghiep" xml:space="preserve">
-    <value>Doanh nghiệp</value>
+    <value>Doanh Nghiệp</value>
   </data>
 	<data name="tim_kiem" xml:space="preserve">
     <value>Tìm kiếm</value>
@@ -3215,5 +3215,11 @@
 	</data>
 	<data name="tao_cuoc_hop_thanh_cong" xml:space="preserve">
 		<value>Tạo cuộc họp thành công.</value>
+	</data>
+	<data name="khach_hang_title" xml:space="preserve">
+		<value>Khách Hàng</value>
+	</data>
+	<data name="thong_tin_khach_hang_title" xml:space="preserve">
+		<value>Thông Tin Khách Hàng</value>
 	</data>
 </root>

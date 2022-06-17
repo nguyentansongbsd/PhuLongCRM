@@ -20,77 +20,24 @@ namespace PhuLongCRM.Models
         {
             get
             {
-                if (activitytypecode == "appointment")
-                {
-                    // return null;
-                    if (this.contact_bsd_fullname != null)
-                    {
-                        return this.contact_bsd_fullname;
-                    }
-                    else if (this.accounts_bsd_name != null)
-                    {
-                        return this.accounts_bsd_name;
-                    }
-                    else if (this.lead_fullname != null)
-                    {
-                        return this.lead_fullname;
-                    }
-                    else if (this.queue_name != null)
-                    {
-                        return this.queue_name;
-                    }
-                    else
-                    {
-                        return " ";
-                    }
-                }
+                // load theo khách hàng, k có sẽ lấy liên quna
 
-                if (activitytypecode == "phonecall")
-                {
-                    if (this.callto_contact_name != null)
-                    {
-                        return this.callto_contact_name;
-                    }
-                    else if (this.callto_account_name != null)
-                    {
-                        return this.callto_account_name;
-                    }
-                    else if (this.callto_lead_name != null)
-                    {
-                        return this.callto_lead_name;
-                    }
-                    else
-                    {
-                        return " ";
-                    }
-                }
+                if (this.callto_contact_name != null)
+                    return this.callto_contact_name;
+                else if (this.callto_account_name != null)
+                    return this.callto_account_name;
+                else if (this.callto_lead_name != null)
+                    return this.callto_lead_name;
+                else if (this.contact_bsd_fullname != null)
+                    return this.contact_bsd_fullname;
+                else if (this.accounts_bsd_name != null)
+                    return this.accounts_bsd_name;
+                else if (this.lead_fullname != null)
+                    return this.lead_fullname;
+                else if (this.queue_name != null)
+                    return this.queue_name;
                 else
-                {
-                    if (this.accounts_bsd_name != null)
-                    {
-                        return this.accounts_bsd_name;
-                    }
-                    else if (this.contact_bsd_fullname != null)
-                    {
-                        return this.contact_bsd_fullname;
-                    }
-                    else if (this.lead_fullname != null)
-                    {
-                        return this.lead_fullname;
-                    }
-                    else if (this.queue_name != null)
-                    {
-                        return this.queue_name;
-                    }
-                    else if (this.systemsetup_bsd_name != null)
-                    {
-                        return this.systemsetup_bsd_name;
-                    }
-                    else
-                    {
-                        return " ";
-                    }
-                }
+                    return " ";
             }
         }
         public string activitytypecode { get; set; }
