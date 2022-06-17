@@ -68,7 +68,7 @@
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_giay_phep_kinh_doanh}" Text="{Binding singleAccount.bsd_registrationcode}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" FontSize="15" Margin="0,10,0,0"/>
-                    <controls:DatePickerBoderControl Date="{Binding singleAccount.bsd_issuedon}" Placeholder="{x:Static lang:Language.chon_ngay_cap}"/>
+                    <controls:DatePickerBoderControl Date="{Binding singleAccount.bsd_issuedon}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.noi_cap}" FontSize="15" Margin="0,10,0,0"/>
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_noi_cap}" Text="{Binding singleAccount.bsd_placeofissue}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>

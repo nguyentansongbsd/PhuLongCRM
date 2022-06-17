@@ -19,7 +19,13 @@ namespace PhuLongCRM
         {
             InitializeComponent();
             this.BindingContext = this;
-            Date = DateTime.Now;
+            Date = null;// DateTime.Now; ;
+        }
+
+        async void Button_Clicked(System.Object sender, System.EventArgs e)
+        {
+
+            await DisplayAlert("", Date.Value.ToString(), "ok");
         }
     }
 }
