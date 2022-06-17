@@ -3216,4 +3216,7 @@
 	<data name="tao_cuoc_hop_thanh_cong" xml:space="preserve">
 		<value>Create meeting successed.</value>
 	</data>
+	<data name="vui_long_chon_thoi_gian" xml:space="preserve">
+		<value>Pleas select time.</value>
+	</data>
 </root>

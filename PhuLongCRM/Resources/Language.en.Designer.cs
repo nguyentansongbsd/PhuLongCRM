@@ -8860,6 +8860,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pleas select time..
+        /// </summary>
+        internal static string vui_long_chon_thoi_gian {
+            get {
+                return ResourceManager.GetString("vui_long_chon_thoi_gian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please choose start date..
         /// </summary>
         internal static string vui_long_chon_thoi_gian_bat_dau {

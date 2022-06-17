@@ -10,7 +10,8 @@
     <!--<Label Text="Trang chu" TextColor="Black" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center"/>-->
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center" Padding="10,0">
-            <controls:DatePickerBoderControl Date="{Binding Date}" Placeholder="ngayf"/>
+            <controls:DatePickerBoderControl Date="{Binding Date}" Placeholder="ngay" ShowTime="False"/>
+            <Button Text="test" Clicked="Button_Clicked"/>
         </StackLayout>
         
     </ContentPage.Content>

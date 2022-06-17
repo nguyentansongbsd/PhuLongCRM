@@ -3216,4 +3216,7 @@
 	<data name="tao_cuoc_hop_thanh_cong" xml:space="preserve">
 		<value>Tạo cuộc họp thành công.</value>
 	</data>
+	<data name="vui_long_chon_thoi_gian" xml:space="preserve">
+		<value>Vui lòng chọn thời gian.</value>
+	</data>
 </root>

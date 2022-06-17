@@ -61,7 +61,7 @@
                     </Grid>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_sinh}"/>
-                    <controls:DatePickerBoderControl Date="{Binding ContactModel.birthdate}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"/>
+                    <controls:DatePickerBoderControl Date="{Binding ContactModel.birthdate}" ShowTime="False" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.gioi_tinh}"/>
                     <controls:LookUp NameDisplay="Label" BottomModal="{Reference LookUpModal}" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>

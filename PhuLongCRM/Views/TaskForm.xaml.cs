@@ -83,7 +83,7 @@ namespace PhuLongCRM.Views
         {
             viewModel.Title = Language.tao_cong_viec;
             viewModel.TaskFormModel = new TaskFormModel();
-            dateTimeTGBatDau.DefaultDisplay = DateTime.Now;
+            //dateTimeTGBatDau.DefaultDisplay = DateTime.Now;
             dateTimeTGKetThuc.DefaultDisplay = DateTime.Now;
         }
         public async void InitUpdate()
