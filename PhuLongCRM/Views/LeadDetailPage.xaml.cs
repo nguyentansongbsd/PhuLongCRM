@@ -27,13 +27,12 @@ namespace PhuLongCRM.Views
         public LeadDetailPage(Guid id,bool isFromQRCode = false)
         {
             InitializeComponent();
-            this.Title = Language.thong_tin_khach_hang;
+            this.Title = Language.thong_tin_khach_hang_title;
             this.Id = id;
             this.BindingContext = viewModel = new LeadDetailPageViewModel();
             viewModel.IsFromQRCode = isFromQRCode;
             NeedToRefreshLeadDetail = false;
             NeedToRefreshActivity = false;
-            Tab_Tapped(1);
             Init();
         }
 
@@ -425,43 +424,6 @@ namespace PhuLongCRM.Views
         {
             OnAppearing();
         }
-        private void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-        private async void CustomerCare_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-            if (viewModel.list_customercare == null)
-                await viewModel.LoadCaseForLead();
-        }
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Selected");
-                VisualStateManager.GoToState(lbThongTin, "Selected");
-                TabThongTin.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Normal");
-                VisualStateManager.GoToState(lbThongTin, "Normal");
-                TabThongTin.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderCustomerCare, "Selected");
-                VisualStateManager.GoToState(lbCustomerCare, "Selected");
-                TabCustomerCare.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderCustomerCare, "Normal");
-                VisualStateManager.GoToState(lbCustomerCare, "Normal");
-                TabCustomerCare.IsVisible = false;
-            }           
-        }
 
         private async void GenerateQRCode(object sender, EventArgs e)
         {
@@ -489,5 +451,23 @@ namespace PhuLongCRM.Views
             }
         }
 
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabThongTin.IsVisible = true;
+                    TabCustomerCare.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    TabThongTin.IsVisible = false;
+                    TabCustomerCare.IsVisible = true;
+                    if (viewModel.list_customercare == null)
+                        await viewModel.LoadCaseForLead();
+                }
+            }
+        }
     }
 }

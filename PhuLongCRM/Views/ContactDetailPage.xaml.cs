@@ -32,7 +32,6 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new ContactDetailPageViewModel();
             NeedToRefresh = false;
             NeedToRefreshActivity = false;
-            Tab_Tapped(1);
             Id = contactId;
             Init();
         }
@@ -408,59 +407,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-        private async void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-        private async void GiaoDich_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-            await LoadDataGiaoDich(Id.ToString());
-        }
-        private void PhongThuy_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(3);
-            LoadDataPhongThuy();
-        }
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Selected");
-                VisualStateManager.GoToState(lbThongTin, "Selected");
-                TabThongTin.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Normal");
-                VisualStateManager.GoToState(lbThongTin, "Normal");
-                TabThongTin.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderGiaoDich, "Selected");
-                VisualStateManager.GoToState(lbGiaoDich, "Selected");
-                TabGiaoDich.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderGiaoDich, "Normal");
-                VisualStateManager.GoToState(lbGiaoDich, "Normal");
-                TabGiaoDich.IsVisible = false;
-            }
-            if (tab == 3)
-            {
-                VisualStateManager.GoToState(radBorderPhongThuy, "Selected");
-                VisualStateManager.GoToState(lbPhongThuy, "Selected");
-                TabPhongThuy.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderPhongThuy, "Normal");
-                VisualStateManager.GoToState(lbPhongThuy, "Normal");
-                TabPhongThuy.IsVisible = false;
-            }
-        }
         private void ThongTinCongTy_Tapped(object sender, EventArgs e)
         {            
             if (!string.IsNullOrEmpty(viewModel.singleContact._parentcustomerid_value))
@@ -504,6 +450,33 @@ namespace PhuLongCRM.Views
         private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
         {
             OnAppearing();
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabThongTin.IsVisible = true;
+                    TabGiaoDich.IsVisible = false;
+                    TabPhongThuy.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    await LoadDataGiaoDich(Id.ToString());
+                    TabThongTin.IsVisible = false;
+                    TabGiaoDich.IsVisible = true;
+                    TabPhongThuy.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    LoadDataPhongThuy();
+                    TabThongTin.IsVisible = false;
+                    TabGiaoDich.IsVisible = false;
+                    TabPhongThuy.IsVisible = true;
+                }
+            }
         }
     }
 }
