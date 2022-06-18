@@ -9,7 +9,7 @@
     xmlns:controls="clr-namespace:PhuLongCRM.Controls" 
     xmlns:views="clr-namespace:PhuLongCRM.Views"
     ios:Page.UseSafeArea="true"
-    Title="{x:Static lang:Language.thong_tin_giu_cho_title}"
+    Title="{x:Static lang:Language.giu_cho_title}"
     x:Class="PhuLongCRM.Views.QueuesDetialPage"
     x:Name="this">
     <ContentPage.Resources>

@@ -45,8 +45,8 @@ namespace PhuLongCRM.Views
 
         private void Create()
         {
-            this.Title = Language.tao_moi_khach_hang_doanh_nghiep;
-            btnSave.Text = Language.tao_moi;
+            this.Title = Language.tao_moi_khach_hang;
+            btnSave.Text = Language.tao_moi_khach_hang_doanh_nghiep;
             btnSave.Clicked += CreateContact_Clicked;
             viewModel.BusinessType = viewModel.BusinessTypeOptionList.SingleOrDefault(x => x.Val == "100000000");
             viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById("1");//mac dinh la KH tiem nang
@@ -60,8 +60,8 @@ namespace PhuLongCRM.Views
         private async void Update()
         {
             viewModel.singleAccount = new AccountFormModel();
-            this.Title = Language.cap_nhat_khach_hang_doanh_nghiep;
-            btnSave.Text = Language.cap_nhat;
+            this.Title = Language.cap_nhat_khach_hang;
+            btnSave.Text = Language.cap_nhat_khach_hang_doanh_nghiep;
             btnSave.Clicked += UpdateContact_Clicked;
 
             await viewModel.LoadOneAccount(this.AccountId);

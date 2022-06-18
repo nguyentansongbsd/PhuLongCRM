@@ -362,10 +362,11 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadActiviy(Guid accountID, string entity, string entitys)
         {
-            string forphonecall = null;
+            string callto = null;
+            string requiredattendees = null;
             if (entity == "phonecall")
             {
-                forphonecall = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
+                callto = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
                                         <filter type='and'>
                                             <condition attribute='participationtypemask' operator='eq' value='2' />
                                         </filter>
@@ -380,6 +381,10 @@ namespace PhuLongCRM.ViewModels
                                         </link-entity>
                                     </link-entity>";
             }
+            if (entity == "appointment")
+            {
+                requiredattendees = "<attribute name='requiredattendees' />";
+            }
 
             string fetch = $@"<fetch version='1.0' count='3' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='true'>
                                 <entity name='{entity}'>
@@ -388,7 +393,8 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='activityid' />
                                     <attribute name='scheduledstart' />
                                     <attribute name='scheduledend' /> 
-                                    <attribute name='activitytypecode' /> 
+                                    <attribute name='activitytypecode' />
+                                    {requiredattendees}
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
                                         <filter type='or'>
@@ -397,7 +403,7 @@ namespace PhuLongCRM.ViewModels
                                         </filter>
                                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
-                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
+                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='party'/>
                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>
                                     </link-entity>
@@ -407,7 +413,7 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
                                         <attribute name='fullname' alias='lead_fullname'/>
                                     </link-entity>
-                                    {forphonecall}
+                                    {callto}
                                 </entity>
                             </fetch>";
 
@@ -415,9 +421,28 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Count == 0) return;
 
             var data = result.value;
-            foreach (var x in data)
+            if (entity == "appointment")
             {
-                list_thongtincase.Add(x);
+                foreach (var item in data)
+                {
+                    var a = item.requiredattendees;
+                    list_thongtincase.Add(item);
+                }
+            }
+            else if (entity == "phonecall")
+            {
+                foreach (var item in data)
+                {
+                    item.customer = item.regarding_name;
+                    list_thongtincase.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var x in data)
+                {
+                    list_thongtincase.Add(x);
+                }
             }
         }
 

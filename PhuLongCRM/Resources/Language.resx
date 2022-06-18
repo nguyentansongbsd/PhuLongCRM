@@ -1252,7 +1252,7 @@
     <value>Họ tên</value>
   </data>
 	<data name="nhap_ho_ten_khach_hang" xml:space="preserve">
-    <value>Nhập họ tên khách hàng.</value>
+    <value>Nhập họ tên khách hàng</value>
   </data>
 	<data name="nhom_khach_hang_contact" xml:space="preserve">
     <value>Nhóm khách hàng</value>
@@ -3224,5 +3224,59 @@
 	</data>
 	<data name="thong_tin_khach_hang_title" xml:space="preserve">
 		<value>Thông Tin Khách Hàng</value>
+	</data>
+	<data name="tao_moi_khach_hang" xml:space="preserve">
+		<value>Tạo Mới Khách Hàng</value>
+	</data>
+	<data name="cap_nhat_khach_hang" xml:space="preserve">
+		<value>Cập Nhật Khách Hàng</value>
+	</data>
+	<data name="thon_tin_can_ho_title" xml:space="preserve">
+		<value>Thông Tin Căn Hộ</value>
+	</data>
+	<data name="thong_tin_gia_ban_title" xml:space="preserve">
+		<value>Thông Tin Giá Bán</value>
+	</data>
+	<data name="ban_giao_title" xml:space="preserve">
+		<value>Bàn Giao</value>
+	</data>
+	<data name="danh_sach_theo_doi_title" xml:space="preserve">
+		<value>Danh Sách Theo Dõi</value>
+	</data>
+	<data name="phan_hoi_title" xml:space="preserve">
+		<value>Phản Hồi</value>
+	</data>
+	<data name="ban_co_muon_huy_phan_hoi_nay_khong" xml:space="preserve">
+		<value>Bạn có muốn hủy phản hồi này không ?</value>
+	</data>
+	<data name="cap_nhat_cong_viec_title" xml:space="preserve">
+		<value>Cập Nhật Công Việc</value>
+	</data>
+	<data name="tao_moi_cong_viec_title" xml:space="preserve">
+		<value>Tạo Mới Công Việc</value>
+	</data>
+	<data name="cap_nhat_cuoc_goi_title" xml:space="preserve">
+		<value>Cập Nhật Cuộc Gọi</value>
+	</data>
+	<data name="tao_moi_cuoc_goi_title" xml:space="preserve">
+		<value>Tạo Mới Cuộc Gọi</value>
+	</data>
+	<data name="cap_nhat_cuoc_hop_title" xml:space="preserve">
+		<value>Cập Nhật Cuộc Họp</value>
+	</data>
+	<data name="tao_moi_cuoc_hop_title" xml:space="preserve">
+		<value>Tạo Mới Cuộc Họp</value>
+	</data>
+	<data name="lich_lam_viec_theo_thang_title" xml:space="preserve">
+		<value>Lịch Làm Việc Theo Tháng</value>
+	</data>
+	<data name="lich_lam_viec_theo_tuan_title" xml:space="preserve">
+		<value>Lịch Làm Việc Theo Tuần</value>
+	</data>
+	<data name="lich_lam_viec_theo_ngay_title" xml:space="preserve">
+		<value>Lịch Làm Việc Theo Ngày</value>
+	</data>
+	<data name="trang_chu_title" xml:space="preserve">
+		<value>Trang Chủ</value>
 	</data>
 </root>

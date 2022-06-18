@@ -303,7 +303,7 @@
                             </telerikPrimitives:RadBorder>
                         </StackLayout>
                         <StackLayout Grid.Row="1">
-                            <Label Text="{x:Static lang:Language.danh_sach_giu_cho}" TextColor="#333333" FontSize="15"  BackgroundColor="#F2F2F2" Padding="10" FontAttributes="Bold" />
+                            <Label Text="{x:Static lang:Language.giu_cho_title}" TextColor="#333333" FontSize="15"  BackgroundColor="#F2F2F2" Padding="10" FontAttributes="Bold" />
                             <ScrollView Padding="0,0,0,40">
                                 <StackLayout>
                                     <StackLayout BindableLayout.ItemsSource="{Binding QueueList}" Spacing="1" BackgroundColor="#eeeeee">

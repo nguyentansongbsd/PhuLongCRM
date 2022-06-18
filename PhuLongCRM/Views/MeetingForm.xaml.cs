@@ -134,8 +134,7 @@ namespace PhuLongCRM.Views
 
         private void Create()
         {
-            this.Title = Language.tao_moi_cuoc_hop;
-            BtnSave.Text = Language.tao_cuoc_hop;
+            this.Title = BtnSave.Text = Language.tao_moi_cuoc_hop_title;
             IsInit = true;
             BtnSave.Clicked += Create_Clicked;
         }
@@ -147,8 +146,7 @@ namespace PhuLongCRM.Views
 
         private async void Update()
         {
-            this.Title = Language.cap_nhat_cuoc_hop;
-            BtnSave.Text = Language.cap_nhat;
+            this.Title = BtnSave.Text = Language.cap_nhat_cuoc_hop_title;
             BtnSave.Clicked += Update_Clicked;
             await viewModel.loadDataMeet(this.MeetId);
 

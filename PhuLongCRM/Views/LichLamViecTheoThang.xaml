@@ -6,7 +6,7 @@
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" xmlns:views="clr-namespace:PhuLongCRM.Views"
              x:Class="PhuLongCRM.Views.LichLamViecTheoThang"
-             Title="{x:Static lang:Language.lich_lam_viec_theo_thang}">
+             Title="{x:Static lang:Language.lich_lam_viec_theo_thang_title}">
     <ContentPage.Resources>
         <Style TargetType="telerikPrimitives:RadBorder" x:Key="radBorder">
             <Setter Property="CornerRadius" Value="0"/>

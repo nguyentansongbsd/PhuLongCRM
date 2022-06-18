@@ -25,50 +25,6 @@
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
             </Style>
-            <Style x:Key="radBorderTap" TargetType="telerikPrimitives:RadBorder">
-                <Setter Property="BackgroundColor" Value="White"/>
-                <Setter Property="Padding" Value="10"/>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup>
-                            <VisualState x:Name="Active">
-                                <VisualState.Setters>
-                                    <Setter Property="BorderColor" Value="{StaticResource NavigationPrimary}"/>
-                                    <Setter Property="BorderThickness" Value="0,0,0,2"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="InActive">
-                                <VisualState.Setters>
-                                    <Setter Property="BorderColor" Value="#B3B3B3"/>
-                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-            <Style x:Key="labelTap" TargetType="Label">
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup>
-                            <VisualState x:Name="Active">
-                                <VisualState.Setters>
-                                    <Setter Property="TextColor" Value="{StaticResource NavigationPrimary}"/>
-                                    <Setter Property="FontAttributes" Value="Bold"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="InActive">
-                                <VisualState.Setters>
-                                    <Setter Property="TextColor" Value="#B3B3B3"/>
-                                    <Setter Property="FontAttributes" Value="None"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
             <converter:DateFormatConverter x:Key="DateFormatConverter" />
             <converter:DecimalFormatConverter x:Key="DecimalFormatConverter" />
             <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />
@@ -189,28 +145,14 @@
                             </telerikPrimitives:RadBorder>
                         </Grid>
                     </Grid>
-
-                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="0">
-                        <telerikPrimitives:RadBorder x:Name="radborderThongTin" Grid.Column="0" Style="{StaticResource radBorderTap}">
-                            <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ThongTin_Tapped"/>
-                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lblThongTin" Text="{x:Static lang:Language.thong_tin}"  Style="{StaticResource labelTap}"/>
-                        </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="radborderGiaoDich" Grid.Column="1" Style="{StaticResource radBorderTap}">
-                            <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiaoDich_Tapped"/>
-                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lblGiaoDich" Text="{x:Static lang:Language.giao_dich}"  Style="{StaticResource labelTap}"/>
-                        </telerikPrimitives:RadBorder>
-                    </Grid>
-
+                    <controls:TabControl ListTab="thong_tin_title,giao_dich_title" IndexTab="TabControl_IndexTab"/>
+                    
                     <Grid x:Name="gridContent" Margin="0,5,0,0" >
                         <StackLayout x:Name="stackThongTinCanHo" IsVisible="true">
                             <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.thon_tin_can_ho}" TextColor="#333333" FontSize="15" FontAttributes="Bold" Padding="10"/>
+                                        <Label Text="{x:Static lang:Language.thon_tin_can_ho_title}" TextColor="#333333" FontSize="15" FontAttributes="Bold" Padding="10"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -261,7 +203,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.thong_tin_gia_ban}" TextColor="#333333" FontSize="15" FontAttributes="Bold" Padding="10"/>
+                                        <Label Text="{x:Static lang:Language.thong_tin_gia_ban_title}" TextColor="#333333" FontSize="15" FontAttributes="Bold" Padding="10"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -289,7 +231,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.ban_giao}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
+                                        <Label Text="{x:Static lang:Language.ban_giao_title}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -327,7 +269,7 @@
                             <telerikPrimitives:RadExpander x:Name="layout_danhsachdatcho" IsExpanded="False" AutomationId="masterCardExpander" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.danh_sach_giu_cho}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
+                                        <Label Text="{x:Static lang:Language.giu_cho_title}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -350,34 +292,9 @@
                                                             </telerikPrimitives:RadBorder>
                                                             <Label Grid.Column="1" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                         </Grid>
-                                                        <Label Grid.Row="1" FontSize="15" TextColor="#333333">
-                                                            <Label.FormattedText>
-                                                                <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}:'}"/>
-                                                                    <Span Text=" "/>
-                                                                    <Span Text="{Binding customername}"/>
-                                                                </FormattedString>
-                                                            </Label.FormattedText>
-                                                        </Label>
-                                                        <Label Grid.Row="2" FontSize="15" TextColor="#333333">
-                                                            <Label.FormattedText>
-                                                                <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}:'}"/>
-                                                                    <Span Text=" "/>
-                                                                    <Span Text="{Binding project_name}"/>
-                                                                </FormattedString>
-                                                            </Label.FormattedText>
-                                                        </Label>
-                                                        <Label Grid.Row="3" FontSize="15" TextColor="#333333">
-                                                            <Label.FormattedText>
-                                                                <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Static lang:Language.thoi_gian_het_han},StringFormat='{0}:'}"/>
-                                                                    <Span Text=" "/>
-                                                                    <Span Text="{Binding bsd_queuingexpired,StringFormat='{0:dd/MM/yyyy} - '}"/>
-                                                                    <Span Text="{Binding bsd_queuingexpired,StringFormat='{0:HH:mm}'}"/>
-                                                                </FormattedString>
-                                                            </Label.FormattedText>
-                                                        </Label>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customername}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding project_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_het_han}" Text="{Binding bsd_queuingexpired, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
                                                     </Grid>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
@@ -390,7 +307,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.danh_sach_bang_tinh_gia}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
+                                        <Label Text="{x:Static lang:Language.bang_tinh_gia_title}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -413,22 +330,10 @@
                                                             </telerikPrimitives:RadBorder>
                                                             <Label Grid.Column="1" Text="{Binding name}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" VerticalOptions="Center"/>
                                                         </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding purchaser}" FontSize="15" TextColor="#333333"/>
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding bsd_project_name}" FontSize="15" TextColor="#333333"/>
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding bsd_unitno_name}" FontSize="15" TextColor="#333333"/>
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding totalamount_format}" FontSize="15" TextColor="#333333"/>
-                                                        </Grid>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding purchaser}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding bsd_project_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.san_pham}" Text="{Binding bsd_unitno_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.tong_tien}" Text="{Binding totalamount_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold"/>
                                                     </StackLayout>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
@@ -441,7 +346,7 @@
                             <telerikPrimitives:RadExpander x:Name="layout_danhsachdatcoc" IsExpanded="False" AutomationId="masterCardExpander" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.dat_coc}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
+                                        <Label Text="{x:Static lang:Language.dat_coc_title}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -464,22 +369,10 @@
                                                             </telerikPrimitives:RadBorder>
                                                             <Label Grid.Column="1" Text="{Binding name}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" VerticalOptions="Center"/>
                                                         </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding purchaser}" FontSize="15" TextColor="#333333"/>
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding bsd_project_name}" FontSize="15" TextColor="#333333"/>
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding bsd_unitno_name}" FontSize="15" TextColor="#333333"/>
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*">
-                                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                                            <Label Grid.Column="1" Text="{Binding totalamount_format}" FontSize="15" TextColor="#333333"/>
-                                                        </Grid>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding purchaser}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding bsd_project_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.san_pham}" Text="{Binding bsd_unitno_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.tong_tien}" Text="{Binding totalamount_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold"/>
                                                     </StackLayout>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
@@ -492,7 +385,7 @@
                             <telerikPrimitives:RadExpander x:Name="layout_danhsachhopdong" IsExpanded="False" AutomationId="masterCardExpander" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.hop_dong}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
+                                        <Label Text="{x:Static lang:Language.hop_dong_title}" FontSize="15" TextColor="#333333" FontAttributes="Bold" Padding="10"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -515,22 +408,10 @@
                                                             </telerikPrimitives:RadBorder>
                                                             <Label Grid.Column="1" Text="{Binding unit_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                         </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                                                            <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                            <Label Text="{Binding customer_name}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                                            <Label Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                            <Label Text="{Binding project_name}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                                            <Label Text="{Binding Source={x:Static lang:Language.ma_hop_dong},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                            <Label Text="{Binding bsd_contractnumber}" TextColor="#444444" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
-                                                        </Grid>
-                                                        <Grid ColumnDefinitions="Auto,*" Grid.Row="4">
-                                                            <Label Text="{Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                            <Label Text="{Binding totalamount_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold" FontSize="15" Grid.Column="1" LineBreakMode="TailTruncation" />
-                                                        </Grid>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding project_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.ma_hop_dong}" Text="{Binding bsd_contractnumber}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.tong_tien}" Text="{Binding totalamount_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold"/>
                                                     </Grid>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>

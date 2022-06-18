@@ -37,11 +37,6 @@ namespace PhuLongCRM.Views
             
             if (viewModel.UnitInfo != null)
             {
-                VisualStateManager.GoToState(radborderThongTin, "Active");
-                VisualStateManager.GoToState(radborderGiaoDich, "InActive");
-                VisualStateManager.GoToState(lblThongTin, "Active");
-                VisualStateManager.GoToState(lblGiaoDich, "InActive");
-
                 viewModel.StatusCode = StatusCodeUnit.GetStatusCodeById(viewModel.UnitInfo.statuscode.ToString());
                 if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_direction)) 
                 {
@@ -138,39 +133,6 @@ namespace PhuLongCRM.Views
                 Grid.SetColumn(btnBangTinhGia, 0);
                 Grid.SetColumn(btnGiuCho, 0);
             }
-        }
-
-        private void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radborderThongTin, "Active");
-            VisualStateManager.GoToState(radborderGiaoDich, "InActive");
-            VisualStateManager.GoToState(lblThongTin, "Active");
-            VisualStateManager.GoToState(lblGiaoDich, "InActive");
-            stackThongTinCanHo.IsVisible = true;
-            stackGiaoDich.IsVisible = false;
-        }
-
-        private async void GiaoDich_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            VisualStateManager.GoToState(radborderThongTin, "InActive");
-            VisualStateManager.GoToState(radborderGiaoDich, "Active");
-            VisualStateManager.GoToState(lblThongTin, "InActive");
-            VisualStateManager.GoToState(lblGiaoDich, "Active");
-            stackThongTinCanHo.IsVisible = false;
-            stackGiaoDich.IsVisible = true;
-
-            if (viewModel.IsLoaded == false)
-            {
-                viewModel.BangTinhGiaList = new ObservableCollection<ReservationListModel>();
-                await Task.WhenAll(
-                    viewModel.LoadQueues(),
-                    viewModel.LoadDanhSachDatCoc(),
-                    viewModel.LoadDanhSachBangTinhGia(),
-                    viewModel.LoadOptoinEntry()
-                );
-            }
-            LoadingHelper.Hide();
         }
 
         private async void ShowMoreDanhSachDatCho_Clicked(object sender, EventArgs e)
@@ -341,6 +303,36 @@ namespace PhuLongCRM.Views
         private void CloseContentEvent_Tapped(object sender, EventArgs e)
         {
             ContentEvent.IsVisible = false;
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    stackThongTinCanHo.IsVisible = true;
+                    stackGiaoDich.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    LoadingHelper.Show();
+                    stackThongTinCanHo.IsVisible = false;
+                    stackGiaoDich.IsVisible = true;
+
+                    if (viewModel.IsLoaded == false)
+                    {
+                        viewModel.BangTinhGiaList = new ObservableCollection<ReservationListModel>();
+                        await Task.WhenAll(
+                            viewModel.LoadQueues(),
+                            viewModel.LoadDanhSachDatCoc(),
+                            viewModel.LoadDanhSachBangTinhGia(),
+                            viewModel.LoadOptoinEntry()
+                        );
+                    }
+                    LoadingHelper.Hide();
+                }
+            }
         }
     }
 }

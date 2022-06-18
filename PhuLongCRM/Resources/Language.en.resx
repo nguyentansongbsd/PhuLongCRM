@@ -1252,7 +1252,7 @@
     <value>User name</value>
   </data>
 	<data name="nhap_ho_ten_khach_hang" xml:space="preserve">
-    <value>Please enter user name.</value>
+    <value>Please enter user name</value>
   </data>
 	<data name="nhom_khach_hang_contact" xml:space="preserve">
     <value>Type</value>
@@ -3224,5 +3224,59 @@
 	</data>
 	<data name="thong_tin_khach_hang_title" xml:space="preserve">
 		<value>Customer Information</value>
+	</data>
+	<data name="tao_moi_khach_hang" xml:space="preserve">
+		<value>Create Customer</value>
+	</data>
+	<data name="cap_nhat_khach_hang" xml:space="preserve">
+		<value>Update Customer</value>
+	</data>
+	<data name="thon_tin_can_ho_title" xml:space="preserve">
+		<value>Unit information</value>
+	</data>
+	<data name="thong_tin_gia_ban_title" xml:space="preserve">
+		<value>Price Information</value>
+	</data>
+	<data name="ban_giao_title" xml:space="preserve">
+		<value>Handover</value>
+	</data>
+	<data name="danh_sach_theo_doi_title" xml:space="preserve">
+		<value>Follow Up List</value>
+	</data>
+	<data name="phan_hoi_title" xml:space="preserve">
+		<value>Cases</value>
+	</data>
+	<data name="ban_co_muon_huy_phan_hoi_nay_khong" xml:space="preserve">
+		<value>Do you want to cancel this case ?</value>
+	</data>
+	<data name="cap_nhat_cong_viec_title" xml:space="preserve">
+		<value>Update Task</value>
+	</data>
+	<data name="tao_moi_cong_viec_title" xml:space="preserve">
+		<value>Create Task</value>
+	</data>
+	<data name="cap_nhat_cuoc_goi_title" xml:space="preserve">
+		<value>Update Phone Call</value>
+	</data>
+	<data name="tao_moi_cuoc_goi_title" xml:space="preserve">
+		<value>Create Phone Call</value>
+	</data>
+	<data name="cap_nhat_cuoc_hop_title" xml:space="preserve">
+		<value>Update Meeting</value>
+	</data>
+	<data name="tao_moi_cuoc_hop_title" xml:space="preserve">
+		<value>Create Meeting</value>
+	</data>
+	<data name="lich_lam_viec_theo_thang_title" xml:space="preserve">
+		<value>Working Schedule By Month</value>
+	</data>
+	<data name="lich_lam_viec_theo_tuan_title" xml:space="preserve">
+		<value>Working Schedule By Week</value>
+	</data>
+	<data name="lich_lam_viec_theo_ngay_title" xml:space="preserve">
+		<value>Working Schedule By Day</value>
+	</data>
+	<data name="trang_chu_title" xml:space="preserve">
+		<value>Home</value>
 	</data>
 </root>

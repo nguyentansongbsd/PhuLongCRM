@@ -142,5 +142,8 @@ namespace PhuLongCRM.Models
         public string _customer;
         public string customer { get => _customer; set { _customer = value; OnPropertyChanged(nameof(customer)); } }
         public bool is_appointment { get => activitytypecode == "appointment" ? true : false; }
+
+        // sử dụng cho meet
+        public List<object> requiredattendees { get; set; } // filed khách hàng bắt buộc
     }
 }

@@ -361,7 +361,7 @@
                                                             <Label Grid.Column="1" Text="{Binding subject}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                                         </Grid>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.loai_actitivty}" Text="{Binding activitytypecode_format}"/>
-                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding regarding_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer}"/>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_bat_dau}" Text="{Binding scheduledstart_format, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_ket_thuc}" Text="{Binding scheduledend_format, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
                                                     </StackLayout>
