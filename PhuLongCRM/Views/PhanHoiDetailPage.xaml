@@ -48,7 +48,7 @@
                         </StackLayout>
                     </telerikPrimitives:RadBorder>
 
-                    <controls:TabControl ListTab="thong_tin_title,phan_hoi_lien_quan" IndexTab="TabControl_IndexTab" Margin="0,5,0,0"/>
+                    <controls:TabControl ListTab="thong_tin_title,phan_hoi_lien_quan_title" IndexTab="TabControl_IndexTab" Margin="0,5,0,0"/>
                     <Grid>
                         <!--tab thông tin-->
                         <StackLayout x:Name="TabThongTin" IsVisible="true" Margin="0,5,0,0" Spacing="1" BackgroundColor="#F1F1F1">

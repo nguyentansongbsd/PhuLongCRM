@@ -1852,7 +1852,7 @@
     <value>Product</value>
   </data>
 	<data name="phan_hoi_lien_quan" xml:space="preserve">
-    <value>Parent Case</value>
+    <value>Parent case</value>
   </data>
 	<data name="phan_hoi_chinh" xml:space="preserve">
     <value>Parent case</value>
@@ -3279,4 +3279,13 @@
 	<data name="trang_chu_title" xml:space="preserve">
 		<value>Home</value>
 	</data>
+	<data name="tao_bang_tinh_gia_title" xml:space="preserve">
+		<value>Create Quotation</value>
+	</data>
+	<data name="tao_phan_hoi_title" xml:space="preserve">
+		<value>Create Case</value>
+	</data>
+	<data name="phan_hoi_lien_quan_title" xml:space="preserve">
+    <value>Parent Case</value>
+  </data>
 </root>

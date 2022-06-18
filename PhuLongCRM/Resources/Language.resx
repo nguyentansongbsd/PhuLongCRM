@@ -1417,7 +1417,7 @@
     <value>Đồng Sở Hữu</value>
   </data>
 	<data name="ttdc_vbtt" xml:space="preserve">
-    <value>Deposit Agreement</value>
+    <value>Văn Bản Thỏa Thuận</value>
   </data>
 	<data name="ngay_ttdc_vbtt" xml:space="preserve">
     <value>Ngày TTĐC/VBTT</value>
@@ -1852,7 +1852,7 @@
     <value>Đối tượng</value>
   </data>
 	<data name="phan_hoi_lien_quan" xml:space="preserve">
-    <value>Phản Hồi Liên Quan</value>
+    <value>Phản hồi liên quan</value>
   </data>
 	<data name="phan_hoi_chinh" xml:space="preserve">
     <value>Phản hồi chính</value>
@@ -3278,5 +3278,14 @@
 	</data>
 	<data name="trang_chu_title" xml:space="preserve">
 		<value>Trang Chủ</value>
+	</data>
+	<data name="tao_bang_tinh_gia_title" xml:space="preserve">
+		<value>Tạo Bảng Tính Giá</value>
+	</data>
+	<data name="tao_phan_hoi_title" xml:space="preserve">
+		<value>Tạo Phản Hồi</value>
+	</data>
+	<data name="phan_hoi_lien_quan_title" xml:space="preserve">
+		<value>Phản Hồi Liên Quan</value>
 	</data>
 </root>

@@ -4,7 +4,7 @@
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
-             Title="{x:Static lang:Language.tao_bang_tinh_gia}"
+             Title="{x:Static lang:Language.tao_bang_tinh_gia_title}"
              x:Class="PhuLongCRM.Views.ReservationForm">
     <ContentPage.Resources>
         <ResourceDictionary>

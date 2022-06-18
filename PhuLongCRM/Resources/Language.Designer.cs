@@ -6613,11 +6613,20 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Phản Hồi Liên Quan.
+        ///   Looks up a localized string similar to Phản hồi liên quan.
         /// </summary>
         internal static string phan_hoi_lien_quan {
             get {
                 return ResourceManager.GetString("phan_hoi_lien_quan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phản Hồi Liên Quan.
+        /// </summary>
+        internal static string phan_hoi_lien_quan_title {
+            get {
+                return ResourceManager.GetString("phan_hoi_lien_quan_title", resourceCulture);
             }
         }
         
@@ -7387,6 +7396,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tạo Bảng Tính Giá.
+        /// </summary>
+        internal static string tao_bang_tinh_gia_title {
+            get {
+                return ResourceManager.GetString("tao_bang_tinh_gia_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tạo Công việc.
         /// </summary>
         internal static string tao_cong_viec {
@@ -7617,6 +7635,15 @@ namespace PhuLongCRM.Resources {
         internal static string tao_phan_hoi {
             get {
                 return ResourceManager.GetString("tao_phan_hoi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tạo Phản Hồi.
+        /// </summary>
+        internal static string tao_phan_hoi_title {
+            get {
+                return ResourceManager.GetString("tao_phan_hoi_title", resourceCulture);
             }
         }
         
@@ -8674,7 +8701,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deposit Agreement.
+        ///   Looks up a localized string similar to Văn Bản Thỏa Thuận.
         /// </summary>
         internal static string ttdc_vbtt {
             get {
