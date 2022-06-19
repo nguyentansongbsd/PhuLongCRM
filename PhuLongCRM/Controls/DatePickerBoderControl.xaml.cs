@@ -138,6 +138,7 @@ namespace PhuLongCRM.Controls
             if (this.Time.HasValue)
             {
                 this.Date = new DateTime(this.Date.Value.Year, this.Date.Value.Month, this.Date.Value.Day, this.Time.Value.Hours, this.Time.Value.Minutes, this.Time.Value.Seconds);
+                this.Date_Selected?.Invoke(sender, EventArgs.Empty);
             }
         }
 

@@ -54,16 +54,16 @@
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_dia_diem}" Text="{Binding MeetingModel.location}" FontSize="15"/>
                     
                     <controls:FormLabelRequired Text="{x:Static lang:Language.thoi_gian_bat_dau}" Margin="0,10,0,0"/>
-                    <controls:DatePickerControl x:Name="DatePickerStart" Date="{Binding MeetingModel.scheduledstart}" Placeholder="{x:Static lang:Language.chon_thoi_gian_bat_dau}" DisplayFormat="dd/MM/yyyy - HH:mm" SpinnerFormat="dd/MM/yyyy HH:mm" DateSelected="DatePickerStart_DateSelected"/>
-
+                    <controls:DatePickerBoderControl x:Name="DatePickerStart" Date="{Binding MeetingModel.scheduledstart}" ShowTime="True" Placeholder="{x:Static lang:Language.chon_thoi_gian_bat_dau}" Date_Selected="DatePickerStart_DateSelected"/>
+                    
                     <Grid ColumnDefinitions="Auto,Auto" Margin="0,10,0,0">
                         <controls:FormLabel Text="{x:Static lang:Language.su_kien_ca_ngay}" Grid.Column="0"/>
                         <CheckBox HorizontalOptions="End" Grid.Column="1" IsChecked="{Binding MeetingModel.isalldayevent}" CheckedChanged="AllDayEvent_changeChecked"/>
                     </Grid>
                     
                     <controls:FormLabelRequired Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Margin="0,10,0,0"/>
-                    <controls:DatePickerControl x:Name="DatePickerEnd" Date="{Binding MeetingModel.scheduledend}" Placeholder="{x:Static lang:Language.chon_thoi_gian_ket_thuc}" DisplayFormat="dd/MM/yyyy - HH:mm" SpinnerFormat="dd/MM/yyyy HH:mm" DateSelected="DatePickerEnd_DateSelected" />
-
+                    <controls:DatePickerBoderControl x:Name="DatePickerEnd" Date="{Binding MeetingModel.scheduledend}" ShowTime="True" Placeholder="{x:Static lang:Language.chon_thoi_gian_ket_thuc}" Date_Selected="DatePickerEnd_DateSelected"/>
+                    
                     <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" FontSize="15" Margin="0,10,0,0"/>
                     <controls:MainEditor Text="{Binding MeetingModel.description}" Placeholder="{x:Static lang:Language.nhap_mo_ta}" FontSize="15" HeightRequest="100"/>
                 </StackLayout>

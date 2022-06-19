@@ -223,19 +223,19 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value == null)
                 return;
             var data = result.value.FirstOrDefault();
+            if (data.scheduledend != null && data.scheduledstart != null)
+            {
+                PhoneCellModel.scheduledend = data.scheduledend.Value.ToLocalTime();
+                PhoneCellModel.scheduledstart = data.scheduledstart.Value.ToLocalTime();
+            }
             PhoneCellModel.activityid = data.activityid;
             PhoneCellModel.subject = data.subject;
             PhoneCellModel.statecode = data.statecode;
             PhoneCellModel.statuscode = data.statuscode;
             PhoneCellModel.phonenumber = data.phonenumber;
             PhoneCellModel.description = data.description;
-    //        PhoneCellModel = data;
-            if (data.scheduledend != null && data.scheduledstart != null)
-            {
-                PhoneCellModel.scheduledend = data.scheduledend.Value.ToLocalTime();
-                PhoneCellModel.scheduledstart = data.scheduledstart.Value.ToLocalTime();
-            }
-
+            //PhoneCellModel = data;
+            
             if (data.contact_id != Guid.Empty)
             {
                 Customer = new OptionSet

@@ -22,8 +22,7 @@
                     </telerikPrimitives:RadBorder>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.thoi_gian_bat_dau}"/>
-                    <controls:DatePickerBoderControl Date="{Binding TaskFormModel.scheduledstart}" ShowTime="True" Placeholder="{x:Static lang:Language.chon_thoi_gian_bat_dau}" Date_Selected="DateStart_Selected"/>
-                    <!--<controls:DatePickerControl x:Name="dateTimeTGBatDau" Date="{Binding TaskFormModel.scheduledstart}" Placeholder="{x:Static lang:Language.chon_thoi_gian_bat_dau}" DisplayFormat="dd/MM/yyyy - HH:mm" SpinnerFormat="dd/MM/yyyy HH:mm" DateSelected="DateStart_Selected"/>-->
+                    <controls:DatePickerBoderControl x:Name="dateStart" Date="{Binding TaskFormModel.scheduledstart}" ShowTime="True" Placeholder="{x:Static lang:Language.chon_thoi_gian_bat_dau}" Date_Selected="DateStart_Selected"/>
 
                     <StackLayout Orientation="Horizontal" Spacing="15">
                         <Label Text="{x:Static lang:Language.su_kien_ca_ngay}" TextColor="#444444" FontSize="15" VerticalTextAlignment="Center" >
@@ -35,7 +34,7 @@
                     </StackLayout>
                     
                     <controls:FormLabelRequired Text="{x:Static lang:Language.thoi_gian_ket_thuc}"/>
-                    <controls:DatePickerControl x:Name="dateTimeTGKetThuc" Date="{Binding TaskFormModel.scheduledend}" Placeholder="{x:Static lang:Language.chon_thoi_gian_ket_thuc}" DisplayFormat="dd/MM/yyyy - HH:mm" SpinnerFormat="dd/MM/yyyy HH:mm" DateSelected="DateEnd_Selected"/>
+                    <controls:DatePickerBoderControl x:Name="dateEnd" Date="{Binding TaskFormModel.scheduledend}" ShowTime="True" Placeholder="{x:Static lang:Language.chon_thoi_gian_ket_thuc}" Date_Selected="DateEnd_Selected"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" />
                     <controls:MainEditor Text="{Binding TaskFormModel.description}"  HeightRequest="100" Placeholder="{x:Static lang:Language.nhap_mo_ta}" FontSize="15"/>

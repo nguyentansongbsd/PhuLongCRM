@@ -83,8 +83,6 @@ namespace PhuLongCRM.Views
         {
             viewModel.Title = Language.tao_cong_viec;
             viewModel.TaskFormModel = new TaskFormModel();
-            //dateTimeTGBatDau.DefaultDisplay = DateTime.Now;
-            dateTimeTGKetThuc.DefaultDisplay = DateTime.Now;
         }
         public async void InitUpdate()
         {
@@ -145,13 +143,13 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (!viewModel.TaskFormModel.scheduledstart.HasValue)
+            if (!viewModel.TaskFormModel.scheduledstart.HasValue || dateStart.IsTimeNull)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
                 return;
             }
 
-            if (!viewModel.TaskFormModel.scheduledend.HasValue)
+            if (!viewModel.TaskFormModel.scheduledend.HasValue || dateEnd.IsTimeNull)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc);
                 return;
