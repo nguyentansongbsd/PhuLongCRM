@@ -81,7 +81,7 @@ namespace PhuLongCRM.Views
         }
         public void InitAdd()
         {
-            viewModel.Title = Language.tao_cong_viec;
+            btnSave.Text = this.Title = Language.tao_moi_cong_viec_title;
             viewModel.TaskFormModel = new TaskFormModel();
             //dateTimeTGBatDau.DefaultDisplay = DateTime.Now;
             dateTimeTGKetThuc.DefaultDisplay = DateTime.Now;
@@ -91,7 +91,7 @@ namespace PhuLongCRM.Views
             await viewModel.LoadTask();
             if (viewModel.TaskFormModel != null)
             {
-                btnSave.Text = viewModel.Title = Language.cap_nhat;
+                btnSave.Text = this.Title = Language.cap_nhat_cong_viec_title;
                 CheckTaskForm?.Invoke(true);
             }
             else

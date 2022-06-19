@@ -20,7 +20,8 @@ namespace PhuLongCRM.Views
         public LeadForm()
         {
             InitializeComponent();
-            this.Title = Language.tao_moi_kh_tiem_nang;
+            this.Title = Language.tao_moi_khach_hang;
+            btn_save_lead.Text = Language.tao_moi_kh_tiem_nang;
             Init();
             
             viewModel.Rating = RatingData.GetRatingById("2");//mac dinh la warm
@@ -29,8 +30,8 @@ namespace PhuLongCRM.Views
         public LeadForm(Guid Id)
         {
             InitializeComponent();
-            this.Title = Language.cap_nhat_kh_tiem_nang;
-            btn_save_lead.Text = Language.cap_nhat;
+            this.Title = Language.cap_nhat_khach_hang;
+            btn_save_lead.Text = Language.cap_nhat_kh_tiem_nang;
             Init();
             viewModel.LeadId = Id;
             InitUpdate();

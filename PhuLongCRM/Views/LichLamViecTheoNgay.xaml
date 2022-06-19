@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources" xmlns:views="clr-namespace:PhuLongCRM.Views"
              x:Class="PhuLongCRM.Views.LichLamViecTheoNgay"
-             Title="{x:Static lang:Language.lich_lam_viec_theo_ngay}">
+             Title="{x:Static lang:Language.lich_lam_viec_theo_ngay_title}">
     <ContentPage.Resources>
         <Style TargetType="telerikPrimitives:RadBorder" x:Key="radBorder">
             <Setter Property="CornerRadius" Value="0"/>

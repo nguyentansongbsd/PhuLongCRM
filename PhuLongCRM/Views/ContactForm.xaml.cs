@@ -47,8 +47,8 @@ namespace PhuLongCRM.Views
 
         private void Create()
         {
-            this.Title = Language.tao_moi_khach_hang_ca_nhan;
-            btn_save_contact.Text = Language.tao_moi;
+            this.Title = Language.tao_moi_khach_hang;
+            btn_save_contact.Text = Language.tao_moi_khach_hang_ca_nhan;
             btn_save_contact.Clicked += CreateContact_Clicked;
             viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById("1");
             lookUpTinhTrang.IsEnabled = false;
@@ -62,8 +62,8 @@ namespace PhuLongCRM.Views
         private async void Update()
         {
             await loadData(this.Id.ToString());
-            this.Title = Language.cap_nhat_khach_hang_ca_nhan;
-            btn_save_contact.Text = Language.cap_nhat;
+            this.Title = Language.cap_nhat_khach_hang;
+            btn_save_contact.Text = Language.cap_nhat_khach_hang_ca_nhan;
             btn_save_contact.Clicked += UpdateContact_Clicked;
             lookUpTinhTrang.IsEnabled = false;
 

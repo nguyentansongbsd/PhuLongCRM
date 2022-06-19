@@ -604,6 +604,7 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadActiviy(Guid leadID, string entity, string entitys)
         {
             string forphonecall = null;
+            string requiredattendees = null;
             if (entity == "phonecall")
             {
                 forphonecall = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
@@ -621,6 +622,10 @@ namespace PhuLongCRM.ViewModels
                                         </link-entity>
                                     </link-entity>";
             }
+            if (entity == "appointment")
+            {
+                requiredattendees = "<attribute name='requiredattendees' />";
+            }
 
             string fetch = $@"<fetch version='1.0' count='3' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='true'>
                                 <entity name='{entity}'>
@@ -629,7 +634,8 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='activityid' />
                                     <attribute name='scheduledstart' />
                                     <attribute name='scheduledend' /> 
-                                    <attribute name='activitytypecode' /> 
+                                    <attribute name='activitytypecode' />
+                                    {requiredattendees}
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
                                         <filter type='or'>
@@ -654,11 +660,29 @@ namespace PhuLongCRM.ViewModels
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>(entitys, fetch);
             if (result == null || result.value.Count == 0) return;
-
             var data = result.value;
-            foreach (var x in data)
+            if (entity == "appointment")
             {
-                list_customercare.Add(x);
+                foreach (var item in data)
+                {
+                    var a = item.requiredattendees;
+                    list_customercare.Add(item);
+                }
+            }
+            else if (entity == "phonecall")
+            {
+                foreach (var item in data)
+                {
+                    item.customer = item.regarding_name;
+                    list_customercare.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var x in data)
+                {
+                    list_customercare.Add(x);
+                }
             }
         }
 

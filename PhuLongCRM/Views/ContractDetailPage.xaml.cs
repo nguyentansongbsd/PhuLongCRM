@@ -24,7 +24,6 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             ContractId = id;
             BindingContext = viewModel = new ContractDetailPageViewModel();
-            Tab_Tapped(1);
             Init();
         }
 
@@ -77,79 +76,6 @@ namespace PhuLongCRM.Views
                 SutUpPromotions();
                 SutUpSpecialDiscount();
                 LoadingHelper.Hide();
-            }
-        }
-
-        private void TongHop_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(3);
-        }
-
-        private void ChiTiet_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-        }
-
-        private void ChinhSach_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-
-        private void Lich_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(4);
-            LoadInstallmentList(this.ContractId);
-        }
-
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
-            {
-                VisualStateManager.GoToState(radBorderChinhSach, "Selected");
-                VisualStateManager.GoToState(lbChinhSach, "Selected");
-                TabChinhSach.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderChinhSach, "Normal");
-                VisualStateManager.GoToState(lbChinhSach, "Normal");
-                TabChinhSach.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderChiTiet, "Selected");
-                VisualStateManager.GoToState(lbChiTiet, "Selected");
-                TabChiTiet.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderChiTiet, "Normal");
-                VisualStateManager.GoToState(lbChiTiet, "Normal");
-                TabChiTiet.IsVisible = false;
-            }
-            if (tab == 3)
-            {
-                VisualStateManager.GoToState(radBorderTongHop, "Selected");
-                VisualStateManager.GoToState(lbTongHop, "Selected");
-                TabTongHop.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderTongHop, "Normal");
-                VisualStateManager.GoToState(lbTongHop, "Normal");
-                TabTongHop.IsVisible = false;
-            }
-            if (tab == 4)
-            {
-                VisualStateManager.GoToState(radBorderLich, "Selected");
-                VisualStateManager.GoToState(lbLich, "Selected");
-                TabLich.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderLich, "Normal");
-                VisualStateManager.GoToState(lbLich, "Normal");
-                TabLich.IsVisible = false;
             }
         }
 
@@ -395,6 +321,42 @@ namespace PhuLongCRM.Views
             if (viewModel.HandoverConditionItem != null)
                 ContentHandoverCondition.IsVisible = true;
             LoadingHelper.Hide();
+        }
+
+        private void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabChinhSach.IsVisible = true;
+                    TabChiTiet.IsVisible = false;
+                    TabTongHop.IsVisible = false;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabChiTiet.IsVisible = true;
+                    TabTongHop.IsVisible = false;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabChiTiet.IsVisible = false;
+                    TabTongHop.IsVisible = true;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 3)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabChiTiet.IsVisible = false;
+                    TabTongHop.IsVisible = false;
+                    TabLich.IsVisible = true;
+                    LoadInstallmentList(this.ContractId);
+                }
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             Title="{x:Static lang:Language.phan_hoi}"
+             Title="{x:Static lang:Language.phan_hoi_title}"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:converters="clr-namespace:PhuLongCRM.Converters" 
@@ -29,21 +29,9 @@
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="1" Text="{Binding title}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                     </Grid>
-                                    
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                        <Label Grid.Column="1" Text="{Binding casetypecodevalue}" TextColor="#444444" FontSize="15"/>
-                                    </Grid>
-                                    
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                        <Label Grid.Column="1" Text="{Binding contactname}" TextColor="#444444" FontSize="15"/>
-                                    </Grid>
-
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.nguon},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                        <Label Grid.Column="1" Text="{Binding caseorigincodevalue}" TextColor="#444444" FontSize="15"/>
-                                    </Grid>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.loai}" Text="{Binding casetypecodevalue}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding contactname}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.nguon}" Text="{Binding caseorigincodevalue}"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

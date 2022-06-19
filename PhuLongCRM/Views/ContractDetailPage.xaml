@@ -6,7 +6,7 @@
              x:Class="PhuLongCRM.Views.ContractDetailPage"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:converters="clr-namespace:PhuLongCRM.Converters"
-             Title="{Static lang:Language.hop_dong}">
+             Title="{Static lang:Language.hop_dong_title}">
     <ContentPage.Resources>
         <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
             <Setter Property="IndicatorText" Value="&#xf105;"/>
@@ -68,40 +68,16 @@
                             </Grid>
                         </StackLayout>
                     </telerikPrimitives:RadBorder>
-                    <Grid ColumnDefinitions="*,*,*,*" Margin="0,5,0,0">
-                        <BoxView HeightRequest="0.5" BackgroundColor="#939393" Grid.ColumnSpan="4" VerticalOptions="End" />
-                        <telerikPrimitives:RadBorder x:Name="radBorderChinhSach" Grid.Column="0" Style="{StaticResource rabBorder_Tab}">
-                            <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ChinhSach_Tapped"/>
-                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lbChinhSach" Text="{x:Static lang:Language.chinh_sach}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
-                        </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="radBorderChiTiet" Grid.Column="1" Style="{StaticResource rabBorder_Tab}">
-                            <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ChiTiet_Tapped"/>
-                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lbChiTiet" Text="{x:Static lang:Language.chi_tiet}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
-                        </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="radBorderTongHop" Grid.Column="2" Style="{StaticResource rabBorder_Tab}">
-                            <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TongHop_Tapped"/>
-                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lbTongHop" Text="{x:Static lang:Language.tong_hop}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
-                        </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="radBorderLich" Grid.Column="3" Style="{StaticResource rabBorder_Tab}">
-                            <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Lich_Tapped"/>
-                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lbLich" Text="{x:Static lang:Language.lich}" Style="{StaticResource Lb_Tab}" LineBreakMode="TailTruncation"/>
-                        </telerikPrimitives:RadBorder>
-                    </Grid>
+
+                    <controls:TabControl Margin="0,5,0,0" ListTab="chinh_sach_title,chi_tiet_title,tong_hop_title,lich_title" IndexTab="TabControl_IndexTab"/>
+
                     <Grid>
                         <!--tab tổng hợp-->
                         <StackLayout x:Name="TabTongHop" IsVisible="false" Margin="0,5,0,0">
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_chi_tiet}"/>
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_chi_tiet_title}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -237,7 +213,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_gia}"/>
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_gia_title}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -280,7 +256,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.phi_quan_ly}"/>
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.phi_quan_ly_title}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -306,7 +282,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.chinh_sach}"/>
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.chinh_sach_title}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -443,7 +419,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.dong_so_huu}"/>
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.nguoi_dong_so_huu_title}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>

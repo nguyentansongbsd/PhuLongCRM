@@ -107,8 +107,7 @@ namespace PhuLongCRM.Views
 
         private void Create()
         {
-            this.Title = Language.tao_moi_cuoc_goi;
-            BtnSave.Text = Language.them_cuoc_goi;
+            this.Title = BtnSave.Text = Language.tao_moi_cuoc_goi_title;
             IsInit = true;
             BtnSave.Clicked += Create_Clicked;
         }
@@ -120,11 +119,10 @@ namespace PhuLongCRM.Views
 
         private async void Update()
         {
-            BtnSave.Text = Language.cap_nhat;
+            this.Title = BtnSave.Text = Language.cap_nhat_cuoc_goi_title;
             BtnSave.Clicked += Update_Clicked;
             await viewModel.loadPhoneCall(this.PhoneCallId);
             await viewModel.loadFromTo(this.PhoneCallId);
-            this.Title = Language.cap_nhat_cuoc_goi;
             if (viewModel.PhoneCellModel.activityid != Guid.Empty)
             {
                 OnCompleted?.Invoke(true);

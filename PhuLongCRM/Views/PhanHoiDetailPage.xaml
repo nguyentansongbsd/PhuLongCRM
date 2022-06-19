@@ -7,7 +7,7 @@
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" xmlns:converters="clr-namespace:PhuLongCRM.Converters" xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              x:Class="PhuLongCRM.Views.PhanHoiDetailPage"
              x:Name="this"
-             Title="{x:Static lang:Language.chi_tiet_phan_hoi}">
+             Title="{x:Static lang:Language.phan_hoi_title}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:PhanHoiStatusCodeConvert x:Key="StatucToColor"/>
@@ -47,21 +47,8 @@
                             </Grid>
                         </StackLayout>
                     </telerikPrimitives:RadBorder>
-                    <Grid ColumnDefinitions="*,*">
-                        <BoxView HeightRequest="0.5" BackgroundColor="#939393" Grid.ColumnSpan="2" VerticalOptions="End" />
-                        <telerikPrimitives:RadBorder x:Name="radBorderThongTin" Grid.Column="0" Style="{StaticResource rabBorder_Tab}">
-                            <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ThongTin_Tapped"/>
-                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lbThongTin" Text="{x:Static lang:Language.thong_tin}" Style="{StaticResource Lb_Tab}"/>
-                        </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="radBorderPhanHoiLienQuan" Grid.Column="1" Style="{StaticResource rabBorder_Tab}">
-                            <telerikPrimitives:RadBorder.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PhanHoiLienQuan_Tapped"/>
-                            </telerikPrimitives:RadBorder.GestureRecognizers>
-                            <Label x:Name="lbPhanHoiLienQuan" Text="{x:Static lang:Language.phan_hoi_lien_quan}" Style="{StaticResource Lb_Tab}"/>
-                        </telerikPrimitives:RadBorder>
-                    </Grid>
+
+                    <controls:TabControl ListTab="thong_tin_title,phan_hoi_lien_quan_title" IndexTab="TabControl_IndexTab" Margin="0,5,0,0"/>
                     <Grid>
                         <!--tab thông tin-->
                         <StackLayout x:Name="TabThongTin" IsVisible="true" Margin="0,5,0,0" Spacing="1" BackgroundColor="#F1F1F1">
@@ -94,22 +81,9 @@
                                     <DataTemplate>
                                         <StackLayout BackgroundColor ="White" Padding="15,10" Margin="0,1" Spacing="10">
                                             <Label Text="{Binding title}" TextColor="#1C78C2" FontSize="15" FontAttributes="Bold" VerticalOptions="Center"/>
-
-                                            <Grid ColumnDefinitions="Auto,*">
-                                                <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.loai},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                                <Label Grid.Column="1" Text="{Binding casetypecodevalue}" TextColor="#444444" FontSize="15"/>
-                                            </Grid>
-
-                                            <Grid ColumnDefinitions="Auto,*">
-                                                <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                                <Label Grid.Column="1" Text="{Binding contactname}" TextColor="#444444" FontSize="15"/>
-                                            </Grid>
-
-                                            <Grid ColumnDefinitions="Auto,*">
-                                                <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.nguon},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                                <Label Grid.Column="1" Text="{Binding caseorigincodevalue}" TextColor="#444444" FontSize="15"/>
-                                            </Grid>
-
+                                            <controls:FieldListViewItem Title="{x:Static lang:Language.loai}" Text="{Binding casetypecodevalue}"/>
+                                            <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding contactname}"/>
+                                            <controls:FieldListViewItem Title="{x:Static lang:Language.nguon}" Text="{Binding caseorigincodevalue}"/>
                                         </StackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
