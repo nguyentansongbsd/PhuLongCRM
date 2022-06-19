@@ -31,14 +31,12 @@ namespace PhuLongCRM.Views
             Init();
             MeetId = id;
             Update();
-        }     
+        }
 
         private void Init()
         {
             LoadingHelper.Show();
             BindingContext = viewModel = new MeetingViewModel();
-            DatePickerStart.DefaultDisplay = DateTime.Now;
-            DatePickerEnd.DefaultDisplay = DateTime.Now;
             // kiểm tra page trước là page nào
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
             if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage" 
@@ -192,6 +190,19 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
+
+            if (DatePickerStart.IsTimeNull)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
+                return;
+            }
+
+            if (DatePickerEnd.IsTimeNull)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc);
+                return;
+            }
+
             if (viewModel.CustomerMapping == null)
             {
                 if (viewModel.Optional != null && viewModel.Optional.Count > 0)

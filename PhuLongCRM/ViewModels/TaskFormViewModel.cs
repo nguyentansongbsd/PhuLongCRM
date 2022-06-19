@@ -75,12 +75,13 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Count == 0) return;
 
             var data = result.value.FirstOrDefault();
-            this.TaskFormModel = data;
             if (data.scheduledend != null && data.scheduledstart != null)
             {
-                TaskFormModel.scheduledend = data.scheduledend.Value.ToLocalTime();
-                TaskFormModel.scheduledstart = data.scheduledstart.Value.ToLocalTime();
+                data.scheduledend = data.scheduledend.Value.ToLocalTime();
+                data.scheduledstart = data.scheduledstart.Value.ToLocalTime();
             }
+            this.TaskFormModel = data;
+            
          //   this.TaskFormModel = result.value.FirstOrDefault();
 
             //customer type = 1 -> lead.  customer type = 2 -> contact. customer type = 3 -> account
