@@ -21,23 +21,59 @@ namespace PhuLongCRM.Models
             get
             {
                 // load theo khách hàng, k có sẽ lấy liên quna
-
-                if (this.callto_contact_name != null)
-                    return this.callto_contact_name;
-                else if (this.callto_account_name != null)
-                    return this.callto_account_name;
-                else if (this.callto_lead_name != null)
-                    return this.callto_lead_name;
-                else if (this.contact_bsd_fullname != null)
-                    return this.contact_bsd_fullname;
-                else if (this.accounts_bsd_name != null)
-                    return this.accounts_bsd_name;
-                else if (this.lead_fullname != null)
-                    return this.lead_fullname;
-                else if (this.queue_name != null)
-                    return this.queue_name;
+                if (activitytypecode == "appointment")
+                {
+                    if (this.callto_contact_name != null)
+                        return this.callto_contact_name;
+                    else if (this.callto_account_name != null)
+                        return this.callto_account_name;
+                    else if (this.callto_lead_name != null)
+                        return this.callto_lead_name;
+                    else if (this.contact_bsd_fullname != null)
+                        return this.contact_bsd_fullname;
+                    else if (this.accounts_bsd_name != null)
+                        return this.accounts_bsd_name;
+                    else if (this.lead_fullname != null)
+                        return this.lead_fullname;
+                    else if (this.queue_name != null)
+                        return this.queue_name;
+                    else
+                        return null;
+                }
+                else if (activitytypecode == "phonecall")
+                {
+                    if (this.callto_contact_name != null)
+                        return this.callto_contact_name;
+                    else if (this.callto_account_name != null)
+                        return this.callto_account_name;
+                    else if (this.callto_lead_name != null)
+                        return this.callto_lead_name;
+                    else if (this.contact_bsd_fullname != null)
+                        return this.contact_bsd_fullname;
+                    else if (this.accounts_bsd_name != null)
+                        return this.accounts_bsd_name;
+                    else if (this.lead_fullname != null)
+                        return this.lead_fullname;
+                    else if (this.queue_name != null)
+                        return this.queue_name;
+                    else
+                        return null;
+                }
+                else if (activitytypecode == "task")
+                {
+                    if (this.contact_bsd_fullname != null)
+                        return this.contact_bsd_fullname;
+                    else if (this.accounts_bsd_name != null)
+                        return this.accounts_bsd_name;
+                    else if (this.lead_fullname != null)
+                        return this.lead_fullname;
+                    else if (this.queue_name != null)
+                        return this.queue_name;
+                    else
+                        return null;
+                }
                 else
-                    return " ";
+                    return null;
             }
         }
         public string activitytypecode { get; set; }
@@ -141,9 +177,5 @@ namespace PhuLongCRM.Models
 
         public string _customer;
         public string customer { get => _customer; set { _customer = value; OnPropertyChanged(nameof(customer)); } }
-        public bool is_appointment { get => activitytypecode == "appointment" ? true : false; }
-
-        // sử dụng cho meet
-        public List<object> requiredattendees { get; set; } // filed khách hàng bắt buộc
     }
 }

@@ -241,7 +241,7 @@
     <value>Contracts</value>
   </data>
 	<data name="tai_lieu_kinh_doanh" xml:space="preserve">
-    <value>Sales literature</value>
+    <value>Sales Literature</value>
   </data>
 	<data name="danh_sach_theo_doi" xml:space="preserve">
     <value>Follow Up List</value>
@@ -3286,6 +3286,9 @@
 		<value>Create Case</value>
 	</data>
 	<data name="phan_hoi_lien_quan_title" xml:space="preserve">
-    <value>Parent Case</value>
-  </data>
+		<value>Parent Case</value>
+	</data>
+	<data name="thong_tin_giu_cho_title" xml:space="preserve">
+		<value>Queue Information</value>
+	</data>
 </root>

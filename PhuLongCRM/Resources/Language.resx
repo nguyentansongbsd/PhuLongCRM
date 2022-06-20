@@ -223,7 +223,7 @@
     <value>Nhấn để chỉnh sửa</value>
   </data>
 	<data name="dong_bo_danh_ba" xml:space="preserve">
-    <value>Đồng bộ danh bạ</value>
+    <value>Đồng Bộ Danh Bạ</value>
   </data>
 	<data name="gio_hang" xml:space="preserve">
     <value>Giỏ Hàng</value>
@@ -241,7 +241,7 @@
     <value>Hợp đồng</value>
   </data>
 	<data name="tai_lieu_kinh_doanh" xml:space="preserve">
-    <value>Tài liệu kinh doanh</value>
+    <value>Tài Liệu Kinh Doanh</value>
   </data>
 	<data name="danh_sach_theo_doi" xml:space="preserve">
     <value>Danh sách theo dõi</value>
@@ -1414,7 +1414,7 @@
     <value>Thư thanh lý</value>
   </data>
 	<data name="dong_so_huu" xml:space="preserve">
-    <value>Đồng Sở Hữu</value>
+    <value>Đồng sở hữu</value>
   </data>
 	<data name="ttdc_vbtt" xml:space="preserve">
     <value>Văn Bản Thỏa Thuận</value>
@@ -3287,5 +3287,8 @@
 	</data>
 	<data name="phan_hoi_lien_quan_title" xml:space="preserve">
 		<value>Phản Hồi Liên Quan</value>
+	</data>
+	<data name="thong_tin_giu_cho_title" xml:space="preserve">
+		<value>Thông Tin Giữ Chỗ</value>
 	</data>
 </root>
