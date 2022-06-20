@@ -6,6 +6,7 @@ using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using Stormlion.PhotoBrowser;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -41,6 +42,11 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
+                if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_qrcode))
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
+                }
+
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
@@ -334,6 +340,7 @@ namespace PhuLongCRM.Views
                viewModel.LoadPhongThuy();
             }
         }
+
         private void ShowImage_Tapped(object sender, EventArgs e)
         {
             LookUpImage.IsVisible = true;
@@ -383,6 +390,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
+
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {          
             string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
@@ -407,6 +415,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
+
         private void ThongTinCongTy_Tapped(object sender, EventArgs e)
         {            
             if (!string.IsNullOrEmpty(viewModel.singleContact._parentcustomerid_value))
@@ -427,7 +436,8 @@ namespace PhuLongCRM.Views
                     }
                 };
             }
-        }      
+        }
+
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -476,6 +486,32 @@ namespace PhuLongCRM.Views
                     TabGiaoDich.IsVisible = false;
                     TabPhongThuy.IsVisible = true;
                 }
+            }
+        }
+
+        private async void GenerateQRCode(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            List<string> info = new List<string>();
+            info.Add(viewModel.singleContact.bsd_customercode);
+            info.Add("contact");
+            info.Add(viewModel.singleContact.contactid.ToString());
+            string uriQrCode = $"https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data={string.Join(",", info)}";
+
+            var bytearr = await DowloadImageToByteArrHelper.Download(uriQrCode);
+            string base64 = System.Convert.ToBase64String(bytearr);
+
+            bool isSuccess = await viewModel.SaveQRCode(base64);
+            if (isSuccess)
+            {
+                viewModel.singleContact.bsd_qrcode = base64;
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_that_bai);
             }
         }
     }

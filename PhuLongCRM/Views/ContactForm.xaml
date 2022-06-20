@@ -147,7 +147,7 @@
                                 <controls:MainEntry Text="{Binding singleContact.bsd_placeofissuepassport}" Placeholder="{x:Static lang:Language.nhap_noi_cap_ho_chieu}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.so_the_can_cuoc}" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_the_can_cuoc}" Text="{Binding singleContact.bsd_idcard}" FontSize="15" Keyboard="Numeric" TextChanged="CCCD_TextChanged" IsEnabled="{Binding IsOfficial}"/>
+                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_the_can_cuoc}" Text="{Binding singleContact.bsd_identitycard}" FontSize="15" Keyboard="Numeric" TextChanged="CCCD_TextChanged" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap_the_can_cuoc}" Margin="0,10,0,0"/>
                                 <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_issuedateidcard}" Placeholder="{x:Static lang:Language.chon_ngay_cap_the_can_cuoc}" ShowTime="False"/>

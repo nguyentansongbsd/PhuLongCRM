@@ -181,6 +181,9 @@ namespace PhuLongCRM.Models
         public string statuscode { get; set; }
         public string statuscode_format { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Name : null;}}
         public string statuscode_color { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Background : null; } }
+
+        private string _bsd_qrcode;
+        public string bsd_qrcode { get => _bsd_qrcode; set { _bsd_qrcode = value;OnPropertyChanged(nameof(bsd_qrcode)); } }
     }
 }
 
