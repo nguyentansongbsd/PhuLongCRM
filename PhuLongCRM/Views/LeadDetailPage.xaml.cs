@@ -440,7 +440,7 @@ namespace PhuLongCRM.Views
             bool isSuccess = await viewModel.SaveQRCode(base64);
             if (isSuccess)
             {
-                viewModel.singleLead.bsd_qrcode = uriQrCode;
+                viewModel.singleLead.bsd_qrcode = base64;
                 ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
                 LoadingHelper.Hide();
             }

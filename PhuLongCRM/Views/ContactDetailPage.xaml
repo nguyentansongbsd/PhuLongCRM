@@ -38,7 +38,6 @@
             <Setter Property="Padding" Value="25,10"/>
             <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
         </Style>
-        <converter:NullToHideConverter x:Key="NullToBool"/>
         <!--tab phong thuy-->
         <Style x:Key="Lb_Title_PhongThuy" TargetType="Label">
             <Setter Property="FontSize" Value="16" />
@@ -68,6 +67,7 @@
             <converter:NullToHideConverter x:Key="NullToBool"/>
             <converter:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
             <converter:PhanHoiStatusCodeConvert x:Key="StatucToColor"/>
+            <converter:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -131,20 +131,25 @@
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
-                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="1" BackgroundColor="#F1F1F1">
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="0">
+                                    <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <controls:FormLabel Text="QR Code" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <ffimageloading:CachedImage x:Name="imgQrCode" Grid.Column="1" Source="{Binding singleContact.bsd_qrcode,Converter={StaticResource Base64ToImageSourceConverter}}" IsVisible="{Binding singleContact.bsd_qrcode,Converter={StaticResource NullToBool}}" LoadingPlaceholder="image_placeholder.jpg" Margin="0,10,25,10" HeightRequest="80" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End"/>
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.gioi_tinh}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleGender.Label}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="1">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.quoc_tich}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding SingleLocalization.Label}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="2">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleContact.birthdate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="3">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <controls:FormLabel Text="{x:Static lang:Language.ten_cong_ty}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleContact.parentcustomerid_label}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#2196F3" Style="{StaticResource Lb_Title_Content}">
                                                 <controls:FormLabelValue.GestureRecognizers>
@@ -152,15 +157,15 @@
                                                 </controls:FormLabelValue.GestureRecognizers>
                                             </controls:FormLabelValue>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="4">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <controls:FormLabel Text="{x:Static lang:Language.chuc_vu}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleContact.bsd_jobtitlevn}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="5">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.sdt_kinh_doanh}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding singleContact.telephone1}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
-                                        <Grid Grid.Row="6" RowDefinitions="Auto,1,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                        <Grid RowDefinitions="Auto,1,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_lien_lac},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="0" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>
                                             <controls:FormLabelValue Text="{Binding singleContact.bsd_contactaddress}" Grid.Column="1" Grid.Row="0" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                                             <BoxView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" BackgroundColor="#F1F1F1" HeightRequest="0.5"/>
@@ -184,7 +189,7 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>-->
-                                    </Grid>
+                                    </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
@@ -238,15 +243,15 @@
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="7">
                                             <controls:FormLabel Text="{x:Static lang:Language.so_the_can_cuoc}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_idcard}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
+                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_identitycard}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="8">
                                             <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_issuedateidcard,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
+                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_identitycarddategrant,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="9">
                                             <controls:FormLabel Text="{x:Static lang:Language.noi_cap}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <controls:FormLabelValue Text="{Binding singleContact._bsd_placeofissueidcar}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
+                                            <controls:FormLabelValue Text="{Binding singleContact.bsd_placeofissueidentitycard}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
                                     </Grid>
                                 </telerikPrimitives:RadExpander.Content>

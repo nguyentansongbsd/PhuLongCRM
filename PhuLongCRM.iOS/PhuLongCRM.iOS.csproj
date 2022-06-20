@@ -179,6 +179,7 @@
     <BundleResource Include="Resources\ic_english.png" />
     <BundleResource Include="Resources\ic_vietnam.jpg" />
     <BundleResource Include="GoogleService-Info.plist" />
+    <BundleResource Include="Resources\image_placeholder.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
