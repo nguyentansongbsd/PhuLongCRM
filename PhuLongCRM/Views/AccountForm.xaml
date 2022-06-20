@@ -85,7 +85,7 @@
                 </StackLayout>
             </ScrollView>
             <Grid AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="White" VerticalOptions="EndAndExpand">
-                <Button x:Name="btnSave" Margin="10,5,10,10" Padding="10,5" HeightRequest="40" TextColor="White" FontAttributes="Bold" CornerRadius="10" FontSize="16" BackgroundColor="#2196F3" BorderWidth="1" BorderColor="#2196F3" />
+                <Button x:Name="btnSave" Margin="10" Padding="10,5" HeightRequest="40" TextColor="White" FontAttributes="Bold" CornerRadius="10" BackgroundColor="{StaticResource NavigationPrimary}" BorderWidth="1" BorderColor="{StaticResource NavigationPrimary}" />
             </Grid>
             
             <controls:CenterModal x:Name="CenterModal" />

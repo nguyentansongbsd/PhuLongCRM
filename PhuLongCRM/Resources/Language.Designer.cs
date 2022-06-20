@@ -3229,7 +3229,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đồng bộ danh bạ.
+        ///   Looks up a localized string similar to Đồng Bộ Danh Bạ.
         /// </summary>
         internal static string dong_bo_danh_ba {
             get {
@@ -3238,7 +3238,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đồng Sở Hữu.
+        ///   Looks up a localized string similar to Đồng sở hữu.
         /// </summary>
         internal static string dong_so_huu {
             get {
@@ -7333,7 +7333,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tài liệu kinh doanh.
+        ///   Looks up a localized string similar to Tài Liệu Kinh Doanh.
         /// </summary>
         internal static string tai_lieu_kinh_doanh {
             get {

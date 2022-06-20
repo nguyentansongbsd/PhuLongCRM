@@ -11,7 +11,7 @@ using Xamarin.Forms.Extended;
 
 namespace PhuLongCRM.ViewModels
 {
-    public class ActivityListViewModel : ListViewBaseViewModel2<HoatDongListModel>
+    public class ActivityListViewModel : ActivityBaseViewModel<HoatDongListModel>
     {
         public string Keyword { get; set; }
 
@@ -57,133 +57,69 @@ namespace PhuLongCRM.ViewModels
                 if (entity == "phonecall")
                 {
                     callto = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
-                                        <filter type='and'>
-                                            <condition attribute='participationtypemask' operator='eq' value='2' />
-                                        </filter>
-                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='party_contact'>
-                                            <attribute name='fullname' alias='callto_contact_name'/>
-                                        </link-entity>
-                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='party_account'>
-                                            <attribute name='bsd_name' alias='callto_account_name'/>
-                                        </link-entity>
-                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='party_lead'>
-                                            <attribute name='fullname' alias='callto_lead_name'/>
-                                        </link-entity>
-                                    </link-entity>";
+                                            <filter type='and'>
+                                                <condition attribute='participationtypemask' operator='eq' value='2' />
+                                            </filter>
+                                            <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='party_contact'>
+                                                <attribute name='fullname' alias='callto_contact_name'/>
+                                            </link-entity>
+                                            <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='party_account'>
+                                                <attribute name='bsd_name' alias='callto_account_name'/>
+                                            </link-entity>
+                                            <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='party_lead'>
+                                                <attribute name='fullname' alias='callto_lead_name'/>
+                                            </link-entity>
+                                        </link-entity>";
                     filter = $@"<condition entityname='party_contact' attribute='fullname' operator='like' value='%25{Keyword}%25' />
-                                <condition entityname='party_account' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />
-                                <condition entityname='party_lead' attribute='fullname' operator='like' value='%25{Keyword}%25' />";
+                                    <condition entityname='party_account' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />
+                                    <condition entityname='party_lead' attribute='fullname' operator='like' value='%25{Keyword}%25' />";
                 }
 
-                if(entity == "appointment")
+                if (entity == "appointment")
                 {
                     callto = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
-                                        <filter type='and'>
-                                            <condition attribute='participationtypemask' operator='eq' value='5' />
-                                        </filter>
-                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='party_contact'>
-                                            <attribute name='fullname' alias='callto_contact_name'/>
-                                        </link-entity>
-                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='party_account'>
-                                            <attribute name='bsd_name' alias='callto_account_name'/>
-                                        </link-entity>
-                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='party_lead'>
-                                            <attribute name='fullname' alias='callto_lead_name'/>
-                                        </link-entity>
-                                    </link-entity>";
+                                            <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='party_contact'/>
+                                            <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='party_account'/>
+                                            <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='party_lead'/>
+                                        </link-entity>";
                     filter = $@"<condition entityname='party_contact' attribute='fullname' operator='like' value='%25{Keyword}%25' />
-                                <condition entityname='party_account' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />
-                                <condition entityname='party_lead' attribute='fullname' operator='like' value='%25{Keyword}%25' />";
+                                    <condition entityname='party_account' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />
+                                    <condition entityname='party_lead' attribute='fullname' operator='like' value='%25{Keyword}%25' />";
                 }
 
-                FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='true'>
-                                  <entity name='{entity}'>
-                                    <attribute name='activitytypecode' />
-                                    <attribute name='subject' />
-                                    <attribute name='statecode' />
-                                    <attribute name='activityid' />
-                                    <attribute name='scheduledstart' />
-                                    <attribute name='scheduledend' />
-                                    <order attribute='modifiedon' descending='true' />
-                                    <filter type='and'>
-                                        <filter type='or'>
-                                            <condition attribute='subject' operator='like' value='%25{Keyword}%25' />
-                                            <condition attribute='regardingobjectidname' operator='like' value='%25{Keyword}%25' />
-                                            {filter}
+                FetchXml = $@"<fetch version='1.0' count='5' page='{Page}' output-format='xml-platform' mapping='logical' distinct='true'>
+                                      <entity name='{entity}'>
+                                        <attribute name='activitytypecode' />
+                                        <attribute name='subject' />
+                                        <attribute name='statecode' />
+                                        <attribute name='activityid' />
+                                        <attribute name='scheduledstart' />
+                                        <attribute name='scheduledend' />
+                                        <order attribute='modifiedon' descending='true' />
+                                        <filter type='and'>
+                                            <filter type='or'>
+                                                <condition attribute='subject' operator='like' value='%25{Keyword}%25' />
+                                                <condition attribute='regardingobjectidname' operator='like' value='%25{Keyword}%25' />
+                                                {filter}
+                                            </filter>
+                                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                         </filter>
-                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
-                                    </filter>
-                                    <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
-                                        <attribute name='bsd_name' alias='accounts_bsd_name'/>
-                                    </link-entity>
-                                    <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
-                                        <attribute name='fullname' alias='contact_bsd_fullname'/>
-                                    </link-entity>
-                                    <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
-                                        <attribute name='fullname' alias='lead_fullname'/>
-                                    </link-entity>
-                                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
-                                        <attribute name='name' alias='queue_name'/>
-                                    </link-entity>
-                                    {callto}
-                                  </entity>
-                                </fetch>";
+                                        <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
+                                            <attribute name='bsd_name' alias='accounts_bsd_name'/>
+                                        </link-entity>
+                                        <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
+                                            <attribute name='fullname' alias='contact_bsd_fullname'/>
+                                        </link-entity>
+                                        <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
+                                            <attribute name='fullname' alias='lead_fullname'/>
+                                        </link-entity>
+                                        <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+                                            <attribute name='name' alias='queue_name'/>
+                                        </link-entity>
+                                        {callto}
+                                      </entity>
+                                    </fetch>";
             });
-        }
-        public override async Task LoadOnRefreshCommandAsync()
-        {
-            await base.LoadOnRefreshCommandAsync();
-            if (entity == "appointment")
-            {
-                InfiniteScrollCollection<HoatDongListModel> list = new InfiniteScrollCollection<HoatDongListModel>();
-                foreach (var item in this.Data)
-                {
-                    HoatDongListModel meet = list.FirstOrDefault(x => x.activityid == item.activityid);
-                    if (meet != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(item.callto_contact_name))
-                        {
-                            string new_customer = ", " + item.callto_contact_name;
-                            meet.customer += new_customer;
-                        }
-                        if (!string.IsNullOrWhiteSpace(item.callto_account_name))
-                        {
-                            string new_customer = ", " + item.callto_account_name;
-                            meet.customer += new_customer;
-                        }
-                        if (!string.IsNullOrWhiteSpace(item.callto_lead_name))
-                        {
-                            string new_customer = ", " + item.callto_lead_name;
-                            meet.customer += new_customer;
-                        }
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrWhiteSpace(item.callto_contact_name))
-                        {
-                            item.customer = item.callto_contact_name;
-                        }
-                        if (!string.IsNullOrWhiteSpace(item.callto_account_name))
-                        {
-                            item.customer = item.callto_account_name;
-                        }
-                        if (!string.IsNullOrWhiteSpace(item.callto_lead_name))
-                        {
-                            item.customer = item.callto_lead_name;
-                        }
-                        list.Add(item);
-                    }
-                }
-                this.Data.Clear();
-                this.Data.AddRange(list);
-            }
-            else if(entity == "phonecall")
-            {
-                foreach (var item in this.Data)
-                {
-                    item.customer = item.regarding_name;
-                }
-            }    
         }
     }
 }

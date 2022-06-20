@@ -63,7 +63,7 @@
                     </telerikPrimitives:RadBorder>
 
 
-                    <controls:FormLabel Text="{Binding Source={x:Static lang:Language.mo_ta},StringFormat='{0}: '}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="7"/>
+                    <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="7"/>
                     <telerikPrimitives:RadBorder Grid.Column="0" Grid.Row="8" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Grid.ColumnSpan="2">
                         <Label Text="{Binding PhoneCall.description}" Grid.Column="1" FontSize="14" TextColor="#444444"/>
                     </telerikPrimitives:RadBorder>
@@ -91,7 +91,7 @@
                         <Label Text="{Binding Task.scheduledend,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
                     </telerikPrimitives:RadBorder>
 
-                    <controls:FormLabel Text="{Binding Source={x:Static lang:Language.mo_ta},StringFormat='{0}: '}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4"/>
+                    <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="4"/>
                     <telerikPrimitives:RadBorder Grid.Column="0" Grid.Row="5" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Grid.ColumnSpan="2">
                         <Label Text="{Binding Task.description}" Grid.Column="1" FontSize="14" TextColor="#444444"/>
                     </telerikPrimitives:RadBorder>
@@ -153,7 +153,7 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.su_kien_ca_ngay}" Grid.Column="0" FontSize="14" TextColor="#444444"/>
                                 <CheckBox HorizontalOptions="Start" Grid.Column="1" IsChecked="{Binding Meet.isalldayevent}" Margin="10,0,0,0" IsEnabled="False"/>
                             </Grid>
-                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.mo_ta},StringFormat='{0}: '}" FontSize="14" TextColor="#444444"/>
+                            <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" FontSize="14" TextColor="#444444"/>
                             <telerikPrimitives:RadBorder BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Grid.ColumnSpan="2">
                                 <Label Text="{Binding Meet.description}" Grid.Column="1" FontSize="14" TextColor="#444444"/>
                             </telerikPrimitives:RadBorder>
@@ -162,8 +162,8 @@
                 </StackLayout>
             </StackLayout>
             <Grid IsVisible="{Binding ShowGridButton}" Grid.Row="2" ColumnDefinitions="*,*" BackgroundColor="White" Padding="10,0,10,10">
-                <Button Text="{x:Static lang:Language.cap_nhat}" Grid.Column="0" Clicked="Update_Clicked" TextColor="White" FontSize="16" FontAttributes="Bold" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" TextTransform="None" VerticalOptions="Center"/>
-                <Button Text="{x:Static lang:Language.hoan_thanh}" Grid.Column="1" Clicked="Completed_Clicked" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" HeightRequest="40" BackgroundColor="White" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" BorderWidth="1" TextTransform="None" VerticalOptions="Center"/>
+                <Button Text="{x:Static lang:Language.cap_nhat}" Grid.Column="0" Clicked="Update_Clicked" TextColor="White" FontSize="16" FontAttributes="Bold" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" VerticalOptions="Center"/>
+                <Button Text="{x:Static lang:Language.hoan_thanh}" Grid.Column="1" Clicked="Completed_Clicked" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" HeightRequest="40" BackgroundColor="White" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" BorderWidth="1" VerticalOptions="Center"/>
             </Grid>
         </Grid>
     </telerikPrimitives:RadBorder>

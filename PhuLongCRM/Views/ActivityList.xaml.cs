@@ -166,10 +166,6 @@ namespace PhuLongCRM.Views
                         viewModel.EntityName = "phonecalls";
                         viewModel.entity = "phonecall";
                         await viewModel.LoadOnRefreshCommandAsync();
-                        foreach (var item in viewModel.Data)
-                        {
-                            item.customer = item.regarding_name;
-                        }
                     }
                     LoadingHelper.Hide();
                 }
