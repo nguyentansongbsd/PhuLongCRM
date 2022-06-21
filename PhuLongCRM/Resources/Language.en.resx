@@ -214,7 +214,7 @@
     <value>Close</value>
   </data>
 	<data name="khong_cap_nhat_duoc_thong_tin_imei" xml:space="preserve">
-    <value>Unable to update information Imei</value>
+    <value>Unable to edit information Imei</value>
   </data>
 	<data name="chua_co_contact_khong_the_chinh_sua_thong_tin" xml:space="preserve">
     <value>No contact, can't edit info.</value>
@@ -766,7 +766,7 @@
     <value>Create Mandatory Secondary</value>
   </data>
 	<data name="chinh_sua" xml:space="preserve">
-    <value>Update</value>
+    <value>Edit</value>
   </data>
 	<data name="xac_nhan" xml:space="preserve">
     <value>Confirm</value>
@@ -865,10 +865,10 @@
     <value>Create</value>
   </data>
 	<data name="cap_nhat" xml:space="preserve">
-    <value>Update</value>
+    <value>Edit</value>
   </data>
 	<data name="cap_nhat_khach_hang_doanh_nghiep" xml:space="preserve">
-    <value>Update Account</value>
+    <value>Edit Account</value>
   </data>
 	<data name="vui_long_chon_loai_khach_hang" xml:space="preserve">
     <value>Please choose localization.</value>
@@ -913,10 +913,10 @@
     <value>Create account failed.</value>
   </data>
 	<data name="cap_nhat_khach_hang_doanh_nghiep_thanh_cong" xml:space="preserve">
-    <value>Update account successed.</value>
+    <value>Edit account successed.</value>
   </data>
 	<data name="cap_nhat_khach_hang_doanh_nghiep_that_bai" xml:space="preserve">
-    <value>Update account failed.</value>
+    <value>Edit account failed.</value>
   </data>
 	<data name="cong_viec" xml:space="preserve">
     <value>Task</value>
@@ -1126,7 +1126,7 @@
     <value>Quotation signed date</value>
   </data>
 	<data name="cap_nhat_bang_tinh_gia" xml:space="preserve">
-    <value>Update Quotation</value>
+    <value>Edit Quotation</value>
   </data>
 	<data name="huy_bang_tinh_gia" xml:space="preserve">
     <value>Cancel Quotation</value>
@@ -1141,13 +1141,13 @@
     <value>Sign quotation</value>
   </data>
 	<data name="xac_nhan_in" xml:space="preserve">
-    <value>Print Quotation Final</value>
+    <value>Print Quotation final</value>
   </data>
 	<data name="xac_nhan_tai_pdc" xml:space="preserve">
-    <value>Confirm upload quotation</value>
+    <value>Confirm upload Quotation</value>
   </data>
 	<data name="ky_phieu_dat_coc" xml:space="preserve">
-    <value>Sign reservation form</value>
+    <value>Sign Reservation form</value>
   </data>
 	<data name="da_xoa_lich_thanh_toan" xml:space="preserve">
     <value>Cleared installment.</value>
@@ -1324,7 +1324,7 @@
     <value>Create Contact</value>
   </data>
 	<data name="cap_nhat_khach_hang_ca_nhan" xml:space="preserve">
-    <value>Update Contact</value>
+    <value>Edit Contact</value>
   </data>
 	<data name="vui_long_nhap_ho_ten" xml:space="preserve">
     <value>Please enter user name.</value>
@@ -1378,10 +1378,10 @@
     <value>Create conatact failed.</value>
   </data>
 	<data name="cap_nhat_thanh_cong" xml:space="preserve">
-    <value>Update successed.</value>
+    <value>Edit successed.</value>
   </data>
 	<data name="cap_nhat_that_bai" xml:space="preserve">
-    <value>Update failed.</value>
+    <value>Edit failed.</value>
   </data>
 	<data name="xem_anh_mat_truoc_cmnd" xml:space="preserve">
     <value>View photo</value>
@@ -1435,7 +1435,7 @@
     <value>Contract type description</value>
   </data>
 	<data name="cap_nhat_hop_dong" xml:space="preserve">
-    <value>Update Contract</value>
+    <value>Edit Contract</value>
   </data>
 	<data name="ngay_spa" xml:space="preserve">
     <value>SPA date</value>
@@ -1717,7 +1717,7 @@
     <value>Create Lead</value>
   </data>
 	<data name="cap_nhat_kh_tiem_nang" xml:space="preserve">
-    <value>Update Lead</value>
+    <value>Edit Lead</value>
   </data>
 	<data name="so_dien_thoai_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
     <value>Invalid phone (phone must be 10 characters long).</value>
@@ -1828,7 +1828,7 @@
     <value>Create Meeting</value>
   </data>
 	<data name="cap_nhat_cuoc_hop" xml:space="preserve">
-    <value>Update Meeting</value>
+    <value>Edit Meeting</value>
   </data>
 	<data name="vui_long_nhap_chu_de_cuoc_hop" xml:space="preserve">
     <value>Please enter subject.</value>
@@ -1861,7 +1861,7 @@
     <value>Reactivate case</value>
   </data>
 	<data name="cap_nhat_phan_hoi" xml:space="preserve">
-    <value>Update Case</value>
+    <value>Edit Case</value>
   </data>
 	<data name="huong_giai_quyet" xml:space="preserve">
     <value>Resolution</value>
@@ -1957,7 +1957,7 @@
     <value>Create Phone Call</value>
   </data>
 	<data name="cap_nhat_cuoc_goi" xml:space="preserve">
-    <value>Update Phone Call</value>
+    <value>Edit Phone Call</value>
   </data>
 	<data name="vui_long_nhap_chu_de_cuoc_goi" xml:space="preserve">
     <value>Please enter subject.</value>
@@ -2170,7 +2170,7 @@
     <value>Delete co-owner successed.</value>
   </data>
 	<data name="cap_nhat_dong_so_huu" xml:space="preserve">
-    <value>Update Co-owner</value>
+    <value>Edit Co-owner</value>
   </data>
 	<data name="vui_long_chon_quan_he" xml:space="preserve">
     <value>Please choose relationship.</value>
@@ -2185,7 +2185,7 @@
     <value>Create co-owner successed.</value>
   </data>
 	<data name="cap_nhat_dong_so_huu_thanh_cong" xml:space="preserve">
-    <value>Update co-owner successed.</value>
+    <value>Edit co-owner successed.</value>
   </data>
 	<data name="nguoi_mua_khong_duoc_trung_voi_dai_ly_san_giao_dich_vui_long_chon_lai" xml:space="preserve">
     <value>Purchaser and Sales agent company are duplicated. Please check again.</value>
@@ -2218,7 +2218,7 @@
     <value>Enter subject</value>
   </data>
 	<data name="cap_nhap_cong_viec" xml:space="preserve">
-    <value>Update task</value>
+    <value>Edit task</value>
   </data>
 	<data name="thoi_gian_bat_dau_phai_nho_hon_thoi_gian_ket_thuc" xml:space="preserve">
     <value>The end time must be greater than the start time.</value>
@@ -3112,7 +3112,7 @@
 		<value>Follow up list created successfully.</value>
 	</data>
 	<data name="cap_nhat_thong_tin_title" xml:space="preserve">
-		<value>Update Information</value>
+		<value>Edit Information</value>
 	</data>
 	<data name="ful_refund_takeoutmoney" xml:space="preserve">
 		<value>Refund</value>
@@ -3142,10 +3142,10 @@
 		<value>Please choose phase launch.</value>
 	</data>
 	<data name="cap_nhat_danh_sach_theo_doi_thanh_cong" xml:space="preserve">
-		<value>Follow up list has been updated successfully.</value>
+		<value>Follow up list has been edited successfully.</value>
 	</data>
 	<data name="cap_nhat_danh_sach_theo_doi_that_bai" xml:space="preserve">
-		<value>Failed to update follow up list.</value>
+		<value>Failed to edit follow up list.</value>
 	</data>
 	<data name="ma_dstd" xml:space="preserve">
 		<value>FUL code</value>
@@ -3187,7 +3187,7 @@
 		<value>Quotation And Reservation</value>
   </data>
 	<data name="tao_qr_code" xml:space="preserve">
-		<value>Generate QR Code</value>
+		<value>Generate QR code</value>
 	</data>
 	<data name="tao_qr_code_thanh_cong" xml:space="preserve">
 		<value>Generate qr code successed</value>
@@ -3229,7 +3229,7 @@
 		<value>Create Customer</value>
 	</data>
 	<data name="cap_nhat_khach_hang" xml:space="preserve">
-		<value>Update Customer</value>
+		<value>Edit Customer</value>
 	</data>
 	<data name="thon_tin_can_ho_title" xml:space="preserve">
 		<value>Unit information</value>
@@ -3250,19 +3250,19 @@
 		<value>Do you want to cancel this case ?</value>
 	</data>
 	<data name="cap_nhat_cong_viec_title" xml:space="preserve">
-		<value>Update Task</value>
+		<value>Edit Task</value>
 	</data>
 	<data name="tao_moi_cong_viec_title" xml:space="preserve">
 		<value>Create Task</value>
 	</data>
 	<data name="cap_nhat_cuoc_goi_title" xml:space="preserve">
-		<value>Update Phone Call</value>
+		<value>Edit Phone Call</value>
 	</data>
 	<data name="tao_moi_cuoc_goi_title" xml:space="preserve">
 		<value>Create Phone Call</value>
 	</data>
 	<data name="cap_nhat_cuoc_hop_title" xml:space="preserve">
-		<value>Update Meeting</value>
+		<value>Edit Meeting</value>
 	</data>
 	<data name="tao_moi_cuoc_hop_title" xml:space="preserve">
 		<value>Create Meeting</value>
@@ -3293,5 +3293,8 @@
 	</data>
 	<data name="khong_co_hoat_dong" xml:space="preserve">
 		<value>No Activity</value>
+ </data>
+	<data name="cap_nhat_bang_tinh_gia_title" xml:space="preserve">
+		<value>Edit Quotation</value>
 	</data>
 </root>

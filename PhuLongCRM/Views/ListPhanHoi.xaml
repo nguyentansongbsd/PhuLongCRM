@@ -24,7 +24,7 @@
                             <ViewCell>
                                 <StackLayout BackgroundColor ="White" Padding="15,10" Margin="0,1" Spacing="10">
                                     <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
-                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode,Converter={StaticResource StatucToColor}}">
+                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode,Converter={StaticResource StatucToColor}}" VerticalOptions="Start">
                                             <Label Grid.Column="0" Text="{Binding statuscodevalue}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="1" Text="{Binding title}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>

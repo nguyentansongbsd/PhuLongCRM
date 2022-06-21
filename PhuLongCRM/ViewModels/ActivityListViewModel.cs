@@ -11,7 +11,7 @@ using Xamarin.Forms.Extended;
 
 namespace PhuLongCRM.ViewModels
 {
-    public class ActivityListViewModel : ActivityBaseViewModel<HoatDongListModel>
+    public class ActivityListViewModel : ActivityBaseViewModel
     {
         public string Keyword { get; set; }
 

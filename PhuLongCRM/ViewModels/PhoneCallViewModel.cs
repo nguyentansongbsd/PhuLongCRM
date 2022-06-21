@@ -371,7 +371,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value == null)
                 return;
             var tmp = result.value.FirstOrDefault();
-            PhoneCellModel.phonenumber = tmp.telephone1;
+            PhoneCellModel.phonenumber = tmp.telephone1_format;
         }
 
         public async Task loadOneContact(String contactid)
@@ -392,7 +392,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value == null)
                 return;
             var tmp = result.value.FirstOrDefault();
-            PhoneCellModel.phonenumber = tmp.mobilephone;
+            PhoneCellModel.phonenumber = tmp.mobilephone_format;
         }
 
         public async Task LoadOneLead(String leadid)
@@ -411,7 +411,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value == null)
                 return;
             var tmp = result.value.FirstOrDefault();
-            PhoneCellModel.phonenumber = tmp.mobilephone;
+            PhoneCellModel.phonenumber = tmp.mobilephone_format;
         }
     }
 }

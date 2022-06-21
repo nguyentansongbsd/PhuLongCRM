@@ -10,14 +10,14 @@ using Xamarin.Forms.Extended;
 
 namespace PhuLongCRM.Models
 {
-    public class ActivityBaseViewModel<TEntity> : BaseViewModel where TEntity : class
+    public class ActivityBaseViewModel : BaseViewModel
     {
         public bool IsAuthenticate { get; set; } = false;
         public string Url { get; set; } // bao gom {0}
         public string EntityName { get; set; }
         public string FetchXml { get; set; }
         public int? RecordPerPage { get; set; } // de kiem tra du lieu tra ve co = recordperpage tren api khong, neu nho hon thi set out of data
-        public InfiniteScrollCollection<TEntity> Data { get; set; }
+        public InfiniteScrollCollection<HoatDongListModel> Data { get; set; }
 
         public Action ConnectFail;
 
@@ -80,7 +80,7 @@ namespace PhuLongCRM.Models
 
         public ICommand PreLoadData { get; set; }
 
-        public Command<TEntity> OnMapItem { get; set; }
+        public Command<HoatDongListModel> OnMapItem { get; set; }
 
         public ICommand RefreshCommand
         {
@@ -94,7 +94,7 @@ namespace PhuLongCRM.Models
 
         public ActivityBaseViewModel()
         {
-            Data = new InfiniteScrollCollection<TEntity>
+            Data = new InfiniteScrollCollection<HoatDongListModel>
             {
                 OnLoadMore = async () =>
                 {
@@ -117,16 +117,16 @@ namespace PhuLongCRM.Models
             OnPropertyChanged(nameof(IsEmptyList));
         }
 
-        public virtual async Task<List<TEntity>> LoadItems()
+        public virtual async Task<List<HoatDongListModel>> LoadItems()
         {
             PreLoadData.Execute(null);
-            var items = new List<TEntity>();
+            var items = new List<HoatDongListModel>();
 
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<TEntity>>(EntityName, FetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>(EntityName, FetchXml);
 
             if (result != null)
             {
-                var list = (List<TEntity>)result.value;
+                var list = (List<HoatDongListModel>)result.value;
                 var count = list.Count;
                 if (count > 0)
                 {
@@ -153,36 +153,18 @@ namespace PhuLongCRM.Models
                     OutOfData = true;
                 }
             }
-            else
-            {
-                //OutOfData = false;
-                //Data.Clear();
-                //_page = 1;
-
-                //if (UseConnectFailtNotificationDefault == true)
-                //{
-                //    ConnectFail = async () => Helpers.ToastMessageHelper.ShortMessage("mat ket noi");
-                //    ConnectFail();
-                //}
-                //else
-                //{
-                //    ConnectFail?.Invoke();
-                //}
-            }
             if (EntityName == "appointments")
             {
                 foreach (var item in items)
                 {
-                    var a = item as HoatDongListModel;
-                    a.customer = await MeetCustomerHelper.MeetCustomer(a.activityid);
+                    item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
                 }
             }
             else
             {
                 foreach (var item in items)
                 {
-                    var a = item as HoatDongListModel;
-                    a.customer = a.regarding_name;
+                    item.customer = item.regarding_name;
                 }
             }
             return items;
