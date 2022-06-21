@@ -43,6 +43,11 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleAccount.accountid != Guid.Empty)
             {
+                if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_qrcode))
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
+                }
+
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
@@ -335,6 +340,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
+
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
             string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
@@ -355,6 +361,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
+
         private void NguoiDaiDien_Tapped(object sender, EventArgs e)
         {
             if (viewModel.PrimaryContact.contactid != null)
@@ -376,6 +383,7 @@ namespace PhuLongCRM.Views
                 };
             }
         }
+
         private async void Update(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -394,6 +402,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -413,10 +422,12 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void CloseContentMandatorySecondary_Tapped(object sender, EventArgs e)
         {
             ContentMandatorySecondary.IsVisible = false;
         }
+
         private void ListMandatorySecondary_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -426,6 +437,7 @@ namespace PhuLongCRM.Views
             ContentMandatorySecondary.IsVisible = true;
             LoadingHelper.Hide();
         }
+
         private async void ListMoreMandatory_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             if (e.Item != null)
@@ -441,6 +453,7 @@ namespace PhuLongCRM.Views
                 }
             }
         }
+
         private void SetHeightListView()
         {
             double height_item = (viewModel.list_MandatorySecondary.Count() * 110) + 50;
@@ -464,6 +477,7 @@ namespace PhuLongCRM.Views
                 ListMandatory.IsVisible = true;
             }
         }
+
         private async void NewMeet(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
@@ -473,6 +487,7 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
+
         private async void NewPhoneCall(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
@@ -482,6 +497,7 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
+        
         private async void NewTask(object sender, EventArgs e)
         {
             if (viewModel.singleAccount != null)
@@ -491,6 +507,7 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
+
         private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
         {
             OnAppearing();
@@ -521,6 +538,32 @@ namespace PhuLongCRM.Views
                     TabGiaoDich.IsVisible = false;
                     TabNguoiUyQuyen.IsVisible = true;
                 }
+            }
+        }
+
+        private async void GenerateQRCode(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            List<string> info = new List<string>();
+            info.Add(viewModel.singleAccount.bsd_customercode);
+            info.Add("account");
+            info.Add(viewModel.singleAccount.accountid.ToString());
+            string uriQrCode = $"https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data={string.Join(",", info)}";
+
+            var bytearr = await DowloadImageToByteArrHelper.Download(uriQrCode);
+            string base64 = System.Convert.ToBase64String(bytearr);
+
+            bool isSuccess = await viewModel.SaveQRCode(base64);
+            if (isSuccess)
+            {
+                viewModel.singleAccount.bsd_qrcode = base64;
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_that_bai);
             }
         }
     }

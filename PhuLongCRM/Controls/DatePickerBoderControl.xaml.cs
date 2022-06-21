@@ -135,11 +135,16 @@ namespace PhuLongCRM.Controls
 
         private void timePicker_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (this.Time.HasValue)
+            if (this.Date.HasValue && this.Time.HasValue)
             {
                 this.Date = new DateTime(this.Date.Value.Year, this.Date.Value.Month, this.Date.Value.Day, this.Time.Value.Hours, this.Time.Value.Minutes, this.Time.Value.Seconds);
-                this.Date_Selected?.Invoke(sender, EventArgs.Empty);
             }
+            else if (!this.Date.HasValue && this.Time.HasValue)
+            {
+                this.Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, this.Time.Value.Hours, this.Time.Value.Minutes, this.Time.Value.Seconds);
+            }
+
+            this.Date_Selected?.Invoke(sender, EventArgs.Empty);
         }
 
         private void ResetGrid(int numSpan)

@@ -121,6 +121,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_housenumberstreet' />
                                 <attribute name='bsd_businesstype' />
                                 <attribute name='bsd_customercode' />
+                                <attribute name='bsd_qrcode' />
                                 <order attribute='createdon' descending='true' />
                                     <link-entity name='contact' from='contactid' to='primarycontactid' visible='false' link-type='outer' alias='contacts'>
                                         <attribute name='bsd_fullname' alias='primarycontactname'/>
@@ -507,6 +508,22 @@ namespace PhuLongCRM.ViewModels
                 }
             }
             return false;
-        }        
+        }
+
+        // Save qrcode
+        public async Task<bool> SaveQRCode(string qrCode)
+        {
+            string path = "/accounts(" + this.singleAccount.accountid + ")";
+            object content = new
+            {
+                bsd_qrcode = qrCode,
+            };
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            if (result.IsSuccess)
+                return true;
+            else
+                return false;
+        }
     }
 }
