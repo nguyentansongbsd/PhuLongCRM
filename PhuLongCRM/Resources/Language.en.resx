@@ -3187,7 +3187,7 @@
 		<value>Quotation And Reservation</value>
   </data>
 	<data name="tao_qr_code" xml:space="preserve">
-		<value>Generate QR Code</value>
+		<value>Generate QR code</value>
 	</data>
 	<data name="tao_qr_code_thanh_cong" xml:space="preserve">
 		<value>Generate qr code successed</value>

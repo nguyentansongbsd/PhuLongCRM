@@ -7657,7 +7657,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tạo QR Code.
+        ///   Looks up a localized string similar to Tạo QR code.
         /// </summary>
         internal static string tao_qr_code {
             get {

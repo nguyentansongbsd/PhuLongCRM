@@ -3187,7 +3187,7 @@
 		<value>Bảng Tính Giá Và Đặt Cọc</value>
   </data>
 	<data name="tao_qr_code" xml:space="preserve">
-		<value>Tạo QR Code</value>
+		<value>Tạo QR code</value>
 	</data>
 	<data name="tao_qr_code_thanh_cong" xml:space="preserve">
 		<value>Tạo qr code thành công</value>
