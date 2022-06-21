@@ -320,5 +320,27 @@ namespace PhuLongCRM.Models
 
         private string _bsd_qrcode;
         public string bsd_qrcode { get=>_bsd_qrcode; set { _bsd_qrcode = value;OnPropertyChanged(nameof(bsd_qrcode)); } }
+        public string mobilephone_format
+        {
+            get
+            {
+                if (mobilephone != null && mobilephone.Contains("-"))
+                {
+                    return mobilephone.Split('-')[1].StartsWith("84") ? mobilephone.Replace("84", "+84-") : mobilephone;
+                }
+                else if (mobilephone != null && mobilephone.Contains("+84"))
+                {
+                    return mobilephone.Replace("+84", "+84-");
+                }
+                else if (mobilephone != null && mobilephone.StartsWith("84"))
+                {
+                    return mobilephone.Replace("84", "+84-");
+                }
+                else
+                {
+                    return mobilephone;
+                }
+            }
+        }
     }
 }

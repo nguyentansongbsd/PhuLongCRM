@@ -85,7 +85,7 @@
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="6">
                                     <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dien_thoai},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                    <controls:FormLabelValue Text="{Binding singleAccount.telephone1,Converter={StaticResource PhoneFormatConverter}}" Grid.Column="1" FontSize="15" TextColor="#444444" />
+                                    <controls:FormLabelValue Text="{Binding singleAccount.telephone1_format}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                 </Grid>
                             </Grid>
                             <BoxView HeightRequest="1" BackgroundColor="#939393" Grid.Row="1"/>
@@ -135,7 +135,7 @@
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.dien_thoai}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <controls:FormLabelValue Text="{Binding singleAccount.telephone1,Converter={StaticResource PhoneFormatConverter}}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding singleAccount.telephone1_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.email}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
@@ -206,7 +206,7 @@
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" Grid.Row="1">
                                             <controls:FormLabel Text="{x:Static lang:Language.so_dien_thoai}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <controls:FormLabelValue Text="{Binding PrimaryContact.mobilephone}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding PrimaryContact.mobilephone_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid Grid.Row="2" RowDefinitions="Auto,1,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_lien_lac},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="0" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>
