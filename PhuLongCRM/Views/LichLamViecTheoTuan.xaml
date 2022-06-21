@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
@@ -62,8 +62,8 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
-            <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" RowDefinitions="Auto,Auto,*">
-                <Grid Grid.Row="0" ColumnDefinitions="*,*,*" ColumnSpacing="0" VerticalOptions="Center" >
+            <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" RowDefinitions="Auto,Auto,*" RowSpacing="0" BackgroundColor="#eeeeee">
+                <Grid Grid.Row="0" BackgroundColor="White" ColumnDefinitions="*,*,*" ColumnSpacing="0" VerticalOptions="Center" >
                     <telerikPrimitives:RadBorder x:Name="radBorderTask" Grid.Column="0" Style="{StaticResource radBorder}">
                         <telerikPrimitives:RadBorder.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Task_Tapped"/>
@@ -83,13 +83,17 @@
                         <Label x:Name="lblPhoneCall" Text="{x:Static lang:Language.cuoc_goi}" Style="{StaticResource labelTap}"/>
                     </telerikPrimitives:RadBorder>
                 </Grid>
-                <DatePicker Grid.Row="1" Date="{Binding selectedDate}" DateSelected="Handle_DateSelected"/>
-                <ListView x:Name="listView" IsGroupingEnabled="true" ItemsSource="{Binding selectedDateEventsGrouped}"  Grid.Row="2"  HasUnevenRows="true" SelectionMode="None" ItemTapped="Event_Tapped">
+
+                <StackLayout Grid.Row="1" BackgroundColor="White" Padding="10,6" Margin="0,0,0,2">
+                    <controls:DatePickerBoderControl Date="{Binding selectedDate}" ShowTime="False" IsVisibleButtonClear="False" Date_Selected="Handle_DateSelected" />
+                </StackLayout>
+                
+                <ListView x:Name="listView" BackgroundColor="White" IsGroupingEnabled="true" ItemsSource="{Binding selectedDateEventsGrouped}"  Grid.Row="2"  HasUnevenRows="true" SelectionMode="None" ItemTapped="Event_Tapped">
                     <ListView.GroupHeaderTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Padding="5">
-                                    <Label Text="{Binding Key, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" FontSize="Medium"/>
+                                <StackLayout Padding="10,6">
+                                    <Label Text="{Binding Key, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" FontSize="15"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
@@ -133,7 +137,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,6,6" Text="&#xf067;" Clicked="AddButton_Clicked"  TextColor="White" FontSize="18" FontFamily="FontAwesomeSolid" WidthRequest="44" HeightRequest="44" CornerRadius="22" BackgroundColor="#1399D5"/>
+                <Button Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,14,40" Text="&#xf067;" Clicked="AddButton_Clicked"  TextColor="White" FontSize="18" FontFamily="FontAwesomeSolid" WidthRequest="44" HeightRequest="44" CornerRadius="22" BackgroundColor="#1399D5"/>
             </Grid>
             <views:ActivityPopupContentView x:Name="ActivityPopup" HidePopupActivity="ActivityPopup_HidePopupActivity"/>
         </AbsoluteLayout>

@@ -3291,6 +3291,9 @@
 	<data name="thong_tin_giu_cho_title" xml:space="preserve">
 		<value>Thông Tin Giữ Chỗ</value>
 	</data>
+	<data name="khong_co_hoat_dong" xml:space="preserve">
+		<value>Không có hoạt động</value>
+  </data>
 	<data name="cap_nhat_bang_tinh_gia_title" xml:space="preserve">
 		<value>Chỉnh Sửa Bảng Tính Giá</value>
 	</data>

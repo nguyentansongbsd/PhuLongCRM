@@ -202,6 +202,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to cancel this case ?.
+        /// </summary>
+        internal static string ban_co_muon_huy_phan_hoi_nay_khong {
+            get {
+                return ResourceManager.GetString("ban_co_muon_huy_phan_hoi_nay_khong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to delete this promotions?.
         /// </summary>
         internal static string ban_co_muon_xoa_khuyen_mai_khong {
@@ -261,6 +270,15 @@ namespace PhuLongCRM.Resources {
         internal static string ban_giao_du_kien_hd {
             get {
                 return ResourceManager.GetString("ban_giao_du_kien_hd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Handover.
+        /// </summary>
+        internal static string ban_giao_title {
+            get {
+                return ResourceManager.GetString("ban_giao_title", resourceCulture);
             }
         }
         
@@ -463,6 +481,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Task.
+        /// </summary>
+        internal static string cap_nhat_cong_viec_title {
+            get {
+                return ResourceManager.GetString("cap_nhat_cong_viec_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Phone Call.
         /// </summary>
         internal static string cap_nhat_cuoc_goi {
@@ -472,11 +499,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Phone Call.
+        /// </summary>
+        internal static string cap_nhat_cuoc_goi_title {
+            get {
+                return ResourceManager.GetString("cap_nhat_cuoc_goi_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Meeting.
         /// </summary>
         internal static string cap_nhat_cuoc_hop {
             get {
                 return ResourceManager.GetString("cap_nhat_cuoc_hop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Meeting.
+        /// </summary>
+        internal static string cap_nhat_cuoc_hop_title {
+            get {
+                return ResourceManager.GetString("cap_nhat_cuoc_hop_title", resourceCulture);
             }
         }
         
@@ -531,6 +576,15 @@ namespace PhuLongCRM.Resources {
         internal static string cap_nhat_kh_tiem_nang {
             get {
                 return ResourceManager.GetString("cap_nhat_kh_tiem_nang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Customer.
+        /// </summary>
+        internal static string cap_nhat_khach_hang {
+            get {
+                return ResourceManager.GetString("cap_nhat_khach_hang", resourceCulture);
             }
         }
         
@@ -2641,6 +2695,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Follow Up List.
+        /// </summary>
+        internal static string danh_sach_theo_doi_title {
+            get {
+                return ResourceManager.GetString("danh_sach_theo_doi_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Booking.
         /// </summary>
         internal static string dat_cho {
@@ -4351,6 +4414,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer.
+        /// </summary>
+        internal static string khach_hang_title {
+            get {
+                return ResourceManager.GetString("khach_hang_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         internal static string khong {
@@ -4401,6 +4473,15 @@ namespace PhuLongCRM.Resources {
         internal static string khong_co_du_lieu {
             get {
                 return ResourceManager.GetString("khong_co_du_lieu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Activity.
+        /// </summary>
+        internal static string khong_co_hoat_dong {
+            get {
+                return ResourceManager.GetString("khong_co_hoat_dong", resourceCulture);
             }
         }
         
@@ -4909,6 +4990,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Working Schedule By Day.
+        /// </summary>
+        internal static string lich_lam_viec_theo_ngay_title {
+            get {
+                return ResourceManager.GetString("lich_lam_viec_theo_ngay_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Working schedule by month.
         /// </summary>
         internal static string lich_lam_viec_theo_thang {
@@ -4918,11 +5008,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Working Schedule By Month.
+        /// </summary>
+        internal static string lich_lam_viec_theo_thang_title {
+            get {
+                return ResourceManager.GetString("lich_lam_viec_theo_thang_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Working schedule by week.
         /// </summary>
         internal static string lich_lam_viec_theo_tuan {
             get {
                 return ResourceManager.GetString("lich_lam_viec_theo_tuan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Working Schedule By Week.
+        /// </summary>
+        internal static string lich_lam_viec_theo_tuan_title {
+            get {
+                return ResourceManager.GetString("lich_lam_viec_theo_tuan_title", resourceCulture);
             }
         }
         
@@ -6061,7 +6169,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please enter user name..
+        ///   Looks up a localized string similar to Please enter user name.
         /// </summary>
         internal static string nhap_ho_ten_khach_hang {
             get {
@@ -6511,11 +6619,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parent Case.
+        ///   Looks up a localized string similar to Parent case.
         /// </summary>
         internal static string phan_hoi_lien_quan {
             get {
                 return ResourceManager.GetString("phan_hoi_lien_quan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Case.
+        /// </summary>
+        internal static string phan_hoi_lien_quan_title {
+            get {
+                return ResourceManager.GetString("phan_hoi_lien_quan_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cases.
+        /// </summary>
+        internal static string phan_hoi_title {
+            get {
+                return ResourceManager.GetString("phan_hoi_title", resourceCulture);
             }
         }
         
@@ -7213,7 +7339,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales literature.
+        ///   Looks up a localized string similar to Sales Literature.
         /// </summary>
         internal static string tai_lieu_kinh_doanh {
             get {
@@ -7272,6 +7398,15 @@ namespace PhuLongCRM.Resources {
         internal static string tao_bang_tinh_gia_thanh_cong {
             get {
                 return ResourceManager.GetString("tao_bang_tinh_gia_thanh_cong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Quotation.
+        /// </summary>
+        internal static string tao_bang_tinh_gia_title {
+            get {
+                return ResourceManager.GetString("tao_bang_tinh_gia_title", resourceCulture);
             }
         }
         
@@ -7420,11 +7555,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Task.
+        /// </summary>
+        internal static string tao_moi_cong_viec_title {
+            get {
+                return ResourceManager.GetString("tao_moi_cong_viec_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Phone Call.
         /// </summary>
         internal static string tao_moi_cuoc_goi {
             get {
                 return ResourceManager.GetString("tao_moi_cuoc_goi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Phone Call.
+        /// </summary>
+        internal static string tao_moi_cuoc_goi_title {
+            get {
+                return ResourceManager.GetString("tao_moi_cuoc_goi_title", resourceCulture);
             }
         }
         
@@ -7438,11 +7591,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Meeting.
+        /// </summary>
+        internal static string tao_moi_cuoc_hop_title {
+            get {
+                return ResourceManager.GetString("tao_moi_cuoc_hop_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Lead.
         /// </summary>
         internal static string tao_moi_kh_tiem_nang {
             get {
                 return ResourceManager.GetString("tao_moi_kh_tiem_nang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Customer.
+        /// </summary>
+        internal static string tao_moi_khach_hang {
+            get {
+                return ResourceManager.GetString("tao_moi_khach_hang", resourceCulture);
             }
         }
         
@@ -7470,6 +7641,15 @@ namespace PhuLongCRM.Resources {
         internal static string tao_phan_hoi {
             get {
                 return ResourceManager.GetString("tao_phan_hoi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Case.
+        /// </summary>
+        internal static string tao_phan_hoi_title {
+            get {
+                return ResourceManager.GetString("tao_phan_hoi_title", resourceCulture);
             }
         }
         
@@ -7852,6 +8032,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit information.
+        /// </summary>
+        internal static string thon_tin_can_ho_title {
+            get {
+                return ResourceManager.GetString("thon_tin_can_ho_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notify.
         /// </summary>
         internal static string thong_bao {
@@ -8052,6 +8241,15 @@ namespace PhuLongCRM.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Price Information.
         /// </summary>
+        internal static string thong_tin_gia_ban_title {
+            get {
+                return ResourceManager.GetString("thong_tin_gia_ban_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Information.
+        /// </summary>
         internal static string thong_tin_gia_title {
             get {
                 return ResourceManager.GetString("thong_tin_gia_title", resourceCulture);
@@ -8100,6 +8298,15 @@ namespace PhuLongCRM.Resources {
         internal static string thong_tin_khach_hang {
             get {
                 return ResourceManager.GetString("thong_tin_khach_hang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Information.
+        /// </summary>
+        internal static string thong_tin_khach_hang_title {
+            get {
+                return ResourceManager.GetString("thong_tin_khach_hang_title", resourceCulture);
             }
         }
         
@@ -8442,6 +8649,15 @@ namespace PhuLongCRM.Resources {
         internal static string trang_chu {
             get {
                 return ResourceManager.GetString("trang_chu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        internal static string trang_chu_title {
+            get {
+                return ResourceManager.GetString("trang_chu_title", resourceCulture);
             }
         }
         
