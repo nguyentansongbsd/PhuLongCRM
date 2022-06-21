@@ -48,7 +48,7 @@ namespace PhuLongCRM.Views
             VisualStateManager.GoToState(lblPhoneCall, "InActive");
 
             await viewModel.loadAllActivities();
-            Handle_DateSelected(null, new Xamarin.Forms.DateChangedEventArgs(DateTime.Now, DateTime.Now));         
+            Handle_DateSelected(null,EventArgs.Empty);         
             if (viewModel.lstEvents != null && viewModel.lstEvents.Count > 0)
                 OnComplete?.Invoke(true);
             else
@@ -121,10 +121,12 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        void Handle_DateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
+        private void Handle_DateSelected(System.Object sender, System.EventArgs e)
         {
-            viewModel.selectedDate = e.NewDate;
-            viewModel.UpdateSelectedEventsForWeekView(viewModel.selectedDate.Value);
+            if (sender == null)
+                viewModel.UpdateSelectedEventsForWeekView(DateTime.Now);
+            else
+                viewModel.UpdateSelectedEventsForWeekView(viewModel.selectedDate.Value);
         }
 
         private async void AddButton_Clicked(object sender, System.EventArgs e)

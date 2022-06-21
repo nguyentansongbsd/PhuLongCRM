@@ -19,12 +19,11 @@ namespace PhuLongCRM
         {
             InitializeComponent();
             this.BindingContext = this;
-            Date = null;// DateTime.Now; ;
+            Date = new DateTime(2022, 06, 18, 22, 00, 00);
         }
 
         async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
-
             await DisplayAlert("", Date.Value.ToString(), "ok");
         }
     }

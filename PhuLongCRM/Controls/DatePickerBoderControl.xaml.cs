@@ -35,6 +35,9 @@ namespace PhuLongCRM.Controls
         public static readonly BindableProperty ShowTimeProperty = BindableProperty.Create(nameof(ShowTime), typeof(bool?), typeof(DatePickerBoderControl), null, BindingMode.TwoWay, propertyChanged: ShowTimeChanged);
         public bool? ShowTime { get => (bool?)GetValue(ShowTimeProperty); set => SetValue(ShowTimeProperty, value); }
 
+        public static readonly BindableProperty IsVisibleButtonClearProperty = BindableProperty.Create(nameof(IsVisibleButtonClear), typeof(bool?), typeof(DatePickerBoderControl), null, BindingMode.TwoWay);
+        public bool? IsVisibleButtonClear { get => (bool?)GetValue(IsVisibleButtonClearProperty); set => SetValue(IsVisibleButtonClearProperty, value); }
+
         public bool IsTimeNull { get; set; }
 
         public DatePickerBoderControl()
@@ -66,8 +69,14 @@ namespace PhuLongCRM.Controls
                 if (control.Date.HasValue)
                 {
                     control.Time = new TimeSpan(control.Date.Value.Hour, control.Date.Value.Minute, control.Date.Value.Second);
+                    control.Date = new DateTime(control.Date.Value.Year, control.Date.Value.Month, control.Date.Value.Day, control.Time.Value.Hours, control.Time.Value.Minutes, control.Time.Value.Seconds);
                     control.ShowEntryTime = control.Time.HasValue ? false : true;
                     control.btnClearTime.IsVisible = !control.ShowEntryTime;
+                }
+
+                if (control.IsVisibleButtonClear.HasValue && control.IsVisibleButtonClear.Value == false)
+                {
+                    control.btnClearTime.IsVisible = control.btnClear.IsVisible = false;
                 }
             }
         }
@@ -98,7 +107,7 @@ namespace PhuLongCRM.Controls
             {
                 this.Date = DateTime.Now;
             }
-            btnClear.IsVisible = !ShowEntry;
+            btnClear.IsVisible = IsVisibleButtonClear.HasValue ? IsVisibleButtonClear.Value : !ShowEntry;
         }
 
         private void timePicker_OnChangeState(object sender, EventArgs e)
@@ -109,7 +118,7 @@ namespace PhuLongCRM.Controls
             {
                 this.Time = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
             }
-            btnClearTime.IsVisible = !ShowEntryTime;
+            btnClearTime.IsVisible = IsVisibleButtonClear.HasValue ? IsVisibleButtonClear.Value : !ShowEntryTime;
         }
 
         private void ClearDate_Tapped(object sender, EventArgs e)

@@ -3291,4 +3291,7 @@
 	<data name="thong_tin_giu_cho_title" xml:space="preserve">
 		<value>Queue Information</value>
 	</data>
+	<data name="khong_co_hoat_dong" xml:space="preserve">
+		<value>No Activity</value>
+	</data>
 </root>

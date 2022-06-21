@@ -183,7 +183,7 @@ namespace PhuLongCRM.ViewModels
 
                 if (!checkHasValue)
                 {
-                    selectedDateEvents.Add(new CalendarEvent() { dateForGroupingWeek = currentDate, activitytype_label = "No Activity" });
+                    selectedDateEvents.Add(new CalendarEvent() { dateForGroupingWeek = currentDate, activitytype_label = Language.khong_co_hoat_dong });
                 }
 
             }
