@@ -214,7 +214,7 @@
     <value>Đóng</value>
   </data>
 	<data name="khong_cap_nhat_duoc_thong_tin_imei" xml:space="preserve">
-    <value>Không cập nhật được thông tin Imei.</value>
+    <value>Không chỉnh sửa được thông tin Imei.</value>
   </data>
 	<data name="chua_co_contact_khong_the_chinh_sua_thong_tin" xml:space="preserve">
     <value>Chưa có contact, không thể chỉnh sửa thông tin.</value>
@@ -865,10 +865,10 @@
     <value>Tạo Mới</value>
   </data>
 	<data name="cap_nhat" xml:space="preserve">
-    <value>Cập Nhật</value>
+    <value>Chỉnh sửa</value>
   </data>
 	<data name="cap_nhat_khach_hang_doanh_nghiep" xml:space="preserve">
-    <value>Cập Nhật Khách Hàng Doanh Nghiệp</value>
+    <value>Chỉnh Sửa Khách Hàng Doanh Nghiệp</value>
   </data>
 	<data name="vui_long_chon_loai_khach_hang" xml:space="preserve">
     <value>Vui lòng chọn loại khách hàng.</value>
@@ -913,10 +913,10 @@
     <value>Tạo khách hàng doanh nghiệp thất bại.</value>
   </data>
 	<data name="cap_nhat_khach_hang_doanh_nghiep_thanh_cong" xml:space="preserve">
-    <value>Cập nhật khách hàng doanh nghiệp thành công.</value>
+    <value>Chỉnh sửa khách hàng doanh nghiệp thành công.</value>
   </data>
 	<data name="cap_nhat_khach_hang_doanh_nghiep_that_bai" xml:space="preserve">
-    <value>Cập nhật khách hàng doanh nghiệp thất bại.</value>
+    <value>Chỉnh sửa khách hàng doanh nghiệp thất bại.</value>
   </data>
 	<data name="cong_viec" xml:space="preserve">
     <value>Công Việc</value>
@@ -1126,28 +1126,28 @@
     <value>Ngày ký</value>
   </data>
 	<data name="cap_nhat_bang_tinh_gia" xml:space="preserve">
-    <value>Cập Nhật Bảng Tính Giá</value>
+    <value>Chỉnh sửa Bảng tính giá</value>
   </data>
 	<data name="huy_bang_tinh_gia" xml:space="preserve">
-    <value>Hủy Bảng Tính Giá</value>
+    <value>Hủy Bảng tính giá</value>
   </data>
 	<data name="xoa_lich_thanh_toan" xml:space="preserve">
-    <value>Xóa Lịch Thanh Toán</value>
+    <value>Xóa Lịch thanh toán</value>
   </data>
 	<data name="tao_lich_thanh_toan" xml:space="preserve">
-    <value>Tạo Lịch Thanh Toán</value>
+    <value>Tạo Lịch thanh toán</value>
   </data>
 	<data name="ky_bang_tinh_gia" xml:space="preserve">
-    <value>Ký Bảng Tính Giá</value>
+    <value>Ký Bảng tính giá</value>
   </data>
 	<data name="xac_nhan_in" xml:space="preserve">
     <value>Xác nhận in</value>
   </data>
 	<data name="xac_nhan_tai_pdc" xml:space="preserve">
-    <value>Xác Nhận Tải PĐC</value>
+    <value>Xác nhận tải PĐC</value>
   </data>
 	<data name="ky_phieu_dat_coc" xml:space="preserve">
-    <value>Ký Phiếu Đặt Cọc</value>
+    <value>Ký Phiếu đặt cọc</value>
   </data>
 	<data name="da_xoa_lich_thanh_toan" xml:space="preserve">
     <value>Đã xóa lịch thanh toán.</value>
@@ -1324,7 +1324,7 @@
     <value>Tạo Mới Khách Hàng Cá Nhân</value>
   </data>
 	<data name="cap_nhat_khach_hang_ca_nhan" xml:space="preserve">
-    <value>Cập Nhật Khách Hàng Cá Nhân</value>
+    <value>Chỉnh Sửa Khách Hàng Cá Nhân</value>
   </data>
 	<data name="vui_long_nhap_ho_ten" xml:space="preserve">
     <value>Vui lòng nhập họ tên.</value>
@@ -1378,10 +1378,10 @@
     <value>Tạo khách hàng cá nhân thất bại.</value>
   </data>
 	<data name="cap_nhat_thanh_cong" xml:space="preserve">
-    <value>Cập nhật thành công.</value>
+    <value>Chỉnh sửa thành công.</value>
   </data>
 	<data name="cap_nhat_that_bai" xml:space="preserve">
-    <value>Cập nhật thất bại.</value>
+    <value>Chỉnh sửa thất bại.</value>
   </data>
 	<data name="xem_anh_mat_truoc_cmnd" xml:space="preserve">
     <value>Xem ảnh mặt trước cmnd</value>
@@ -1435,7 +1435,7 @@
     <value>Mô tả loại HĐ</value>
   </data>
 	<data name="cap_nhat_hop_dong" xml:space="preserve">
-    <value>Cập Nhật Hợp Đồng</value>
+    <value>Chỉnh Sửa Hợp Đồng</value>
   </data>
 	<data name="ngay_spa" xml:space="preserve">
     <value>Ngày HĐ</value>
@@ -1717,7 +1717,7 @@
     <value>Tạo Mới Khách Hàng Tiềm Năng</value>
   </data>
 	<data name="cap_nhat_kh_tiem_nang" xml:space="preserve">
-    <value>Cập Nhật Khách Hàng Tiềm Năng</value>
+    <value>Chỉnh Sửa Khách Hàng Tiềm Năng</value>
   </data>
 	<data name="so_dien_thoai_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
     <value>Số điện thoại không hợp lệ (Gồm 10 ký tự)</value>
@@ -1828,7 +1828,7 @@
     <value>Tạo Cuộc họp</value>
   </data>
 	<data name="cap_nhat_cuoc_hop" xml:space="preserve">
-    <value>Cập Nhật Cuộc Họp</value>
+    <value>Chỉnh Sửa Cuộc Họp</value>
   </data>
 	<data name="vui_long_nhap_chu_de_cuoc_hop" xml:space="preserve">
     <value>Vui lòng nhập chủ đề cuộc họp.</value>
@@ -1861,7 +1861,7 @@
     <value>Mở lại phản hồi</value>
   </data>
 	<data name="cap_nhat_phan_hoi" xml:space="preserve">
-    <value>Cập Nhật Phản Hồi</value>
+    <value>Chỉnh Sửa Phản Hồi</value>
   </data>
 	<data name="huong_giai_quyet" xml:space="preserve">
     <value>Hướng giải quyết</value>
@@ -1957,7 +1957,7 @@
     <value>Thêm cuộc gọi</value>
   </data>
 	<data name="cap_nhat_cuoc_goi" xml:space="preserve">
-    <value>Cập Nhật Cuộc Gọi</value>
+    <value>Chỉnh Sửa Cuộc Gọi</value>
   </data>
 	<data name="vui_long_nhap_chu_de_cuoc_goi" xml:space="preserve">
     <value>Vui lòng nhập chủ đề cuộc gọi.</value>
@@ -2170,7 +2170,7 @@
     <value>Xóa người đồng sở hữu thành công.</value>
   </data>
 	<data name="cap_nhat_dong_so_huu" xml:space="preserve">
-    <value>Cập Nhật Đồng Sở Hữu</value>
+    <value>Chỉnh Sửa Đồng Sở Hữu</value>
   </data>
 	<data name="vui_long_chon_quan_he" xml:space="preserve">
     <value>Vui lòng chọn quan hệ.</value>
@@ -2185,7 +2185,7 @@
     <value>Thêm đồng sở hữu thành công.</value>
   </data>
 	<data name="cap_nhat_dong_so_huu_thanh_cong" xml:space="preserve">
-    <value>Cập nhật đồng sở hữu thành công.</value>
+    <value>Chỉnh sửa đồng sở hữu thành công.</value>
   </data>
 	<data name="nguoi_mua_khong_duoc_trung_voi_dai_ly_san_giao_dich_vui_long_chon_lai" xml:space="preserve">
     <value>Người mua không được trùng với Đại lý/ Sàn giao dịch. Vui lòng chọn lại.</value>
@@ -2218,7 +2218,7 @@
     <value>Nhập chủ đề công việc</value>
   </data>
 	<data name="cap_nhap_cong_viec" xml:space="preserve">
-    <value>Cập Nhật Công Việc</value>
+    <value>Chỉnh Sửa Công Việc</value>
   </data>
 	<data name="thoi_gian_bat_dau_phai_nho_hon_thoi_gian_ket_thuc" xml:space="preserve">
     <value>Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.</value>
@@ -3112,7 +3112,7 @@
 		<value>Đã tạo danh sách theo dõi.</value>
 	</data>
 	<data name="cap_nhat_thong_tin_title" xml:space="preserve">
-		<value>Cập Nhật Thông Tin</value>
+		<value>Chỉnh Sửa Thông Tin</value>
 	</data>
 	<data name="ful_refund_takeoutmoney" xml:space="preserve">
 		<value>Hoàn tiền</value>
@@ -3142,10 +3142,10 @@
 		<value>Vui lòng chọn đợt mở bán.</value>
 	</data>
 	<data name="cap_nhat_danh_sach_theo_doi_thanh_cong" xml:space="preserve">
-		<value>Cập nhật danh sách theo dõi thành công.</value>
+		<value>Chỉnh sửa danh sách theo dõi thành công.</value>
 	</data>
 	<data name="cap_nhat_danh_sach_theo_doi_that_bai" xml:space="preserve">
-		<value>Cập nhật danh sách theo dõi thất bại.</value>
+		<value>Chỉnh sửa danh sách theo dõi thất bại.</value>
 	</data>
 	<data name="ma_dstd" xml:space="preserve">
 		<value>Mã DSTD</value>
@@ -3229,7 +3229,7 @@
 		<value>Tạo Mới Khách Hàng</value>
 	</data>
 	<data name="cap_nhat_khach_hang" xml:space="preserve">
-		<value>Cập Nhật Khách Hàng</value>
+		<value>Chỉnh Sửa Khách Hàng</value>
 	</data>
 	<data name="thon_tin_can_ho_title" xml:space="preserve">
 		<value>Thông Tin Căn Hộ</value>
@@ -3250,19 +3250,19 @@
 		<value>Bạn có muốn hủy phản hồi này không ?</value>
 	</data>
 	<data name="cap_nhat_cong_viec_title" xml:space="preserve">
-		<value>Cập Nhật Công Việc</value>
+		<value>Chỉnh Sửa Công Việc</value>
 	</data>
 	<data name="tao_moi_cong_viec_title" xml:space="preserve">
 		<value>Tạo Mới Công Việc</value>
 	</data>
 	<data name="cap_nhat_cuoc_goi_title" xml:space="preserve">
-		<value>Cập Nhật Cuộc Gọi</value>
+		<value>Chỉnh Sửa Cuộc Gọi</value>
 	</data>
 	<data name="tao_moi_cuoc_goi_title" xml:space="preserve">
 		<value>Tạo Mới Cuộc Gọi</value>
 	</data>
 	<data name="cap_nhat_cuoc_hop_title" xml:space="preserve">
-		<value>Cập Nhật Cuộc Họp</value>
+		<value>Chỉnh Sửa Cuộc Họp</value>
 	</data>
 	<data name="tao_moi_cuoc_hop_title" xml:space="preserve">
 		<value>Tạo Mới Cuộc Họp</value>
@@ -3290,5 +3290,8 @@
 	</data>
 	<data name="thong_tin_giu_cho_title" xml:space="preserve">
 		<value>Thông Tin Giữ Chỗ</value>
+	</data>
+	<data name="cap_nhat_bang_tinh_gia_title" xml:space="preserve">
+		<value>Chỉnh Sửa Bảng Tính Giá</value>
 	</data>
 </root>

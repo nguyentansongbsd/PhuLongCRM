@@ -98,7 +98,7 @@ namespace PhuLongCRM.Views
             await viewModel.LoadQuote();
             if (viewModel.Quote != null)
             {
-                this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia;
+                this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia_title;
                 lookupNguoiMua.IsEnabled = false;
                 lookupGiuCho.IsEnabled = false;
                 lookupDaiLySanGiaoDich.IsEnabled = false;
