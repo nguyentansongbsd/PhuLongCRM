@@ -121,7 +121,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_housenumberstreet' />
                                 <attribute name='bsd_businesstype' />
                                 <attribute name='bsd_customercode' />
-                                <attribute name='bsd_qrcode' />
+                                <attribute name='bsd_imageqrcode' />
                                 <order attribute='createdon' descending='true' />
                                     <link-entity name='contact' from='contactid' to='primarycontactid' visible='false' link-type='outer' alias='contacts'>
                                         <attribute name='bsd_fullname' alias='primarycontactname'/>
@@ -464,32 +464,15 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <filter type='and'>
                                       <condition attribute='bsd_developeraccount' operator='eq' value='{accountid}' />
-                                    </filter>                                  
+                                      <condition attribute='statuscode' operator='eq' value='100000000' />
+                                    </filter>
                                   </entity>
-                                </fetch>";
+                                </fetch>"; // 100000000 == Applying
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<MandatorySecondaryModel>>("bsd_mandatorysecondaries", fetchxml);
-            if (result == null)
+            if (result == null || result.value.Count == 0) return;
+            foreach (var x in result.value)
             {
-                return;
-            }
-            var data = result.value;
-
-            if (data.Any())
-            {
-                foreach (var x in data)
-                {
-                    if (UserLogged.Id == x.bsd_employeeid)
-                        x.is_employee = true;
-                    else
-                        x.is_employee = false;
-                    list_MandatorySecondary.Add(x);
-                }
-                if (list_MandatorySecondary.Any(x => x.statuscode == 100000000))
-                {
-                    var item = list_MandatorySecondary.SingleOrDefault(x => x.statuscode == 100000000);
-                    list_MandatorySecondary.Remove(item);
-                    list_MandatorySecondary.Insert(0, item);
-                }
+                list_MandatorySecondary.Add(x);
             }
         }
 
@@ -516,7 +499,7 @@ namespace PhuLongCRM.ViewModels
             string path = "/accounts(" + this.singleAccount.accountid + ")";
             object content = new
             {
-                bsd_qrcode = qrCode,
+                bsd_imageqrcode = qrCode,
             };
 
             CrmApiResponse result = await CrmHelper.PatchData(path, content);

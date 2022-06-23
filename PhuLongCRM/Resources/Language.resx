@@ -142,7 +142,7 @@
     <value>Đã nhận</value>
   </data>
 	<data name="giao_dich" xml:space="preserve">
-    <value>Giao Dịch</value>
+    <value>GIAO DỊCH</value>
   </data>
 	<data name="giu_cho" xml:space="preserve">
     <value>Giữ chỗ</value>
@@ -3296,5 +3296,23 @@
   </data>
 	<data name="cap_nhat_bang_tinh_gia_title" xml:space="preserve">
 		<value>Chỉnh Sửa Bảng Tính Giá</value>
+	</data>
+	<data name="vui_long_nhap_email" xml:space="preserve">
+		<value>Vui lòng nhập email</value>
+	</data>
+	<data name="thong_tin_lien_he_title" xml:space="preserve">
+		<value>Thông tin liên hệ</value>
+	</data>
+	<data name="nhap_mandatory_sts" xml:space="preserve">
+		<value>Nháp</value>
+	</data>
+	<data name="dang_ap_dung_mandatory_sts" xml:space="preserve">
+		<value>Đang áp dụng</value>
+	</data>
+	<data name="huy_mandatory_sts" xml:space="preserve">
+		<value>Hủy</value>
+	</data>
+	<data name="vo_hieu_luc_mandatory_sts" xml:space="preserve">
+		<value>Vô hiệu lực</value>
 	</data>
 </root>

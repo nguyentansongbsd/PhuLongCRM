@@ -78,7 +78,6 @@
                                         </Label.GestureRecognizers>
                                     </Label>
                                 </Grid>
-
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="5">
                                     <controls:FormLabel Text="{Binding Source={x:Static lang:Language.giay_phep_kinh_doanh},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                     <controls:FormLabelValue Text="{Binding singleAccount.bsd_registrationcode}" Grid.Column="1" FontSize="15" TextColor="#444444" />
@@ -122,7 +121,7 @@
                                     <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <controls:FormLabel Text="QR Code" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <ffimageloading:CachedImage x:Name="imgQrCode" Grid.Column="1" Source="{Binding singleAccount.bsd_qrcode,Converter={StaticResource Base64ToImageSourceConverter}}" IsVisible="{Binding singleAccount.bsd_qrcode,Converter={StaticResource NullToHideConverter}}" LoadingPlaceholder="image_placeholder.jpg" Margin="0,10,25,10" HeightRequest="80" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End"/>
+                                            <ffimageloading:CachedImage x:Name="imgQrCode" Grid.Column="1" Source="{Binding singleAccount.bsd_imageqrcode,Converter={StaticResource Base64ToImageSourceConverter}}" IsVisible="{Binding singleAccount.bsd_imageqrcode,Converter={StaticResource NullToHideConverter}}" LoadingPlaceholder="image_placeholder.jpg" Margin="0,10,25,10" HeightRequest="80" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End"/>
                                         </Grid>
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
@@ -388,7 +387,7 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                            <Grid RowDefinitions="Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
                                                 <Grid.GestureRecognizers>
                                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ListMandatorySecondary_Tapped" CommandParameter="{Binding .}"/>
                                                 </Grid.GestureRecognizers>
@@ -398,8 +397,11 @@
                                                     </telerikPrimitives:RadBorder>
                                                     <Label Grid.Column="1" Text="{Binding bsd_contact_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                 </Grid>
-                                                <controls:FieldListViewItem Title="{x:Static lang:Language.so_dien_thoai}" Text="{Binding bsd_contacmobilephone}"/>
-                                                <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_hieu_luc}" Text="{Binding bsd_effectivedateto, StringFormat='{0:dd/MM/yyyy}'}"/>
+                                                <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
+                                                    <Label Text="{x:Static lang:Language.so_dien_thoai}" FontSize="15" TextColor="Gray" Grid.Column="0"/>
+                                                    <Label Text="{Binding bsd_contacmobilephone,Converter={x:StaticResource PhoneFormatConverter}}" FontSize="15" Grid.Column="1" TextColor="Black"/>
+                                                </Grid>
+                                                <controls:FieldListViewItem Grid.Row="2" Title="{x:Static lang:Language.thoi_gian_hieu_luc}" Text="{Binding bsd_effectivedateto, StringFormat='{0:dd/MM/yyyy}'}"/>
                                             </Grid>
                                         </ViewCell>
                                     </DataTemplate>
@@ -447,7 +449,7 @@
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.ten_cong_ty},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                 <Label Grid.Column="1" Text="{Binding MandatorySecondary.bsd_developeraccount_name}" TextColor="#444444" FontSize="15"/>
                             </Grid>
-                            <Label Text="Thông Tin Chi Tiết" TextColor="#333333" FontSize="15"  BackgroundColor="#80F2F2F2" Padding="15,10" FontAttributes="Bold" />
+                            <Label Text="{x:Static lang:Language.thong_tin_chi_tiet}" TextColor="#333333" FontSize="15"  BackgroundColor="#80F2F2F2" Padding="15,10" FontAttributes="Bold" />
                             <StackLayout Spacing="1" Background="#f1f1f1">
                                 <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                     <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.ngay_bat_dau_hieu_luc},StringFormat='{0}: '}" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>

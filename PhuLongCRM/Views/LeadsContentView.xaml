@@ -17,11 +17,11 @@
     <ContentView.Content>
         <AbsoluteLayout>
             <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="0">
                     <controls:SearchBarFrame x:Name="searchBar" Grid.Column="0" Margin="10,5">
                         <controls:SearchBar  Text="{Binding Keyword}" SearchButtonPressed="Search_Pressed" TextChanged="Search_TextChanged"/>
                     </controls:SearchBarFrame>
-                    <Label Text="&#xf161;" TextColor="#444444" FontFamily="FontAwesomeSolid" FontSize="Medium" Grid.Column="1" Margin="0,0,15,0" VerticalOptions="Center">
+                    <Label Text="&#xf161;" TextColor="#444444" FontFamily="FontAwesomeSolid" FontSize="Medium" Grid.Column="1" Padding="6" Margin="0,0,15,0" VerticalOptions="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Sort_Tapped"/>
                         </Label.GestureRecognizers>

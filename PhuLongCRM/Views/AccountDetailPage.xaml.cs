@@ -43,7 +43,7 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleAccount.accountid != Guid.Empty)
             {
-                if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_qrcode))
+                if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_imageqrcode))
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
                 }
@@ -346,15 +346,17 @@ namespace PhuLongCRM.Views
             string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
-                var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                if (checkVadate == true)
-                {
-                    await Launcher.OpenAsync($"tel:{phone}");
-                }
-                else
-                {
-                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                }
+                await Launcher.OpenAsync($"tel:{phone}");
+                // khong can check validate
+                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
+                //if (checkVadate == true)
+                //{
+                //    await Launcher.OpenAsync($"tel:{phone}");
+                //}
+                //else
+                //{
+                //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                //}
             }
             else
             {
@@ -556,7 +558,7 @@ namespace PhuLongCRM.Views
             bool isSuccess = await viewModel.SaveQRCode(base64);
             if (isSuccess)
             {
-                viewModel.singleAccount.bsd_qrcode = base64;
+                viewModel.singleAccount.bsd_imageqrcode = base64;
                 ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
                 LoadingHelper.Hide();
             }
