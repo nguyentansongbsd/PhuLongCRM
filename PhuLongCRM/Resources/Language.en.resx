@@ -133,7 +133,7 @@
     <value>Home</value>
   </data>
 	<data name="hoa_hong" xml:space="preserve">
-    <value>Commission</value>
+    <value>COMMISSION</value>
   </data>
 	<data name="tong_tien" xml:space="preserve">
     <value>Total amount</value>
@@ -142,7 +142,7 @@
     <value>Received</value>
   </data>
 	<data name="giao_dich" xml:space="preserve">
-		<value>Transaction</value>
+		<value>TRANSACTION</value>
 	</data>
 	<data name="giu_cho" xml:space="preserve">
     <value>Queuing</value>
@@ -157,7 +157,7 @@
     <value>Sold</value>
   </data>
 	<data name="khach_hang_tiem_nang" xml:space="preserve">
-    <value>Leads</value>
+    <value>LEADS</value>
   </data>
 	<data name="khach_hang_moi" xml:space="preserve">
     <value>New customer</value>
@@ -3296,5 +3296,23 @@
  </data>
 	<data name="cap_nhat_bang_tinh_gia_title" xml:space="preserve">
 		<value>Edit Quotation</value>
+	</data>
+	<data name="vui_long_nhap_email" xml:space="preserve">
+		<value>Please enter email</value>
+	</data>
+	<data name="thong_tin_lien_he_title" xml:space="preserve">
+		<value>Contact Info</value>
+	</data>
+	<data name="nhap_mandatory_sts" xml:space="preserve">
+		<value>Active</value>
+	</data>
+	<data name="dang_ap_dung_mandatory_sts" xml:space="preserve">
+		<value>Applying</value>
+	</data>
+	<data name="huy_mandatory_sts" xml:space="preserve">
+		<value>Cancel</value>
+	</data>
+	<data name="vo_hieu_luc_mandatory_sts" xml:space="preserve">
+		<value>Inactive</value>
 	</data>
 </root>

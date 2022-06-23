@@ -454,7 +454,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update task.
+        ///   Looks up a localized string similar to Edit task.
         /// </summary>
         internal static string cap_nhap_cong_viec {
             get {
@@ -463,7 +463,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
         internal static string cap_nhat {
             get {
@@ -472,7 +472,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Quotation.
+        ///   Looks up a localized string similar to Edit Quotation.
         /// </summary>
         internal static string cap_nhat_bang_tinh_gia {
             get {
@@ -481,7 +481,16 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Task.
+        ///   Looks up a localized string similar to Edit Quotation.
+        /// </summary>
+        internal static string cap_nhat_bang_tinh_gia_title {
+            get {
+                return ResourceManager.GetString("cap_nhat_bang_tinh_gia_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Task.
         /// </summary>
         internal static string cap_nhat_cong_viec_title {
             get {
@@ -490,7 +499,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Phone Call.
+        ///   Looks up a localized string similar to Edit Phone Call.
         /// </summary>
         internal static string cap_nhat_cuoc_goi {
             get {
@@ -499,7 +508,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Phone Call.
+        ///   Looks up a localized string similar to Edit Phone Call.
         /// </summary>
         internal static string cap_nhat_cuoc_goi_title {
             get {
@@ -508,7 +517,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Meeting.
+        ///   Looks up a localized string similar to Edit Meeting.
         /// </summary>
         internal static string cap_nhat_cuoc_hop {
             get {
@@ -517,7 +526,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Meeting.
+        ///   Looks up a localized string similar to Edit Meeting.
         /// </summary>
         internal static string cap_nhat_cuoc_hop_title {
             get {
@@ -526,7 +535,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Follow up list has been updated successfully..
+        ///   Looks up a localized string similar to Follow up list has been edited successfully..
         /// </summary>
         internal static string cap_nhat_danh_sach_theo_doi_thanh_cong {
             get {
@@ -535,7 +544,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to update follow up list..
+        ///   Looks up a localized string similar to Failed to edit follow up list..
         /// </summary>
         internal static string cap_nhat_danh_sach_theo_doi_that_bai {
             get {
@@ -544,7 +553,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Co-owner.
+        ///   Looks up a localized string similar to Edit Co-owner.
         /// </summary>
         internal static string cap_nhat_dong_so_huu {
             get {
@@ -553,7 +562,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update co-owner successed..
+        ///   Looks up a localized string similar to Edit co-owner successed..
         /// </summary>
         internal static string cap_nhat_dong_so_huu_thanh_cong {
             get {
@@ -562,7 +571,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Contract.
+        ///   Looks up a localized string similar to Edit Contract.
         /// </summary>
         internal static string cap_nhat_hop_dong {
             get {
@@ -571,7 +580,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Lead.
+        ///   Looks up a localized string similar to Edit Lead.
         /// </summary>
         internal static string cap_nhat_kh_tiem_nang {
             get {
@@ -580,7 +589,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Customer.
+        ///   Looks up a localized string similar to Edit Customer.
         /// </summary>
         internal static string cap_nhat_khach_hang {
             get {
@@ -589,7 +598,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Contact.
+        ///   Looks up a localized string similar to Edit Contact.
         /// </summary>
         internal static string cap_nhat_khach_hang_ca_nhan {
             get {
@@ -598,7 +607,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Account.
+        ///   Looks up a localized string similar to Edit Account.
         /// </summary>
         internal static string cap_nhat_khach_hang_doanh_nghiep {
             get {
@@ -607,7 +616,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update account successed..
+        ///   Looks up a localized string similar to Edit account successed..
         /// </summary>
         internal static string cap_nhat_khach_hang_doanh_nghiep_thanh_cong {
             get {
@@ -616,7 +625,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update account failed..
+        ///   Looks up a localized string similar to Edit account failed..
         /// </summary>
         internal static string cap_nhat_khach_hang_doanh_nghiep_that_bai {
             get {
@@ -625,7 +634,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Case.
+        ///   Looks up a localized string similar to Edit Case.
         /// </summary>
         internal static string cap_nhat_phan_hoi {
             get {
@@ -634,7 +643,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update successed..
+        ///   Looks up a localized string similar to Edit successed..
         /// </summary>
         internal static string cap_nhat_thanh_cong {
             get {
@@ -643,7 +652,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update failed..
+        ///   Looks up a localized string similar to Edit failed..
         /// </summary>
         internal static string cap_nhat_that_bai {
             get {
@@ -652,7 +661,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Information.
+        ///   Looks up a localized string similar to Edit Information.
         /// </summary>
         internal static string cap_nhat_thong_tin_title {
             get {
@@ -967,7 +976,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
         internal static string chinh_sua {
             get {
@@ -2515,6 +2524,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Applying.
+        /// </summary>
+        internal static string dang_ap_dung_mandatory_sts {
+            get {
+                return ResourceManager.GetString("dang_ap_dung_mandatory_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On hold.
         /// </summary>
         internal static string dang_cho {
@@ -3550,7 +3568,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transaction.
+        ///   Looks up a localized string similar to TRANSACTION.
         /// </summary>
         internal static string giao_dich {
             get {
@@ -3901,7 +3919,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commission.
+        ///   Looks up a localized string similar to COMMISSION.
         /// </summary>
         internal static string hoa_hong {
             get {
@@ -4189,6 +4207,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string huy_mandatory_sts {
+            get {
+                return ResourceManager.GetString("huy_mandatory_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel case.
         /// </summary>
         internal static string huy_phan_hoi {
@@ -4387,7 +4414,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Leads.
+        ///   Looks up a localized string similar to LEADS.
         /// </summary>
         internal static string khach_hang_tiem_nang {
             get {
@@ -4441,7 +4468,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to update information Imei.
+        ///   Looks up a localized string similar to Unable to edit information Imei.
         /// </summary>
         internal static string khong_cap_nhat_duoc_thong_tin_imei {
             get {
@@ -4648,7 +4675,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign reservation form.
+        ///   Looks up a localized string similar to Sign Reservation form.
         /// </summary>
         internal static string ky_phieu_dat_coc {
             get {
@@ -6196,6 +6223,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        internal static string nhap_mandatory_sts {
+            get {
+                return ResourceManager.GetString("nhap_mandatory_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter old password.
         /// </summary>
         internal static string nhap_mat_khau_cu {
@@ -7654,7 +7690,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate QR Code.
+        ///   Looks up a localized string similar to Generate QR code.
         /// </summary>
         internal static string tao_qr_code {
             get {
@@ -8311,6 +8347,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact Info.
+        /// </summary>
+        internal static string thong_tin_lien_he_title {
+            get {
+                return ResourceManager.GetString("thong_tin_lien_he_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to M.F Information.
         /// </summary>
         internal static string thong_tin_phi_quan_ly {
@@ -8824,6 +8869,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inactive.
+        /// </summary>
+        internal static string vo_hieu_luc_mandatory_sts {
+            get {
+                return ResourceManager.GetString("vo_hieu_luc_mandatory_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please choose contact to convert..
         /// </summary>
         internal static string vui_long_chon_contact_de_chuyen_sang_khach_hang_tiem_nang {
@@ -9166,6 +9220,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter email.
+        /// </summary>
+        internal static string vui_long_nhap_email {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter take out money between 0 and 100..
         /// </summary>
         internal static string vui_long_nhap_gia_tri_tu_0_den_100 {
@@ -9382,7 +9445,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Print Quotation Final.
+        ///   Looks up a localized string similar to Print Quotation final.
         /// </summary>
         internal static string xac_nhan_in {
             get {
@@ -9445,7 +9508,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm upload quotation.
+        ///   Looks up a localized string similar to Confirm upload Quotation.
         /// </summary>
         internal static string xac_nhan_tai_pdc {
             get {

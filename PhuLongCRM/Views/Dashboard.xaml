@@ -39,13 +39,13 @@
                         <Grid ColumnDefinitions="*,*" Margin="14,6">
                             <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
-                                    <Label Text="{Binding TotalCommission}" FontSize="18" TextColor="#D42A16" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding TotalCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#D42A16" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
-                                    <Label Text="{Binding TotalPaidCommission}" FontSize="18" TextColor="#2196F3" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding TotalPaidCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#2196F3" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.da_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
@@ -169,16 +169,10 @@
 
                         <StackLayout Orientation="Horizontal" Padding="14,14,14,8">
                             <Label Text="{x:Static lang:Language.cong_viec_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
-                            <Label  TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
+                            <Label Text="{Binding Source={x:Static lang:Language.xem_them},StringFormat='{0} >>'}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ShowMore_Tapped"/>
                                 </Label.GestureRecognizers>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding Source={x:Static lang:Language.xem_them},StringFormat='{0} '}" FontSize="15"/>
-                                        <Span Text="&#xf054;" FontSize="13" FontFamily="FontAwesomeSolid"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
                             </Label>
                         </StackLayout>
                         <StackLayout x:Name="stTaskList" BindableLayout.ItemsSource="{Binding Activities}" Padding="14" Spacing="8">

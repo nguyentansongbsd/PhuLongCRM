@@ -400,7 +400,7 @@ namespace PhuLongCRM.Views
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
                 if (checkVadate == true)
                 {
-                   await Launcher.OpenAsync($"tel:{phone}");
+                    await Launcher.OpenAsync($"tel:{phone}");
                     LoadingHelper.Hide();
                 }
                 else

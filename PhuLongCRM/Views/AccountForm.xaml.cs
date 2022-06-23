@@ -208,6 +208,12 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai_cong_ty);
                 return;
             }
+            if (string.IsNullOrWhiteSpace(viewModel.singleAccount.emailaddress1) )
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_email);
+                return;
+            }
+
 
             string phone = viewModel.singleAccount.telephone1;
             phone = phone.Contains("-") ? phone.Split('-')[1] : phone;

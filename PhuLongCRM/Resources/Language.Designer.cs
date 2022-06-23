@@ -2524,6 +2524,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đang áp dụng.
+        /// </summary>
+        internal static string dang_ap_dung_mandatory_sts {
+            get {
+                return ResourceManager.GetString("dang_ap_dung_mandatory_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đang chờ.
         /// </summary>
         internal static string dang_cho {
@@ -3559,7 +3568,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Giao Dịch.
+        ///   Looks up a localized string similar to GIAO DỊCH.
         /// </summary>
         internal static string giao_dich {
             get {
@@ -4194,6 +4203,15 @@ namespace PhuLongCRM.Resources {
         internal static string huy_giu_cho {
             get {
                 return ResourceManager.GetString("huy_giu_cho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hủy.
+        /// </summary>
+        internal static string huy_mandatory_sts {
+            get {
+                return ResourceManager.GetString("huy_mandatory_sts", resourceCulture);
             }
         }
         
@@ -6201,6 +6219,15 @@ namespace PhuLongCRM.Resources {
         internal static string nhap_ma_so_thue {
             get {
                 return ResourceManager.GetString("nhap_ma_so_thue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nháp.
+        /// </summary>
+        internal static string nhap_mandatory_sts {
+            get {
+                return ResourceManager.GetString("nhap_mandatory_sts", resourceCulture);
             }
         }
         
@@ -8320,6 +8347,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thông tin liên hệ.
+        /// </summary>
+        internal static string thong_tin_lien_he_title {
+            get {
+                return ResourceManager.GetString("thong_tin_lien_he_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thông Tin Phí Quản lý.
         /// </summary>
         internal static string thong_tin_phi_quan_ly {
@@ -8833,6 +8869,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vô hiệu lực.
+        /// </summary>
+        internal static string vo_hieu_luc_mandatory_sts {
+            get {
+                return ResourceManager.GetString("vo_hieu_luc_mandatory_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vui lòng chọn Contact để chuyển sang khách hàng tiềm năng..
         /// </summary>
         internal static string vui_long_chon_contact_de_chuyen_sang_khach_hang_tiem_nang {
@@ -9171,6 +9216,15 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_nhap_chu_de_cuoc_hop {
             get {
                 return ResourceManager.GetString("vui_long_nhap_chu_de_cuoc_hop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vui lòng nhập email.
+        /// </summary>
+        internal static string vui_long_nhap_email {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_email", resourceCulture);
             }
         }
         

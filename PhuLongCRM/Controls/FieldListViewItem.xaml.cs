@@ -16,14 +16,9 @@ namespace PhuLongCRM.Controls
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(FieldListViewItem), null, BindingMode.TwoWay);
         public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
         // value
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(FieldListViewItem), null, BindingMode.TwoWay, propertyChanged: TextChanged);
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(FieldListViewItem), null, BindingMode.TwoWay);
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
-        private static void TextChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (newValue == null) return;
-            FieldListViewItem control = (FieldListViewItem)bindable;
-            control.lb_text.SetBinding(Label.TextProperty, "Text");
-        }
+        
         // title color
         public static readonly BindableProperty TitleTextColorProperty = BindableProperty.Create(nameof(TitleTextColor), typeof(Color), typeof(FieldListViewItem), Color.Gray, BindingMode.TwoWay);
         public Color TitleTextColor { get => (Color)GetValue(TitleTextColorProperty); set => SetValue(TitleTextColorProperty, value); }
@@ -43,16 +38,14 @@ namespace PhuLongCRM.Controls
         public FieldListViewItem()
         {
             InitializeComponent();
-            lb_title.BindingContext = this;
-            lb_title.SetBinding(Label.TextProperty, new Binding("Title") { Source = this, StringFormat = "{0}: "});
-            lb_title.SetBinding(Label.TextColorProperty, "TitleTextColor");
-            lb_title.SetBinding(Label.FontAttributesProperty, "TitleFontAttributes");
+            lb_title.SetBinding(Label.TextProperty, new Binding("Title") { Source = this, StringFormat = "{0}: " });
+            lb_title.SetBinding(Label.TextColorProperty, new Binding("TitleTextColor") { Source = this });
+            lb_title.SetBinding(Label.FontAttributesProperty, new Binding("TitleFontAttributes") { Source = this });
 
-            lb_text.BindingContext = this;
-            lb_text.SetBinding(Label.TextProperty, "Text");
-            lb_text.SetBinding(Label.TextColorProperty, "TextColor");
-            lb_text.SetBinding(Label.FontAttributesProperty, "FontAttributes");
-            lb_text.SetBinding(Label.LineBreakModeProperty, "LineBreakMode");
+            lb_text.SetBinding(Label.TextProperty, new Binding("Text") { Source = this });
+            lb_text.SetBinding(Label.TextColorProperty, new Binding("TextColor") { Source = this });
+            lb_text.SetBinding(Label.FontAttributesProperty, new Binding("FontAttributes") { Source = this });
+            lb_text.SetBinding(Label.LineBreakModeProperty, new Binding("LineBreakMode") { Source = this });
         }
     }
 }
