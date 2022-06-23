@@ -688,5 +688,30 @@ namespace PhuLongCRM.ViewModels
             else
                 return false;
         }
+        public async Task<LeadFormModel> LoadStatusLead()
+        {
+            if (singleLead == null || singleLead.leadid == Guid.Empty) return null;
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                <entity name='lead'>
+                                    <attribute name='statuscode' />
+                                    <attribute name='statecode' />
+                                    <attribute name='bsd_qrcode' />
+                                    <order attribute='createdon' descending='true' />
+                                    <filter type='and'>
+                                        <condition attribute='leadid' operator='eq' value='{singleLead.leadid}' />
+                                    </filter>
+                                    <link-entity name='account' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='accountid' alias='account_id'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='contactid' alias='contact_id'/>
+                                    </link-entity>
+                                </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
+            if (result == null || result.value.Count == 0)
+                return null;
+            return result.value.FirstOrDefault();
+        }
     }
 }

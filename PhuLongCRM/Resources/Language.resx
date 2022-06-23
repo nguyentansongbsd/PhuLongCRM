@@ -3190,10 +3190,10 @@
 		<value>Tạo QR code</value>
 	</data>
 	<data name="tao_qr_code_thanh_cong" xml:space="preserve">
-		<value>Tạo qr code thành công</value>
+		<value>Tạo QR code thành công</value>
 	</data>
 	<data name="tao_qr_code_that_bai" xml:space="preserve">
-		<value>Tạo qr code thất bại</value>
+		<value>Tạo QR code thất bại</value>
 	</data>
 	<data name="thong_tin_user_title" xml:space="preserve">
 		<value>Thông Tin User</value>

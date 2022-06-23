@@ -58,7 +58,7 @@
                     
                     <Grid ColumnDefinitions="Auto,Auto" Margin="0,10,0,0">
                         <controls:FormLabel Text="{x:Static lang:Language.su_kien_ca_ngay}" Grid.Column="0"/>
-                        <CheckBox HorizontalOptions="End" Grid.Column="1" IsChecked="{Binding MeetingModel.isalldayevent}" CheckedChanged="AllDayEvent_changeChecked"/>
+                        <CheckBox x:Name="CBallDay" HorizontalOptions="End" Grid.Column="1" IsChecked="{Binding MeetingModel.isalldayevent}" CheckedChanged="AllDayEvent_changeChecked"/>
                     </Grid>
                     
                     <controls:FormLabelRequired Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Margin="0,10,0,0"/>

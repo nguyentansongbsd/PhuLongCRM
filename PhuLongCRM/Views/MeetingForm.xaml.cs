@@ -308,6 +308,12 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.MeetingModel.scheduledstart = viewModel.MeetingModel.scheduledend;
                     }
+                    if(viewModel.MeetingModel.isalldayevent)
+                    {
+                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
+                        viewModel.MeetingModel.isalldayevent = false;
+                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
+                    }
                 }
             }
         }
@@ -323,6 +329,19 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart;
                     }
+                    if (viewModel.MeetingModel.isalldayevent)
+                    {
+                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
+                        viewModel.MeetingModel.isalldayevent = false;
+                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
+                    }
+                    // chưa word ok, do control
+                    if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend.Value.AddDays(-1)) == 0)
+                    {
+                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
+                        viewModel.MeetingModel.isalldayevent = true;
+                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
+                    }
                 }
                 else
                 {
@@ -335,6 +354,8 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.MeetingModel.scheduledstart != null)
             {
+                DatePickerStart.Date_Selected -= DatePickerStart_DateSelected;
+                DatePickerEnd.Date_Selected -= DatePickerEnd_DateSelected;
                 if (viewModel.MeetingModel.isalldayevent)
                 {
                     var timeStart = viewModel.MeetingModel.scheduledstart.Value;
@@ -367,6 +388,8 @@ namespace PhuLongCRM.Views
                     else
                         viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(1);
                 }
+                DatePickerStart.Date_Selected += DatePickerStart_DateSelected;
+                DatePickerEnd.Date_Selected += DatePickerEnd_DateSelected;
             }
             else
             {

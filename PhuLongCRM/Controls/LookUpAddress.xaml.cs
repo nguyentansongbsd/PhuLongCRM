@@ -208,7 +208,7 @@ namespace PhuLongCRM.Controls
             }
             foreach (var x in result.value)
             {
-                if (UserLogged.Language == "en")
+                if (UserLogged.Language == "en" && !string.IsNullOrWhiteSpace(x.Detail))
                     x.Name = x.Detail;
                 list_country_lookup.Add(x);
             }
@@ -232,7 +232,7 @@ namespace PhuLongCRM.Controls
                 if (result != null && result.value.Count > 0)
                 {
                     Country = result.value.FirstOrDefault();
-                    if (UserLogged.Language == "en")
+                    if (UserLogged.Language == "en" && !string.IsNullOrWhiteSpace(Country.Detail))
                         Country.Name = Country.Detail;
                     SelectedItem.country_name = Country.Name;
                     SelectedItem.country_id = Country.Id;
@@ -260,7 +260,7 @@ namespace PhuLongCRM.Controls
             }
             foreach (var x in result.value)
             {
-                if (UserLogged.Language == "en")
+                if (UserLogged.Language == "en" && !string.IsNullOrWhiteSpace(x.Detail))
                     x.Name = x.Detail;
                 list_province_lookup.Add(x);
             }
@@ -285,7 +285,7 @@ namespace PhuLongCRM.Controls
                 if (result != null && result.value.Count > 0)
                 {
                     Province = result.value.FirstOrDefault();
-                    if (UserLogged.Language == "en")
+                    if (UserLogged.Language == "en" && !string.IsNullOrWhiteSpace(Province.Detail))
                         Province.Name = Province.Detail;
                     SelectedItem.province_name = Province.Name;
                     SelectedItem.province_id = Province.Id;
@@ -313,7 +313,7 @@ namespace PhuLongCRM.Controls
             }
             foreach (var x in result.value)
             {
-                if (UserLogged.Language == "en")
+                if (UserLogged.Language == "en" && !string.IsNullOrWhiteSpace(x.Detail))
                     x.Name = x.Detail;
                 list_district_lookup.Add(x);
             }
@@ -338,7 +338,7 @@ namespace PhuLongCRM.Controls
                 if (result != null && result.value.Count > 0)
                 {
                     District = result.value.FirstOrDefault();
-                    if (UserLogged.Language == "en")
+                    if (UserLogged.Language == "en" && !string.IsNullOrWhiteSpace(District.Detail))
                         District.Name = District.Detail;
                     SelectedItem.district_name = District.Name;
                     SelectedItem.district_id = District.Id;
