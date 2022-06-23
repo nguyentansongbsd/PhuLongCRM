@@ -754,13 +754,13 @@
     <value>Mô tả (EN)</value>
   </data>
 	<data name="tao_cuoc_hop" xml:space="preserve">
-    <value>Tạo Cuộc họp</value>
+    <value>Tạo cuộc họp</value>
   </data>
 	<data name="tao_cuoc_goi" xml:space="preserve">
-    <value>Tạo Cuộc gọi</value>
+    <value>Tạo cuộc gọi</value>
   </data>
 	<data name="tao_cong_viec" xml:space="preserve">
-    <value>Tạo Công việc</value>
+    <value>Tạo công việc</value>
   </data>
 	<data name="them_nguoi_uy_quyen" xml:space="preserve">
     <value>Thêm Người Ủy Quyền</value>
@@ -1126,19 +1126,19 @@
     <value>Ngày ký</value>
   </data>
 	<data name="cap_nhat_bang_tinh_gia" xml:space="preserve">
-    <value>Chỉnh sửa Bảng tính giá</value>
+    <value>Chỉnh sửa bảng tính giá</value>
   </data>
 	<data name="huy_bang_tinh_gia" xml:space="preserve">
-    <value>Hủy Bảng tính giá</value>
+    <value>Hủy bảng tính giá</value>
   </data>
 	<data name="xoa_lich_thanh_toan" xml:space="preserve">
-    <value>Xóa Lịch thanh toán</value>
+    <value>Xóa lịch thanh toán</value>
   </data>
 	<data name="tao_lich_thanh_toan" xml:space="preserve">
-    <value>Tạo Lịch thanh toán</value>
+    <value>Tạo lịch thanh toán</value>
   </data>
 	<data name="ky_bang_tinh_gia" xml:space="preserve">
-    <value>Ký Bảng tính giá</value>
+    <value>Ký bảng tính giá</value>
   </data>
 	<data name="xac_nhan_in" xml:space="preserve">
     <value>Xác nhận in</value>
@@ -1147,7 +1147,7 @@
     <value>Xác nhận tải PĐC</value>
   </data>
 	<data name="ky_phieu_dat_coc" xml:space="preserve">
-    <value>Ký Phiếu đặt cọc</value>
+    <value>Ký phiếu đặt cọc</value>
   </data>
 	<data name="da_xoa_lich_thanh_toan" xml:space="preserve">
     <value>Đã xóa lịch thanh toán.</value>
@@ -2056,7 +2056,7 @@
     <value>Hủy giữ chỗ</value>
   </data>
 	<data name="tao_bang_tinh_gia" xml:space="preserve">
-    <value>Tạo Bảng tính giá</value>
+    <value>Tạo bảng tính giá</value>
   </data>
 	<data name="khong_co_so_dien_thoai" xml:space="preserve">
     <value>Không có số điện thoại.</value>
@@ -2572,10 +2572,10 @@
     <value>Loại</value>
   </data>
 	<data name="di_den_kh_ca_nhan" xml:space="preserve">
-    <value>Đi đến KH Cá nhân</value>
+    <value>Đi đến KH cá nhân</value>
   </data>
 	<data name="di_den_kh_doanh_nghiep" xml:space="preserve">
-    <value>Đi đến KH Doanh nghiệp</value>
+    <value>Đi đến KH doanh nghiệp</value>
   </data>
 	<data name="gui" xml:space="preserve">
     <value>Gửi</value>

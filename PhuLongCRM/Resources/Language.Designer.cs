@@ -472,7 +472,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chỉnh sửa Bảng tính giá.
+        ///   Looks up a localized string similar to Chỉnh sửa bảng tính giá.
         /// </summary>
         internal static string cap_nhat_bang_tinh_gia {
             get {
@@ -2812,7 +2812,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đi đến KH Cá nhân.
+        ///   Looks up a localized string similar to Đi đến KH cá nhân.
         /// </summary>
         internal static string di_den_kh_ca_nhan {
             get {
@@ -2821,7 +2821,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đi đến KH Doanh nghiệp.
+        ///   Looks up a localized string similar to Đi đến KH doanh nghiệp.
         /// </summary>
         internal static string di_den_kh_doanh_nghiep {
             get {
@@ -4144,7 +4144,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hủy Bảng tính giá.
+        ///   Looks up a localized string similar to Hủy bảng tính giá.
         /// </summary>
         internal static string huy_bang_tinh_gia {
             get {
@@ -4639,7 +4639,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ký Bảng tính giá.
+        ///   Looks up a localized string similar to Ký bảng tính giá.
         /// </summary>
         internal static string ky_bang_tinh_gia {
             get {
@@ -4657,7 +4657,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ký Phiếu đặt cọc.
+        ///   Looks up a localized string similar to Ký phiếu đặt cọc.
         /// </summary>
         internal static string ky_phieu_dat_coc {
             get {
@@ -7393,7 +7393,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tạo Bảng tính giá.
+        ///   Looks up a localized string similar to Tạo bảng tính giá.
         /// </summary>
         internal static string tao_bang_tinh_gia {
             get {
@@ -7420,7 +7420,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tạo Công việc.
+        ///   Looks up a localized string similar to Tạo công việc.
         /// </summary>
         internal static string tao_cong_viec {
             get {
@@ -7438,7 +7438,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tạo Cuộc gọi.
+        ///   Looks up a localized string similar to Tạo cuộc gọi.
         /// </summary>
         internal static string tao_cuoc_goi {
             get {
@@ -7456,7 +7456,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tạo Cuộc họp.
+        ///   Looks up a localized string similar to Tạo cuộc họp.
         /// </summary>
         internal static string tao_cuoc_hop {
             get {
@@ -7537,7 +7537,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tạo Lịch thanh toán.
+        ///   Looks up a localized string similar to Tạo lịch thanh toán.
         /// </summary>
         internal static string tao_lich_thanh_toan {
             get {
@@ -9535,7 +9535,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xóa Lịch thanh toán.
+        ///   Looks up a localized string similar to Xóa lịch thanh toán.
         /// </summary>
         internal static string xoa_lich_thanh_toan {
             get {
