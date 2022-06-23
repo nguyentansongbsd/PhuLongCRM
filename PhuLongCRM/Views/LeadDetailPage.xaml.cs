@@ -39,7 +39,7 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await LoadDataThongTin(Id.ToString());
-            SetButtonFloatingButton();
+            SetButtonFloatingButton(viewModel.singleLead);
 
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
@@ -63,8 +63,6 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadOneLead(Id.ToString()) ;
                 if (viewModel.singleLead.new_gender != null) { await viewModel.loadOneGender(viewModel.singleLead.new_gender); }
                 if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }
-                viewModel.ButtonCommandList?.Clear();
-                SetButtonFloatingButton();
                 NeedToRefreshLeadDetail = false;
             }
             if (NeedToRefreshActivity == true)
@@ -80,49 +78,55 @@ namespace PhuLongCRM.Views
             base.OnAppearing();
         }
 
-        private void SetButtonFloatingButton()
+        private void SetButtonFloatingButton(LeadFormModel lead)
         {
-            if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_qrcode))
+            if (lead != null)
             {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
-            }
-            
-            if (viewModel.singleLead.statuscode == "3") // qualified
-            {
-                floatingButtonGroup.IsVisible = false;
-                if (viewModel.singleLead.account_id != Guid.Empty)
+                viewModel.ButtonCommandList.Clear();
+                if (string.IsNullOrWhiteSpace(lead.bsd_qrcode) && lead.statuscode != "3" && lead.statuscode != "4" && lead.statuscode != "5" && lead.statuscode != "6" && lead.statuscode != "7")
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_doanh_nghiep, "FontAwesomeRegular", "\uf1ad", null, GoToAccount));
-                    floatingButtonGroup.IsVisible = true;
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
                 }
-                if (viewModel.singleLead.contact_id != Guid.Empty)
+
+                if (lead.statuscode == "3") // qualified
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_ca_nhan, "FontAwesomeRegular", "\uf2c1", null, GoToContact));
-                    floatingButtonGroup.IsVisible = true;
+                    floatingButtonGroup.IsVisible = false;
+                    if (lead.account_id != Guid.Empty)
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_doanh_nghiep, "FontAwesomeRegular", "\uf1ad", null, GoToAccount));
+                        floatingButtonGroup.IsVisible = true;
+                    }
+                    if (lead.contact_id != Guid.Empty)
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_ca_nhan, "FontAwesomeRegular", "\uf2c1", null, GoToContact));
+                        floatingButtonGroup.IsVisible = true;
+                    }
                 }
-            }
-            else if (viewModel.singleLead.statuscode == "4" || viewModel.singleLead.statuscode == "5" || viewModel.singleLead.statuscode == "6"|| viewModel.singleLead.statuscode == "7")
-            {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.kich_hoat_lai_kh, "FontAwesomeSolid", "\uf1b8", null, ReactivateLead));
-            }
-            else
-            {
-                // hỏi lại sts
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
-                if (viewModel.singleLead.leadqualitycode == 3)
+                else if (lead.statuscode == "4" || lead.statuscode == "5" || lead.statuscode == "6" || lead.statuscode == "7")
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.kich_hoat_lai_kh, "FontAwesomeSolid", "\uf1b8", null, ReactivateLead));
                 }
                 else
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chuyen_doi_khach_hang, "FontAwesomeSolid", "\uf542", null, LeadQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
+                    // hỏi lại sts
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+                    if (lead.leadqualitycode == 3)
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
+                    }
+                    else
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chuyen_doi_khach_hang, "FontAwesomeSolid", "\uf542", null, LeadQualify));
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
+                    }
                 }
             }
+            else
+                floatingButtonGroup.IsVisible = false;
         }
 
         private async void Update(object sender, EventArgs e)
@@ -157,8 +161,6 @@ namespace PhuLongCRM.Views
                 if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                 if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
                 await viewModel.LoadOneLead(Id.ToString());
-                viewModel.ButtonCommandList.Clear();
-                SetButtonFloatingButton();
                 LoadingHelper.Hide();
                 if (_isID)
                     ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
@@ -205,8 +207,6 @@ namespace PhuLongCRM.Views
                     if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
                     if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
                     await viewModel.LoadOneLead(Id.ToString());
-                    viewModel.ButtonCommandList.Clear();
-                    SetButtonFloatingButton();
                     ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 }
                 else
@@ -229,8 +229,6 @@ namespace PhuLongCRM.Views
                 if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
                 if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
                 await viewModel.LoadOneLead(Id.ToString());
-                viewModel.ButtonCommandList.Clear();
-                SetButtonFloatingButton();
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
             }
             else
@@ -304,6 +302,10 @@ namespace PhuLongCRM.Views
             if (viewModel.PhongThuy == null)
             {
                 viewModel.LoadPhongThuy();
+                if (viewModel.PhongThuy.gioi_tinh != 0 && viewModel.PhongThuy.nam_sinh != 0)
+                    phongthuy_info.IsVisible = true;
+                else
+                    phongthuy_info.IsVisible = false;
             }
         }
 
@@ -459,15 +461,30 @@ namespace PhuLongCRM.Views
                 {
                     TabThongTin.IsVisible = true;
                     TabCustomerCare.IsVisible = false;
+                    TabPhongThuy.IsVisible = false;
                 }
                 else if ((int)e.Item == 1)
                 {
                     TabThongTin.IsVisible = false;
                     TabCustomerCare.IsVisible = true;
+                    TabPhongThuy.IsVisible = false;
                     if (viewModel.list_customercare == null)
                         await viewModel.LoadCaseForLead();
                 }
+                else if ((int)e.Item == 2)
+                {
+                    TabThongTin.IsVisible = false;
+                    TabCustomerCare.IsVisible = false;
+                    TabPhongThuy.IsVisible = true;
+                    LoadDataPhongThuy();
+                }
             }
+        }
+
+        private async void floatingButtonGroup_ClickedEvent(object sender, EventArgs e)
+        {
+            var lead = await viewModel.LoadStatusLead();
+            SetButtonFloatingButton(lead);
         }
     }
 }

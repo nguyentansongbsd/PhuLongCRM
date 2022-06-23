@@ -41,6 +41,8 @@ namespace PhuLongCRM.Controls
                 BtnShow.TextColor = Color.Black;
                 BtnShow.BackgroundColor = Color.White;
                 //BtnShow.FontFamily = Device.RuntimePlatform == Device.iOS ? "FontAwesome5Free-Solid" : "FontAwesome5Solid.otf#Regular";
+                EventHandler eventHandler = ClickedEvent;
+                eventHandler?.Invoke((object)this, null);
             }
             else // dang hien thi
             {

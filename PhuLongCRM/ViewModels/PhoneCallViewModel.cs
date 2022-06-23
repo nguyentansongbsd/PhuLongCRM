@@ -212,10 +212,6 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='opportunityid' alias='queue_id'/>                  
                     <attribute name='name' alias='queue_name'/>
                 </link-entity>
-                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
-                    <attribute name='bsd_name' alias='user_name'/>
-                    <attribute name='bsd_employeeid' alias='user_id'/>
-                </link-entity>
             </entity>
           </fetch>";
 
