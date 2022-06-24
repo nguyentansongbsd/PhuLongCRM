@@ -250,7 +250,7 @@
     <value>Cases</value>
   </data>
 	<data name="lich_lam_viec" xml:space="preserve">
-    <value>Work schedule</value>
+    <value>Work Schedule</value>
   </data>
 	<data name="hoat_dong" xml:space="preserve">
     <value>Activities</value>
@@ -796,7 +796,7 @@
     <value>Account Information</value>
   </data>
 	<data name="dai_dien_phap_luat" xml:space="preserve">
-    <value>Legal representative</value>
+    <value>Legal Representative</value>
   </data>
 	<data name="loai_khach_hang" xml:space="preserve">
     <value>Localization</value>
@@ -1606,7 +1606,7 @@
     <value>Number ID</value>
   </data>
 	<data name="nguon_khach_hang" xml:space="preserve">
-    <value>Lead Source</value>
+    <value>Lead source</value>
   </data>
 	<data name="so_gpkd" xml:space="preserve">
     <value>Registration code</value>
@@ -1696,7 +1696,7 @@
     <value>Marketing materials</value>
   </data>
 	<data name="tao_khach_hang" xml:space="preserve">
-    <value>Create Customer</value>
+    <value>Create customer</value>
   </data>
 	<data name="dia_chi_cong_ty" xml:space="preserve">
     <value>Company address</value>
@@ -1954,7 +1954,7 @@
     <value>Create Phone Call</value>
   </data>
 	<data name="them_cuoc_goi" xml:space="preserve">
-    <value>Create Phone Call</value>
+    <value>Create Phone call</value>
   </data>
 	<data name="cap_nhat_cuoc_goi" xml:space="preserve">
     <value>Edit Phone Call</value>
