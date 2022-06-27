@@ -402,5 +402,6 @@ namespace PhuLongCRM.Models
 
         private string _bsd_qrcode;
         public string bsd_qrcode { get => _bsd_qrcode; set { _bsd_qrcode = value; OnPropertyChanged(nameof(bsd_qrcode)); } }
+        public Guid leadid_originated { get; set; }// lead originated id
     }
 }

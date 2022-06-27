@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             Title="Tài Liệu Kinh Doanh"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
+             Title="{x:Static lang:Language.tai_lieu_kinh_doanh}"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:converter ="clr-namespace:PhuLongCRM.Converters"
              x:Class="PhuLongCRM.Views.ListTaiLieuKinhDoanh">

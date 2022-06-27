@@ -69,6 +69,10 @@ namespace PhuLongCRM.Views
             return true;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
         private void IsRemember_Tapped(object sender, EventArgs e)
         {
             checkboxRememberAcc.IsChecked = !checkboxRememberAcc.IsChecked;
@@ -155,7 +159,7 @@ namespace PhuLongCRM.Views
             }    
         }
 
-        private void Flag_Tapped(object sender, EventArgs e)
+        private async void Flag_Tapped(object sender, EventArgs e)
         {
             string code = (string)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (code == UserLogged.Language) return;
@@ -176,8 +180,7 @@ namespace PhuLongCRM.Views
                 flagEN.BorderColor = Color.FromHex("#2196F3");
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             }
-            Application.Current.MainPage = new AppShell();
-            Shell.Current.Navigation.PushAsync(new Login(), false);
+            ChangedLanguage();
             LoadingHelper.Hide();
         }
 
@@ -330,7 +333,16 @@ namespace PhuLongCRM.Views
 
         private async void LoginUserCRM_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new LoginByUserCRMPage());
+           await Navigation.PushAsync(new LoginByUserCRMPage());
+        }
+        private void ChangedLanguage()
+        {
+            lblUserName.Text = Language.ten_dang_nhap;
+            lblPassword.Text = Language.mat_khau;
+            lbRemember.Text = Language.ghi_nho_dang_nhap;
+            lbfogotPassword.Text = Language.quen_mat_khau;
+            btnLogin.Text = Language.dang_nhap;
+            btnLoginUserCRM.Text = Language.dang_nhap_voi_user_crm;
         }
     }
 }

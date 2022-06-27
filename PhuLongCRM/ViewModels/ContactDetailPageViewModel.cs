@@ -141,6 +141,9 @@ namespace PhuLongCRM.ViewModels
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
                                           <attribute name='bsd_name' alias='parentcustomerid_label' />
                                     </link-entity>
+                                    <link-entity name='lead' from='leadid' to='originatingleadid' link-type='outer'>
+                                        <attribute name='leadid' alias='leadid_originated'/>
+                                    </link-entity>
                                     <filter type='and'>
                                         <condition attribute='contactid' operator='eq' value='" + id + @"' />
                                     </filter>
@@ -377,9 +380,9 @@ namespace PhuLongCRM.ViewModels
             if(list_chamsockhachhang != null && singleContact.contactid != Guid.Empty)
             {
                 await Task.WhenAll(
-                LoadActiviy(singleContact.contactid, "task", "tasks"),
-                LoadActiviy(singleContact.contactid, "phonecall", "phonecalls"),
-                LoadActiviy(singleContact.contactid, "appointment", "appointments")
+                LoadActiviy("task", "tasks"),
+                LoadActiviy("phonecall", "phonecalls"),
+                LoadActiviy("appointment", "appointments")
                 //LoadTasks(singleContact.contactid),
                 //LoadMettings(singleContact.contactid),
                 //LoadPhoneCalls(singleContact.contactid)
@@ -388,7 +391,7 @@ namespace PhuLongCRM.ViewModels
             ShowMoreChamSocKhachHang = list_chamsockhachhang.Count < (3* PageChamSocKhachHang) ? false : true;
         }
 
-        public async Task LoadActiviy(Guid contactID, string entity, string entitys)
+        public async Task LoadActiviy(string entity, string entitys)
         {
             string forphonecall = null;
             if (entity == "phonecall")
@@ -419,8 +422,10 @@ namespace PhuLongCRM.ViewModels
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
                                         <filter type='or'>
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
+                                            <condition entityname='party' attribute='partyid' operator='eq' value='{singleContact.contactid}'/>
+                                            <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
+                                            <condition entityname='party' attribute='partyid' operator='eq' value='{singleContact.leadid_originated}'/>
+                                            <condition attribute='regardingobjectid' operator='eq' value='{singleContact.leadid_originated}' />
                                         </filter>
                                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
