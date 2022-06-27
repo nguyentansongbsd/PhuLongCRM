@@ -1249,7 +1249,7 @@
     <value>Feng Shui</value>
   </data>
 	<data name="ho_ten" xml:space="preserve">
-    <value>User name</value>
+    <value>Full name</value>
   </data>
 	<data name="nhap_ho_ten_khach_hang" xml:space="preserve">
     <value>Please enter user name</value>

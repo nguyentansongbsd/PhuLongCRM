@@ -3910,7 +3910,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User name.
+        ///   Looks up a localized string similar to Full name.
         /// </summary>
         internal static string ho_ten {
             get {
@@ -7699,7 +7699,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate qr code successed.
+        ///   Looks up a localized string similar to Generate QR code successed.
         /// </summary>
         internal static string tao_qr_code_thanh_cong {
             get {
@@ -7708,7 +7708,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate qr code failed.
+        ///   Looks up a localized string similar to Generate QR code failed.
         /// </summary>
         internal static string tao_qr_code_that_bai {
             get {

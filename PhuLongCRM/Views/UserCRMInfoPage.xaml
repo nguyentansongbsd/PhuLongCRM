@@ -28,9 +28,9 @@
                                 </ffimageloading:CachedImage.Transformations>
                             </ffimageloading:CachedImage>
                         </controls:ExtendedFrame>
-                        <telerikPrimitives:RadBorder Margin="0,0,-8,-8" VerticalOptions="EndAndExpand" HorizontalOptions="End" BorderColor="{StaticResource NavigationPrimary}" BorderThickness="2" CornerRadius="20" Padding="8" BackgroundColor="White">
+                        <!--<telerikPrimitives:RadBorder Margin="0,0,-8,-8" VerticalOptions="EndAndExpand" HorizontalOptions="End" BorderColor="{StaticResource NavigationPrimary}" BorderThickness="2" CornerRadius="20" Padding="8" BackgroundColor="White">
                             <Label Text="&#xf030;" FontFamily="FontAwesomeSolid" FontSize="16" TextColor="{StaticResource NavigationPrimary}"/>
-                        </telerikPrimitives:RadBorder>
+                        </telerikPrimitives:RadBorder>-->
                     </Grid>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.ten}" Margin="0,20,0,0"/>

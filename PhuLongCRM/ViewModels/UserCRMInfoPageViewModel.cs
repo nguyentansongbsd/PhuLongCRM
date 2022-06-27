@@ -19,7 +19,7 @@ namespace PhuLongCRM.ViewModels
 
         public UserCRMInfoPageViewModel()
         {
-            this.Avatar = UserLogged.Avartar;
+            
         }
         public async Task LoadUserCRM()
         {
