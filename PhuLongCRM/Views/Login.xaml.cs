@@ -176,7 +176,8 @@ namespace PhuLongCRM.Views
                 flagEN.BorderColor = Color.FromHex("#2196F3");
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             }
-            Application.Current.MainPage = new Login();
+            Application.Current.MainPage = new AppShell();
+            Shell.Current.Navigation.PushAsync(new Login(), false);
             LoadingHelper.Hide();
         }
 
