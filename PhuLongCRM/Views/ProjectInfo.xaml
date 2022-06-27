@@ -11,6 +11,7 @@
              xmlns:ffimagetransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              ios:Page.UseSafeArea="true"
              BackgroundColor="White"
+             xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
              Title="{x:Static lang:Language.thong_tin_du_an_title}"
              x:Class="PhuLongCRM.Views.ProjectInfo">
     <ContentPage.Resources>
@@ -146,7 +147,7 @@
                                     </Grid>
                                     <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
                                         <controls:ExtendedFrame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Padding="4" CornerRadius="24" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,0,5,0">
-                                            <ffimageloading:CachedImage Source="{Binding Project.bsd_projectslogo, Converter={StaticResource Base64ToImagesource}}" LoadingPlaceholder="user.png" HeightRequest="40" WidthRequest="40"  DownsampleWidth="500">
+                                            <ffimageloading:CachedImage x:Name="avataProject" Source="{Binding Project.bsd_projectslogo, Converter={StaticResource Base64ToImagesource}}" LoadingPlaceholder="user.png" HeightRequest="40" WidthRequest="40"  DownsampleWidth="500">
                                                 <ffimageloading:CachedImage.Transformations>
                                                     <ffimagetransformations:CircleTransformation/>
                                                 </ffimageloading:CachedImage.Transformations>

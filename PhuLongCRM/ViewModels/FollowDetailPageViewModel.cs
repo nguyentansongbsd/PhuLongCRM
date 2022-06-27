@@ -42,6 +42,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_resell' />
                                     <attribute name='bsd_description' />
                                     <attribute name='bsd_depositfee' />
+                                    <attribute name='bsd_salecomment' />
                                     <attribute name='bsd_totalforfeitureamount_new' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>

@@ -903,12 +903,12 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<FollowUpModel>>("bsd_followuplists", fetchXml);
             if (result == null || result.value.Count == 0)
             {
-                Reservation.bsd_followuplist_format = Language.co;
+                Reservation.bsd_followuplist_format = Language.khong;
                 return true;// retrun true khi danh sách k có ful nào đang có hiệu lực
             }
             else
             {
-                Reservation.bsd_followuplist_format = Language.khong;
+                Reservation.bsd_followuplist_format = Language.co;
                 return false;
             }
         }

@@ -39,7 +39,7 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await LoadDataThongTin(Id.ToString());
-
+            
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
                 if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_qrcode))

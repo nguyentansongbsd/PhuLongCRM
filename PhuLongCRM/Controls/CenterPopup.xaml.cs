@@ -33,7 +33,8 @@ namespace PhuLongCRM.Controls
         public CenterPopup()
         {
             InitializeComponent();
-            this.title.SetBinding(Entry.TextProperty, "Title");
+            this.title.BindingContext = this;
+            this.title.SetBinding(Label.TextProperty, "Title");
         }
 
         private void CreateBody()
