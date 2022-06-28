@@ -43,6 +43,10 @@ namespace PhuLongCRM.Views
                 viewModel.LoadThongKeBangTinhGia(),
                 viewModel.CheckPhasesLaunch()
             );
+            if(viewModel.Project.bsd_projectslogo == null)
+            {
+                avataProject.Source = StringAvata(viewModel.ProjectName);
+            }    
             if (viewModel.IsHasPhasesLaunch == false && viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
             {
                 viewModel.IsShowBtnGiuCho = true;
@@ -250,6 +254,30 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                 }
             }
+        }
+        private string StringAvata(string projectName)
+        {
+            if (projectName == null) return null;
+            string nameAvata = null;
+
+            var name = projectName.Split(' ');
+            if (name != null && name.Length > 1)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    nameAvata += name[i].Substring(0, 1).ToUpper();
+                }
+            }
+            else
+            {
+                if (projectName.Length > 1)
+                {
+                    nameAvata = projectName.Substring(0, 2).ToUpper();
+                }
+                else
+                    nameAvata = projectName.ToUpper();
+            }
+            return $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={nameAvata}";
         }
     }
 }
