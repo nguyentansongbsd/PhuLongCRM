@@ -179,7 +179,7 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             string[] options = new string[] { Language.mat_khach_hang, Language.khong_lien_lac_duoc, Language.khong_quan_tam, Language.da_huy };
             
-            string aws = await DisplayActionSheet(Language.tuy_chon, Language.huy, null, options);
+            string aws = await DisplayActionSheet(Language.tuy_chon_khong_chuyen_doi, Language.huy, null, options);
 
             if (aws == Language.mat_khach_hang)
             {

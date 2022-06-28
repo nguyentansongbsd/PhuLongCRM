@@ -27,6 +27,7 @@ namespace PhuLongCRM.Views
             viewModel.Rating = RatingData.GetRatingById("2");//mac dinh la warm
             viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById("100000002"); // mac dinh la "Chua xac dinh"
         }
+
         public LeadForm(Guid Id)
         {
             InitializeComponent();
@@ -221,14 +222,40 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length > 12 ||
-                viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length != 12 )// CCCD
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
             if (viewModel.TypeIdCard?.Val == "100000003" && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
+            }
+        }
+
+        private void TypeIdCard_ItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
+        {
+            if (viewModel.TypeIdCard == null)
+            {
+                viewModel.singleLead.bsd_identitycardnumberid = null;
+            }
+
+            if (viewModel.TypeIdCard != null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid))
+            {
+                if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
+                    return;
+                }
+                if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 12)// CCCD
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
+                    return;
+                }
+                if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
+                    return;
+                }
             }
         }
 
@@ -312,13 +339,18 @@ namespace PhuLongCRM.Views
                 return ;
             }
 
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.TypeIdCard == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_loai_the_id);
+                return;
+            }
+
             if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 12
-                || viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 12)// CCCD
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
@@ -370,5 +402,7 @@ namespace PhuLongCRM.Views
                 }
             }
         }
+
+        
     }
 }

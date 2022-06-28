@@ -8788,6 +8788,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tuỳ chọn không chuyển đổi.
+        /// </summary>
+        internal static string tuy_chon_khong_chuyen_doi {
+            get {
+                return ResourceManager.GetString("tuy_chon_khong_chuyen_doi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tỷ giá.
         /// </summary>
         internal static string ty_gia {
@@ -9000,6 +9009,15 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_chon_loai_thanh_ly {
             get {
                 return ResourceManager.GetString("vui_long_chon_loai_thanh_ly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vui lòng chọn loại thẻ ID.
+        /// </summary>
+        internal static string vui_long_chon_loai_the_id {
+            get {
+                return ResourceManager.GetString("vui_long_chon_loai_the_id", resourceCulture);
             }
         }
         

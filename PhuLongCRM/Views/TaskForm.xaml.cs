@@ -117,24 +117,24 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-        private void EventAllDay_Tapped(object sender, EventArgs e)
-        {
-            viewModel.IsEventAllDay = !viewModel.IsEventAllDay;
-        }
-        private void CheckedBoxEventAllDay_Change(object sender, EventArgs e)
-        {
-            if (!viewModel.TaskFormModel.scheduledstart.HasValue)
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
-                viewModel.IsEventAllDay = false;
-                return;
-            }
-            if (viewModel.IsEventAllDay == true)
-            {
-                viewModel.TaskFormModel.scheduledstart = new DateTime(viewModel.TaskFormModel.scheduledstart.Value.Year, viewModel.TaskFormModel.scheduledstart.Value.Month, viewModel.TaskFormModel.scheduledstart.Value.Day, 7, 0, 0); ;
-                viewModel.TaskFormModel.scheduledend = viewModel.TaskFormModel.scheduledstart.Value.AddDays(1);
-            }
-        }
+        //private void EventAllDay_Tapped(object sender, EventArgs e)
+        //{
+        //    viewModel.IsEventAllDay = !viewModel.IsEventAllDay;
+        //}
+        //private void CheckedBoxEventAllDay_Change(object sender, EventArgs e)
+        //{
+        //    if (!viewModel.TaskFormModel.scheduledstart.HasValue)
+        //    {
+        //        ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
+        //        viewModel.IsEventAllDay = false;
+        //        return;
+        //    }
+        //    if (viewModel.IsEventAllDay == true)
+        //    {
+        //        viewModel.TaskFormModel.scheduledstart = new DateTime(viewModel.TaskFormModel.scheduledstart.Value.Year, viewModel.TaskFormModel.scheduledstart.Value.Month, viewModel.TaskFormModel.scheduledstart.Value.Day, 7, 0, 0); ;
+        //        viewModel.TaskFormModel.scheduledend = viewModel.TaskFormModel.scheduledstart.Value.AddDays(1);
+        //    }
+        //}
         private async void SaveTask_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(viewModel.TaskFormModel.subject))

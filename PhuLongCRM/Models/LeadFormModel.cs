@@ -269,7 +269,9 @@ namespace PhuLongCRM.Models
         public string bsd_customercode { get; set; }
         public string bsd_customergroup { get; set; }
         public string bsd_typeofidcard { get; set; }
-        public string bsd_identitycardnumberid { get; set; }
+
+        private string _bsd_identitycardnumberid;
+        public string bsd_identitycardnumberid { get=>_bsd_identitycardnumberid; set { _bsd_identitycardnumberid = value;OnPropertyChanged(nameof(bsd_identitycardnumberid)); } }
         public string bsd_area { get; set; }
         public string bsd_placeofissue { get; set; }
         public string bsd_registrationcode { get; set; }

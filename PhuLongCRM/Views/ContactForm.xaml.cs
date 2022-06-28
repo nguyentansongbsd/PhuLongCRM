@@ -202,8 +202,7 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && viewModel.singleContact.bsd_identitycard.Length > 12 ||
-                !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && viewModel.singleContact.bsd_identitycard.Length < 9)
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && viewModel.singleContact.bsd_identitycard.Length != 12)
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
@@ -450,7 +449,7 @@ namespace PhuLongCRM.Views
 
         private void CCCD_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (viewModel.singleContact.bsd_identitycard.Length > 12 || viewModel.singleContact.bsd_identitycard.Length < 9)
+            if (viewModel.singleContact.bsd_identitycard.Length != 12 )
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
