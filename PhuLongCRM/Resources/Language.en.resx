@@ -361,7 +361,7 @@
     <value>Collaborator</value>
   </data>
 	<data name="nguoi_uy_quyen" xml:space="preserve">
-    <value>Mandatory secondary</value>
+    <value>Mandatory Secondary</value>
   </data>
 	<data name="nguoi_dai_dien_phap_ly" xml:space="preserve">
     <value>Legal Representative</value>
@@ -3314,5 +3314,11 @@
 	</data>
 	<data name="vo_hieu_luc_mandatory_sts" xml:space="preserve">
 		<value>Inactive</value>
+	</data>
+	<data name="vui_long_chon_loai_the_id" xml:space="preserve">
+		<value>Please choose type id card</value>
+	</data>
+	<data name="tuy_chon_khong_chuyen_doi" xml:space="preserve">
+		<value>Options of disqualify</value>
 	</data>
 </root>

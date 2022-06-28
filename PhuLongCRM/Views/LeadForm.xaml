@@ -79,7 +79,7 @@
                                 <controls:DatePickerBoderControl Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"  ShowTime="False"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.loai_the_id}"/>
-                                <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="{x:Static lang:Language.chon_loai_the_id}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}"/>
+                                <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="{x:Static lang:Language.chon_loai_the_id}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}" SelectedItemChange="TypeIdCard_ItemChange"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.so_id}"/>
                                 <controls:MainEntry Text="{Binding singleLead.bsd_identitycardnumberid}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_id}" Margin="0,0,0,5" Unfocused="MainEntry_Unfocused" />

@@ -2979,7 +2979,7 @@
 	<data name="da_thanh_toan_contract" xml:space="preserve">
     <value>Đã thanh toán</value>
   </data>
-  <data name="title_hop_dong_mua_ban" xml:space="preserve">
+	<data name="title_hop_dong_mua_ban" xml:space="preserve">
     <value>Hợp Đồng Mua Bán</value>
   </data>
 	<data name="nguoi_dung_phai_tu_18_tuoi" xml:space="preserve">
@@ -3314,5 +3314,11 @@
 	</data>
 	<data name="vo_hieu_luc_mandatory_sts" xml:space="preserve">
 		<value>Vô hiệu lực</value>
+	</data>
+	<data name="vui_long_chon_loai_the_id" xml:space="preserve">
+		<value>Vui lòng chọn loại thẻ ID</value>
+	</data>
+	<data name="tuy_chon_khong_chuyen_doi" xml:space="preserve">
+		<value>Tuỳ chọn không chuyển đổi</value>
 	</data>
 </root>
