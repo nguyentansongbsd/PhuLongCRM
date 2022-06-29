@@ -424,8 +424,6 @@ namespace PhuLongCRM.ViewModels
                                         <filter type='or'>
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{singleContact.contactid}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{singleContact.leadid_originated}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{singleContact.leadid_originated}' />
                                         </filter>
                                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
