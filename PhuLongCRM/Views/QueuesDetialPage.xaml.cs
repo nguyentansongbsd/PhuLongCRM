@@ -21,6 +21,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshDC = null;
         public static bool? NeedToRefreshActivity = null;
         public static OptionSet FromQueue = null;
+        public static OptionSet CustomerFromQueue = null;
         public QueuesDetialPageViewModel viewModel;
         public QueuesDetialPage(Guid queueId)
         {
@@ -39,6 +40,7 @@ namespace PhuLongCRM.Views
             if (viewModel.Queue != null)
             {
                 FromQueue = new OptionSet { Val = viewModel.Queue.opportunityid.ToString(), Label = viewModel.Queue.name, Title = CodeQueue };
+                CustomerFromQueue = viewModel.Customer;
                 SetButtons();
                 OnCompleted?.Invoke(true);
             }

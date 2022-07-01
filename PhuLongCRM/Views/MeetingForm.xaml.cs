@@ -102,18 +102,18 @@ namespace PhuLongCRM.Views
                 else if (page_before == "QueuesDetialPage" && QueuesDetialPage.FromQueue != null && !string.IsNullOrWhiteSpace(QueuesDetialPage.FromQueue.Val))
                 {
                     viewModel.CustomerMapping = QueuesDetialPage.FromQueue;
-                    //if (viewModel.Required == null)
-                    //{
-                    //    List<OptionSetFilter> item = new List<OptionSetFilter>();
-                    //    item.Add(new OptionSetFilter
-                    //    {
-                    //        Val = AccountDetailPage.FromCustomer.Val,
-                    //        Label = AccountDetailPage.FromCustomer.Label,
-                    //        Title = AccountDetailPage.FromCustomer.Title,
-                    //        Selected = true
-                    //    });
-                    //    viewModel.Required = item;
-                    //}
+                    if (viewModel.Required == null)
+                    {
+                        List<OptionSetFilter> item = new List<OptionSetFilter>();
+                        item.Add(new OptionSetFilter
+                        {
+                            Val = QueuesDetialPage.CustomerFromQueue.Val,
+                            Label = QueuesDetialPage.CustomerFromQueue.Label,
+                            Title = QueuesDetialPage.CustomerFromQueue.Title,
+                            Selected = true
+                        });
+                        viewModel.Required = item;
+                    }
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                 }

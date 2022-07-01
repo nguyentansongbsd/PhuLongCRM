@@ -353,10 +353,7 @@ namespace PhuLongCRM.ViewModels
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='account'>                              
-                                <attribute name='telephone1' />
-                                <attribute name='bsd_name' />
-                                <attribute name='name' />
-                                <attribute name='accountid' />                               
+                                <attribute name='telephone1' />                             
                                 <order attribute='createdon' descending='true' />                                
                                 <filter type='and'>
                                   <condition attribute='accountid' operator='eq' value='" + accountid + @"' />
@@ -374,10 +371,7 @@ namespace PhuLongCRM.ViewModels
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='contact'>
-                                    <attribute name='fullname' />  
                                     <attribute name='mobilephone' />
-                                    <attribute name='bsd_fullname' />
-                                    <attribute name='contactid' />
                                     <order attribute='createdon' descending='true' />                                   
                                     <filter type='and'>
                                         <condition attribute='contactid' operator='eq' value='" + contactid + @"' />
@@ -394,8 +388,7 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadOneLead(String leadid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                <entity name='lead'>
-                                    <attribute name='lastname' />                                  
+                                <entity name='lead'>                              
                                     <attribute name='mobilephone' />                                  
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>

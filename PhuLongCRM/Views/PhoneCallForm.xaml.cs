@@ -81,10 +81,12 @@ namespace PhuLongCRM.Views
                 else if (page_before == "QueuesDetialPage" && QueuesDetialPage.FromQueue != null && !string.IsNullOrWhiteSpace(QueuesDetialPage.FromQueue.Val))
                 {
                     viewModel.Customer = QueuesDetialPage.FromQueue;
+                    viewModel.CallTo = QueuesDetialPage.CustomerFromQueue;
                     Lookup_Customer.IsVisible = false;
                     CustomerMapping2.IsVisible = true;
                     Lookup_CallTo.IsVisible = true;
                     CustomerMapping.IsVisible = false;
+                    Lookup_CallTo_SelectedItemChange(null, null);
                 }
                 else
                 {
