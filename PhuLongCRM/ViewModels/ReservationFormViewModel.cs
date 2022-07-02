@@ -951,7 +951,7 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var item in result.value)
             {
-                if (DateTime.Parse(item.bsd_startdate).Date < DateTime.Now.Date && DateTime.Parse(item.bsd_enddate).Date > DateTime.Now.Date)
+                if (item.bsd_startdate.HasValue && item.bsd_enddate.HasValue && item.bsd_startdate.Value < DateTime.Now.Date && item.bsd_enddate.Value > DateTime.Now.Date)
                 {
                     this.Promotions.Add(item);
                 }
@@ -1192,7 +1192,8 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_relationship' alias='bsd_relationshipId' />
                                     <order attribute='bsd_name' descending='false' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_reservation' operator='eq' uitype='quote' value='{this.QuoteId}' />
+                                        <condition attribute='bsd_reservation' operator='eq' uitype='quote' value='{this.QuoteId}' />
+                                        <condition attribute='statuscode' operator='eq' value='1' />
                                     </filter>
                                     <link-entity name='account' from='accountid' to='bsd_customer' visible='false' link-type='outer' alias='a_c5024cb219dbeb11bacb002248168cad'>
                                         <attribute name='bsd_name' alias='account_name'/>

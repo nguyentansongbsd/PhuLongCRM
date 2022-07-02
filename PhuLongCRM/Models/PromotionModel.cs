@@ -16,10 +16,10 @@ namespace PhuLongCRM.Models
         private string _bsd_description;
         public string bsd_description { get => _bsd_description; set { _bsd_description = value; OnPropertyChanged(nameof(bsd_description)); } }
 
-        public string _bsd_startdate;
-        public string bsd_startdate
+        public DateTime? _bsd_startdate;
+        public DateTime? bsd_startdate
         {
-            get => this._bsd_startdate;
+            get => _bsd_startdate;
             set
             {
                 _bsd_startdate = value;
@@ -30,14 +30,14 @@ namespace PhuLongCRM.Models
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(_bsd_startdate))
+                if (_bsd_startdate.HasValue == true)
                     return true;
                 else
                     return false;
             }
         }
-        public string _bsd_enddate;
-        public string bsd_enddate
+        public DateTime? _bsd_enddate;
+        public DateTime? bsd_enddate
         {
             get => this._bsd_enddate;
             set
@@ -50,7 +50,7 @@ namespace PhuLongCRM.Models
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(_bsd_enddate))
+                if (_bsd_enddate.HasValue == true)
                     return true;
                 else
                     return false;

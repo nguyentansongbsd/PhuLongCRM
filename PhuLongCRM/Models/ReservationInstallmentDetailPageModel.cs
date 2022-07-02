@@ -75,5 +75,31 @@ namespace PhuLongCRM.Models
                     return true;
             }
         }
+        public bool bsd_signcontractinstallment { get; set; }
+        public int bsd_duedatecalculatingmethod { get; set; }
+        public string bsd_icon_format
+        {
+            get
+            {
+                if (bsd_signcontractinstallment == true)
+                    return "\uf044";
+                else if (bsd_duedatecalculatingmethod == 100000002)
+                    return "\uf2b5";
+                else
+                     return "\uf111";
+            }
+        }
+        public string bsd_icon_color
+        {
+            get
+            {
+                if (bsd_signcontractinstallment == true)
+                    return "#0DB302";
+                else if (bsd_duedatecalculatingmethod == 100000002)
+                    return "#D42A16";
+                else
+                    return "#1399D5";
+            }
+        }
     }
 }

@@ -488,7 +488,8 @@ namespace PhuLongCRM.ViewModels
                   <attribute name='bsd_fullname' alias='contact_name' />
                 </link-entity>
                  <filter type='and'>
-                      <condition attribute='bsd_reservation' operator='eq' uitype='quote' value='{ReservationId}' />
+                    <condition attribute='bsd_reservation' operator='eq' uitype='quote' value='{ReservationId}' />
+                    <condition attribute='statuscode' operator='eq' value='1' />
                   </filter>
               </entity>
             </fetch>";
@@ -528,6 +529,8 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='bsd_amountpercent' />
                 <attribute name='bsd_managementamount' />
                 <attribute name='bsd_maintenanceamount' />
+                <attribute name='bsd_signcontractinstallment' />
+                <attribute name='bsd_duedatecalculatingmethod' />
                 <order attribute='bsd_ordernumber' descending='false' />
                 <filter type='and'>
                   <condition attribute='statecode' operator='eq' value='0' />
@@ -712,6 +715,10 @@ namespace PhuLongCRM.ViewModels
             }
             var data = result.value.SingleOrDefault();
             PromotionItem = data;
+            if (data.bsd_startdate.HasValue)
+                PromotionItem.bsd_startdate = data.bsd_startdate.Value.ToLocalTime();
+            if (data.bsd_enddate.HasValue)
+                PromotionItem.bsd_enddate = data.bsd_enddate.Value.ToLocalTime();
         }
         public async Task LoadHandoverConditionItem(Guid handovercondition_id)
         {

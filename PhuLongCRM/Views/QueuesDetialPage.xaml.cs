@@ -109,6 +109,10 @@ namespace PhuLongCRM.Views
                 }
                 if (viewModel.ShowBtnBangTinhGia == false && viewModel.ShowBtnHuyGiuCho == false && viewModel.ShowCare == false)
                     floatingButtonGroup.IsVisible = false;
+                if (viewModel.Queue.statuscode == 100000000 || viewModel.Queue.statuscode == 100000002)
+                    floatingButtonGroup.IsVisible = true;
+                else
+                    floatingButtonGroup.IsVisible = false;
             }
         }
         private void GoToProject_Tapped(object sender, EventArgs e)
