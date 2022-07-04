@@ -1093,7 +1093,7 @@ namespace PhuLongCRM.Views
                                 if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                                 if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
 
-                                this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia;
+                                this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia_title;
 
                                 viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
                                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
@@ -1135,7 +1135,7 @@ namespace PhuLongCRM.Views
                         if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                         if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                         if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
-                        this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia;
+                        this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia_title;
                         ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                         LoadingHelper.Hide();
                     }
@@ -1189,7 +1189,7 @@ namespace PhuLongCRM.Views
                             if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                             if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                             if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
-                            this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia;
+                            this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia_title;
                             ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                             LoadingHelper.Hide();
                         }

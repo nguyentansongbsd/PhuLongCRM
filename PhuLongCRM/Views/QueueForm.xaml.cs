@@ -66,18 +66,6 @@ namespace PhuLongCRM.Views
                  await viewModel.LoadCustomerReferralLookUp();
                  LoadingHelper.Hide();
              };
-            if (viewModel.AccountsLookUp.Count <= 0)
-            {
-               // LoadingHelper.Show();
-                await viewModel.LoadAccountsLookUp();
-               // LoadingHelper.Hide();
-            }
-            if (viewModel.ContactsLookUp.Count <= 0)
-            {
-                //LoadingHelper.Show();
-                await viewModel.LoadContactsLookUp();
-               // LoadingHelper.Hide();
-            }
         }
 
         public async void Create()
@@ -88,6 +76,11 @@ namespace PhuLongCRM.Views
             if (from)
             {
                 await viewModel.LoadFromUnit(viewModel.UnitId);
+                if(viewModel.QueueFormModel.bsd_units_id == null)
+                {
+                    OnCompleted?.Invoke(false);
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
+                }    
                 string res = await viewModel.createQueueDraft(false, viewModel.UnitId);
                 topic.Text = viewModel.QueueFormModel.bsd_units_name;
                 if (viewModel.QueueFormModel.bsd_units_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
@@ -101,6 +94,11 @@ namespace PhuLongCRM.Views
             else
             {
                 await viewModel.LoadFromProject(viewModel.UnitId);
+                if (viewModel.QueueFormModel.bsd_project_id == null)
+                {
+                    OnCompleted?.Invoke(false);
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_du_an);
+                }
                 string res = await viewModel.createQueueDraft(true, viewModel.UnitId);
                 topic.Text = viewModel.QueueFormModel.bsd_project_name +" - "+ DateTime.Now.ToString("dd/MM/yyyy");
                 if (viewModel.QueueFormModel.bsd_project_id != Guid.Empty && viewModel.idQueueDraft != Guid.Empty)
@@ -138,9 +136,9 @@ namespace PhuLongCRM.Views
             }
             if (from)
             {
-                if (!await viewModel.SetQueueTime())
+                if (!await viewModel.SetQueueTime())// chỉ kiểm tra kh cho giữ chỗ sản phẩm
                 {
-                    ToastMessageHelper.ShortMessage(Language.khach_hang_da_tham_gia_giu_cho_cho_du_an_nay);
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_da_tham_gia_giu_cho_cho_san_pham_nay);
                     LoadingHelper.Hide();
                     btnSave.Text = Language.tao_giu_cho;
                     return;

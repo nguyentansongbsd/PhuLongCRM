@@ -44,7 +44,7 @@
                                 </telerikPrimitives:RadBorder>
                                 <Label Grid.Column="1" Text="{Binding Reservation.name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                             </Grid>
-                            <Grid ColumnDefinitions="Auto,*" x:Name="ma_bang_tinh_gia">
+                            <Grid ColumnDefinitions="Auto,*" x:Name="ma_bang_tinh_gia" IsVisible="false">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.ma_bang_tinh_gia},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
                                 <Label Grid.Column="1" Text="{Binding Reservation.bsd_quotationnumber}" TextColor="#444444" FontSize="15"/>
                             </Grid>
