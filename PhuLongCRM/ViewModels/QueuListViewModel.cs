@@ -125,6 +125,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_name' alias='Label'/>
                                     <attribute name='createdon' />
                                     <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='statuscode' operator='eq' value='861450002' />
+                                    </filter>
                                   </entity>
                             </fetch>";
                 var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetchXml);
