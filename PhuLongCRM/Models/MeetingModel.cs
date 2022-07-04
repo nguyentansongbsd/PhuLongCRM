@@ -21,11 +21,8 @@ namespace PhuLongCRM.Models
             get => this._scheduledstart;
             set
             {
-                if (value.HasValue)
-                {
-                    _scheduledstart = value;
-                    OnPropertyChanged(nameof(scheduledstart));
-                }
+                _scheduledstart = value;
+                OnPropertyChanged(nameof(scheduledstart));
             }
         }
         public TimeSpan _timeStart { get; set; }

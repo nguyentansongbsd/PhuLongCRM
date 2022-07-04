@@ -712,7 +712,7 @@ namespace PhuLongCRM.ViewModels
         private async Task<object> getContent2()
         {
             IDictionary<string, object> data = new Dictionary<string, object>();
-            data["bsd_queuingfee"] = QueueFormModel.bsd_queuingfee;
+            data["bsd_queuingfee"] = 0;
             data["name"] = QueueFormModel.name;
 
             if (Customer != null || !string.IsNullOrWhiteSpace(Customer.Val))

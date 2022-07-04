@@ -636,6 +636,7 @@ namespace PhuLongCRM.ViewModels
         public async Task<CrmApiResponse> UpdatePaymentScheme()
         {
             IDictionary<string, object> data = new Dictionary<string, object>();
+            data["mobile"] = "yes";
             CrmApiResponse  apiResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})/Microsoft.Dynamics.CRM.bsd_Action_Resv_Gene_PMS", data);
             return apiResponse;
         }

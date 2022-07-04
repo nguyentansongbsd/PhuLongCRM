@@ -154,6 +154,7 @@ namespace PhuLongCRM.ViewModels
             }
 
             var tmp = result.value.FirstOrDefault();
+            tmp.bsd_fullname = tmp.fullname;
             this.singleContact = tmp;
 
             checkCMND = tmp.bsd_identitycardnumber;

@@ -38,7 +38,7 @@ namespace PhuLongCRM.Controls
         public static readonly BindableProperty IsVisibleButtonClearProperty = BindableProperty.Create(nameof(IsVisibleButtonClear), typeof(bool?), typeof(DatePickerBoderControl), null, BindingMode.TwoWay);
         public bool? IsVisibleButtonClear { get => (bool?)GetValue(IsVisibleButtonClearProperty); set => SetValue(IsVisibleButtonClearProperty, value); }
 
-        public bool IsTimeNull { get; set; }
+        public bool IsTimeNull { get; set; } = true;
 
         public DatePickerBoderControl()
         {
@@ -71,6 +71,7 @@ namespace PhuLongCRM.Controls
                     control.Time = new TimeSpan(control.Date.Value.Hour, control.Date.Value.Minute, control.Date.Value.Second);
                     control.Date = new DateTime(control.Date.Value.Year, control.Date.Value.Month, control.Date.Value.Day, control.Time.Value.Hours, control.Time.Value.Minutes, control.Time.Value.Seconds);
                     control.ShowEntryTime = control.Time.HasValue ? false : true;
+                    control.IsTimeNull = false;
                     control.btnClearTime.IsVisible = !control.ShowEntryTime;
                 }
 

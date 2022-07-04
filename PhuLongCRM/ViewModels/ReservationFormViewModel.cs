@@ -93,7 +93,7 @@ namespace PhuLongCRM.ViewModels
 
         private OptionSet _priceListApply;
         public OptionSet PriceListApply { get => _priceListApply; set { _priceListApply = value; OnPropertyChanged(nameof(PriceListApply)); } }
-        
+
         #region CoOwner
         public ObservableCollection<CoOwnerFormModel> CoOwnerList { get; set; } = new ObservableCollection<CoOwnerFormModel>();
 
@@ -144,7 +144,7 @@ namespace PhuLongCRM.ViewModels
         #endregion
 
         private TotalReservationModel _totalReservation;
-        public TotalReservationModel TotalReservation { get => _totalReservation; set { _totalReservation = value;OnPropertyChanged(nameof(TotalReservation)); } }
+        public TotalReservationModel TotalReservation { get => _totalReservation; set { _totalReservation = value; OnPropertyChanged(nameof(TotalReservation)); } }
 
         private PhasesLanchModel _phasesLanchModel;
         public PhasesLanchModel PhasesLanchModel { get => _phasesLanchModel; set { _phasesLanchModel = value; OnPropertyChanged(nameof(PhasesLanchModel)); } }
@@ -182,7 +182,7 @@ namespace PhuLongCRM.ViewModels
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_paymentschemedetails", fetchXml);
             if (result == null) return;
-            this.IsHadLichThanhToan = result.value.Count != 0 ? true: false;
+            this.IsHadLichThanhToan = result.value.Count != 0 ? true : false;
         }
 
         //Load thong tin Quote
@@ -406,14 +406,14 @@ namespace PhuLongCRM.ViewModels
             ckPTTTIds = new List<string>();
             ckNoiBoIds = new List<string>();
             ckQuyDoiIds = new List<string>();
-            
+
             foreach (var item in DiscountChilds)
             {
                 if (item.Selected == true)
                 {
                     ckChungIds.Add(item.Val);
                 }
-            }            
+            }
             foreach (var item in DiscountChildsPaymentSchemes)
             {
                 if (item.Selected == true)
@@ -457,7 +457,7 @@ namespace PhuLongCRM.ViewModels
                 {
                     result.Content = responseActions.output;
                 }
-                
+
             }
             return result;
         }
@@ -586,7 +586,7 @@ namespace PhuLongCRM.ViewModels
                 this.DiscountExchangeList = new OptionSet() { Val = PhasesLanchModel.promotion_id.ToString(), Label = PhasesLanchModel.promotion_name };
                 await LoadDiscountChildsExchange();
             }
-            
+
         }
 
         // Load tax code
@@ -864,7 +864,7 @@ namespace PhuLongCRM.ViewModels
         }
 
         // Load CK PTTT
-        public async Task LoadDiscountChildsPaymentSchemes( string Id)
+        public async Task LoadDiscountChildsPaymentSchemes(string Id)
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_discount'>
@@ -1226,7 +1226,7 @@ namespace PhuLongCRM.ViewModels
                     CKTPTTTIds.Add(item.Val);
                 }
             }
-            string CKIds = CKTPTTTIds.Count > 0 ? string.Join(",", CKTPTTTIds): null;
+            string CKIds = CKTPTTTIds.Count > 0 ? string.Join(",", CKTPTTTIds) : null;
 
             var json = new
             {
@@ -1234,7 +1234,7 @@ namespace PhuLongCRM.ViewModels
                 input2 = CKIds
             };
             var data = JsonConvert.SerializeObject(json);
-            CrmApiResponse apiResponse = await CrmHelper.PostData(path,data);
+            CrmApiResponse apiResponse = await CrmHelper.PostData(path, data);
             return apiResponse;
         }
 
@@ -1295,7 +1295,7 @@ namespace PhuLongCRM.ViewModels
                     apiResponse = await CrmHelper.PostData(path, content);
                 }
             }
-            
+
             if (apiResponse.IsSuccess)
             {
                 return true;
@@ -1492,9 +1492,9 @@ namespace PhuLongCRM.ViewModels
             data["bsd_depositfee"] = this.Quote.bsd_depositfee;
             data["bsd_nameofstaffagent"] = this.Quote.bsd_nameofstaffagent;
             data["bsd_numberofmonthspaidmf"] = this.Quote.bsd_numberofmonthspaidmf;
-            data["bsd_managementfee"] = this.Quote.bsd_managementfee; 
+            data["bsd_managementfee"] = this.Quote.bsd_managementfee;
 
-            data["bsd_detailamount"] = decimal.Round(this.TotalReservation.ListedPrice, 0); 
+            data["bsd_detailamount"] = decimal.Round(this.TotalReservation.ListedPrice, 0);
             data["bsd_discount"] = this.TotalReservation.Discount;
             data["bsd_packagesellingamount"] = this.TotalReservation.HandoverAmount;
             data["bsd_totalamountlessfreight"] = this.TotalReservation.NetSellingPrice;
@@ -1557,7 +1557,7 @@ namespace PhuLongCRM.ViewModels
                 data["customerid_account@odata.bind"] = $"/accounts({this.Buyer.Val})";
                 //await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "customerid_contact");
             }
-            if (this.SalesAgent != null && Guid.Parse(this.SalesAgent?.Val) != Guid.Empty )
+            if (this.SalesAgent != null && Guid.Parse(this.SalesAgent?.Val) != Guid.Empty)
             {
                 data["bsd_salessgentcompany@odata.bind"] = $"/accounts({this.SalesAgent.Val})";
             }
@@ -1565,7 +1565,7 @@ namespace PhuLongCRM.ViewModels
             {
                 await CrmHelper.SetNullLookupField("quotes", this.Quote.quoteid, "bsd_salessgentcompany");
             }
-            if (this.Collaborator !=null)
+            if (this.Collaborator != null)
             {
                 data["bsd_collaborator@odata.bind"] = $"/contacts({this.Collaborator.Id})";
             }

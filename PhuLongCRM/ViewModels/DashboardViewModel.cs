@@ -470,7 +470,10 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='createdon' />
                                     <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
-                                      <condition attribute='statecode' operator='eq' value='0' />
+                                      <condition attribute='statecode' operator='in'>
+                                            <value>0</value>
+                                            <value>3</value>
+                                        </condition>
                                       <condition attribute='scheduledstart' operator='today' />
                                       <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>

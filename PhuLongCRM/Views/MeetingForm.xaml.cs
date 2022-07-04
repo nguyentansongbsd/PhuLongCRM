@@ -368,10 +368,12 @@ namespace PhuLongCRM.Views
                     else
                     {
                         viewModel.MeetingModel.scheduleddurationminutes = 0;
-                    }    
+                    }
+
+                    //viewModel.MeetingModel.scheduledstart = null;
 
                     viewModel.MeetingModel.scheduledstart = new DateTime(timeStart.Year, timeStart.Month, timeStart.Day, 7, 0, 0);
-                    viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddDays(1);
+                    //viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddDays(1);
                 }
                 else
                 {
