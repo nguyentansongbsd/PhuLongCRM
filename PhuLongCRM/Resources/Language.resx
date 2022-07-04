@@ -1210,7 +1210,7 @@
     <value>Giới tính</value>
   </data>
 	<data name="quoc_tich" xml:space="preserve">
-    <value>Quốc tịch</value>
+    <value>Công dân</value>
   </data>
 	<data name="ngay_sinh" xml:space="preserve">
     <value>Ngày sinh</value>
@@ -1264,7 +1264,7 @@
     <value>Chọn giới tính</value>
   </data>
 	<data name="chon_quoc_tich" xml:space="preserve">
-    <value>Chọn quốc tịch</value>
+    <value>Chọn công dân</value>
   </data>
 	<data name="chon_ngay_sinh" xml:space="preserve">
     <value>Chọn ngày sinh</value>
@@ -1336,7 +1336,7 @@
     <value>Vui lòng chọn giới tính.</value>
   </data>
 	<data name="vui_long_chon_quoc_tich" xml:space="preserve">
-    <value>Vui lòng chọn quốc tịch.</value>
+    <value>Vui lòng chọn công dân.</value>
   </data>
 	<data name="vui_long_chon_ngay_sinh" xml:space="preserve">
     <value>Vui lòng chọn ngày sinh.</value>

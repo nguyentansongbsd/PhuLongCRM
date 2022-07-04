@@ -207,7 +207,7 @@
 
                                         <StackLayout Orientation="Horizontal" Padding="16,10" BackgroundColor="White">
                                             <Label Text="{x:Static lang:Language.phi_giu_cho}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding Queue.bsd_queuingfee_format}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="#333333" FontSize="14"/>
+                                            <Label Text="{Binding Queue.bsd_queuingfee_format,StringFormat='{0} đ'}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" TextColor="Red" FontSize="14"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>

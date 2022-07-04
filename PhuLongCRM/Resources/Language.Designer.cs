@@ -1534,7 +1534,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chọn quốc tịch.
+        ///   Looks up a localized string similar to Chọn công dân.
         /// </summary>
         internal static string chon_quoc_tich {
             get {
@@ -6934,7 +6934,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quốc tịch.
+        ///   Looks up a localized string similar to Công dân.
         /// </summary>
         internal static string quoc_tich {
             get {
@@ -9139,7 +9139,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vui lòng chọn quốc tịch..
+        ///   Looks up a localized string similar to Vui lòng chọn công dân..
         /// </summary>
         internal static string vui_long_chon_quoc_tich {
             get {

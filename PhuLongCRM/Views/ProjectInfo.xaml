@@ -133,10 +133,21 @@
                             </Grid>
                             <telerikPrimitives:RadBorder BorderColor="#808080" CornerRadius="10" BorderThickness="1" BackgroundColor="White" Grid.Row="1" >
                                 <StackLayout Margin="15" Spacing="10">
-                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <Grid ColumnDefinitions="Auto,Auto,*">
                                         <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="5" BackgroundColor="{Binding StatusCode.Background}" VerticalOptions="StartAndExpand" HorizontalOptions="Start">
                                             <Label Text="{Binding StatusCode.Name}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                         </telerikPrimitives:RadBorder>
+                                        <telerikPrimitives:RadBorder Grid.Column="1" CornerRadius="5" BackgroundColor="{Binding StatusCode.Background}" VerticalOptions="StartAndExpand" HorizontalOptions="Start">
+                                            <Label FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0}: {1}">
+                                                        <Binding Source="{x:Static lang:Language.ma}" />
+                                                        <Binding Path="Project.bsd_projectcode" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                        </telerikPrimitives:RadBorder>
+
                                         <StackLayout Grid.Column="2" IsVisible="{Binding IsHasEvent}" HorizontalOptions="End" Orientation="Horizontal">
                                             <StackLayout.GestureRecognizers>
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OpenEvent_Tapped"/>
@@ -146,19 +157,17 @@
                                         </StackLayout>
                                     </Grid>
                                     <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
-                                        <controls:ExtendedFrame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Padding="4" CornerRadius="24" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,0,5,0">
-                                            <ffimageloading:CachedImage x:Name="avataProject" Source="{Binding Project.bsd_projectslogo, Converter={StaticResource Base64ToImagesource}}" LoadingPlaceholder="user.png" HeightRequest="40" WidthRequest="40"  DownsampleWidth="500">
+                                        <controls:ExtendedFrame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Padding="4" CornerRadius="34" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,0,5,0">
+                                            <ffimageloading:CachedImage x:Name="avataProject" Source="{Binding Project.bsd_projectslogo, Converter={StaticResource Base64ToImagesource}}" LoadingPlaceholder="user.png" HeightRequest="60" WidthRequest="60"  DownsampleWidth="500">
                                                 <ffimageloading:CachedImage.Transformations>
                                                     <ffimagetransformations:CircleTransformation/>
                                                 </ffimageloading:CachedImage.Transformations>
                                             </ffimageloading:CachedImage>
                                         </controls:ExtendedFrame>
                                         <Label Text="{Binding Project.bsd_name}" Grid.Column="1" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
-                                        <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                                            <controls:FieldListViewItem Title="{x:Static lang:Language.ma_du_an}" Text="{Binding Project.bsd_projectcode}" TitleTextColor="#444444" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" LineBreakMode="NoWrap"/>
-                                            <Label Text=" - " TextColor="#444444" FontSize="15"/>
+                                        <StackLayout Grid.Column="1" Grid.Row="1">
+                                            <controls:FieldListViewItem Title="{x:Static lang:Language.giu_cho_du_an}" Text="{Binding Project.bsd_queueproject_format}" TitleTextColor="#444444" TextColor="#444444" FontAttributes="None" LineBreakMode="NoWrap"/>
                                             <controls:FieldListViewItem Title="{x:Static lang:Language.mo_hinh}" Text="{Binding ProjectType.Label}" TitleTextColor="#444444" TextColor="#444444" LineBreakMode="NoWrap"/>
-                                            <Label Text="{Binding PropertyUsageType.Label,StringFormat='- {0}'}" FontSize="15" TextColor="#444444"/>
                                         </StackLayout>
                                     </Grid>
                                     <Label FontSize="15" TextColor="#444444">

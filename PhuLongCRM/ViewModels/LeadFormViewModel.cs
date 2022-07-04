@@ -144,6 +144,7 @@ namespace PhuLongCRM.ViewModels
                             <attribute name='bsd_permanentaddress1' />
                             <attribute name='bsd_housenumberstreet' />
                             <attribute name='bsd_contactaddress' />
+                            <attribute name='fullname' />
                             <order attribute='createdon' descending='true' />
                             <filter type='and'>
                                 <condition attribute='leadid' operator='eq' value='{LeadId}' />
@@ -168,7 +169,7 @@ namespace PhuLongCRM.ViewModels
                 return;
             }
             var tmp = result.value.FirstOrDefault();
-
+            tmp.lastname = tmp.fullname;
             this.singleLead = tmp;
 
             string fetch2 = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -346,6 +347,7 @@ namespace PhuLongCRM.ViewModels
             IDictionary<string, object> data = new Dictionary<string, object>();
             data["leadid"] = singleLead.leadid;
             data["subject"] = this.Topic.Label;
+            data["firstname"] = "";
             data["lastname"] = singleLead.lastname;
             data["jobtitle"] = singleLead.jobtitle;
             data["emailaddress1"] = singleLead.emailaddress1;

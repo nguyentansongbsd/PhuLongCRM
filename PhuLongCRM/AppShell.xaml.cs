@@ -46,8 +46,10 @@ namespace PhuLongCRM
 
         private async void Init()
         {
-            await LoadUserCRM();
             VerApp = Config.OrgConfig.VerApp;
+            this.ContactName = UserLogged.ContactName;
+            this.UserName = UserLogged.User;
+            this.Avartar = $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={UserLogged.User}";
             this.BindingContext = this;
         }
 
@@ -70,7 +72,7 @@ namespace PhuLongCRM
         private void UserInfor_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            if (UserLogged.ContactId == Guid.Empty)
+            if (!UserLogged.IsLoginByUserCRM && UserLogged.ContactId == Guid.Empty)
             {
                 ToastMessageHelper.ShortMessage(Language.chua_co_contact_khong_the_chinh_sua_thong_tin);
                 LoadingHelper.Hide();
@@ -119,42 +121,5 @@ namespace PhuLongCRM
         {
             await Shell.Current.GoToAsync("//LoginPage");
         }
-
-        private async Task LoadUserCRM()
-        {
-            LoadingHelper.Show();
-            var decodedToken = Decoder.DecodeToken(UserLogged.AccessToken);
-            JwtModel model = JsonConvert.DeserializeObject<JwtModel>(decodedToken.Payload);
-            
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='systemuser'>
-                                    <attribute name='fullname' />
-                                    <attribute name='systemuserid' />
-                                    <attribute name='domainname' />
-                                    <order attribute='fullname' descending='false' />
-                                    <filter type='and'>
-                                      <condition attribute='domainname' operator='eq' value='{model.unique_name}' />
-                                    </filter>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<UserModel>>("systemusers", fetchXml);
-            if (result != null || result.value.Count > 0)
-            {
-                UserModel user = result.value.SingleOrDefault();
-                this.ContactName = user.domainname;
-                UserLogged.ContactName = this.UserName = model.name;
-                UserLogged.Id = user.systemuserid;
-
-                LoadingHelper.Hide();
-            }
-            else
-            {
-                this.ContactName = model.unique_name;
-                UserLogged.User = this.UserName = model.name;
-                LoadingHelper.Hide();
-            }
-        }
-
-       
     }
 }
