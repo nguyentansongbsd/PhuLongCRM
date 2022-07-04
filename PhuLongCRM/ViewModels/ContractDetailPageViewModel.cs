@@ -21,9 +21,9 @@ namespace PhuLongCRM.ViewModels
 
         private bool _showInstallmentList;
         public bool ShowInstallmentList { get => _showInstallmentList; set { _showInstallmentList = value; OnPropertyChanged(nameof(ShowInstallmentList)); } }
-        public List<DiscountModel> ListDiscount { get; set; }
-        public List<DiscountSpecialModel> ListSpecialDiscount { get; set; }
-        public List<OptionSet> ListPromotion { get; set; }
+        public ObservableCollection<DiscountModel> ListDiscount { get; set; } = new ObservableCollection<DiscountModel>();
+        public ObservableCollection<DiscountSpecialModel> ListSpecialDiscount { get; set; } = new ObservableCollection<DiscountSpecialModel>();
+        public ObservableCollection<OptionSet> ListPromotion { get; set; } = new ObservableCollection<OptionSet>();
 
         public ObservableCollection<DiscountModel> ListDiscountPaymentScheme { get; set; } = new ObservableCollection<DiscountModel>();
         public ObservableCollection<DiscountModel> ListDiscountInternel { get; set; } = new ObservableCollection<DiscountModel>();
@@ -46,9 +46,6 @@ namespace PhuLongCRM.ViewModels
             Contract = new ContractModel();
             CoownerList = new ObservableCollection<ReservationCoownerModel>();
             InstallmentList = new ObservableCollection<ReservationInstallmentDetailPageModel>();
-            ListDiscount = new List<DiscountModel>();
-            ListSpecialDiscount = new List<DiscountSpecialModel>();
-            ListPromotion = new List<OptionSet>();
         }
 
         public async Task LoadContract(Guid ContractId)
@@ -103,6 +100,10 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
                                        <attribute name='bsd_projectid' alias='project_id'/>
                                        <attribute name='bsd_name' alias='project_name'/>
+                                    </link-entity>
+                                    <link-entity name='quote' from='quoteid' to='quoteid' link-type='inner' alias='ak' >
+                                        <attribute name='quoteid' alias='queue_id'/>
+                                        <attribute name='name' alias='queue_name' />
                                     </link-entity>
                                     <link-entity name='product' from='productid' to='bsd_unitnumber' link-type='outer' alias='ab'>
                                        <attribute name='productid' alias='unit_id'/>

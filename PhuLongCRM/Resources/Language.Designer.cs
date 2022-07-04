@@ -2785,7 +2785,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ĐĐKTSP.
+        ///   Looks up a localized string similar to Đặc điểm kỹ thuật SP.
         /// </summary>
         internal static string ddktsp {
             get {

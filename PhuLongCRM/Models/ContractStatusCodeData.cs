@@ -27,12 +27,11 @@ namespace PhuLongCRM.Models
                 new StatusCodeModel("2",Language.contract_pending_sts,"#01577E"),// contract_pending_sts //Pending
                 new StatusCodeModel("100000002",Language.contract_signed_contract_sts,"#016C70"), // đã ký hợp đồng // contract_signed_contract_sts //Signed Contract
                 new StatusCodeModel("100000006",Language.contract_terminated_sts,"#c4c4c4"), // đã thanh lý // contract_terminated_sts //Terminated
-                new StatusCodeModel("0","","#bfbfbf"),
-                new StatusCodeModel("100000008",Language.contract_signed_da_sts,"#FAF0F3"), // ???? // contract_signed_da_sts //Signed D.A
+                new StatusCodeModel("100000008",Language.contract_signed_da_sts,"#FF869E"), // ???? // contract_signed_da_sts //Signed D.A
                 new StatusCodeModel("100000009",Language.contract_acceptance_sts,"#DE7962"), // ???? // contract_acceptance_sts //Acceptance
-                new StatusCodeModel("100000010",Language.contract_units_handover_sts,"#E9F3FB"), // ???? // contract_units_handover_sts //Units Handover
+                new StatusCodeModel("100000010",Language.contract_units_handover_sts,"#7D9D9C"), // ???? // contract_units_handover_sts //Units Handover
                 new StatusCodeModel("100000011",Language.contract_confirm_document_sts,"#59C30D"), // ???? // contract_confirm_document_sts //Confirm Document
-                new StatusCodeModel("100000012",Language.contract_pink_book_handover_sts,"#BDF2D5"), // ???? // contract_pink_book_handover_sts //Pink-book Handover
+                new StatusCodeModel("100000012",Language.contract_pink_book_handover_sts,"#4CACBC"), // ???? // contract_pink_book_handover_sts //Pink-book Handover
             };
         }
 

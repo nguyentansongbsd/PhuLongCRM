@@ -225,6 +225,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private async void stackLayoutPromotions_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -337,6 +338,42 @@ namespace PhuLongCRM.Views
                     LoadInstallmentList(this.ContractId);
                 }
             }
+        }
+
+        private void GoToProject_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            ProjectInfo project = new ProjectInfo(viewModel.Contract.project_id);
+            project.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(project);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
+        }
+
+        private void GoToDatDoc_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            BangTinhGiaDetailPage datcoc = new BangTinhGiaDetailPage(viewModel.Contract.queue_id);
+            datcoc.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(datcoc);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
     }
 }
