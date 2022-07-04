@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
@@ -67,9 +68,9 @@ namespace PhuLongCRM.ViewModels
         public int PageHopDong { get; set; } = 1;
         public int PageCase { get; set; } = 1;
 
-        public string CodeContact = "2";
+        public string CodeAccount = LookUpMultipleTabs.CodeAccount;
 
-        public string CodeAccount = "3";
+        public string CodeContact = LookUpMultipleTabs.CodeContac;
 
         public QueuesDetialPageViewModel()
         {

@@ -21,6 +21,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshDC = null;
         public static bool? NeedToRefreshActivity = null;
         public static OptionSet FromQueue = null;
+        public static OptionSet CustomerFromQueue = null;
         public QueuesDetialPageViewModel viewModel;
         public QueuesDetialPage(Guid queueId)
         {
@@ -39,6 +40,7 @@ namespace PhuLongCRM.Views
             if (viewModel.Queue != null)
             {
                 FromQueue = new OptionSet { Val = viewModel.Queue.opportunityid.ToString(), Label = viewModel.Queue.name, Title = CodeQueue };
+                CustomerFromQueue = viewModel.Customer;
                 SetButtons();
                 OnCompleted?.Invoke(true);
             }
@@ -106,6 +108,10 @@ namespace PhuLongCRM.Views
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_giu_cho, "FontAwesomeSolid", "\uf05e", null, HuyGC));
                 }
                 if (viewModel.ShowBtnBangTinhGia == false && viewModel.ShowBtnHuyGiuCho == false && viewModel.ShowCare == false)
+                    floatingButtonGroup.IsVisible = false;
+                if (viewModel.Queue.statuscode == 100000000 || viewModel.Queue.statuscode == 100000002)
+                    floatingButtonGroup.IsVisible = true;
+                else
                     floatingButtonGroup.IsVisible = false;
             }
         }

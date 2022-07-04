@@ -827,16 +827,18 @@ namespace PhuLongCRM.ViewModels
                     {
                         if(DaiLyOptions != null)
                         {
-                            DaiLyOptions.AddRange(await LoadAccuntSales(all));
-                            DaiLyOptions.AddRange(await LoadAccuntSales(develop));
+                            var list1 = await LoadAccuntSales(all);
+                            var list2 = await LoadAccuntSales(develop);
+                            DaiLyOptions = list1.Union(list2).Distinct().ToList();
                         }    
                     }
                     else
                     {
                         if (DaiLyOptions != null)
                         {
-                            DaiLyOptions.AddRange(await LoadAccuntSales(sale_phasesLaunch));
-                            DaiLyOptions.AddRange(await LoadAccuntSales(develop));
+                            var list1 = await LoadAccuntSales(sale_phasesLaunch);
+                            var list2 = await LoadAccuntSales(develop);
+                            DaiLyOptions = list1.Union(list2).Distinct().ToList();
                         }
                     }
                 }

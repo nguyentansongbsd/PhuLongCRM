@@ -515,9 +515,11 @@
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <Grid ColumnDefinitions="Auto,*" Padding="20,0" BackgroundColor="White">
-                                            <BoxView WidthRequest="1" HorizontalOptions="CenterAndExpand" Grid.Column="0" BackgroundColor="Gray"/>
-                                            <Label Text="&#xf111;"  TextColor="#1399D5" FontSize="10" FontFamily="FontAwesomeSolid" Grid.Column="0" VerticalOptions="CenterAndExpand"/>
-                                            <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Grid.Column="1" Margin="20,10,0,10">
+                                            <Grid WidthRequest="25">
+                                                <BoxView WidthRequest="1" HorizontalOptions="Center" Grid.Column="0" BackgroundColor="Gray"/>
+                                                <Label Text="{Binding bsd_icon_format}"  TextColor="{Binding bsd_icon_color}" FontSize="17" FontFamily="FontAwesomeSolid" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" BackgroundColor="White" Padding="2"/>
+                                            </Grid>
+                                            <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Grid.Column="1" Margin="10,10,0,10">
                                                 <StackLayout Padding="10">
                                                     <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto">
                                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}">
