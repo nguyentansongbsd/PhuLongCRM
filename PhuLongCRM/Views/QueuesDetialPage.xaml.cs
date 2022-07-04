@@ -316,7 +316,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId) { Title = Language.danh_sach_bang_tinh_gia };
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId) { Title = Language.bang_tinh_gia_title };
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
             {
                 if (isSuccess)
@@ -335,7 +335,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId) { Title = Language.dat_coc };
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId, true) { Title = Language.dat_coc_title };
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
             {
                 if (isSuccess)

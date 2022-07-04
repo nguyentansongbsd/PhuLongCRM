@@ -2029,7 +2029,7 @@
     <value>Please enter title queue.</value>
   </data>
 	<data name="khach_hang_da_tham_gia_giu_cho_cho_du_an_nay" xml:space="preserve">
-    <value>This customer has already queued this unit.</value>
+    <value>This customer has already queued this project.</value>
   </data>
 	<data name="khach_hang_phai_khac_dai_ly_ban_hang" xml:space="preserve">
     <value>Customer and Sales agent company are duplicated. Please check again.</value>
@@ -3321,4 +3321,10 @@
 	<data name="tuy_chon_khong_chuyen_doi" xml:space="preserve">
 		<value>Options of disqualify</value>
 	</data>
+	<data name="khach_hang_da_tham_gia_giu_cho_cho_san_pham_nay" xml:space="preserve">
+    <value>This customer has already queued this unit.</value>
+  </data>
+	<data name="khong_tim_thay_du_an" xml:space="preserve">
+    <value>Project not found.</value>
+  </data>
 </root>

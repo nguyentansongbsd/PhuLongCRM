@@ -139,10 +139,17 @@ namespace PhuLongCRM.ViewModels
                 return;
             }
             this.QueueFormModel = tmp;
-            if (QueueFormModel.bsd_units_queuingfee > 0)
-                QueueFormModel.bsd_queuingfee = QueueFormModel.bsd_units_queuingfee;
-            else if (QueueFormModel.bsd_bookingf > 0)
-                QueueFormModel.bsd_queuingfee = QueueFormModel.bsd_bookingf;
+            if (QueueFormModel.bsd_phaseslaunch_id == Guid.Empty) // giữ chỗ sản phẩm có đợt mở bán, tiền giữ chỗ = 0
+            {
+                if (QueueFormModel.bsd_units_queuingfee > 0)
+                    QueueFormModel.bsd_queuingfee = QueueFormModel.bsd_units_queuingfee;
+                else if (QueueFormModel.bsd_bookingf > 0)
+                    QueueFormModel.bsd_queuingfee = QueueFormModel.bsd_bookingf;
+            }
+            else
+            {
+                QueueFormModel.bsd_queuingfee = 0;
+            }    
             QueueFormModel.bsd_queuingfee_format = StringFormatHelper.FormatCurrency(QueueFormModel.bsd_queuingfee);
         }
 
@@ -348,74 +355,6 @@ namespace PhuLongCRM.ViewModels
 
         //    return data;
         //}
-
-        public async Task LoadContactsLookUp()
-        {
-            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                  <entity name='contact'>
-                    <attribute name='contactid' alias='Id' />
-                    <attribute name='fullname' alias='Name' />
-                    <order attribute='createdon' descending='true' />                   
-                    <filter type='and'>
-                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
-                    </filter>
-                  </entity>
-                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("contacts", fetch);
-            if (result == null)
-                return;
-            var data = result.value;
-            foreach (var item in data)
-            {
-                ContactsLookUp.Add(item);
-            }
-        }
-
-        public async Task LoadAccountsLookUp()
-        {
-            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                              <entity name='account'>
-                                <attribute name='name' alias='Name'/>
-                                <attribute name='accountid' alias='Id'/>
-                                <order attribute='createdon' descending='true' />
-                                <filter type='and'>
-                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
-                                </filter>
-                              </entity>
-                            </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("accounts", fetch);
-            if (result == null)
-                return;
-            var data = result.value;
-            foreach (var item in data)
-            {
-                AccountsLookUp.Add(item);
-            }
-        }
-
-        public async Task LoadSalesAgent()
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='account'>
-                                    <attribute name='name' alias='Name' />
-                                    <attribute name='accountid' alias='Id' />
-                                    <order attribute='createdon' descending='true' />
-                                    <filter type='and'>
-                                       <condition attribute='bsd_businesstypesys' operator='contain-values'>
-                                         <value>100000002</value>
-                                       </condition>                                
-                                    </filter>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("accounts", fetch);
-            if (result == null)
-                return;
-            var data = result.value;
-            foreach (var item in data)
-            {
-                DaiLyOptions.Add(item);
-            }
-        }
 
         //private async Task<object> getContent()
         //{
@@ -712,7 +651,7 @@ namespace PhuLongCRM.ViewModels
         private async Task<object> getContent2()
         {
             IDictionary<string, object> data = new Dictionary<string, object>();
-            data["bsd_queuingfee"] = 0;
+            data["bsd_queuingfee"] = QueueFormModel.bsd_queuingfee;
             data["name"] = QueueFormModel.name;
 
             if (Customer != null || !string.IsNullOrWhiteSpace(Customer.Val))
@@ -865,8 +804,9 @@ namespace PhuLongCRM.ViewModels
             {
                 if (DaiLyOptions != null)
                 {
-                    DaiLyOptions.AddRange(await LoadAccuntSales(all));
-                    DaiLyOptions.AddRange(await LoadAccuntSales(develop));
+                    var list1 = await LoadAccuntSales(all);
+                    var list2 = await LoadAccuntSales(develop);
+                    DaiLyOptions = list1.Union(list2).Distinct().ToList();
                 }
             }
         }

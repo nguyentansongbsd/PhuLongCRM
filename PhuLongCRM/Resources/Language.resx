@@ -3321,4 +3321,10 @@
 	<data name="tuy_chon_khong_chuyen_doi" xml:space="preserve">
 		<value>Tuỳ chọn không chuyển đổi</value>
 	</data>
+	<data name="khach_hang_da_tham_gia_giu_cho_cho_san_pham_nay" xml:space="preserve">
+		<value>Khách hàng đã tham gia giữ chỗ cho sản phẩm này.</value>
+	</data>
+	<data name="khong_tim_thay_du_an" xml:space="preserve">
+		<value>Không tìm thấy dự án.</value>
+	 </data>
 </root>

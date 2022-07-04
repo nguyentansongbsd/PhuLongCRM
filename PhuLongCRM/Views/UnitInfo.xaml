@@ -282,10 +282,10 @@
                                             </BindableLayout.EmptyViewTemplate>
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" BackgroundColor ="White" Padding="15,10">
-                                                        <Grid.GestureRecognizers>
+                                                    <StackLayout BackgroundColor ="White" Padding="15,10">
+                                                        <StackLayout.GestureRecognizers>
                                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiuChoItem_Tapped" CommandParameter="{Binding opportunityid}"/>
-                                                        </Grid.GestureRecognizers>
+                                                        </StackLayout.GestureRecognizers>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="0">
                                                             <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                                 <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
@@ -295,7 +295,7 @@
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customername}"/>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding project_name}"/>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_het_han}" Text="{Binding bsd_queuingexpired, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
-                                                    </Grid>
+                                                    </StackLayout>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
@@ -322,7 +322,7 @@
                                                 <DataTemplate>
                                                     <StackLayout BackgroundColor ="White" Padding="15,10">
                                                         <StackLayout.GestureRecognizers>
-                                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ChiTietDatCoc_Tapped" CommandParameter="{Binding quoteid}"/>
+                                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ChiTietBTG_Tapped" CommandParameter="{Binding quoteid}"/>
                                                         </StackLayout.GestureRecognizers>
                                                         <Grid ColumnDefinitions="Auto,*">
                                                             <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="4" BorderColor="Transparent" Padding="5" BackgroundColor="{Binding statuscode,Converter={StaticResource ReservationStatusCodeConverterColor}}">
@@ -351,7 +351,7 @@
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout>
-                                        <StackLayout x:Name="datagrid_danhsachdatcoc" BindableLayout.ItemsSource="{Binding list_danhsachdatcoc}" BindableLayout.EmptyView="Không có dữ liệu" BackgroundColor="#eeeeee" Spacing="1">
+                                        <StackLayout x:Name="datagrid_danhsachdatcoc" BindableLayout.ItemsSource="{Binding list_danhsachdatcoc}" BindableLayout.EmptyView="{x:Static lang:Language.khong_co_du_lieu}" BackgroundColor="#eeeeee" Spacing="1">
                                             <BindableLayout.EmptyViewTemplate>
                                                 <DataTemplate>
                                                     <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
