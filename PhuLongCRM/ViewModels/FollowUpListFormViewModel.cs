@@ -247,6 +247,20 @@ namespace PhuLongCRM.ViewModels
             }
 
         }
+        public async Task<Boolean> createFUL()
+        {
+            string path = "/bsd_followuplists";
+            var content = await this.getContent();
+            CrmApiResponse result = await CrmHelper.PostData(path, content);
+            if (result.IsSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public async Task<Boolean> DeletLookup(string fieldName, Guid FULid)
         {
@@ -294,6 +308,33 @@ namespace PhuLongCRM.ViewModels
 
             data["bsd_description"] = FULDetail.bsd_description;
             data["bsd_salecomment"] = FULDetail.bsd_salecomment;
+
+            data["bsd_followuplistid"] = FULDetail.bsd_followuplistid;
+            if (FULDetail.project_id != Guid.Empty)
+            {
+                data["bsd_project@odata.bind"] = "/bsd_projects(" + FULDetail.project_id + ")";
+            }
+            //data["bsd_date"] = DateTime.Now.ToLocalTime();
+
+            data["bsd_reservation@odata.bind"] = "/quotes(" + FULDetail.bsd_reservation_id + ")";
+            data["bsd_depositfee"] = FULDetail.bsd_depositfee;
+            if (FULDetail.product_id != Guid.Empty)
+            {
+                data["bsd_Units@odata.bind"] = "/products(" + FULDetail.product_id + ")";
+            }
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM)
+            {
+                data["bsd_Employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
+            }
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
+            {
+                data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
+            }
+
+            data["bsd_sellingprice"] = FULDetail.bsd_sellingprice;
+            data["bsd_totalamount"] = FULDetail.bsd_totalamount;
+            data["bsd_totalamountpaid"] = FULDetail.bsd_totalamountpaid;
+            data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)"; // Don vi tien te mac dinh la "đ"
             return data;
         }
     }

@@ -26,6 +26,16 @@ namespace PhuLongCRM.Views
             Init(fulid);
         }
 
+        public FollowUpListForm(FollowUpModel ful)
+        {
+            InitializeComponent();
+            this.BindingContext = viewModel = new FollowUpListFormViewModel();
+            this.Title = btnSave.Text = Language.tao_moi_danh_sach_theo_doi_title;
+            if (ful.bsd_followuplistid != Guid.Empty)
+                viewModel.FULDetail = ful;
+            InitCreate();
+        }
+
         public async void Init(Guid fulid)
         {
             await viewModel.LoadFUL(fulid);
@@ -44,6 +54,24 @@ namespace PhuLongCRM.Views
 
                 if (!string.IsNullOrWhiteSpace(viewModel.FULDetail.bsd_takeoutmoney.ToString()) && viewModel.FULDetail.bsd_takeoutmoney != 0)
                     viewModel.TakeOutMoney = FollowUpListTakeOutMoney.GetFollowUpListTakeOutMoneyById(viewModel.FULDetail.bsd_takeoutmoney.ToString());
+            }
+
+            if (viewModel.FULDetail != null && viewModel.FULDetail.bsd_followuplistid != Guid.Empty)
+                OnCompleted?.Invoke(true);
+            else
+                OnCompleted?.Invoke(false);
+        }
+        public async void InitCreate()
+        {
+            SetPreOpen();
+            await Task.Delay(1);
+            if (viewModel.FULDetail != null)
+            {
+                if (!string.IsNullOrWhiteSpace(viewModel.FULDetail.bsd_type.ToString()))
+                    viewModel.Type = FollowUpType.GetFollowUpTypeById(viewModel.FULDetail.bsd_type.ToString());
+
+                if (!string.IsNullOrWhiteSpace(viewModel.FULDetail.bsd_group.ToString()) && viewModel.FULDetail.bsd_group != 0)
+                    viewModel.Group = FollowUpGroup.GetFollowUpGroupById(viewModel.FULDetail.bsd_group.ToString());
             }
 
             if (viewModel.FULDetail != null && viewModel.FULDetail.bsd_followuplistid != Guid.Empty)
@@ -100,6 +128,11 @@ namespace PhuLongCRM.Views
 
         private async void btnSave_Clicked(object sender, EventArgs e)
         {
+            if (viewModel.FULDetail == null || string.IsNullOrWhiteSpace(viewModel.FULDetail.bsd_name))
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_ten);
+                return;
+            }
             if (viewModel.Type == null || string.IsNullOrWhiteSpace(viewModel.Type.Id))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_loai);
@@ -141,20 +174,34 @@ namespace PhuLongCRM.Views
             }
 
             LoadingHelper.Show();
-            var updated = await viewModel.updateFUL();
-            if (updated)
+            var create = await viewModel.createFUL();
+            if (create)
             {
                 if (FollowDetailPage.NeedToRefresh.HasValue) FollowDetailPage.NeedToRefresh = true;
                 if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                 await Navigation.PopAsync();
-                ToastMessageHelper.ShortMessage(Language.cap_nhat_danh_sach_theo_doi_thanh_cong);
+                ToastMessageHelper.ShortMessage(Language.da_tao_danh_sach_theo_doi);
                 LoadingHelper.Hide();
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.cap_nhat_danh_sach_theo_doi_that_bai);
+                ToastMessageHelper.ShortMessage(Language.tao_moi_danh_sach_theo_doi_that_bai);
             }
+            //var updated = await viewModel.updateFUL();
+            //if (updated)
+            //{
+            //    if (FollowDetailPage.NeedToRefresh.HasValue) FollowDetailPage.NeedToRefresh = true;
+            //    if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
+            //    await Navigation.PopAsync();
+            //    ToastMessageHelper.ShortMessage(Language.cap_nhat_danh_sach_theo_doi_thanh_cong);
+            //    LoadingHelper.Hide();
+            //}
+            //else
+            //{
+            //    LoadingHelper.Hide();
+            //    ToastMessageHelper.ShortMessage(Language.cap_nhat_danh_sach_theo_doi_that_bai);
+            //}
         }
 
         private void Lookup_TakeOut_SelectedItemChange(object sender, LookUpChangeEvent e)

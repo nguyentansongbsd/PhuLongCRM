@@ -3327,4 +3327,22 @@
 	<data name="khong_tim_thay_du_an" xml:space="preserve">
     <value>Project not found.</value>
   </data>
+	<data name="di_den_hop_dong" xml:space="preserve">
+    <value>Go to Contract</value>
+  </data>
+	<data name="huy_dat_coc" xml:space="preserve">
+    <value>Cancel Deposit</value>
+  </data>
+	<data name="tao_moi_danh_sach_theo_doi_title" xml:space="preserve">
+    <value>Create Follow Up List</value>
+  </data>
+	<data name="nhap_ten" xml:space="preserve">
+    <value>Enter name</value>
+  </data>
+	<data name="vui_long_nhap_ten" xml:space="preserve">
+    <value>Please enter name.</value>
+  </data>
+	<data name="tao_moi_danh_sach_theo_doi_that_bai" xml:space="preserve">
+		<value>Failed to create follow up list.</value>
+	</data>
 </root>
