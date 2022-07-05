@@ -118,7 +118,7 @@ namespace PhuLongCRM.Views
                 await Task.WhenAll(
                     viewModel.LoadDiscountChilds(),
                     viewModel.LoadDiscountChildsPaymentSchemes(id.ToString()),
-                    viewModel.LoadDiscountSpecialPaymentSchemes(),
+                    //viewModel.LoadDiscountSpecialPaymentSchemes(),
                     viewModel.LoadDiscountChildsInternel(),
                     viewModel.LoadDiscountChildsExchange(),
                     viewModel.LoadHandoverCondition(),
@@ -947,6 +947,7 @@ namespace PhuLongCRM.Views
                         viewModel.CoOwnerList.Clear();
                         await viewModel.LoadCoOwners();
                         await centerModalCoOwner.Hide();
+                        if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                         ToastMessageHelper.ShortMessage(Language.cap_nhat_dong_so_huu_thanh_cong);
                         LoadingHelper.Hide();
                     }

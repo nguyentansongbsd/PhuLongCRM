@@ -15,15 +15,14 @@ namespace PhuLongCRM.Views
     {
         private BangTinhGiaDetailPageViewModel viewModel;
         public Action<bool> OnCompleted;
-        private Guid ReservationId;
         public static bool? NeedToRefresh = null; 
         public static bool? NeedToRefreshInstallment = null;
 
         public BangTinhGiaDetailPage(Guid id, bool isContract = false)
         {
             InitializeComponent();
-            ReservationId = id;
             BindingContext = viewModel = new BangTinhGiaDetailPageViewModel();
+            viewModel.ReservationId = id;
             NeedToRefresh = false;
             NeedToRefreshInstallment = false;
             Init();
@@ -33,9 +32,13 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await Task.WhenAll(
-                LoadDataChinhSach(ReservationId),
-                viewModel.LoadCoOwners(ReservationId)
+                LoadDataChinhSach(viewModel.ReservationId),
+                viewModel.LoadCoOwners(viewModel.ReservationId)
                 );
+
+            MessagingCenter.Subscribe<BangTinhGiaDetailPageViewModel>(this, "IsRefresh", (sender) => {
+                SetUpButtonGroup();
+            });
 
             SetUpButtonGroup();
             if (viewModel.Reservation.quoteid != Guid.Empty)
@@ -64,8 +67,8 @@ namespace PhuLongCRM.Views
                 viewModel.NumberInstallment = 0;
                 
                 await Task.WhenAll(
-                    LoadDataChinhSach(ReservationId),
-                    viewModel.LoadCoOwners(ReservationId)
+                    LoadDataChinhSach(viewModel.ReservationId),
+                    viewModel.LoadCoOwners(viewModel.ReservationId)
                 );
                 if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                 LoadingHelper.Hide();
@@ -78,7 +81,7 @@ namespace PhuLongCRM.Views
                 viewModel.NumberInstallment = 0;
                 viewModel.InstallmentList.Clear();
                 
-                await viewModel.LoadInstallmentList(ReservationId);
+                await viewModel.LoadInstallmentList(viewModel.ReservationId);
                 LoadingHelper.Hide();
             }
             if (NeedToRefreshInstallment == true || NeedToRefresh == true)
@@ -97,9 +100,9 @@ namespace PhuLongCRM.Views
             {
                 await Task.WhenAll(
                     viewModel.LoadReservation(id),
-                    viewModel.LoadPromotions(ReservationId),
-                    viewModel.LoadSpecialDiscount(ReservationId),
-                    viewModel.LoadInstallmentList(ReservationId)
+                    viewModel.LoadPromotions(viewModel.ReservationId),
+                    viewModel.LoadSpecialDiscount(viewModel.ReservationId),
+                    viewModel.LoadInstallmentList(viewModel.ReservationId)
                     );
                 await Task.WhenAll(
                     viewModel.LoadDiscounts(),
@@ -107,9 +110,27 @@ namespace PhuLongCRM.Views
                     viewModel.LoadDiscountsInternel(),
                     viewModel.LoadDiscountsExChange()
                     ) ;
-                await viewModel.LoadHandoverCondition(ReservationId);
+                await viewModel.LoadHandoverCondition(viewModel.ReservationId);
                // SutUpSpecialDiscount();
             }
+        }
+
+        private void GoToQueueDetail_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            QueuesDetialPage queuesDetial = new QueuesDetialPage(viewModel.Reservation.queue_id);
+            queuesDetial.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(queuesDetial);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
 
         // tab lich
@@ -122,7 +143,8 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-        private async void SetUpButtonGroup()
+
+        public async void SetUpButtonGroup()
         {
             var checkFul = await viewModel.CheckFUL();
             if (viewModel.Reservation.statuscode == 3 && checkFul == true)// show khi statuscode == 3(Deposited)
@@ -141,7 +163,10 @@ namespace PhuLongCRM.Views
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xoa_lich_thanh_toan, "FontAwesomeRegular", "\uf1c3", null, CancelInstallment));
                 }
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
+                if (!viewModel.Reservation.bsd_quotationprinteddate.HasValue)
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
+                }
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeRegular", "\uf273", null, CancelQuotes));
                 if (viewModel.InstallmentList.Count > 0 && viewModel.Reservation.bsd_quotationprinteddate != null)
                 {
@@ -167,6 +192,7 @@ namespace PhuLongCRM.Views
                 floatingButtonGroup.IsVisible = false;
             }
         }
+
         private void InitContract(bool _isContract)
         {
             if (_isContract)
@@ -183,6 +209,7 @@ namespace PhuLongCRM.Views
             }
 
         }
+
         private async void FULTerminate(object sender, EventArgs e)
         {
             if (viewModel.Reservation != null && viewModel.Reservation.quoteid != Guid.Empty)
@@ -222,6 +249,7 @@ namespace PhuLongCRM.Views
             {
                 if (await viewModel.DeactiveInstallment())
                 {
+                    NeedToRefresh = true;
                     NeedToRefreshInstallment = true;
                     OnAppearing();
                     LoadingHelper.Hide();
@@ -290,7 +318,7 @@ namespace PhuLongCRM.Views
         private void EditQuotes(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            ReservationForm reservation = new ReservationForm(this.ReservationId);
+            ReservationForm reservation = new ReservationForm(viewModel.ReservationId);
             reservation.CheckReservation = async (isSuccess) =>
             {
                 if (isSuccess == 0)
@@ -750,7 +778,7 @@ namespace PhuLongCRM.Views
                 else if ((int)e.Item == 3)
                 {
                     if (viewModel.InstallmentList.Count == 0)
-                        LoadInstallmentList(ReservationId);
+                        LoadInstallmentList(viewModel.ReservationId);
                     TabChinhSach.IsVisible = false;
                     TabTongHop.IsVisible = false;
                     TabChiTiet.IsVisible = false;
