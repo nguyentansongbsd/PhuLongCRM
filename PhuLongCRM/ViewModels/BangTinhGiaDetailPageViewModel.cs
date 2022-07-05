@@ -11,11 +11,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
     public class BangTinhGiaDetailPageViewModel : BaseViewModel
     {
+        public Guid ReservationId { get; set; }
         private ReservationDetailPageModel _reservation;
         public ReservationDetailPageModel Reservation { get => _reservation; set { _reservation = value; OnPropertyChanged(nameof(Reservation)); } }
         public ObservableCollection<FloatButtonItem> ButtonCommandList { get; set; }
@@ -54,6 +57,16 @@ namespace PhuLongCRM.ViewModels
 
         private DiscountModel _discount;
         public DiscountModel Discount { get => _discount; set { _discount = value; OnPropertyChanged(nameof(Discount)); } }
+
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
+
+        public ICommand RefreshCommand => new Command(async () =>
+        {
+            IsRefreshing = true;
+            await RefreshBTG();
+            IsRefreshing = false;
+        });
 
         public string UpdateQuote = "1";
         public string UpdateQuotation = "2";
@@ -277,11 +290,13 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_packagesellings", fetchXml);
             if (result == null || result.value.Count == 0) return;
 
-            Reservation.handovercondition_id = Guid.Parse(result.value.FirstOrDefault().Val);
-            Reservation.handovercondition_name = result.value.FirstOrDefault().Label;
+            var data = result.value.FirstOrDefault();
+            Reservation.handovercondition_id = Guid.Parse(data.Val);
+            Reservation.handovercondition_name = data.Label;
         }
         public async Task LoadSpecialDiscount(Guid ReservationId)
         {
+            // statuscode = Approved / 100000000
             string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                     <entity name='bsd_discountspecial'>
                                         <attribute name='bsd_discountspecialid' />
@@ -293,6 +308,7 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='bsd_totalamount' />
                                         <order attribute='bsd_name' descending='false' />
                                         <filter type='and'>
+                                        <condition attribute='statuscode' operator='eq' value='100000000' />
                                             <condition attribute='bsd_quote' operator='eq' uitype='quote' value='" + ReservationId + @"' />
                                         </filter>
                                     </entity>
@@ -919,6 +935,40 @@ namespace PhuLongCRM.ViewModels
                 Reservation.bsd_followuplist_format = Language.co;
                 return false;
             }
+        }
+
+        private async Task RefreshBTG()
+        {
+            LoadingHelper.Show();
+            IsRefreshing = true;
+            CoownerList.Clear();
+            ListDiscountPaymentScheme.Clear();
+            ListDiscount.Clear();
+            ListPromotion.Clear();
+            ListDiscountInternel.Clear();
+            ListDiscountExchange.Clear();
+            InstallmentList.Clear();
+            ButtonCommandList.Clear();
+            ShowInstallmentList = false;
+            NumberInstallment = 0;
+
+            await Task.WhenAll(
+                LoadCoOwners(this.ReservationId),
+                LoadReservation(this.ReservationId),
+                LoadPromotions(this.ReservationId),
+                LoadSpecialDiscount(this.ReservationId),
+                LoadInstallmentList(this.ReservationId)
+                );
+            await Task.WhenAll(
+                LoadDiscounts(),
+                LoadDiscountsPaymentScheme(),
+                LoadDiscountsInternel(),
+                LoadDiscountsExChange()
+                );
+            await LoadHandoverCondition(this.ReservationId);
+            MessagingCenter.Send<BangTinhGiaDetailPageViewModel>(this, "IsRefresh");
+            IsRefreshing = false;
+            LoadingHelper.Hide();
         }
     }
 }
