@@ -909,13 +909,15 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_enddate'/>
                                     <attribute name='createdon'/>
                                     <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_special' operator='eq' value='1' />
+                                    </filter>
                                     <link-entity name='bsd_bsd_discountonpaymentscheme_bsd_discoun' from='bsd_discountid' to='bsd_discountid' intersect='true'>
-                                      <filter type='and'>,
-                                          <condition attribute='bsd_special' operator='eq' value='1'/>,
-                                          <condition attribute='bsd_discounttype' operator='eq' value='100000000'/>,
-                                          <condition attribute='statuscode' operator='eq' value='100000000'/>,
-                                          <condition attribute='bsd_phaseslaunch' operator='eq' value='{PhasesLaunchId}'/>,
-                                        </filter>,
+                                      <filter type='and'>
+                                          <condition attribute='bsd_discounttype' operator='eq' value='100000000'/>
+                                          <condition attribute='statuscode' operator='eq' value='100000000'/>
+                                          <condition attribute='bsd_phaseslaunch' operator='eq' value='{PhasesLaunchId}'/>
+                                        </filter>
                                     </link-entity>
                                   </entity>
                                 </fetch>";

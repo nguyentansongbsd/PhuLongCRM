@@ -2176,7 +2176,7 @@
     <value>Vui lòng chọn quan hệ.</value>
   </data>
 	<data name="khach_hang_khong_duoc_trung_voi_nguoi_mua" xml:space="preserve">
-    <value>Khách hàng không được trùng với người mua.</value>
+    <value>Khách hàng đồng sở hữu không được trùng với người mua chính.</value>
   </data>
 	<data name="khach_hang_da_duoc_chon" xml:space="preserve">
     <value>Khách hàng đã được chọn.</value>
@@ -2191,7 +2191,7 @@
     <value>Người mua không được trùng với Đại lý/ Sàn giao dịch. Vui lòng chọn lại.</value>
   </data>
 	<data name="khach_hang_coower_va_khach_hang_khong_duoc_trung" xml:space="preserve">
-    <value>Khách hàng Co-Owner và khách hàng không được trùng.</value>
+    <value>Khách hàng đồng sở hữu không được trùng với người mua chính.</value>
   </data>
 	<data name="dai_ly_san_giao_dich_khong_duoc_trung_voi_nguoi_mua_vui_long_chon_lai" xml:space="preserve">
     <value>Đại lý/ Sàn giao dịch không được trùng với Người mua. Vui lòng chọn lại.</value>
