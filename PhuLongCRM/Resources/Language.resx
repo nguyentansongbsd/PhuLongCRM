@@ -3327,4 +3327,22 @@
 	<data name="khong_tim_thay_du_an" xml:space="preserve">
 		<value>Không tìm thấy dự án.</value>
 	 </data>
+	<data name="di_den_hop_dong" xml:space="preserve">
+		<value>Đi đến Hợp đồng</value>
+	</data>
+	<data name="huy_dat_coc" xml:space="preserve">
+		<value>Hủy Đặt cọc</value>
+	</data>
+	<data name="tao_moi_danh_sach_theo_doi_title" xml:space="preserve">
+    <value>Tạo Mới Danh Sách Theo Dõi</value>
+  </data>
+	<data name="nhap_ten" xml:space="preserve">
+    <value>Nhập tên</value>
+  </data>
+	<data name="vui_long_nhap_ten" xml:space="preserve">
+    <value>Vui lòng nhập tên.</value>
+  </data>
+	<data name="tao_moi_danh_sach_theo_doi_that_bai" xml:space="preserve">
+		<value>Tạo danh sách theo dõi thất bại.</value>
+	</data>
 </root>

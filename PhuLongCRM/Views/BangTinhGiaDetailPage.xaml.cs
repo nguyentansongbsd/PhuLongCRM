@@ -147,9 +147,17 @@ namespace PhuLongCRM.Views
         public async void SetUpButtonGroup()
         {
             var checkFul = await viewModel.CheckFUL();
-            if (viewModel.Reservation.statuscode == 3 && checkFul == true)// show khi statuscode == 3(Deposited)
+            if (viewModel.Reservation.statuscode == 100000000)// (hủy đặt cọc)
+            {
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_dat_coc, "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
+            }
+            if (viewModel.Reservation.statuscode == 3 && checkFul == true)// show khi statuscode == 3(Deposited) (tạo ful)
             {
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.de_nghi_thanh_ly, "FontAwesomeSolid", "\uf560", null, FULTerminate));
+            }
+            if (viewModel.Reservation.statuscode == 4)// show khi statuscode == 4(Won) (đi đến contract) 
+            {
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_hop_dong, "FontAwesomeSolid", "\uf56c", null, GoToContract));
             }
 
             if (viewModel.Reservation.statuscode == 100000007)
@@ -209,36 +217,79 @@ namespace PhuLongCRM.Views
             }
 
         }
+        private void GoToContract(object sender, EventArgs e)
+        {
+            if (viewModel.Reservation != null && viewModel.Reservation.salesorder_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ContractDetailPage contractDetailPage = new ContractDetailPage(viewModel.Reservation.salesorder_id);
+                contractDetailPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == true)
+                    {
+                        await Navigation.PushAsync(contractDetailPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
 
-        private async void FULTerminate(object sender, EventArgs e)
+                };
+            }
+            else
+            {
+                ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+            }
+        }
+        private void FULTerminate(object sender, EventArgs e)
         {
             if (viewModel.Reservation != null && viewModel.Reservation.quoteid != Guid.Empty)
             {
                 LoadingHelper.Show();
-                var fulid = await viewModel.FULTerminate();
-                if (fulid != Guid.Empty)
+                int ful_type = 0;
+                if (viewModel.Reservation.statuscode == 3)
+                    ful_type = 100000005;
+                else if (viewModel.Reservation.statuscode == 100000006 || viewModel.Reservation.statuscode == 100000004)
+                    ful_type = 100000001;
+                else if (viewModel.Reservation.bsd_reservationformstatus == 100000001)
+                    ful_type = 100000000;
+                else if (viewModel.Reservation.statuscode == 100000000)
+                    ful_type = 100000000;
+
+                var ful = new FollowUpModel
                 {
-                    FollowUpListForm newPage = new FollowUpListForm(fulid);
-                    newPage.OnCompleted = async (OnCompleted) =>
+                    bsd_followuplistid = Guid.NewGuid(),
+                    project_id = viewModel.Reservation.project_id,
+                    project_name = viewModel.Reservation.project_name,
+                    bsd_group = 100000000,
+                    bsd_type = ful_type,
+                    bsd_name = "Termination_" + viewModel.Reservation.quotenumber + "_CCR",
+                    bsd_reservation_id = viewModel.Reservation.quoteid,
+                    name_reservation = viewModel.Reservation.name,
+                    bsd_depositfee = viewModel.Reservation.bsd_depositfee,
+                    product_id = viewModel.Reservation.unit_id,
+                    bsd_units = viewModel.Reservation.unit_name,
+                    bsd_sellingprice = viewModel.Reservation.totalamount,
+                    bsd_totalamount = viewModel.Reservation.totalamount,
+                    bsd_totalamountpaid = viewModel.Reservation.bsd_totalamountpaid,
+
+                };
+                FollowUpListForm newPage = new FollowUpListForm(ful);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == true)
                     {
-                        if (OnCompleted == true)
-                        {
-                            await Navigation.PushAsync(newPage);
-                            LoadingHelper.Hide();
-                        }
-                        else
-                        {
-                            LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
-                        }
-                    };
-                    ToastMessageHelper.ShortMessage(Language.da_tao_danh_sach_theo_doi);
-                }
-                else
-                {
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.de_nghi_thanh_ly_that_bai);
-                }
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
             }
         }
 
@@ -621,6 +672,7 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
+                LoadingHelper.Show();
                 if (await viewModel.CancelDeposit())
                 {
                     NeedToRefresh = true;

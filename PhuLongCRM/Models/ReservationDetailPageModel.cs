@@ -398,5 +398,6 @@ namespace PhuLongCRM.Models
                     return true;
             }
         }
+        public Guid salesorder_id { get; set; } // id contract
     }
 }

@@ -2821,6 +2821,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đi đến Hợp đồng.
+        /// </summary>
+        internal static string di_den_hop_dong {
+            get {
+                return ResourceManager.GetString("di_den_hop_dong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đi đến KH cá nhân.
         /// </summary>
         internal static string di_den_kh_ca_nhan {
@@ -4167,6 +4176,15 @@ namespace PhuLongCRM.Resources {
         internal static string huy_bang_tinh_gia_that_bai_vui_long_thu_lai {
             get {
                 return ResourceManager.GetString("huy_bang_tinh_gia_that_bai_vui_long_thu_lai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hủy Đặt cọc.
+        /// </summary>
+        internal static string huy_dat_coc {
+            get {
+                return ResourceManager.GetString("huy_dat_coc", resourceCulture);
             }
         }
         
@@ -6475,6 +6493,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nhập tên.
+        /// </summary>
+        internal static string nhap_ten {
+            get {
+                return ResourceManager.GetString("nhap_ten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nhập tên công ty.
         /// </summary>
         internal static string nhap_ten_cong_ty {
@@ -7650,6 +7677,24 @@ namespace PhuLongCRM.Resources {
         internal static string tao_moi_cuoc_hop_title {
             get {
                 return ResourceManager.GetString("tao_moi_cuoc_hop_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tạo danh sách theo dõi thất bại..
+        /// </summary>
+        internal static string tao_moi_danh_sach_theo_doi_that_bai {
+            get {
+                return ResourceManager.GetString("tao_moi_danh_sach_theo_doi_that_bai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tạo Mới Danh Sách Theo Dõi.
+        /// </summary>
+        internal static string tao_moi_danh_sach_theo_doi_title {
+            get {
+                return ResourceManager.GetString("tao_moi_danh_sach_theo_doi_title", resourceCulture);
             }
         }
         
@@ -9387,6 +9432,15 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_nhap_so_tien_hoan_lai {
             get {
                 return ResourceManager.GetString("vui_long_nhap_so_tien_hoan_lai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vui lòng nhập tên..
+        /// </summary>
+        internal static string vui_long_nhap_ten {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_ten", resourceCulture);
             }
         }
         
