@@ -274,6 +274,7 @@ namespace PhuLongCRM.Views
                     bsd_sellingprice = viewModel.Reservation.totalamount,
                     bsd_totalamount = viewModel.Reservation.totalamount,
                     bsd_totalamountpaid = viewModel.Reservation.bsd_totalamountpaid,
+                    bsd_date = DateTime.Now
 
                 };
                 FollowUpListForm newPage = new FollowUpListForm(ful);

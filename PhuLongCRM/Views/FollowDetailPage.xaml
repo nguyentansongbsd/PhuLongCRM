@@ -60,7 +60,7 @@
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Text="{x:Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                <Label Text="{Binding FollowDetail.customer}" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}">
+                                <Label Text="{Binding FollowDetail.customer}" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Customer_Tapped"/>
                                     </Label.GestureRecognizers>
@@ -68,11 +68,19 @@
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Text="{x:Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                <Label Text="{Binding FollowDetail.bsd_units}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
+                                <Label Text="{Binding FollowDetail.bsd_units}" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Unit_Tapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Text="{x:Binding Source={x:Static lang:Language.dat_coc},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                <Label Text="{Binding FollowDetail.name_reservation}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
+                                <Label Text="{Binding FollowDetail.name_reservation}" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Reservation_Tapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
                         </StackLayout>
                     </telerikPrimitives:RadBorder>
@@ -99,7 +107,8 @@
                                             <controls:FormLabel Text="{x:Static lang:Language.nhom}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding FollowDetail.bsd_group_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                        <!--task 768-->
+                                        <!--<Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.du_an}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding FollowDetail.project_name}" Grid.Column="1" FontSize="15" FontAttributes="Bold" TextColor="#1C78C2" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End">
                                                 <controls:FormLabelValue.GestureRecognizers>
@@ -114,19 +123,19 @@
                                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Unit_Tapped"/>
                                                 </controls:FormLabelValue.GestureRecognizers>
                                             </controls:FormLabelValue>
-                                        </Grid>
+                                        </Grid>-->
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.gia_ban}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_sellingprice_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
+                                            <controls:FormLabelValue Text="{Binding FollowDetail.bsd_sellingprice_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="Red" FontAttributes="Bold" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                        <!--<Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.dat_coc}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                             <controls:FormLabelValue Text="{Binding FollowDetail.name_reservation}" Grid.Column="1" FontSize="15" FontAttributes="Bold" TextColor="#1C78C2" Style="{StaticResource Lb_Title_Content}" HorizontalTextAlignment="End">
                                                 <controls:FormLabelValue.GestureRecognizers>
                                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Reservation_Tapped"/>
                                                 </controls:FormLabelValue.GestureRecognizers>
                                             </controls:FormLabelValue>
-                                        </Grid>
+                                        </Grid>-->
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>

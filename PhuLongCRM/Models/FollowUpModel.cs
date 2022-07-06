@@ -124,5 +124,6 @@ namespace PhuLongCRM.Models
 
         private bool _isRefund;
         public bool isRefund { get { return _isRefund; } set { _isRefund = value; OnPropertyChanged(nameof(isRefund)); } }
+        public DateTime bsd_date { get; set; }
     }
 }

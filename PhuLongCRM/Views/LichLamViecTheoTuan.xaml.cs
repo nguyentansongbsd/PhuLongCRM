@@ -30,6 +30,7 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Show();
                 viewModel.lstEvents?.Clear();
                 await viewModel.loadAllActivities();
+                viewModel.UpdateSelectedEventsForWeekView(viewModel.selectedDate.Value);
                 ActivityPopup.Refresh();
                 NeedToRefresh = false;
                 LoadingHelper.Hide();

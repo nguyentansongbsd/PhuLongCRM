@@ -133,6 +133,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_ten);
                 return;
             }
+            if (viewModel.FULDetail == null || viewModel.FULDetail.bsd_date == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_ngay_tao);
+                return;
+            }
             if (viewModel.Type == null || string.IsNullOrWhiteSpace(viewModel.Type.Id))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_loai);
@@ -158,7 +163,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_tien_hoan_lai);
                 return;
             }
-            if (viewModel.TakeOutMoney.Id == "100000001")
+            if (viewModel.TakeOutMoney.Id == "100000001" && viewModel.Refund < 0 || viewModel.TakeOutMoney.Id == "100000001" && viewModel.Refund > 100)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_gia_tri_tu_0_den_100);
                 return;
@@ -219,6 +224,8 @@ namespace PhuLongCRM.Views
             {
                 lb_so_tien.Text = Language.tien_phat_thanh_ly;
             }
+            viewModel.Refund = 0;
+            entry_so_tien_Unfocused(null, null);
         }
 
         private void entry_so_tien_Unfocused(object sender, FocusEventArgs e)

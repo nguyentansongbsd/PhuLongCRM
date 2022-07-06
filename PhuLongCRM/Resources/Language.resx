@@ -3345,4 +3345,13 @@
 	<data name="tao_moi_danh_sach_theo_doi_that_bai" xml:space="preserve">
 		<value>Tạo danh sách theo dõi thất bại.</value>
 	</data>
+	<data name="ngay_tao" xml:space="preserve">
+		<value>Ngày tạo</value>
+	</data>
+	<data name="vui_long_chon_ngay_tao" xml:space="preserve">
+		<value>Vui lòng chọn ngày tạo.</value>
+	</data>
+	<data name="chon_ngay_tao" xml:space="preserve">
+		<value>Chọn ngày tạo</value>
+	</data>
 </root>
