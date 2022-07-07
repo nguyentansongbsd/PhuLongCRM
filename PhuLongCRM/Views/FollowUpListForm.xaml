@@ -37,16 +37,21 @@
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
                             <StackLayout BackgroundColor="White" Padding="10">
-                                <controls:FormLabel Text="{x:Static lang:Language.ma_dstd}" FontSize="15"/>
+                                <!--<controls:FormLabel Text="{x:Static lang:Language.ma_dstd}" FontSize="15"/>
                                 <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
                                     <Label Text="{Binding FULDetail.bsd_followuplistcode}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
-                                </telerikPrimitives:RadBorder>
+                                </telerikPrimitives:RadBorder>-->
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ten}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_ten}" Text="{Binding FULDetail.bsd_name}" FontSize="15"/>
 
-                                <!--<controls:FormLabelRequired Text="Date ???" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập date" Text="{Binding FULDetail.bsd_name}" FontSize="15"/>-->
+                                <controls:FormLabel Text="{x:Static lang:Language.ngay_tao}" FontSize="15"/>
+                                <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1">
+                                    <Label Text="{Binding FULDetail.bsd_date,StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
+                                </telerikPrimitives:RadBorder>
+
+                                <!--<controls:FormLabelRequired Text="{x:Static lang:Language.ngay_tao}" Margin="0,10,0,0"/>
+                                <controls:DatePickerBoderControl Date="{Binding FULDetail.bsd_date}" Placeholder="{x:Static lang:Language.chon_ngay_tao}" ShowTime="False"/>-->
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.loai}" Margin="0,10,0,0"/>
                                 <controls:LookUp x:Name="Lookup_Type" Placeholder="{x:Static lang:Language.chon_loai}" ItemsSource="{Binding ListType}" SelectedItem="{Binding Type}" BottomModal="{x:Reference BottomModal}" NameDisplay="Name"/>

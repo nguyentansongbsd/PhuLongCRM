@@ -3345,6 +3345,15 @@
 	<data name="tao_moi_danh_sach_theo_doi_that_bai" xml:space="preserve">
 		<value>Failed to create follow up list.</value>
 	</data>
+	<data name="ngay_tao" xml:space="preserve">
+		<value>Date</value>
+	</data>
+	<data name="vui_long_chon_ngay_tao" xml:space="preserve">
+		<value>Please choose date.</value>
+	</data>
+	<data name="chon_ngay_tao" xml:space="preserve">
+		<value>Choose date</value>
+  </data>
 	<data name="phat_cham_tt" xml:space="preserve">
 		<value>INTEREST</value>
 	</data>

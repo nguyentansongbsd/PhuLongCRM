@@ -314,7 +314,7 @@ namespace PhuLongCRM.ViewModels
             {
                 data["bsd_project@odata.bind"] = "/bsd_projects(" + FULDetail.project_id + ")";
             }
-            //data["bsd_date"] = DateTime.Now.ToLocalTime();
+            data["bsd_date"] = FULDetail.bsd_date;
 
             data["bsd_reservation@odata.bind"] = "/quotes(" + FULDetail.bsd_reservation_id + ")";
             data["bsd_depositfee"] = FULDetail.bsd_depositfee;
