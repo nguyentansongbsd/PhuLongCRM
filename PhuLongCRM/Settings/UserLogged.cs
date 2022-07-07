@@ -100,5 +100,10 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(UserAttribute), null);
             set => AppSettings.AddOrUpdateValue(nameof(UserAttribute), value);
         }
+        public static string UserCRM
+        {
+            get => AppSettings.GetValueOrDefault(nameof(UserCRM), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(UserCRM), value);
+        }
     }
 }

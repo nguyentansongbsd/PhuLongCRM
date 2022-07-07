@@ -3,9 +3,6 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
@@ -374,6 +371,16 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
+        }
+
+        private async void Interest_Tapped(object sender, EventArgs e)
+        {
+            var item = (ReservationInstallmentDetailPageModel)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.bsd_interestchargeamount == 0 && item.overdue != Language.phat_cham_tt) return;
+            LoadingHelper.Show();
+            await viewModel.LoadInstallmentById(item.bsd_paymentschemedetailid);
+            Interest_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
         }
     }
 }
