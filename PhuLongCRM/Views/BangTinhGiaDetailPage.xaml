@@ -520,9 +520,9 @@
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
                                             <Grid ColumnDefinitions="Auto,*" Padding="20,0" BackgroundColor="White">
-                                                <Grid WidthRequest="25">
+                                                <Grid WidthRequest="25" >
                                                     <BoxView WidthRequest="1" HorizontalOptions="Center" Grid.Column="0" BackgroundColor="Gray"/>
-                                                    <Label Text="{Binding bsd_icon_format}"  TextColor="{Binding bsd_icon_color}" FontSize="17" FontFamily="FontAwesomeSolid" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" BackgroundColor="White" Padding="2"/>
+                                                    <Label Text="{Binding bsd_icon_format}" TextColor="{Binding bsd_icon_color}" FontSize="17" FontFamily="FontAwesomeSolid" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" BackgroundColor="White" Padding="2"/>
                                                 </Grid>
                                                 <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Grid.Column="1" Margin="10,10,0,10">
                                                     <StackLayout Padding="10">
