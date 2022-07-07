@@ -22,6 +22,7 @@ namespace PhuLongCRM.Models
         public string bsd_amountwaspaid_format { get => StringFormatHelper.FormatCurrency(bsd_amountwaspaid); }
         public decimal bsd_depositamount { get; set; } // số tiền đặt cọc
         public string bsd_depositamount_format { get => StringFormatHelper.FormatCurrency(bsd_depositamount); }
+        public decimal bsd_interestchargeamount { get; set; }
 
         public int bsd_ordernumber { get; set; } // đợt
         public bool bsd_depositamount_hide
@@ -99,6 +100,32 @@ namespace PhuLongCRM.Models
                     return "#D42A16";
                 else
                     return "#1399D5";
+            }
+        }
+
+        public string overdue
+        {
+            get
+            {
+                if (this.statuscode == 100000000) // Not paid
+                {
+                    if (this.bsd_interestchargeamount != 0 && this.bsd_duedate < DateTime.Now)
+                    {
+                        return Language.phat_cham_tt;
+                    }
+                    else if (this.bsd_duedate < DateTime.Now)
+                    {
+                        return Language.tre_han_tt;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
     }

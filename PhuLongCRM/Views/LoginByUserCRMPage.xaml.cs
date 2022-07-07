@@ -81,7 +81,7 @@ namespace PhuLongCRM.Views
             if (result != null || result.value.Count > 0)
             {
                 UserModel user = result.value.SingleOrDefault();
-                UserLogged.User = model.name;
+                UserLogged.UserCRM = model.name;
                 UserLogged.ContactName = model.unique_name;
                 UserLogged.Id = user.systemuserid;
                 LoadingHelper.Hide();

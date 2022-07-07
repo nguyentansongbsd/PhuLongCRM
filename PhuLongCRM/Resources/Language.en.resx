@@ -3353,5 +3353,26 @@
 	</data>
 	<data name="chon_ngay_tao" xml:space="preserve">
 		<value>Choose date</value>
+  </data>
+	<data name="phat_cham_tt" xml:space="preserve">
+		<value>INTEREST</value>
+	</data>
+	<data name="tre_han_tt" xml:space="preserve">
+		<value>OVERDUE</value>
+	</data>
+	<data name="phi_lai_xuat_so_tien" xml:space="preserve">
+		<value>Interest Charge (Amount)</value>
+	</data>
+	<data name="tien_lai_da_duoc_tra" xml:space="preserve">
+		<value>Interest Was Paid</value>
+	</data>
+	<data name="phi_lai_suat_con_lai" xml:space="preserve">
+		<value>Interest Charge (Remaining)</value>
+	</data>
+	<data name="ngay_noi_bat" xml:space="preserve">
+		<value>Outstanding Day</value>
+	</data>
+	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
+		<value>Interest Charge Status</value>
 	</data>
 </root>

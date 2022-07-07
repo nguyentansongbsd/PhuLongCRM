@@ -3353,5 +3353,26 @@
 	</data>
 	<data name="chon_ngay_tao" xml:space="preserve">
 		<value>Chọn ngày tạo</value>
+  </data>
+	<data name="phat_cham_tt" xml:space="preserve">
+		<value>PHẠT CHẬM TT</value>
+	</data>
+	<data name="tre_han_tt" xml:space="preserve">
+		<value>TRỂ HẠN TT</value>
+	</data>
+	<data name="phi_lai_xuat_so_tien" xml:space="preserve">
+		<value>Phí lãi suất (Số tiền)</value>
+	</data>
+	<data name="tien_lai_da_duoc_tra" xml:space="preserve">
+		<value>Tiền lãi đã được trả</value>
+	</data>
+	<data name="phi_lai_suat_con_lai" xml:space="preserve">
+		<value>Phí lãi suất (Còn lại)</value>
+	</data>
+	<data name="ngay_noi_bat" xml:space="preserve">
+		<value>Ngày nổi bật</value>
+	</data>
+	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
+		<value>Tình trạng phí lãi suất</value>
 	</data>
 </root>
