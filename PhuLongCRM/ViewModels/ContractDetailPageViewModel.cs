@@ -41,6 +41,9 @@ namespace PhuLongCRM.ViewModels
         private DiscountModel _discount;
         public DiscountModel Discount { get => _discount; set { _discount = value; OnPropertyChanged(nameof(Discount)); } }
 
+        private InterestInstallmentModel _interest;
+        public InterestInstallmentModel Interest { get => _interest; set { _interest = value; OnPropertyChanged(nameof(Interest)); } }
+
         public ContractDetailPageViewModel()
         {
             Contract = new ContractModel();
@@ -361,6 +364,9 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='bsd_amountpercent' />
                 <attribute name='bsd_managementamount' />
                 <attribute name='bsd_maintenanceamount' />
+                <attribute name='bsd_signcontractinstallment' />
+                <attribute name='bsd_duedatecalculatingmethod' />
+                <attribute name='bsd_interestchargeamount' />
                 <order attribute='bsd_ordernumber' descending='false' />
                 <filter type='and'>
                     <condition attribute='statecode' operator='eq' value='0' />
@@ -615,6 +621,27 @@ namespace PhuLongCRM.ViewModels
             {
                 this.ListDiscountPaymentScheme.Add(item);
             }
+        }
+
+        public async Task LoadInstallmentById(Guid id)
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_paymentschemedetail'>
+                                    <attribute name='bsd_paymentschemedetailid' />
+                                    <attribute name='bsd_actualgracedays' />
+                                    <attribute name='bsd_interestwaspaid' />
+                                    <attribute name='bsd_interestchargestatus' />
+                                    <attribute name='bsd_interestchargeremaining' />
+                                    <attribute name='bsd_interestchargeamount' />
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_paymentschemedetailid' operator='eq' value='{id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<InterestInstallmentModel>>("bsd_paymentschemedetails", fetchXml);
+            if (result == null && result.value.Count == 0) return;
+            this.Interest = result.value.SingleOrDefault();
         }
     }
 }

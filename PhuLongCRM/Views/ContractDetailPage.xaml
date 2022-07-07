@@ -465,38 +465,46 @@
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <Grid ColumnDefinitions="Auto,*" Padding="20,0" BackgroundColor="White">
-                                            <BoxView WidthRequest="1" HorizontalOptions="CenterAndExpand" Grid.Column="0" BackgroundColor="Gray"/>
-                                            <Label Text="&#xf111;"  TextColor="#1399D5" FontSize="10" FontFamily="FontAwesomeSolid" Grid.Column="0" VerticalOptions="CenterAndExpand"/>
+                                            <Grid WidthRequest="25" >
+                                                <BoxView WidthRequest="1" HorizontalOptions="Center" Grid.Column="0" BackgroundColor="Gray"/>
+                                                <Label Text="{Binding bsd_icon_format}" TextColor="{Binding bsd_icon_color}" FontSize="17" FontFamily="FontAwesomeSolid" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" BackgroundColor="White" Padding="2"/>
+                                            </Grid>
                                             <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Grid.Column="1" Margin="10,10,0,10">
-                                                <StackLayout Padding="10">
-                                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto">
-                                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="Center">
-                                                            <Label Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                                <StackLayout Padding="0,0,0,10">
+                                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="0">
+                                                        <telerikPrimitives:RadBorder Grid.Row="0" Grid.Column="0" CornerRadius="0,0,5,0" BackgroundColor="{Binding statuscode_color}" VerticalOptions="Center">
+                                                            <Label Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="6,4"/>
                                                         </telerikPrimitives:RadBorder>
-                                                        <Label Grid.Column="1" Text="{Binding bsd_name_format}" TextColor="#1C78C2" FontSize="15" FontAttributes="Bold" VerticalOptions="Center"/>
+                                                        <Label Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding bsd_name_format}" Margin="6,0"  TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" />
+                                                        <telerikPrimitives:RadBorder Grid.Row="0" Grid.Column="2" IsVisible="{Binding overdue,Converter={StaticResource NullToHideConverter}}" CornerRadius="0,0,0,5" HorizontalOptions="EndAndExpand" BackgroundColor="Red" VerticalOptions="Center" >
+                                                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Interest_Tapped" CommandParameter="{Binding .}"/>
+                                                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                                                            <Label Text="{Binding overdue}" VerticalOptions="Start" Background="red" Margin="6,4" FontSize="14" TextColor="White" FontAttributes="Bold"/>
+                                                        </telerikPrimitives:RadBorder>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding hide_duedate}">
+                                                    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding hide_duedate}" Margin="10,0">
                                                         <Label Text="{Binding Source={x:Static lang:Language.ngay_den_han},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_duedate,StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" Grid.Column="1" FontAttributes="Bold"/>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,*">
+                                                    <Grid ColumnDefinitions="Auto,*" Margin="10,0">
                                                         <Label Text="{Binding Source={x:Static lang:Language.tien_dot},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_amountofthisphase_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding bsd_depositamount_hide}" >
+                                                    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding bsd_depositamount_hide}" Margin="10,0">
                                                         <Label Text="{Binding Source={x:Static lang:Language.tien_dat_coc},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_depositamount_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,*">
+                                                    <Grid ColumnDefinitions="Auto,*" Margin="10,0">
                                                         <Label Text="{Binding Source={x:Static lang:Language.da_thanh_toan},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
                                                         <Label Text="{Binding bsd_amountwaspaid_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_maintenanceamount_hide}" >
+                                                    <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_maintenanceamount_hide}" Margin="10,0">
                                                         <Label Grid.Column="0" Text="&#xf192;" TextColor="#b2b2b2" VerticalOptions="Center" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
                                                         <Label Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                         <Label Text="{Binding bsd_maintenanceamount_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
                                                     </Grid>
-                                                    <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_managementamount_hide}" >
+                                                    <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_managementamount_hide}" Margin="10,0">
                                                         <Label Grid.Column="0" Text="&#xf192;" VerticalOptions="Center" TextColor="#b2b2b2" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
                                                         <Label Text="{Binding Source={x:Static lang:Language.phi_quan_ly},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
                                                         <Label Text="{Binding bsd_managementamount_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
@@ -572,7 +580,7 @@
                     </StackLayout>
                 </controls:CenterPopup.Body>
             </controls:CenterPopup>
-            
+
             <controls:CenterPopup x:Name="Discount_CenterPopup">
                 <controls:CenterPopup.Body>
                     <StackLayout Padding="10,0">
@@ -647,7 +655,7 @@
                     </StackLayout>
                 </controls:CenterPopup.Body>
             </controls:CenterPopup>
-            
+
             <controls:CenterPopup x:Name="HandoverCondition_CenterPopup" Title="{x:Static lang:Language.dieu_kien_ban_giao_title}">
                 <controls:CenterPopup.Body>
                     <StackLayout Padding="10,0">
@@ -706,6 +714,43 @@
                             <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
                             <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
                                 <Label Text="{Binding HandoverConditionItem.bsd_description}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </telerikPrimitives:RadBorder>
+                        </Grid>
+                    </StackLayout>
+                </controls:CenterPopup.Body>
+            </controls:CenterPopup>
+
+            <controls:CenterPopup x:Name="Interest_CenterPopup" Title="{x:Static lang:Language.phat_cham_tt}">
+                <controls:CenterPopup.Body>
+                    <StackLayout Padding="10,0">
+                        <Grid ColumnDefinitions="4*,6*">
+                            <controls:FormLabel Text="{x:Static lang:Language.phi_lai_xuat_so_tien}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                            <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                <Label Text="{Binding Interest.interestChargeAmountFormat,StringFormat='{0} đ'}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </telerikPrimitives:RadBorder>
+                        </Grid>
+                        <Grid ColumnDefinitions="4*,6*">
+                            <controls:FormLabel Text="{x:Static lang:Language.tien_lai_da_duoc_tra}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                            <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                <Label Text="{Binding Interest.interestChargePaidFormat,StringFormat='{0} đ'}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </telerikPrimitives:RadBorder>
+                        </Grid>
+                        <Grid ColumnDefinitions="4*,6*">
+                            <controls:FormLabel Text="{x:Static lang:Language.phi_lai_suat_con_lai}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                            <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                <Label Text="{Binding Interest.interestChargeRemainingFormat,StringFormat='{0} đ'}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </telerikPrimitives:RadBorder>
+                        </Grid>
+                        <Grid ColumnDefinitions="4*,6*">
+                            <controls:FormLabel Text="{x:Static lang:Language.ngay_noi_bat}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                            <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                <Label Text="{Binding Interest.bsd_actualgracedays}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </telerikPrimitives:RadBorder>
+                        </Grid>
+                        <Grid ColumnDefinitions="4*,6*">
+                            <controls:FormLabel Text="{x:Static lang:Language.tinh_trang_phi_lai_xuat}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                            <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                <Label Text="{Binding Interest.interestChargeStatusFormat}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </telerikPrimitives:RadBorder>
                         </Grid>
                     </StackLayout>
