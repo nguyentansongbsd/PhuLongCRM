@@ -1090,7 +1090,7 @@
     <value>Chiết khấu</value>
   </data>
 	<data name="dkbg" xml:space="preserve">
-    <value>ĐKBG</value>
+    <value>Điều kiện BG</value>
   </data>
 	<data name="gia_ban_truoc_thue" xml:space="preserve">
     <value>Giá bán trước thuế</value>
@@ -1438,7 +1438,7 @@
     <value>Chỉnh Sửa Hợp Đồng</value>
   </data>
 	<data name="ngay_spa" xml:space="preserve">
-    <value>Ngày HĐ</value>
+    <value>Ngày hợp đồng</value>
   </data>
 	<data name="ngay_in_hd" xml:space="preserve">
     <value>Ngày in HĐ</value>
@@ -1450,7 +1450,7 @@
     <value>Ngày tải lên HĐ</value>
   </data>
 	<data name="mien_giam_thang" xml:space="preserve">
-    <value>Miễn giảm (tháng)</value>
+    <value>Miễn giảm PQL (tháng)</value>
   </data>
 	<data name="phuong_thuc_thanh_toan" xml:space="preserve">
     <value>Phương thức thanh toán</value>
@@ -3091,7 +3091,7 @@
 		<value>Mã dự án</value>
 	</data>
 	<data name="mo_hinh" xml:space="preserve">
-		<value>Mô hình</value>
+		<value>Mô hình kinh doanh</value>
 	</data>
 	<data name="thong_tin_du_an_title" xml:space="preserve">
 		<value>Thông Tin Dự Án</value>
@@ -3375,4 +3375,16 @@
 	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
 		<value>Tình trạng phí lãi suất</value>
 	</data>
+	<data name="dat_coc_dashboard" xml:space="preserve">
+		<value>Đặt cọc</value>
+	</data>
+	<data name="ngay_ky_hd" xml:space="preserve">
+    <value>Ngày ký</value>
+  </data>
+  <data name="ngay_ky_vbtt" xml:space="preserve">
+    <value>Ngày ký</value>
+  </data>
+  <data name="ngay_in_vbtt" xml:space="preserve">
+    <value>Ngày in</value>
+  </data>
 </root>

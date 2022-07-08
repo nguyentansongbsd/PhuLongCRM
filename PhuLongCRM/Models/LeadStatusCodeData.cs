@@ -13,13 +13,13 @@ namespace PhuLongCRM.Models
             return new List<StatusCodeModel>()
             {
                 new StatusCodeModel("0","","#FFFFFF"),
-                new StatusCodeModel("1",Language.new_sts,"#ffc43d"),//New
+                new StatusCodeModel("1",Language.new_sts,"#2C95F6"),//New
                 new StatusCodeModel("2",Language.da_lien_he_sts,"#F43927"), //Contacted
-                new StatusCodeModel("3",Language.da_xac_nhan_sts,"#8bce3d"), //Qualified
-                new StatusCodeModel("4",Language.mat_khach_hang,"#808080"), //Lost
-                new StatusCodeModel("5",Language.khong_lien_lac_duoc,"#808080"),//Cannot Contact
-                new StatusCodeModel("6",Language.khong_quan_tam,"#808080"), // No Longer Interested
-                new StatusCodeModel("7",Language.da_huy,"#808080"),//Canceled
+                new StatusCodeModel("3",Language.da_xac_nhan_sts,"#F6E22D"), //Qualified
+                new StatusCodeModel("4",Language.mat_khach_hang,"#932CF6"), //Lost
+                new StatusCodeModel("5",Language.khong_lien_lac_duoc,"#932CF6"),//Cannot Contact
+                new StatusCodeModel("6",Language.khong_quan_tam,"#932CF6"), // No Longer Interested
+                new StatusCodeModel("7",Language.da_huy,"#932CF6"),//Canceled
             };
         }
 

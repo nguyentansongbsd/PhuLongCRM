@@ -1390,6 +1390,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose date.
+        /// </summary>
+        internal static string chon_ngay_tao {
+            get {
+                return ResourceManager.GetString("chon_ngay_tao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose representative.
         /// </summary>
         internal static string chon_nguoi_dai_dien {
@@ -2209,7 +2218,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Converted.
+        ///   Looks up a localized string similar to Qualified.
         /// </summary>
         internal static string da_chuyen_doi {
             get {
@@ -2749,6 +2758,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deposit.
+        /// </summary>
+        internal static string dat_coc_dashboard {
+            get {
+                return ResourceManager.GetString("dat_coc_dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reservation - Sign off RF.
         /// </summary>
         internal static string dat_coc_sign_off_rf {
@@ -2785,7 +2803,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ĐĐKTSP.
+        ///   Looks up a localized string similar to Units Specification.
         /// </summary>
         internal static string ddktsp {
             get {
@@ -3028,7 +3046,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Handover condition amount.
+        ///   Looks up a localized string similar to Handover condition.
         /// </summary>
         internal static string dkbg {
             get {
@@ -5791,6 +5809,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DA printed date.
+        /// </summary>
+        internal static string ngay_in_vbtt {
+            get {
+                return ResourceManager.GetString("ngay_in_vbtt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quotation signed date.
         /// </summary>
         internal static string ngay_ky {
@@ -5800,11 +5827,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Signed contract date.
+        /// </summary>
+        internal static string ngay_ky_hd {
+            get {
+                return ResourceManager.GetString("ngay_ky_hd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reservation signed date.
         /// </summary>
         internal static string ngay_ky_reservation {
             get {
                 return ResourceManager.GetString("ngay_ky_reservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signed D.A date.
+        /// </summary>
+        internal static string ngay_ky_vbtt {
+            get {
+                return ResourceManager.GetString("ngay_ky_vbtt", resourceCulture);
             }
         }
         
@@ -5850,6 +5895,15 @@ namespace PhuLongCRM.Resources {
         internal static string ngay_tai_len_reservation {
             get {
                 return ResourceManager.GetString("ngay_tai_len_reservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string ngay_tao {
+            get {
+                return ResourceManager.GetString("ngay_tao", resourceCulture);
             }
         }
         
@@ -6052,7 +6106,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apartment project.
+        ///   Looks up a localized string similar to Residential.
         /// </summary>
         internal static string nha_o {
             get {
@@ -6826,7 +6880,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Management amount.
+        ///   Looks up a localized string similar to Management fee.
         /// </summary>
         internal static string phi_quan_ly {
             get {
@@ -9162,6 +9216,15 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_chon_ngay_sinh {
             get {
                 return ResourceManager.GetString("vui_long_chon_ngay_sinh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please choose date..
+        /// </summary>
+        internal static string vui_long_chon_ngay_tao {
+            get {
+                return ResourceManager.GetString("vui_long_chon_ngay_tao", resourceCulture);
             }
         }
         
