@@ -198,21 +198,22 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadCoOwners(Guid ContractId)
         {
             string xml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-              <entity name='bsd_coowner'>
-                <attribute name='bsd_coownerid' />
-                <attribute name='bsd_name' />
-                <order attribute='bsd_name' descending='true' />
-                <link-entity name='account' from='accountid' to='bsd_customer' visible='false' link-type='outer' alias='a_1324f6d5b214e911a97f000d3aa04914'>
-                  <attribute name='bsd_name' alias='account_name' />
-                </link-entity>
-                <link-entity name='contact' from='contactid' to='bsd_customer' visible='false' link-type='outer' alias='a_6b0d05eeb214e911a97f000d3aa04914'>
-                  <attribute name='bsd_fullname' alias='contact_name' />
-                </link-entity>
-                 <filter type='and'>
-                      <condition attribute='bsd_optionentry' operator='eq' uitype='quote' value='{ContractId}' />
-                  </filter>
-              </entity>
-            </fetch>";
+                              <entity name='bsd_coowner'>
+                                <attribute name='bsd_coownerid' />
+                                <attribute name='bsd_name' />
+                                <attribute name='bsd_relationship' />
+                                <order attribute='bsd_name' descending='true' />
+                                <link-entity name='account' from='accountid' to='bsd_customer' visible='false' link-type='outer' alias='a_1324f6d5b214e911a97f000d3aa04914'>
+                                  <attribute name='bsd_name' alias='account_name' />
+                                </link-entity>
+                                <link-entity name='contact' from='contactid' to='bsd_customer' visible='false' link-type='outer' alias='a_6b0d05eeb214e911a97f000d3aa04914'>
+                                  <attribute name='bsd_fullname' alias='contact_name' />
+                                </link-entity>
+                                 <filter type='and'>
+                                      <condition attribute='bsd_optionentry' operator='eq' uitype='quote' value='{ContractId}' />
+                                  </filter>
+                              </entity>
+                            </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ReservationCoownerModel>>("bsd_coowners", xml);
             if (result != null)
             {
