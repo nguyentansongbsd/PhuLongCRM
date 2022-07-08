@@ -153,7 +153,7 @@ namespace PhuLongCRM.Views
         async void Event_Tapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
             var val = e.Item as CalendarEvent;
-            if (val != null)
+            if (val != null && val.Activity != null)
             {
                 ActivityPopup.ShowActivityPopup(val.Activity.activityid, val.Activity.activitytypecode);
             }
