@@ -97,7 +97,7 @@
                             <controls:ExtendedFrame Grid.Column="1" Padding="0">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numQuote}" FontSize="18" FontAttributes="Bold" TextColor="#FA7803" HorizontalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.dat_coc}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.dat_coc_dashboard}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="2" Padding="0">

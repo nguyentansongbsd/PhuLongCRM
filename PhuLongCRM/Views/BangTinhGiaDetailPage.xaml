@@ -165,7 +165,7 @@
                                                         <DataTemplate>
                                                             <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End" >
                                                                 <Label.Text>
-                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <MultiBinding StringFormat="{}{0} ({1})">
                                                                         <Binding Path="bsd_name" />
                                                                         <Binding Path="value_format" />
                                                                     </MultiBinding>
@@ -675,7 +675,7 @@
                 <controls:CenterPopup.Body>
                     <StackLayout Padding="10,0">
                         <Grid ColumnDefinitions="Auto,*">
-                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding DiscountSpecialItem.statuscode_color}" Grid.Column="0">
+                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding DiscountSpecialItem.statuscode_color}" Grid.Column="0" VerticalOptions="Start">
                                 <Label Text="{Binding DiscountSpecialItem.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                             </telerikPrimitives:RadBorder>
                             <Label Text="{Binding DiscountSpecialItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Column="1" Padding="0,5"/>
