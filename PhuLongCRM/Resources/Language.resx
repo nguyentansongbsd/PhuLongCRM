@@ -2488,7 +2488,7 @@
     <value>Đã liên hệ</value>
   </data>
 	<data name="da_xac_nhan_sts" xml:space="preserve">
-    <value>Đã Xác Nhận</value>
+    <value>Đã Chuyển Đổi</value>
   </data>
 	<data name="format_dashboard" xml:space="preserve">
     <value>#,0 tr</value>
@@ -2584,7 +2584,7 @@
     <value>Không gửi</value>
   </data>
 	<data name="gia_tri_qsdd_m" xml:space="preserve">
-    <value>Giá trị QSDĐ/m²</value>
+    <value>Giá trị QSDĐ/ m²</value>
   </data>
 	<data name="chon_dia_chi" xml:space="preserve">
     <value>Chọn địa chỉ</value>
@@ -2638,10 +2638,10 @@
     <value>Quy Trình Bán</value>
   </data>
 	<data name="thoi_gian_giu_cho_dai_han" xml:space="preserve">
-    <value>Thời gian giữ chỗ dài hạn</value>
+    <value>Thời gian giữ chỗ dài hạn (ngày)</value>
   </data>
 	<data name="thoi_gian_giu_cho_ngan_han" xml:space="preserve">
-    <value>Thời gian giữ chỗ ngắn hạn</value>
+    <value>Thời gian giữ chỗ ngắn hạn (giờ)</value>
   </data>
 	<data name="thong_tin_chung_title" xml:space="preserve">
     <value>Thông Tin Chung</value>
@@ -2977,7 +2977,7 @@
 		<value>Mã hợp đồng</value>
 	</data>
 	<data name="da_thanh_toan_contract" xml:space="preserve">
-    <value>Đã thanh toán</value>
+    <value>Đã thanh toán (số tiền/ %)</value>
   </data>
 	<data name="title_hop_dong_mua_ban" xml:space="preserve">
     <value>Hợp Đồng Mua Bán</value>
@@ -3178,7 +3178,7 @@
 		<value>Căn hộ phải ở tình trạng sẵn sàng hoặc giữ chỗ.</value>
 	</data>
 	<data name="sale_marketing_comment" xml:space="preserve">
-		<value>P.Kinh doanh bình luận</value>
+		<value>Kinh doanh bình luận</value>
 	</data>
 	<data name="nhap_sale_marketing_comment" xml:space="preserve">
 		<value>Nhập bình luận</value>
@@ -3374,5 +3374,11 @@
 	</data>
 	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
 		<value>Tình trạng phí lãi suất</value>
+	</data>
+	<data name="so_gpkd_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
+		<value>Số giấy phép kinh doanh không hợp lệ (Gồm 10 ký tự).</value>
+	</data>
+	<data name="tien_dat_coc_ful" xml:space="preserve">
+		<value>Tiền đặt cọc</value>
 	</data>
 </root>

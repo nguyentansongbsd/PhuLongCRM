@@ -335,7 +335,7 @@
                                         </Grid>
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.gia_tri_qsdd},StringFormat='{0} (m²)'}" FontSize="15" TextColor="#333333"  VerticalOptions="Center" Padding="25,10,0,10"/>
+                                            <Label Grid.Column="0" Text="{x:Static lang:Language.gia_tri_qsdd_m}" FontSize="15" TextColor="#333333"  VerticalOptions="Center" Padding="25,10,0,10"/>
                                             <Label Grid.Column="1" Text="{Binding Project.bsd_landvalueofproject_format,StringFormat='{0} đ'}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" Padding="0,10,25,10"/>
                                         </Grid>
 
@@ -349,7 +349,7 @@
                                             <Label Grid.Column="1" Text="{Binding Project.bsd_numberofmonthspaidmf}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" Padding="0,10,25,10"/>
                                         </Grid>
 
-                                        <Grid ColumnDefinitions="4*,6*" BackgroundColor="White">
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <Label Grid.Column="0" Text="{x:Static lang:Language.don_gia_phi_quan_ly_thang_m2}" FontSize="15" TextColor="#333333"  VerticalOptions="Center" Padding="25,10,0,10"/>
                                             <Label Grid.Column="1" Text="{Binding Project.bsd_managementamount_format,StringFormat='{0} đ'}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" Padding="0,10,25,10"/>
                                         </Grid>

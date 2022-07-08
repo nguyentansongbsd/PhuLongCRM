@@ -362,7 +362,7 @@
                                                         </Grid>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer_name}"/>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding project_name}"/>
-                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.san_pham}" Text="{Binding unit_name}"/>
+                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.ma_hop_dong}" Text="{Binding bsd_contractnumber}"/>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.tong_tien}" Text="{Binding totalamount_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold"/>
                                                     </StackLayout>
                                                 </DataTemplate>

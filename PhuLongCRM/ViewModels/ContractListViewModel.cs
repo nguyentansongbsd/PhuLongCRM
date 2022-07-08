@@ -111,7 +111,8 @@ namespace PhuLongCRM.ViewModels
                 var list = ContractStatusCodeData.ContractStatusData();
                 foreach (var item in list)
                 {
-                    FiltersStatus.Add(new OptionSet(item.Id, item.Name));
+                    if (item.Id != "4" || item.Id != "3" || item.Id != "100003" || item.Id != "1" || item.Id != "100002" || item.Id != "2")
+                        FiltersStatus.Add(new OptionSet(item.Id, item.Name));
                 }
             }
         }

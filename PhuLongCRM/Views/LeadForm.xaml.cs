@@ -360,6 +360,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
             }
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode) && viewModel.singleLead.bsd_registrationcode.Length != 10)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
 
             LoadingHelper.Show();
 
