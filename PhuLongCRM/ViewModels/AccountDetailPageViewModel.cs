@@ -465,6 +465,7 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                       <condition attribute='bsd_developeraccount' operator='eq' value='{accountid}' />
                                       <condition attribute='statuscode' operator='eq' value='100000000' />
+                                      <condition attribute='bsd_mandatorysecondary' operator='eq' value='1' />
                                     </filter>
                                   </entity>
                                 </fetch>"; // 100000000 == Applying

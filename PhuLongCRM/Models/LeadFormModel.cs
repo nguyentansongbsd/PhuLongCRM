@@ -47,7 +47,8 @@ namespace PhuLongCRM.Models
         public DateTime? new_birthday
         {
             get { return _new_birthday; }
-            set {if (value.HasValue) { _new_birthday = value.Value.ToLocalTime(); } else { _new_birthday = null; }
+            set {
+                _new_birthday = value;
                 OnPropertyChanged(nameof(new_birthday)); }
         }
 
@@ -277,7 +278,7 @@ namespace PhuLongCRM.Models
         public string bsd_registrationcode { get; set; }
 
         private DateTime? _bsd_dategrant;
-        public DateTime? bsd_dategrant { get => _bsd_dategrant; set { if (value.HasValue) _bsd_dategrant = value.Value.ToLocalTime(); else _bsd_dategrant = null; OnPropertyChanged(nameof(bsd_dategrant)); } }
+        public DateTime? bsd_dategrant { get => _bsd_dategrant; set { _bsd_dategrant = value; OnPropertyChanged(nameof(bsd_dategrant)); } }
 
         //địa chỉ liên ljac
         public Guid bsd_country_id { get; set; }

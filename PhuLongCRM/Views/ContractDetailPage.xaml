@@ -37,7 +37,7 @@
                                 <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding Contract.statuscode_color}">
                                     <Label Grid.Column="0" Text="{Binding Contract.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                 </telerikPrimitives:RadBorder>
-                                <Label Grid.Column="1" Text="{Binding Contract.unit_name}" TextColor="#4BA8F1" FontAttributes="Bold" FontSize="15">
+                                <Label Grid.Column="1" Text="{Binding Contract.unit_name}" TextColor="#4BA8F1" FontAttributes="Bold" FontSize="16" VerticalOptions="Center">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnitDetail_Tapped" CommandParameter="{Binding Contract.unit_id}"/>
                                     </Label.GestureRecognizers>
@@ -49,7 +49,7 @@
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.ma_hop_dong},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                <Label Grid.Column="1" Text="{Binding Contract.bsd_contractnumber}" TextColor="#444444" FontSize="15"/>
+                                <Label Grid.Column="1" Text="{Binding Contract.bsd_contractnumber}" TextColor="#444444" FontSize="15" FontAttributes="Bold"/>
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.tong_tien},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
@@ -160,11 +160,11 @@
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_dadate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_in}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_in_vbtt}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_agreementdate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_ky}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_ky_vbtt}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_signeddadate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                     </StackLayout>
@@ -186,14 +186,14 @@
                                             <controls:FormLabel Text="{x:Static lang:Language.loai_hop_dong}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_contracttype_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                        <!--<Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.mo_ta_loai_hd}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_contracttypedescription_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.cap_nhat_hop_dong}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_updatecontractdate_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
+                                        </Grid>-->
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                             <controls:FormLabel Text="{x:Static lang:Language.ngay_spa}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_contractdate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
@@ -207,7 +207,7 @@
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_signingexpired,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_ky}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                            <controls:FormLabel Text="{x:Static lang:Language.ngay_ky_hd}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                             <controls:FormLabelValue Text="{Binding Contract.bsd_signedcontractdate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
@@ -375,7 +375,7 @@
                                                     <DataTemplate>
                                                         <Label FontSize="15" Padding="20,0,0,0" BackgroundColor="White" TextColor="#1399D5" FontAttributes="None" VerticalOptions="Center" HorizontalTextAlignment="End" >
                                                             <Label.Text>
-                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                <MultiBinding StringFormat="{}{0} ({1})">
                                                                     <Binding Path="bsd_name" />
                                                                     <Binding Path="value_format" />
                                                                 </MultiBinding>
@@ -442,7 +442,13 @@
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
                                                 <telerikPrimitives:RadBorder BorderColor="#f3f3f3" BorderThickness="0,0,0,1">
-                                                    <Label Text="{Binding customer}" Padding="25,10" FontAttributes="Bold" TextColor="#1399D5" FontSize="15"/>
+                                                    <StackLayout>
+                                                        <Label Text="{Binding customer}" Padding="25,10,0,0" FontAttributes="Bold" TextColor="#1399D5" FontSize="15"/>
+                                                        <Grid ColumnDefinitions="Auto,*">
+                                                            <Label Text="{Binding Source={x:Static lang:Language.quan_he},StringFormat='{0}:'}" FontSize="15" TextColor="#444444" Grid.Column="0" Padding="25,0,0,10"/>
+                                                            <Label Text="{Binding relationship_format}" FontSize="15" TextColor="#444444" Grid.Column="1" Padding="0,0,25,10"/>
+                                                        </Grid>
+                                                    </StackLayout>
                                                 </telerikPrimitives:RadBorder>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
@@ -489,11 +495,11 @@
                                                     </Grid>
                                                     <Grid ColumnDefinitions="Auto,*" Margin="10,0">
                                                         <Label Text="{Binding Source={x:Static lang:Language.tien_dot},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                        <Label Text="{Binding bsd_amountofthisphase_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" Grid.Column="1"/>
+                                                        <Label Text="{Binding bsd_amountofthisphase_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
                                                     <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding bsd_depositamount_hide}" Margin="10,0">
                                                         <Label Text="{Binding Source={x:Static lang:Language.tien_dat_coc},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                        <Label Text="{Binding bsd_depositamount_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" Grid.Column="1"/>
+                                                        <Label Text="{Binding bsd_depositamount_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold" FontSize="15" Grid.Column="1"/>
                                                     </Grid>
                                                     <Grid ColumnDefinitions="Auto,*" Margin="10,0">
                                                         <Label Text="{Binding Source={x:Static lang:Language.da_thanh_toan},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
@@ -560,7 +566,7 @@
                 <controls:CenterPopup.Body>
                     <StackLayout Padding="10,0">
                         <Grid ColumnDefinitions="Auto,*">
-                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding DiscountSpecialItem.statuscode_color}" Grid.Column="0">
+                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding DiscountSpecialItem.statuscode_color}" Grid.Column="0" VerticalOptions="Start">
                                 <Label Text="{Binding DiscountSpecialItem.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                             </telerikPrimitives:RadBorder>
                             <Label Text="{Binding DiscountSpecialItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Column="1" Padding="0,5"/>

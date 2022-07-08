@@ -49,7 +49,7 @@ namespace PhuLongCRM
             VerApp = Config.OrgConfig.VerApp;
             this.ContactName = UserLogged.ContactName;
             this.UserName = UserLogged.UserCRM;
-            this.Avartar = $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={UserLogged.User}";
+            this.Avartar = $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={UserLogged.UserCRM}";
             this.BindingContext = this;
         }
 

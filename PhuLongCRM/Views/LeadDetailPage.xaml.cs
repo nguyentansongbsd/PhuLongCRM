@@ -58,11 +58,13 @@ namespace PhuLongCRM.Views
 
         protected async override void OnAppearing()
         {
-            if (NeedToRefreshLeadDetail==true)
+            if (NeedToRefreshLeadDetail == true)
             {
-                await viewModel.LoadOneLead(Id.ToString()) ;
+                await viewModel.LoadOneLead(Id.ToString());
                 if (viewModel.singleLead.new_gender != null) { await viewModel.loadOneGender(viewModel.singleLead.new_gender); }
                 if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }
+                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_customergroup)) viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
+                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_area)) viewModel.Area = AreaData.GetAreaById(viewModel.singleLead.bsd_area);
                 NeedToRefreshLeadDetail = false;
             }
             if (NeedToRefreshActivity == true)

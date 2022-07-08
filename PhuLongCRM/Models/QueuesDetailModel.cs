@@ -67,7 +67,5 @@ namespace PhuLongCRM.Models
         //bsd_queuingfeepaid
         public decimal bsd_queuingfeepaid { get; set; }
         public string bsd_queuingfeepaid_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfeepaid); }
-        // bsd_expired đang k lấy đúng giá trị, luôn trả về false
-        public bool bsd_expired_icon { get => DateTime.Compare(bsd_queuingexpired, DateTime.Now) < 0 ? true : false; }
     }
 }

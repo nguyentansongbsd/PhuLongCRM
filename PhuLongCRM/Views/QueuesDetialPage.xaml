@@ -93,7 +93,7 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>-->
-                                    <StackLayout Grid.Column="1" IsVisible="{Binding Queue.bsd_expired_icon}" HorizontalOptions="End" Orientation="Horizontal">
+                                    <StackLayout Grid.Column="1" IsVisible="{Binding Queue.bsd_expired}" HorizontalOptions="End" Orientation="Horizontal">
                                         <Label Text="{x:Static lang:Language.da_het_han}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" TextColor="Red"/>
                                         <Label Text="&#xf1da;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="15" TextColor="Red"/>
                                     </StackLayout>

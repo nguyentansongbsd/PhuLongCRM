@@ -76,6 +76,14 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                         {project}
                                         {status}
+                                        <condition attribute='statuscode' operator='not-in'>
+                                            <value>4</value>
+                                            <value>3</value>
+                                            <value>100003</value>
+                                            <value>1</value>
+                                            <value>100002</value>
+                                            <value>2</value>
+                                        </condition>
                                         <condition attribute = '{attibute}' operator= 'eq' value = '{UserLogged.Id}' />  
                                         <filter type='or'>      
                                             <condition attribute='customeridname' operator='like' value ='%25{Keyword}%25' />          
@@ -111,7 +119,8 @@ namespace PhuLongCRM.ViewModels
                 var list = ContractStatusCodeData.ContractStatusData();
                 foreach (var item in list)
                 {
-                    FiltersStatus.Add(new OptionSet(item.Id, item.Name));
+                    if (item.Id != "4" && item.Id != "3" && item.Id != "100003" && item.Id != "1" && item.Id != "100002" && item.Id != "2")
+                        FiltersStatus.Add(new OptionSet(item.Id, item.Name));
                 }
             }
         }

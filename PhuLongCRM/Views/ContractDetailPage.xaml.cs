@@ -246,16 +246,16 @@ namespace PhuLongCRM.Views
         private async void stackLayoutSpecialDiscount_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as OptionSet;
-            if (item != null && item.Val != string.Empty)
+            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as DiscountSpecialModel;
+            if (item != null && item.bsd_discountspecialid != Guid.Empty)
             {
                 if (viewModel.DiscountSpecialItem == null)
                 {
-                    await viewModel.LoadDiscountSpecialItem(item.Val);
+                    await viewModel.LoadDiscountSpecialItem(item.bsd_discountspecialid.ToString());
                 }
-                else if (viewModel.DiscountSpecialItem.bsd_discountspecialid.ToString() != item.Val)
+                else if (viewModel.DiscountSpecialItem.bsd_discountspecialid != item.bsd_discountspecialid)
                 {
-                    await viewModel.LoadDiscountSpecialItem(item.Val);
+                    await viewModel.LoadDiscountSpecialItem(item.bsd_discountspecialid.ToString());
                 }
             }
             if (viewModel.DiscountSpecialItem != null)
@@ -358,7 +358,7 @@ namespace PhuLongCRM.Views
         private void GoToDatDoc_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            BangTinhGiaDetailPage datcoc = new BangTinhGiaDetailPage(viewModel.Contract.queue_id);
+            BangTinhGiaDetailPage datcoc = new BangTinhGiaDetailPage(viewModel.Contract.queue_id,true);
             datcoc.OnCompleted = async (isSuccess) => {
                 if (isSuccess)
                 {

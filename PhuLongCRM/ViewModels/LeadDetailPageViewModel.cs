@@ -159,6 +159,10 @@ namespace PhuLongCRM.ViewModels
             this.singleLead = data;
             this.singleGender = list_gender_optionset.SingleOrDefault(x => x.Val == this.singleLead.new_gender);
             this.LeadSource = LeadSourcesData.GetLeadSourceById(this.singleLead.leadsourcecode);
+            if (singleLead.bsd_dategrant.HasValue)
+                singleLead.bsd_dategrant = data.bsd_dategrant.Value.ToLocalTime();
+            if (singleLead.new_birthday.HasValue)
+                singleLead.new_birthday = data.new_birthday.Value.ToLocalTime();
             LoadAddress();
             await LoadCountryByName();
         }
