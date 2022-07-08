@@ -8581,7 +8581,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thông Tin User.
+        ///   Looks up a localized string similar to Thông Tin Người Dùng.
         /// </summary>
         internal static string thong_tin_user_title {
             get {
