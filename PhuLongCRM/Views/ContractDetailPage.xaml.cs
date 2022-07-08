@@ -358,7 +358,7 @@ namespace PhuLongCRM.Views
         private void GoToDatDoc_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            BangTinhGiaDetailPage datcoc = new BangTinhGiaDetailPage(viewModel.Contract.queue_id);
+            BangTinhGiaDetailPage datcoc = new BangTinhGiaDetailPage(viewModel.Contract.queue_id,true);
             datcoc.OnCompleted = async (isSuccess) => {
                 if (isSuccess)
                 {

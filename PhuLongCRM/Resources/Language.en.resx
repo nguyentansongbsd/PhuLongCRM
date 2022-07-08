@@ -697,7 +697,7 @@
     <value>Permanent address</value>
   </data>
 	<data name="nguoi_dai_dien" xml:space="preserve">
-    <value>Representative</value>
+    <value>Mandatory primary</value>
   </data>
 	<data name="so_dien_thoai" xml:space="preserve">
     <value>Mobile phone</value>
@@ -997,7 +997,7 @@
     <value>Policy</value>
   </data>
 	<data name="tong_hop" xml:space="preserve">
-    <value>Sumarry</value>
+    <value>Summary</value>
   </data>
 	<data name="chi_tiet" xml:space="preserve">
     <value>Detail</value>
@@ -1978,7 +1978,7 @@
     <value>Estimate handover date</value>
   </data>
 	<data name="so_thang_tinh_phu_quan_ly" xml:space="preserve">
-    <value>Number Of Months Paid M.F</value>
+    <value>Number of months paid M.F</value>
   </data>
 	<data name="don_gia_phi_quan_ly_thang_m2" xml:space="preserve">
     <value>Management amount (month/spm)</value>
@@ -2584,7 +2584,7 @@
     <value>Don't send</value>
   </data>
 	<data name="gia_tri_qsdd_m" xml:space="preserve">
-    <value>Land value deduction/sqm</value>
+    <value>Land value/ sqm</value>
   </data>
 	<data name="chon_dia_chi" xml:space="preserve">
     <value>Choose address</value>
@@ -2971,13 +2971,13 @@
 		<value>FIN</value>
 	</data>
 	<data name="ful_sam_group" xml:space="preserve">
-		<value>S-M</value>
+		<value>Sales</value>
 	</data>
 	<data name="ma_hop_dong" xml:space="preserve">
     <value>Contract number</value>
   </data>
   <data name="da_thanh_toan_contract" xml:space="preserve">
-    <value>Total amount</value>
+    <value>Paid (amount/ %)</value>
   </data>
   <data name="title_hop_dong_mua_ban" xml:space="preserve">
     <value>Sale - Purchase Agreement (SPA)</value>
@@ -3043,7 +3043,7 @@
 		<value>Policy</value>
 	</data>
 	<data name="tong_hop_title" xml:space="preserve">
-		<value>Sumarry</value>
+		<value>Summary</value>
 	</data>
 	<data name="chi_tiet_title" xml:space="preserve">
 		<value>Detail</value>
@@ -3178,7 +3178,7 @@
 		<value>Unit must be available or queueing.</value>
 	</data>
 	<data name="sale_marketing_comment" xml:space="preserve">
-		<value>S-M comment</value>
+		<value>Sales comment</value>
 	</data>
 	<data name="nhap_sale_marketing_comment" xml:space="preserve">
 		<value>Enter Sale and marketing comment</value>
@@ -3374,6 +3374,12 @@
 	</data>
 	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
 		<value>Interest Charge Status</value>
+	</data>
+	<data name="so_gpkd_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
+		<value>Invalid registration code (registration code must be 10 characters long).</value>
+	</data>
+	<data name="tien_dat_coc_ful" xml:space="preserve">
+		<value>Deposit fee</value>
 	</data>
 	<data name="dat_coc_dashboard" xml:space="preserve">
 		<value>Deposit</value>

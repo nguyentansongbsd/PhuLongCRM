@@ -340,6 +340,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_project' alias='project_id'/>
                                     <attribute name='salesorderid' />
                                     <attribute name='ordernumber' />
+                                    <attribute name='bsd_contractnumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
                                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>

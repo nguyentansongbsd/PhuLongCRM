@@ -396,10 +396,10 @@
                                             </BindableLayout.EmptyViewTemplate>
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
-                                                        <Grid.GestureRecognizers>
+                                                    <StackLayout BackgroundColor ="White" Padding="20" Margin="0,1">
+                                                        <StackLayout.GestureRecognizers>
                                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ItemHopDong_Tapped" CommandParameter="{Binding salesorderid}"/>
-                                                        </Grid.GestureRecognizers>
+                                                        </StackLayout.GestureRecognizers>
                                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">
                                                             <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                                 <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
@@ -410,7 +410,7 @@
                                                         <controls:FieldListViewItem Grid.Row="2" Title="{x:Static lang:Language.du_an}" Text="{Binding project_name}"/>
                                                         <controls:FieldListViewItem Grid.Row="3" Title="{x:Static lang:Language.ma_hop_dong}" Text="{Binding bsd_contractnumber}"/>
                                                         <controls:FieldListViewItem Grid.Row="4" Title="{x:Static lang:Language.tong_tien}" Text="{Binding totalamount_format, StringFormat='{0} đ'}" TextColor="Red" FontAttributes="Bold"/>
-                                                    </Grid>
+                                                    </StackLayout>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
