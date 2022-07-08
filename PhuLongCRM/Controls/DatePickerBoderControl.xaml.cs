@@ -56,6 +56,7 @@ namespace PhuLongCRM.Controls
             lblDash.SetBinding(Label.IsVisibleProperty, new Binding("ShowTime") { Source = this });
             entryTime.SetBinding(MainEntry.IsVisibleProperty, new Binding("ShowEntryTime") { Source = this });
         }
+
         private static void HadValueChanged(BindableObject bindable, object oldValue, object newValue)
         {
             DatePickerBoderControl control = (DatePickerBoderControl)bindable;
@@ -140,6 +141,10 @@ namespace PhuLongCRM.Controls
 
         private void datePicker_DateSelected(System.Object sender, Xamarin.Forms.DateChangedEventArgs e)
         {
+            if (Date.HasValue && Time.HasValue)
+            {
+                Date = new DateTime(Date.Value.Year, Date.Value.Month, Date.Value.Day, Time.Value.Hours, Time.Value.Minutes, Time.Value.Seconds);
+            }
             this.Date_Selected?.Invoke(sender, EventArgs.Empty);
         }
 

@@ -469,18 +469,18 @@
                                                 <BoxView WidthRequest="1" HorizontalOptions="Center" Grid.Column="0" BackgroundColor="Gray"/>
                                                 <Label Text="{Binding bsd_icon_format}" TextColor="{Binding bsd_icon_color}" FontSize="17" FontFamily="FontAwesomeSolid" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" BackgroundColor="White" Padding="2"/>
                                             </Grid>
-                                            <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Grid.Column="1" Margin="10,10,0,10">
-                                                <StackLayout Padding="0,0,0,10">
-                                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="0">
-                                                        <telerikPrimitives:RadBorder Grid.Row="0" Grid.Column="0" CornerRadius="0,0,5,0" BackgroundColor="{Binding statuscode_color}" VerticalOptions="Center">
+                                            <telerikPrimitives:RadBorder BorderThickness="1" Padding="0" CornerRadius="10" BorderColor="Gray" Grid.Column="1" Margin="10,10,0,10">
+                                                <StackLayout Padding="0,0,0,10" >
+                                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="0" >
+                                                        <telerikPrimitives:RadBorder Grid.Row="0" Grid.Column="0" CornerRadius="0,0,5,0" Margin="{OnPlatform Android='-2,-2,0,0'}" BackgroundColor="{Binding statuscode_color}" VerticalOptions="Start">
                                                             <Label Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="6,4"/>
                                                         </telerikPrimitives:RadBorder>
                                                         <Label Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding bsd_name_format}" Margin="6,0"  TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" />
-                                                        <telerikPrimitives:RadBorder Grid.Row="0" Grid.Column="2" IsVisible="{Binding overdue,Converter={StaticResource NullToHideConverter}}" CornerRadius="0,0,0,5" HorizontalOptions="EndAndExpand" BackgroundColor="Red" VerticalOptions="Center" >
+                                                        <telerikPrimitives:RadBorder Grid.Row="0" Grid.Column="2" Margin="{OnPlatform Android='0,-2,-1,0'}" IsVisible="{Binding overdue,Converter={StaticResource NullToHideConverter}}" CornerRadius="0,0,0,5" HorizontalOptions="EndAndExpand" BackgroundColor="Red" VerticalOptions="Center" >
                                                             <telerikPrimitives:RadBorder.GestureRecognizers>
                                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Interest_Tapped" CommandParameter="{Binding .}"/>
                                                             </telerikPrimitives:RadBorder.GestureRecognizers>
-                                                            <Label Text="{Binding overdue}" VerticalOptions="Start" Background="red" Margin="6,4" FontSize="14" TextColor="White" FontAttributes="Bold"/>
+                                                            <Label Text="{Binding overdue}" VerticalOptions="Start" Background="red" Margin="6,4" FontSize="13" TextColor="White" FontAttributes="Bold"/>
                                                         </telerikPrimitives:RadBorder>
                                                     </Grid>
                                                     <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding hide_duedate}" Margin="10,0">
