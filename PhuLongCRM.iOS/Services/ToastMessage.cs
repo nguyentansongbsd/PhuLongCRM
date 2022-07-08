@@ -12,7 +12,8 @@ namespace PhuLongCRM.iOS.Services
     public class ToastMessage : IToastMessage
     {
         const int LONG_DELAY = 3000;
-        const int SHORT_DELAY = 1300;
+        //1300 fix task 482 thành 1500
+        const int SHORT_DELAY = 1500;
 
         private UIView mView;
         private UILabel label;

@@ -1,19 +1,65 @@
-﻿using PhuLongCRM.Models;
+﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
     public class ContractListViewModel : ListViewBaseViewModel2<ContractModel>
     {
+        public ObservableCollection<OptionSet> FiltersStatus { get; set; } = new ObservableCollection<OptionSet>();
+        public ObservableCollection<OptionSet> FiltersProject { get; set; } = new ObservableCollection<OptionSet>();
+
+        public List<string> _filterStatus;
+        public List<string> FilterStatus { get => _filterStatus; set { _filterStatus = value; OnPropertyChanged(nameof(FilterStatus)); } }
+        public OptionSet _filterProject;
+        public OptionSet FilterProject { get => _filterProject; set { _filterProject = value; OnPropertyChanged(nameof(FilterProject)); } }
+
         public string Keyword { get; set; }
         public ContractListViewModel()
         {
+            string attibute = string.Empty;
+            attibute = UserLogged.IsLoginByUserCRM ? "bsd_saleby" : "bsd_employee";
             PreLoadData = new Command(() =>
             {
+                string project = null;
+                string status = null;
+                if (FilterStatus != null && FilterStatus.Count > 0)
+                {
+                    if (string.IsNullOrWhiteSpace(FilterStatus.Where(x => x == "-1").FirstOrDefault()))
+                    {
+                        string sts = string.Empty;
+                        foreach (var item in FilterStatus)
+                        {
+                            sts += $@"<value>{item}</value>";
+                        }
+                        status = @"<condition attribute='statuscode' operator='in'>" + sts + "</condition>";
+                    }
+                    else
+                    {
+                        status = null;
+                    }
+                }
+                else
+                {
+                    status = null;
+                }
+                if (FilterProject != null && FilterProject.Val != "-1")
+                {
+                    project = $@"<condition attribute='bsd_project' operator='eq' value='{FilterProject.Val}' />";
+                }
+                else
+                {
+                    project = null;
+                }
+
                 EntityName = "salesorders";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='salesorder'>
@@ -25,14 +71,18 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_project' alias='project_id'/>
                                     <attribute name='salesorderid' />
                                     <attribute name='ordernumber' />
+                                    <attribute name='bsd_contractnumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>
-                                        <condition attribute = 'bsd_employee' operator= 'eq' value = '{UserLogged.Id}' />  
+                                        {project}
+                                        {status}
+                                        <condition attribute = '{attibute}' operator= 'eq' value = '{UserLogged.Id}' />  
                                         <filter type='or'>      
                                             <condition attribute='customeridname' operator='like' value ='%25{Keyword}%25' />          
                                             <condition attribute='bsd_projectname' operator='like' value ='%25{Keyword}%25' />              
                                             <condition attribute='bsd_unitnumbername' operator='like' value ='%25{Keyword}%25' />             
                                             <condition attribute='ordernumber' operator='like' value ='%25{Keyword}%25' />
+                                            <condition attribute='bsd_optionno' operator='like' value ='%25{Keyword}%25' />
                                             <condition attribute='bsd_contractnumber' operator='like' value ='%25{Keyword}%25' />
                                         </filter >                  
                                     </filter >
@@ -51,6 +101,47 @@ namespace PhuLongCRM.ViewModels
                                 </entity>
                             </fetch>";
             }); 
+        }
+
+        public void LoadStatus()
+        {
+            if (FiltersStatus != null && FiltersStatus.Count == 0)
+            {
+                FiltersStatus.Add(new OptionSet("-1", Language.tat_ca));
+                var list = ContractStatusCodeData.ContractStatusData();
+                foreach (var item in list)
+                {
+                    FiltersStatus.Add(new OptionSet(item.Id, item.Name));
+                }
+            }
+        }
+
+        public async Task LoadProject()
+        {
+            if (FiltersProject != null)
+            {
+                string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                <entity name='bsd_project'>
+                                    <attribute name='bsd_projectid' alias='Val'/>
+                                    <attribute name='bsd_projectcode'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <attribute name='createdon' />
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='statuscode' operator='eq' value='861450002' />
+                                    </filter>
+                                  </entity>
+                            </fetch>";
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetchXml);
+                if (result == null || result.value.Any() == false) return;
+
+                FiltersProject.Add(new OptionSet("-1", Language.tat_ca));
+                var data = result.value;
+                foreach (var item in data)
+                {
+                    FiltersProject.Add(item);
+                }
+            }
         }
     }
 }

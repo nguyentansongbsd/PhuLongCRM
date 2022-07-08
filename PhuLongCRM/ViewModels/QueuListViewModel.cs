@@ -84,8 +84,9 @@ namespace PhuLongCRM.ViewModels
                             <value>100000002</value>
                             <value>100000009</value>
                             <value>100000010</value>
+                            <value>100000008</value>
                           </condition>
-                          <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                           "+ status + @"
                             " + project + @"
                         </filter>
@@ -105,7 +106,7 @@ namespace PhuLongCRM.ViewModels
             if (FiltersStatus != null && FiltersStatus.Count == 0)
             {
                 FiltersStatus.Add(new OptionSet("-1", Language.tat_ca));
-                var list = QueuesStatusCodeData.GetQueuesByIds("4,100000000,100000002,100000003,100000004");
+                var list = QueuesStatusCodeData.GetQueuesByIds("4,100000000,100000002,100000003,100000004,100000008");
                 foreach (var item in list)
                 {
                     FiltersStatus.Add(new OptionSet(item.Id, item.Name));
@@ -124,6 +125,9 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_name' alias='Label'/>
                                     <attribute name='createdon' />
                                     <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='statuscode' operator='eq' value='861450002' />
+                                    </filter>
                                   </entity>
                             </fetch>";
                 var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetchXml);

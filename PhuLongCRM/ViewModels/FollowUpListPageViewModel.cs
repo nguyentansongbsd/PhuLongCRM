@@ -34,7 +34,7 @@ namespace PhuLongCRM.ViewModels
                                           <condition entityname='customer_reservation' attribute='customeridname' operator='like' value='%25{Keyword}%25' />
                                           <condition entityname='customer_optionentry' attribute='customeridname' operator='like' value='%25{Keyword}%25' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
                                     <link-entity name='quote' from='quoteid' to='bsd_reservation' visible='false' link-type='outer' alias='customer_reservation'>
                                         <attribute name='name' alias='name_reservation'/>

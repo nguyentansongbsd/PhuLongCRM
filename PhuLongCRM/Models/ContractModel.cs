@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -191,9 +192,9 @@ namespace PhuLongCRM.Models
             get
             {
                 if (bsd_contracttype == 100000000)
-                    return "Long Term Lease";
+                    return Language.contract_long_term_lease_type;//"Long Term Lease";
                 else if (bsd_contracttype == 100000001)
-                    return "Purchase";
+                    return Language.contract_purchase_type; //"Purchase"; //contract_purchase_type
                 else
                     return "";
             }
@@ -345,5 +346,22 @@ namespace PhuLongCRM.Models
         public string _discountlist_name; // tên chiết khấu
         public string discountlist_name { get => _discountlist_name; set { _discountlist_name = value; OnPropertyChanged(nameof(discountlist_name)); } }
         public string bsd_discounts { get; set; } // danh sách chiết khấu
+
+        private string _interneldiscount_name;
+        public string interneldiscount_name { get => _interneldiscount_name; set { _interneldiscount_name = value; OnPropertyChanged(nameof(interneldiscount_name)); } }
+        public Guid discountpromotion_id { get; set; }
+
+        private string _discountpromotion_name;
+        public string discountpromotion_name { get => _discountpromotion_name; set { _discountpromotion_name = value; OnPropertyChanged(nameof(discountpromotion_name)); } }
+        public string bsd_exchangediscount { get; set; }
+        public string bsd_interneldiscount { get; set; }
+
+        public decimal bsd_totalamountpaidinstallment { get; set; }
+        public string bsd_totalamountpaidinstallment_format { get => StringFormatHelper.FormatCurrency(bsd_totalamountpaidinstallment); }
+        public decimal bsd_totalpercent { get; set; }
+        public string totalpercent_Format { get => StringFormatHelper.FormatCurrency(bsd_totalpercent); }
+
+        public string bsd_chietkhautheopttt { get; set; }
+        public string bsd_selectedchietkhaupttt { get; set; }
     }
 }

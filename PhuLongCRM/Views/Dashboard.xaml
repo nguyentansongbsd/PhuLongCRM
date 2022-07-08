@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="{Static lang:Language.trang_chu}"
+             Title="{Static lang:Language.trang_chu_title}"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
@@ -13,6 +13,16 @@
             <convertes:CurrencyFormatConverter x:Key="CurrencyFormat"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ScanQRCode_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="FontAwesomeSolid"
+                    Glyph="&#xf029;"
+                    Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <AbsoluteLayout>
             <RefreshView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
@@ -29,13 +39,13 @@
                         <Grid ColumnDefinitions="*,*" Margin="14,6">
                             <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
-                                    <Label Text="{Binding TotalCommission}" FontSize="18" TextColor="#7C0617" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding TotalCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#D42A16" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
-                                    <Label Text="{Binding TotalPaidCommission}" FontSize="18" TextColor="#017914" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding TotalPaidCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#2196F3" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.da_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
@@ -159,16 +169,10 @@
 
                         <StackLayout Orientation="Horizontal" Padding="14,14,14,8">
                             <Label Text="{x:Static lang:Language.cong_viec_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
-                            <Label  TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
+                            <Label Text="{Binding Source={x:Static lang:Language.xem_them},StringFormat='{0} >>'}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ShowMore_Tapped"/>
                                 </Label.GestureRecognizers>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding Source={x:Static lang:Language.xem_them},StringFormat='{0} '}" FontSize="15"/>
-                                        <Span Text="&#xf054;" FontSize="13" FontFamily="FontAwesomeSolid"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
                             </Label>
                         </StackLayout>
                         <StackLayout x:Name="stTaskList" BindableLayout.ItemsSource="{Binding Activities}" Padding="14" Spacing="8">
@@ -182,7 +186,12 @@
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ActivitiItem_Tapped" CommandParameter="{Binding .}"/>
                                         </controls:ExtendedFrame.GestureRecognizers>
                                         <StackLayout Spacing="8">
-                                            <Label Text="{Binding subject}" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource NavigationPrimary}"/>
+                                            <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">
+                                                <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="5" BackgroundColor="{Binding activitytypecode_color}" VerticalOptions="StartAndExpand">
+                                                    <Label Text="{Binding activitytypecode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                                </telerikPrimitives:RadBorder>
+                                                <Label Grid.Column="1" Text="{Binding subject}" TextColor="{StaticResource NavigationPrimary}" FontSize="15" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                            </Grid>
                                             <Label FontSize="15" TextColor="#333333">
                                                 <Label.FormattedText>
                                                     <FormattedString>

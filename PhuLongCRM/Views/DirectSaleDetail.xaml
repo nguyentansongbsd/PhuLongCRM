@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
@@ -229,7 +229,7 @@
                                     <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="#FEC93D">
                                         <StackLayout Orientation="Horizontal">
                                             <Label Text="&#xf005;" FontFamily="FontAwesomeSolid" FontSize="13" TextColor="White" Margin="5,0,0,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                            <Label Text="VIP" FontSize="14" TextColor="White" Margin="0,5,5,5"/>
+                                            <Label Text="VIP" FontSize="14" FontAttributes="Bold" TextColor="White" Margin="0,5,5,5"/>
                                         </StackLayout>
                                     </telerikPrimitives:RadBorder>
                                 </StackLayout>
@@ -259,7 +259,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
                                         <Span Text=" "/>
-                                        <Span Text="{Binding Unit.bsd_constructionarea_format}"/>
+                                        <Span Text="{Binding Unit.bsd_netsaleablearea_format}"/>
                                         <Span Text=" "/>
                                         <Span Text="{x:Static lang:Language.sqm}"/>
                                     </FormattedString>
@@ -303,7 +303,7 @@
                             </telerikPrimitives:RadBorder>
                         </StackLayout>
                         <StackLayout Grid.Row="1">
-                            <Label Text="{x:Static lang:Language.danh_sach_giu_cho}" TextColor="#333333" FontSize="15"  BackgroundColor="#F2F2F2" Padding="10" FontAttributes="Bold" />
+                            <Label Text="{x:Static lang:Language.giu_cho_title}" TextColor="#333333" FontSize="15"  BackgroundColor="#F2F2F2" Padding="10" FontAttributes="Bold" />
                             <ScrollView Padding="0,0,0,40">
                                 <StackLayout>
                                     <StackLayout BindableLayout.ItemsSource="{Binding QueueList}" Spacing="1" BackgroundColor="#eeeeee">
@@ -345,6 +345,14 @@
                                                             </FormattedString>
                                                         </Label.FormattedText>
                                                     </Label>
+                                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                                                        <Label Text="{Binding Source={x:Static lang:Language.phi_giu_cho_da_thanh_toan},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                        <Label Text="{Binding bsd_queuingfeepaid_format}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+                                                        <Label Text="{Binding Source={x:Static lang:Language.da_thanh_toan_phi_giu_cho},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
+                                                        <Label Text="{Binding bsd_collectedqueuingfee_format}" TextColor="Red" FontSize="15" Grid.Column="1" FontAttributes="Bold"/>
+                                                    </Grid>
                                                 </StackLayout>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>

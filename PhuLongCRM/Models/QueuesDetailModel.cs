@@ -5,11 +5,12 @@ namespace PhuLongCRM.Models
 {
     public class QueuesDetailModel : BaseViewModel
     {
-        public string opportunityid { get; set; }
+        public Guid opportunityid { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public Guid _bsd_units_value { get; set; }
         public string unit_name { get; set; }
+        public string unit_status { get; set; }
         public Guid _bsd_project_value { get; set; }
         public string project_name { get; set; }
         public string bsd_queuenumber { get; set; }
@@ -22,7 +23,8 @@ namespace PhuLongCRM.Models
         public Guid _bsd_salesagentcompany_value { get; set; }
         public string salesagentcompany_name { get; set; }
 
-        public double? bsd_queuingfee { get; set; }
+        public decimal? bsd_queuingfee { get; set; }
+        public string bsd_queuingfee_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfee); }
         public double? budgetamount { get; set; }
 
         public Guid _bsd_phaselaunch_value { get; set; }
@@ -56,11 +58,8 @@ namespace PhuLongCRM.Models
 
         private bool _bsd_expired;
         public bool bsd_expired { get => _bsd_expired; set { _bsd_expired = value; OnPropertyChanged(nameof(bsd_expired)); } }
-
         public string bsd_expired_format { get { return BoolToStringData.GetStringByBool(bsd_expired); } }
-
         public string statuscode_format { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString()).Name; } }
-
         public Guid collaborator_id { get; set; }
         public string collaborator_name { get; set; }
         public Guid customerreferral_id { get; set; }
@@ -68,5 +67,7 @@ namespace PhuLongCRM.Models
         //bsd_queuingfeepaid
         public decimal bsd_queuingfeepaid { get; set; }
         public string bsd_queuingfeepaid_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfeepaid); }
+        // bsd_expired đang k lấy đúng giá trị, luôn trả về false
+        public bool bsd_expired_icon { get => DateTime.Compare(bsd_queuingexpired, DateTime.Now) < 0 ? true : false; }
     }
 }

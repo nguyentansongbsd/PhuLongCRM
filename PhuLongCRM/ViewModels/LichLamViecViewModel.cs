@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using Xamarin.Forms;
 
@@ -60,7 +61,7 @@ namespace PhuLongCRM.ViewModels
                 if (this.selectedDate.HasValue)
                 {
                     var date = selectedDate.Value;
-                    var result = string.Format("{0}, {1} {2}", CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(date.DayOfWeek), CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month), date.Day);
+                    var result = string.Format("{0}, {1} - {2}", CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(date.DayOfWeek),date.Day, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month));
 
                     if (Device.RuntimePlatform == Device.Android)
                     {
@@ -110,7 +111,7 @@ namespace PhuLongCRM.ViewModels
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='isregularactivity' operator='eq' value='1' />
-                                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer'>
                                         <attribute name='fullname' alias='regardingobjectid_label_contact'/>
@@ -124,6 +125,7 @@ namespace PhuLongCRM.ViewModels
                               </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ListActivitiesAcc>>(EntityName, fetch);
+            if (result == null || result.value.Count == 0) return;
             var data = result.value;
             if (data.Any())
             {
@@ -181,7 +183,7 @@ namespace PhuLongCRM.ViewModels
 
                 if (!checkHasValue)
                 {
-                    selectedDateEvents.Add(new CalendarEvent() { dateForGroupingWeek = currentDate, activitytype_label = "No Activity" });
+                    selectedDateEvents.Add(new CalendarEvent() { dateForGroupingWeek = currentDate, activitytype_label = Language.khong_co_hoat_dong });
                 }
 
             }
@@ -224,10 +226,6 @@ namespace PhuLongCRM.ViewModels
                 <link-entity name='lead' from='leadid' to='regardingobjectid' visible='false' link-type='outer' alias='a_fb87dbfd8304e911a98b000d3aa2e890'>
                     <attribute name='leadid' alias='lead_id'/>                  
                     <attribute name='fullname' alias='lead_name'/>
-                </link-entity>
-                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
-                    <attribute name='bsd_name' alias='user_name'/>
-                    <attribute name='bsd_employeeid' alias='user_id'/>
                 </link-entity>
             </entity>
           </fetch>";

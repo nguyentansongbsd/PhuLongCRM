@@ -17,12 +17,12 @@ namespace PhuLongCRM.Views
     public partial class UserInfoPage : ContentPage
     {
         public UserInfoPageViewModel viewModel;
+        public Action<bool> OnCompleted;
+
         public UserInfoPage()
         {
-            LoadingHelper.Show();
             InitializeComponent();
             Init();
-            
         }
 
         private async void Init()
@@ -30,7 +30,14 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new UserInfoPageViewModel();
             centerModelPassword.Body.BindingContext = viewModel;
             await viewModel.LoadContact();
-            LoadingHelper.Hide();
+            if (viewModel.ContactModel != null)
+            {
+                OnCompleted?.Invoke(true);
+            }
+            else
+            {
+                OnCompleted?.Invoke(false);
+            }
         }
 
         private async void ChangePassword_Tapped(object sender, EventArgs e)
@@ -145,17 +152,44 @@ namespace PhuLongCRM.Views
             }
         }
 
+        private void PhoneNum_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.PhoneNumber)) return;
+            string phone = string.Empty;
+            phone = viewModel.PhoneNumber.Contains("-") ? viewModel.PhoneNumber.Split('-')[1] : viewModel.PhoneNumber;
+
+            if (phone.Length != 10)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+            }
+        }
+
         private async void SaveUserInfor_Clicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(viewModel.ContactModel.mobilephone))
+            if (string.IsNullOrWhiteSpace(viewModel.PhoneNumber))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);
+                return;
+            }
+
+            string phone = string.Empty;
+            phone = viewModel.PhoneNumber.Contains("-") ? viewModel.PhoneNumber.Split('-')[1] : viewModel.PhoneNumber;
+
+            if (phone.Length != 10)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 return;
             }
 
             if (viewModel.ContactModel.birthdate == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_ngay_sinh);
+                return;
+            }
+
+            if (DateTime.Now.Year - DateTime.Parse(viewModel.ContactModel.birthdate.ToString()).Year < 18)
+            {
+                ToastMessageHelper.ShortMessage(Language.nguoi_dung_phai_tu_18_tuoi);
                 return;
             }
 
@@ -191,13 +225,13 @@ namespace PhuLongCRM.Views
             string asw = await DisplayActionSheet(Language.tuy_chon, Language.huy, null, options);
             if (asw == Language.thu_vien)
             {
-                LoadingHelper.Show();
                 await CrossMedia.Current.Initialize();
                 PermissionStatus photostatus = await PermissionHelper.RequestPhotosPermission();
                 if (photostatus == PermissionStatus.Granted)
                 {
                     try
                     {
+                        LoadingHelper.Show();
                         var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions() { PhotoSize = PhotoSize.MaxWidthHeight,MaxWidthHeight=600});
                         if (file != null)
                         {
@@ -233,11 +267,11 @@ namespace PhuLongCRM.Views
             }
             else if (asw == Language.chup_hinh)
             {
-                LoadingHelper.Show();
                 await CrossMedia.Current.Initialize();
                 PermissionStatus camerastatus = await PermissionHelper.RequestCameraPermission();
                 if (camerastatus == PermissionStatus.Granted)
                 {
+                    LoadingHelper.Show();
                     string fileName = $"{Guid.NewGuid()}.jpg";
                     var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
                     {

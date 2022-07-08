@@ -20,7 +20,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshNumQueue = null;
         public ProjectInfoViewModel viewModel;
 
-        public ProjectInfo(Guid projectId,string projectName = null)
+        public ProjectInfo(Guid projectId, string projectName = null)
         {
             InitializeComponent();
             this.BindingContext = viewModel = new ProjectInfoViewModel();
@@ -33,13 +33,6 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
-            VisualStateManager.GoToState(radborderThongKe, "Active");
-            VisualStateManager.GoToState(radborderThongTin, "InActive");
-            VisualStateManager.GoToState(radborderGiuCho, "InActive");
-            VisualStateManager.GoToState(lblThongKe, "Active");
-            VisualStateManager.GoToState(lblThongTin, "InActive");
-            VisualStateManager.GoToState(lblGiuCho, "InActive");
-
             await Task.WhenAll(
                 viewModel.LoadData(),
                 viewModel.LoadAllCollection(),
@@ -47,8 +40,21 @@ namespace PhuLongCRM.Views
                 viewModel.LoadThongKe(),
                 viewModel.LoadThongKeGiuCho(),
                 viewModel.LoadThongKeHopDong(),
-                viewModel.LoadThongKeBangTinhGia()
-            ) ;
+                viewModel.LoadThongKeBangTinhGia(),
+                viewModel.CheckPhasesLaunch()
+            );
+            if(viewModel.Project.bsd_projectslogo == null)
+            {
+                avataProject.Source = StringAvata(viewModel.ProjectName);
+            }    
+            if (viewModel.IsHasPhasesLaunch == false && viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
+            {
+                viewModel.IsShowBtnGiuCho = true;
+            }
+            else
+            {
+                viewModel.IsShowBtnGiuCho = false;
+            }
 
             if (viewModel.Project != null)
             {
@@ -69,7 +75,7 @@ namespace PhuLongCRM.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if(NeedToRefreshQueue == true)
+            if (NeedToRefreshQueue == true)
             {
                 LoadingHelper.Show();
                 viewModel.PageListGiuCho = 1;
@@ -89,56 +95,12 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void ThongKe_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radborderThongKe, "Active");
-            VisualStateManager.GoToState(radborderThongTin, "InActive");
-            VisualStateManager.GoToState(radborderGiuCho, "InActive");
-            VisualStateManager.GoToState(lblThongKe, "Active");
-            VisualStateManager.GoToState(lblThongTin, "InActive");
-            VisualStateManager.GoToState(lblGiuCho, "InActive");
-            stackThongKe.IsVisible = true;
-            stackThongTin.IsVisible = false;
-            stackGiuCho.IsVisible = false;
-        }
-
-        private async void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radborderThongKe, "InActive");
-            VisualStateManager.GoToState(radborderThongTin, "Active");
-            VisualStateManager.GoToState(radborderGiuCho, "InActive");
-            VisualStateManager.GoToState(lblThongKe, "InActive");
-            VisualStateManager.GoToState(lblThongTin, "Active");
-            VisualStateManager.GoToState(lblGiuCho, "InActive");
-            stackThongKe.IsVisible = false;
-            stackThongTin.IsVisible = true;
-            stackGiuCho.IsVisible = false;
-        }
-
-        private async void GiuCho_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            VisualStateManager.GoToState(radborderThongKe, "InActive");
-            VisualStateManager.GoToState(radborderThongTin, "InActive");
-            VisualStateManager.GoToState(radborderGiuCho, "Active");
-            VisualStateManager.GoToState(lblThongKe, "InActive");
-            VisualStateManager.GoToState(lblThongTin, "InActive");
-            VisualStateManager.GoToState(lblGiuCho, "Active");
-            stackThongKe.IsVisible = false;
-            stackThongTin.IsVisible = false;
-            stackGiuCho.IsVisible = true;
-            if (viewModel.IsLoadedGiuCho == false)
-            {
-                await viewModel.LoadGiuCho();
-            }            
-            LoadingHelper.Hide();
-        }
-
         private void GiuCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             QueueForm queue = new QueueForm(viewModel.ProjectId, false);
-            queue.OnCompleted = async (IsSuccess) => {
+            queue.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(queue);
@@ -165,7 +127,8 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             var id = (Guid)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             AccountDetailPage accountDetailPage = new AccountDetailPage(id);
-            accountDetailPage.OnCompleted= async (IsSuccess) => {
+            accountDetailPage.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(accountDetailPage);
@@ -182,9 +145,10 @@ namespace PhuLongCRM.Views
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var itemId = (Guid)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
-            queuesDetialPage.OnCompleted = async (IsSuccess) => {
+            queuesDetialPage.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(queuesDetialPage);
@@ -259,6 +223,61 @@ namespace PhuLongCRM.Views
         private void CloseContentEvent_Tapped(object sender, EventArgs e)
         {
             ContentEvent.IsVisible = false;
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    stackThongKe.IsVisible = true;
+                    stackThongTin.IsVisible = false;
+                    stackGiuCho.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    stackThongKe.IsVisible = false;
+                    stackThongTin.IsVisible = true;
+                    stackGiuCho.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    stackThongKe.IsVisible = false;
+                    stackThongTin.IsVisible = false;
+                    stackGiuCho.IsVisible = true;
+                    LoadingHelper.Show();
+                    if (viewModel.IsLoadedGiuCho == false)
+                    {
+                        await viewModel.LoadGiuCho();
+                    }
+                    LoadingHelper.Hide();
+                }
+            }
+        }
+        private string StringAvata(string projectName)
+        {
+            if (projectName == null) return null;
+            string nameAvata = null;
+
+            var name = projectName.Split(' ');
+            if (name != null && name.Length > 1)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    nameAvata += name[i].Substring(0, 1).ToUpper();
+                }
+            }
+            else
+            {
+                if (projectName.Length > 1)
+                {
+                    nameAvata = projectName.Substring(0, 2).ToUpper();
+                }
+                else
+                    nameAvata = projectName.ToUpper();
+            }
+            return $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={nameAvata}";
         }
     }
 }

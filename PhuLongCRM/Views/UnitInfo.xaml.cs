@@ -32,18 +32,11 @@ namespace PhuLongCRM.Views
         }
         public async void Init()
         {
-            await Task.WhenAll(
-                viewModel.LoadUnit(),
-                viewModel.CheckShowBtnBangTinhGia()
-                );
+            await viewModel.LoadUnit();
+            await viewModel.CheckShowBtnBangTinhGia();
             
             if (viewModel.UnitInfo != null)
             {
-                VisualStateManager.GoToState(radborderThongTin, "Active");
-                VisualStateManager.GoToState(radborderGiaoDich, "InActive");
-                VisualStateManager.GoToState(lblThongTin, "Active");
-                VisualStateManager.GoToState(lblGiaoDich, "InActive");
-
                 viewModel.StatusCode = StatusCodeUnit.GetStatusCodeById(viewModel.UnitInfo.statuscode.ToString());
                 if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_direction)) 
                 {
@@ -55,7 +48,7 @@ namespace PhuLongCRM.Views
                     viewModel.View = ViewData.GetViewByIds(viewModel.UnitInfo.bsd_viewphulong);
                 }
 
-                if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004)
+                if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004 || viewModel.UnitInfo.statuscode == 100000007)
                 {
                     btnGiuCho.IsVisible = viewModel.UnitInfo.bsd_vippriority ? false : true;
                     if (viewModel.UnitInfo.statuscode != 1 && viewModel.IsShowBtnBangTinhGia == true)
@@ -73,8 +66,8 @@ namespace PhuLongCRM.Views
                     viewModel.IsShowBtnBangTinhGia = false;
                 }
 
-                gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
                 SetButton();
+                gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
                 OnCompleted?.Invoke(true);
             }
             else
@@ -140,39 +133,6 @@ namespace PhuLongCRM.Views
                 Grid.SetColumn(btnBangTinhGia, 0);
                 Grid.SetColumn(btnGiuCho, 0);
             }
-        }
-
-        private void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            VisualStateManager.GoToState(radborderThongTin, "Active");
-            VisualStateManager.GoToState(radborderGiaoDich, "InActive");
-            VisualStateManager.GoToState(lblThongTin, "Active");
-            VisualStateManager.GoToState(lblGiaoDich, "InActive");
-            stackThongTinCanHo.IsVisible = true;
-            stackGiaoDich.IsVisible = false;
-        }
-
-        private async void GiaoDich_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            VisualStateManager.GoToState(radborderThongTin, "InActive");
-            VisualStateManager.GoToState(radborderGiaoDich, "Active");
-            VisualStateManager.GoToState(lblThongTin, "InActive");
-            VisualStateManager.GoToState(lblGiaoDich, "Active");
-            stackThongTinCanHo.IsVisible = false;
-            stackGiaoDich.IsVisible = true;
-
-            if (viewModel.IsLoaded == false)
-            {
-                viewModel.BangTinhGiaList = new ObservableCollection<ReservationListModel>();
-                await Task.WhenAll(
-                    viewModel.LoadQueues(),
-                    viewModel.LoadDanhSachDatCoc(),
-                    viewModel.LoadDanhSachBangTinhGia(),
-                    viewModel.LoadOptoinEntry()
-                );
-            }
-            LoadingHelper.Hide();
         }
 
         private async void ShowMoreDanhSachDatCho_Clicked(object sender, EventArgs e)
@@ -243,7 +203,7 @@ namespace PhuLongCRM.Views
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var itemId = (Guid)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
             queuesDetialPage.OnCompleted = async (IsSuccess) => {
                 if (IsSuccess)
@@ -263,7 +223,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId, true);
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
             {
                 if (isSuccess)
@@ -343,6 +303,56 @@ namespace PhuLongCRM.Views
         private void CloseContentEvent_Tapped(object sender, EventArgs e)
         {
             ContentEvent.IsVisible = false;
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    stackThongTinCanHo.IsVisible = true;
+                    stackGiaoDich.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    LoadingHelper.Show();
+                    stackThongTinCanHo.IsVisible = false;
+                    stackGiaoDich.IsVisible = true;
+
+                    if (viewModel.IsLoaded == false)
+                    {
+                        viewModel.BangTinhGiaList = new ObservableCollection<ReservationListModel>();
+                        await Task.WhenAll(
+                            viewModel.LoadQueues(),
+                            viewModel.LoadDanhSachDatCoc(),
+                            viewModel.LoadDanhSachBangTinhGia(),
+                            viewModel.LoadOptoinEntry()
+                        );
+                    }
+                    LoadingHelper.Hide();
+                }
+            }
+        }
+
+        private void ChiTietBTG_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
+            bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(bangTinhGiaDetail);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
     }
 }

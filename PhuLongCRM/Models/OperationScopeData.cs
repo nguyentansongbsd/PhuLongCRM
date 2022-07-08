@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,9 +11,9 @@ namespace PhuLongCRM.Models
         {
             return new List<OptionSet>()
             {
-                new OptionSet("100000000","Real Estate"),
-                new OptionSet("100000001","Finance"),
-                new OptionSet("100000002","Education"),
+                new OptionSet("100000000",Language.account_real_estate_os),// account_real_estate_os //Real Estate
+                new OptionSet("100000001",Language.account_finance_os),// account_finance_os //Finance
+                new OptionSet("100000002",Language.account_education_os),// account_education_os //Education
             };
         }
 

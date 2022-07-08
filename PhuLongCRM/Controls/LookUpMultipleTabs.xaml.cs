@@ -56,6 +56,10 @@ namespace PhuLongCRM.Controls
         public static string CodeContac = "2";
 
         public static string CodeLead = "1";
+
+        public static readonly BindableProperty RootProperty = BindableProperty.Create(nameof(Root), typeof(Page), typeof(LookUpMultipleTabs), null, BindingMode.TwoWay);
+        public Page Root { get => (Page)GetValue(RootProperty); set => SetValue(RootProperty, value); }
+
         public LookUpMultipleTabs()
         {
             InitializeComponent();
@@ -113,13 +117,14 @@ namespace PhuLongCRM.Controls
                 tap.Tapped += Lead_Tapped;
                 TabsLead.GestureRecognizers.Add(tap);
 
+                SetUpLead();
+                gridMain.Children.Add(ListLead);
+                Grid.SetColumn(ListLead, 0);
+                Grid.SetRow(ListLead, 1);
+                ListLead.IsVisible = false;
+
                 if (numberTab == 0)
                 {
-                    SetUpLead();
-                    gridMain.Children.Add(ListLead);
-                    Grid.SetColumn(ListLead, 0);
-                    Grid.SetRow(ListLead, 1);
-
                     ListLead.IsVisible = true;
                     var lb = TabsLead.Content as Label;
                     VisualStateManager.GoToState(TabsLead, "Selected");
@@ -139,13 +144,14 @@ namespace PhuLongCRM.Controls
                 tap.Tapped += Contact_Tapped;
                 TabsContact.GestureRecognizers.Add(tap);
 
+                SetUpContact();
+                gridMain.Children.Add(ListContact);
+                Grid.SetColumn(ListContact, 0);
+                Grid.SetRow(ListContact, 1);
+                ListContact.IsVisible = false;
+
                 if (numberTab == 0)
                 {
-                    SetUpContact();
-                    gridMain.Children.Add(ListContact);
-                    Grid.SetColumn(ListContact, 0);
-                    Grid.SetRow(ListContact, 1);
-
                     ListContact.IsVisible = true;
                     var lb = TabsContact.Content as Label;
                     VisualStateManager.GoToState(TabsContact, "Selected");
@@ -164,13 +170,14 @@ namespace PhuLongCRM.Controls
                 tap.Tapped += Account_Tapped;
                 TabsAccount.GestureRecognizers.Add(tap);
 
+                SetUpAccount();
+                gridMain.Children.Add(ListAccount);
+                Grid.SetColumn(ListAccount, 0);
+                Grid.SetRow(ListAccount, 1);
+                ListAccount.IsVisible = false;
+
                 if (numberTab == 0)
                 {
-                    SetUpAccount();
-                    gridMain.Children.Add(ListAccount);
-                    Grid.SetColumn(ListAccount, 0);
-                    Grid.SetRow(ListAccount, 1);
-
                     ListAccount.IsVisible = true;
                     var lb = TabsAccount.Content as Label;
                     VisualStateManager.GoToState(TabsAccount, "Selected");
@@ -181,44 +188,54 @@ namespace PhuLongCRM.Controls
 
             if (ShowAddButton == true)
             {
-                gridMain.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                //gridMain.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
-                Grid grid = new Grid();
-                grid.HeightRequest = 40;
-                grid.Margin = 5;
-                grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                //Grid grid = new Grid();
+                //grid.HeightRequest = 40;
+                //grid.Margin = 5;
+                //grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                //grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                //grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
 
-                Button btnNewContact = new Button();
-                btnNewContact.Padding = 5;
-                btnNewContact.CornerRadius = 10;
-                btnNewContact.FontSize = 16;
-                btnNewContact.TextColor = Color.White;
-                btnNewContact.TextTransform = TextTransform.None;
-                btnNewContact.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
-                btnNewContact.Text = Language.them_kh_ca_nhan;
-                btnNewContact.Clicked += NewContact_Clicked;
-                grid.Children.Add(btnNewContact);
-                Grid.SetColumn(btnNewContact, 0);
-                Grid.SetRow(btnNewContact, 0);
+                //Button btnNewContact = new Button();
+                //btnNewContact.CornerRadius = 10;
+                //btnNewContact.FontSize = 15;
+                //btnNewContact.TextColor = Color.White;
+                //btnNewContact.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
+                //btnNewContact.Text = Language.them_kh_ca_nhan;
+                //btnNewContact.Clicked += NewContact_Clicked;
+                //grid.Children.Add(btnNewContact);
+                //Grid.SetColumn(btnNewContact, 0);
+                //Grid.SetRow(btnNewContact, 0);
 
-                Button btnNewAccount = new Button();
-                btnNewAccount.Padding = 5;
-                btnNewAccount.CornerRadius = 10;
-                btnNewAccount.FontSize = 16;
-                btnNewAccount.TextColor = Color.White;
-                btnNewAccount.TextTransform = TextTransform.None;
-                btnNewAccount.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
-                btnNewAccount.Text = Language.them_kh_doanh_nghiep;
-                btnNewAccount.Clicked += NewAccount_Clicked;
-                grid.Children.Add(btnNewAccount);
-                Grid.SetColumn(btnNewAccount, 1);
-                Grid.SetRow(btnNewAccount, 0);
+                //Button btnNewAccount = new Button();
+                //btnNewAccount.CornerRadius = 10;
+                //btnNewAccount.FontSize = 15;
+                //btnNewAccount.TextColor = Color.White;
+                //btnNewAccount.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
+                //btnNewAccount.Text = Language.them_kh_doanh_nghiep;
+                //btnNewAccount.Clicked += NewAccount_Clicked;
+                //grid.Children.Add(btnNewAccount);
+                //Grid.SetColumn(btnNewAccount, 1);
+                //Grid.SetRow(btnNewAccount, 0);
 
-                gridMain.Children.Add(grid);
-                Grid.SetColumn(grid, 0);
-                Grid.SetRow(grid, 2);
+                Button btnNewCustomer = new Button();
+                btnNewCustomer.CornerRadius = 22;
+                btnNewCustomer.Margin = 10;
+                btnNewCustomer.FontSize = 18;
+                btnNewCustomer.TextColor = Color.White;
+                btnNewCustomer.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
+                btnNewCustomer.Text = "\uf067";
+                btnNewCustomer.FontFamily = "FontAwesomeSolid";
+                btnNewCustomer.HeightRequest = 44;
+                btnNewCustomer.WidthRequest = 44;
+                btnNewCustomer.HorizontalOptions = LayoutOptions.End;
+                btnNewCustomer.VerticalOptions = LayoutOptions.End;
+                btnNewCustomer.Clicked += NewCustomer_Clicked;
+
+                gridMain.Children.Add(btnNewCustomer);
+                Grid.SetColumn(btnNewCustomer, 0);
+                Grid.SetRow(btnNewCustomer, 1);
             }
 
             BoxView boxView = new BoxView();
@@ -235,6 +252,25 @@ namespace PhuLongCRM.Controls
                 Grid.SetColumn(gridTabs, 0);
                 Grid.SetRow(gridTabs, 0);
             }             
+        }
+
+        private async void NewCustomer_Clicked(object sender, EventArgs e)
+        {
+            if (Root != null)
+            {
+                LoadingHelper.Show();
+                string[] options = new string[] { Language.khach_hang_ca_nhan_option, Language.khach_hang_doanh_nghiep_option };
+                string asw = await Root.DisplayActionSheet(Language.tao_khach_hang, Language.huy, null, options);
+                if (asw == Language.khach_hang_ca_nhan_option)
+                {
+                    await Navigation.PushAsync(new ContactForm());
+                }
+                else if (asw == Language.khach_hang_doanh_nghiep_option)
+                {
+                    await Navigation.PushAsync(new AccountForm());
+                }
+                LoadingHelper.Hide();
+            }
         }
 
         private async void NewAccount_Clicked(object sender, EventArgs e)
@@ -305,7 +341,6 @@ namespace PhuLongCRM.Controls
                 ListAccount.IsVisible = false;
         }
         public RadBorder CreateTabs(string NameTab)
-
         {
             RadBorder rd = new RadBorder();
             rd.Style = (Style)Application.Current.Resources["rabBorder_Tab"];
@@ -351,7 +386,8 @@ namespace PhuLongCRM.Controls
                     <attribute name='bsd_passport' alias='HC' />
                     <order attribute='fullname' descending='false' />                   
                     <filter type='and'>
-                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='statecode' operator='eq' value='0' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                     </filter>
                   </entity>
                 </fetch>";
@@ -387,8 +423,8 @@ namespace PhuLongCRM.Controls
                                 <attribute name='mobilephone' alias='SDT' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                    " + loadNewLead + @"
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    {loadNewLead}
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                 </filter>
                               </entity>
                             </fetch>";
@@ -418,7 +454,8 @@ namespace PhuLongCRM.Controls
                                 <attribute name='bsd_registrationcode' alias='SoGPKD'/>
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    <condition attribute='statecode' operator='eq' value='0' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                 </filter>
                               </entity>
                             </fetch>";

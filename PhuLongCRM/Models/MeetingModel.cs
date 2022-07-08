@@ -14,17 +14,15 @@ namespace PhuLongCRM.Models
 
         private string _description;
         public string description { get => _description; set { _description = value; OnPropertyChanged(nameof(description)); } }
+
         public DateTime? _scheduledstart;
         public DateTime? scheduledstart
         {
             get => this._scheduledstart;
             set
             {
-                if (value.HasValue)
-                {
-                    _scheduledstart = value;
-                    OnPropertyChanged(nameof(scheduledstart));
-                }
+                _scheduledstart = value;
+                OnPropertyChanged(nameof(scheduledstart));
             }
         }
         public TimeSpan _timeStart { get; set; }
@@ -88,6 +86,9 @@ namespace PhuLongCRM.Models
 
         public Guid lead_id { get; set; }
         public string lead_name { get; set; }
+
+        public Guid queue_id { get; set; }
+        public string queue_name { get; set; }
 
         public Guid user_id { get; set; }
         public string user_name { get; set; }
@@ -182,6 +183,6 @@ namespace PhuLongCRM.Models
         public string required { get => _required; set { _required = value; OnPropertyChanged(nameof(required)); } }
 
         private string _optional;
-        public string optional { get => _optional; set { _optional = value; OnPropertyChanged(nameof(optional)); } }
+        public string optional { get => _optional; set { _optional = value; OnPropertyChanged(nameof(optional)); } }    
     }
 }

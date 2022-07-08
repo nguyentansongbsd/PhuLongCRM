@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using PhuLongCRM.Resources;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.Converters
@@ -15,13 +16,13 @@ namespace PhuLongCRM.Converters
                 switch ((int)value)
                 {
                     case 1: 
-                        return "Nháp"; // Active
+                        return Language.nhap_mandatory_sts; // Active
                     case 100000000: 
-                        return "Đang áp dụng"; // Applying
+                        return Language.dang_ap_dung_mandatory_sts; // Applying
                     case 100000001: 
-                        return "Hủy"; //Cancel
+                        return Language.huy_mandatory_sts; //Cancel
                     case 2: 
-                        return "Vô hiệu lực"; // Inactive 
+                        return Language.vo_hieu_luc_mandatory_sts; // Inactive 
                     default:
                         return "";
                 }

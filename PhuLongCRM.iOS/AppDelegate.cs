@@ -30,6 +30,7 @@ namespace PhuLongCRM.iOS
             CachedImageRenderer.Init();
             
             LoadApplication(new App());
+            ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             DependencyService.Get<ILoadingService>().Initilize();
 
             return base.FinishedLaunching(app, options);

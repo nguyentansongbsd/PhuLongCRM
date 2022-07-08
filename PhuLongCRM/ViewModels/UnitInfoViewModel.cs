@@ -1,19 +1,12 @@
-﻿using PhuLongCRM.Config;
-using PhuLongCRM.Helper;
-using PhuLongCRM.IServices;
+﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
-using Newtonsoft.Json;
 using Stormlion.PhotoBrowser;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -106,6 +99,7 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='statuscode' />
                 <attribute name='bsd_areavariance' />
                 <attribute name='bsd_constructionarea' />
+                <attribute name='bsd_netsaleablearea' />
                 <attribute name='price' />
                 <attribute name='bsd_landvalueofunit' />
                 <attribute name='bsd_landvalue' />
@@ -159,13 +153,15 @@ namespace PhuLongCRM.ViewModels
                       <entity name='opportunity'>
                         <attribute name='name' />
                         <attribute name='customerid' />
+                        <attribute name='bsd_bookingtime' />
                         <attribute name='createdon' />
                         <attribute name='statuscode' />
                         <attribute name='bsd_queuingexpired' />
                         <attribute name='opportunityid' />
-                        <order attribute='bsd_bookingtime' descending='false' />
+                        <order attribute='statecode' descending='false' />
+                        <order attribute='statuscode' descending='true' />
                         <filter type='and'>
-                          <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                           <condition attribute='bsd_units' operator='eq' value='{UnitInfo.productid}' />
                         </filter>
                         <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer'>
@@ -191,6 +187,13 @@ namespace PhuLongCRM.ViewModels
             {
                 list_danhsachdatcho.Add(item);
             }
+            List<QueuesModel> list_sort = new List<QueuesModel>();
+            list_sort = list_danhsachdatcho.OrderByDescending(num => num, new QueuesModel()).ToList();
+            list_danhsachdatcho.Clear();
+            foreach (var item in list_sort)
+            {
+                list_danhsachdatcho.Add(item);
+            }
         }
 
         public async Task LoadDanhSachBangTinhGia()
@@ -206,7 +209,7 @@ namespace PhuLongCRM.ViewModels
                         <order attribute='createdon' descending='true' />
                         <filter type='and'>
                             <condition attribute='bsd_unitno' operator='eq' value='{UnitInfo.productid}'/>
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>
@@ -258,7 +261,7 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     <condition attribute='bsd_unitno' operator='eq' value='{UnitInfo.productid}'/>
-                                    <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
                                             <value>100000000</value>
@@ -317,9 +320,10 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_project' alias='project_id'/>
                                     <attribute name='salesorderid' />
                                     <attribute name='ordernumber' />
+                                    <attribute name='bsd_contractnumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
-                                        <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                         <condition attribute='bsd_unitnumber' operator='eq' value='{UnitInfo.productid}'/>                
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
@@ -376,7 +380,14 @@ namespace PhuLongCRM.ViewModels
             {
                 if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
                 {
-                    IsShowBtnBangTinhGia = true;
+                    if (UnitInfo.statuscode == 100000000 || UnitInfo.statuscode == 100000004)
+                    {
+                        IsShowBtnBangTinhGia = true;
+                    }
+                    else
+                    {
+                        IsShowBtnBangTinhGia = false;
+                    }
                     return;
                 }
                 else
@@ -450,6 +461,7 @@ namespace PhuLongCRM.ViewModels
             //    }
             //}
         }
+
         public async Task LoadDataEvent()
         {
             if (UnitInfo == null || UnitInfo.event_id == Guid.Empty) return;

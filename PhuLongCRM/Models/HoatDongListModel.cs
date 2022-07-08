@@ -14,58 +14,66 @@ namespace PhuLongCRM.Models
         public string accounts_bsd_name { get; set; }
         public string contact_bsd_fullname { get; set; }
         public string lead_fullname { get; set; }
+        public string queue_name { get; set; }
         public string systemsetup_bsd_name { get; set; }
         public string regarding_name
         {
             get
             {
+                // load theo khách hàng, k có sẽ lấy liên quna
                 if (activitytypecode == "appointment")
                 {
-                    return null;
+                    if (this.callto_contact_name != null)
+                        return this.callto_contact_name;
+                    else if (this.callto_account_name != null)
+                        return this.callto_account_name;
+                    else if (this.callto_lead_name != null)
+                        return this.callto_lead_name;
+                    else if (this.contact_bsd_fullname != null)
+                        return this.contact_bsd_fullname;
+                    else if (this.accounts_bsd_name != null)
+                        return this.accounts_bsd_name;
+                    else if (this.lead_fullname != null)
+                        return this.lead_fullname;
+                    else if (this.queue_name != null)
+                        return this.queue_name;
+                    else
+                        return null;
                 }
-
-                    if (activitytypecode == "phonecall")
+                else if (activitytypecode == "phonecall")
                 {
                     if (this.callto_contact_name != null)
-                    {
                         return this.callto_contact_name;
-                    }
                     else if (this.callto_account_name != null)
-                    {
                         return this.callto_account_name;
-                    }
                     else if (this.callto_lead_name != null)
-                    {
                         return this.callto_lead_name;
-                    }
+                    else if (this.contact_bsd_fullname != null)
+                        return this.contact_bsd_fullname;
+                    else if (this.accounts_bsd_name != null)
+                        return this.accounts_bsd_name;
+                    else if (this.lead_fullname != null)
+                        return this.lead_fullname;
+                    else if (this.queue_name != null)
+                        return this.queue_name;
                     else
-                    {
-                        return " ";
-                    }
+                        return null;
+                }
+                else if (activitytypecode == "task")
+                {
+                    if (this.contact_bsd_fullname != null)
+                        return this.contact_bsd_fullname;
+                    else if (this.accounts_bsd_name != null)
+                        return this.accounts_bsd_name;
+                    else if (this.lead_fullname != null)
+                        return this.lead_fullname;
+                    else if (this.queue_name != null)
+                        return this.queue_name;
+                    else
+                        return null;
                 }
                 else
-                {
-                    if (this.accounts_bsd_name != null)
-                    {
-                        return this.accounts_bsd_name;
-                    }
-                    else if (this.contact_bsd_fullname != null)
-                    {
-                        return this.contact_bsd_fullname;
-                    }
-                    else if (this.lead_fullname != null)
-                    {
-                        return this.lead_fullname;
-                    }
-                    else if (this.systemsetup_bsd_name != null)
-                    {
-                        return this.systemsetup_bsd_name;
-                    }
-                    else
-                    {
-                        return " ";
-                    }
-                }
+                    return null;
             }
         }
         public string activitytypecode { get; set; }
@@ -115,11 +123,11 @@ namespace PhuLongCRM.Models
                 switch (prioritycode)
                 {
                     case 0:
-                        return "Low";
+                        return Language.case_low_priority;
                     case 1:
-                        return "Normal";
+                        return Language.case_normal_priority;
                     case 2:
-                        return "High";
+                        return Language.case_high_priority;
                     default:
                         return " ";
                 }

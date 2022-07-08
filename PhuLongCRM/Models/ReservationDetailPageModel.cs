@@ -37,9 +37,11 @@ namespace PhuLongCRM.Models
         public string bsd_exchangediscount { get; set; }
 
         public Guid interneldiscount_id { get; set; }
+
         private string _interneldiscount_name;
         public string interneldiscount_name { get=> _interneldiscount_name; set { _interneldiscount_name = value;OnPropertyChanged(nameof(interneldiscount_name)); } }
         public Guid discountpromotion_id { get; set; }
+
         private string _discountpromotion_name;
         public string discountpromotion_name { get => _discountpromotion_name; set { _discountpromotion_name = value; OnPropertyChanged(nameof(discountpromotion_name)); } }
 
@@ -56,16 +58,19 @@ namespace PhuLongCRM.Models
         public Guid queue_id { get; set; } // id đặt chỗ
         public string queue_name { get; set; } // tên đặt chỗ
         public bool bsd_followuplist { get; set; } // danh sách theo dõi
-        public string bsd_followuplist_format { get { return BoolToStringData.GetStringByBool(bsd_followuplist); } }
+
+        private string _bsd_followuplist_format;
+        public string bsd_followuplist_format { get => _bsd_followuplist_format; set { _bsd_followuplist_format = value; OnPropertyChanged(nameof(bsd_followuplist_format)); } }
+        //public string bsd_followuplist_format { get { return BoolToStringData.GetStringByBool(bsd_followuplist); } }
         // thông tin sản phẩm
         public int bsd_unitstatus { get; set; } // tình trạng sản phẩm
         public string bsd_unitstatus_format { get => StatusCodeUnit.GetStatusCodeById(bsd_unitstatus.ToString()).Name; }
         public decimal bsd_constructionarea { get; set; } // diện tích xây dựng
-        public string bsd_constructionarea_format { get => StringFormatHelper.FormatCurrency(bsd_constructionarea); }
+        public string bsd_constructionarea_format { get => StringFormatHelper.FormatPercent(bsd_constructionarea); }
         public decimal bsd_netusablearea { get; set; } // diện tích sử dụng
-        public string bsd_netusablearea_format { get => StringFormatHelper.FormatCurrency(bsd_netusablearea); }
+        public string bsd_netusablearea_format { get => StringFormatHelper.FormatPercent(bsd_netusablearea); }
         public decimal bsd_actualarea { get; set; } // diện tích thực
-        public string bsd_actualarea_format { get => StringFormatHelper.FormatCurrency(bsd_actualarea); }
+        public string bsd_actualarea_format { get => StringFormatHelper.FormatPercent(bsd_actualarea); }
         // thông tin chi tiết
         public Guid project_id { get; set; } // id dự án
         public string project_name { get; set; } // tên dự án
@@ -211,7 +216,7 @@ namespace PhuLongCRM.Models
 
         // thông tin đặt cọc
         public int bsd_reservationformstatus { get; set; } // trạng thái pđc
-        public string bsd_reservationformstatus_format { get => QuoteStatusCodeData.GetQuoteStatusCodeById(bsd_reservationformstatus.ToString())?.Name; }
+        public string bsd_reservationformstatus_format { get => ReservationFormStatus.GetRFStatusById(bsd_reservationformstatus.ToString())?.Label; }
 
         public DateTime? _bsd_reservationprinteddate; // ngày in
         public DateTime? bsd_reservationprinteddate
@@ -382,6 +387,17 @@ namespace PhuLongCRM.Models
                     OnPropertyChanged(nameof(bsd_calculatedforsalesreport));
                 }
             }
-        }         
+        }     
+        public bool hide_contract
+        {
+            get
+            {
+                if (statuscode == 100000007)
+                    return false;
+                else
+                    return true;
+            }
+        }
+        public Guid salesorder_id { get; set; } // id contract
     }
 }

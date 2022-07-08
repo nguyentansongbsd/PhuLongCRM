@@ -1,26 +1,30 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PhuLongCRM.Config;
+using PhuLongCRM.Helper;
+using PhuLongCRM.Models;
+using System;
 using System.Collections.Generic;
-
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
-        private string _num;
-        public string num { get=>_num; set { _num = value; OnPropertyChanged(nameof(num)); } }
+        private DateTime? _date;
+        public DateTime? Date { get => _date; set { _date = value;OnPropertyChanged(nameof(Date)); } }
         public BlankPage()
         {
             InitializeComponent();
             this.BindingContext = this;
-            test.InputValue = num = "840336021479";
-
-            
+            Date = new DateTime(2022, 06, 18, 22, 00, 00);
         }
 
-        private async void Button_Clicked(System.Object sender, System.EventArgs e)
+        async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
-            await DisplayAlert("", test.Mask, "ok");
+            await DisplayAlert("", Date.Value.ToString(), "ok");
         }
     }
 }

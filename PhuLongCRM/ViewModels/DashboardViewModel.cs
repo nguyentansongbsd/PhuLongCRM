@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using Xamarin.Forms;
 
@@ -146,7 +147,7 @@ namespace PhuLongCRM.ViewModels
             decimal countTotalPaidTh = 0;
             decimal countTotalPaidFo = 0;
 
-            foreach(var item in result.value)
+            foreach (var item in result.value)
             {
                 // danh sách các hhgd có sts = Accountant Confirmed lấy từ entity Commission Calculator trong 4 tháng từ ngày hiện tại trở về trước
                 if (item.statuscode_calculator == 100000003 && item.createdon.Month == first_Month.Month)
@@ -178,17 +179,17 @@ namespace PhuLongCRM.ViewModels
                         TotalPaidCommissionAMonth += item.bsd_totalamountpaid;
                     }
                 }
-            }           
+            }
 
-            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalCommissionFr) };
-            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalCommissionSe) };
-            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalCommissionTh) };
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalCommissionFo) };
+            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionFr) };
+            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionSe) };
+            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionTh) };
+            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionFo) };
 
-            ChartModel chartFirstMonth2 = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalPaidFr) };
-            ChartModel chartSecondMonth2 = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalPaidSe) };
-            ChartModel chartThirdMonth2 = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalPaidTh) };
-            ChartModel chartFourthMonth2 = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value =  TotalAMonth(countTotalPaidFo) };
+            ChartModel chartFirstMonth2 = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidFr) };
+            ChartModel chartSecondMonth2 = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidSe) };
+            ChartModel chartThirdMonth2 = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidTh) };
+            ChartModel chartFourthMonth2 = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidFo) };
 
             this.CommissionTransactionChart.Add(chartFirstMonth);
             this.CommissionTransactionChart.Add(chartSecondMonth);
@@ -228,23 +229,23 @@ namespace PhuLongCRM.ViewModels
                                                     <value>100000002</value>
                                                     <value>100000000</value>
                                                 </condition>
-                                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
+                                                <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                             </filter>
                                     </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("opportunities", fetchXml);
             if (result == null) return;
 
-            var countQueueFr = result.value.Where(x => x.Date.Month == first_Month.Month).Count();
+            var countQueueFr = result.value.Where(x => x.Date.ToLocalTime().Month == first_Month.Month).Count();
             ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countQueueFr };
 
-            var countQueueSe = result.value.Where(x => x.Date.Month == second_Month.Month).Count();
+            var countQueueSe = result.value.Where(x => x.Date.ToLocalTime().Month == second_Month.Month).Count();
             ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countQueueSe };
 
-            var countQueueTh = result.value.Where(x => x.Date.Month == third_Month.Month).Count();
+            var countQueueTh = result.value.Where(x => x.Date.ToLocalTime().Month == third_Month.Month).Count();
             ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countQueueTh };
 
-            var countQueueFo = this.numQueue = result.value.Where(x => x.Date.Month == fourth_Month.Month).Count();
+            var countQueueFo = this.numQueue = result.value.Where(x => x.Date.ToLocalTime().Month == fourth_Month.Month).Count();
             ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countQueueFo };
 
             this.DataMonthQueue.Add(chartFirstMonth);
@@ -265,23 +266,23 @@ namespace PhuLongCRM.ViewModels
                                         <value>4</value>
                                       </condition>
                                       <condition attribute='bsd_deposittime' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("quotes", fetchXml);
             if (result == null) return;
 
-            var countQuoteFr = result.value.Where(x => x.Date.Month == first_Month.Month).Count();
+            var countQuoteFr = result.value.Where(x => x.Date.ToLocalTime().Month == first_Month.Month).Count();
             ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countQuoteFr };
 
-            var countQuoteSe = result.value.Where(x => x.Date.Month == second_Month.Month).Count();
+            var countQuoteSe = result.value.Where(x => x.Date.ToLocalTime().Month == second_Month.Month).Count();
             ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countQuoteSe };
 
-            var countQuoteTh = result.value.Where(x => x.Date.Month == third_Month.Month).Count();
+            var countQuoteTh = result.value.Where(x => x.Date.ToLocalTime().Month == third_Month.Month).Count();
             ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countQuoteTh };
 
-            var countQuoteFo = this.numQuote = result.value.Where(x => x.Date.Month == fourth_Month.Month).Count();
+            var countQuoteFo = this.numQuote = result.value.Where(x => x.Date.ToLocalTime().Month == fourth_Month.Month).Count();
             ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countQuoteFo };
 
             this.DataMonthQuote.Add(chartFirstMonth);
@@ -305,24 +306,23 @@ namespace PhuLongCRM.ViewModels
                                         <value>100000008</value>
                                       </condition>
                                       <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                      <condition attribute='bsd_signedcontractdate' operator='null' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("salesorders", fetchXml);
             if (result == null) return;
 
-            var countOptionEntryFr = result.value.Where(x => x.Date.Month == first_Month.Month).Count();
+            var countOptionEntryFr = result.value.Where(x => x.Date.ToLocalTime().Month == first_Month.Month).Count();
             ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countOptionEntryFr };
 
-            var countOptionEntrySe = result.value.Where(x => x.Date.Month == second_Month.Month).Count();
+            var countOptionEntrySe = result.value.Where(x => x.Date.ToLocalTime().Month == second_Month.Month).Count();
             ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countOptionEntrySe };
 
-            var countOptionEntryTh = result.value.Where(x => x.Date.Month == third_Month.Month).Count();
+            var countOptionEntryTh = result.value.Where(x => x.Date.ToLocalTime().Month == third_Month.Month).Count();
             ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countOptionEntryTh };
 
-            var countOptionEntryFo = this.numOptionEntry = result.value.Where(x => x.Date.Month == fourth_Month.Month).Count();
+            var countOptionEntryFo = this.numOptionEntry = result.value.Where(x => x.Date.ToLocalTime().Month == fourth_Month.Month).Count();
             ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countOptionEntryFo };
 
             this.DataMonthOptionEntry.Add(chartFirstMonth);
@@ -333,32 +333,30 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadUnitFourMonths()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='product'>
-                                    <attribute name='productid' alias='Id'/>
+                                  <entity name='salesorder'>
+                                    <attribute name='salesorderid' alias='Id'/>
+                                    <attribute name='bsd_signedcontractdate' alias='Date' />
+                                    <order attribute='createdon' descending='true' />
                                     <filter type='and'>
-                                      <condition attribute='statuscode' operator='eq' value='100000002' />
+                                      <condition attribute='bsd_unitstatus' operator='eq' value='100000002' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                      <condition attribute='bsd_signedcontractdate' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                     </filter>
-                                    <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='inner'>
-	                                <attribute name='bsd_signedcontractdate' alias='Date'/>
-                                      <filter type='and'>
-                                        <condition attribute='bsd_signedcontractdate' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                      </filter>
-                                    </link-entity>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("products", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("salesorders", fetchXml);
             if (result == null) return;
 
-            var countUnitFr = result.value.Where(x => x.Date.Month == first_Month.Month).Count();
+            var countUnitFr = result.value.Where(x => x.Date.ToLocalTime().Month == first_Month.Month).Count();
             ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countUnitFr };
 
-            var countUnitSe = result.value.Where(x => x.Date.Month == second_Month.Month).Count();
+            var countUnitSe = result.value.Where(x => x.Date.ToLocalTime().Month == second_Month.Month).Count();
             ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countUnitSe };
 
-            var countUnitTh = result.value.Where(x => x.Date.Month == third_Month.Month).Count();
+            var countUnitTh = result.value.Where(x => x.Date.ToLocalTime().Month == third_Month.Month).Count();
             ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countUnitTh };
 
-            var countUnitFo = this.numUnit = result.value.Where(x => x.Date.Month == fourth_Month.Month).Count();
+            var countUnitFo = this.numUnit = result.value.Where(x => x.Date.ToLocalTime().Month == fourth_Month.Month).Count();
             ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countUnitFo };
 
             this.DataMonthUnit.Add(chartFirstMonth);
@@ -368,6 +366,10 @@ namespace PhuLongCRM.ViewModels
         }
         public async Task LoadLeads()
         {
+            ChartModel chartKHMoi = new ChartModel();
+            ChartModel chartKHDaChuyenDoi = new ChartModel();
+            ChartModel chartKHKhongChuyenDoi = new ChartModel();
+
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='lead'>
                                     <attribute name='statuscode' alias='Label'/>
@@ -375,21 +377,27 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                       <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                       <condition attribute='statuscode' operator='ne' value='2'/>
-                                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetchXml);
-            if (result == null || result.value.Count == 0) return;
+            if (result != null && result.value.Count > 0)
+            {
+                numKHMoi = result.value.Where(x => x.Label == "1").Count();
+                numKHDaChuyenDoi = result.value.Where(x => x.Label == "3").Count();
+                numKHKhongChuyenDoi = result.value.Where(x => x.Label == "4" || x.Label == "5" || x.Label == "6" || x.Label == "7").Count();
 
-            numKHMoi = result.value.Where(x => x.Label == "1").Count();
-            ChartModel chartKHMoi = new ChartModel() { Category = "Khách hàng mới", Value = numKHMoi };
-
-            numKHDaChuyenDoi = result.value.Where(x => x.Label == "3").Count();
-            ChartModel chartKHDaChuyenDoi = new ChartModel() { Category = "Đã chuyển đổi", Value = numKHDaChuyenDoi };
-
-            numKHKhongChuyenDoi = result.value.Where(x => x.Label == "4" || x.Label == "5" || x.Label == "6" || x.Label == "7").Count();
-            ChartModel chartKHKhongChuyenDoi = new ChartModel() { Category = "Không chuyển đổi", Value = numKHKhongChuyenDoi };
+                chartKHMoi = new ChartModel() { Category = Language.khach_hang_moi, Value = numKHMoi };
+                chartKHDaChuyenDoi = new ChartModel() { Category = Language.da_chuyen_doi, Value = numKHDaChuyenDoi };
+                chartKHKhongChuyenDoi = new ChartModel() { Category = Language.khong_chuyen_doi, Value = numKHKhongChuyenDoi };
+            }
+            else
+            {
+                chartKHMoi = new ChartModel() { Category = Language.khach_hang_moi, Value = 1 };
+                chartKHDaChuyenDoi = new ChartModel() { Category = Language.da_chuyen_doi, Value = 1 };
+                chartKHKhongChuyenDoi = new ChartModel() { Category = Language.khong_chuyen_doi, Value = 1 };
+            }
 
             this.LeadsChart.Add(chartKHMoi);
             this.LeadsChart.Add(chartKHDaChuyenDoi);
@@ -406,10 +414,11 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
                                     <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer' alias='a_48f82b1a8ad844bd90d915e7b3c4f263'>
                                           <attribute name='fullname' alias='contact_name'/>
@@ -459,10 +468,14 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />   
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='in'>
+                                            <value>0</value>
+                                            <value>3</value>
+                                        </condition>
                                       <condition attribute='scheduledstart' operator='today' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
                                     <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer' alias='a_48f82b1a8ad844bd90d915e7b3c4f263'>
                                         <attribute name='fullname' alias='contact_name'/>
@@ -547,10 +560,11 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='scheduledend' />
                                     <attribute name='activitytypecode' />
                                     <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
+                                    <order attribute='scheduledstart' descending='false' />
                                     <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
                                       <condition attribute='scheduledstart' operator='today' />
-                                      <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     </filter>
                                     <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer' alias='a_48f82b1a8ad844bd90d915e7b3c4f263'>
                                         <attribute name='fullname' alias='contact_name'/>

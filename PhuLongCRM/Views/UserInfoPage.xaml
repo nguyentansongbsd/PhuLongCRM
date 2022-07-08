@@ -46,7 +46,8 @@
                     <controls:MainEntry Text="{Binding ContactModel.emailaddress1}" Placeholder="{x:Static lang:Language.nhap_email}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}"/>
-                    <controls:MainEntry Text="{Binding ContactModel.mobilephone}" Keyboard="Numeric" Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}"/>
+                    <controls:PhoneEntryControl Text="{Binding PhoneNumber}" Keyboard="Numeric" Unfocused="PhoneNum_Unfocused" FontSize="15" Placeholder="+84-033XXXXXXX"/>
+                    <!--<controls:MainEntry Text="{Binding PhoneNumber}" Keyboard="Numeric" Unfocused="PhoneNum_Unfocused" Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}"/>-->
 
                     <controls:FormLabel Text="{x:Static lang:Language.mat_khau}"/>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="0">
@@ -60,7 +61,7 @@
                     </Grid>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_sinh}"/>
-                    <controls:DatePickerBoderControl Date="{Binding ContactModel.birthdate}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"/>
+                    <controls:DatePickerBoderControl Date="{Binding ContactModel.birthdate}" ShowTime="False" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.gioi_tinh}"/>
                     <controls:LookUp NameDisplay="Label" BottomModal="{Reference LookUpModal}" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>

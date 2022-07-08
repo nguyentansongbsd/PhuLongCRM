@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace PhuLongCRM.Models
 
         public string GetErrorMessage()
         {
-            return ErrorResponse?.error?.message?.ToString() ?? "Lỗi, Vui lòng thực hiện lại thao tác.";
+            return ErrorResponse?.error?.message?.ToString() ?? Language.da_co_loi_xay_ra_vui_long_thu_lai_sau;
         }
     }
 }

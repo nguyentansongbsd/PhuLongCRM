@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
@@ -12,6 +13,7 @@ namespace PhuLongCRM.ViewModels
 {
     public class QueuesDetialPageViewModel : BaseViewModel
     {
+        public ObservableCollection<FloatButtonItem> ButtonCommandList { get; set; } = new ObservableCollection<FloatButtonItem>();
         public Guid QueueId { get; set; }
         public string NumPhone { get; set; }
 
@@ -32,6 +34,7 @@ namespace PhuLongCRM.ViewModels
 
         private QueuesStatusCodeModel _queueStatusCode;
         public QueuesStatusCodeModel QueueStatusCode { get => _queueStatusCode; set { _queueStatusCode = value; OnPropertyChanged(nameof(QueueStatusCode)); } }
+        public ObservableCollection<HoatDongListModel> list_thongtincase { get; set; }
 
         private string _queueProject;
         public string QueueProject { get => _queueProject; set { _queueProject = value; OnPropertyChanged(nameof(QueueProject)); } }
@@ -54,16 +57,24 @@ namespace PhuLongCRM.ViewModels
         private bool _showMoreHopDong;
         public bool ShowMoreHopDong { get => _showMoreHopDong; set { _showMoreHopDong = value; OnPropertyChanged(nameof(ShowMoreHopDong)); } }
 
+        private bool _showMoreCase;
+        public bool ShowMoreCase { get => _showMoreCase; set { _showMoreCase = value; OnPropertyChanged(nameof(ShowMoreCase)); } }
+
+        private bool _showCare;
+        public bool ShowCare { get => _showCare; set { _showCare = value; OnPropertyChanged(nameof(ShowCare)); } }
+
         public int PageBangTinhGia { get; set; } = 1;
         public int PageDatCoc { get; set; } = 1;
         public int PageHopDong { get; set; } = 1;
+        public int PageCase { get; set; } = 1;
 
-        public string CodeContact = "2";
+        public string CodeAccount = LookUpMultipleTabs.CodeAccount;
 
-        public string CodeAccount = "3";
+        public string CodeContact = LookUpMultipleTabs.CodeContac;
 
         public QueuesDetialPageViewModel()
         {
+            list_thongtincase = new ObservableCollection<HoatDongListModel>();
         }
 
         public async Task LoadQueue()
@@ -101,6 +112,7 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity>
                                 <link-entity name='product' from='productid' to='bsd_units' visible='false' link-type='outer' alias='a_ba2436e819dbeb11bacb002248168cad'>
                                     <attribute name='name'  alias='unit_name'/>
+                                    <attribute name='statuscode'  alias='unit_status'/>
                                 </link-entity>
                                 <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
                                     <attribute name='bsd_name' alias='account_name'/>
@@ -164,9 +176,8 @@ namespace PhuLongCRM.ViewModels
             ShowBtnHuyGiuCho = (data.statuscode == 100000000 || data.statuscode == 100000002) ? true : false;
 //            ShowBtnBangTinhGia = (data.statuscode == 100000000 && !string.IsNullOrWhiteSpace(data.phaselaunch_name)) ? true : false;
             ShowButtons = (data.statuscode == 100000008 || data.statuscode == 100000009 || data.statuscode == 100000010) ? false : true; //data.statuscode == 100000008 ||
-            
+            ShowCare = (data.statuscode == 1 || data.statuscode == 4 || data.statuscode == 5 || data.statuscode == 100000003 || data.statuscode == 100000008) ? false : true;
             this.QueueStatusCode = QueuesStatusCodeData.GetQueuesById(data.statuscode.ToString());
-
             this.Queue = data;
         }
 
@@ -177,7 +188,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='name' alias='Label'/>
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                             <condition attribute='statuscode' operator='in'>
                                    <value>100000000</value>
                                    <value>100000001</value>
@@ -211,7 +222,7 @@ namespace PhuLongCRM.ViewModels
                         <order attribute='createdon' descending='true' />
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>
@@ -252,8 +263,6 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadDanhSachDatCoc()
         {
-           
-
             string fetchXml = $@"<fetch version='1.0' count='5' page='{PageDatCoc}' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name='quote'>
                         <attribute name='name' />
@@ -265,7 +274,7 @@ namespace PhuLongCRM.ViewModels
                         <order attribute='createdon' descending='true' />
                         <filter type='and'>
                             <condition attribute='opportunityid' operator='like'  value='{this.Queue.opportunityid}' />
-                            <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                              <filter type='or'>
                                <condition attribute='statuscode' operator='in'>
                                    <value>100000000</value>
@@ -324,7 +333,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='ordernumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
-                                        <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                         <condition attribute='opportunityid' operator='eq' value='{this.Queue.opportunityid}'/>                
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
@@ -465,6 +474,78 @@ namespace PhuLongCRM.ViewModels
 
             string path = "/products(" + Queue._bsd_units_value + ")";
             CrmApiResponse result = await CrmHelper.PatchData(path, data);
+        }
+        public async Task LoadCaseForQueue()
+        {
+            if (list_thongtincase != null && Queue != null && Queue.opportunityid != Guid.Empty)
+            {
+                await Task.WhenAll(
+                    LoadActiviy(Queue.opportunityid, "task", "tasks"),
+                    LoadActiviy(Queue.opportunityid, "phonecall", "phonecalls"),
+                    LoadActiviy(Queue.opportunityid, "appointment", "appointments")
+                );
+            }
+            ShowMoreCase = list_thongtincase?.Count < (3 * PageCase) ? false : true;
+        }
+        public async Task LoadActiviy(Guid queueID, string entity, string entitys)
+        {
+            string forphonecall = null;
+            if (entity == "phonecall")
+            {
+                forphonecall = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
+                                        <filter type='and'>
+                                            <condition attribute='participationtypemask' operator='eq' value='2' />
+                                        </filter>
+                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
+                                            <attribute name='fullname' alias='callto_contact_name'/>
+                                        </link-entity>
+                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
+                                            <attribute name='bsd_name' alias='callto_account_name'/>
+                                        </link-entity>
+                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
+                                            <attribute name='fullname' alias='callto_lead_name'/>
+                                        </link-entity>
+                                    </link-entity>";
+            }
+
+            string fetch = $@"<fetch version='1.0' count='3' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='true'>
+                                <entity name='{entity}'>
+                                    <attribute name='subject' />
+                                    <attribute name='statecode' />
+                                    <attribute name='activityid' />
+                                    <attribute name='scheduledstart' />
+                                    <attribute name='scheduledend' /> 
+                                    <attribute name='activitytypecode' /> 
+                                    <order attribute='modifiedon' descending='true' />
+                                    <filter type='and'>
+                                        <condition attribute='regardingobjectid' operator='eq' value='{queueID}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                    </filter>
+                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
+                                    <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
+                                        <attribute name='bsd_name' alias='accounts_bsd_name'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
+                                        <attribute name='fullname' alias='contact_bsd_fullname'/>
+                                    </link-entity>
+                                    <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
+                                        <attribute name='fullname' alias='lead_fullname'/>
+                                    </link-entity>
+                                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+                                        <attribute name='name' alias='queue_name'/>
+                                    </link-entity>
+                                    {forphonecall}
+                                </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>(entitys, fetch);
+            if (result == null || result.value.Count == 0) return;
+
+            var data = result.value;
+            foreach (var x in data)
+            {
+                list_thongtincase.Add(x);
+            }
         }
     }
 }

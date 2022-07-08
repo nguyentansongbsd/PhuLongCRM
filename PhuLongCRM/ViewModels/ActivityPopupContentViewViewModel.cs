@@ -79,12 +79,16 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='leadid' alias='lead_id'/>                  
                     <attribute name='fullname' alias='lead_name'/>
                 </link-entity>
-                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
-                    <attribute name='bsd_name' alias='user_name'/>
-                    <attribute name='bsd_employeeid' alias='user_id'/>
+                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                    <attribute name='opportunityid' alias='queue_id'/>                  
+                    <attribute name='name' alias='queue_name'/>
                 </link-entity>
             </entity>
           </fetch>";
+            //"<link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
+            //        <attribute name='bsd_name' alias='user_name'/>
+            //        <attribute name='bsd_employeeid' alias='user_id'/>
+            //    </link-entity>"
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhoneCellModel>>("phonecalls", fetch);
             if (result == null || result.value == null)
@@ -119,8 +123,16 @@ namespace PhuLongCRM.ViewModels
                     Name = PhoneCall.lead_name
                 };
             }
+            else if (PhoneCall.queue_id != Guid.Empty)
+            {
+                PhoneCall.Customer = new CustomerLookUp
+                {
+                    Name = PhoneCall.queue_name
+                };
+            }
 
-            if (PhoneCall.statecode == 0)
+
+            if (PhoneCall.statecode == 0 || PhoneCall.statecode == 3)
                 ShowGridButton = true;
             else
                 ShowGridButton = false;
@@ -167,7 +179,8 @@ namespace PhuLongCRM.ViewModels
                     if (item.typemask == 1) // from call
                     {
                         // hiển thị thông tin là employee khi ở dưới app
-                        PhoneCall.call_from = UserLogged.User; //item.user_name;
+                        if (!string.IsNullOrWhiteSpace(UserLogged.ContactName))
+                            PhoneCall.call_from = UserLogged.ContactName;
                     }
                     else if (item.typemask == 2) // to call
                     {
@@ -242,12 +255,16 @@ namespace PhuLongCRM.ViewModels
     	                            <attribute name='bsd_name' alias='account_name'/>
                                 </link-entity>
                                 <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='ai'>
-	                            <attribute name='contactid' alias='contact_id' />                  
+	                                <attribute name='contactid' alias='contact_id' />                  
                                     <attribute name='fullname' alias='contact_name'/>
                                 </link-entity>
                                 <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='aj'>
-	                            <attribute name='leadid' alias='lead_id'/>                  
+	                                <attribute name='leadid' alias='lead_id'/>                  
                                     <attribute name='fullname' alias='lead_name'/>
+                                </link-entity>
+                                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                                    <attribute name='opportunityid' alias='queue_id'/>                  
+                                    <attribute name='name' alias='queue_name'/>
                                 </link-entity>
                               </entity>
                             </fetch>";
@@ -283,8 +300,15 @@ namespace PhuLongCRM.ViewModels
                     Name = Task.lead_name
                 };
             }
+            else if (Task.queue_id != Guid.Empty)
+            {
+                Task.Customer = new CustomerLookUp
+                {
+                    Name = Task.queue_name
+                };
+            }
 
-            if (Task.statecode == 0)
+            if (Task.statecode == 0 || Task.statecode == 3)
                 ShowGridButton = true;
             else
                 ShowGridButton = false;
@@ -348,6 +372,10 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='leadid' alias='lead_id'/>                  
                                     <attribute name='fullname' alias='lead_name'/>
                                 </link-entity>
+                                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                                    <attribute name='opportunityid' alias='queue_id'/>                  
+                                    <attribute name='name' alias='queue_name'/>
+                                </link-entity>
                             </entity>
                           </fetch>";
 
@@ -384,8 +412,15 @@ namespace PhuLongCRM.ViewModels
                     Name = Meet.lead_name
                 };
             }
+            else if (Meet.queue_id != Guid.Empty)
+            {
+                Meet.Customer = new CustomerLookUp
+                {
+                    Name = Meet.queue_name
+                };
+            }
 
-            if (Meet.statecode == 0)
+            if (Meet.statecode == 0 || Meet.statecode == 3)
                 ShowGridButton = true;
             else
                 ShowGridButton = false;

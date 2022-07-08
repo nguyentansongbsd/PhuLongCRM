@@ -11,6 +11,7 @@ using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using System.Linq;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Controls;
 
 namespace PhuLongCRM.Views
 {
@@ -46,8 +47,8 @@ namespace PhuLongCRM.Views
 
         private void Create()
         {
-            this.Title = Language.tao_moi_khach_hang_ca_nhan;
-            btn_save_contact.Text = Language.tao_moi;
+            this.Title = Language.tao_moi_khach_hang;
+            btn_save_contact.Text = Language.tao_moi_khach_hang_ca_nhan;
             btn_save_contact.Clicked += CreateContact_Clicked;
             viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById("1");
             lookUpTinhTrang.IsEnabled = false;
@@ -61,8 +62,8 @@ namespace PhuLongCRM.Views
         private async void Update()
         {
             await loadData(this.Id.ToString());
-            this.Title = Language.cap_nhat_khach_hang_ca_nhan;
-            btn_save_contact.Text = Language.cap_nhat;
+            this.Title = Language.cap_nhat_khach_hang;
+            btn_save_contact.Text = Language.cap_nhat_khach_hang_ca_nhan;
             btn_save_contact.Clicked += UpdateContact_Clicked;
             lookUpTinhTrang.IsEnabled = false;
 
@@ -116,11 +117,22 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_ho_ten);
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(viewModel.singleContact.mobilephone))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);               
                 return;
             }
+
+            string phone = string.Empty;
+            phone = viewModel.singleContact.mobilephone.Contains("-") ? viewModel.singleContact.mobilephone.Split('-')[1] : viewModel.singleContact.mobilephone;
+
+            if (phone.Length != 10)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
+
             if (viewModel.singleGender == null || viewModel.singleGender.Val == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_gioi_tinh);
@@ -175,7 +187,8 @@ namespace PhuLongCRM.Views
             if (!await viewModel.CheckCMND(viewModel.singleContact.bsd_identitycardnumber, id))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_da_duoc_su_dung);
-               // return;
+                viewModel.checkCMND = viewModel.singleContact.bsd_identitycardnumber;
+                return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && !await viewModel.CheckPassport(viewModel.singleContact.bsd_passport, id))
             {
@@ -189,8 +202,7 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_idcard) && viewModel.singleContact.bsd_idcard.Length > 12 ||
-                !string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_idcard) && viewModel.singleContact.bsd_idcard.Length < 9)
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && viewModel.singleContact.bsd_identitycard.Length != 12)
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
@@ -214,6 +226,7 @@ namespace PhuLongCRM.Views
                 if (created != new Guid())
                 {
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
+                    if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (QueueForm.NeedToRefresh.HasValue) QueueForm.NeedToRefresh = true;
 
                     await Navigation.PopAsync();
@@ -236,6 +249,7 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                     if (ContactDetailPage.NeedToRefresh.HasValue) ContactDetailPage.NeedToRefresh = true;
+                    if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
 
                     //if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
                     //{
@@ -299,7 +313,8 @@ namespace PhuLongCRM.Views
             var tmpHeight = width * 2 / 3;
             MatTruocCMND.HeightRequest = tmpHeight;
             MatSauCMND.HeightRequest = tmpHeight;
-        }     
+        }
+
         public void MatTruocCMND_Tapped(object sender, System.EventArgs e)
         {
             List<OptionSet> menuItem = new List<OptionSet>();
@@ -416,7 +431,7 @@ namespace PhuLongCRM.Views
             popup_detailCMNDImage.IsVisible = false;
         }
 
-        private void CMND_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
+        private void CMND_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
             if (viewModel.singleContact.bsd_identitycardnumber.Length != 9)
             {
@@ -434,9 +449,24 @@ namespace PhuLongCRM.Views
 
         private void CCCD_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (viewModel.singleContact.bsd_idcard.Length > 12 || viewModel.singleContact.bsd_idcard.Length < 9)
+            if (viewModel.singleContact.bsd_identitycard.Length != 12 )
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
+            }
+        }
+
+        private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            var num = sender as PhoneEntryControl;
+            if (!string.IsNullOrWhiteSpace(num.Text))
+            {
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
             }
         }
     }

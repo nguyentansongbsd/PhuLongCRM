@@ -1,15 +1,28 @@
-﻿using System;
+﻿using PhuLongCRM.Helper;
+using System;
 namespace PhuLongCRM.Models
 {
     public class DiscountChildOptionSet : OptionSet
     {
+        public string name_format
+        {
+            get
+            {
+                if (bsd_method == 100000001)
+                    return Label + $" - {StringFormatHelper.FormatCurrency(bsd_amount)} đ";
+                else if (bsd_method == 100000000)
+                    return Label + $" - {StringFormatHelper.FormatPercent(bsd_percentage)}%";
+                else
+                    return null;
+            }
+        }
         public decimal bsd_amount { get; set; }
         public decimal bsd_percentage { get; set; }
         public string new_type { get; set; }
         public DateTime? bsd_startdate { get; set; }
         public DateTime? bsd_enddate { get; set; }
         public DateTime createdon { get; set; }
-
+        public int bsd_method { get; set; }
         public bool IsEnableChecked { get; set; }
 
         private string _itemColor = "#444444";
@@ -31,7 +44,6 @@ namespace PhuLongCRM.Models
                 return false;
             }
         }
-
         public bool IsNotApplied
         {
             get

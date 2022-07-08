@@ -19,8 +19,7 @@ namespace PhuLongCRM.Models
                 new StatusCodeModel("100000001",Language.dat_coc_tt_du_tien_coc,"#9A40AB"),
                 new StatusCodeModel("100000000",Language.dat_coc_sign_off_rf,"#FA7901"),
                 new StatusCodeModel("100000005",Language.dat_coc_da_thanh_ly,"#808080"),
-                new StatusCodeModel("100000007",Language.units,"#D42A16"),
-                new StatusCodeModel("0","","#333333"),
+                new StatusCodeModel("100000007",Language.units,"#D42A16")
             };
         }
 

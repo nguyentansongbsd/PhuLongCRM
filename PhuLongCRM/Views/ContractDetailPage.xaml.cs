@@ -3,9 +3,6 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
@@ -24,13 +21,22 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             ContractId = id;
             BindingContext = viewModel = new ContractDetailPageViewModel();
-            Tab_Tapped(1);
             Init();
         }
 
         public async void Init()
         {
-            await viewModel.LoadContract(this.ContractId);
+            await Task.WhenAll(
+                    viewModel.LoadContract(ContractId),
+                    viewModel.LoadPromotions(this.ContractId),
+                    viewModel.LoadSpecialDiscount(this.ContractId),
+                    viewModel.LoadCoOwners(ContractId),
+                    viewModel.LoadDiscountsPaymentScheme());
+            await Task.WhenAll(
+                     viewModel.LoadHandoverCondition(this.ContractId),
+                     viewModel.LoadDiscounts(),
+                     viewModel.LoadDiscountsInternel(),
+                     viewModel.LoadDiscountsExChange());
             if (viewModel.Contract.salesorderid != Guid.Empty)
             {
                 OnCompleted?.Invoke(true);
@@ -52,90 +58,21 @@ namespace PhuLongCRM.Views
         }
 
         //tab chính sách
-        private async void LoadChinhSach()
+        private async Task LoadChinhSach()
         {
             if (viewModel.Contract.handovercondition_id == Guid.Empty)
             {
                 LoadingHelper.Show();
-                await viewModel.LoadHandoverCondition(this.ContractId);
+                await Task.WhenAll(
+                    viewModel.LoadHandoverCondition(this.ContractId),
+                    viewModel.LoadDiscounts(),
+                    viewModel.LoadPromotions(this.ContractId),
+                    viewModel.LoadSpecialDiscount(this.ContractId),
+                    viewModel.LoadCoOwners(ContractId));
                 SetUpDiscount(viewModel.Contract.bsd_discounts);
                 SutUpPromotions();
                 SutUpSpecialDiscount();
                 LoadingHelper.Hide();
-            }
-        }
-
-        private void TongHop_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-
-        private void ChiTiet_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-        }
-
-        private void ChinhSach_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(3);
-            LoadChinhSach();
-        }
-
-        private void Lich_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(4);
-            LoadInstallmentList(this.ContractId);
-        }
-
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
-            {
-                VisualStateManager.GoToState(radBorderTongHop, "Selected");
-                VisualStateManager.GoToState(lbTongHop, "Selected");
-                TabTongHop.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderTongHop, "Normal");
-                VisualStateManager.GoToState(lbTongHop, "Normal");
-                TabTongHop.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderChiTiet, "Selected");
-                VisualStateManager.GoToState(lbChiTiet, "Selected");
-                TabChiTiet.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderChiTiet, "Normal");
-                VisualStateManager.GoToState(lbChiTiet, "Normal");
-                TabChiTiet.IsVisible = false;
-            }
-            if (tab == 3)
-            {
-                VisualStateManager.GoToState(radBorderChinhSach, "Selected");
-                VisualStateManager.GoToState(lbChinhSach, "Selected");
-                TabChinhSach.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderChinhSach, "Normal");
-                VisualStateManager.GoToState(lbChinhSach, "Normal");
-                TabChinhSach.IsVisible = false;
-            }
-            if (tab == 4)
-            {
-                VisualStateManager.GoToState(radBorderLich, "Selected");
-                VisualStateManager.GoToState(lbLich, "Selected");
-                TabLich.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderLich, "Normal");
-                VisualStateManager.GoToState(lbLich, "Normal");
-                TabLich.IsVisible = false;
             }
         }
 
@@ -163,75 +100,75 @@ namespace PhuLongCRM.Views
 
         private async void SetUpDiscount(string ids)
         {
-            if (!string.IsNullOrEmpty(ids))
-            {
-                scrolltDiscount.IsVisible = true;
-                if (viewModel.Contract.discountlist_id != Guid.Empty)
-                {
-                    await viewModel.LoadDiscounts();
+            //if (!string.IsNullOrEmpty(ids))
+            //{
+            //    scrolltDiscount.IsVisible = true;
+            //    if (viewModel.Contract.discountlist_id != Guid.Empty)
+            //    {
+            //        await viewModel.LoadDiscounts();
 
-                    var list_id = ids.Split(',');
+            //        var list_id = ids.Split(',');
 
-                    foreach (var id in list_id)
-                    {
-                        OptionSet item = viewModel.ListDiscount.Single(x => x.Val == id);
-                        if (item != null && !string.IsNullOrEmpty(item.Val))
-                        {
-                            stackLayoutDiscount.Children.Add(SetUpItemBorder(item.Label));
-                        }
-                    }
-                }
-            }
-            else
-            {
-                scrolltDiscount.IsVisible = false;
-            }
+            //        foreach (var id in list_id)
+            //        {
+            //            OptionSet item = viewModel.ListDiscount.Single(x => x.Val == id);
+            //            if (item != null && !string.IsNullOrEmpty(item.Val))
+            //            {
+            //                stackLayoutDiscount.Children.Add(SetUpItemBorder(item.Label));
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    scrolltDiscount.IsVisible = false;
+            //}
         }
 
         private async void SutUpSpecialDiscount()
         {
-            if (viewModel.Contract.salesorderid != Guid.Empty)
-            {
-                await viewModel.LoadSpecialDiscount(this.ContractId);
-                if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
-                {
-                    stackLayoutSpecialDiscount.IsVisible = true;
-                    foreach (var item in viewModel.ListSpecialDiscount)
-                    {
-                        if (!string.IsNullOrEmpty(item.Label))
-                        {
-                            stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
-                        }
-                    }
-                }
-                else
-                {
-                    stackLayoutSpecialDiscount.IsVisible = false;
-                }
-            }
+            //if (viewModel.Contract.salesorderid != Guid.Empty)
+            //{
+            //    await viewModel.LoadSpecialDiscount(this.ContractId);
+            //    if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
+            //    {
+            //        stackLayoutSpecialDiscount.IsVisible = true;
+            //        foreach (var item in viewModel.ListSpecialDiscount)
+            //        {
+            //            if (!string.IsNullOrEmpty(item.Label))
+            //            {
+            //                stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        stackLayoutSpecialDiscount.IsVisible = false;
+            //    }
+            //}
         }
 
         private async void SutUpPromotions()
         {
-            if (viewModel.Contract.salesorderid != Guid.Empty)
-            {
-                await viewModel.LoadPromotions(this.ContractId);
-                if (viewModel.ListPromotion != null && viewModel.ListPromotion.Count > 0)
-                {
-                    stackLayoutPromotions.IsVisible = true;
-                    foreach (var item in viewModel.ListPromotion)
-                    {
-                        if (!string.IsNullOrEmpty(item.Label))
-                        {
-                            stackLayoutPromotions.Children.Add(SetUpItem(item.Label));
-                        }
-                    }
-                }
-                else
-                {
-                    stackLayoutPromotions.IsVisible = false;
-                }
-            }
+            //if (viewModel.Contract.salesorderid != Guid.Empty)
+            //{
+            //    await viewModel.LoadPromotions(this.ContractId);
+            //    if (viewModel.ListPromotion != null && viewModel.ListPromotion.Count > 0)
+            //    {
+            //        stackLayoutPromotions.IsVisible = true;
+            //        foreach (var item in viewModel.ListPromotion)
+            //        {
+            //            if (!string.IsNullOrEmpty(item.Label))
+            //            {
+            //                stackLayoutPromotions.Children.Add(SetUpItem(item.Label));
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        stackLayoutPromotions.IsVisible = false;
+            //    }
+            //}
         }
 
         private RadBorder SetUpItemBorder(string content)
@@ -271,7 +208,8 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             var unitId = (Guid)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             UnitInfo unit = new UnitInfo(unitId);
-            unit.OnCompleted = async (isSuccess) => {
+            unit.OnCompleted = async (isSuccess) =>
+            {
                 if (isSuccess)
                 {
                     await Navigation.PushAsync(unit);
@@ -283,6 +221,166 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
+        }
+
+        private async void stackLayoutPromotions_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as OptionSet;
+            if (item != null && item.Val != string.Empty)
+            {
+                if (viewModel.PromotionItem == null)
+                {
+                    await viewModel.LoadPromotionItem(item.Val);
+                }
+                else if (viewModel.PromotionItem.bsd_promotionid.ToString() != item.Val)
+                {
+                    await viewModel.LoadPromotionItem(item.Val);
+                }
+            }
+            if (viewModel.PromotionItem != null)
+                Promotion_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
+        }
+
+        private async void stackLayoutSpecialDiscount_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as OptionSet;
+            if (item != null && item.Val != string.Empty)
+            {
+                if (viewModel.DiscountSpecialItem == null)
+                {
+                    await viewModel.LoadDiscountSpecialItem(item.Val);
+                }
+                else if (viewModel.DiscountSpecialItem.bsd_discountspecialid.ToString() != item.Val)
+                {
+                    await viewModel.LoadDiscountSpecialItem(item.Val);
+                }
+            }
+            if (viewModel.DiscountSpecialItem != null)
+                SpecialDiscount_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
+        }
+
+        private async void Discount_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = (DiscountModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.bsd_discounttype == "100000000")
+                Discount_CenterPopup.Title = Language.chiet_khau_chung;
+            else if (item.bsd_discounttype == "100000004")
+                Discount_CenterPopup.Title = Language.chiet_khau_noi_bo;
+            else if (item.bsd_discounttype == "100000002")
+                Discount_CenterPopup.Title = Language.phuong_thuc_thanh_toan;
+            else if (item.bsd_discounttype == "100000006")
+                Discount_CenterPopup.Title = Language.chiet_khau_quy_doi;
+
+            await viewModel.LoadDiscountItem(item.bsd_discountid);
+            if (viewModel.Discount != null)
+            {
+                Discount_CenterPopup.ShowCenterPopup();
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_chiet_khau);
+            }
+        }
+
+        private async void HandoverConditionItem_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            if (viewModel.HandoverConditionItem == null && viewModel.Contract.handovercondition_id != Guid.Empty)
+            {
+                await viewModel.LoadHandoverConditionItem(viewModel.Contract.handovercondition_id);
+            }
+            if (viewModel.HandoverConditionItem != null)
+                HandoverCondition_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
+        }
+
+        private void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabChinhSach.IsVisible = true;
+                    TabChiTiet.IsVisible = false;
+                    TabTongHop.IsVisible = false;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabChiTiet.IsVisible = true;
+                    TabTongHop.IsVisible = false;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabChiTiet.IsVisible = false;
+                    TabTongHop.IsVisible = true;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 3)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabChiTiet.IsVisible = false;
+                    TabTongHop.IsVisible = false;
+                    TabLich.IsVisible = true;
+                    LoadInstallmentList(this.ContractId);
+                }
+            }
+        }
+
+        private void GoToProject_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            ProjectInfo project = new ProjectInfo(viewModel.Contract.project_id);
+            project.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(project);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
+        }
+
+        private void GoToDatDoc_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            BangTinhGiaDetailPage datcoc = new BangTinhGiaDetailPage(viewModel.Contract.queue_id);
+            datcoc.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(datcoc);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
+        }
+
+        private async void Interest_Tapped(object sender, EventArgs e)
+        {
+            var item = (ReservationInstallmentDetailPageModel)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.bsd_interestchargeamount == 0 && item.overdue != Language.phat_cham_tt) return;
+            LoadingHelper.Show();
+            await viewModel.LoadInstallmentById(item.bsd_paymentschemedetailid);
+            Interest_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
         }
     }
 }

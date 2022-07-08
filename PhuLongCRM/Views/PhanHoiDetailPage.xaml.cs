@@ -29,7 +29,6 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new PhanHoiDetailPageViewModel();
             centerModalUpdateCase.Body.BindingContext = viewModel;
             NeedToRefresh = false;
-            Tab_Tapped(1);
             Init();
         }
 
@@ -124,14 +123,15 @@ namespace PhuLongCRM.Views
         private async void CancelCase(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string options = await DisplayActionSheet(Language.huy_phan_hoi, Language.khong, Language.co, Language.xac_nhan_huy_phan_hoi);
-            if (options == Language.co)
+            bool confirm = await DisplayAlert(Language.xac_nhan_huy_phan_hoi, Language.ban_co_muon_huy_phan_hoi_nay_khong, Language.co, Language.khong);
+            if (confirm)
             {
                 viewModel.Case.statecode = 2;
                 viewModel.Case.statuscode = 6;
                 if (await viewModel.UpdateCase())
                 {
                     await viewModel.LoadCase(viewModel.Case.incidentid);
+                    if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 }
@@ -141,7 +141,7 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 }
             }
-            else if (options == Language.khong)
+            else
             {
                 LoadingHelper.Hide();
             }
@@ -180,6 +180,7 @@ namespace PhuLongCRM.Views
             if (await viewModel.UpdateCaseResolution())
             {
                 await viewModel.LoadCase(viewModel.Case.incidentid);
+                if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.phan_hoi_da_duoc_giai_quyet);
             }
@@ -198,6 +199,7 @@ namespace PhuLongCRM.Views
             if (await viewModel.UpdateCase())
             {
                 await viewModel.LoadCase(viewModel.Case.incidentid);
+                if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.da_mo_lai_phan_hoi);
             }
@@ -205,45 +207,6 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
-            }
-        }
-
-        private void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-
-        private async void PhanHoiLienQuan_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-            await LoadDataPhanHoiLienQuan(CaseId);
-        }
-
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Selected");
-                VisualStateManager.GoToState(lbThongTin, "Selected");
-                TabThongTin.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Normal");
-                VisualStateManager.GoToState(lbThongTin, "Normal");
-                TabThongTin.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderPhanHoiLienQuan, "Selected");
-                VisualStateManager.GoToState(lbPhanHoiLienQuan, "Selected");
-                TabPhanHoiLienQuan.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderPhanHoiLienQuan, "Normal");
-                VisualStateManager.GoToState(lbPhanHoiLienQuan, "Normal");
-                TabPhanHoiLienQuan.IsVisible = false;
             }
         }
 
@@ -284,6 +247,24 @@ namespace PhuLongCRM.Views
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
+                }
+            }
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabThongTin.IsVisible = true;
+                    TabPhanHoiLienQuan.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    await LoadDataPhanHoiLienQuan(CaseId);
+                    TabThongTin.IsVisible = false;
+                    TabPhanHoiLienQuan.IsVisible = true;
                 }
             }
         }

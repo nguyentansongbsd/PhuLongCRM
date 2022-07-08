@@ -59,16 +59,16 @@ namespace PhuLongCRM.Models
             switch (activity.statecode)
             {
                 case "0":
-                    status_label = "Open";
+                    status_label = Language.activity_open_sts; // "Open";
                     break;
                 case "1":
-                    status_label = "Completed";
+                    status_label = Language.activity_completed_sts; //"Completed";
                     break;
                 case "2":
-                    status_label = "Canceled";
+                    status_label = Language.activity_cancelled_sts; //"Canceled";
                     break;
                 case "3":
-                    status_label = "Scheduled";
+                    status_label = Language.activity_scheduled_sts; //"Scheduled";
                     break;
             }
             this.Color = LeadBorderColor;
@@ -79,11 +79,11 @@ namespace PhuLongCRM.Models
 
             if (Device.RuntimePlatform == Device.Android || Device.RuntimePlatform == Device.UWP)
             {
-                this.AllDayString = "ALL DAY";
+                this.AllDayString = Language.ca_ngay; //"ALL DAY";
             }
             else
             {
-                this.AllDayString = "All Day";
+                this.AllDayString = Language.ca_ngay; //"All Day";
             }
 
             this.Detail = activitytype_label + " (" + status_label + ") \n" + StartTimeString + " - " + EndTimeString;

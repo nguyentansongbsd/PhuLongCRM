@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
@@ -24,7 +24,7 @@
                 </StackLayout>
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="0" Padding="20,10" BackgroundColor="White">
                     <Label x:Name="total_choosed" Grid.Column="0" BackgroundColor="White" Text="{Binding totalChecked}" VerticalTextAlignment="Center" TextColor="#444444" FontSize="15"/>
-                    <telerikPrimitives:RadCheckBox x:Name="checkAll" Grid.Column="1"  BackgroundColor="White" IsCheckedChanged="checkAll_IsCheckedChanged"  CheckedColor="DarkGreen" IsChecked="{Binding isCheckedAll, Mode=TwoWay}" HorizontalOptions="End" VerticalOptions="Center" />
+                    <telerikPrimitives:RadCheckBox x:Name="checkAll" Grid.Column="1" BackgroundColor="White" IsCheckedChanged="checkAll_IsCheckedChanged"  CheckedColor="DarkGreen" IsChecked="{Binding isCheckedAll, Mode=TwoWay}" HorizontalOptions="End" VerticalOptions="Center" HeightRequest="30"/>
                 </Grid>
 
                 <controls:BsdListView x:Name="listView" ItemsSource="{Binding Contacts}" Margin="0,1,0,0">

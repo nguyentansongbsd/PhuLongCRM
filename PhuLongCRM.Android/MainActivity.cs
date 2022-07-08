@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Xamarin.Forms;
 using PhuLongCRM.IServices;
+using AndroidX.AppCompat.App;
 
 namespace PhuLongCRM.Droid
 {
@@ -21,11 +22,14 @@ namespace PhuLongCRM.Droid
 
             base.OnCreate(savedInstanceState);
 
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Stormlion.PhotoBrowser.Droid.Platform.Init(this);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            //AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+
             LoadApplication(new App());
             DependencyService.Get<ILoadingService>().Initilize();
         }

@@ -4,7 +4,7 @@
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
-             Title="{x:Static lang:Language.tao_bang_tinh_gia}"
+             Title="{x:Static lang:Language.tao_bang_tinh_gia_title}"
              x:Class="PhuLongCRM.Views.ReservationForm">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -176,7 +176,6 @@
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
 
-
                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_chung}" Margin="0,10,0,0"/>
                             <controls:LookUp x:Name="lookupChieuKhau" Placeholder="{x:Static lang:Language.chon_chiet_khau_chung}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" SelectedItemChange="DiscountListItem_Changed"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChilds}">
@@ -188,7 +187,7 @@
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildItem_CheckedChanged"/>
                                             <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                                                <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="{Binding Source={x:Static lang:Language.het_han},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="{Binding Source={x:Static lang:Language.khong_ap_dung},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
                                             </StackLayout>
@@ -208,7 +207,7 @@
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildInternelItem_CheckedChanged"/>
                                             <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                                                <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="{Binding Source={x:Static lang:Language.het_han},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="{Binding Source={x:Static lang:Language.khong_ap_dung},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
                                             </StackLayout>
@@ -269,7 +268,7 @@
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildExchangeItem_CheckedChanged"/>
                                             <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                                                <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="{Binding Source={x:Static lang:Language.het_han},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
                                                 <Label Text="{Binding Source={x:Static lang:Language.khong_ap_dung},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
                                             </StackLayout>
@@ -427,50 +426,50 @@
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout BackgroundColor="#eeeeee" Spacing="1">
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{x:Static lang:Language.gia_ban_goc}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.ListedPrice_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{x:Static lang:Language.gia_ban_goc}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.ListedPrice_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
 
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{Binding Source={x:Static lang:Language.chiet_khau},StringFormat='(-) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.Discount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{Binding Source={x:Static lang:Language.chiet_khau},StringFormat='(-) {0}'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.Discount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
 
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{Binding Source={x:Static lang:Language.tong_tien_dkbg},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.HandoverAmount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{Binding Source={x:Static lang:Language.tong_tien_dkbg},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.HandoverAmount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
 
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{x:Static lang:Language.gia_ban_truoc_thue}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.NetSellingPrice_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{x:Static lang:Language.gia_ban_truoc_thue}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.NetSellingPrice_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
 
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{Binding Source={x:Static lang:Language.tong_gia_tri_qsdd},StringFormat='(-) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.LandValue_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{Binding Source={x:Static lang:Language.tong_gia_tri_qsdd},StringFormat='(-) {0}'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.LandValue_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
 
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{Binding Source={x:Static lang:Language.tong_tien_thue_vat},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.TotalTax_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{Binding Source={x:Static lang:Language.tong_tien_thue_vat},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.TotalTax_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
 
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.MaintenanceFee_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='(+) {0}'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.MaintenanceFee_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
 
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{x:Static lang:Language.gia_ban_sau_thue}" FontSize="15" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.NetSellingPriceAfterVAT_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{x:Static lang:Language.gia_ban_sau_thue}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.NetSellingPriceAfterVAT_format,StringFormat='{0} đ'}" FontSize="15" TextColor="#333333" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
 
-                                        <StackLayout Orientation="Horizontal" Padding="10,15" BackgroundColor="White" VerticalOptions="Center">
-                                            <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
-                                            <Label Text="{Binding TotalReservation.TotalAmount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="Red" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                            <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" FontAttributes="Bold" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
+                                            <Label Text="{Binding TotalReservation.TotalAmount_format,StringFormat='{0} đ'}" FontSize="15" TextColor="Red" FontAttributes="Bold" HorizontalOptions="EndAndExpand" Grid.Column="1" Padding="0,10,25,10"/>
+                                        </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>

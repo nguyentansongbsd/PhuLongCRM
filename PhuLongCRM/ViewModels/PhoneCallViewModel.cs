@@ -2,6 +2,7 @@
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace PhuLongCRM.ViewModels
         public string CodeContac = LookUpMultipleTabs.CodeContac;
 
         public string CodeLead = LookUpMultipleTabs.CodeLead;
+
+        public string CodeQueue = QueuesDetialPage.CodeQueue;
 
         public bool _showButton;
         public bool ShowButton { get => _showButton; set { _showButton = value; OnPropertyChanged(nameof(ShowButton)); } }
@@ -74,6 +77,10 @@ namespace PhuLongCRM.ViewModels
                 {
                     data["regardingobjectid_account_phonecall@odata.bind"] = "/accounts(" + Customer.Val + ")";
                 }
+                else if (Customer.Title == CodeQueue)
+                {
+                    data["regardingobjectid_opportunity_phonecall@odata.bind"] = "/opportunities(" + Customer.Val + ")";
+                }
             }
             else
             {
@@ -85,8 +92,16 @@ namespace PhuLongCRM.ViewModels
             List<object> dataFromTo = new List<object>();
 
             IDictionary<string, object> item_from = new Dictionary<string, object>();
-            item_from["partyid_systemuser@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
-            item_from["participationtypemask"] = 1;
+            if (!UserLogged.IsLoginByUserCRM && UserLogged.Id != Guid.Empty)
+            {
+                item_from["partyid_systemuser@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
+                item_from["participationtypemask"] = 1;
+            }
+            else
+            {
+                item_from["partyid_systemuser@odata.bind"] = "/systemusers(" + UserLogged.Id + ")";
+                item_from["participationtypemask"] = 1;
+            }
 
             dataFromTo.Add(item_from);
 
@@ -110,11 +125,11 @@ namespace PhuLongCRM.ViewModels
 
             data["phonecall_activity_parties"] = dataFromTo;
 
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
             {
                 data["bsd_employee_PhoneCall@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
@@ -193,9 +208,9 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='leadid' alias='lead_id'/>                  
                     <attribute name='fullname' alias='lead_name'/>
                 </link-entity>
-                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
-                    <attribute name='bsd_name' alias='user_name'/>
-                    <attribute name='bsd_employeeid' alias='user_id'/>
+                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                    <attribute name='opportunityid' alias='queue_id'/>                  
+                    <attribute name='name' alias='queue_name'/>
                 </link-entity>
             </entity>
           </fetch>";
@@ -204,19 +219,19 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value == null)
                 return;
             var data = result.value.FirstOrDefault();
+            if (data.scheduledend != null && data.scheduledstart != null)
+            {
+                PhoneCellModel.scheduledend = data.scheduledend.Value.ToLocalTime();
+                PhoneCellModel.scheduledstart = data.scheduledstart.Value.ToLocalTime();
+            }
             PhoneCellModel.activityid = data.activityid;
             PhoneCellModel.subject = data.subject;
             PhoneCellModel.statecode = data.statecode;
             PhoneCellModel.statuscode = data.statuscode;
             PhoneCellModel.phonenumber = data.phonenumber;
             PhoneCellModel.description = data.description;
-    //        PhoneCellModel = data;
-            if (data.scheduledend != null && data.scheduledstart != null)
-            {
-                PhoneCellModel.scheduledend = data.scheduledend.Value.ToLocalTime();
-                PhoneCellModel.scheduledstart = data.scheduledstart.Value.ToLocalTime();
-            }
-
+            //PhoneCellModel = data;
+            
             if (data.contact_id != Guid.Empty)
             {
                 Customer = new OptionSet
@@ -244,8 +259,17 @@ namespace PhuLongCRM.ViewModels
                     Label = data.lead_name
                 };
             }
+            else if (data.queue_id != Guid.Empty)
+            {
+                Customer = new OptionSet
+                {
+                    Title = CodeQueue,
+                    Val = data.queue_id.ToString(),
+                    Label = data.queue_name
+                };
+            }
 
-            if (PhoneCellModel.statecode == 0)
+            if (PhoneCellModel.statecode == 0 || PhoneCellModel.statecode == 3)
                 ShowButton = true;
             else
                 ShowButton = false;
@@ -329,10 +353,7 @@ namespace PhuLongCRM.ViewModels
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='account'>                              
-                                <attribute name='telephone1' />
-                                <attribute name='bsd_name' />
-                                <attribute name='name' />
-                                <attribute name='accountid' />                               
+                                <attribute name='telephone1' />                             
                                 <order attribute='createdon' descending='true' />                                
                                 <filter type='and'>
                                   <condition attribute='accountid' operator='eq' value='" + accountid + @"' />
@@ -343,17 +364,14 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value == null)
                 return;
             var tmp = result.value.FirstOrDefault();
-            PhoneCellModel.phonenumber = tmp.telephone1;
+            PhoneCellModel.phonenumber = tmp.telephone1_format;
         }
 
         public async Task loadOneContact(String contactid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='contact'>
-                                    <attribute name='fullname' />  
                                     <attribute name='mobilephone' />
-                                    <attribute name='bsd_fullname' />
-                                    <attribute name='contactid' />
                                     <order attribute='createdon' descending='true' />                                   
                                     <filter type='and'>
                                         <condition attribute='contactid' operator='eq' value='" + contactid + @"' />
@@ -364,14 +382,13 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value == null)
                 return;
             var tmp = result.value.FirstOrDefault();
-            PhoneCellModel.phonenumber = tmp.mobilephone;
+            PhoneCellModel.phonenumber = tmp.mobilephone_format;
         }
 
         public async Task LoadOneLead(String leadid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                <entity name='lead'>
-                                    <attribute name='lastname' />                                  
+                                <entity name='lead'>                              
                                     <attribute name='mobilephone' />                                  
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
@@ -383,7 +400,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value == null)
                 return;
             var tmp = result.value.FirstOrDefault();
-            PhoneCellModel.phonenumber = tmp.mobilephone;
+            PhoneCellModel.phonenumber = tmp.mobilephone_format;
         }
     }
 }

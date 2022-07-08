@@ -31,17 +31,16 @@ namespace PhuLongCRM.Views
             Init();
             MeetId = id;
             Update();
-        }     
+        }
 
         private void Init()
         {
             LoadingHelper.Show();
             BindingContext = viewModel = new MeetingViewModel();
-            DatePickerStart.DefaultDisplay = DateTime.Now;
-            DatePickerEnd.DefaultDisplay = DateTime.Now;
             // kiểm tra page trước là page nào
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
-            if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
+            if(page_before == "ContactDetailPage" || page_before == "AccountDetailPage" 
+                || page_before == "LeadDetailPage" || page_before == "QueuesDetialPage")
             {
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
@@ -54,6 +53,25 @@ namespace PhuLongCRM.Views
                             Val = ContactDetailPage.FromCustomer.Val,
                             Label = ContactDetailPage.FromCustomer.Label,
                             Title = ContactDetailPage.FromCustomer.Title,
+                            Selected = true
+                        });
+                        viewModel.Required = item;
+                    }
+                    Lookup_Customer.IsVisible = false;
+                    RegardingMapping.IsVisible = true;
+                    Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
+                }
+                else if (page_before == "LeadDetailPage" && LeadDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(LeadDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CustomerMapping = LeadDetailPage.FromCustomer;
+                    if (viewModel.Required == null)
+                    {
+                        List<OptionSetFilter> item = new List<OptionSetFilter>();
+                        item.Add(new OptionSetFilter
+                        {
+                            Val = LeadDetailPage.FromCustomer.Val,
+                            Label = LeadDetailPage.FromCustomer.Label,
+                            Title = LeadDetailPage.FromCustomer.Title,
                             Selected = true
                         });
                         viewModel.Required = item;
@@ -79,6 +97,25 @@ namespace PhuLongCRM.Views
                     }
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
+                    Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
+                }
+                else if (page_before == "QueuesDetialPage" && QueuesDetialPage.FromQueue != null && !string.IsNullOrWhiteSpace(QueuesDetialPage.FromQueue.Val))
+                {
+                    viewModel.CustomerMapping = QueuesDetialPage.FromQueue;
+                    if (viewModel.Required == null)
+                    {
+                        List<OptionSetFilter> item = new List<OptionSetFilter>();
+                        item.Add(new OptionSetFilter
+                        {
+                            Val = QueuesDetialPage.CustomerFromQueue.Val,
+                            Label = QueuesDetialPage.CustomerFromQueue.Label,
+                            Title = QueuesDetialPage.CustomerFromQueue.Title,
+                            Selected = true
+                        });
+                        viewModel.Required = item;
+                    }
+                    Lookup_Customer.IsVisible = false;
+                    RegardingMapping.IsVisible = true;
                 }
                 else
                 {
@@ -95,8 +132,7 @@ namespace PhuLongCRM.Views
 
         private void Create()
         {
-            this.Title = Language.tao_moi_cuoc_hop;
-            BtnSave.Text = Language.tao_cuoc_hop;
+            this.Title = BtnSave.Text = Language.tao_moi_cuoc_hop_title;
             IsInit = true;
             BtnSave.Clicked += Create_Clicked;
         }
@@ -108,8 +144,7 @@ namespace PhuLongCRM.Views
 
         private async void Update()
         {
-            this.Title = Language.cap_nhat_cuoc_hop;
-            BtnSave.Text = Language.cap_nhat;
+            this.Title = BtnSave.Text = Language.cap_nhat_cuoc_hop_title;
             BtnSave.Clicked += Update_Clicked;
             await viewModel.loadDataMeet(this.MeetId);
 
@@ -155,6 +190,19 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
+
+            if (DatePickerStart.IsTimeNull)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
+                return;
+            }
+
+            if (DatePickerEnd.IsTimeNull)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc);
+                return;
+            }
+
             if (viewModel.CustomerMapping == null)
             {
                 if (viewModel.Optional != null && viewModel.Optional.Count > 0)
@@ -191,7 +239,9 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                    if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+                    if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
+                    ToastMessageHelper.ShortMessage(Language.tao_cuoc_hop_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
@@ -212,6 +262,8 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
+                    if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+                    if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
@@ -228,7 +280,9 @@ namespace PhuLongCRM.Views
         {
             if (date != null && date1 != null)
             {
-                int result = DateTime.Compare(date.Value, date1.Value);
+                DateTime timeStart = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, date.Value.Hour, date.Value.Minute, 0);
+                DateTime timeEnd = new DateTime(date1.Value.Year, date1.Value.Month, date1.Value.Day, date1.Value.Hour, date1.Value.Minute, 0);
+                int result = DateTime.Compare(timeStart, timeEnd);
                 if (result < 0)
                     return -1;
                 else if (result == 0)
@@ -254,6 +308,12 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.MeetingModel.scheduledstart = viewModel.MeetingModel.scheduledend;
                     }
+                    if(viewModel.MeetingModel.isalldayevent)
+                    {
+                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
+                        viewModel.MeetingModel.isalldayevent = false;
+                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
+                    }
                 }
             }
         }
@@ -269,6 +329,19 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart;
                     }
+                    if (viewModel.MeetingModel.isalldayevent)
+                    {
+                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
+                        viewModel.MeetingModel.isalldayevent = false;
+                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
+                    }
+                    // chưa word ok, do control
+                    if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend.Value.AddDays(-1)) == 0)
+                    {
+                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
+                        viewModel.MeetingModel.isalldayevent = true;
+                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
+                    }
                 }
                 else
                 {
@@ -281,6 +354,8 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.MeetingModel.scheduledstart != null)
             {
+                DatePickerStart.Date_Selected -= DatePickerStart_DateSelected;
+                DatePickerEnd.Date_Selected -= DatePickerEnd_DateSelected;
                 if (viewModel.MeetingModel.isalldayevent)
                 {
                     var timeStart = viewModel.MeetingModel.scheduledstart.Value;
@@ -293,9 +368,9 @@ namespace PhuLongCRM.Views
                     else
                     {
                         viewModel.MeetingModel.scheduleddurationminutes = 0;
-                    }    
+                    }
 
-                    viewModel.MeetingModel.scheduledstart = new DateTime(timeStart.Year, timeStart.Month, timeStart.Day, 0, 0, 0);
+                    viewModel.MeetingModel.scheduledstart = new DateTime(timeStart.Year, timeStart.Month, timeStart.Day, 7, 0, 0);
                     viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddDays(1);
                 }
                 else
@@ -303,9 +378,18 @@ namespace PhuLongCRM.Views
                     var dateStart = viewModel.MeetingModel.scheduledstart.Value;
                     TimeSpan timeStart = viewModel.MeetingModel.timeStart;
 
-                    viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, timeStart.Hours, timeStart.Minutes, timeStart.Seconds);
-                    viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
+                    if (viewModel.MeetingModel.timeStart != new TimeSpan(0, 0, 0))
+                        viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, timeStart.Hours, timeStart.Minutes, timeStart.Seconds);
+                    else
+                        viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, dateStart.Hour, dateStart.Minute, dateStart.Second);
+
+                    if (viewModel.MeetingModel.scheduleddurationminutes > 0)
+                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
+                    else
+                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(1);
                 }
+                DatePickerStart.Date_Selected += DatePickerStart_DateSelected;
+                DatePickerEnd.Date_Selected += DatePickerEnd_DateSelected;
             }
             else
             {

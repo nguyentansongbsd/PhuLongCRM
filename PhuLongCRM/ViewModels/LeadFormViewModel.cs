@@ -90,17 +90,19 @@ namespace PhuLongCRM.ViewModels
         private AddressModel _address3;
         public AddressModel Address3 { get => _address3; set { _address3 = value; OnPropertyChanged(nameof(Address3)); } }
 
+        private AddressModel _addressCopy;
+        public AddressModel AddressCopy { get => _addressCopy; set { _addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
         public LeadFormViewModel()
         {
             singleLead = new LeadFormModel();
             list_industrycode_optionset = new ObservableCollection<OptionSet>();
-            this.Genders = new List<OptionSet>() { new OptionSet("1",Language.nam), new OptionSet("2", Language.nu) };
+            this.Genders = new List<OptionSet>() { new OptionSet("1",Language.nam), new OptionSet("2", Language.nu), new OptionSet("100000000",Language.khac) };
             this.loadIndustrycode();
         }
 
         public async Task LoadOneLead()
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                           <entity name='lead'>
                             <attribute name='lastname' />
                             <attribute name='companyname' />
@@ -142,17 +144,13 @@ namespace PhuLongCRM.ViewModels
                             <attribute name='bsd_permanentaddress1' />
                             <attribute name='bsd_housenumberstreet' />
                             <attribute name='bsd_contactaddress' />
+                            <attribute name='fullname' />
                             <order attribute='createdon' descending='true' />
                             <filter type='and'>
-                                <condition attribute='leadid' operator='eq' value='{" + LeadId + @"}' />
-                                <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                <condition attribute='leadid' operator='eq' value='{LeadId}' />
                             </filter>
                             <link-entity name='transactioncurrency' from='transactioncurrencyid' to='transactioncurrencyid' visible='false' link-type='outer'>
                                 <attribute name='currencyname'  alias='transactioncurrencyid_label'/>
-                            </link-entity>
-                            <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
-                                <attribute name='campaignid'  alias='_campaignid_value'/>
-                                <attribute name='name'  alias='campaignid_label'/>
                             </link-entity>
                             <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' visible='false' link-type='outer' alias='a_533be24fba81e911a83b000d3a07be23'>
                                 <attribute name='bsd_name' alias='bsd_topic_label' />
@@ -160,6 +158,10 @@ namespace PhuLongCRM.ViewModels
                             </link-entity>
                           </entity>
                         </fetch>";
+            //$@"<link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
+            //                    <attribute name='campaignid'  alias='_campaignid_value'/>
+            //                    <attribute name='name'  alias='campaignid_label'/>
+            //                </link-entity>" lỗi
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
             if (result == null || result.value.Count == 0)
@@ -167,7 +169,7 @@ namespace PhuLongCRM.ViewModels
                 return;
             }
             var tmp = result.value.FirstOrDefault();
-
+            tmp.lastname = tmp.fullname;
             this.singleLead = tmp;
 
             string fetch2 = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -177,7 +179,6 @@ namespace PhuLongCRM.ViewModels
                             <order attribute='createdon' descending='true' />
                             <filter type='and'>
                                 <condition attribute='leadid' operator='eq' value='{" + LeadId + @"}' />
-                                <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                             </filter>
                              <link-entity name='bsd_country' from='bsd_countryid' to='bsd_accountcountry' link-type='outer' alias='aa'>
                                     <attribute name='bsd_countryid' alias='bsd_accountcountry_id' />
@@ -346,6 +347,7 @@ namespace PhuLongCRM.ViewModels
             IDictionary<string, object> data = new Dictionary<string, object>();
             data["leadid"] = singleLead.leadid;
             data["subject"] = this.Topic.Label;
+            data["firstname"] = "";
             data["lastname"] = singleLead.lastname;
             data["jobtitle"] = singleLead.jobtitle;
             data["emailaddress1"] = singleLead.emailaddress1;
@@ -372,7 +374,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_registrationcode"] = singleLead.bsd_registrationcode;
 
             data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone : null;
-            data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1)? singleLead.telephone1 : null;
+            data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1)? singleLead.telephone1 : "+84";
 
             if (!string.IsNullOrWhiteSpace(singleLead.numberofemployees))
             {
@@ -413,11 +415,11 @@ namespace PhuLongCRM.ViewModels
             {
                 data["campaignid@odata.bind"] = "/campaigns(" + singleLead._campaignid_value + ")"; /////Lookup Field
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -458,10 +460,16 @@ namespace PhuLongCRM.ViewModels
 
             if (Address3 != null)
             {
-                if(!string.IsNullOrWhiteSpace(Address3.lineaddress))
+                if (!string.IsNullOrWhiteSpace(Address3.lineaddress))
+                {
                     data["bsd_account_housenumberstreetwardvn"] = Address3.lineaddress;
+                    data["bsd_account_housenumberstreetwarden"] = Address3.lineaddress;
+                }
                 if (!string.IsNullOrWhiteSpace(Address3.address))
+                {
                     data["bsd_accountaddressvn"] = Address3.address;
+                    data["bsd_accountaddressen"] = Address3.address;
+                }
             }
 
             ////bsd_permanentcountry
@@ -499,9 +507,15 @@ namespace PhuLongCRM.ViewModels
             if (Address2 != null)
             {
                 if (!string.IsNullOrWhiteSpace(Address2.lineaddress))
+                {
                     data["bsd_permanentaddress"] = Address2.lineaddress;
+                    data["bsd_permanenthousenumber"] = Address2.lineaddress;
+                }
                 if (!string.IsNullOrWhiteSpace(Address2.address))
+                {
                     data["bsd_permanentaddress1"] = Address2.address;
+                    data["bsd_diachithuongtru"] = Address2.address;
+                }
             }
 
             //bsd_country
@@ -539,9 +553,15 @@ namespace PhuLongCRM.ViewModels
             if (Address1 != null)
             {
                 if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
+                {
                     data["bsd_housenumberstreet"] = Address1.lineaddress;// singleLead.bsd_housenumberstreet;
+                    data["bsd_housenumber"] = Address1.lineaddress;
+                }
                 if (!string.IsNullOrWhiteSpace(Address1.address))
+                {
                     data["bsd_contactaddress"] = Address1.address;// singleLead.bsd_contactaddress;
+                    data["bsd_diachi"] = Address1.address;
+                }
             }
 
             return data;
@@ -572,39 +592,72 @@ namespace PhuLongCRM.ViewModels
         //////// INDUSTRYCODE OPTIONSET AREA
         public void loadIndustrycode()
         {
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("1"), Label = "Kế toán", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("2"), Label = "Nông nghiệp và Trích xuất Tài nguyên Thiên nhiên Không Dầu", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("3"), Label = "In và Xuất bản Truyền thông", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("4"), Label = "Nhà môi giới", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("5"), Label = "Bán lẻ Dịch vụ Cấp nước trong Tòa nhà", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("6"), Label = "Dịch vụ Kinh doanh", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("7"), Label = "Tư vấn", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("8"), Label = "Dịch vụ Tiêu dùng", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("9"), Label = "Quản lý Thiết kế, Chỉ đạo và Quảng cáo", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("10"), Label = "Nhà phân phối, Người điều vận và Nhà chế biến", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("11"), Label = "Văn phòng và Phòng khám Bác sĩ", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("12"), Label = "Sản xuất Lâu bền", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("13"), Label = "Địa điểm Ăn Uống", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("14"), Label = "Bán lẻ Dịch vụ Giải trí", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("15"), Label = "Thuê và Cho thuê Thiết bị", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("16"), Label = "Tài chính", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("17"), Label = "Chế biến Thực phẩm và Thuốc lá", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("18"), Label = "Xử lý Dựa vào Nhiều vốn Chuyển về", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("19"), Label = "Sửa chữa và Bảo dưỡng Chuyển đến", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("20"), Label = "Bảo hiểm", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("21"), Label = "Dịch vụ Pháp lý", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("22"), Label = "Bán lẻ Hàng hóa Không lâu bền", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("23"), Label = "Dịch vụ Tiêu dùng Bên ngoài", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("24"), Label = "Trích xuất và Phân phối Hóa dầu", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("25"), Label = "Bán lẻ Dịch vụ", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("26"), Label = "Chi nhánh SIG", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("27"), Label = "Dịch vụ Xã hội", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("28"), Label = "Nhà thầu Giao dịch Bên ngoài Đặc biệt", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("29"), Label = "Bất động sản Đặc biệt", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("30"), Label = "Vận tải", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("31"), Label = "Tạo và Phân phối Tiện ích", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("32"), Label = "Bán lẻ Phương tiện", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("33"), Label = "Bán buôn", });
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("1"), Label = Language.lead_1_industry, });
+            //Accounting
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("2"), Label = Language.lead_2_industry, });
+            //Agriculture and Non-petrol natural resource extraction
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("3"), Label = Language.lead_3_industry, });
+            //Broadcasting printing and Publishing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("4"), Label = Language.lead_4_industry, });
+            //Brokers
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("5"), Label = Language.lead_5_industry, });
+            //Building supply retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("6"), Label = Language.lead_6_industry, });
+            //Business services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("7"), Label = Language.lead_7_industry, });
+            //Consulting
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("8"), Label = Language.lead_8_industry, });
+            //Consumer services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("9"), Label = Language.lead_9_industry, });
+            //Design, direction and creative management
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("10"), Label = Language.lead_10_industry, });
+            //Distributors, dispatchers and processors
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("11"), Label = Language.lead_11_industry, });
+            //Doctor's offices and clinics
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("12"), Label = Language.lead_12_industry, });
+            //Durable manufacturing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("13"), Label = Language.lead_13_industry, });
+            //Eating and drinking places
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("14"), Label = Language.lead_14_industry, });
+            //Entertainment retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("15"), Label = Language.lead_15_industry, });
+            //Equipment rental and leasing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("16"), Label = Language.lead_16_industry, });
+            //Financial
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("17"), Label = Language.lead_17_industry, });
+            //Food and tobacco processing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("18"), Label = Language.lead_18_industry, });
+            //Inbound capital intensive processing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("19"), Label = Language.lead_19_industry, });
+            //Inbound repair and services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("20"), Label = Language.lead_20_industry, });
+            //Insurance
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("21"), Label = Language.lead_21_industry, });
+            //Legal services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("22"), Label = Language.lead_22_industry, });
+            //Non-Durable merchandise retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("23"), Label = Language.lead_23_industry, });
+            //Outbound consumer service
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("24"), Label = Language.lead_24_industry, });
+            //Petrochemical extraction and distribution
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("25"), Label = Language.lead_25_industry, });
+            //Service retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("26"), Label = Language.lead_26_industry, });
+            //SIG affiliations
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("27"), Label = Language.lead_27_industry, });
+            //Social services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("28"), Label = Language.lead_28_industry, });
+            //Special outbound trade contractors
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("29"), Label = Language.lead_29_industry, });
+            //Specialty realty
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("30"), Label = Language.lead_30_industry, });
+            //Transportation
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("31"), Label = Language.lead_31_industry, });
+            //Utility creation and distribution
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("32"), Label = Language.lead_32_industry, });
+            //Vehicle retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("33"), Label = Language.lead_33_industry, });
+            //Wholesale
         }
 
         public async Task LoadTopics()
@@ -638,29 +691,6 @@ namespace PhuLongCRM.ViewModels
             foreach (var x in result.value)
             {
                 list_campaign_lookup.Add(x);
-            }
-        }
-
-        // check id
-        public async Task<bool> CheckID(string identitycardnumber, string leadid)
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='lead'>
-                                    <attribute name='fullname' />
-                                    <filter type='and'>
-                                        <condition attribute='bsd_identitycardnumberid' operator='eq' value='" + identitycardnumber + @"' />
-                                        <condition attribute='leadid' operator='ne' value='" + leadid + @"' />
-                                    </filter>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("leads", fetch);
-            if (result != null && result.value.Count > 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
             }
         }
     }

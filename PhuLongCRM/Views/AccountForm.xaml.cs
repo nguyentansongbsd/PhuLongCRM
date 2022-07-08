@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.Helper;
+﻿using PhuLongCRM.Controls;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
@@ -44,10 +45,11 @@ namespace PhuLongCRM.Views
 
         private void Create()
         {
-            this.Title = Language.tao_moi_khach_hang_doanh_nghiep;
-            btnSave.Text = Language.tao_moi;
+            this.Title = Language.tao_moi_khach_hang;
+            btnSave.Text = Language.tao_moi_khach_hang_doanh_nghiep;
             btnSave.Clicked += CreateContact_Clicked;
             viewModel.BusinessType = viewModel.BusinessTypeOptionList.SingleOrDefault(x => x.Val == "100000000");
+            viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById("1");//mac dinh la KH tiem nang
         }
 
         private void CreateContact_Clicked(object sender, EventArgs e)
@@ -58,10 +60,9 @@ namespace PhuLongCRM.Views
         private async void Update()
         {
             viewModel.singleAccount = new AccountFormModel();
-            this.Title = Language.cap_nhat_khach_hang_doanh_nghiep;
-            btnSave.Text = Language.cap_nhat;
+            this.Title = Language.cap_nhat_khach_hang;
+            btnSave.Text = Language.cap_nhat_khach_hang_doanh_nghiep;
             btnSave.Clicked += UpdateContact_Clicked;
-            lookUpTinhTrang.IsEnabled = false;
 
             await viewModel.LoadOneAccount(this.AccountId);
 
@@ -127,11 +128,11 @@ namespace PhuLongCRM.Views
 
         public void SetPreOpen()
         {
-            lookUpTinhTrang.PreOpenAsync = async () => {
-                LoadingHelper.Show();
-                viewModel.CustomerStatusReasons = CustomerStatusReasonData.CustomerStatusReasons();
-                LoadingHelper.Hide();
-            };
+            //lookUpTinhTrang.PreOpenAsync = async () => {
+            //    LoadingHelper.Show();
+            //    viewModel.CustomerStatusReasons = CustomerStatusReasonData.CustomerStatusReasons();
+            //    LoadingHelper.Hide();
+            //};
 
             lookUpOperationScope.PreOpenAsync = async () => {
                 LoadingHelper.Show();
@@ -163,6 +164,22 @@ namespace PhuLongCRM.Views
             };
         }
 
+        private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            var num = sender as PhoneEntryControl;
+
+            if (!string.IsNullOrWhiteSpace(num.Text))
+            {
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
+            }
+        }
+
         private async void SaveData(string id)
         {
             if (viewModel.Localization == null)
@@ -191,6 +208,21 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai_cong_ty);
                 return;
             }
+            if (string.IsNullOrWhiteSpace(viewModel.singleAccount.emailaddress1) )
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_email);
+                return;
+            }
+
+
+            string phone = viewModel.singleAccount.telephone1;
+            phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+            if (phone.Length != 10)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
+
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             if (!string.IsNullOrWhiteSpace(viewModel.singleAccount.emailaddress1))
             {

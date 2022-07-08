@@ -49,7 +49,7 @@ namespace PhuLongCRM.Views
         {
             ReservationListModel val = e.Item as ReservationListModel;
             LoadingHelper.Show();
-            BangTinhGiaDetailPage newPage = new BangTinhGiaDetailPage(val.quoteid) { Title = Language.dat_coc };
+            BangTinhGiaDetailPage newPage = new BangTinhGiaDetailPage(val.quoteid,true) { Title = Language.dat_coc_title };
             newPage.OnCompleted = async (OnCompleted) =>
             {
                 if (OnCompleted == true)

@@ -1,7 +1,6 @@
 ﻿
 using Newtonsoft.Json;
 using PhuLongCRM.Helper;
-using PhuLongCRM.Helper;
 using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
@@ -70,6 +69,10 @@ namespace PhuLongCRM.Views
             return true;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
         private void IsRemember_Tapped(object sender, EventArgs e)
         {
             checkboxRememberAcc.IsChecked = !checkboxRememberAcc.IsChecked;
@@ -156,7 +159,7 @@ namespace PhuLongCRM.Views
             }    
         }
 
-        private void Flag_Tapped(object sender, EventArgs e)
+        private async void Flag_Tapped(object sender, EventArgs e)
         {
             string code = (string)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (code == UserLogged.Language) return;
@@ -168,14 +171,16 @@ namespace PhuLongCRM.Views
             {
                 flagVN.BorderColor = Color.FromHex("#2196F3");
                 flagEN.BorderColor = Color.FromHex("#eeeeee");
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("vi-VN");
             }
                 
             else if (code == "en")
             {
                 flagVN.BorderColor = Color.FromHex("#eeeeee");
                 flagEN.BorderColor = Color.FromHex("#2196F3");
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             }
-            Application.Current.MainPage = new Login();
+            ChangedLanguage();
             LoadingHelper.Hide();
         }
 
@@ -200,6 +205,7 @@ namespace PhuLongCRM.Views
                     var body = await response.Content.ReadAsStringAsync();
                     GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
                     UserLogged.AccessToken = tokenData.access_token;
+                    UserLogged.UserAttribute = "bsd_employee";
 
                     EmployeeModel employeeModel = await LoginUser();
                     if (employeeModel != null)
@@ -241,6 +247,7 @@ namespace PhuLongCRM.Views
                         UserLogged.ManagerName = employeeModel.manager_name;
                         UserLogged.IsSaveInforUser = checkboxRememberAcc.IsChecked;
                         UserLogged.IsLogged = true;
+                        UserLogged.IsLoginByUserCRM = false;
 
                         Application.Current.MainPage = new AppShell();
                         await Task.Delay(1);
@@ -315,6 +322,27 @@ namespace PhuLongCRM.Views
             Dictionary<string, object> data = new Dictionary<string, object>();
             data["bsd_imeinumber"] = ImeiNum;
             return data;
+        }
+
+        private async void ForgotPassword_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            await Navigation.PushAsync(new ForgotPassWordPage());
+            LoadingHelper.Hide();
+        }
+
+        private async void LoginUserCRM_Clicked(object sender, EventArgs e)
+        {
+           await Navigation.PushAsync(new LoginByUserCRMPage());
+        }
+        private void ChangedLanguage()
+        {
+            lblUserName.Text = Language.ten_dang_nhap;
+            lblPassword.Text = Language.mat_khau;
+            lbRemember.Text = Language.ghi_nho_dang_nhap;
+            lbfogotPassword.Text = Language.quen_mat_khau;
+            btnLogin.Text = Language.dang_nhap;
+            btnLoginUserCRM.Text = Language.dang_nhap_voi_user_crm;
         }
     }
 }

@@ -2,6 +2,7 @@
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace PhuLongCRM.ViewModels
         public string Codelead = LookUpMultipleTabs.CodeLead;
         public string CodeContact = LookUpMultipleTabs.CodeContac;
         public string CodeAccount = LookUpMultipleTabs.CodeAccount;
+        public string CodeQueue = QueuesDetialPage.CodeQueue;
 
         public TaskFormViewModel()
         {
@@ -63,18 +65,23 @@ namespace PhuLongCRM.ViewModels
 	                                <attribute name='leadid' alias='lead_id'/>                  
                                     <attribute name='lastname' alias='lead_name'/>
                                 </link-entity>
+                                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                                    <attribute name='opportunityid' alias='queue_id'/>                  
+                                    <attribute name='name' alias='queue_name'/>
+                                </link-entity>
                               </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<TaskFormModel>>("tasks", fetchXml);
             if (result == null || result.value.Count == 0) return;
 
             var data = result.value.FirstOrDefault();
-            this.TaskFormModel = data;
             if (data.scheduledend != null && data.scheduledstart != null)
             {
-                TaskFormModel.scheduledend = data.scheduledend.Value.ToLocalTime();
-                TaskFormModel.scheduledstart = data.scheduledstart.Value.ToLocalTime();
+                data.scheduledend = data.scheduledend.Value.ToLocalTime();
+                data.scheduledstart = data.scheduledstart.Value.ToLocalTime();
             }
+            this.TaskFormModel = data;
+            
          //   this.TaskFormModel = result.value.FirstOrDefault();
 
             //customer type = 1 -> lead.  customer type = 2 -> contact. customer type = 3 -> account
@@ -100,6 +107,14 @@ namespace PhuLongCRM.ViewModels
                 customer.Val = this.TaskFormModel.account_id.ToString();
                 customer.Label = this.TaskFormModel.account_name;
                 customer.Title = "3";
+                this.Customer = customer;
+            }
+            else if (this.TaskFormModel.queue_id != Guid.Empty)
+            {
+                OptionSet customer = new OptionSet();
+                customer.Val = this.TaskFormModel.queue_id.ToString();
+                customer.Label = this.TaskFormModel.queue_name;
+                customer.Title = CodeQueue;
                 this.Customer = customer;
             }
         }
@@ -159,12 +174,16 @@ namespace PhuLongCRM.ViewModels
             {
                 data["regardingobjectid_account_task@odata.bind"] = "/accounts(" + Customer.Val+ ")";
             }
+            else if (Customer != null && Customer.Title == CodeQueue)
+            {
+                data["regardingobjectid_opportunity_task@odata.bind"] = "/opportunities(" + Customer.Val + ")";
+            }
 
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
             {
                 data["bsd_employee_Task@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }

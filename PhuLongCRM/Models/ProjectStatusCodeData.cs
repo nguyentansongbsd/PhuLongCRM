@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhuLongCRM.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,10 +11,10 @@ namespace PhuLongCRM.Models
         {
             return new List<StatusCodeModel>()
             {
-                new StatusCodeModel("1","Active","#14A184"),//Active
-                new StatusCodeModel("861450002","Publish","#2FCC71"),//Publish
-                new StatusCodeModel("861450001","Unpublish","#808080"),//Unpublish
-                new StatusCodeModel("2","Inactive","#D90825")//Inactive
+                new StatusCodeModel("1",Language.project_active_sts,"#14A184"),//Active project_active_sts
+                new StatusCodeModel("861450002",Language.project_publish_sts,"#2FCC71"),//Publish project_publish_sts
+                new StatusCodeModel("861450001",Language.project_unpublish_sts,"#808080"),//Unpublish project_unpublish_sts
+                new StatusCodeModel("2",Language.project_inactive_sts,"#D90825")//Inactive project_inactive_sts
             };
         }
         public static StatusCodeModel GetProjectStatusCodeById(string id)

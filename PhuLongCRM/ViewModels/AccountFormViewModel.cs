@@ -122,6 +122,8 @@ namespace PhuLongCRM.ViewModels
         private AddressModel _address2;
         public AddressModel Address2 { get => _address2; set { _address2 = value; OnPropertyChanged(nameof(Address2)); } }
 
+        private AddressModel _addressCopy;
+        public AddressModel AddressCopy { get => _addressCopy; set {_addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
         public AccountFormViewModel()
         {
             singleAccount = new AccountFormModel();
@@ -316,7 +318,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_email2"] = singleAccount.bsd_email2;
             data["websiteurl"] = singleAccount.websiteurl;
             data["fax"] = singleAccount.fax;
-            data["telephone1"] = singleAccount.telephone1;
+            data["telephone1"] = singleAccount.telephone1.Contains("-") ? singleAccount.telephone1.Replace("+", "").Replace("-", "") : singleAccount.telephone1;
             data["bsd_registrationcode"] = singleAccount.bsd_registrationcode;
             data["bsd_issuedon"] = singleAccount.bsd_issuedon.HasValue ? (DateTime.Parse(singleAccount.bsd_issuedon.ToString()).ToLocalTime()).ToString("yyyy-MM-dd\"T\"HH:mm:ss\"Z\"") : null;
             data["bsd_placeofissue"] = singleAccount.bsd_placeofissue;
@@ -419,11 +421,11 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Address2.district_id + ")"; /////Lookup Field _bsd_permanentdistrict_value
             }
 
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM) //id_user_crm
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -438,7 +440,7 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='fullname' alias='Name' />
                     <order attribute='fullname' descending='false' />
                     <filter type='and'>
-                      <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                     </filter>
                   </entity>
                 </fetch>";

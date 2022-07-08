@@ -181,6 +181,31 @@ namespace PhuLongCRM.Models
         public string statuscode { get; set; }
         public string statuscode_format { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Name : null;}}
         public string statuscode_color { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString()).Background : null; } }
+
+        private string _bsd_imageqrcode;
+        public string bsd_imageqrcode { get => _bsd_imageqrcode; set { _bsd_imageqrcode = value;OnPropertyChanged(nameof(bsd_imageqrcode)); } }
+        public string telephone1_format
+        {
+            get
+            {
+                if (telephone1 != null && telephone1.Contains("-"))
+                {
+                    return telephone1.Split('-')[1].StartsWith("84") ? telephone1.Replace("84", "+84-") : telephone1;
+                }
+                else if (telephone1 != null && telephone1.Contains("+84"))
+                {
+                    return telephone1.Replace("+84", "+84-");
+                }
+                else if (telephone1 != null && telephone1.StartsWith("84"))
+                {
+                    return telephone1.Replace("84", "+84-");
+                }
+                else
+                {
+                    return telephone1;
+                }
+            }
+        }
     }
 }
 

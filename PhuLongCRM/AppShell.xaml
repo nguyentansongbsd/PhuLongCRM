@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:converters="clr-namespace:PhuLongCRM.Converters"
        xmlns:controls="clr-namespace:PhuLongCRM.Controls"
        xmlns:views="clr-namespace:PhuLongCRM.Views"
+       xmlns:plcrm="clr-namespace:PhuLongCRM"
        xmlns:lang="clr-namespace:PhuLongCRM.Resources"
        xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
        xmlns:ffimageTranformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
@@ -61,12 +62,12 @@
         </StackLayout>
     </Shell.FlyoutHeader>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="{x:Static lang:Language.trang_chu}" ContentTemplate="{DataTemplate views:Dashboard}">
+        <ShellContent Title="{x:Static lang:Language.trang_chu_title}" ContentTemplate="{DataTemplate views:Dashboard}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf015;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.khach_hang}" ContentTemplate="{DataTemplate views:CustomerPage}">
+        <ShellContent Title="{x:Static lang:Language.khach_hang_title}" ContentTemplate="{DataTemplate views:CustomerPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf0c0;" Size="18"/>
             </ShellContent.Icon>
@@ -83,39 +84,39 @@
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf07a;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
-    <ShellContent Title="{x:Static lang:Language.danh_sach_giu_cho}" ContentTemplate="{DataTemplate views:QueueList}">
+    <ShellContent Title="{x:Static lang:Language.giu_cho_title}" ContentTemplate="{DataTemplate views:QueueList}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf02d;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
-    <ShellContent Title="{x:Static lang:Language.danh_sach_bang_tinh_gia}" ContentTemplate="{DataTemplate views:ReservationList}" >
+    <ShellContent Title="{x:Static lang:Language.bang_tinh_gia_title}" ContentTemplate="{DataTemplate views:ReservationList}" >
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf46d;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
-    <ShellContent Title="{x:Static lang:Language.danh_sach_dat_coc}" ContentTemplate="{DataTemplate views:DatCocList}" >
+    <ShellContent Title="{x:Static lang:Language.dat_coc_title}" ContentTemplate="{DataTemplate views:DatCocList}" >
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf46d;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
-    <ShellContent Title="{x:Static lang:Language.hop_dong}" ContentTemplate="{DataTemplate views:ContractList}">
+    <ShellContent Title="{x:Static lang:Language.hop_dong_title}" ContentTemplate="{DataTemplate views:ContractList}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#666666" Glyph="&#xf0ca;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
-    <ShellContent Title="{x:Static lang:Language.tai_lieu_kinh_doanh}" ContentTemplate="{DataTemplate views:ListTaiLieuKinhDoanh}">
+    <!--<ShellContent Title="{x:Static lang:Language.tai_lieu_kinh_doanh}" ContentTemplate="{DataTemplate views:ListTaiLieuKinhDoanh}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf07c;" Size="18"/>
         </ShellContent.Icon>
-    </ShellContent>
-    <ShellContent Title="{x:Static lang:Language.danh_sach_theo_doi}" ContentTemplate="{DataTemplate views:FollowUpListPage}">
+    </ShellContent>-->
+    <ShellContent Title="{x:Static lang:Language.danh_sach_theo_doi_title}" ContentTemplate="{DataTemplate views:FollowUpListPage}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf0ca;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="{x:Static lang:Language.phan_hoi}" ContentTemplate="{DataTemplate views:ListPhanHoi}">
+        <ShellContent Title="{x:Static lang:Language.phan_hoi_title}" ContentTemplate="{DataTemplate views:ListPhanHoi}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeRegular" Color="#7D7D7D" Glyph="&#xf086;" Size="18"/>
             </ShellContent.Icon>

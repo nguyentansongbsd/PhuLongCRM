@@ -90,5 +90,20 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(IsSaveInforUser), false);
             set => AppSettings.AddOrUpdateValue(nameof(IsSaveInforUser), value);
         }
+        public static bool IsLoginByUserCRM
+        {
+            get => AppSettings.GetValueOrDefault(nameof(IsLoginByUserCRM), false);
+            set => AppSettings.AddOrUpdateValue(nameof(IsLoginByUserCRM), value);
+        }
+        public static string UserAttribute
+        {
+            get => AppSettings.GetValueOrDefault(nameof(UserAttribute), null);
+            set => AppSettings.AddOrUpdateValue(nameof(UserAttribute), value);
+        }
+        public static string UserCRM
+        {
+            get => AppSettings.GetValueOrDefault(nameof(UserCRM), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(UserCRM), value);
+        }
     }
 }

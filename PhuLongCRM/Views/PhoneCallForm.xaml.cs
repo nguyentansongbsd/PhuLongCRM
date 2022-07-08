@@ -17,9 +17,9 @@ using Xamarin.Forms.Xaml;
 
 namespace PhuLongCRM.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PhoneCallForm : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PhoneCallForm : ContentPage
+    {
         public Action<bool> OnCompleted;
         private bool IsInit;
         public PhoneCallViewModel viewModel;
@@ -27,27 +27,26 @@ namespace PhuLongCRM.Views
 
         public PhoneCallForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
             Init();
             Create();
         }
         public PhoneCallForm(Guid id)
         {
             InitializeComponent();
-            Init();           
+            Init();
             PhoneCallId = id;
             Update();
-        }      
+        }
 
         private void Init()
         {
             LoadingHelper.Show();
             BindingContext = viewModel = new PhoneCallViewModel();
-            DatePickerStart.DefaultDisplay = DateTime.Now;
-            DatePickerEnd.DefaultDisplay = DateTime.Now;
             // kiểm tra page trước là page nào
             var page_before = App.Current.MainPage.Navigation.NavigationStack.Last()?.GetType().Name;
-            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage")
+            if (page_before == "ContactDetailPage" || page_before == "AccountDetailPage"
+                || page_before == "LeadDetailPage" || page_before == "QueuesDetialPage")
             {
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
@@ -55,6 +54,8 @@ namespace PhuLongCRM.Views
                     viewModel.Customer = ContactDetailPage.FromCustomer;
                     Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
+                    Lookup_CallTo.IsVisible = false;
+                    CustomerMapping2.IsVisible = true;
                     Lookup_CallTo_SelectedItemChange(null, null);
                 }
                 else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
@@ -63,25 +64,50 @@ namespace PhuLongCRM.Views
                     viewModel.Customer = AccountDetailPage.FromCustomer;
                     Lookup_Customer.IsVisible = false;
                     CustomerMapping.IsVisible = true;
+                    Lookup_CallTo.IsVisible = false;
+                    CustomerMapping2.IsVisible = true;
+                    Lookup_CallTo_SelectedItemChange(null, null);
+                }
+                else if (page_before == "LeadDetailPage" && LeadDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(LeadDetailPage.FromCustomer.Val))
+                {
+                    viewModel.CallTo = LeadDetailPage.FromCustomer;
+                    viewModel.Customer = LeadDetailPage.FromCustomer;
+                    Lookup_Customer.IsVisible = false;
+                    CustomerMapping.IsVisible = true;
+                    Lookup_CallTo.IsVisible = false;
+                    CustomerMapping2.IsVisible = true;
+                    Lookup_CallTo_SelectedItemChange(null, null);
+                }
+                else if (page_before == "QueuesDetialPage" && QueuesDetialPage.FromQueue != null && !string.IsNullOrWhiteSpace(QueuesDetialPage.FromQueue.Val))
+                {
+                    viewModel.Customer = QueuesDetialPage.FromQueue;
+                    viewModel.CallTo = QueuesDetialPage.CustomerFromQueue;
+                    Lookup_Customer.IsVisible = false;
+                    CustomerMapping2.IsVisible = true;
+                    Lookup_CallTo.IsVisible = true;
+                    CustomerMapping.IsVisible = false;
                     Lookup_CallTo_SelectedItemChange(null, null);
                 }
                 else
                 {
                     Lookup_Customer.IsVisible = true;
                     CustomerMapping.IsVisible = false;
+                    Lookup_CallTo.IsVisible = true;
+                    CustomerMapping2.IsVisible = false;
                 }
             }
             else
             {
                 Lookup_Customer.IsVisible = true;
                 CustomerMapping.IsVisible = false;
+                Lookup_CallTo.IsVisible = true;
+                CustomerMapping2.IsVisible = false;
             }
         }
 
         private void Create()
         {
-            this.Title = Language.tao_moi_cuoc_goi;
-            BtnSave.Text = Language.them_cuoc_goi;
+            this.Title = BtnSave.Text = Language.tao_moi_cuoc_goi_title;
             IsInit = true;
             BtnSave.Clicked += Create_Clicked;
         }
@@ -93,11 +119,10 @@ namespace PhuLongCRM.Views
 
         private async void Update()
         {
-            BtnSave.Text = Language.cap_nhat;
+            this.Title = BtnSave.Text = Language.cap_nhat_cuoc_goi_title;
             BtnSave.Clicked += Update_Clicked;
             await viewModel.loadPhoneCall(this.PhoneCallId);
             await viewModel.loadFromTo(this.PhoneCallId);
-            this.Title = Language.cap_nhat_cuoc_goi;
             if (viewModel.PhoneCellModel.activityid != Guid.Empty)
             {
                 OnCompleted?.Invoke(true);
@@ -118,7 +143,7 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_chu_de_cuoc_goi);
                 return;
-            }         
+            }
             if (viewModel.CallTo == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_nhan_cuoc_goi);
@@ -132,8 +157,15 @@ namespace PhuLongCRM.Views
             if (viewModel.PhoneCellModel.scheduledstart == null || viewModel.PhoneCellModel.scheduledend == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau);
-                    return;
+                return;
             }
+
+            if (DatePickerStart.IsTimeNull)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
+                return;
+            }
+
             if (viewModel.PhoneCellModel.scheduledstart != null && viewModel.PhoneCellModel.scheduledend != null)
             {
                 if (this.compareDateTime(viewModel.PhoneCellModel.scheduledstart, viewModel.PhoneCellModel.scheduledend) != -1)
@@ -141,6 +173,12 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                     return;
                 }
+            }
+
+            if (DatePickerEnd.IsTimeNull)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc);
+                return;
             }
 
             //if (viewModel.Customer != null && viewModel.Customer.Val == viewModel.CallTo.Val)
@@ -162,7 +200,9 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage(Language.da_them_cuoc_goi);                   
+                    if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+                    if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
+                    ToastMessageHelper.ShortMessage(Language.tao_cuoc_goi_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
@@ -183,6 +223,8 @@ namespace PhuLongCRM.Views
                     if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
+                    if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+                    if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
@@ -197,7 +239,7 @@ namespace PhuLongCRM.Views
 
         private int compareDateTime(DateTime? date, DateTime? date1)
         {
-            if (date != null && date1 != null )
+            if (date != null && date1 != null)
             {
                 DateTime timeStart = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, date.Value.Hour, date.Value.Minute, 0);
                 DateTime timeEnd = new DateTime(date1.Value.Year, date1.Value.Month, date1.Value.Day, date1.Value.Hour, date1.Value.Minute, 0);
@@ -214,7 +256,7 @@ namespace PhuLongCRM.Views
             if (date1 == null && date != null)
                 return 1;
             return 0;
-        }     
+        }
 
         private void DatePickerStart_DateSelected(object sender, EventArgs e)
         {
@@ -241,7 +283,7 @@ namespace PhuLongCRM.Views
                     {
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.PhoneCellModel.scheduledend = viewModel.PhoneCellModel.scheduledstart;
-                    }    
+                    }
                 }
                 else
                 {

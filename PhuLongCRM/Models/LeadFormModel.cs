@@ -269,7 +269,9 @@ namespace PhuLongCRM.Models
         public string bsd_customercode { get; set; }
         public string bsd_customergroup { get; set; }
         public string bsd_typeofidcard { get; set; }
-        public string bsd_identitycardnumberid { get; set; }
+
+        private string _bsd_identitycardnumberid;
+        public string bsd_identitycardnumberid { get=>_bsd_identitycardnumberid; set { _bsd_identitycardnumberid = value;OnPropertyChanged(nameof(bsd_identitycardnumberid)); } }
         public string bsd_area { get; set; }
         public string bsd_placeofissue { get; set; }
         public string bsd_registrationcode { get; set; }
@@ -317,5 +319,30 @@ namespace PhuLongCRM.Models
         public string bsd_accountdistrict_name_en { get; set; }
         public Guid account_id { get; set; }
         public Guid contact_id { get; set; }
+
+        private string _bsd_qrcode;
+        public string bsd_qrcode { get=>_bsd_qrcode; set { _bsd_qrcode = value;OnPropertyChanged(nameof(bsd_qrcode)); } }
+        public string mobilephone_format
+        {
+            get
+            {
+                if (mobilephone != null && mobilephone.Contains("-"))
+                {
+                    return mobilephone.Split('-')[1].StartsWith("84") ? mobilephone.Replace("84", "+84-") : mobilephone;
+                }
+                else if (mobilephone != null && mobilephone.Contains("+84"))
+                {
+                    return mobilephone.Replace("+84", "+84-");
+                }
+                else if (mobilephone != null && mobilephone.StartsWith("84"))
+                {
+                    return mobilephone.Replace("84", "+84-");
+                }
+                else
+                {
+                    return mobilephone;
+                }
+            }
+        }
     }
 }

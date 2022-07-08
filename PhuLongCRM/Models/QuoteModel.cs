@@ -12,12 +12,16 @@ namespace PhuLongCRM.Models
         public string name { get => _name; set { _name = value; OnPropertyChanged(nameof(name)); } }
         public Guid paymentscheme_id { get; set; }
         public string paymentscheme_name { get; set; }
+
         public decimal bsd_constructionarea { get; set; }
-        public string bsd_constructionarea_format { get => StringFormatHelper.FormatCurrency(bsd_constructionarea); }
+        private string _bsd_constructionarea_format;
+        public string bsd_constructionarea_format { get=> _bsd_constructionarea_format; set { _bsd_constructionarea_format = value;OnPropertyChanged(nameof(bsd_constructionarea_format)); } }
         public decimal bsd_netusablearea { get; set; }
-        public string bsd_netusablearea_format { get => StringFormatHelper.FormatCurrency(bsd_netusablearea); }
+        private string _bsd_netusablearea_format;
+        public string bsd_netusablearea_format { get => _bsd_netusablearea_format;set { _bsd_netusablearea_format = value;OnPropertyChanged(nameof(bsd_netusablearea_format)); } }
         public decimal bsd_actualarea { get; set; }
-        public string bsd_actualarea_format { get => StringFormatHelper.FormatCurrency(bsd_actualarea); }
+        private string _bsd_actualarea_format;
+        public string bsd_actualarea_format { get => _bsd_actualarea_format; set { _bsd_actualarea_format = value;OnPropertyChanged(nameof(bsd_actualarea_format)); } }
         public string bsd_unitstatus { get; set; }
 
         public Guid discountlist_id { get; set; }
@@ -25,9 +29,11 @@ namespace PhuLongCRM.Models
         public string bsd_discounts { get; set; }
         public string bsd_contracttypedescripton { get; set; }
         public decimal bsd_depositfee { get; set; }
-        public string bsd_depositfee_format { get => StringFormatHelper.FormatCurrency(bsd_depositfee); }
+        private string _bsd_depositfee_format;
+        public string bsd_depositfee_format { get => _bsd_depositfee_format; set { _bsd_depositfee_format = value;OnPropertyChanged(nameof(bsd_depositfee_format)); } }
         public decimal bsd_bookingfee { get; set; }
-        public string bsd_bookingfee_format { get => StringFormatHelper.FormatCurrency(bsd_bookingfee); }
+        private string _bsd_bookingfee_format;
+        public string bsd_bookingfee_format { get => _bsd_bookingfee_format; set { _bsd_bookingfee_format = value;OnPropertyChanged(nameof(bsd_bookingfee_format)); } }
 
         private string _bsd_nameofstaffagent;
         public string bsd_nameofstaffagent { get => _bsd_nameofstaffagent; set { _bsd_nameofstaffagent = value; OnPropertyChanged(nameof(bsd_nameofstaffagent)); } }
@@ -39,7 +45,8 @@ namespace PhuLongCRM.Models
         private int _bsd_numberofmonthspaidmf;
         public int bsd_numberofmonthspaidmf { get => _bsd_numberofmonthspaidmf; set { _bsd_numberofmonthspaidmf = value; OnPropertyChanged(nameof(bsd_numberofmonthspaidmf)); } }
         public decimal bsd_managementfee { get; set; }
-        public string bsd_managementfee_format { get => StringFormatHelper.FormatCurrency(bsd_managementfee); }
+        private string _bsd_managementfee_format;
+        public string bsd_managementfee_format { get => _bsd_managementfee_format;set { _bsd_managementfee_format = value;OnPropertyChanged(nameof(bsd_managementfee_format)); } }
         public string bsd_waivermanafeemonth { get; set; }
 
         public decimal bsd_discount { get; set; }

@@ -2,6 +2,7 @@ using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -52,10 +53,9 @@ namespace PhuLongCRM.ViewModels
         public List<OptionSetFilter> Optional { get => _optional; set { _optional = value; OnPropertyChanged(nameof(Optional)); } }
 
         public string CodeAccount = LookUpMultipleTabs.CodeAccount;
-
         public string CodeContac = LookUpMultipleTabs.CodeContac;
-
         public string CodeLead = LookUpMultipleTabs.CodeLead;
+        public string CodeQueue = QueuesDetialPage.CodeQueue;
 
         public bool _showButton;
         public bool ShowButton { get => _showButton; set { _showButton = value; OnPropertyChanged(nameof(ShowButton)); } }
@@ -106,6 +106,10 @@ namespace PhuLongCRM.ViewModels
                           <attribute name='leadid' alias='lead_id'/>                  
                           <attribute name='fullname' alias='lead_name'/>
                       </link-entity>
+                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
+                        <attribute name='opportunityid' alias='queue_id'/>                  
+                        <attribute name='name' alias='queue_name'/>
+                    </link-entity>
                   </entity>
                 </fetch>";
 
@@ -156,8 +160,17 @@ namespace PhuLongCRM.ViewModels
                     Label = data.lead_name
                 };
             }
+            else if (data.queue_id != Guid.Empty)
+            {
+                Customer = new OptionSetFilter
+                {
+                    Title = CodeQueue,
+                    Val = data.queue_id.ToString(),
+                    Label = data.queue_name
+                };
+            }
 
-            if (MeetingModel.statecode == 0)
+            if (MeetingModel.statecode == 0 || MeetingModel.statecode == 3)
                 ShowButton = true;
             else
                 ShowButton = false;
@@ -311,6 +324,18 @@ namespace PhuLongCRM.ViewModels
 
                     data["regardingobjectid_account_appointment@odata.bind"] = "/accounts(" + CustomerMapping.Val + ")";
                 }
+                else if (CustomerMapping.Title == CodeLead)
+                {
+                    item_required["partyid_lead@odata.bind"] = "/leads(" + CustomerMapping.Val + ")";
+                    item_required["participationtypemask"] = 5;
+                    arrayMeeting.Add(item_required);
+
+                    data["regardingobjectid_lead_appointment@odata.bind"] = "/leads(" + CustomerMapping.Val + ")";
+                }
+                else if (CustomerMapping.Title == CodeQueue)
+                {
+                    data["regardingobjectid_opportunity_appointment@odata.bind"] = "/opportunities(" + CustomerMapping.Val + ")";
+                }
             }
             if (Required != null)
             {
@@ -376,11 +401,11 @@ namespace PhuLongCRM.ViewModels
             }
             data["appointment_activity_parties"] = arrayMeeting;
 
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
             {
                 data["bsd_employee_Appointment@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
@@ -409,8 +434,6 @@ namespace PhuLongCRM.ViewModels
 
         public async Task<bool> UpdateMeeting(Guid meetingid)
         {
-            MeetingModel.statecode = 0;
-            MeetingModel.statuscode = 1;
             var actualdurationminutes = Math.Round((MeetingModel.scheduledend.Value - MeetingModel.scheduledstart.Value).TotalMinutes);
             MeetingModel.scheduleddurationminutes = int.Parse(actualdurationminutes.ToString());
             string path = "/appointments(" + meetingid + ")";
@@ -430,14 +453,14 @@ namespace PhuLongCRM.ViewModels
         {
             LeadsLookUpRequired = new List<OptionSetFilter>();
             LeadsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='lead'>
                                 <attribute name='fullname' alias='Label' />
                                 <attribute name='leadid' alias='Val' />
                                 <attribute name='mobilephone' alias='SDT' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                                 </filter>
                               </entity>
                             </fetch>";
@@ -457,7 +480,7 @@ namespace PhuLongCRM.ViewModels
         {
             ContactsLookUpRequired = new List<OptionSetFilter>();
             ContactsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
                     <attribute name='contactid' alias='Val' />
                     <attribute name='fullname' alias='Label' />
@@ -466,7 +489,7 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='bsd_passport' alias='HC' />
                     <order attribute='fullname' descending='false' />                   
                     <filter type='and'>
-                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                     </filter>
                   </entity>
                 </fetch>";
@@ -486,7 +509,7 @@ namespace PhuLongCRM.ViewModels
         {
             AccountsLookUpRequired = new List<OptionSetFilter>();
             AccountsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='account'>
                                 <attribute name='name' alias='Label'/>
                                 <attribute name='accountid' alias='Val'/>
@@ -494,7 +517,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_registrationcode' alias='SoGPKD'/>
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
-                                    <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                                 </filter>
                               </entity>
                             </fetch>";

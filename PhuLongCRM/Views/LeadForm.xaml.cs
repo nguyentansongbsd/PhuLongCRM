@@ -7,6 +7,7 @@ using PhuLongCRM.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Controls;
 
 namespace PhuLongCRM.Views
 {
@@ -19,17 +20,19 @@ namespace PhuLongCRM.Views
         public LeadForm()
         {
             InitializeComponent();
-            this.Title = Language.tao_moi_kh_tiem_nang;
+            this.Title = Language.tao_moi_khach_hang;
+            btn_save_lead.Text = Language.tao_moi_kh_tiem_nang;
             Init();
             
             viewModel.Rating = RatingData.GetRatingById("2");//mac dinh la warm
             viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById("100000002"); // mac dinh la "Chua xac dinh"
         }
+
         public LeadForm(Guid Id)
         {
             InitializeComponent();
-            this.Title = Language.cap_nhat_kh_tiem_nang;
-            btn_save_lead.Text = Language.cap_nhat;
+            this.Title = Language.cap_nhat_khach_hang;
+            btn_save_lead.Text = Language.cap_nhat_kh_tiem_nang;
             Init();
             viewModel.LeadId = Id;
             InitUpdate();
@@ -219,30 +222,70 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length > 12 ||
-                viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length != 12 )// CCCD
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
-            if (viewModel.TypeIdCard?.Val == "100000003" && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
+            if (viewModel.TypeIdCard?.Val == "100000002" && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
             }
         }
 
+        private void TypeIdCard_ItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
+        {
+            if (viewModel.TypeIdCard == null)
+            {
+                viewModel.singleLead.bsd_identitycardnumberid = null;
+            }
+
+            if (viewModel.TypeIdCard != null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid))
+            {
+                if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
+                    return;
+                }
+                if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 12)// CCCD
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
+                    return;
+                }
+                if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
+                    return;
+                }
+            }
+        }
+
         private void mobilephone_text_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.singleLead.mobilephone?.Length != 14)
+            var num = sender as PhoneEntryControl;
+            if (!string.IsNullOrWhiteSpace(num.Text))
             {
-                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
             }
         }
 
         private void telephone1_text_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.singleLead.telephone1?.Length != 14)
+            var num = sender as PhoneEntryControl;
+            if (!string.IsNullOrWhiteSpace(num.Text))
             {
-                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
             }
         }
 
@@ -296,27 +339,27 @@ namespace PhuLongCRM.Views
                 return ;
             }
 
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.TypeIdCard == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_loai_the_id);
+                return;
+            }
+
             if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length > 12
-                || viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length < 9)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 12)// CCCD
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000003" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
+            if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
             }
-            if(!await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid,viewModel.singleLead.leadid.ToString()))
-            {
-                ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
-                return;
-            }    
 
             LoadingHelper.Show();
 
@@ -359,5 +402,7 @@ namespace PhuLongCRM.Views
                 }
             }
         }
+
+        
     }
 }

@@ -15,27 +15,30 @@ namespace PhuLongCRM.Views
     {
         private BangTinhGiaDetailPageViewModel viewModel;
         public Action<bool> OnCompleted;
-        private Guid ReservationId;
         public static bool? NeedToRefresh = null; 
         public static bool? NeedToRefreshInstallment = null;
 
-        public BangTinhGiaDetailPage(Guid id)
+        public BangTinhGiaDetailPage(Guid id, bool isContract = false)
         {
             InitializeComponent();
-            ReservationId = id;
             BindingContext = viewModel = new BangTinhGiaDetailPageViewModel();
+            viewModel.ReservationId = id;
             NeedToRefresh = false;
             NeedToRefreshInstallment = false;
-            Tab_Tapped(1);
             Init();
+            InitContract(isContract);
         }
 
         public async void Init()
         {
             await Task.WhenAll(
-                LoadDataChinhSach(ReservationId),
-                viewModel.LoadCoOwners(ReservationId)
+                LoadDataChinhSach(viewModel.ReservationId),
+                viewModel.LoadCoOwners(viewModel.ReservationId)
                 );
+
+            MessagingCenter.Subscribe<BangTinhGiaDetailPageViewModel>(this, "IsRefresh", (sender) => {
+                SetUpButtonGroup();
+            });
 
             SetUpButtonGroup();
             if (viewModel.Reservation.quoteid != Guid.Empty)
@@ -54,21 +57,20 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Show();
 
                 viewModel.CoownerList.Clear();
+                viewModel.ListDiscountPaymentScheme.Clear();
                 viewModel.ListDiscount.Clear();
                 viewModel.ListPromotion.Clear();
+                viewModel.ListDiscountInternel.Clear();
+                viewModel.ListDiscountExchange.Clear();
+                viewModel.InstallmentList.Clear();
                 viewModel.ShowInstallmentList = false;
                 viewModel.NumberInstallment = 0;
-                viewModel.InstallmentList.Clear();
-
+                
                 await Task.WhenAll(
-                    LoadDataChinhSach(ReservationId),
-                    viewModel.LoadCoOwners(ReservationId)
+                    LoadDataChinhSach(viewModel.ReservationId),
+                    viewModel.LoadCoOwners(viewModel.ReservationId)
                 );
-                viewModel.ButtonCommandList.Clear();
-                SetUpButtonGroup();
                 if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
-                NeedToRefresh = false;
-
                 LoadingHelper.Hide();
             }
             if (NeedToRefreshInstallment == true)
@@ -78,27 +80,29 @@ namespace PhuLongCRM.Views
                 viewModel.ShowInstallmentList = false;
                 viewModel.NumberInstallment = 0;
                 viewModel.InstallmentList.Clear();
+                
+                await viewModel.LoadInstallmentList(viewModel.ReservationId);
+                LoadingHelper.Hide();
+            }
+            if (NeedToRefreshInstallment == true || NeedToRefresh == true)
+            {
                 viewModel.ButtonCommandList.Clear();
-
-                await viewModel.LoadInstallmentList(ReservationId);    
                 SetUpButtonGroup();
                 NeedToRefreshInstallment = false;
-
-                LoadingHelper.Hide();
+                NeedToRefresh = false;
             }
         }
 
         //tab chinh sach
-
         private async Task LoadDataChinhSach(Guid id)
         {
             if (id != Guid.Empty)
             {
                 await Task.WhenAll(
                     viewModel.LoadReservation(id),
-                    viewModel.LoadPromotions(ReservationId),
-                    viewModel.LoadSpecialDiscount(ReservationId),
-                    viewModel.LoadInstallmentList(ReservationId)
+                    viewModel.LoadPromotions(viewModel.ReservationId),
+                    viewModel.LoadSpecialDiscount(viewModel.ReservationId),
+                    viewModel.LoadInstallmentList(viewModel.ReservationId)
                     );
                 await Task.WhenAll(
                     viewModel.LoadDiscounts(),
@@ -106,9 +110,27 @@ namespace PhuLongCRM.Views
                     viewModel.LoadDiscountsInternel(),
                     viewModel.LoadDiscountsExChange()
                     ) ;
-                await viewModel.LoadHandoverCondition(ReservationId);
-                SutUpSpecialDiscount();
+                await viewModel.LoadHandoverCondition(viewModel.ReservationId);
+               // SutUpSpecialDiscount();
             }
+        }
+
+        private void GoToQueueDetail_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            QueuesDetialPage queuesDetial = new QueuesDetialPage(viewModel.Reservation.queue_id);
+            queuesDetial.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(queuesDetial);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
 
         // tab lich
@@ -122,98 +144,37 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private void ChinhSach_Tapped(object sender, EventArgs e)
+        public async void SetUpButtonGroup()
         {
-            Tab_Tapped(1);
-        }
-
-        private void TongHop_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-        }
-
-        private void ChiTiet_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(3);
-        }
-
-        private void Lich_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(4);
-            if (viewModel.InstallmentList.Count == 0)
+            var checkFul = await viewModel.CheckFUL();
+            if (viewModel.Reservation.statuscode == 100000000)// (hủy đặt cọc)
             {
-                LoadInstallmentList(ReservationId);
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_dat_coc, "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
             }
-        }
-
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
+            if (viewModel.Reservation.statuscode == 3 && checkFul == true)// show khi statuscode == 3(Deposited) (tạo ful)
             {
-                VisualStateManager.GoToState(radBorderChinhSach, "Selected");
-                VisualStateManager.GoToState(lbChinhSach, "Selected");
-                TabChinhSach.IsVisible = true;
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.de_nghi_thanh_ly, "FontAwesomeSolid", "\uf560", null, FULTerminate));
             }
-            else
+            if (viewModel.Reservation.statuscode == 4)// show khi statuscode == 4(Won) (đi đến contract) 
             {
-                VisualStateManager.GoToState(radBorderChinhSach, "Normal");
-                VisualStateManager.GoToState(lbChinhSach, "Normal");
-                TabChinhSach.IsVisible = false;
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_hop_dong, "FontAwesomeSolid", "\uf56c", null, GoToContract));
             }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderTongHop, "Selected");
-                VisualStateManager.GoToState(lbTongHop, "Selected");
-                TabTongHop.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderTongHop, "Normal");
-                VisualStateManager.GoToState(lbTongHop, "Normal");
-                TabTongHop.IsVisible = false;
-            }
-            if (tab == 3)
-            {
-                VisualStateManager.GoToState(radBorderChiTiet, "Selected");
-                VisualStateManager.GoToState(lbChiTiet, "Selected");
-                TabChiTiet.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderChiTiet, "Normal");
-                VisualStateManager.GoToState(lbChiTiet, "Normal");
-                TabChiTiet.IsVisible = false;
-            }
-            if (tab == 4)
-            {
-                VisualStateManager.GoToState(radBorderLich, "Selected");
-                VisualStateManager.GoToState(lbLich, "Selected");
-                TabLich.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderLich, "Normal");
-                VisualStateManager.GoToState(lbLich, "Normal");
-                TabLich.IsVisible = false;
-            }
-        }
-
-        private void SetUpButtonGroup()
-        {
-            //if (viewModel.Reservation.statuscode == 100000007 || viewModel.Reservation.statuscode == 100000000)
-            //{
-            //    viewModel.ButtonCommandList.Add(new FloatButtonItem("Hủy Đặt Cọc", "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
-            //}
 
             if (viewModel.Reservation.statuscode == 100000007)
             {
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat_bang_tinh_gia, "FontAwesomeRegular", "\uf044", null, EditQuotes));
-                if (viewModel.InstallmentList.Count == 0)
+                if (viewModel.InstallmentList?.Count == 0)
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_lich_thanh_toan, "FontAwesomeRegular", "\uf271", null, CreatePaymentScheme));
                 }
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xoa_lich_thanh_toan, "FontAwesomeRegular", "\uf1c3", null, CancelInstallment));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
+                if (viewModel.InstallmentList?.Count > 0)
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xoa_lich_thanh_toan, "FontAwesomeRegular", "\uf1c3", null, CancelInstallment));
+                }
+                if (!viewModel.Reservation.bsd_quotationprinteddate.HasValue)
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
+                }
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeRegular", "\uf273", null, CancelQuotes));
                 if (viewModel.InstallmentList.Count > 0 && viewModel.Reservation.bsd_quotationprinteddate != null)
                 {
@@ -240,6 +201,99 @@ namespace PhuLongCRM.Views
             }
         }
 
+        private void InitContract(bool _isContract)
+        {
+            if (_isContract)
+            {
+                ma_dat_coc.IsVisible = true;
+                ma_bang_tinh_gia.IsVisible = false;
+                this.Title = Language.dat_coc_title;
+            }
+            else
+            {
+                ma_dat_coc.IsVisible = false;
+                ma_bang_tinh_gia.IsVisible = true;
+                this.Title = Language.bang_tinh_gia_title;
+            }
+
+        }
+        private void GoToContract(object sender, EventArgs e)
+        {
+            if (viewModel.Reservation != null && viewModel.Reservation.salesorder_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ContractDetailPage contractDetailPage = new ContractDetailPage(viewModel.Reservation.salesorder_id);
+                contractDetailPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == true)
+                    {
+                        await Navigation.PushAsync(contractDetailPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+
+                };
+            }
+            else
+            {
+                ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+            }
+        }
+        private void FULTerminate(object sender, EventArgs e)
+        {
+            if (viewModel.Reservation != null && viewModel.Reservation.quoteid != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                int ful_type = 0;
+                if (viewModel.Reservation.statuscode == 3)
+                    ful_type = 100000005;
+                else if (viewModel.Reservation.statuscode == 100000006 || viewModel.Reservation.statuscode == 100000004)
+                    ful_type = 100000001;
+                else if (viewModel.Reservation.bsd_reservationformstatus == 100000001)
+                    ful_type = 100000000;
+                else if (viewModel.Reservation.statuscode == 100000000)
+                    ful_type = 100000000;
+
+                var ful = new FollowUpModel
+                {
+                    bsd_followuplistid = Guid.NewGuid(),
+                    project_id = viewModel.Reservation.project_id,
+                    project_name = viewModel.Reservation.project_name,
+                    bsd_group = 100000000,
+                    bsd_type = ful_type,
+                    bsd_name = "Termination_" + viewModel.Reservation.quotenumber + "_CCR",
+                    bsd_reservation_id = viewModel.Reservation.quoteid,
+                    name_reservation = viewModel.Reservation.name,
+                    bsd_depositfee = viewModel.Reservation.bsd_depositfee,
+                    product_id = viewModel.Reservation.unit_id,
+                    bsd_units = viewModel.Reservation.unit_name,
+                    bsd_sellingprice = viewModel.Reservation.totalamount,
+                    bsd_totalamount = viewModel.Reservation.totalamount,
+                    bsd_totalamountpaid = viewModel.Reservation.bsd_totalamountpaid,
+                    bsd_date = DateTime.Now
+
+                };
+                FollowUpListForm newPage = new FollowUpListForm(ful);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == true)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
+            }
+        }
+
         private async void CancelInstallment(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -247,6 +301,7 @@ namespace PhuLongCRM.Views
             {
                 if (await viewModel.DeactiveInstallment())
                 {
+                    NeedToRefresh = true;
                     NeedToRefreshInstallment = true;
                     OnAppearing();
                     LoadingHelper.Hide();
@@ -315,7 +370,7 @@ namespace PhuLongCRM.Views
         private void EditQuotes(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            ReservationForm reservation = new ReservationForm(this.ReservationId);
+            ReservationForm reservation = new ReservationForm(viewModel.ReservationId);
             reservation.CheckReservation = async (isSuccess) =>
             {
                 if (isSuccess == 0)
@@ -418,7 +473,7 @@ namespace PhuLongCRM.Views
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
-                    this.Title = Language.dat_coc;
+                    this.Title = Language.dat_coc_title;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.bang_tinh_gia_da_duoc_ky);
                 }
@@ -618,6 +673,7 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
+                LoadingHelper.Show();
                 if (await viewModel.CancelDeposit())
                 {
                     NeedToRefresh = true;
@@ -637,22 +693,150 @@ namespace PhuLongCRM.Views
                 }
             }
         }
+
         private void SutUpSpecialDiscount()
         {
-            if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
+            //if (viewModel.ListSpecialDiscount != null && viewModel.ListSpecialDiscount.Count > 0)
+            //{
+            //    stackLayoutSpecialDiscount.IsVisible = true;
+            //    foreach (var item in viewModel.ListSpecialDiscount)
+            //    {
+            //        if (!string.IsNullOrEmpty(item.Label))
+            //        {
+            //            stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    stackLayoutSpecialDiscount.IsVisible = false;
+            //}
+        }
+
+        private async void stackLayoutPromotions_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as OptionSet;
+            if (item != null && item.Val != string.Empty)
             {
-                stackLayoutSpecialDiscount.IsVisible = true;
-                foreach (var item in viewModel.ListSpecialDiscount)
+                if (viewModel.PromotionItem == null)
                 {
-                    if (!string.IsNullOrEmpty(item.Label))
-                    {
-                        stackLayoutSpecialDiscount.Children.Add(SetUpItem(item.Label));
-                    }
+                    await viewModel.LoadPromotionItem(item.Val);
+                }
+                else if (viewModel.PromotionItem.bsd_promotionid.ToString() != item.Val)
+                {
+                    await viewModel.LoadPromotionItem(item.Val);
                 }
             }
-            else
+            if (viewModel.PromotionItem != null)
+                KhuyenMai_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
+        }
+
+        private async void HandoverConditionItem_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            if (viewModel.HandoverConditionItem == null && viewModel.Reservation.handovercondition_id != Guid.Empty)
             {
-                stackLayoutSpecialDiscount.IsVisible = false;
+                await viewModel.LoadHandoverConditionItem(viewModel.Reservation.handovercondition_id);
+            }
+            if (viewModel.HandoverConditionItem != null)
+                HandoverCondition_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
+        }
+
+        private async void stackLayoutSpecialDiscount_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = ((TapGestureRecognizer)((Label)sender).GestureRecognizers[0]).CommandParameter as DiscountSpecialModel;
+            if (item != null && item.bsd_discountspecialid != Guid.Empty)
+            {
+                if (viewModel.DiscountSpecialItem == null)
+                {
+                    await viewModel.LoadDiscountSpecialItem(item.bsd_discountspecialid.ToString());
+                }
+                else if (viewModel.DiscountSpecialItem.bsd_discountspecialid != item.bsd_discountspecialid)
+                {
+                    await viewModel.LoadDiscountSpecialItem(item.bsd_discountspecialid.ToString());
+                }
+            }
+            if (viewModel.DiscountSpecialItem != null)
+                SpecialDiscount_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
+        }
+
+        private async void Discount_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = (DiscountModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.bsd_discounttype == "100000000")
+                Discount_CenterPopup.Title = Language.chiet_khau_chung;
+            else if(item.bsd_discounttype == "100000004")
+                Discount_CenterPopup.Title = Language.chiet_khau_noi_bo;
+            else if(item.bsd_discounttype == "100000002")
+                Discount_CenterPopup.Title = Language.phuong_thuc_thanh_toan;
+            else if (item.bsd_discounttype == "100000006")
+                Discount_CenterPopup.Title = Language.chiet_khau_quy_doi;
+            await viewModel.LoadDiscountItem(item.bsd_discountid);
+            if (viewModel.Discount != null)
+                Discount_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
+        }
+
+        private void Unit_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var unitId = (Guid)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            UnitInfo unit = new UnitInfo(unitId);
+            unit.OnCompleted = async (isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(unit);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
+        }
+
+        private void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabChinhSach.IsVisible = true;
+                    TabTongHop.IsVisible = false;
+                    TabChiTiet.IsVisible = false;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabTongHop.IsVisible = true;
+                    TabChiTiet.IsVisible = false;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    TabChinhSach.IsVisible = false;
+                    TabTongHop.IsVisible = false;
+                    TabChiTiet.IsVisible = true;
+                    TabLich.IsVisible = false;
+                }
+                else if ((int)e.Item == 3)
+                {
+                    if (viewModel.InstallmentList.Count == 0)
+                        LoadInstallmentList(viewModel.ReservationId);
+                    TabChinhSach.IsVisible = false;
+                    TabTongHop.IsVisible = false;
+                    TabChiTiet.IsVisible = false;
+                    TabLich.IsVisible = true;
+                }
             }
         }
     }

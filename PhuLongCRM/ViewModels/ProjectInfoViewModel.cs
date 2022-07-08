@@ -101,6 +101,8 @@ namespace PhuLongCRM.ViewModels
         private StatusCodeModel _statusCode;
         public StatusCodeModel StatusCode { get => _statusCode; set { _statusCode = value; OnPropertyChanged(nameof(StatusCode)); } }
 
+        public bool IsHasPhasesLaunch { get; set; }
+
         public ProjectInfoViewModel()
         {
             ListGiuCho = new ObservableCollection<QueuesModel>();
@@ -126,6 +128,14 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_bookingfee' />
                                 <attribute name='bsd_depositamount' />
                                 <attribute name='statuscode' />
+                                <attribute name='bsd_queuesperunit' />
+                                <attribute name='bsd_unitspersalesman' />
+                                <attribute name='bsd_queueunitdaysaleman' />
+                                <attribute name='bsd_longqueuingtime' />
+                                <attribute name='bsd_shortqueingtime' />
+                                <attribute name='bsd_projectslogo'/>
+                                <attribute name='bsd_queueproject'/>
+                                <attribute name='bsd_printagreement'/>
                                 <order attribute='bsd_name' descending='false' />
                                 <filter type='and'>
                                   <condition attribute='bsd_projectid' operator='eq' uitype='bsd_project' value='" + ProjectId.ToString() + @"' />
@@ -345,7 +355,7 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadGiuCho()
         {
             IsLoadedGiuCho = true;
-            string fetchXml = $@"<fetch version='1.0' count='10' page='{PageListGiuCho}' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='5' page='{PageListGiuCho}' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='opportunity'>
                                 <attribute name='name' />
                                 <attribute name='customerid' alias='customer_id'/>
@@ -355,6 +365,8 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='opportunityid' />
                                 <order attribute='bsd_bookingtime' descending='false' />
                                 <filter type='and'>
+                                    <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                   <condition attribute='statuscode' operator='in'>
                                     <value>100000002</value>
                                     <value>100000000</value>
@@ -362,14 +374,6 @@ namespace PhuLongCRM.ViewModels
                                 </filter>
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
                                     <attribute name='bsd_name' alias='project_name'/>
-                                  <filter type='and'>
-                                    <condition attribute='bsd_projectid' operator='eq' value='{ProjectId}'/>
-                                  </filter>
-                                </link-entity>
-                                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='inner' alias='ac'>
-                                  <filter type='and'>
-                                    <condition attribute='bsd_employeeid' operator='eq' value='{UserLogged.Id}' />
-                                  </filter>
                                 </link-entity>
                                 <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
                                   <attribute name='name' alias='account_name'/>
@@ -472,6 +476,23 @@ namespace PhuLongCRM.ViewModels
                 Event.bsd_startdate = Event.bsd_startdate.Value.ToLocalTime();
                 Event.bsd_enddate = Event.bsd_enddate.Value.ToLocalTime();
             }
+        }
+        public async Task CheckPhasesLaunch()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_phaseslaunch'>
+                                    <attribute name='bsd_phaseslaunchid' alias='Val'/>
+                                    <order attribute='createdon' descending='true' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_projectid' operator='eq' value='{this.ProjectId}' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_phaseslaunchs", fetchXml);
+            if (result != null && result.value.Count > 0)
+                this.IsHasPhasesLaunch = true;
+            else
+                this.IsHasPhasesLaunch = false;
         }
     }
 }

@@ -63,12 +63,9 @@ namespace PhuLongCRM.Views
         private async void LoadProject_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            if (viewModel.Projects.Count == 0)
-            {
-                await viewModel.LoadProject();
-                listviewProject.ItemsSource = viewModel.Projects;
-            }
-            
+            viewModel.Projects.Clear();
+            await viewModel.LoadProject();
+            listviewProject.ItemsSource = viewModel.Projects;
             await bottomModalProject.Show();
             LoadingHelper.Hide();
         }
@@ -174,6 +171,19 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                 }
             };
-        }       
+        }
+
+        private void Clear_Clicked(object sender, EventArgs e)
+        {
+            viewModel.Project = null;
+           viewModel.PhasesLaunch = null;
+            viewModel.IsEvent = false;
+            viewModel.UnitCode = null;
+            viewModel.SelectedDirections = null;
+            viewModel.SelectedViews = null;
+            viewModel.SelectedUnitStatus = null;
+            viewModel.NetArea = null;
+            viewModel.Price = null;
+        }
     }
 }

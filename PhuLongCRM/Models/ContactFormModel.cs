@@ -31,7 +31,8 @@ namespace PhuLongCRM.Models
         public string jobtitle { get { return _jobtitle; } set { _jobtitle = value; OnPropertyChanged(nameof(jobtitle)); } }
 
         private DateTime? _birthdate;
-        public DateTime? birthdate {
+        public DateTime? birthdate
+        {
             get { return _birthdate; }
             set
             {
@@ -41,7 +42,29 @@ namespace PhuLongCRM.Models
         }
 
         private string _mobilephone;
-        public string mobilephone { get { return _mobilephone != null && _mobilephone.Contains("+84-")? _mobilephone : (_mobilephone != null && _mobilephone.Contains("+84") ? "+84-" : "+84-" + _mobilephone); } set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
+        public string mobilephone { get => _mobilephone; set { _mobilephone = value; OnPropertyChanged(nameof(mobilephone)); } }
+        public string mobilephone_format
+        {
+            get
+            {
+                if (mobilephone != null && mobilephone.Contains("-"))
+                {
+                    return mobilephone.Split('-')[1].StartsWith("84") ? mobilephone.Replace("84", "+84-") : mobilephone;
+                }
+                else if (mobilephone != null && mobilephone.Contains("+84"))
+                {
+                    return mobilephone.Replace("+84", "+84-");
+                }
+                else if (mobilephone != null && mobilephone.StartsWith("84"))
+                {
+                    return mobilephone.Replace("84", "+84-");
+                }
+                else
+                {
+                    return mobilephone;
+                }
+            }
+        }
 
         private string _createdon;
         public string createdon { get { return _createdon; } set { _createdon = value; OnPropertyChanged(nameof(createdon)); } }
@@ -95,7 +118,8 @@ namespace PhuLongCRM.Models
         public string bsd_passport { get { return _bsd_passport; } set { _bsd_passport = value; OnPropertyChanged(nameof(bsd_passport)); } }
 
         private DateTime? _bsd_issuedonpassport;
-        public DateTime? bsd_issuedonpassport {
+        public DateTime? bsd_issuedonpassport
+        {
             get { return _bsd_issuedonpassport; }
             set
             {
@@ -302,24 +326,25 @@ namespace PhuLongCRM.Models
         private bool _bsd_loingysinh;
         public bool bsd_loingysinh { get { return _bsd_loingysinh; } set { _bsd_loingysinh = value; OnPropertyChanged(nameof(bsd_loingysinh)); } }
 
-        private string _bsd_idcard;
-        public string bsd_idcard { get { return _bsd_idcard; } set { _bsd_idcard = value; OnPropertyChanged(nameof(bsd_idcard)); } }
+        private string _bsd_identitycard;
+        public string bsd_identitycard { get { return _bsd_identitycard; } set { _bsd_identitycard = value; OnPropertyChanged(nameof(bsd_identitycard)); } }
 
-        private DateTime? _bsd_issuedateidcard;
-        public DateTime? bsd_issuedateidcard {
-            get { return _bsd_issuedateidcard; }
+        private DateTime? _bsd_identitycarddategrant;
+        public DateTime? bsd_identitycarddategrant
+        {
+            get { return _bsd_identitycarddategrant; }
             set
             {
-                if (value.HasValue) { _bsd_issuedateidcard = value.Value.ToLocalTime(); } else { _bsd_issuedateidcard = null; }
-                OnPropertyChanged(nameof(bsd_issuedateidcard));
+                if (value.HasValue) { _bsd_identitycarddategrant = value.Value.ToLocalTime(); } else { _bsd_identitycarddategrant = null; }
+                OnPropertyChanged(nameof(bsd_identitycarddategrant));
             }
         }
 
-        private string _bsd_placeofissueidcar;
-        public string bsd_placeofissueidcar { get { return _bsd_placeofissueidcar; } set { _bsd_placeofissueidcar = value; OnPropertyChanged(nameof(bsd_placeofissueidcar)); } }
+        private string _bsd_placeofissueidentitycard;
+        public string bsd_placeofissueidentitycard { get { return _bsd_placeofissueidentitycard; } set { _bsd_placeofissueidentitycard = value; OnPropertyChanged(nameof(bsd_placeofissueidentitycard)); } }
 
         private decimal? _bsd_birthdate;
-        public decimal? bsd_birthdate{get {return _bsd_birthdate;} set{_bsd_birthdate = value; OnPropertyChanged(nameof(bsd_birthdate)); }}
+        public decimal? bsd_birthdate { get { return _bsd_birthdate; } set { _bsd_birthdate = value; OnPropertyChanged(nameof(bsd_birthdate)); } }
 
         private decimal? _bsd_birthmonth;
         public decimal? bsd_birthmonth { get { return _bsd_birthmonth; } set { _bsd_birthmonth = value; OnPropertyChanged(nameof(bsd_birthmonth)); } }
@@ -365,7 +390,7 @@ namespace PhuLongCRM.Models
         public ImageSource bsd_mattruoccmnd_source { get => _bsd_mattruoccmnd_source; set { _bsd_mattruoccmnd_source = value; OnPropertyChanged(nameof(bsd_mattruoccmnd_source)); } }
 
         private ImageSource _bsd_matsaucmnd_source;
-        public ImageSource bsd_matsaucmnd_source { get => _bsd_matsaucmnd_source; set { _bsd_matsaucmnd_source = value;  OnPropertyChanged(nameof(bsd_matsaucmnd_source)); } }
+        public ImageSource bsd_matsaucmnd_source { get => _bsd_matsaucmnd_source; set { _bsd_matsaucmnd_source = value; OnPropertyChanged(nameof(bsd_matsaucmnd_source)); } }
 
         private string _bsd_postalcode;
         public string bsd_postalcode { get { return _bsd_postalcode; } set { _bsd_postalcode = value; OnPropertyChanged(nameof(bsd_postalcode)); } }
@@ -374,5 +399,9 @@ namespace PhuLongCRM.Models
         public string bsd_customercode { get; set; }
         public string statuscode_format { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString())?.Name : null; } }
         public string statuscode_color { get { return statuscode != null ? CustomerStatusCodeData.GetCustomerStatusCodeById(statuscode.ToString())?.Background : null; } }
+
+        private string _bsd_qrcode;
+        public string bsd_qrcode { get => _bsd_qrcode; set { _bsd_qrcode = value; OnPropertyChanged(nameof(bsd_qrcode)); } }
+        public Guid leadid_originated { get; set; }// lead originated id
     }
 }

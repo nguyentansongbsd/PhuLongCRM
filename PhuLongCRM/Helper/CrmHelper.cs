@@ -1,15 +1,14 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using PhuLongCRM.Config;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using PhuLongCRM.Views;
 using System;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace PhuLongCRM.Helper
 {
@@ -41,15 +40,23 @@ namespace PhuLongCRM.Helper
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    var reLoginResponse = await LoginHelper.Login();
-                    if (reLoginResponse.IsSuccessStatusCode)
+                    if (UserLogged.IsLoginByUserCRM)
                     {
-                        var body = await reLoginResponse.Content.ReadAsStringAsync();
-                        GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
-                        UserLogged.AccessToken = tokenData.access_token;
+                        await Shell.Current.DisplayAlert("", "Het phien ban dang nhap. vui long dang nhap lai", "ok");
+                        await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
+                    }
+                    else
+                    {
+                        var reLoginResponse = await LoginHelper.Login();
+                        if (reLoginResponse.IsSuccessStatusCode)
+                        {
+                            var body = await reLoginResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
 
-                        var api_Response = await RetrieveMultiple<T>(EntityName, FetchXml);
-                        return api_Response;
+                            var api_Response = await RetrieveMultiple<T>(EntityName, FetchXml);
+                            return api_Response;
+                        }
                     }
                 }
                 else
@@ -57,7 +64,7 @@ namespace PhuLongCRM.Helper
                     var a = response.RequestMessage;
                     var body = await response.Content.ReadAsStringAsync();
                     var api_Response = JsonConvert.DeserializeObject<ErrorResponse>(body);
-                    
+
                 }
             }
             catch (Exception ex)
@@ -139,7 +146,7 @@ namespace PhuLongCRM.Helper
                         GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
                         UserLogged.AccessToken = tokenData.access_token;
 
-                        var api_response= await SetNullLookupField(EntityName, Id, FieldName);
+                        var api_response = await SetNullLookupField(EntityName, Id, FieldName);
                         return api_response;
                     }
                     else
@@ -147,7 +154,7 @@ namespace PhuLongCRM.Helper
                         return new CrmApiResponse()
                         {
                             IsSuccess = false,
-                            ErrorResponse = new ErrorResponse() {error = new Error() { message = reLoginResponse.RequestMessage.ToString() } }
+                            ErrorResponse = new ErrorResponse() { error = new Error() { message = reLoginResponse.RequestMessage.ToString() } }
                         };
                     }
                 }
@@ -218,15 +225,23 @@ namespace PhuLongCRM.Helper
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    var reLoginResponse = await LoginHelper.Login();
-                    if (reLoginResponse.IsSuccessStatusCode)
+                    if (UserLogged.IsLoginByUserCRM)
                     {
-                        var body = await reLoginResponse.Content.ReadAsStringAsync();
-                        GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
-                        UserLogged.AccessToken = tokenData.access_token;
+                        ToastMessageHelper.ShortMessage("Het phien ban dang nhap. vui long dang nhap lai");
+                        await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
+                    }
+                    else
+                    {
+                        var reLoginResponse = await LoginHelper.Login();
+                        if (reLoginResponse.IsSuccessStatusCode)
+                        {
+                            var body = await reLoginResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
 
-                        var api_Response = await PostData(path, formContent);
-                        return api_Response;
+                            var api_Response = await PostData(path, formContent);
+                            return api_Response;
+                        }
                     }
                 }
                 else
@@ -288,15 +303,23 @@ namespace PhuLongCRM.Helper
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    var reLoginResponse = await LoginHelper.Login();
-                    if (reLoginResponse.IsSuccessStatusCode)
+                    if (UserLogged.IsLoginByUserCRM)
                     {
-                        var body = await reLoginResponse.Content.ReadAsStringAsync();
-                        GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
-                        UserLogged.AccessToken = tokenData.access_token;
+                        ToastMessageHelper.ShortMessage("Het phien ban dang nhap. vui long dang nhap lai");
+                        await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
+                    }
+                    else
+                    {
+                        var reLoginResponse = await LoginHelper.Login();
+                        if (reLoginResponse.IsSuccessStatusCode)
+                        {
+                            var body = await reLoginResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
 
-                        var api_Response = await PatchData(path, formContent);
-                        return api_Response;
+                            var api_Response = await PatchData(path, formContent);
+                            return api_Response;
+                        }
                     }
                 }
                 else
@@ -339,15 +362,23 @@ namespace PhuLongCRM.Helper
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    var reLoginResponse = await LoginHelper.Login();
-                    if (reLoginResponse.IsSuccessStatusCode)
+                    if (UserLogged.IsLoginByUserCRM)
                     {
-                        var body = await reLoginResponse.Content.ReadAsStringAsync();
-                        GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
-                        UserLogged.AccessToken = tokenData.access_token;
+                        ToastMessageHelper.ShortMessage("Het phien ban dang nhap. vui long dang nhap lai");
+                        await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
+                    }
+                    else
+                    {
+                        var reLoginResponse = await LoginHelper.Login();
+                        if (reLoginResponse.IsSuccessStatusCode)
+                        {
+                            var body = await reLoginResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
 
-                        var api_Response = await DeleteRecord(path);
-                        return api_Response;
+                            var api_Response = await DeleteRecord(path);
+                            return api_Response;
+                        }
                     }
                 }
                 else

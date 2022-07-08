@@ -200,14 +200,36 @@ namespace PhuLongCRM.Views
             data["leadid"] = leadFormModel.leadid;
             data["subject"] = leadFormModel.bsd_topic_label;
             data["lastname"] = leadFormModel.lastname;
-            data["mobilephone"] = leadFormModel.mobilephone;           
-            if (UserLogged.Id != Guid.Empty)
+            data["bsd_topic@odata.bind"] = "/bsd_topics(B564BDFC-50E2-EC11-BB3D-00224859CF8A)"; //Khách hàng tiềm năng APP
+            data["leadsourcecode"] = "10"; //Orther
+            data["telephone1"] = "+84";
+
+            if (leadFormModel.mobilephone.StartsWith("+84"))
+            {
+                data["mobilephone"] = leadFormModel.mobilephone.Replace("+","");
+            }
+            else if (leadFormModel.mobilephone.StartsWith("84"))
+            {
+                data["mobilephone"] = leadFormModel.mobilephone;
+            }
+            else if (leadFormModel.mobilephone.StartsWith("0"))
+            {
+                data["mobilephone"] = "84" + leadFormModel.mobilephone;
+            }
+            else
+            {
+                data["mobilephone"] = leadFormModel.mobilephone;
+            }
+            
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
+                //data["bsd_importer@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
+                data["createdby@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
             return data;
         }

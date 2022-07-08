@@ -32,7 +32,7 @@ namespace PhuLongCRM.ViewModels
         public OptionSet Area { get => _area; set { _area = value; OnPropertyChanged(nameof(Area)); } }
 
         private PhongThuyModel _PhongThuy;
-        public PhongThuyModel PhongThuy { get => _PhongThuy; set { _PhongThuy = value; OnPropertyChanged(nameof(PhongThuy)); } }                
+        public PhongThuyModel PhongThuy { get => _PhongThuy; set { _PhongThuy = value; OnPropertyChanged(nameof(PhongThuy)); } }
         public ObservableCollection<OptionSet> list_gender_optionset { get; set; }
         public ObservableCollection<OptionSet> list_industrycode_optionset { get; set; }
         public ObservableCollection<HuongPhongThuy> list_HuongTot { set; get; }
@@ -52,23 +52,41 @@ namespace PhuLongCRM.ViewModels
         public int LeadStatusCode { get; set; }
         public int LeadStateCode { get; set; }
 
+        public string CodeLead = Controls.LookUpMultipleTabs.CodeLead;
+
+        private ObservableCollection<HoatDongListModel> _list_customercare;
+        public ObservableCollection<HoatDongListModel> list_customercare { get => _list_customercare; set { _list_customercare = value; OnPropertyChanged(nameof(list_customercare)); } }
+
+        private bool _showMoreCase;
+        public bool ShowMoreCase { get => _showMoreCase; set { _showMoreCase = value; OnPropertyChanged(nameof(ShowMoreCase)); } }
+        public int PageCase { get; set; } = 1;
+
+        public bool IsFromQRCode { get; set; }
+
         public LeadDetailPageViewModel()
         {
             singleGender = new OptionSet();
-            singleIndustrycode = new OptionSet();                      
+            singleIndustrycode = new OptionSet();
 
             list_gender_optionset = new ObservableCollection<OptionSet>();
-            list_industrycode_optionset = new ObservableCollection<OptionSet>();           
+            list_industrycode_optionset = new ObservableCollection<OptionSet>();
 
             list_HuongTot = new ObservableCollection<HuongPhongThuy>();
             list_HuongXau = new ObservableCollection<HuongPhongThuy>();
 
             this.loadGender();
             this.loadIndustrycode();
-        }      
+        }
 
         public async Task LoadOneLead(String leadid)
         {
+            string filterEmployee = string.Empty;
+            if (IsFromQRCode == false)
+            {
+                filterEmployee = $@"<filter type='and'>
+                                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{ UserLogged.Id}' />
+                                    </filter>";
+            }
             singleLead = new LeadFormModel();
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='lead'>
@@ -112,6 +130,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_accountaddressvn' />
                                     <attribute name='bsd_permanentaddress1' />
                                     <attribute name='bsd_contactaddress' />
+                                    <attribute name='bsd_qrcode' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='leadid' operator='eq' value='{" + leadid + @"}' />
@@ -119,25 +138,23 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='transactioncurrency' from='transactioncurrencyid' to='transactioncurrencyid' visible='false' link-type='outer'>
                                         <attribute name='currencyname'  alias='transactioncurrencyid_label'/>
                                     </link-entity>
-                                    <link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
-                                        <attribute name='name'  alias='campaignid_label'/>
-                                    </link-entity>
                                     <link-entity name='account' from='originatingleadid' to='leadid' link-type='outer'>
                                         <attribute name='accountid' alias='account_id'/>
                                     </link-entity>
                                     <link-entity name='contact' from='originatingleadid' to='leadid' link-type='outer'>
                                         <attribute name='contactid' alias='contact_id'/>
                                     </link-entity>
-                                    <filter type='and'>
-                                          <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
-                                    </filter>
+                                    " + filterEmployee + @"
                                 </entity>
                             </fetch>";
+            //$@"<link-entity name='campaign' from='campaignid' to='campaignid' visible='false' link-type='outer'>
+            //                            <attribute name='name'  alias='campaignid_label'/>
+            //                        </link-entity>"
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
-            if(result == null)
+            if (result == null)
             {
                 return;
-            }    
+            }
             var data = result.value.FirstOrDefault();
             this.singleLead = data;
             this.singleGender = list_gender_optionset.SingleOrDefault(x => x.Val == this.singleLead.new_gender);
@@ -191,7 +208,7 @@ namespace PhuLongCRM.ViewModels
             else
             {
                 IsSuccessContact = false;
-            }           
+            }
         }
         public async Task CreateAccount()
         {
@@ -208,7 +225,7 @@ namespace PhuLongCRM.ViewModels
                 {
                     IsSuccessAccount = false;
                 }
-            }           
+            }
         }
 
         public void loadGender()
@@ -228,39 +245,72 @@ namespace PhuLongCRM.ViewModels
         /// ////
         public void loadIndustrycode()
         {
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("1"), Label = "Kế toán", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("2"), Label = "Nông nghiệp và Trích xuất Tài nguyên Thiên nhiên Không Dầu", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("3"), Label = "In và Xuất bản Truyền thông", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("4"), Label = "Nhà môi giới", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("5"), Label = "Bán lẻ Dịch vụ Cấp nước trong Tòa nhà", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("6"), Label = "Dịch vụ Kinh doanh", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("7"), Label = "Tư vấn", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("8"), Label = "Dịch vụ Tiêu dùng", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("9"), Label = "Quản lý Thiết kế, Chỉ đạo và Quảng cáo", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("10"), Label = "Nhà phân phối, Người điều vận và Nhà chế biến", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("11"), Label = "Văn phòng và Phòng khám Bác sĩ", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("12"), Label = "Sản xuất Lâu bền", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("13"), Label = "Địa điểm Ăn Uống", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("14"), Label = "Bán lẻ Dịch vụ Giải trí", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("15"), Label = "Thuê và Cho thuê Thiết bị", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("16"), Label = "Tài chính", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("17"), Label = "Chế biến Thực phẩm và Thuốc lá", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("18"), Label = "Xử lý Dựa vào Nhiều vốn Chuyển về", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("19"), Label = "Sửa chữa và Bảo dưỡng Chuyển đến", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("20"), Label = "Bảo hiểm", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("21"), Label = "Dịch vụ Pháp lý", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("22"), Label = "Bán lẻ Hàng hóa Không lâu bền", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("23"), Label = "Dịch vụ Tiêu dùng Bên ngoài", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("24"), Label = "Trích xuất và Phân phối Hóa dầu", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("25"), Label = "Bán lẻ Dịch vụ", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("26"), Label = "Chi nhánh SIG", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("27"), Label = "Dịch vụ Xã hội", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("28"), Label = "Nhà thầu Giao dịch Bên ngoài Đặc biệt", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("29"), Label = "Bất động sản Đặc biệt", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("30"), Label = "Vận tải", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("31"), Label = "Tạo và Phân phối Tiện ích", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("32"), Label = "Bán lẻ Phương tiện", });
-            list_industrycode_optionset.Add(new OptionSet() { Val = ("33"), Label = "Bán buôn", });
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("1"), Label = Language.lead_1_industry, });
+            //Accounting
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("2"), Label = Language.lead_2_industry, });
+            //Agriculture and Non-petrol natural resource extraction
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("3"), Label = Language.lead_3_industry, });
+            //Broadcasting printing and Publishing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("4"), Label = Language.lead_4_industry, });
+            //Brokers
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("5"), Label = Language.lead_5_industry, });
+            //Building supply retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("6"), Label = Language.lead_6_industry, });
+            //Business services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("7"), Label = Language.lead_7_industry, });
+            //Consulting
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("8"), Label = Language.lead_8_industry, });
+            //Consumer services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("9"), Label = Language.lead_9_industry, });
+            //Design, direction and creative management
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("10"), Label = Language.lead_10_industry, });
+            //Distributors, dispatchers and processors
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("11"), Label = Language.lead_11_industry, });
+            //Doctor's offices and clinics
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("12"), Label = Language.lead_12_industry, });
+            //Durable manufacturing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("13"), Label = Language.lead_13_industry, });
+            //Eating and drinking places
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("14"), Label = Language.lead_14_industry, });
+            //Entertainment retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("15"), Label = Language.lead_15_industry, });
+            //Equipment rental and leasing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("16"), Label = Language.lead_16_industry, });
+            //Financial
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("17"), Label = Language.lead_17_industry, });
+            //Food and tobacco processing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("18"), Label = Language.lead_18_industry, });
+            //Inbound capital intensive processing
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("19"), Label = Language.lead_19_industry, });
+            //Inbound repair and services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("20"), Label = Language.lead_20_industry, });
+            //Insurance
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("21"), Label = Language.lead_21_industry, });
+            //Legal services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("22"), Label = Language.lead_22_industry, });
+            //Non-Durable merchandise retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("23"), Label = Language.lead_23_industry, });
+            //Outbound consumer service
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("24"), Label = Language.lead_24_industry, });
+            //Petrochemical extraction and distribution
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("25"), Label = Language.lead_25_industry, });
+            //Service retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("26"), Label = Language.lead_26_industry, });
+            //SIG affiliations
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("27"), Label = Language.lead_27_industry, });
+            //Social services
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("28"), Label = Language.lead_28_industry, });
+            //Special outbound trade contractors
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("29"), Label = Language.lead_29_industry, });
+            //Specialty realty
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("30"), Label = Language.lead_30_industry, });
+            //Transportation
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("31"), Label = Language.lead_31_industry, });
+            //Utility creation and distribution
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("32"), Label = Language.lead_32_industry, });
+            //Vehicle retail
+            list_industrycode_optionset.Add(new OptionSet() { Val = ("33"), Label = Language.lead_33_industry, });
+            //Wholesale
         }
 
         public async Task<OptionSet> loadOneIndustrycode(string id)
@@ -268,7 +318,7 @@ namespace PhuLongCRM.ViewModels
             this.singleIndustrycode = list_industrycode_optionset.FirstOrDefault(x => x.Val == id); ;
             return singleIndustrycode;
         }
-              
+
         public void LoadPhongThuy()
         {
             PhongThuy = new PhongThuyModel();
@@ -336,7 +386,7 @@ namespace PhuLongCRM.ViewModels
                 address.Add(singleLead.address1_country);
             }
 
-            Address = string.Join(", ", address);       
+            Address = string.Join(", ", address);
         }
 
         private async Task<object> getContentContact()
@@ -346,17 +396,17 @@ namespace PhuLongCRM.ViewModels
             data["lastname"] = singleLead.lastname;
             data["bsd_fullname"] = singleLead.lastname;
             data["emailaddress1"] = singleLead.emailaddress1;
-            data["mobilephone"] = singleLead.mobilephone;          
+            data["mobilephone"] = singleLead.mobilephone;
             data["bsd_jobtitlevn"] = singleLead.jobtitle;
             data["telephone1"] = singleLead.telephone1;
-             data["birthdate"] = singleLead.new_birthday.HasValue ? (DateTime.Parse(singleLead.new_birthday.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
+            data["birthdate"] = singleLead.new_birthday.HasValue ? (DateTime.Parse(singleLead.new_birthday.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
             data["gendercode"] = singleLead.new_gender;
 
-            if (UserLogged.Id != null)
+            if (UserLogged.Id != null && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -369,8 +419,8 @@ namespace PhuLongCRM.ViewModels
             IDictionary<string, object> data = new Dictionary<string, object>();
             Guid accountid = Guid.NewGuid();
             data["accountid"] = accountid;
-            data["bsd_name"] = singleLead.companyname;        
-            data["websiteurl"] = singleLead.websiteurl;          
+            data["bsd_name"] = singleLead.companyname;
+            data["websiteurl"] = singleLead.websiteurl;
             if (!string.IsNullOrWhiteSpace(singleLead.numberofemployees))
             {
                 data["numberofemployees"] = int.Parse(singleLead.numberofemployees);
@@ -400,7 +450,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_postalcode"] = singleLead.address1_postalcode;
             if (singleLead._transactioncurrencyid_value == null)
             {
-                await DeletLookup("accounts","transactioncurrencyid", accountid);
+                await DeletLookup("accounts", "transactioncurrencyid", accountid);
             }
             else
             {
@@ -431,11 +481,11 @@ namespace PhuLongCRM.ViewModels
             {
                 data["bsd_district@odata.bind"] = "/new_districts(" + District.Id + ")"; /////Lookup Field
             }
-            if (UserLogged.Id != Guid.Empty)
+            if (UserLogged.Id != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -451,7 +501,7 @@ namespace PhuLongCRM.ViewModels
         private async Task<object> getContent()
         {
             IDictionary<string, object> data = new Dictionary<string, object>();
-            data["statecode"] = "1";            
+            data["statecode"] = "1";
             return data;
         }
 
@@ -472,7 +522,7 @@ namespace PhuLongCRM.ViewModels
             {
                 Country = result.value.FirstOrDefault();
                 await LoadProvinceByName();
-            }        
+            }
         }
         public async Task LoadProvinceByName()
         {
@@ -492,8 +542,8 @@ namespace PhuLongCRM.ViewModels
             {
                 this.Province = result.value.FirstOrDefault();
                 await LoadDistrictByName();
-            }          
-        }     
+            }
+        }
         public async Task LoadDistrictByName()
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -512,7 +562,156 @@ namespace PhuLongCRM.ViewModels
             if (result != null && result.value.Count > 0)
             {
                 this.District = result.value.FirstOrDefault();
-            }        
+            }
+        }
+        // check id
+        public async Task<bool> CheckID(string identitycardnumber, string leadid)
+        {
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='lead'>
+                                    <attribute name='fullname' />
+                                    <filter type='and'>
+                                        <condition attribute='bsd_identitycardnumberid' operator='eq' value='" + identitycardnumber + @"' />
+                                        <condition attribute='leadid' operator='ne' value='" + leadid + @"' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("leads", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public async Task LoadCaseForLead()
+        {
+            if (list_customercare == null)
+                list_customercare = new ObservableCollection<HoatDongListModel>();
+
+            if (list_customercare != null && singleLead != null && singleLead.leadid != Guid.Empty)
+            {
+                await Task.WhenAll(
+                    LoadActiviy(singleLead.leadid, "task", "tasks"),
+                    LoadActiviy(singleLead.leadid, "phonecall", "phonecalls"),
+                    LoadActiviy(singleLead.leadid, "appointment", "appointments")
+                );
+            }
+            ShowMoreCase = list_customercare.Count < (3 * PageCase) ? false : true;
+        }
+        public async Task LoadActiviy(Guid leadID, string entity, string entitys)
+        {
+            string forphonecall = null;
+            if (entity == "phonecall")
+            {
+                forphonecall = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
+                                        <filter type='and'>
+                                            <condition attribute='participationtypemask' operator='eq' value='2' />
+                                        </filter>
+                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
+                                            <attribute name='fullname' alias='callto_contact_name'/>
+                                        </link-entity>
+                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
+                                            <attribute name='bsd_name' alias='callto_account_name'/>
+                                        </link-entity>
+                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
+                                            <attribute name='fullname' alias='callto_lead_name'/>
+                                        </link-entity>
+                                    </link-entity>";
+            }
+
+            string fetch = $@"<fetch version='1.0' count='3' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='true'>
+                                <entity name='{entity}'>
+                                    <attribute name='subject' />
+                                    <attribute name='statecode' />
+                                    <attribute name='activityid' />
+                                    <attribute name='scheduledstart' />
+                                    <attribute name='scheduledend' /> 
+                                    <attribute name='activitytypecode' />
+                                    <order attribute='modifiedon' descending='true' />
+                                    <filter type='and'>
+                                        <filter type='or'>
+                                            <condition entityname='party' attribute='partyid' operator='eq' value='{leadID}'/>
+                                            <condition attribute='regardingobjectid' operator='eq' value='{leadID}' />
+                                        </filter>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                    </filter>
+                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
+                                    <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
+                                        <attribute name='bsd_name' alias='accounts_bsd_name'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
+                                        <attribute name='fullname' alias='contact_bsd_fullname'/>
+                                    </link-entity>
+                                    <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
+                                        <attribute name='fullname' alias='lead_fullname'/>
+                                    </link-entity>
+                                    {forphonecall}
+                                </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>(entitys, fetch);
+            if (result == null || result.value.Count == 0) return;
+            var data = result.value;
+            if (entity == "appointment")
+            {
+                foreach (var item in data)
+                {
+                    item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
+                    list_customercare.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var item in data)
+                {
+                    item.customer = item.regarding_name;
+                    list_customercare.Add(item);
+                }
+            }
+        }
+
+        // Save qrcode
+        public async Task<bool> SaveQRCode(string qrCode)
+        {
+            string path = "/leads(" + this.singleLead.leadid + ")";
+            object content = new
+            {
+                bsd_qrcode = qrCode,
+            };
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            if (result.IsSuccess)
+                return true;
+            else
+                return false;
+        }
+        public async Task<LeadFormModel> LoadStatusLead()
+        {
+            if (singleLead == null || singleLead.leadid == Guid.Empty) return null;
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                <entity name='lead'>
+                                    <attribute name='statuscode' />
+                                    <attribute name='statecode' />
+                                    <attribute name='bsd_qrcode' />
+                                    <order attribute='createdon' descending='true' />
+                                    <filter type='and'>
+                                        <condition attribute='leadid' operator='eq' value='{singleLead.leadid}' />
+                                    </filter>
+                                    <link-entity name='account' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='accountid' alias='account_id'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='originatingleadid' to='leadid' link-type='outer'>
+                                        <attribute name='contactid' alias='contact_id'/>
+                                    </link-entity>
+                                </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
+            if (result == null || result.value.Count == 0)
+                return null;
+            return result.value.FirstOrDefault();
         }
     }
 }

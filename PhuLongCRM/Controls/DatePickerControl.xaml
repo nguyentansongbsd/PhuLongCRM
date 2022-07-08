@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Name="this" x:Class="PhuLongCRM.Controls.DatePickerControl">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Name="this" 
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources"
+             x:Class="PhuLongCRM.Controls.DatePickerControl">
     <ContentView.Resources>
         <ResourceDictionary>
             <Style TargetType="Label" x:Key="placeholderLabelStyle">
@@ -20,11 +23,11 @@
 
             <ControlTemplate x:Key="footerTemplate">
                 <Grid ColumnDefinitions="*,*" HorizontalOptions="FillAndExpand">
-                    <Button Grid.Column="0" Text="Đóng" 
+                    <Button Grid.Column="0" Text="{x:Static lang:Language.dong}" 
                             TextColor="#1399D5" FontAttributes="Bold" FontSize="15"
                             BackgroundColor="Transparent"
                             Command="{TemplateBinding CancelCommand}" />
-                    <Button Grid.Column="1" Text="Chọn" 
+                    <Button Grid.Column="1" Text="{x:Static lang:Language.xac_nhan}" 
                             TextColor="#1399D5" FontAttributes="Bold" FontSize="15"
                             BackgroundColor="Transparent"
                             Command="{TemplateBinding AcceptCommand}" />

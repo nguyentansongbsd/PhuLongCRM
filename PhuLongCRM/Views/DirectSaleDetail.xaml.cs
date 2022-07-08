@@ -213,34 +213,30 @@ namespace PhuLongCRM.Views
 
         public void SetButton()
         {
-            if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == false)
+            btnBangTinhGia.IsVisible = viewModel.IsShowBtnBangTinhGia;
+
+            if (btnGiuCho.IsVisible == false && btnBangTinhGia.IsVisible == false)
             {
                 gridButton.IsVisible = false;
             }
-            else if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == true)
+            else if (btnGiuCho.IsVisible == true && btnBangTinhGia.IsVisible == true)
             {
                 gridButton.IsVisible = true;
-                btnGiuCho.IsVisible = true;
-                btnBangTinhGia.IsVisible = viewModel.IsShowBtnBangTinhGia;
                 Grid.SetColumn(btnGiuCho, 0);
                 Grid.SetColumnSpan(btnGiuCho, 1);
                 Grid.SetColumn(btnBangTinhGia, 1);
                 Grid.SetColumnSpan(btnBangTinhGia, 1);
             }
-            else if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == false)
+            else if (btnGiuCho.IsVisible == true && btnBangTinhGia.IsVisible == false)
             {
                 gridButton.IsVisible = true;
-                btnGiuCho.IsVisible = true;
-                btnBangTinhGia.IsVisible = viewModel.IsShowBtnBangTinhGia;
                 Grid.SetColumn(btnGiuCho, 0);
                 Grid.SetColumnSpan(btnGiuCho, 2);
                 Grid.SetColumn(btnBangTinhGia, 0);
             }
-            else if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == true)
+            else if (btnGiuCho.IsVisible == false && btnBangTinhGia.IsVisible == true)
             {
                 gridButton.IsVisible = true;
-                btnGiuCho.IsVisible = false;
-                btnBangTinhGia.IsVisible = viewModel.IsShowBtnBangTinhGia;
                 Grid.SetColumn(btnGiuCho, 0);
                 Grid.SetColumn(btnBangTinhGia, 0);
                 Grid.SetColumnSpan(btnBangTinhGia, 2);
@@ -309,7 +305,8 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                   // ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
+                  //  ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
+                  // hiện câu thông báo bên queue form
                 }
             };
         }
@@ -373,7 +370,7 @@ namespace PhuLongCRM.Views
             viewModel.QueueList.Clear();
             await Task.WhenAll(
                 viewModel.LoadQueues(unitId),
-                viewModel.CheckShowBtnBangTinhGia(unitId),
+                //viewModel.CheckShowBtnBangTinhGia(unitId),
                 viewModel.LoadUnitById(unitId)
                 );
 
@@ -394,29 +391,19 @@ namespace PhuLongCRM.Views
             {
                 viewModel.UnitView = null;
             }
-            if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004")
+            // hiện btn giữ chỗ availabe, queuing, preparing, booking
+            if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004"
+                || viewModel.UnitStatusCode.Id == "100000007")
             {
-                btnGiuCho.IsVisible = !viewModel.Unit.bsd_vippriority;
-                if (viewModel.UnitStatusCode.Id != "1" && viewModel.IsShowBtnBangTinhGia == true)
-                {
-                    viewModel.IsShowBtnBangTinhGia = true;
-                }
-                else
-                {
-                    viewModel.IsShowBtnBangTinhGia = false;
-                }
+                btnGiuCho.IsVisible = true;
             }
             else
             {
                 btnGiuCho.IsVisible = false;
-                viewModel.IsShowBtnBangTinhGia = false;
             }
-
             SetButton();
-
             gridButton.IsVisible = !viewModel.Unit.bsd_vippriority;
             LoadingHelper.Hide();
-
         }
     }
 }

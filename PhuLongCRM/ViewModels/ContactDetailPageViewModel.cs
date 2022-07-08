@@ -81,14 +81,68 @@ namespace PhuLongCRM.ViewModels
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='contact'>
-                                    <all-attributes />
+                                    <attribute name='contactid' />
+                                    <attribute name='fullname' />
+                                    <attribute name='bsd_fullname' />
+                                    <attribute name='bsd_firstname' />
+                                    <attribute name='firstname' />
+                                    <attribute name='bsd_lastname' />
+                                    <attribute name='lastname' />
+                                    <attribute name='emailaddress1' />
+                                    <attribute name='jobtitle' />
+                                    <attribute name='birthdate' />
+                                    <attribute name='mobilephone' />
+                                    <attribute name='createdon' />
+                                    <attribute name='ownerid' />
+                                    <attribute name='gendercode' />
+                                    <attribute name='bsd_identitycardnumber' />
+                                    <attribute name='statuscode' />
+                                    <attribute name='bsd_contactaddress' />
+                                    <attribute name='statecode' />
+                                    <attribute name='bsd_type' />
+                                    <attribute name='bsd_localization' />
+                                    <attribute name='bsd_haveprotector' />
+                                    <attribute name='bsd_dategrant' />
+                                    <attribute name='bsd_placeofissue' />
+                                    <attribute name='bsd_passport' />
+                                    <attribute name='bsd_issuedonpassport' />
+                                    <attribute name='bsd_placeofissuepassport' />
+                                    <attribute name='bsd_jobtitlevn' />
+                                    <attribute name='bsd_taxcode' />
+                                    <attribute name='bsd_email2' />
+                                    <attribute name='telephone1' />
+                                    <attribute name='fax' />
+                                    <attribute name='bsd_totaltransaction' />
+                                    <attribute name='bsd_customergroup' />
+                                    <attribute name='bsd_diachi' />
+                                    <attribute name='bsd_housenumberstreet' />
+                                    <attribute name='bsd_housenumber' />
+                                    <attribute name='bsd_country' />
+                                    <attribute name='bsd_province' />
+                                    <attribute name='bsd_district' />
+                                    <attribute name='bsd_permanentaddress1' />
+                                    <attribute name='bsd_diachithuongtru' />
+                                    <attribute name='bsd_permanentcountry' />
+                                    <attribute name='bsd_permanentprovince' />
+                                    <attribute name='bsd_permanentdistrict' />
+                                    <attribute name='bsd_permanentaddress' />
+                                    <attribute name='bsd_permanenthousenumber' />
+                                    <attribute name='bsd_identitycard' />
+                                    <attribute name='bsd_identitycarddategrant' />
+                                    <attribute name='bsd_placeofissueidentitycard' />
+                                    <attribute name='bsd_birthdate' />
+                                    <attribute name='bsd_birthmonth' />
+                                    <attribute name='bsd_birthyear' />
+                                    <attribute name='bsd_postalcode' />
+                                    <attribute name='bsd_qrcode' />
+                                    <attribute name='bsd_customercode' />
                                     <order attribute='createdon' descending='true' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
                                           <attribute name='bsd_name' alias='parentcustomerid_label' />
                                     </link-entity>
-                                    <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' visible='false' link-type='outer' alias='a_cf81d7378befeb1194ef000d3a81fcba'>
-                                      <attribute name='bsd_employeeid' alias='employee_id'/>
+                                    <link-entity name='lead' from='leadid' to='originatingleadid' link-type='outer'>
+                                        <attribute name='leadid' alias='leadid_originated'/>
                                     </link-entity>
                                     <filter type='and'>
                                         <condition attribute='contactid' operator='eq' value='" + id + @"' />
@@ -159,11 +213,12 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='customerid' />
                                 <attribute name='createdon' />
                                 <attribute name='bsd_queuingexpired' />
+                                <attribute name='statuscode' />
                                 <attribute name='opportunityid' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='parentcontactid' operator='eq' uitype='contact' value='{customerId}' />
-                                  <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                  <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                 </filter> 
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
                                     <attribute name='bsd_name' alias='bsd_project_name'/>
@@ -202,7 +257,7 @@ namespace PhuLongCRM.ViewModels
         // DANH SACH DAT COC
         public async Task LoadReservationForContactForm(string customerId)
         {
-            string fetch = $@"<fetch version='1.0' count='3' page='{PageDanhSachDatCoc}' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' count='5' page='{PageDanhSachDatCoc}' output-format='xml-platform' mapping='logical' distinct='false'>
                           <entity name='quote'>
                                 <attribute name='name' />
                                 <attribute name='totalamount' />
@@ -213,7 +268,7 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='customerid' operator='eq' value='{customerId}' />
-                                  <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                  <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
                                            <value>100000000</value>
@@ -223,6 +278,7 @@ namespace PhuLongCRM.ViewModels
                                             <value>861450002</value>
                                             <value>4</value>                
                                             <value>3</value>
+                                            <value>100000007</value>
                                        </condition>
                                        <filter type='and'>
                                            <condition attribute='statuscode' operator='in'>
@@ -256,7 +312,7 @@ namespace PhuLongCRM.ViewModels
             }
             var data = result.value;
 
-            if (data.Count < 3)
+            if (data.Count < 5)
             {
                 ShowMoreDanhSachDatCoc = false;
             }
@@ -286,7 +342,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='ordernumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
-                                        <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                         <condition attribute='customerid' operator='eq' value='{customerId}' />               
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
@@ -324,9 +380,9 @@ namespace PhuLongCRM.ViewModels
             if(list_chamsockhachhang != null && singleContact.contactid != Guid.Empty)
             {
                 await Task.WhenAll(
-                LoadActiviy(singleContact.contactid, "task", "tasks"),
-                LoadActiviy(singleContact.contactid, "phonecall", "phonecalls"),
-                LoadActiviy(singleContact.contactid, "appointment", "appointments")
+                LoadActiviy("task", "tasks"),
+                LoadActiviy("phonecall", "phonecalls"),
+                LoadActiviy("appointment", "appointments")
                 //LoadTasks(singleContact.contactid),
                 //LoadMettings(singleContact.contactid),
                 //LoadPhoneCalls(singleContact.contactid)
@@ -335,7 +391,7 @@ namespace PhuLongCRM.ViewModels
             ShowMoreChamSocKhachHang = list_chamsockhachhang.Count < (3* PageChamSocKhachHang) ? false : true;
         }
 
-        public async Task LoadActiviy(Guid contactID, string entity, string entitys)
+        public async Task LoadActiviy(string entity, string entitys)
         {
             string forphonecall = null;
             if (entity == "phonecall")
@@ -355,7 +411,6 @@ namespace PhuLongCRM.ViewModels
                                         </link-entity>
                                     </link-entity>";
             }
-
             string fetch = $@"<fetch version='1.0' count='3' page='{PageChamSocKhachHang}' output-format='xml-platform' mapping='logical' distinct='true'>
                                 <entity name='{entity}'>
                                     <attribute name='subject' />
@@ -363,14 +418,14 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='activityid' />
                                     <attribute name='scheduledstart' />
                                     <attribute name='scheduledend' /> 
-                                    <attribute name='activitytypecode' /> 
+                                    <attribute name='activitytypecode' />
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
                                         <filter type='or'>
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
+                                            <condition entityname='party' attribute='partyid' operator='eq' value='{singleContact.contactid}'/>
+                                            <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
@@ -389,9 +444,21 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>(entitys, fetch);
             if (result == null || result.value.Count == 0) return;
             var data = result.value;
-            foreach (var x in data)
+            if (entity == "appointment")
             {
-                list_chamsockhachhang.Add(x);
+                foreach (var item in data)
+                {
+                    item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
+                    list_chamsockhachhang.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var item in data)
+                {
+                    item.customer = item.regarding_name;
+                    list_chamsockhachhang.Add(item);
+                }
             }
         }
 
@@ -411,7 +478,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                      <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>
@@ -462,7 +529,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                    <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>
@@ -548,7 +615,7 @@ namespace PhuLongCRM.ViewModels
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                      <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>
@@ -642,6 +709,22 @@ namespace PhuLongCRM.ViewModels
                     PhongThuy.nam_sinh = 0;
                 }
             }
+        }
+
+        // Save qrcode
+        public async Task<bool> SaveQRCode(string qrCode)
+        {
+            string path = "/contacts(" + this.singleContact.contactid + ")";
+            object content = new
+            {
+                bsd_qrcode = qrCode,
+            };
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            if (result.IsSuccess)
+                return true;
+            else
+                return false;
         }
     }
 

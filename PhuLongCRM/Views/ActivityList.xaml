@@ -8,79 +8,10 @@
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              x:Class="PhuLongCRM.Views.ActivityList"
              Title="{x:Static lang:Language.hoat_dong}">
-    <ContentPage.Resources>
-        <Style TargetType="telerikPrimitives:RadBorder" x:Key="radBorder">
-            <Setter Property="CornerRadius" Value="0"/>
-            <Setter Property="Padding" Value="0,5"/>
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Active">
-                            <VisualState.Setters>
-                                <Setter Property="BorderThickness" Value="0,0,0,2"/>
-                                <Setter Property="BorderColor" Value="#026294"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="InActive">
-                            <VisualState.Setters>
-                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                <Setter Property="BorderColor" Value="#808080"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-        <Style TargetType="Label" x:Key="labelTap">
-            <Setter Property="Margin" Value="15,10"/>
-            <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="LineBreakMode" Value="TailTruncation"/>
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Active">
-                            <VisualState.Setters>
-                                <Setter Property="TextColor" Value="#026294"/>
-                                <Setter Property="FontAttributes" Value="Bold"/>
-                                <Setter Property="FontSize" Value="16"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="InActive">
-                            <VisualState.Setters>
-                                <Setter Property="TextColor" Value="#808080"/>
-                                <Setter Property="FontAttributes" Value="None"/>
-                                <Setter Property="FontSize" Value="15"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-        <converters:NullToHideConverter x:Key="NullToHideConverter" />
-    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <Grid RowDefinitions="Auto,Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                <Grid Grid.Row="0" ColumnDefinitions="*,*,*" ColumnSpacing="0" VerticalOptions="Center" >
-                    <telerikPrimitives:RadBorder x:Name="radBorderTask" Grid.Column="0" Style="{StaticResource radBorder}">
-                        <telerikPrimitives:RadBorder.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Task_Tapped"/>
-                        </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblTask" Text="{x:Static lang:Language.cong_viec}" Style="{StaticResource labelTap}"/>
-                    </telerikPrimitives:RadBorder>
-                    <telerikPrimitives:RadBorder x:Name="radBorderMeeting" Grid.Column="1" Style="{StaticResource radBorder}">
-                        <telerikPrimitives:RadBorder.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Meeting_Tapped"/>
-                        </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblMeeting" Text="{x:Static lang:Language.cuoc_hop}" Style="{StaticResource labelTap}"/>
-                    </telerikPrimitives:RadBorder>
-                    <telerikPrimitives:RadBorder x:Name="radBorderPhoneCall" Grid.Column="2" Style="{StaticResource radBorder}">
-                        <telerikPrimitives:RadBorder.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PhoneCall_Tapped"/>
-                        </telerikPrimitives:RadBorder.GestureRecognizers>
-                        <Label x:Name="lblPhoneCall" Text="{x:Static lang:Language.cuoc_goi}" Style="{StaticResource labelTap}"/>
-                    </telerikPrimitives:RadBorder>
-                </Grid>
+                <controls:TabControl ListTab="cong_viec,cuoc_hop,cuoc_goi" IndexTab="TabControl_IndexTab"/>
 
                 <controls:SearchBarFrame x:Name="searchBar" Grid.Row="1" Margin="10,10,10,5">
                     <controls:SearchBar  Text="{Binding Keyword}" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
@@ -89,27 +20,21 @@
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                <StackLayout BackgroundColor ="White" Padding="20" Margin="0,1">
                                     <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statecode_color}" VerticalOptions="Start">
                                             <Label Grid.Column="0" Text="{Binding statecode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="1" Text="{Binding subject}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                     </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
-                                        <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding regarding_name}" IsVisible="{Binding regarding_name,Converter={StaticResource NullToHideConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                        <Label Text="{Binding customer}" IsVisible="{Binding customer,Converter={StaticResource NullToHideConverter}}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
+                                    <Grid ColumnDefinitions="Auto,*">
+                                        <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="Gray" FontSize="15" Grid.Column="0"/>
+                                        <Label Text="{Binding customer}" TextColor="Black" FontSize="15" Grid.Column="1"/>
                                     </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
-                                        <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_bat_dau},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding scheduledstart_format,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="3">
-                                        <Label Text="{Binding Source={x:Static lang:Language.thoi_gian_ket_thuc},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                        <Label Text="{Binding scheduledend_format,StringFormat='{0:dd/MM/yyyy - HH:mm}'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                    </Grid>
-                                </Grid>
+                                    <!--<controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer}"/>-->
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_bat_dau}" Text="{Binding scheduledstart_format, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_ket_thuc}" Text="{Binding scheduledend_format, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
+                                </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </controls:BsdListView.ItemTemplate>
@@ -120,7 +45,7 @@
                 <Button Text="&#xf067;" Clicked="NewActivity_Clicked"  TextColor="White" FontSize="18" FontFamily="FontAwesomeSolid" WidthRequest="44" HeightRequest="44" CornerRadius="22" BackgroundColor="#1399D5"/>
             </controls:ExtendedFrame>
 
-            <views:ActivityPopupContentView x:Name="ActivityPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" HidePopupActivity="ActivityPopup_HidePopupActivity"/>
+            <views:ActivityPopupContentView x:Name="ActivityPopup" HidePopupActivity="ActivityPopup_HidePopupActivity"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

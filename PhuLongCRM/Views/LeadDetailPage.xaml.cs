@@ -1,9 +1,13 @@
-﻿using PhuLongCRM.Helper;
+﻿using FFImageLoading.Forms;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -18,26 +22,31 @@ namespace PhuLongCRM.Views
         public Action<bool> OnCompleted;
         private LeadDetailPageViewModel viewModel;
         private Guid Id;
-        public LeadDetailPage(Guid id)
+        public static OptionSet FromCustomer = null;
+        public static bool? NeedToRefreshActivity = null;
+        public LeadDetailPage(Guid id,bool isFromQRCode = false)
         {
             InitializeComponent();
-            this.Title = Language.thong_tin_khach_hang;
+            this.Title = Language.thong_tin_khach_hang_title;
             this.Id = id;
             this.BindingContext = viewModel = new LeadDetailPageViewModel();
+            viewModel.IsFromQRCode = isFromQRCode;
             NeedToRefreshLeadDetail = false;
+            NeedToRefreshActivity = false;
             Init();
         }
 
         public async void Init()
         {
             await LoadDataThongTin(Id.ToString());
-            SetButtonFloatingButton();
+            SetButtonFloatingButton(viewModel.singleLead);
 
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
+                FromCustomer = new OptionSet { Val = viewModel.singleLead.leadid.ToString(), Label = viewModel.singleLead.lastname, Title = viewModel.CodeLead };
                 viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
                 viewModel.Area = AreaData.GetAreaById(viewModel.singleLead.bsd_area);
-                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard ))
+                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard))
                 {
                     viewModel.TypeIdCard = TypeIdCardData.GetTypeIdCardById(viewModel.singleLead.bsd_typeofidcard);
                 }
@@ -56,43 +65,68 @@ namespace PhuLongCRM.Views
                 if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }
                 NeedToRefreshLeadDetail = false;
             }
+            if (NeedToRefreshActivity == true)
+            {
+                LoadingHelper.Show();
+                viewModel.PageCase = 1;
+                viewModel.list_customercare?.Clear();
+                await viewModel.LoadCaseForLead();
+                ActivityPopup.Refresh();
+                NeedToRefreshActivity = false;
+                LoadingHelper.Hide();
+            }
             base.OnAppearing();
         }
 
-        private void SetButtonFloatingButton()
+        private void SetButtonFloatingButton(LeadFormModel lead)
         {
-            if (viewModel.singleLead.statuscode == "3") // qualified
+            if (lead != null)
             {
-                floatingButtonGroup.IsVisible = false;
-                if (viewModel.singleLead.account_id != Guid.Empty)
+                viewModel.ButtonCommandList.Clear();
+                if (string.IsNullOrWhiteSpace(lead.bsd_qrcode) && lead.statuscode != "3" && lead.statuscode != "4" && lead.statuscode != "5" && lead.statuscode != "6" && lead.statuscode != "7")
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_doanh_nghiep, "FontAwesomeRegular", "\uf1ad", null, GoToAccount));
-                    floatingButtonGroup.IsVisible = true;
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
                 }
-                if (viewModel.singleLead.contact_id != Guid.Empty)
+
+                if (lead.statuscode == "3") // qualified
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_ca_nhan, "FontAwesomeRegular", "\uf2c1", null, GoToContact));
-                    floatingButtonGroup.IsVisible = true;
+                    floatingButtonGroup.IsVisible = false;
+                    if (lead.account_id != Guid.Empty)
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_doanh_nghiep, "FontAwesomeRegular", "\uf1ad", null, GoToAccount));
+                        floatingButtonGroup.IsVisible = true;
+                    }
+                    if (lead.contact_id != Guid.Empty)
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_ca_nhan, "FontAwesomeRegular", "\uf2c1", null, GoToContact));
+                        floatingButtonGroup.IsVisible = true;
+                    }
                 }
-            }
-            else if (viewModel.singleLead.statuscode == "4" || viewModel.singleLead.statuscode == "5" || viewModel.singleLead.statuscode == "6"|| viewModel.singleLead.statuscode == "7")
-            {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.kich_hoat_lai_kh, "FontAwesomeSolid", "\uf1b8", null, ReactivateLead));
-            }
-            else
-            {
-                if (viewModel.singleLead.leadqualitycode == 3)
+                else if (lead.statuscode == "4" || lead.statuscode == "5" || lead.statuscode == "6" || lead.statuscode == "7")
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.kich_hoat_lai_kh, "FontAwesomeSolid", "\uf1b8", null, ReactivateLead));
                 }
                 else
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chuyen_doi_khach_hang, "FontAwesomeSolid", "\uf542", null, LeadQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
+                    // hỏi lại sts
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+                    if (lead.leadqualitycode == 3)
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
+                    }
+                    else
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chuyen_doi_khach_hang, "FontAwesomeSolid", "\uf542", null, LeadQualify));
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, Update));
+                    }
                 }
             }
+            else
+                floatingButtonGroup.IsVisible = false;
         }
 
         private async void Update(object sender, EventArgs e)
@@ -118,6 +152,7 @@ namespace PhuLongCRM.Views
         private async void LeadQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
+            bool _isID = await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid, viewModel.singleLead.leadid.ToString());
             CrmApiResponse apiResponse = await viewModel.Qualify(viewModel.singleLead.leadid);
             if (apiResponse.IsSuccess == true)
             {
@@ -126,10 +161,11 @@ namespace PhuLongCRM.Views
                 if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                 if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
                 await viewModel.LoadOneLead(Id.ToString());
-                viewModel.ButtonCommandList.Clear();
-                SetButtonFloatingButton();
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                if (_isID)
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                else
+                    ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
             }
             else
             {
@@ -143,7 +179,7 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             string[] options = new string[] { Language.mat_khach_hang, Language.khong_lien_lac_duoc, Language.khong_quan_tam, Language.da_huy };
             
-            string aws = await DisplayActionSheet(Language.tuy_chon, Language.huy, null, options);
+            string aws = await DisplayActionSheet(Language.tuy_chon_khong_chuyen_doi, Language.huy, null, options);
 
             if (aws == Language.mat_khach_hang)
             {
@@ -169,9 +205,8 @@ namespace PhuLongCRM.Views
                 if (isSuccess)
                 {
                     if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
+                    if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
                     await viewModel.LoadOneLead(Id.ToString());
-                    viewModel.ButtonCommandList.Clear();
-                    SetButtonFloatingButton();
                     ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 }
                 else
@@ -192,9 +227,8 @@ namespace PhuLongCRM.Views
             if (isSuccess)
             {
                 if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
+                if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
                 await viewModel.LoadOneLead(Id.ToString());
-                viewModel.ButtonCommandList.Clear();
-                SetButtonFloatingButton();
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
             }
             else
@@ -203,7 +237,6 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Hide();
         }
-
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
             string phone = viewModel.singleLead.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84",""); // thêm sdt ở đây
@@ -225,7 +258,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
             string phone = viewModel.singleLead.mobilephone.Replace(" ","").Replace("+84-","").Replace("84", ""); // thêm sdt ở đây
@@ -251,9 +283,16 @@ namespace PhuLongCRM.Views
         {
             if (leadid != null && viewModel.singleLead == null)
             {
-                await viewModel.LoadOneLead(leadid);
-                if (viewModel.singleLead.new_gender != null) { await viewModel.loadOneGender(viewModel.singleLead.new_gender); }
-                if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }                
+                try
+                {
+                    await viewModel.LoadOneLead(leadid);
+                    if (viewModel.singleLead.new_gender != null) { await viewModel.loadOneGender(viewModel.singleLead.new_gender); }
+                    if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }                
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         }
 
@@ -263,6 +302,10 @@ namespace PhuLongCRM.Views
             if (viewModel.PhongThuy == null)
             {
                 viewModel.LoadPhongThuy();
+                if (viewModel.PhongThuy.gioi_tinh != 0 && viewModel.PhongThuy.nam_sinh != 0)
+                    phongthuy_info.IsVisible = true;
+                else
+                    phongthuy_info.IsVisible = false;
             }
         }
 
@@ -336,6 +379,112 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
             }
+        }
+        private async void NewMeet(object sender, EventArgs e)
+        {
+            if (viewModel.singleLead != null && viewModel.singleLead.leadid != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                await Navigation.PushAsync(new MeetingForm());
+                LoadingHelper.Hide();
+            }
+        }
+        private async void NewPhoneCall(object sender, EventArgs e)
+        {
+            if (viewModel.singleLead != null && viewModel.singleLead.leadid != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                await Navigation.PushAsync(new PhoneCallForm());
+                LoadingHelper.Hide();
+            }
+        }
+        private async void NewTask(object sender, EventArgs e)
+        {
+            if (viewModel.singleLead != null && viewModel.singleLead.leadid != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                await Navigation.PushAsync(new TaskForm());
+                LoadingHelper.Hide();
+            }
+        }
+        private void CareItem_Tapped(object sender, EventArgs e)
+        {
+            var item = (HoatDongListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item != null && item.activityid != Guid.Empty)
+            {
+                ActivityPopup.ShowActivityPopup(item.activityid, item.activitytypecode);
+            }
+        }
+        private async void ShowMoreCare_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            viewModel.PageCase++;
+            await viewModel.LoadCaseForLead();
+            LoadingHelper.Hide();
+        }
+        private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
+        {
+            OnAppearing();
+        }
+
+        private async void GenerateQRCode(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            List<string> info = new List<string>();
+            info.Add(viewModel.singleLead.bsd_customercode);
+            info.Add("lead");
+            info.Add(viewModel.singleLead.leadid.ToString());
+            string uriQrCode = $"https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data={string.Join(",",info)}";
+
+            var bytearr = await DowloadImageToByteArrHelper.Download(uriQrCode);
+            string base64 = System.Convert.ToBase64String(bytearr);
+
+            bool isSuccess = await viewModel.SaveQRCode(base64);
+            if (isSuccess)
+            {
+                viewModel.singleLead.bsd_qrcode = base64;
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_that_bai);
+            }
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabThongTin.IsVisible = true;
+                    TabCustomerCare.IsVisible = false;
+                    TabPhongThuy.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    TabThongTin.IsVisible = false;
+                    TabCustomerCare.IsVisible = true;
+                    TabPhongThuy.IsVisible = false;
+                    if (viewModel.list_customercare == null)
+                        await viewModel.LoadCaseForLead();
+                }
+                else if ((int)e.Item == 2)
+                {
+                    TabThongTin.IsVisible = false;
+                    TabCustomerCare.IsVisible = false;
+                    TabPhongThuy.IsVisible = true;
+                    LoadDataPhongThuy();
+                }
+            }
+        }
+
+        private async void floatingButtonGroup_ClickedEvent(object sender, EventArgs e)
+        {
+            var lead = await viewModel.LoadStatusLead();
+            SetButtonFloatingButton(lead);
         }
     }
 }

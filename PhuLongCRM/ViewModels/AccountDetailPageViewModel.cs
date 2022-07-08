@@ -28,10 +28,11 @@ namespace PhuLongCRM.ViewModels
         public AccountFormModel singleAccount { get => _singleAccount; set { _singleAccount = value; OnPropertyChanged(nameof(singleAccount)); } }
 
         private ContactFormModel _PrimaryContact;
-        public ContactFormModel PrimaryContact { get => _PrimaryContact; set { if (_PrimaryContact != value) { this._PrimaryContact = value; OnPropertyChanged(nameof(PrimaryContact)); } } }
+        public ContactFormModel PrimaryContact { get => _PrimaryContact; set { if (_PrimaryContact != value) { this._PrimaryContact = value; OnPropertyChanged(nameof(PrimaryContact)); } } }        
 
         public ObservableCollection<QueueFormModel> list_thongtinqueing { get; set; }
-        public ObservableCollection<ReservationListModel> list_thongtinquotation { get; set; }
+
+        public ObservableCollection<ReservationListModel> list_thongtinquotation { get; set; } = new ObservableCollection<ReservationListModel>();
         public ObservableCollection<ContractModel> list_thongtincontract { get; set; }
         public ObservableCollection<HoatDongListModel> list_thongtincase { get; set; }
 
@@ -66,6 +67,7 @@ namespace PhuLongCRM.ViewModels
         public bool isLoadMore { get => _isLoadMore; set { _isLoadMore = value; OnPropertyChanged(nameof(isLoadMore)); } }
 
         public string CodeAccount = LookUpMultipleTabs.CodeAccount;
+
         public AccountDetailPageViewModel()
         {
             BusinessTypeOptions = new ObservableCollection<OptionSet>();
@@ -75,7 +77,6 @@ namespace PhuLongCRM.ViewModels
             BusinessTypeOptions.Add(new OptionSet("100000003", Language.chu_dau_tu));
 
             list_thongtinqueing = new ObservableCollection<QueueFormModel>();
-            list_thongtinquotation = new ObservableCollection<ReservationListModel>();
             list_thongtincontract = new ObservableCollection<ContractModel>();
             list_thongtincase = new ObservableCollection<HoatDongListModel>();
             list_MandatorySecondary = new ObservableCollection<MandatorySecondaryModel>();
@@ -120,6 +121,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_housenumberstreet' />
                                 <attribute name='bsd_businesstype' />
                                 <attribute name='bsd_customercode' />
+                                <attribute name='bsd_imageqrcode' />
                                 <order attribute='createdon' descending='true' />
                                     <link-entity name='contact' from='contactid' to='primarycontactid' visible='false' link-type='outer' alias='contacts'>
                                         <attribute name='bsd_fullname' alias='primarycontactname'/>
@@ -139,12 +141,12 @@ namespace PhuLongCRM.ViewModels
                                    <link-entity name='bsd_country' from='bsd_countryid' to='bsd_nation' link-type='outer' alias='as'>
                                         <attribute name='bsd_name' alias='country_name' />                                      
                                     </link-entity>
-                                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' visible='false' link-type='outer' alias='a_cf81d7378befeb1194ef000d3a81fcba'>
-                                  <attribute name='bsd_employeeid' alias='employee_id'/>
-                                  <attribute name='bsd_name' alias='employee_name'/>
-                                </link-entity>
                               </entity>
-                            </fetch>";
+                            </fetch>"; 
+            //<link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' visible='false' link-type='outer' alias='a_cf81d7378befeb1194ef000d3a81fcba'>
+            //                      <attribute name='bsd_employeeid' alias='employee_id'/>
+            //                      <attribute name='bsd_name' alias='employee_name'/>
+            //                    </link-entity> // bị lỗi khi load theo user crm nhưng k thấy sài
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<AccountFormModel>>("accounts", fetch);
             if (result == null)
                 return;
@@ -184,6 +186,8 @@ namespace PhuLongCRM.ViewModels
                 }
                 BusinessTypes = string.Join(", ", listType);
             }
+            else
+                BusinessTypes = Language.khach_hang;
         }
 
         private string LoadAddress(string address)
@@ -204,17 +208,14 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='createdon' />
                                 <attribute name='bsd_queuingexpired' />
                                 <attribute name='opportunityid' />
+                                <attribute name='statuscode' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     <condition attribute='parentaccountid' operator='eq' uitype='account' value='{accountid}' />
+                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                 </filter>  
                                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
                                     <attribute name='bsd_name' alias='bsd_project_name'/>
-                                </link-entity>
-                                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='inner' alias='ac'>
-                                  <filter type='and'>
-                                    <condition attribute='bsd_employeeid' operator='eq' value='{UserLogged.Id}' />
-                                  </filter>
                                 </link-entity>
                                 <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
                                   <attribute name='name' alias='account_name'/>
@@ -249,7 +250,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadDSQuotationAccount(Guid accountid)
         {
-            string fetch = $@"<fetch version='1.0' count='3' page='{PageQuotation}' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' count='5' page='{PageQuotation}' output-format='xml-platform' mapping='logical' distinct='false'>
                             <entity name='quote'>
                                 <attribute name='name' />
                                 <attribute name='totalamount' />
@@ -260,7 +261,7 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='customerid' operator='eq' value='{accountid}' />
-                                  <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                  <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
                                            <value>100000000</value>
@@ -270,6 +271,7 @@ namespace PhuLongCRM.ViewModels
                                             <value>861450002</value>
                                             <value>4</value>                
                                             <value>3</value>
+                                            <value>100000007</value>
                                        </condition>
                                        <filter type='and'>
                                            <condition attribute='statuscode' operator='in'>
@@ -297,7 +299,8 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ReservationListModel>>("quotes", fetch);
             if (result == null || result.value.Any() == false) return;
             var data = result.value;
-            ShowMoreQuotation = data.Count < 3 ? false : true;
+            ShowMoreQuotation = data.Count < 5 ? false : true;
+            List<ReservationListModel> aa = new List<ReservationListModel>();
             foreach (var item in data)
             {
                 list_thongtinquotation.Add(item);
@@ -318,7 +321,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='ordernumber' />
                                     <order attribute='bsd_project' descending='true' />
                                     <filter type='and'>                                      
-                                        <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                         <condition attribute='customerid' operator='eq' value='{accountid}' />               
                                     </filter >
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='aa'>
@@ -360,10 +363,10 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadActiviy(Guid accountID, string entity, string entitys)
         {
-            string forphonecall = null;
+            string callto = null;
             if (entity == "phonecall")
             {
-                forphonecall = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
+                callto = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
                                         <filter type='and'>
                                             <condition attribute='participationtypemask' operator='eq' value='2' />
                                         </filter>
@@ -386,16 +389,16 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='activityid' />
                                     <attribute name='scheduledstart' />
                                     <attribute name='scheduledend' /> 
-                                    <attribute name='activitytypecode' /> 
+                                    <attribute name='activitytypecode' />
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
                                         <filter type='or'>
                                             <condition entityname='party' attribute='partyid' operator='eq' value='{accountID}'/>
                                             <condition attribute='regardingobjectid' operator='eq' value='{accountID}' />
                                         </filter>
-                                        <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
-                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
+                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='party'/>
                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='accounts_bsd_name'/>
                                     </link-entity>
@@ -405,7 +408,7 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
                                         <attribute name='fullname' alias='lead_fullname'/>
                                     </link-entity>
-                                    {forphonecall}
+                                    {callto}
                                 </entity>
                             </fetch>";
 
@@ -413,9 +416,21 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Count == 0) return;
 
             var data = result.value;
-            foreach (var x in data)
+            if (entity == "appointment")
             {
-                list_thongtincase.Add(x);
+                foreach (var item in data)
+                {
+                    item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
+                    list_thongtincase.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var item in data)
+                {
+                    item.customer = item.regarding_name;
+                    list_thongtincase.Add(item);
+                }
             }
         }
 
@@ -437,7 +452,6 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_descriptionsvn' />
                                     <attribute name='bsd_developeraccount' />
                                     <attribute name='bsd_contact' />
-                                    <attribute name='bsd_employee' alias='bsd_employeeid' />
                                     <order attribute='statuscode' descending='false' />
                                     <order attribute='createdon' descending='true' />
                                     <link-entity name='contact' from='contactid' to='bsd_contact' visible='false' link-type='outer' alias='contacts'>
@@ -445,37 +459,20 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='mobilephone' alias='bsd_contacmobilephone'/>
                                         <attribute name='bsd_contactaddress' alias='bsd_contactaddress'/>
                                     </link-entity>         
-                                    <link-entity name='account' from='accountid' to='bsd_developeraccount' link-type='inner' alias='aa'>
+                                    <link-entity name='account' from='accountid' to='bsd_developeraccount' link-type='outer' alias='aa'>
                                         <attribute name='bsd_name' alias='bsd_developeraccount_name' />
                                     </link-entity>
                                     <filter type='and'>
                                       <condition attribute='bsd_developeraccount' operator='eq' value='{accountid}' />
-                                    </filter>                                  
+                                      <condition attribute='statuscode' operator='eq' value='100000000' />
+                                    </filter>
                                   </entity>
-                                </fetch>";
+                                </fetch>"; // 100000000 == Applying
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<MandatorySecondaryModel>>("bsd_mandatorysecondaries", fetchxml);
-            if (result == null)
+            if (result == null || result.value.Count == 0) return;
+            foreach (var x in result.value)
             {
-                return;
-            }
-            var data = result.value;
-
-            if (data.Any())
-            {
-                foreach (var x in data)
-                {
-                    if (UserLogged.Id == x.bsd_employeeid)
-                        x.is_employee = true;
-                    else
-                        x.is_employee = false;
-                    list_MandatorySecondary.Add(x);
-                }
-                if (list_MandatorySecondary.Any(x => x.statuscode == 100000000))
-                {
-                    var item = list_MandatorySecondary.SingleOrDefault(x => x.statuscode == 100000000);
-                    list_MandatorySecondary.Remove(item);
-                    list_MandatorySecondary.Insert(0, item);
-                }
+                list_MandatorySecondary.Add(x);
             }
         }
 
@@ -494,6 +491,22 @@ namespace PhuLongCRM.ViewModels
                 }
             }
             return false;
-        }        
+        }
+
+        // Save qrcode
+        public async Task<bool> SaveQRCode(string qrCode)
+        {
+            string path = "/accounts(" + this.singleAccount.accountid + ")";
+            object content = new
+            {
+                bsd_imageqrcode = qrCode,
+            };
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            if (result.IsSuccess)
+                return true;
+            else
+                return false;
+        }
     }
 }

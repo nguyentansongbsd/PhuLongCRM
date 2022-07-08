@@ -49,8 +49,7 @@ namespace PhuLongCRM.ViewModels
         private string IMAGE_CMND_FOLDER = "Contact_CMND";
         private string frontImage_name;
         private string behindImage_name;
-
-        private string checkCMND;
+        public string checkCMND { get; set; }
 
         private bool _isOfficial;
         public bool IsOfficial { get => _isOfficial; set { _isOfficial = value; OnPropertyChanged(nameof(IsOfficial)); } }
@@ -61,6 +60,8 @@ namespace PhuLongCRM.ViewModels
         private AddressModel _address2;
         public AddressModel Address2 { get => _address2; set { _address2 = value; OnPropertyChanged(nameof(Address2)); } }
 
+        private AddressModel _addressCopy;
+        public AddressModel AddressCopy { get => _addressCopy; set { _addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
         public ContactFormViewModel()
         {
             singleContact = new ContactFormModel();
@@ -153,6 +154,7 @@ namespace PhuLongCRM.ViewModels
             }
 
             var tmp = result.value.FirstOrDefault();
+            tmp.bsd_fullname = tmp.fullname;
             this.singleContact = tmp;
 
             checkCMND = tmp.bsd_identitycardnumber;
@@ -252,7 +254,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_fullname"] = contact.bsd_fullname;
             data["emailaddress1"] = contact.emailaddress1;
             data["birthdate"] = contact.birthdate.HasValue ? (DateTime.Parse(contact.birthdate.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
-            data["mobilephone"] = contact.mobilephone;
+            data["mobilephone"] = contact.mobilephone.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
             data["gendercode"] = contact.gendercode;
             if (checkCMND != contact.bsd_identitycardnumber)
             {
@@ -265,7 +267,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_issuedonpassport"] = contact.bsd_issuedonpassport.HasValue ? (DateTime.Parse(contact.bsd_issuedonpassport.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
             data["bsd_placeofissuepassport"] = contact.bsd_placeofissuepassport;
             data["bsd_jobtitlevn"] = contact.bsd_jobtitlevn;
-            data["telephone1"] = contact.telephone1;
+            data["telephone1"] = !string.IsNullOrWhiteSpace(contact.telephone1) && contact.telephone1.Contains("-") ? contact.telephone1.Replace("+", "").Replace("-", "") : string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1;
             data["statuscode"] = this.CustomerStatusReason?.Val;
           //  data["bsd_housenumberstreet"] = contact.bsd_housenumberstreet;
           //  data["bsd_contactaddress"] = contact.bsd_contactaddress;
@@ -367,11 +369,11 @@ namespace PhuLongCRM.ViewModels
             {
                 data["bsd_permanentdistrict@odata.bind"] = "/new_districts(" + Address2.district_id + ")"; /////Lookup Field
             }
-            if (UserLogged.Id != null)
+            if (UserLogged.Id != null && !UserLogged.IsLoginByUserCRM)
             {
                 data["bsd_employee@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
             }
-            if (UserLogged.ManagerId != Guid.Empty)
+            if (UserLogged.ManagerId != Guid.Empty && !UserLogged.IsLoginByUserCRM)
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
@@ -381,12 +383,12 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadAccountsLookup()
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                     <entity name='account'>
                                         <attribute name='name' alias='Name'/>
                                         <attribute name='accountid' alias='Id'/>
                                         <filter type='and'>
-                                          <condition attribute='bsd_employee' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
+                                          <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                                         </filter>
                                     </entity>
                                 </fetch>";

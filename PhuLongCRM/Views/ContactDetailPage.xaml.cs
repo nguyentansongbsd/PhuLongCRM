@@ -6,6 +6,7 @@ using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using Stormlion.PhotoBrowser;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -32,16 +33,20 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new ContactDetailPageViewModel();
             NeedToRefresh = false;
             NeedToRefreshActivity = false;
-            Tab_Tapped(1);
             Id = contactId;
             Init();
         }
         public async void Init()
         {
             await LoadDataThongTin(Id.ToString());
-
+            
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
+                if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_qrcode))
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
+                }
+
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
@@ -49,10 +54,10 @@ namespace PhuLongCRM.Views
                 if (viewModel.singleContact.statuscode != "100000000")
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
 
-                if (viewModel.singleContact.employee_id != UserLogged.Id)
-                {
-                    floatingButtonGroup.IsVisible = false;
-                }
+                //if (viewModel.singleContact.employee_id != UserLogged.Id)
+                //{
+                //    floatingButtonGroup.IsVisible = false;
+                //}
                 FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
                 OnCompleted(true);
             }
@@ -272,9 +277,14 @@ namespace PhuLongCRM.Views
 
         private void ChiTietDatCoc_Tapped(object sender, EventArgs e)
         {
+            var item = (ReservationListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item == null) return;
+
             LoadingHelper.Show();
-            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(itemId);
+            bool isReservation = false;
+            if (item.statuscode != 100000007)
+                isReservation = true;
+            BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(item.quoteid, isReservation);
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
             {
                 if (isSuccess)
@@ -293,7 +303,7 @@ namespace PhuLongCRM.Views
         private void ItemHopDong_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var itemId = (Guid)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             ContractDetailPage contractDetail = new ContractDetailPage(itemId);
             contractDetail.OnCompleted = async (isSuccess) =>
             {
@@ -330,6 +340,7 @@ namespace PhuLongCRM.Views
                viewModel.LoadPhongThuy();
             }
         }
+
         private void ShowImage_Tapped(object sender, EventArgs e)
         {
             LookUpImage.IsVisible = true;
@@ -379,6 +390,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
+
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {          
             string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
@@ -388,7 +400,7 @@ namespace PhuLongCRM.Views
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
                 if (checkVadate == true)
                 {
-                   await Launcher.OpenAsync($"tel:{phone}");
+                    await Launcher.OpenAsync($"tel:{phone}");
                     LoadingHelper.Hide();
                 }
                 else
@@ -403,59 +415,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
-        private async void ThongTin_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(1);
-        }
-        private async void GiaoDich_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(2);
-            await LoadDataGiaoDich(Id.ToString());
-        }
-        private void PhongThuy_Tapped(object sender, EventArgs e)
-        {
-            Tab_Tapped(3);
-            LoadDataPhongThuy();
-        }
-        private void Tab_Tapped(int tab)
-        {
-            if (tab == 1)
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Selected");
-                VisualStateManager.GoToState(lbThongTin, "Selected");
-                TabThongTin.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderThongTin, "Normal");
-                VisualStateManager.GoToState(lbThongTin, "Normal");
-                TabThongTin.IsVisible = false;
-            }
-            if (tab == 2)
-            {
-                VisualStateManager.GoToState(radBorderGiaoDich, "Selected");
-                VisualStateManager.GoToState(lbGiaoDich, "Selected");
-                TabGiaoDich.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderGiaoDich, "Normal");
-                VisualStateManager.GoToState(lbGiaoDich, "Normal");
-                TabGiaoDich.IsVisible = false;
-            }
-            if (tab == 3)
-            {
-                VisualStateManager.GoToState(radBorderPhongThuy, "Selected");
-                VisualStateManager.GoToState(lbPhongThuy, "Selected");
-                TabPhongThuy.IsVisible = true;
-            }
-            else
-            {
-                VisualStateManager.GoToState(radBorderPhongThuy, "Normal");
-                VisualStateManager.GoToState(lbPhongThuy, "Normal");
-                TabPhongThuy.IsVisible = false;
-            }
-        }
+
         private void ThongTinCongTy_Tapped(object sender, EventArgs e)
         {            
             if (!string.IsNullOrEmpty(viewModel.singleContact._parentcustomerid_value))
@@ -476,7 +436,8 @@ namespace PhuLongCRM.Views
                     }
                 };
             }
-        }      
+        }
+
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -499,6 +460,59 @@ namespace PhuLongCRM.Views
         private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
         {
             OnAppearing();
+        }
+
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    TabThongTin.IsVisible = true;
+                    TabGiaoDich.IsVisible = false;
+                    TabPhongThuy.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    await LoadDataGiaoDich(Id.ToString());
+                    TabThongTin.IsVisible = false;
+                    TabGiaoDich.IsVisible = true;
+                    TabPhongThuy.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    LoadDataPhongThuy();
+                    TabThongTin.IsVisible = false;
+                    TabGiaoDich.IsVisible = false;
+                    TabPhongThuy.IsVisible = true;
+                }
+            }
+        }
+
+        private async void GenerateQRCode(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            List<string> info = new List<string>();
+            info.Add(viewModel.singleContact.bsd_customercode);
+            info.Add("contact");
+            info.Add(viewModel.singleContact.contactid.ToString());
+            string uriQrCode = $"https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data={string.Join(",", info)}";
+
+            var bytearr = await DowloadImageToByteArrHelper.Download(uriQrCode);
+            string base64 = System.Convert.ToBase64String(bytearr);
+
+            bool isSuccess = await viewModel.SaveQRCode(base64);
+            if (isSuccess)
+            {
+                viewModel.singleContact.bsd_qrcode = base64;
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.tao_qr_code_that_bai);
+            }
         }
     }
 }
