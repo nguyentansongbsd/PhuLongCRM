@@ -3196,7 +3196,7 @@
 		<value>Tạo QR code thất bại</value>
 	</data>
 	<data name="thong_tin_user_title" xml:space="preserve">
-		<value>Thông Tin User</value>
+		<value>Thông Tin Người Dùng</value>
 	</data>
 	<data name="ten_user" xml:space="preserve">
 		<value>Tên user</value>

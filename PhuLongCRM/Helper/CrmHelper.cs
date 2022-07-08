@@ -42,7 +42,7 @@ namespace PhuLongCRM.Helper
                 {
                     if (UserLogged.IsLoginByUserCRM)
                     {
-                        await Shell.Current.DisplayAlert("", "Het phien ban dang nhap. vui long dang nhap lai", "ok");
+                        await Shell.Current.DisplayAlert("", "Phiên bản đăng nhập hết hạn.", "Ok");
                         await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
                     }
                     else
@@ -227,7 +227,7 @@ namespace PhuLongCRM.Helper
                 {
                     if (UserLogged.IsLoginByUserCRM)
                     {
-                        ToastMessageHelper.ShortMessage("Het phien ban dang nhap. vui long dang nhap lai");
+                        await Shell.Current.DisplayAlert("", "Phiên bản đăng nhập hết hạn.", "Ok");
                         await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
                     }
                     else
@@ -305,7 +305,7 @@ namespace PhuLongCRM.Helper
                 {
                     if (UserLogged.IsLoginByUserCRM)
                     {
-                        ToastMessageHelper.ShortMessage("Het phien ban dang nhap. vui long dang nhap lai");
+                        await Shell.Current.DisplayAlert("", "Phiên bản đăng nhập hết hạn.", "Ok");
                         await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
                     }
                     else
@@ -364,7 +364,7 @@ namespace PhuLongCRM.Helper
                 {
                     if (UserLogged.IsLoginByUserCRM)
                     {
-                        ToastMessageHelper.ShortMessage("Het phien ban dang nhap. vui long dang nhap lai");
+                        await Shell.Current.DisplayAlert("", "Phiên bản đăng nhập hết hạn.", "Ok");
                         await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
                     }
                     else
