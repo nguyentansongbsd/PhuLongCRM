@@ -163,7 +163,7 @@
     <value>New customer</value>
   </data>
 	<data name="da_chuyen_doi" xml:space="preserve">
-    <value>Converted</value>
+    <value>Qualified</value>
   </data>
 	<data name="khong_chuyen_doi" xml:space="preserve">
     <value>Disqualify</value>
@@ -496,7 +496,7 @@
     <value>Merge at the end</value>
   </data>
 	<data name="nha_o" xml:space="preserve">
-    <value>Apartment project</value>
+    <value>Residential</value>
   </data>
 	<data name="thuong_mai" xml:space="preserve">
     <value>Land projects</value>
@@ -1090,7 +1090,7 @@
     <value>Discount</value>
   </data>
 	<data name="dkbg" xml:space="preserve">
-    <value>Handover condition amount</value>
+    <value>Handover condition</value>
   </data>
 	<data name="gia_ban_truoc_thue" xml:space="preserve">
     <value>Net selling price</value>
@@ -1105,7 +1105,7 @@
     <value>Maintenance fee</value>
   </data>
 	<data name="phi_quan_ly" xml:space="preserve">
-    <value>Management amount</value>
+    <value>Management fee</value>
   </data>
 	<data name="so_thang_dong_phi" xml:space="preserve">
     <value>Number of months paid M.F</value>
@@ -1402,7 +1402,7 @@
     <value>Allow Change Units Spec</value>
   </data>
 	<data name="ddktsp" xml:space="preserve">
-    <value>ĐĐKTSP</value>
+    <value>Units Specification</value>
   </data>
 	<data name="ty_gia" xml:space="preserve">
     <value>Applying exchange rate</value>
@@ -3381,4 +3381,16 @@
 	<data name="tien_dat_coc_ful" xml:space="preserve">
 		<value>Deposit fee</value>
 	</data>
+	<data name="dat_coc_dashboard" xml:space="preserve">
+		<value>Deposit</value>
+	</data>
+	<data name="ngay_ky_hd" xml:space="preserve">
+    <value>Signed contract date</value>
+  </data>
+  <data name="ngay_ky_vbtt" xml:space="preserve">
+    <value>Signed D.A date</value>
+  </data>
+  <data name="ngay_in_vbtt" xml:space="preserve">
+    <value>DA printed date</value>
+  </data>
 </root>
