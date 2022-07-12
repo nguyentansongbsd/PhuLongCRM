@@ -42,6 +42,7 @@ namespace PhuLongCRM.Views
                     var body = await response.Content.ReadAsStringAsync();
                     GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
                     UserLogged.AccessToken = tokenData.access_token;
+                    UserLogged.RefreshToken = tokenData.refresh_token;
 
                     await LoadUserCRM();
 

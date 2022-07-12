@@ -19,7 +19,7 @@ namespace PhuLongCRM.Config
         public const string ClientId_ForUserCRM = "a7544a58-b7bb-4553-9548-d56d1cfbec55";
         public const string ClientSecret_ForUserCRM = "1kO7Q~FQ_o6uhrthjqlaUWiSY-bkpViYBDBPu";
         public const string Redirect_Uri = "https://crm.phulong.com/";
-        public const string Scope = "https://phulongdev.crm5.dynamics.com/.default";
+        public const string Scope = "offline_access https://phulongdev.crm5.dynamics.com/.default";
 
         //public const string TeantId = "1958ace9-e5ba-4d51-b458-cca319ff9b4f";
         //public const string ClientId_ForUserCRM = "1d2267b7-2d9d-4b75-a45d-7531fe7b9494";
