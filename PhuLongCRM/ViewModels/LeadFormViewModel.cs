@@ -375,18 +375,26 @@ namespace PhuLongCRM.ViewModels
             data["revenue"] = singleLead?.revenue;
             data["leadqualitycode"] = Rating.Val;
             data["new_gender"] = this.Gender?.Val;
-            data["new_birthday"] = singleLead.new_birthday.Value.ToUniversalTime(); ;
             data["leadsourcecode"] = this.LeadSource?.Val;
             data["bsd_customergroup"] = this.CustomerGroup?.Val;
             data["bsd_typeofidcard"] = this.TypeIdCard?.Val;
             data["bsd_identitycardnumberid"] = singleLead.bsd_identitycardnumberid;
             data["bsd_area"] = this.Area?.Val;
             data["bsd_placeofissue"] = singleLead.bsd_placeofissue;
-            data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToUniversalTime(); ;
             data["bsd_registrationcode"] = singleLead.bsd_registrationcode;
 
             data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone : null;
             data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1)? singleLead.telephone1 : "+84";
+
+            if (singleLead.new_birthday.HasValue)
+            {
+                data["new_birthday"] = singleLead.new_birthday.Value.ToUniversalTime();
+            }
+
+            if (singleLead.bsd_dategrant.HasValue)
+            {
+                data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToUniversalTime();
+            }
 
             if (!string.IsNullOrWhiteSpace(singleLead.numberofemployees))
             {
