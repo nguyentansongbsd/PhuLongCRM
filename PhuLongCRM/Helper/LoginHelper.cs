@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PhuLongCRM.Config;
 using PhuLongCRM.Models;
+using PhuLongCRM.Settings;
 
 namespace PhuLongCRM.Helper
 {
@@ -40,6 +41,23 @@ namespace PhuLongCRM.Helper
                         new KeyValuePair<string, string>("redirect_uri", OrgConfig.Redirect_Uri),
                         new KeyValuePair<string, string>("client_secret", OrgConfig.ClientSecret_ForUserCRM),
                     });
+            request.Content = formContent;
+            var response = await client.SendAsync(request);
+            return response;
+        }
+
+        public static async Task<HttpResponseMessage> RefreshToken_UserCRM()
+        {
+            var client = BsdHttpClient.Instance();
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://login.microsoftonline.com/{OrgConfig.TeantId}/oauth2/v2.0/token");
+            var formContent = new FormUrlEncodedContent(new[]
+            {
+                        new KeyValuePair<string, string>("grant_type", "refresh_token"),
+                        new KeyValuePair<string, string>("client_id", OrgConfig.ClientId_ForUserCRM),
+                        new KeyValuePair<string, string>("scope", OrgConfig.Scope),
+                        new KeyValuePair<string, string>("refresh_token", UserLogged.RefreshToken),
+                        new KeyValuePair<string, string>("client_secret", OrgConfig.ClientSecret_ForUserCRM),
+            });
             request.Content = formContent;
             var response = await client.SendAsync(request);
             return response;
