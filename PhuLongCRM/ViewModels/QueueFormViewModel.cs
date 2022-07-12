@@ -728,8 +728,10 @@ namespace PhuLongCRM.ViewModels
                                 <filter type='and'>
                                     <condition attribute='bsd_phaseslaunchid' operator='eq' value='{QueueFormModel.bsd_phaseslaunch_id}' />
                                 </filter>
-                                <link-entity name='account' from='accountid' to='bsd_salesagentcompany' link-type='outer' alias='aw'>
-                                    <attribute name='name' alias='salesagentcompany_name' />
+                                <link-entity name='bsd_bsd_phaseslaunch_account' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='aw'>
+                                    <link-entity name='account' from='accountid' to='accountid' link-type='inner' alias='ak'>
+                                        <attribute name='name' alias='salesagentcompany_name' />
+                                    </link-entity>
                                 </link-entity>
                               </entity>
                             </fetch>";
@@ -746,7 +748,7 @@ namespace PhuLongCRM.ViewModels
                                                     <condition attribute='bsd_project' operator='eq' value='{QueueFormModel.bsd_project_id}' />
                                                 </filter>
                                             </link-entity>";
-            string sale_phasesLaunch = $@"<link-entity name='bsd_phaseslaunch' from='bsd_salesagentcompany' to='accountid' link-type='inner' alias='ak'>
+            string sale_phasesLaunch = $@"<link-entity name='bsd_bsd_phaseslaunch_account' from='accountid' to='accountid' link-type='inner' alias='ak'>
                                                         <filter type='and'>
                                                             <condition attribute='bsd_phaseslaunchid' operator='eq' value='{QueueFormModel.bsd_phaseslaunch_id}' />
                                                          </filter>

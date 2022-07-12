@@ -111,6 +111,9 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_country' alias='_bsd_country_value'/>
                                 <attribute name='bsd_postalcode' />
                                 <attribute name='bsd_contactaddress' />
+                                <attribute name='bsd_identitycard' />
+                                <attribute name='bsd_identitycarddategrant' />
+                                <attribute name='bsd_placeofissueidentitycard' />
                                 <attribute name='bsd_customercode' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
@@ -269,16 +272,19 @@ namespace PhuLongCRM.ViewModels
             data["bsd_jobtitlevn"] = contact.bsd_jobtitlevn;
             data["telephone1"] = !string.IsNullOrWhiteSpace(contact.telephone1) && contact.telephone1.Contains("-") ? contact.telephone1.Replace("+", "").Replace("-", "") : string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1;
             data["statuscode"] = this.CustomerStatusReason?.Val;
-          //  data["bsd_housenumberstreet"] = contact.bsd_housenumberstreet;
-          //  data["bsd_contactaddress"] = contact.bsd_contactaddress;
-          //  data["bsd_diachi"] = contact.bsd_diachi;
-          ////  data["bsd_postalcode"] = contact.bsd_postalcode;
-          //  data["bsd_housenumber"] = contact.bsd_housenumberstreet;
+            data["bsd_identitycard"] = contact.bsd_identitycard;
+            data["bsd_identitycarddategrant"] = contact.bsd_identitycarddategrant.HasValue ? (DateTime.Parse(contact.bsd_identitycarddategrant.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
+            data["bsd_placeofissueidentitycard"] = contact.bsd_placeofissueidentitycard;
+            //  data["bsd_housenumberstreet"] = contact.bsd_housenumberstreet;
+            //  data["bsd_contactaddress"] = contact.bsd_contactaddress;
+            //  data["bsd_diachi"] = contact.bsd_diachi;
+            ////  data["bsd_postalcode"] = contact.bsd_postalcode;
+            //  data["bsd_housenumber"] = contact.bsd_housenumberstreet;
 
-          //  data["bsd_permanentaddress1"] = contact.bsd_permanentaddress1;
-          //  data["bsd_diachithuongtru"] = contact.bsd_diachithuongtru;
-          //  data["bsd_permanenthousenumber"] = contact.bsd_permanentaddress;
-          //  data["bsd_permanentaddress"] = contact.bsd_permanentaddress;
+            //  data["bsd_permanentaddress1"] = contact.bsd_permanentaddress1;
+            //  data["bsd_diachithuongtru"] = contact.bsd_diachithuongtru;
+            //  data["bsd_permanenthousenumber"] = contact.bsd_permanentaddress;
+            //  data["bsd_permanentaddress"] = contact.bsd_permanentaddress;
 
             data["bsd_type"] = this.ContactType.Val;
 
