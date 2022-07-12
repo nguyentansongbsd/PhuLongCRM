@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
@@ -26,6 +27,8 @@ namespace PhuLongCRM
 
         private string _verApp;
         public string VerApp { get => _verApp; set { _verApp = value; OnPropertyChanged(nameof(VerApp)); } }
+
+        private UserCRMInfoPage userCRMInfo;
 
         public AppShell()
         {
@@ -119,6 +122,8 @@ namespace PhuLongCRM
 
         private async void Logout_Clicked(System.Object sender, System.EventArgs e)
         {
+            if (UserLogged.IsLoginByUserCRM)
+                DependencyService.Get<IClearCookies>().ClearAllCookies(); ;
             await Shell.Current.GoToAsync("//LoginPage");
         }
     }

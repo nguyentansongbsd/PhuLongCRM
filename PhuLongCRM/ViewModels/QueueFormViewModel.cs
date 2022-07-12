@@ -766,36 +766,36 @@ namespace PhuLongCRM.ViewModels
                     {
                         if(DaiLyOptions != null)
                         {
-                            var list1 = await LoadAccuntSales(all);
-                            var list2 = await LoadAccuntSales(develop);
-                            DaiLyOptions = list1.Union(list2).Distinct().ToList();
+                            DaiLyOptions = await LoadAccuntSales(all);
+                            //var list2 = await LoadAccuntSales(develop);
+                            //DaiLyOptions = list1.Union(list2).Distinct().ToList();
                         }    
                     }
                     else
                     {
                         if (DaiLyOptions != null)
                         {
-                            var list1 = await LoadAccuntSales(sale_phasesLaunch);
-                            var list2 = await LoadAccuntSales(develop);
-                            DaiLyOptions = list1.Union(list2).Distinct().ToList();
+                            DaiLyOptions = await LoadAccuntSales(sale_phasesLaunch);
+                            //var list2 = await LoadAccuntSales(develop);
+                            //DaiLyOptions = list1.Union(list2).Distinct().ToList();
                         }
                     }
                 }
                 else if (phasesLaunch.bsd_locked == true)
                 {
-                    if (string.IsNullOrWhiteSpace(phasesLaunch.salesagentcompany_name))
-                    {
-                        if (DaiLyOptions != null)
-                        {
-                            DaiLyOptions.AddRange(await LoadAccuntSales(develop));
-                        }
-                    }
-                    else
+                    if (!string.IsNullOrWhiteSpace(phasesLaunch.salesagentcompany_name))
                     {
                         if (DaiLyOptions != null)
                         {
                             DaiLyOptions.AddRange(await LoadAccuntSales(sale_phasesLaunch));
                         }
+                    }
+                    else
+                    {
+                        //if (DaiLyOptions != null)
+                        //{
+                        //    DaiLyOptions.AddRange(await LoadAccuntSales(develop));
+                        //}
                     }
                 }
 

@@ -93,6 +93,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ClearCookies.cs" />
     <Compile Include="Services\LoadingService.cs" />
     <Compile Include="Renderers\BorderEntryRenderer.cs" />
     <Compile Include="Services\ToastMessage.cs" />
@@ -259,8 +260,10 @@
       </Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\image_placeholder.jpg">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>

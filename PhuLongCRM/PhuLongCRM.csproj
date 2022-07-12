@@ -39,7 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Settings\" />
-    <Folder Include="IServices\" />
     <Folder Include="Fonts\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Resources\" />
