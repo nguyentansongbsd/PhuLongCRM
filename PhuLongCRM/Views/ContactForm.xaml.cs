@@ -169,12 +169,24 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
-            if (string.IsNullOrWhiteSpace(viewModel.Address1.lineaddress))
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.telephone1) && viewModel.singleContact.telephone1 != "+84")
+            {
+                string telephone = string.Empty;
+                telephone = viewModel.singleContact.telephone1.Contains("-") ? viewModel.singleContact.telephone1.Split('-')[1] : viewModel.singleContact.telephone1;
+
+                if (telephone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                    return;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(viewModel.Address1?.lineaddress))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(viewModel.Address2.lineaddress))
+            if (string.IsNullOrWhiteSpace(viewModel.Address2?.lineaddress))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_thuong_tru);
                 return;
@@ -439,22 +451,6 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private void PassPort_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
-        {
-            if (viewModel.singleContact.bsd_passport.Length != 8)
-            {
-                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
-            }
-        }
-
-        private void CCCD_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
-        {
-            if (viewModel.singleContact.bsd_identitycard.Length != 12 )
-            {
-                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
-            }
-        }
-
         private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
             var num = sender as PhoneEntryControl;
@@ -467,6 +463,22 @@ namespace PhuLongCRM.Views
                 {
                     ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 }
+            }
+        }
+
+        private void CCCD_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (viewModel.singleContact.bsd_identitycard.Length != 12)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
+            }
+        }
+
+        private void PassPort_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (viewModel.singleContact.bsd_passport.Length != 8)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
             }
         }
     }

@@ -43,22 +43,10 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleAccount.accountid != Guid.Empty)
             {
-                if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_imageqrcode))
-                {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
-                }
-
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
-
-                if (viewModel.singleAccount.statuscode != "100000000")
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
-
+                SetButtonFloatingButton();
                 FromCustomer = new OptionSet { Val = viewModel.singleAccount.accountid.ToString(), Label = viewModel.singleAccount.bsd_name, Title = viewModel.CodeAccount };
                 OnCompleted?.Invoke(true);
             }
-
             else
                 OnCompleted?.Invoke(false);
             LoadingHelper.Hide();
@@ -111,6 +99,25 @@ namespace PhuLongCRM.Views
                 ActivityPopup.Refresh();
                 NeedToRefreshActivity = false;
                 LoadingHelper.Hide();
+            }
+        }
+        private void SetButtonFloatingButton()
+        {
+            if (viewModel.singleAccount.accountid != Guid.Empty)
+            {
+                if (viewModel.ButtonCommandList.Count > 0)
+                    viewModel.ButtonCommandList.Clear();
+
+                if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_imageqrcode))
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
+                }
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+
+                if (viewModel.singleAccount.statuscode != "100000000")
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
             }
         }
 
@@ -560,6 +567,7 @@ namespace PhuLongCRM.Views
             {
                 viewModel.singleAccount.bsd_imageqrcode = base64;
                 ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
+                SetButtonFloatingButton();
                 LoadingHelper.Hide();
             }
             else

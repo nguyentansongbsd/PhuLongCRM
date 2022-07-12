@@ -1351,7 +1351,7 @@
     <value>Email already in use.</value>
   </data>
 	<data name="vui_long_chon_dia_chi_thuong_tru" xml:space="preserve">
-    <value>Please choose permanent pddress.</value>
+    <value>Please choose permanent address.</value>
   </data>
 	<data name="vui_long_nhap_so_cmnd" xml:space="preserve">
     <value>Please enter Identity Card Number.</value>

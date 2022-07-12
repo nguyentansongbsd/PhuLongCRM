@@ -42,6 +42,55 @@ namespace PhuLongCRM.Views
             
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
+                SetButtonFloatingButton();
+                FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
+                OnCompleted(true);
+            }
+            else
+                OnCompleted(false);
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                viewModel.singleContact = new ContactFormModel();
+                await LoadDataThongTin(this.Id.ToString());
+                viewModel.PhongThuy = null;
+                LoadDataPhongThuy();
+                NeedToRefresh = false;
+                LoadingHelper.Hide();
+            }
+            if (NeedToRefreshQueues == true)
+            {
+                LoadingHelper.Show();
+                viewModel.PageDanhSachDatCho = 1;
+                viewModel.list_danhsachdatcho.Clear();
+                await viewModel.LoadQueuesForContactForm(viewModel.singleContact.contactid.ToString());
+                NeedToRefreshQueues = false;
+                LoadingHelper.Hide();
+            }
+            if (NeedToRefreshActivity == true && viewModel.list_chamsockhachhang != null)
+            {
+                LoadingHelper.Show();
+                viewModel.PageChamSocKhachHang = 1;
+                viewModel.list_chamsockhachhang.Clear();
+                await viewModel.LoadCaseForContactForm();
+                ActivityPopup.Refresh();
+                NeedToRefreshActivity = false;
+                LoadingHelper.Hide();
+            }
+        }
+
+        private void SetButtonFloatingButton()
+        {
+            if (viewModel.singleContact.contactid != Guid.Empty)
+            {
+                if(viewModel.ButtonCommandList.Count > 0)
+                    viewModel.ButtonCommandList.Clear();
+
                 if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_qrcode))
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
@@ -53,17 +102,7 @@ namespace PhuLongCRM.Views
 
                 if (viewModel.singleContact.statuscode != "100000000")
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
-
-                //if (viewModel.singleContact.employee_id != UserLogged.Id)
-                //{
-                //    floatingButtonGroup.IsVisible = false;
-                //}
-                FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
-                OnCompleted(true);
             }
-
-            else
-                OnCompleted(false);
         }
 
         private async void NewMeet(object sender, EventArgs e)
@@ -113,40 +152,6 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
-        }
-
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            if (NeedToRefresh == true)
-            {
-                LoadingHelper.Show();
-                viewModel.singleContact = new ContactFormModel();
-                await LoadDataThongTin(this.Id.ToString());
-                viewModel.PhongThuy = null;
-                LoadDataPhongThuy();
-                NeedToRefresh = false;
-                LoadingHelper.Hide();
-            }
-            if (NeedToRefreshQueues == true)
-            {
-                LoadingHelper.Show();
-                viewModel.PageDanhSachDatCho = 1;
-                viewModel.list_danhsachdatcho.Clear();
-                await viewModel.LoadQueuesForContactForm(viewModel.singleContact.contactid.ToString());
-                NeedToRefreshQueues = false;
-                LoadingHelper.Hide();
-            }
-            if(NeedToRefreshActivity == true && viewModel.list_chamsockhachhang != null)
-            {
-                LoadingHelper.Show();
-                viewModel.PageChamSocKhachHang = 1;
-                viewModel.list_chamsockhachhang.Clear();
-                await viewModel.LoadCaseForContactForm();
-                ActivityPopup.Refresh();
-                NeedToRefreshActivity = false;
-                LoadingHelper.Hide();
-            }    
         }
 
         // tab thong tin
@@ -506,6 +511,7 @@ namespace PhuLongCRM.Views
             {
                 viewModel.singleContact.bsd_qrcode = base64;
                 ToastMessageHelper.ShortMessage(Language.tao_qr_code_thanh_cong);
+                SetButtonFloatingButton();
                 LoadingHelper.Hide();
             }
             else

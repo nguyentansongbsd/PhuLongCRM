@@ -440,7 +440,11 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='fullname' alias='Name' />
                     <order attribute='fullname' descending='false' />
                     <filter type='and'>
-                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                        <condition attribute='statuscode' operator='in'>
+                            <value>100000000</value>
+                            <value>1</value>
+                        </condition>
                     </filter>
                   </entity>
                 </fetch>";
