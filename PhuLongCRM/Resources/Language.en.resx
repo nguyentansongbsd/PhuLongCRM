@@ -1012,7 +1012,7 @@
     <value>Payment scheme discount</value>
   </data>
 	<data name="chiet_khau_chung" xml:space="preserve">
-    <value>Discount</value>
+    <value>General discount</value>
   </data>
 	<data name="chiet_khau_noi_bo" xml:space="preserve">
     <value>Internal discount</value>
@@ -2084,9 +2084,6 @@
   </data>
 	<data name="khong_ap_dung" xml:space="preserve">
     <value>Do not apply</value>
-  </data>
-	<data name="chieu_khau_chung" xml:space="preserve">
-    <value>Discount list</value>
   </data>
 	<data name="chon_chiet_khau_chung" xml:space="preserve">
     <value>Choose discount</value>

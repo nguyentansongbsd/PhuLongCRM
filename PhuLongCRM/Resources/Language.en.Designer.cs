@@ -895,7 +895,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Discount.
+        ///   Looks up a localized string similar to General discount.
         /// </summary>
         internal static string chiet_khau_chung {
             get {
@@ -945,15 +945,6 @@ namespace PhuLongCRM.Resources {
         internal static string chiet_khau_theo_pttt {
             get {
                 return ResourceManager.GetString("chiet_khau_theo_pttt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Discount list.
-        /// </summary>
-        internal static string chieu_khau_chung {
-            get {
-                return ResourceManager.GetString("chieu_khau_chung", resourceCulture);
             }
         }
         
@@ -2398,7 +2389,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total amount.
+        ///   Looks up a localized string similar to Paid (amount/ %).
         /// </summary>
         internal static string da_thanh_toan_contract {
             get {
@@ -3469,7 +3460,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to S-M.
+        ///   Looks up a localized string similar to Sales.
         /// </summary>
         internal static string ful_sam_group {
             get {
@@ -3559,7 +3550,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Land value deduction/sqm.
+        ///   Looks up a localized string similar to Land value/ sqm.
         /// </summary>
         internal static string gia_tri_qsdd_m {
             get {
@@ -5962,7 +5953,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Representative.
+        ///   Looks up a localized string similar to Mandatory primary.
         /// </summary>
         internal static string nguoi_dai_dien {
             get {
@@ -7132,7 +7123,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to S-M comment.
+        ///   Looks up a localized string similar to Sales comment.
         /// </summary>
         internal static string sale_marketing_comment {
             get {
@@ -7321,6 +7312,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid registration code (registration code must be 10 characters long)..
+        /// </summary>
+        internal static string so_gpkd_khong_hop_le_gom_10_ky_tu {
+            get {
+                return ResourceManager.GetString("so_gpkd_khong_hop_le_gom_10_ky_tu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Passport.
         /// </summary>
         internal static string so_ho_chieu {
@@ -7393,7 +7393,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number Of Months Paid M.F.
+        ///   Looks up a localized string similar to Number of months paid M.F.
         /// </summary>
         internal static string so_thang_tinh_phu_quan_ly {
             get {
@@ -8653,6 +8653,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deposit fee.
+        /// </summary>
+        internal static string tien_dat_coc_ful {
+            get {
+                return ResourceManager.GetString("tien_dat_coc_ful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount of this phase.
         /// </summary>
         internal static string tien_dot {
@@ -8788,7 +8797,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sumarry.
+        ///   Looks up a localized string similar to Summary.
         /// </summary>
         internal static string tong_hop {
             get {
@@ -8797,7 +8806,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sumarry.
+        ///   Looks up a localized string similar to Summary.
         /// </summary>
         internal static string tong_hop_title {
             get {
@@ -9085,7 +9094,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please choose permanent pddress..
+        ///   Looks up a localized string similar to Please choose permanent address..
         /// </summary>
         internal static string vui_long_chon_dia_chi_thuong_tru {
             get {
