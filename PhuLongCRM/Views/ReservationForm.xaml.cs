@@ -1061,7 +1061,7 @@ namespace PhuLongCRM.Views
 
             LoadingHelper.Show();
 
-            if (viewModel.QuoteId == Guid.Empty)
+            if(this.Title == Language.tao_bang_tinh_gia_title) //(viewModel.QuoteId == Guid.Empty)
             {
                 CrmApiResponse response = await viewModel.CreateQuote();
                 if (response.IsSuccess)
@@ -1109,6 +1109,8 @@ namespace PhuLongCRM.Views
                         else
                         {
                             ToastMessageHelper.LongMessage(responseGetTotal.ErrorResponse.error.message);
+                            // set lại id = null khi thất bại để chạy vào create
+                            viewModel.quotedetailid = Guid.Empty;
                             LoadingHelper.Hide();
                         }
 
