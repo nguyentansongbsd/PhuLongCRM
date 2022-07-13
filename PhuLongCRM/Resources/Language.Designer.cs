@@ -949,15 +949,6 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chiếu khấu chung.
-        /// </summary>
-        internal static string chieu_khau_chung {
-            get {
-                return ResourceManager.GetString("chieu_khau_chung", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Chính Sách.
         /// </summary>
         internal static string chinh_sach {
@@ -1012,7 +1003,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chọn chiếu khấu chung.
+        ///   Looks up a localized string similar to Chọn chiết khấu chung.
         /// </summary>
         internal static string chon_chiet_khau_chung {
             get {

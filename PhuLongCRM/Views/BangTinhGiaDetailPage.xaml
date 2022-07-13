@@ -117,7 +117,7 @@
                                                 </StackLayout>
                                             </StackLayout>
                                             <StackLayout BackgroundColor="White" Padding="25,10">
-                                                <controls:FormLabel Text="{x:Static lang:Language.chiet_khau}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                                <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_chung}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
                                                 <controls:FormLabelValue Text="{Binding Reservation.discountlist_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
                                                 <StackLayout BindableLayout.ItemsSource="{Binding ListDiscount}" BackgroundColor="#eeeeee" Spacing="1">
                                                     <BindableLayout.ItemTemplate>

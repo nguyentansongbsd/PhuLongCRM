@@ -390,10 +390,18 @@ namespace PhuLongCRM.ViewModels
             {
                 data["new_birthday"] = singleLead.new_birthday.Value.ToUniversalTime();
             }
+            else
+            {
+                data["new_birthday"] = null;
+            }
 
             if (singleLead.bsd_dategrant.HasValue)
             {
                 data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToUniversalTime();
+            }
+            else
+            {
+                data["bsd_dategrant"] = null;
             }
 
             if (!string.IsNullOrWhiteSpace(singleLead.numberofemployees))

@@ -2085,11 +2085,8 @@
 	<data name="khong_ap_dung" xml:space="preserve">
     <value>Không áp dụng</value>
   </data>
-	<data name="chieu_khau_chung" xml:space="preserve">
-    <value>Chiếu khấu chung</value>
-  </data>
 	<data name="chon_chiet_khau_chung" xml:space="preserve">
-    <value>Chọn chiếu khấu chung</value>
+    <value>Chọn chiết khấu chung</value>
   </data>
 	<data name="chon_chiet_khau_noi_bo" xml:space="preserve">
     <value>Chọn Chiết khấu nội bộ</value>

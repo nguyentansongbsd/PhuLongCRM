@@ -65,6 +65,8 @@ namespace PhuLongCRM.Views
                 if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_customergroup)) viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_area)) viewModel.Area = AreaData.GetAreaById(viewModel.singleLead.bsd_area);
+                viewModel.PhongThuy = null;
+                LoadDataPhongThuy();
                 NeedToRefreshLeadDetail = false;
             }
             if (NeedToRefreshActivity == true)
@@ -301,7 +303,7 @@ namespace PhuLongCRM.Views
         #region TabPhongThuy
         private void LoadDataPhongThuy()
         {
-            if (viewModel.PhongThuy == null)
+            try
             {
                 viewModel.LoadPhongThuy();
                 if (viewModel.PhongThuy.gioi_tinh != 0 && viewModel.PhongThuy.nam_sinh != 0)
@@ -309,6 +311,11 @@ namespace PhuLongCRM.Views
                 else
                     phongthuy_info.IsVisible = false;
             }
+            catch(Exception ex)
+            {
+
+            }
+            
         }
 
         private void ShowImage_Tapped(object sender, EventArgs e)

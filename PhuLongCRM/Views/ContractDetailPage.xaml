@@ -327,7 +327,7 @@
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout BackgroundColor="White" Padding="25,10">
-                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_chung}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
                                             <controls:FormLabelValue Text="{Binding Contract.discountlist_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
                                             <StackLayout BindableLayout.ItemsSource="{Binding ListDiscount}" BackgroundColor="#eeeeee" Spacing="1">
                                                 <BindableLayout.ItemTemplate>
@@ -566,10 +566,10 @@
                 <controls:CenterPopup.Body>
                     <StackLayout Padding="10,0">
                         <Grid ColumnDefinitions="Auto,*">
-                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding DiscountSpecialItem.statuscode_color}" Grid.Column="0" VerticalOptions="Start">
+                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding DiscountSpecialItem.statuscode_color}" Grid.Column="0" VerticalOptions="Center">
                                 <Label Text="{Binding DiscountSpecialItem.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                             </telerikPrimitives:RadBorder>
-                            <Label Text="{Binding DiscountSpecialItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Column="1" Padding="0,5"/>
+                            <Label Text="{Binding DiscountSpecialItem.bsd_name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" Grid.Column="1" Padding="0,5" VerticalOptions="Center" />
                         </Grid>
                         <Grid ColumnDefinitions="4*,6*">
                             <controls:FormLabel Text="{x:Static lang:Language.phan_tram_giam}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
