@@ -208,18 +208,18 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && viewModel.singleContact.bsd_identitycardnumber.Length != 9)
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycardnumber, 9))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && viewModel.singleContact.bsd_identitycard.Length != 12)
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycard, 12))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
             }
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && viewModel.singleContact.bsd_passport.Length != 8)
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_passport, 8))
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
@@ -445,7 +445,7 @@ namespace PhuLongCRM.Views
 
         private void CMND_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.singleContact.bsd_identitycardnumber.Length != 9)
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycardnumber, 9))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
             }
@@ -468,7 +468,8 @@ namespace PhuLongCRM.Views
 
         private void CCCD_Unfocused(object sender, FocusEventArgs e)
         {
-            if (viewModel.singleContact.bsd_identitycard.Length != 12)
+            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard)) return;
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycard, 12))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
@@ -476,7 +477,8 @@ namespace PhuLongCRM.Views
 
         private void PassPort_Unfocused(object sender, FocusEventArgs e)
         {
-            if (viewModel.singleContact.bsd_passport.Length != 8)
+            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport)) return;
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_passport, 8))
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
             }

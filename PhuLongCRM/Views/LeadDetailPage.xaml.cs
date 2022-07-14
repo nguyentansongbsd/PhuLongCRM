@@ -306,7 +306,7 @@ namespace PhuLongCRM.Views
             try
             {
                 viewModel.LoadPhongThuy();
-                if (viewModel.PhongThuy.gioi_tinh != 0 && viewModel.PhongThuy.nam_sinh != 0)
+                if (viewModel.PhongThuy.gioi_tinh != 0 && viewModel.PhongThuy.gioi_tinh != 100000000 && viewModel.PhongThuy.nam_sinh != 0)
                     phongthuy_info.IsVisible = true;
                 else
                     phongthuy_info.IsVisible = false;

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace PhuLongCRM.Helper
 {
@@ -33,6 +34,30 @@ namespace PhuLongCRM.Helper
                     return String.Format(new CultureInfo("vi-VN"), "{0:#,##0.00}", input.Value);
             }
             return null;
+        }
+        public static bool CheckValueID(string input, int? charNumber)
+        {
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                Regex regex = new Regex(@"[^0-9|a-z|A-Z]");
+                Match match = regex.Match(input);
+                if (!match.Success)
+                {
+                    if (charNumber.HasValue)
+                        if (input.Trim().Length != charNumber)
+                            return false;
+                        else
+                            return true;
+                    else
+                        if (input.Contains(" "))
+                        return false;
+                    else
+                        return true;
+                }
+                else
+                    return false;
+            }
+            return false;
         }
     }
 }

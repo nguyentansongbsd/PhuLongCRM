@@ -118,6 +118,11 @@ namespace PhuLongCRM.Views
 
                 if (viewModel.singleAccount.statuscode != "100000000")
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
+
+                if (viewModel.singleAccount.statuscode == "2")
+                    floatingButtonGroup.IsVisible = false;
+                else
+                    floatingButtonGroup.IsVisible = true;
             }
         }
 

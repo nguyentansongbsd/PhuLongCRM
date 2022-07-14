@@ -102,6 +102,11 @@ namespace PhuLongCRM.Views
 
                 if (viewModel.singleContact.statuscode != "100000000")
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
+
+                if (viewModel.singleContact.statuscode == "2")
+                    floatingButtonGroup.IsVisible = false;
+                else
+                    floatingButtonGroup.IsVisible = true;
             }
         }
 
@@ -343,6 +348,10 @@ namespace PhuLongCRM.Views
             {
                viewModel.PhongThuy = new PhongThuyModel();
                viewModel.LoadPhongThuy();
+                if (viewModel.PhongThuy.gioi_tinh != 0 && viewModel.PhongThuy.gioi_tinh != 100000000 && viewModel.PhongThuy.nam_sinh != 0)//100000000
+                    phongthuy_info.IsVisible = true;
+                else
+                    phongthuy_info.IsVisible = false;
             }
         }
 

@@ -700,6 +700,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='statuscode' />
                                     <attribute name='statecode' />
                                     <attribute name='bsd_qrcode' />
+                                    <attribute name='leadqualitycode' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='leadid' operator='eq' value='{singleLead.leadid}' />
