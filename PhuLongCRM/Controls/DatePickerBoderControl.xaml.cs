@@ -81,6 +81,25 @@ namespace PhuLongCRM.Controls
                     control.btnClearTime.IsVisible = control.btnClear.IsVisible = false;
                 }
             }
+            //else if(oldValue != null && newValue != null)
+            //{
+            //    control.ShowEntry = false;
+            //    control.btnClear.IsVisible = !control.ShowEntry;
+
+            //    if (control.Date.HasValue)
+            //    {
+            //        control.Time = new TimeSpan(control.Date.Value.Hour, control.Date.Value.Minute, control.Date.Value.Second);
+            //        control.Date = new DateTime(control.Date.Value.Year, control.Date.Value.Month, control.Date.Value.Day, control.Time.Value.Hours, control.Time.Value.Minutes, control.Time.Value.Seconds);
+            //        control.ShowEntryTime = control.Time.HasValue ? false : true;
+            //        control.IsTimeNull = false;
+            //        control.btnClearTime.IsVisible = !control.ShowEntryTime;
+            //    }
+
+            //    if (control.IsVisibleButtonClear.HasValue && control.IsVisibleButtonClear.Value == false)
+            //    {
+            //        control.btnClearTime.IsVisible = control.btnClear.IsVisible = false;
+            //    }
+            //}
         }
 
         private static void ShowTimeChanged(BindableObject bindable, object oldValue, object newValue)

@@ -9130,7 +9130,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please choose porject..
+        ///   Looks up a localized string similar to Please choose project..
         /// </summary>
         internal static string vui_long_chon_du_an {
             get {

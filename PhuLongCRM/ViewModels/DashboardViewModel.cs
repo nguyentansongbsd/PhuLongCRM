@@ -111,7 +111,9 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadCommissionTransactions()
         {
-            //Phu long khong co file nay <attribute name='bsd_totalcommission' alias='CommissionTotal'/> <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+            string attribute = UserLogged.IsLoginByUserCRM ? "bsd_salestaff" : "bsd_employee";
+
+            //Phu long khong co file nay <attribute name='bsd_totalcommission' alias='CommissionTotal'/> // 100000003 :Accountant Confirmed
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                     <entity name='bsd_commissiontransaction'>
                                         <attribute name='bsd_commissiontransactionid' />
@@ -124,7 +126,7 @@ namespace PhuLongCRM.ViewModels
                                         <order attribute='bsd_name' descending='false' />
                                         <filter type='and'>
                                             <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
-                                            <condition attribute='statecode' operator='eq' value='0' />
+                                            <condition attribute='{attribute}' operator='eq' value='{UserLogged.Id}' />
                                         </filter>
                                         <link-entity name='bsd_commissioncalculation' from='bsd_commissioncalculationid' to='bsd_commissioncalculation' link-type='inner'>
                                             <attribute name='statuscode' alias='statuscode_calculator'/>

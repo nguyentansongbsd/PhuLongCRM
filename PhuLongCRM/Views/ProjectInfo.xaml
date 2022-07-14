@@ -242,51 +242,75 @@
 
                                 <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*,*,*" RowSpacing="15" BackgroundColor="White" Padding="10,0">
                                     <StackLayout Grid.Row="0" Grid.Column="0" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#F1C50D"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#F1C50D" >
+                                            <Label Text="{Binding ChuanBi}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.chuan_bi}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="0" Grid.Column="1" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#2FCC71"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#2FCC71" >
+                                            <Label Text="{Binding SanSang}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.san_sang}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="0" Grid.Column="2" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#00CED1"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#00CED1" >
+                                            <Label Text="{Binding Booking}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.dat_cho}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="0" Grid.Column="3" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#04A8F4"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#04A8F4" >
+                                            <Label Text="{Binding GiuCho}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.giu_cho}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="1" Grid.Column="0" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#14A184"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#14A184" >
+                                            <Label Text="{Binding DatCoc}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.dat_coc}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="1" Grid.Column="1" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#8F44AD"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#8F44AD" >
+                                            <Label Text="{Binding DongYChuyenCoc}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.dong_y_chuyen_coc}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="1" Grid.Column="2" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#e67e22"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#e67e22" >
+                                            <Label Text="{Binding DaDuTienCoc}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.da_du_tien_coc}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="1" Grid.Column="3" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#808080"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#808080" >
+                                            <Label Text="{Binding Option}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.hoan_tat_dat_coc}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Grid.Column="0" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#808080"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#808080" >
+                                            <Label Text="{Binding ThanhToanDot1}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.thanh_toan_dot_1}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Grid.Column="1" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#A0DB8E"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#A0DB8E" >
+                                            <Label Text="{Binding SignedDA}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.da_ky_ttdc_hddc}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Grid.Column="2" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#6897BB"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#6897BB" >
+                                            <Label Text="{Binding Qualified}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.du_dieu_dien}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Grid.Column="3" Spacing="10">
-                                        <BoxView HeightRequest="3" Margin="25,0" BackgroundColor="#BF3A2B"/>
+                                        <telerikPrimitives:RadBorder Margin="15,0" Padding="0,4" CornerRadius="5" BackgroundColor="#BF3A2B" >
+                                            <Label Text="{Binding DaBan}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center"/>
+                                        </telerikPrimitives:RadBorder>
                                         <Label Text="{x:Static lang:Language.da_ban}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                 </Grid>

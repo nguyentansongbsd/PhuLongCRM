@@ -108,8 +108,15 @@
                                         <telerikPrimitives:RadBorder.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Block_Tapped" CommandParameter="{Binding}" />
                                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                                        <Label Text="{Binding bsd_name}" Style="{StaticResource lblBlocks}" TextColor="#B3B3B3" FontSize="15"/>
-                                        <!--,StringFormat='Toà {0}'-->
+                                        <Label Style="{StaticResource lblBlocks}" TextColor="#B3B3B3" FontSize="15">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                    <Binding Path="bsd_name" />
+                                                    <Binding Path="TotalUnitInBlock" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                        <!--,StringFormat='Toà {0}'TotalUnitInBlock-->
                                     </telerikPrimitives:RadBorder>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
@@ -145,9 +152,10 @@
                                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Margin="16,0,16,0">
                                             <Label Grid.Column="0" FontSize="16" FontAttributes="Bold" TextColor="#333333">
                                                 <Label.Text>
-                                                    <MultiBinding StringFormat="{}{0} {1}">
+                                                    <MultiBinding StringFormat="{}{0} {1} ({2})">
                                                         <Binding Source="{x:Static lang:Language.tang}" />
                                                         <Binding Path="bsd_name" />
+                                                        <Binding Path="TotalUnitInFloor" />
                                                     </MultiBinding>
                                                 </Label.Text>
                                             </Label>

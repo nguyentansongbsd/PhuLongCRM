@@ -397,6 +397,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
             }    
         }
+
         private bool CheckCusomer(List<OptionSetFilter> required = null, List<OptionSetFilter> option = null, OptionSet customer = null)
         {
             // kiểm tra từ kh hàng- kh liên quan k check
