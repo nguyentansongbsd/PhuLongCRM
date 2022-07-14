@@ -199,6 +199,9 @@ namespace PhuLongCRM.Controls
                                     <attribute name='bsd_countryid' alias='Id'/>
                                     <attribute name='bsd_nameen' alias='Detail'/>
                                     <order attribute='bsd_priority' descending='false' />
+                                    <filter type='and'>
+                                        <condition attribute='statecode' operator='eq' value='0' />
+                                    </filter>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Models.LookUp>>("bsd_countries", fetch);
@@ -249,7 +252,8 @@ namespace PhuLongCRM.Controls
                                     <attribute name='bsd_nameen' alias='Detail'/>
                                     <order attribute='bsd_priority' descending='false' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_country' operator='eq' value='" + Country.Id + @"' />
+                                        <condition attribute='bsd_country' operator='eq' value='" + Country.Id + @"' />
+                                        <condition attribute='statecode' operator='eq' value='0' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -302,7 +306,8 @@ namespace PhuLongCRM.Controls
                                 <attribute name='bsd_nameen' alias='Detail'/>
                                 <order attribute='new_name' descending='false' />
                                 <filter type='and'>
-                                  <condition attribute='new_province' operator='eq' value='" + Province.Id + @"' />
+                                    <condition attribute='new_province' operator='eq' value='" + Province.Id + @"' />
+                                    <condition attribute='statecode' operator='eq' value='0' />
                                 </filter>
                               </entity>
                             </fetch>";

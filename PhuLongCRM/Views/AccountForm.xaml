@@ -69,7 +69,7 @@
                     <controls:LookUp x:Name="Lookup_PrimaryContact" Placeholder="{x:Static lang:Language.chon_nguoi_dai_dien}" ItemsSource="{Binding PrimaryContactOptionList}" SelectedItem="{Binding PrimaryContact}" BottomModal="{x:Reference BottomModal}" NameDisplay="Name" Margin="10,0" />
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.giay_phep_kinh_doanh}" Margin="10,10,10,0"/>
-                    <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_giay_phep_kinh_doanh}" Text="{Binding singleAccount.bsd_registrationcode}" FontSize="15" IsEnabled="{Binding IsOfficial}" Margin="10,0" />
+                    <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_giay_phep_kinh_doanh}" Text="{Binding singleAccount.bsd_registrationcode}" FontSize="15" IsEnabled="{Binding IsOfficial}" Margin="10,0" Unfocused="so_gpkd_Unfocused" />
 
                     <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" FontSize="15" Margin="10,10,10,0"/>
                     <controls:DatePickerBoderControl Date="{Binding singleAccount.bsd_issuedon}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False" Margin="10,0" />

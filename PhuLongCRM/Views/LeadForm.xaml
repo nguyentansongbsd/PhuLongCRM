@@ -111,7 +111,7 @@
                                 <controls:MainEntry x:Name="companyname_text" Text="{Binding singleLead.companyname}" Placeholder="{x:Static lang:Language.nhap_ten_cong_ty}" FontSize="15"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.so_gpkd}"/>
-                                <controls:MainEntry Text="{Binding singleLead.bsd_registrationcode}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_gpkd}" Margin="0,0,0,5"/>
+                                <controls:MainEntry x:Name="so_gpkd" Text="{Binding singleLead.bsd_registrationcode}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_gpkd}" Margin="0,0,0,5" Unfocused="so_gpkd_Unfocused"/>
 
                                 <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.trang_web}" FontSize="15" />
                                 <controls:MainEntry x:Name="websiteurl_text" Text="{Binding singleLead.websiteurl}" Placeholder="{x:Static lang:Language.nhap_website_cong_ty}" FontSize="15"/>

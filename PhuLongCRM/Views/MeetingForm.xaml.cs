@@ -45,18 +45,8 @@ namespace PhuLongCRM.Views
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
-                    if (viewModel.Required == null)
-                    {
-                        List<OptionSetFilter> item = new List<OptionSetFilter>();
-                        item.Add(new OptionSetFilter
-                        {
-                            Val = ContactDetailPage.FromCustomer.Val,
-                            Label = ContactDetailPage.FromCustomer.Label,
-                            Title = ContactDetailPage.FromCustomer.Title,
-                            Selected = true
-                        });
-                        viewModel.Required = item;
-                    }
+                    Lookup_Required.IsVisible = false;
+                    RequiredMapping.IsVisible = true;
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                     Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
@@ -64,18 +54,8 @@ namespace PhuLongCRM.Views
                 else if (page_before == "LeadDetailPage" && LeadDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(LeadDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = LeadDetailPage.FromCustomer;
-                    if (viewModel.Required == null)
-                    {
-                        List<OptionSetFilter> item = new List<OptionSetFilter>();
-                        item.Add(new OptionSetFilter
-                        {
-                            Val = LeadDetailPage.FromCustomer.Val,
-                            Label = LeadDetailPage.FromCustomer.Label,
-                            Title = LeadDetailPage.FromCustomer.Title,
-                            Selected = true
-                        });
-                        viewModel.Required = item;
-                    }
+                    Lookup_Required.IsVisible = false;
+                    RequiredMapping.IsVisible = true;
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                     Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
@@ -83,18 +63,8 @@ namespace PhuLongCRM.Views
                 else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
-                    if (viewModel.Required == null)
-                    {
-                        List<OptionSetFilter> item = new List<OptionSetFilter>();
-                        item.Add(new OptionSetFilter
-                        {
-                            Val = AccountDetailPage.FromCustomer.Val,
-                            Label = AccountDetailPage.FromCustomer.Label,
-                            Title = AccountDetailPage.FromCustomer.Title,
-                            Selected = true
-                        });
-                        viewModel.Required = item;
-                    }
+                    Lookup_Required.IsVisible = false;
+                    RequiredMapping.IsVisible = true;
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                     Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
@@ -102,29 +72,27 @@ namespace PhuLongCRM.Views
                 else if (page_before == "QueuesDetialPage" && QueuesDetialPage.FromQueue != null && !string.IsNullOrWhiteSpace(QueuesDetialPage.FromQueue.Val))
                 {
                     viewModel.CustomerMapping = QueuesDetialPage.FromQueue;
-                    if (viewModel.Required == null)
-                    {
-                        List<OptionSetFilter> item = new List<OptionSetFilter>();
-                        item.Add(new OptionSetFilter
-                        {
-                            Val = QueuesDetialPage.CustomerFromQueue.Val,
-                            Label = QueuesDetialPage.CustomerFromQueue.Label,
-                            Title = QueuesDetialPage.CustomerFromQueue.Title,
-                            Selected = true
-                        });
-                        viewModel.Required = item;
-                    }
+                    viewModel.Customer = QueuesDetialPage.CustomerFromQueue;
+                    viewModel.Customer.Selected = true; // phân biệt customer là required của queue
+                    lb_requiredMapping.Text = QueuesDetialPage.CustomerFromQueue.Label;
+                    Lookup_Option.ne_customer = Guid.Parse(QueuesDetialPage.CustomerFromQueue.Val);
+                    Lookup_Required.IsVisible = false;
+                    RequiredMapping.IsVisible = true;
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                 }
                 else
                 {
+                    Lookup_Required.IsVisible = true;
+                    RequiredMapping.IsVisible = false;
                     Lookup_Customer.IsVisible = true;
                     RegardingMapping.IsVisible = false;
                 }
             }
             else
             {
+                Lookup_Required.IsVisible = true;
+                RequiredMapping.IsVisible = false;
                 Lookup_Customer.IsVisible = true;
                 RegardingMapping.IsVisible = false;
             }

@@ -208,6 +208,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_giay_phep_kinh_doanh);
                 return;
             }
+            if (!StringFormatHelper.CheckValueID(viewModel.singleAccount.bsd_registrationcode, 10))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
             if (!await viewModel.Check_form_keydata(null, viewModel.singleAccount.bsd_registrationcode, viewModel.singleAccount.accountid.ToString()))
             {
                 ToastMessageHelper.ShortMessage(Language.so_giay_phep_kinh_doanh_da_tao_trong_du_lieu_doanh_nghiep);
@@ -316,6 +321,15 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_khach_hang_doanh_nghiep_that_bai);
                 }
+            }
+        }
+
+        private void so_gpkd_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (!StringFormatHelper.CheckValueID(viewModel.singleAccount.bsd_registrationcode, 10))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
+                return;
             }
         }
     }
