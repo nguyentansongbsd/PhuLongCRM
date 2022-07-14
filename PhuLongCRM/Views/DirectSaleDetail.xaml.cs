@@ -115,6 +115,8 @@ namespace PhuLongCRM.Views
                 Block block = new Block();
                 block.bsd_blockid = Guid.Parse(item.ID);
                 block.bsd_name = item.name;
+                var arrStatus = item.stringQty.Split(',');
+                block.TotalUnitInBlock = int.Parse(arrStatus[0]) + int.Parse(arrStatus[1]) + int.Parse(arrStatus[2]) + int.Parse(arrStatus[3]) + int.Parse(arrStatus[4]) + int.Parse(arrStatus[5]) + int.Parse(arrStatus[6]) + int.Parse(arrStatus[7]) + int.Parse(arrStatus[8]) + int.Parse(arrStatus[9]) + int.Parse(arrStatus[10]) + int.Parse(arrStatus[11]);
                 blocks.Add(block);
             }
             viewModel.Blocks = blocks;

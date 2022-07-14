@@ -49,30 +49,6 @@ namespace PhuLongCRM.ViewModels
         private string _unitView;
         public string UnitView { get => _unitView; set { _unitView = value; OnPropertyChanged(nameof(UnitView)); } }
 
-        private string _numChuanBiInBlock;
-        public string NumChuanBiInBlock { get => _numChuanBiInBlock; set { _numChuanBiInBlock = value; OnPropertyChanged(nameof(NumChuanBiInBlock)); } }
-
-        private string _numSanSangInBlock;
-        public string NumSanSangInBlock { get => _numSanSangInBlock; set { _numSanSangInBlock = value; OnPropertyChanged(nameof(NumSanSangInBlock)); } }
-
-        private string _numGiuChoInBlock;
-        public string NumGiuChoInBlock { get => _numGiuChoInBlock; set { _numGiuChoInBlock = value; OnPropertyChanged(nameof(NumGiuChoInBlock)); } }
-
-        private string _numDatCocInBlock;
-        public string NumDatCocInBlock { get => _numDatCocInBlock; set { _numDatCocInBlock = value; OnPropertyChanged(nameof(NumDatCocInBlock)); } }
-
-        private string _numDongYChuyenCoInBlock;
-        public string NumDongYChuyenCoInBlock { get => _numDongYChuyenCoInBlock; set { _numDongYChuyenCoInBlock = value; OnPropertyChanged(nameof(NumDongYChuyenCoInBlock)); } }
-
-        private string _numDaDuTienCocInBlock;
-        public string NumDaDuTienCocInBlock { get => _numDaDuTienCocInBlock; set { _numDaDuTienCocInBlock = value; OnPropertyChanged(nameof(NumDaDuTienCocInBlock)); } }
-
-        private string _numThanhToanDot1InBlock;
-        public string NumThanhToanDot1InBlock { get => _numThanhToanDot1InBlock; set { _numThanhToanDot1InBlock = value; OnPropertyChanged(nameof(NumThanhToanDot1InBlock)); } }
-
-        private string _numDaBanInBlock;
-        public string NumDaBanInBlock { get => _numDaBanInBlock; set { _numDaBanInBlock = value; OnPropertyChanged(nameof(NumDaBanInBlock)); } }
-
         private bool _showMoreDanhSachDatCho;
         public bool ShowMoreDanhSachDatCho { get => _showMoreDanhSachDatCho; set { _showMoreDanhSachDatCho = value; OnPropertyChanged(nameof(ShowMoreDanhSachDatCho)); } }
 
@@ -414,18 +390,18 @@ namespace PhuLongCRM.ViewModels
             this.Block = new Block();
             this.Block.bsd_blockid = blockId = Guid.Parse(directSaleModel.ID);
             var arrStatus = directSaleModel.stringQty.Split(',');
-            this.Block.NumChuanBiInBlock = arrStatus[0];
-            this.Block.NumSanSangInBlock = arrStatus[1];
-            this.Block.NumBookingInBlock = arrStatus[2];
-            this.Block.NumGiuChoInBlock = arrStatus[3];
-            this.Block.NumDatCocInBlock = arrStatus[4];
-            this.Block.NumDongYChuyenCoInBlock = arrStatus[5];
-            this.Block.NumDaDuTienCocInBlock = arrStatus[6];
-            this.Block.NumOptionInBlock = arrStatus[7];
-            this.Block.NumThanhToanDot1InBlock = arrStatus[8];
-            this.Block.NumSignedDAInBlock = arrStatus[9];
-            this.Block.NumQualifiedInBlock = arrStatus[10];
-            this.Block.NumDaBanInBlock = arrStatus[11];
+            this.Block.NumChuanBiInBlock = int.Parse(arrStatus[0]);
+            this.Block.NumSanSangInBlock = int.Parse(arrStatus[1]);
+            this.Block.NumBookingInBlock = int.Parse(arrStatus[2]);
+            this.Block.NumGiuChoInBlock = int.Parse(arrStatus[3]);
+            this.Block.NumDatCocInBlock = int.Parse(arrStatus[4]);
+            this.Block.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
+            this.Block.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
+            this.Block.NumOptionInBlock = int.Parse(arrStatus[7]);
+            this.Block.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
+            this.Block.NumSignedDAInBlock = int.Parse(arrStatus[9]);
+            this.Block.NumQualifiedInBlock = int.Parse(arrStatus[10]);
+            this.Block.NumDaBanInBlock = int.Parse(arrStatus[11]);
 
             foreach (var item in directSaleModel.listFloor)
             {
@@ -433,18 +409,19 @@ namespace PhuLongCRM.ViewModels
                 floor.bsd_floorid = Guid.Parse(item.ID);
                 floor.bsd_name = item.name;
                 var arrStatusInFloor = item.stringQty.Split(',');
-                floor.NumChuanBiInFloor = arrStatusInFloor[0];
-                floor.NumSanSangInFloor = arrStatusInFloor[1];
-                floor.NumBookingInFloor = arrStatusInFloor[2];
-                floor.NumGiuChoInFloor = arrStatusInFloor[3];
-                floor.NumDatCocInFloor = arrStatusInFloor[4];
-                floor.NumDongYChuyenCoInFloor = arrStatusInFloor[5];
-                floor.NumDaDuTienCocInFloor = arrStatusInFloor[6];
-                floor.NumOptionInFloor = arrStatusInFloor[7];
-                floor.NumThanhToanDot1InFloor = arrStatusInFloor[8];
-                floor.NumSignedDAInFloor = arrStatusInFloor[9];
-                floor.NumQualifiedInFloor = arrStatusInFloor[10];
-                floor.NumDaBanInFloor = arrStatusInFloor[11];
+                floor.NumChuanBiInFloor = int.Parse(arrStatusInFloor[0]);
+                floor.NumSanSangInFloor = int.Parse(arrStatusInFloor[1]);
+                floor.NumBookingInFloor = int.Parse(arrStatusInFloor[2]);
+                floor.NumGiuChoInFloor = int.Parse(arrStatusInFloor[3]);
+                floor.NumDatCocInFloor = int.Parse(arrStatusInFloor[4]);
+                floor.NumDongYChuyenCoInFloor = int.Parse(arrStatusInFloor[5]);
+                floor.NumDaDuTienCocInFloor = int.Parse(arrStatusInFloor[6]);
+                floor.NumOptionInFloor = int.Parse(arrStatusInFloor[7]);
+                floor.NumThanhToanDot1InFloor = int.Parse(arrStatusInFloor[8]);
+                floor.NumSignedDAInFloor = int.Parse(arrStatusInFloor[9]);
+                floor.NumQualifiedInFloor = int.Parse(arrStatusInFloor[10]);
+                floor.NumDaBanInFloor = int.Parse(arrStatusInFloor[11]);
+                floor.TotalUnitInFloor = int.Parse(arrStatusInFloor[0]) + int.Parse(arrStatusInFloor[1]) + int.Parse(arrStatusInFloor[2]) + int.Parse(arrStatusInFloor[3]) + int.Parse(arrStatusInFloor[4]) + int.Parse(arrStatusInFloor[5]) + int.Parse(arrStatusInFloor[6]) + int.Parse(arrStatusInFloor[7]) + int.Parse(arrStatusInFloor[8]) + int.Parse(arrStatusInFloor[9]) + int.Parse(arrStatusInFloor[10]) + int.Parse(arrStatusInFloor[11]);
                 this.Block.Floors.Add(floor);
             };
         }

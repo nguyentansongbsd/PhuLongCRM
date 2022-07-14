@@ -78,18 +78,30 @@ namespace PhuLongCRM.ViewModels
         private bool _isHasEvent;
         public bool IsHasEvent { get => _isHasEvent; set { _isHasEvent = value; OnPropertyChanged(nameof(IsHasEvent)); } }
 
-        public int ChuanBi { get; set; } = 0;
-        public int SanSang { get; set; } = 0;
-        public int GiuCho { get; set; } = 0;
-        public int DatCoc { get; set; } = 0;
-        public int DongYChuyenCoc { get; set; } = 0;
-        public int DaDuTienCoc { get; set; } = 0;
-        public int ThanhToanDot1 { get; set; } = 0;
-        public int DaBan { get; set; } = 0;
-        public int Booking { get; set; } = 0;
-        public int Option { get; set; } = 0;
-        public int SignedDA { get; set; } = 0;
-        public int Qualified { get; set; } = 0;
+        private int _chuanBi = 0;
+        public int ChuanBi { get=>_chuanBi; set { _chuanBi = value;OnPropertyChanged(nameof(ChuanBi)); } }
+        private int _sanSang = 0;
+        public int SanSang { get => _sanSang; set { _sanSang = value;OnPropertyChanged(nameof(SanSang)); } }
+        private int _giuCho = 0;
+        public int GiuCho { get => _giuCho; set { _giuCho = value;OnPropertyChanged(nameof(GiuCho)); } }
+        private int _datCoc = 0;
+        public int DatCoc { get=>_datCoc; set { _datCoc = value;OnPropertyChanged(nameof(DatCoc)); } }
+        private int _dongYChuyenCoc = 0;
+        public int DongYChuyenCoc { get=>_dongYChuyenCoc; set { _dongYChuyenCoc = value;OnPropertyChanged(nameof(DongYChuyenCoc)); } }
+        private int _daDuTienCoc = 0;
+        public int DaDuTienCoc { get=>_daDuTienCoc; set { _daDuTienCoc = value;OnPropertyChanged(nameof(DaDuTienCoc)); } }
+        private int _thanhToanDot1 = 0;
+        public int ThanhToanDot1 { get => _thanhToanDot1 ; set { _thanhToanDot1 = value;OnPropertyChanged(nameof(ThanhToanDot1)); } }
+        private int _daBan = 0;
+        public int DaBan { get=>_daBan; set { _daBan = value;OnPropertyChanged(nameof(DaBan)); } }
+        private int _booking = 0;
+        public int Booking { get=>_booking; set { _booking = value;OnPropertyChanged(nameof(Booking)); } }
+        private int _option = 0;
+        public int Option { get=>_option; set { _option = value;OnPropertyChanged(nameof(Option)); } }
+        private int _signedDA = 0;
+        public int SignedDA { get=>_signedDA; set { _signedDA = value;OnPropertyChanged(nameof(SignedDA)); } }
+        private int _qualified = 0;
+        public int Qualified { get=>_qualified; set { OnPropertyChanged(nameof(Qualified)); } }
 
         public bool IsLoadedGiuCho { get; set; }
 
