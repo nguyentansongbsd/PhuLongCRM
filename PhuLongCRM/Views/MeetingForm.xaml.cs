@@ -338,7 +338,9 @@ namespace PhuLongCRM.Views
                         viewModel.MeetingModel.scheduleddurationminutes = 0;
                     }
 
+                    viewModel.MeetingModel.scheduledstart = null;
                     viewModel.MeetingModel.scheduledstart = new DateTime(timeStart.Year, timeStart.Month, timeStart.Day, 7, 0, 0);
+                    viewModel.MeetingModel.scheduledend = null;
                     viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddDays(1);
                 }
                 else
@@ -346,11 +348,13 @@ namespace PhuLongCRM.Views
                     var dateStart = viewModel.MeetingModel.scheduledstart.Value;
                     TimeSpan timeStart = viewModel.MeetingModel.timeStart;
 
+                    viewModel.MeetingModel.scheduledstart = null;
                     if (viewModel.MeetingModel.timeStart != new TimeSpan(0, 0, 0))
                         viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, timeStart.Hours, timeStart.Minutes, timeStart.Seconds);
                     else
                         viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, dateStart.Hour, dateStart.Minute, dateStart.Second);
 
+                    viewModel.MeetingModel.scheduledend = null;
                     if (viewModel.MeetingModel.scheduleddurationminutes > 0)
                         viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
                     else
@@ -392,6 +396,11 @@ namespace PhuLongCRM.Views
             }
             else
                 return false;
+        }
+
+        private void ClearDate_Clicked(object sender, EventArgs e)
+        {
+            viewModel.MeetingModel.isalldayevent = false;
         }
     }
 }

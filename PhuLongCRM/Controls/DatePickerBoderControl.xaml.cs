@@ -10,6 +10,7 @@ namespace PhuLongCRM.Controls
     public partial class DatePickerBoderControl : Grid
     {
         public event EventHandler Date_Selected;
+        public event EventHandler Clear_Clicked;
 
         public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime?), typeof(DatePickerBoderControl), null, BindingMode.TwoWay, propertyChanged: HadValueChanged);
         public DateTime? Date { get { return (DateTime?)GetValue(DateProperty); } set { SetValue(DateProperty, value); } }
@@ -60,9 +61,13 @@ namespace PhuLongCRM.Controls
         private static void HadValueChanged(BindableObject bindable, object oldValue, object newValue)
         {
             DatePickerBoderControl control = (DatePickerBoderControl)bindable;
-            if (newValue == null) return;
+            if (oldValue != null && newValue == null)
+            {
+                //control.Date = null;
+                return;
+            }
 
-            if (oldValue == null && newValue != null && control.ShowEntry == true)
+            if (oldValue == null && newValue != null)
             {
                 control.ShowEntry = false;
                 control.btnClear.IsVisible = !control.ShowEntry;
@@ -81,25 +86,6 @@ namespace PhuLongCRM.Controls
                     control.btnClearTime.IsVisible = control.btnClear.IsVisible = false;
                 }
             }
-            //else if(oldValue != null && newValue != null)
-            //{
-            //    control.ShowEntry = false;
-            //    control.btnClear.IsVisible = !control.ShowEntry;
-
-            //    if (control.Date.HasValue)
-            //    {
-            //        control.Time = new TimeSpan(control.Date.Value.Hour, control.Date.Value.Minute, control.Date.Value.Second);
-            //        control.Date = new DateTime(control.Date.Value.Year, control.Date.Value.Month, control.Date.Value.Day, control.Time.Value.Hours, control.Time.Value.Minutes, control.Time.Value.Seconds);
-            //        control.ShowEntryTime = control.Time.HasValue ? false : true;
-            //        control.IsTimeNull = false;
-            //        control.btnClearTime.IsVisible = !control.ShowEntryTime;
-            //    }
-
-            //    if (control.IsVisibleButtonClear.HasValue && control.IsVisibleButtonClear.Value == false)
-            //    {
-            //        control.btnClearTime.IsVisible = control.btnClear.IsVisible = false;
-            //    }
-            //}
         }
 
         private static void ShowTimeChanged(BindableObject bindable, object oldValue, object newValue)
@@ -156,10 +142,16 @@ namespace PhuLongCRM.Controls
             this.ShowEntryTime = true;
             btnClearTime.IsVisible = !ShowEntryTime;
             this.IsTimeNull = true;
+            Clear_Clicked?.Invoke(sender, EventArgs.Empty);
         }
 
         private void datePicker_DateSelected(System.Object sender, Xamarin.Forms.DateChangedEventArgs e)
         {
+            //if (Date.HasValue)
+            //{
+            //    this.ShowEntry = false;
+            //    btnClear.IsVisible = !ShowEntry;
+            //}
             if (Date.HasValue && Time.HasValue)
             {
                 Date = new DateTime(Date.Value.Year, Date.Value.Month, Date.Value.Day, Time.Value.Hours, Time.Value.Minutes, Time.Value.Seconds);
