@@ -11,9 +11,8 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center" Padding="10,0">
             <!--<DatePicker Date="{Binding Date}"/>-->
-            <controls:DatePickerBoderControl Date="{Binding Date}" Placeholder="ngay" ShowTime="True"/>
+            <controls:DatePickerBoderControl Date="{Binding MyDate}" Placeholder="ngay" ShowTime="True"/>
             <Button Text="test" Clicked="Button_Clicked"/>
-            <controls:PhoneEntryControl Placeholder="+84-0336xxxxxxx" />
         </StackLayout>
         
     </ContentPage.Content>

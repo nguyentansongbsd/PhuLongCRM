@@ -14,6 +14,7 @@ namespace PhuLongCRM.Views
 {
     public partial class LoginByUserCRMPage : ContentPage
     {
+        private List<OptionSet> Roles = new List<OptionSet>();
         private string loginUrl = "https://login.microsoftonline.com/{0}/oauth2/v2.0/authorize?client_id={1}&response_type=code&redirect_uri={2}&response_mode=query&scope={3}&state=12345";
         private JwtModel model;
 
@@ -46,14 +47,6 @@ namespace PhuLongCRM.Views
                     UserLogged.RefreshToken = tokenData.refresh_token;
 
                     await LoadUserCRM();
-
-                    UserLogged.IsLoginByUserCRM = true;
-                    UserLogged.IsLogged = true;
-                    UserLogged.UserAttribute = "ownerid";
-
-                    Application.Current.MainPage = new AppShell(true);
-                    await Task.Delay(1);
-                    LoadingHelper.Hide();
                 }
                 else
                 {
@@ -83,9 +76,27 @@ namespace PhuLongCRM.Views
             if (result != null || result.value.Count > 0)
             {
                 UserModel user = result.value.SingleOrDefault();
-                UserLogged.UserCRM = model.name;
-                UserLogged.ContactName = model.unique_name;
-                UserLogged.Id = user.systemuserid;
+
+                bool IsSalesRole = await CheckUserRole(user.systemuserid);
+                if (IsSalesRole)
+                {
+                    UserLogged.UserCRM = model.name;
+                    UserLogged.ContactName = model.unique_name;
+                    UserLogged.Id = user.systemuserid;
+                    UserLogged.IsLoginByUserCRM = true;
+                    UserLogged.IsLogged = true;
+                    UserLogged.UserAttribute = "ownerid";
+
+                    Application.Current.MainPage = new AppShell(true);
+                    await Task.Delay(1);
+                }
+                else
+                {
+                    DependencyService.Get<IClearCookies>().ClearAllCookies();
+                    ToastMessageHelper.LongMessage("Vui lòng đăng nhập tài khoản kinh doanh.");
+                    await Navigation.PopAsync();
+                }
+                
                 LoadingHelper.Hide();
             }
             else
@@ -93,6 +104,27 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
                 LoadingHelper.Hide();
             }
+        }
+
+        private async Task<bool> CheckUserRole(Guid id)
+        {
+            string fetchXml = $@"<fetch>
+                                  <entity name='role'>
+                                    <attribute name='name' alias='Label'/>
+                                    <link-entity name='systemuserroles' from='roleid' to='roleid' intersect='true'>
+                                      <filter>
+                                        <condition attribute='systemuserid' operator='eq' value='{id}'/>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("roles", fetchXml);
+            if (result == null || result.value.Count == 0) return false;
+
+            if (result.value.Any(x => x.Label.StartsWith("PL_S&M_")))
+                return true;
+            else
+                return false;
         }
     }
 }

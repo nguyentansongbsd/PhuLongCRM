@@ -13,18 +13,19 @@ namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
-        private DateTime? _date;
-        public DateTime? Date { get => _date; set { _date = value;OnPropertyChanged(nameof(Date)); } }
+        private DateTime? _myDate;
+        public DateTime? MyDate { get => _myDate; set { _myDate = value;OnPropertyChanged(nameof(MyDate)); } }
         public BlankPage()
         {
             InitializeComponent();
             this.BindingContext = this;
-            Date = new DateTime(2022, 06, 18, 22, 00, 00);
+            MyDate = new DateTime(2022, 06, 18, 22, 00, 00);
         }
 
         async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
-            await DisplayAlert("", Date.Value.ToString(), "ok");
+            this.MyDate = null;
+            this.MyDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 00, 00);
         }
     }
 }
