@@ -473,7 +473,9 @@ namespace PhuLongCRM.Views
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
+                    if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
                     this.Title = Language.dat_coc_title;
+                    InitContract(true);
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.bang_tinh_gia_da_duoc_ky);
                 }
@@ -682,6 +684,7 @@ namespace PhuLongCRM.Views
                     if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                     if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
+                    if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.da_huy_dat_coc);
