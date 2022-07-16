@@ -92,7 +92,8 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 viewModel.PageBangTinhGia = 1;
-                viewModel.BangTinhGiaList.Clear();
+                if (viewModel.BangTinhGiaList != null)
+                    viewModel.BangTinhGiaList.Clear();
                 await viewModel.LoadDanhSachBangTinhGia();
                 NeedToRefreshQuotation = false;
                 LoadingHelper.Hide();
