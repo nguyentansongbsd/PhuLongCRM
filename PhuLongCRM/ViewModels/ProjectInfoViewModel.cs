@@ -199,6 +199,26 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadThongKe()
         {
+            unitChartModels = new List<ChartModel>()
+            {
+                new ChartModel {Category ="Giữ chỗ",Value=1},
+                new ChartModel { Category = "Đặt cọc", Value = 1 },
+                new ChartModel {Category ="Đồng ý chuyển cọc",Value=1 },
+                new ChartModel { Category = "Đã đủ tiền cọc", Value = 1 },
+                new ChartModel { Category = "Option", Value = 1 },
+                new ChartModel {Category ="Thanh toán đợt 1",Value=1},
+                new ChartModel { Category = "Signed D.A", Value = 1 },
+                new ChartModel { Category = "Qualified", Value = 1 },
+                new ChartModel { Category = "Đã bán", Value =  1},
+                new ChartModel {Category ="Chuẩn bị", Value=1},
+                new ChartModel { Category = "Sẵn sàng", Value = 1 },
+                new ChartModel { Category = "Booking", Value = 1 },
+            };
+            foreach (var item in unitChartModels)
+            {
+                UnitChart.Add(item);
+            }
+
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='product'>
                                 <attribute name='name' />
@@ -222,18 +242,6 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Unit>>("products", fetchXml);
             if (result == null || result.value.Any() == false)
             {
-                ChuanBi++;
-                SanSang++;
-                GiuCho++;
-                DatCoc++;
-                DongYChuyenCoc++;
-                DaDuTienCoc++;
-                ThanhToanDot1++;
-                DaBan++;
-                Booking++;
-                Option++;
-                SignedDA++;
-                Qualified++;
                 IsShowBtnGiuCho = true;
             }
             else
@@ -253,26 +261,26 @@ namespace PhuLongCRM.ViewModels
                 Option = data.Where(x => x.statuscode == 100000010).Count();
                 SignedDA = data.Where(x => x.statuscode == 100000009).Count();
                 Qualified = data.Where(x => x.statuscode == 100000008).Count();
-            }
 
-            unitChartModels = new List<ChartModel>()
-            {
-                new ChartModel {Category ="Giữ chỗ",Value=GiuCho},
-                new ChartModel { Category = "Đặt cọc", Value = DatCoc },
-                new ChartModel {Category ="Đồng ý chuyển cọc",Value=DongYChuyenCoc },
-                new ChartModel { Category = "Đã đủ tiền cọc", Value = DaDuTienCoc },
-                new ChartModel { Category = "Option", Value = Option },
-                new ChartModel {Category ="Thanh toán đợt 1",Value=ThanhToanDot1},
-                new ChartModel { Category = "Signed D.A", Value = SignedDA },
-                new ChartModel { Category = "Qualified", Value = Qualified },
-                new ChartModel { Category = "Đã bán", Value =  DaBan},
-                new ChartModel {Category ="Chuẩn bị", Value=ChuanBi},
-                new ChartModel { Category = "Sẵn sàng", Value = SanSang },
-                new ChartModel { Category = "Booking", Value = Booking },
-            };
-            foreach (var item in unitChartModels)
-            {
-                UnitChart.Add(item);
+                unitChartModels = new List<ChartModel>()
+                {
+                    new ChartModel {Category ="Giữ chỗ",Value=GiuCho},
+                    new ChartModel { Category = "Đặt cọc", Value = DatCoc },
+                    new ChartModel {Category ="Đồng ý chuyển cọc",Value=DongYChuyenCoc },
+                    new ChartModel { Category = "Đã đủ tiền cọc", Value = DaDuTienCoc },
+                    new ChartModel { Category = "Option", Value = Option },
+                    new ChartModel {Category ="Thanh toán đợt 1",Value=ThanhToanDot1},
+                    new ChartModel { Category = "Signed D.A", Value = SignedDA },
+                    new ChartModel { Category = "Qualified", Value = Qualified },
+                    new ChartModel { Category = "Đã bán", Value =  DaBan},
+                    new ChartModel {Category ="Chuẩn bị", Value=ChuanBi},
+                    new ChartModel { Category = "Sẵn sàng", Value = SanSang },
+                    new ChartModel { Category = "Booking", Value = Booking },
+                };
+                foreach (var item in unitChartModels)
+                {
+                    UnitChart.Add(item);
+                }
             }
         }
 

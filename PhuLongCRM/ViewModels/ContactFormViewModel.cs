@@ -257,7 +257,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_fullname"] = contact.bsd_fullname;
             data["emailaddress1"] = contact.emailaddress1;
             data["birthdate"] = contact.birthdate.HasValue ? (DateTime.Parse(contact.birthdate.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
-            data["mobilephone"] = contact.mobilephone.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
+            data["mobilephone"] = contact.mobilephone;//.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
             data["gendercode"] = contact.gendercode;
             if (checkCMND != contact.bsd_identitycardnumber)
             {
@@ -270,7 +270,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_issuedonpassport"] = contact.bsd_issuedonpassport.HasValue ? (DateTime.Parse(contact.bsd_issuedonpassport.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
             data["bsd_placeofissuepassport"] = contact.bsd_placeofissuepassport;
             data["bsd_jobtitlevn"] = contact.bsd_jobtitlevn;
-            data["telephone1"] = !string.IsNullOrWhiteSpace(contact.telephone1) && contact.telephone1.Contains("-") ? contact.telephone1.Replace("+", "").Replace("-", "") : string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1;
+            data["telephone1"] = string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1;//!string.IsNullOrWhiteSpace(contact.telephone1) && contact.telephone1.Contains("-") ? contact.telephone1.Replace("+", "").Replace("-", "") : string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1
             data["statuscode"] = this.CustomerStatusReason?.Val;
             data["bsd_identitycard"] = contact.bsd_identitycard;
             data["bsd_identitycarddategrant"] = contact.bsd_identitycarddategrant.HasValue ? (DateTime.Parse(contact.bsd_identitycarddategrant.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;

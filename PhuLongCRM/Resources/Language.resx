@@ -3196,7 +3196,7 @@
 		<value>Thông Tin Người Dùng</value>
 	</data>
 	<data name="ten_user" xml:space="preserve">
-		<value>Tên user</value>
+		<value>Tên người dùng</value>
 	</data>
 	<data name="don_vi_kinh_doanh" xml:space="preserve">
 		<value>Đơn vị kinh doanh</value>
