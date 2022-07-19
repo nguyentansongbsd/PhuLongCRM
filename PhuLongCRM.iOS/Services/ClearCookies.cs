@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UIKit;
+using WebKit;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(ClearCookies))]
@@ -15,9 +16,18 @@ namespace PhuLongCRM.iOS.Services
     {
         public void ClearAllCookies()
         {
-            NSHttpCookieStorage CookieStorage = NSHttpCookieStorage.SharedStorage;
-            foreach (var cookie in CookieStorage.Cookies)
-                CookieStorage.DeleteCookie(cookie);
+            NSHttpCookieStorage.SharedStorage.RemoveCookiesSinceDate(NSDate.DistantPast);
+
+            WKWebsiteDataStore.DefaultDataStore.FetchDataRecordsOfTypes(WKWebsiteDataStore.AllWebsiteDataTypes, (NSArray records) => {
+
+                for (nuint i = 0; i < records.Count; i++)
+                {
+                    var record = records.GetItem<WKWebsiteDataRecord>(i);
+                    WKWebsiteDataRecord[] recordArray = new WKWebsiteDataRecord[record.DataTypes.Count];
+                    WKWebsiteDataStore.DefaultDataStore.RemoveDataOfTypes(record.DataTypes, NSDate.DistantPast, () => { });
+                }
+
+            });
         }
     }
 }

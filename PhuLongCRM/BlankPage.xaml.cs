@@ -19,13 +19,14 @@ namespace PhuLongCRM
         {
             InitializeComponent();
             this.BindingContext = this;
-            MyDate = new DateTime(2022, 06, 18, 22, 00, 00);
+            MyDate = null;// new DateTime(2022, 06, 18, 22, 00, 00);
         }
 
         async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
-            this.MyDate = null;
-            this.MyDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 00, 00);
+            //this.MyDate = null;
+            //this.MyDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 00, 00);
+            await DisplayAlert("", MyDate.ToString(), "ok");
         }
     }
 }
