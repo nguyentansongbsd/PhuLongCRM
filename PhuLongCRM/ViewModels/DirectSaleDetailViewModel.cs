@@ -375,7 +375,6 @@ namespace PhuLongCRM.ViewModels
                     {
                         IsShowBtnBangTinhGia = false;
                     }
-                    //IsShowBtnBangTinhGia = true;
                     return;
                 }
                 else

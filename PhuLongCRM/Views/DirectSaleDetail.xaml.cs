@@ -215,8 +215,6 @@ namespace PhuLongCRM.Views
 
         public void SetButton()
         {
-            btnBangTinhGia.IsVisible = viewModel.IsShowBtnBangTinhGia;
-
             if (btnGiuCho.IsVisible == false && btnBangTinhGia.IsVisible == false)
             {
                 gridButton.IsVisible = false;
@@ -243,6 +241,29 @@ namespace PhuLongCRM.Views
                 Grid.SetColumn(btnBangTinhGia, 0);
                 Grid.SetColumnSpan(btnBangTinhGia, 2);
             }
+
+            //gridButton = new Grid();
+            //if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == false)
+            //{
+            //    gridButton.IsVisible = false;
+            //}
+            //gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+            //if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == true)
+            //{
+            //    gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+            //    Grid.SetColumn(btnGiuCho, 0);
+            //    Grid.SetColumn(btnBangTinhGia, 1);
+            //}
+            //else if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == false)
+            //{
+            //    Grid.SetColumn(btnGiuCho, 0);
+            //    Grid.SetColumn(btnBangTinhGia, 0);
+            //}
+            //else if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == true)
+            //{
+            //    Grid.SetColumn(btnBangTinhGia, 0);
+            //    Grid.SetColumn(btnGiuCho, 0);
+            //}
         }
 
         private void UnitInfor_Clicked(object sender, EventArgs e)
@@ -372,7 +393,6 @@ namespace PhuLongCRM.Views
             viewModel.QueueList.Clear();
             await Task.WhenAll(
                 viewModel.LoadQueues(unitId),
-                //viewModel.CheckShowBtnBangTinhGia(unitId),
                 viewModel.LoadUnitById(unitId)
                 );
 
@@ -397,11 +417,20 @@ namespace PhuLongCRM.Views
             if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004"
                 || viewModel.UnitStatusCode.Id == "100000007")
             {
-                btnGiuCho.IsVisible = true;
+                btnGiuCho.IsVisible = viewModel.Unit.bsd_vippriority ? false : true;
+                if (viewModel.Unit.statuscode != 1 && viewModel.IsShowBtnBangTinhGia == true)
+                {
+                    viewModel.IsShowBtnBangTinhGia = true;
+                }
+                else
+                {
+                    viewModel.IsShowBtnBangTinhGia = false;
+                }
             }
             else
             {
                 btnGiuCho.IsVisible = false;
+                viewModel.IsShowBtnBangTinhGia = false;
             }
             SetButton();
             gridButton.IsVisible = !viewModel.Unit.bsd_vippriority;

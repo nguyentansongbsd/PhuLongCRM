@@ -125,6 +125,8 @@ namespace PhuLongCRM.Views
             await viewModel.loadFromTo(this.PhoneCallId);
             if (viewModel.PhoneCellModel.activityid != Guid.Empty)
             {
+                DatePickerStart.ReSetTime();
+                DatePickerEnd.ReSetTime();
                 OnCompleted?.Invoke(true);
                 IsInit = true;
             }

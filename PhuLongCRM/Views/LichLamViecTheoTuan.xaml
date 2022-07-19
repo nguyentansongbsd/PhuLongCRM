@@ -85,7 +85,7 @@
                 </Grid>
 
                 <StackLayout Grid.Row="1" BackgroundColor="White" Padding="10,6" Margin="0,0,0,2">
-                    <controls:DatePickerBoderControl Date="{Binding selectedDate}" ShowTime="False" IsVisibleButtonClear="False" Date_Selected="Handle_DateSelected" />
+                    <controls:DatePickerBoderControl x:Name="datePicker" Date="{Binding selectedDate}" ShowTime="False" IsVisibleButtonClear="False" Date_Selected="Handle_DateSelected" />
                 </StackLayout>
                 
                 <ListView x:Name="listView" BackgroundColor="White" IsGroupingEnabled="true" ItemsSource="{Binding selectedDateEventsGrouped}"  Grid.Row="2"  HasUnevenRows="true" SelectionMode="None" ItemTapped="Event_Tapped">

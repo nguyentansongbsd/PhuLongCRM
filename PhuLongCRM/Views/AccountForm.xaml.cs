@@ -68,6 +68,7 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleAccount.accountid != Guid.Empty)
             {
+                datePickerNgayCap.ReSetTime();
                 customerCode.IsVisible = true;
                 viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById(viewModel.singleAccount.statuscode);
                 viewModel.OperationScope = OperationScopeData.GetOperationScopeById(viewModel.singleAccount.bsd_operationscope);

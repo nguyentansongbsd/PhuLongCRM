@@ -118,8 +118,10 @@ namespace PhuLongCRM.Views
 
             if (viewModel.MeetingModel.activityid != Guid.Empty)
             {
-                OnCompleted?.Invoke(true);
+                DatePickerStart.ReSetTime();
+                DatePickerEnd.ReSetTime();
                 IsInit = true;
+                OnCompleted?.Invoke(true);
             }
             else
                 OnCompleted?.Invoke(false);

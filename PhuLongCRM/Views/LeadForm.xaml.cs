@@ -52,6 +52,7 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
+                datePickerNgayCap.ReSetTime();
                 customerCode.IsVisible = true;
                 lookUpLeadSource.IsEnabled = false;
 
