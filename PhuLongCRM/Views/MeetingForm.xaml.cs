@@ -274,13 +274,15 @@ namespace PhuLongCRM.Views
                     if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend) != -1)
                     {
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
-                        viewModel.MeetingModel.scheduledstart = viewModel.MeetingModel.scheduledend;
+                        //viewModel.MeetingModel.scheduledstart = viewModel.MeetingModel.scheduledend;
                     }
-                    if(viewModel.MeetingModel.isalldayevent)
+                    if (viewModel.MeetingModel.isalldayevent)
                     {
-                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
                         viewModel.MeetingModel.isalldayevent = false;
-                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
+                    }
+                    if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend.Value.AddDays(-1)) == 0)
+                    {
+                        viewModel.MeetingModel.isalldayevent = true;
                     }
                 }
             }
@@ -295,20 +297,16 @@ namespace PhuLongCRM.Views
                     if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend) != -1)
                     {
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
-                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart;
+                        //viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart;
                     }
                     if (viewModel.MeetingModel.isalldayevent)
                     {
-                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
                         viewModel.MeetingModel.isalldayevent = false;
-                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
                     }
                     // chưa word ok, do control
                     if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend.Value.AddDays(-1)) == 0)
                     {
-                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
                         viewModel.MeetingModel.isalldayevent = true;
-                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
                     }
                 }
                 else
@@ -322,8 +320,6 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.MeetingModel.scheduledstart != null)
             {
-                DatePickerStart.Date_Selected -= DatePickerStart_DateSelected;
-                DatePickerEnd.Date_Selected -= DatePickerEnd_DateSelected;
                 if (viewModel.MeetingModel.isalldayevent)
                 {
                     var timeStart = viewModel.MeetingModel.scheduledstart.Value;
@@ -338,30 +334,28 @@ namespace PhuLongCRM.Views
                         viewModel.MeetingModel.scheduleddurationminutes = 0;
                     }
 
-                    viewModel.MeetingModel.scheduledstart = null;
                     viewModel.MeetingModel.scheduledstart = new DateTime(timeStart.Year, timeStart.Month, timeStart.Day, 7, 0, 0);
-                    viewModel.MeetingModel.scheduledend = null;
+                    DatePickerStart.ReSetTime();
                     viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddDays(1);
+                    DatePickerEnd.ReSetTime();
                 }
                 else
                 {
-                    var dateStart = viewModel.MeetingModel.scheduledstart.Value;
-                    TimeSpan timeStart = viewModel.MeetingModel.timeStart;
+                    //var dateStart = viewModel.MeetingModel.scheduledstart.Value;
+                    //TimeSpan timeStart = viewModel.MeetingModel.timeStart;
 
-                    viewModel.MeetingModel.scheduledstart = null;
-                    if (viewModel.MeetingModel.timeStart != new TimeSpan(0, 0, 0))
-                        viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, timeStart.Hours, timeStart.Minutes, timeStart.Seconds);
-                    else
-                        viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, dateStart.Hour, dateStart.Minute, dateStart.Second);
+                    //viewModel.MeetingModel.scheduledstart = null;
+                    //if (viewModel.MeetingModel.timeStart != new TimeSpan(0, 0, 0))
+                    //    viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, timeStart.Hours, timeStart.Minutes, timeStart.Seconds);
+                    //else
+                    //    viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, dateStart.Hour, dateStart.Minute, dateStart.Second);
 
-                    viewModel.MeetingModel.scheduledend = null;
-                    if (viewModel.MeetingModel.scheduleddurationminutes > 0)
-                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
-                    else
-                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(1);
+                    //viewModel.MeetingModel.scheduledend = null;
+                    //if (viewModel.MeetingModel.scheduleddurationminutes > 0)
+                    //    viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
+                    //else
+                    //    viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(1);
                 }
-                DatePickerStart.Date_Selected += DatePickerStart_DateSelected;
-                DatePickerEnd.Date_Selected += DatePickerEnd_DateSelected;
             }
             else
             {

@@ -4,9 +4,9 @@
       xmlns:controls="clr-namespace:PhuLongCRM.Controls" ColumnDefinitions="6*,Auto,4*"
       xmlns:lang="clr-namespace:PhuLongCRM.Resources"
       x:Class="PhuLongCRM.Controls.DatePickerBoderControl">
-    <controls:DatePickerBorder x:Name="datePicker" Grid.Column="0" OnChangeState="datePicker_OnChangeState" DateSelected="datePicker_DateSelected"/>
+    <controls:DatePickerBorder x:Name="datePicker" Grid.Column="0" OnChangeState="datePicker_OnChangeState" DateSelected="datePicker_DateSelected" Unfocused="datePicker_Unfocused"/>
     <Label x:Name="lblDash" Grid.Column="1" Text="-" VerticalOptions="Center" TextColor="Gray" Margin="4,0"/>
-    <controls:TimePickerBorder x:Name="timePicker" Grid.Column="2" OnChangeState="timePicker_OnChangeState" Unfocused="timePicker_Unfocused" />
+    <controls:TimePickerBorder x:Name="timePicker" Grid.Column="2" OnChangeState="timePicker_OnChangeState" />
 
     <controls:LookUpEntry x:Name="entry" Grid.Column="0" IsEnabled="False"/>
     <controls:LookUpEntry x:Name="entryTime" Grid.Column="2" IsEnabled="False" Placeholder="{x:Static lang:Language.thoi_gian}"/>
