@@ -478,7 +478,11 @@ namespace PhuLongCRM.Views
                     TabCustomerCare.IsVisible = true;
                     TabPhongThuy.IsVisible = false;
                     if (viewModel.list_customercare == null)
+                    {
+                        LoadingHelper.Show();
                         await viewModel.LoadCaseForLead();
+                        LoadingHelper.Hide();
+                    }
                 }
                 else if ((int)e.Item == 2)
                 {
