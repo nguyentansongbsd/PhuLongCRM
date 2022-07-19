@@ -1066,7 +1066,7 @@
     <value>Sales agent company</value>
   </data>
 	<data name="nhan_vien_dai_ly_san" xml:space="preserve">
-    <value>Name of Staff-Agent</value>
+    <value>Name of staff-agent</value>
   </data>
 	<data name="khach_hang_gioi_thieu" xml:space="preserve">
     <value>Customer referral</value>
@@ -1921,7 +1921,7 @@
     <value>Choose type</value>
   </data>
 	<data name="chon_khach_hang" xml:space="preserve">
-    <value>Choose cutomer</value>
+    <value>Choose customer</value>
   </data>
 	<data name="chon_san_pham" xml:space="preserve">
     <value>Choose unit</value>
@@ -2020,7 +2020,7 @@
     <value>Enter name of staff agent</value>
   </data>
 	<data name="chon_dai_ly" xml:space="preserve">
-    <value>Choose sale agent company</value>
+    <value>Choose sales agent company</value>
   </data>
 	<data name="tao_giu_cho" xml:space="preserve">
     <value>Create Queue</value>

@@ -69,6 +69,8 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
+                datePickerNgayCap.ReSetTime();
+                datePickerNgayCapHoChieu.ReSetTime();
                 customerCode.IsVisible = true;
                 viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById(viewModel.singleContact.statuscode);
                 OnCompleted?.Invoke(true);

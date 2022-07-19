@@ -12,7 +12,7 @@ namespace PhuLongCRM.Controls
         public event EventHandler Date_Selected;
         public event EventHandler Clear_Clicked;
 
-        public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime?), typeof(DatePickerBoderControl), null, BindingMode.TwoWay, propertyChanged: HadValueChanged);
+        public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime?), typeof(DatePickerBoderControl), null, BindingMode.TwoWay);
         public DateTime? Date { get { return (DateTime?)GetValue(DateProperty); } set { SetValue(DateProperty, value); } }
 
         public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan?), typeof(DatePickerBoderControl), null, BindingMode.TwoWay);
@@ -56,66 +56,6 @@ namespace PhuLongCRM.Controls
             timePicker.SetBinding(TimePickerBorder.IsVisibleProperty, new Binding("ShowTime") { Source = this });
             lblDash.SetBinding(Label.IsVisibleProperty, new Binding("ShowTime") { Source = this });
             entryTime.SetBinding(MainEntry.IsVisibleProperty, new Binding("ShowEntryTime") { Source = this });
-        }
-
-        private static void HadValueChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            DatePickerBoderControl control = (DatePickerBoderControl)bindable;
-            if (oldValue != null && newValue !=null && control.Date.Value.Date == DateTime.Now.Date)// thoi gian = ngay hien tai khong nhay vao 2 ham "datePicker_DateSelected","datePicker_OnChangeState" nen set lai ngay va gio de thien thi
-            {
-                var time = new TimeSpan();
-                if (!control.Time.HasValue && control.ShowTime == true)
-                {
-                    control.Time = time = new TimeSpan(control.Date.Value.Hour, control.Date.Value.Minute, control.Date.Value.Second);
-                    control.IsTimeNull = false;
-                    control.ShowEntryTime = control.Time.HasValue ? false : true;
-                    control.btnClearTime.IsVisible = !control.ShowEntryTime;
-                    if (control.IsVisibleButtonClear.HasValue && control.IsVisibleButtonClear.Value == false)
-                    {
-                        control.btnClearTime.IsVisible = control.btnClear.IsVisible = false;
-                    }
-                }
-                control.Date = new DateTime(control.Date.Value.Year, control.Date.Value.Month, control.Date.Value.Day, time.Hours, time.Minutes, time.Seconds);
-                control.ShowEntry = false;
-                control.btnClear.IsVisible = !control.ShowEntry;
-            }
-
-            //if (oldValue != newValue)
-            //{
-            //    if (control.Date.HasValue && control.test == false)
-            //    {
-            //        control.Time = new TimeSpan(control.Date.Value.Hour, control.Date.Value.Minute, control.Date.Value.Second);
-            //        control.Date = new DateTime(control.Date.Value.Year, control.Date.Value.Month, control.Date.Value.Day, control.Time.Value.Hours, control.Time.Value.Minutes, control.Time.Value.Seconds);
-            //        control.ShowEntryTime = control.Time.HasValue ? false : true;
-            //        control.IsTimeNull = false;
-            //        control.btnClearTime.IsVisible = !control.ShowEntryTime;
-            //    }
-            //}
-            //if (oldValue != null && newValue == null)
-            //{
-            //    //control.Date = null;
-            //    return;
-            //}
-
-            //if (oldValue == null && newValue != null)
-            //{
-            //    control.ShowEntry = false;
-            //    control.btnClear.IsVisible = !control.ShowEntry;
-
-            //    if (control.Date.HasValue)
-            //    {
-            //        control.Time = new TimeSpan(control.Date.Value.Hour, control.Date.Value.Minute, control.Date.Value.Second);
-            //        control.Date = new DateTime(control.Date.Value.Year, control.Date.Value.Month, control.Date.Value.Day, control.Time.Value.Hours, control.Time.Value.Minutes, control.Time.Value.Seconds);
-            //        control.ShowEntryTime = control.Time.HasValue ? false : true;
-            //        control.IsTimeNull = false;
-            //        control.btnClearTime.IsVisible = !control.ShowEntryTime;
-            //    }
-
-            //    if (control.IsVisibleButtonClear.HasValue && control.IsVisibleButtonClear.Value == false)
-            //    {
-            //        control.btnClearTime.IsVisible = control.btnClear.IsVisible = false;
-            //    }
-            //}
         }
 
         private static void ShowTimeChanged(BindableObject bindable, object oldValue, object newValue)
@@ -239,10 +179,18 @@ namespace PhuLongCRM.Controls
 
         public void ReSetTime()
         {
-            this.Time= new TimeSpan(this.Date.Value.Hour, this.Date.Value.Minute, this.Date.Value.Second);
-            this.Date = new DateTime(this.Date.Value.Year, this.Date.Value.Month, this.Date.Value.Day, this.Time.Value.Hours, this.Time.Value.Minutes, this.Time.Value.Seconds);
-            this.ShowEntry = this.ShowEntryTime = false;
-            btnClear.IsVisible = btnClearTime.IsVisible = !ShowEntryTime;
+            if (this.Date.HasValue)
+            {
+                this.Time = new TimeSpan(this.Date.Value.Hour, this.Date.Value.Minute, this.Date.Value.Second);
+                this.Date = new DateTime(this.Date.Value.Year, this.Date.Value.Month, this.Date.Value.Day, this.Time.Value.Hours, this.Time.Value.Minutes, this.Time.Value.Seconds);
+                this.IsTimeNull = false;
+                this.ShowEntry = this.ShowEntryTime = false;
+                btnClear.IsVisible = btnClearTime.IsVisible = !ShowEntryTime;
+                if (this.IsVisibleButtonClear.HasValue && this.IsVisibleButtonClear.Value == false)
+                {
+                    this.btnClearTime.IsVisible = this.btnClear.IsVisible = false;
+                }
+            }
         }
 
         private void datePicker_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)

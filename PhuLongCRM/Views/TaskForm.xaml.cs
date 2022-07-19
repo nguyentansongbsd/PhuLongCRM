@@ -89,6 +89,8 @@ namespace PhuLongCRM.Views
             await viewModel.LoadTask();
             if (viewModel.TaskFormModel != null)
             {
+                dateStart.ReSetTime();
+                dateEnd.ReSetTime();
                 btnSave.Text = this.Title = Language.cap_nhat_cong_viec_title;
                 CheckTaskForm?.Invoke(true);
             }

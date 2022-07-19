@@ -1066,7 +1066,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose sale agent company.
+        ///   Looks up a localized string similar to Choose sales agent company.
         /// </summary>
         internal static string chon_dai_ly {
             get {
@@ -1228,7 +1228,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose cutomer.
+        ///   Looks up a localized string similar to Choose customer.
         /// </summary>
         internal static string chon_khach_hang {
             get {
@@ -6142,7 +6142,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name of Staff-Agent.
+        ///   Looks up a localized string similar to Name of staff-agent.
         /// </summary>
         internal static string nhan_vien_dai_ly_san {
             get {

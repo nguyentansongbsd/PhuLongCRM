@@ -169,12 +169,12 @@ namespace PhuLongCRM.ViewModels
                 return;
             }
             var tmp = result.value.FirstOrDefault();
+            if (tmp.bsd_dategrant.HasValue)
+                tmp.bsd_dategrant = tmp.bsd_dategrant.Value.ToLocalTime();
+            if (tmp.new_birthday.HasValue)
+                tmp.new_birthday = tmp.new_birthday.Value.ToLocalTime();
             tmp.lastname = tmp.fullname;
             this.singleLead = tmp;
-            if (singleLead.bsd_dategrant.HasValue)
-                singleLead.bsd_dategrant = tmp.bsd_dategrant.Value.ToLocalTime();
-            if (singleLead.new_birthday.HasValue)
-                singleLead.new_birthday = tmp.new_birthday.Value.ToLocalTime();
 
             string fetch2 = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                           <entity name='lead'>

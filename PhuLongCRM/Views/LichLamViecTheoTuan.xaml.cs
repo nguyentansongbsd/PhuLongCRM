@@ -49,7 +49,8 @@ namespace PhuLongCRM.Views
             VisualStateManager.GoToState(lblPhoneCall, "InActive");
 
             await viewModel.loadAllActivities();
-            Handle_DateSelected(null,EventArgs.Empty);         
+            Handle_DateSelected(null,EventArgs.Empty);
+            datePicker.ReSetTime();
             if (viewModel.lstEvents != null && viewModel.lstEvents.Count > 0)
                 OnComplete?.Invoke(true);
             else
