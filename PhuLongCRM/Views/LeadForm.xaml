@@ -82,7 +82,7 @@
                                 <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="{x:Static lang:Language.chon_loai_the_id}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}" SelectedItemChange="TypeIdCard_ItemChange"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.so_id}"/>
-                                <controls:MainEntry Text="{Binding singleLead.bsd_identitycardnumberid}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_id}" Margin="0,0,0,5" Unfocused="MainEntry_Unfocused" />
+                                <controls:MainEntry x:Name="lb_soID" Text="{Binding singleLead.bsd_identitycardnumberid}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_id}" Margin="0,0,0,5" Unfocused="MainEntry_Unfocused" />
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}"/>
                                 <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleLead.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False"/>

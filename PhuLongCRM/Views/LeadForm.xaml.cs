@@ -68,6 +68,10 @@ namespace PhuLongCRM.Views
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard))
                 {
                     viewModel.TypeIdCard = TypeIdCardData.GetTypeIdCardById(viewModel.singleLead.bsd_typeofidcard);
+                    if (viewModel.TypeIdCard?.Val == "100000002")
+                        lb_soID.Keyboard = Keyboard.Default;
+                    else
+                        lb_soID.Keyboard = Keyboard.Numeric;
                 }
 
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_area))
@@ -237,6 +241,11 @@ namespace PhuLongCRM.Views
 
         private void TypeIdCard_ItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
         {
+            if (viewModel.TypeIdCard?.Val == "100000002")
+                lb_soID.Keyboard = Keyboard.Default;
+            else
+                lb_soID.Keyboard = Keyboard.Numeric;
+
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid)) return;
 
             if (viewModel.TypeIdCard == null)
