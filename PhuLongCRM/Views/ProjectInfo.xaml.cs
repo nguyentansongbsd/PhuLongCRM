@@ -71,7 +71,6 @@ namespace PhuLongCRM.Views
                 OnCompleted?.Invoke(false);
             }
         }
-
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -94,7 +93,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-
         private void GiuCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -113,7 +111,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private async void ShowMoreListDatCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -121,7 +118,6 @@ namespace PhuLongCRM.Views
             await viewModel.LoadGiuCho();
             LoadingHelper.Hide();
         }
-
         private void ChuDauTu_Tapped(System.Object sender, System.EventArgs e)
         {
             LoadingHelper.Show();
@@ -141,7 +137,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -161,7 +156,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void ItemSlider_Tapped(object sender, EventArgs e)
         {
             // khoa lai vi phu long chua co hinh anh va video
@@ -198,19 +192,16 @@ namespace PhuLongCRM.Views
             //}
             //LoadingHelper.Hide();
         }
-
         private void ScollTo_Video_Tapped(object sender, EventArgs e)
         {
             var index = viewModel.Collections.IndexOf(viewModel.Collections.FirstOrDefault(x => x.SharePointType == SharePointType.Video));
             carouseView.ScrollTo(index, position: ScrollToPosition.End);
         }
-
         private void ScollTo_Image_Tapped(object sender, EventArgs e)
         {
             var index = viewModel.Collections.IndexOf(viewModel.Collections.FirstOrDefault(x => x.SharePointType == SharePointType.Image));
             carouseView.ScrollTo(index, position: ScrollToPosition.End);
         }
-
         private async void OpenEvent_Tapped(object sender, EventArgs e)
         {
             if (viewModel.Event == null)
@@ -219,12 +210,10 @@ namespace PhuLongCRM.Views
             }
             ContentEvent.IsVisible = true;
         }
-
         private void CloseContentEvent_Tapped(object sender, EventArgs e)
         {
             ContentEvent.IsVisible = false;
         }
-
         private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
         {
             if (e.Item != null)

@@ -686,6 +686,7 @@ namespace PhuLongCRM.Views
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
                     if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
+                    if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.da_huy_dat_coc);
                 }

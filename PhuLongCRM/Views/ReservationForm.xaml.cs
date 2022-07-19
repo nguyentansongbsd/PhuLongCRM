@@ -85,6 +85,8 @@ namespace PhuLongCRM.Views
 
                 await Task.WhenAll(viewModel.LoadTaxCode(),viewModel.LoadPhasesLaunch());
                 SetPreOpen();
+                // set giá trị trong tính tiền
+                InitTotal();
                 CheckReservation?.Invoke(0);
             }
             else
@@ -1215,15 +1217,39 @@ namespace PhuLongCRM.Views
         private void SetTotals(CrmApiResponse data)
         {
             viewModel.TotalReservation = JsonConvert.DeserializeObject<TotalReservationModel>(data.Content);
-            viewModel.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.ListedPrice);
+            viewModel.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.ListedPrice));
+            viewModel.TotalReservation.Discount_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.Discount));
+            viewModel.TotalReservation.HandoverAmount_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.HandoverAmount));
+            viewModel.TotalReservation.NetSellingPrice_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.NetSellingPrice));
+            viewModel.TotalReservation.LandValue_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.LandValue));
+            viewModel.TotalReservation.TotalTax_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.TotalTax));
+            viewModel.TotalReservation.MaintenanceFee_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.MaintenanceFee));
+            viewModel.TotalReservation.NetSellingPriceAfterVAT_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.NetSellingPriceAfterVAT));
+            viewModel.TotalReservation.TotalAmount_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.TotalAmount));
+        }
+        private void InitTotal()
+        {
+            if (viewModel.TotalReservation == null)
+                viewModel.TotalReservation = new TotalReservationModel();
+
+            viewModel.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(viewModel.UnitInfor.price);
+            viewModel.TotalReservation.Discount = 0;
             viewModel.TotalReservation.Discount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.Discount);
+            viewModel.TotalReservation.HandoverAmount = 0;
             viewModel.TotalReservation.HandoverAmount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.HandoverAmount);
+            viewModel.TotalReservation.NetSellingPrice = viewModel.UnitInfor.price + viewModel.TotalReservation.HandoverAmount - viewModel.TotalReservation.Discount;
             viewModel.TotalReservation.NetSellingPrice_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.NetSellingPrice);
+            viewModel.TotalReservation.LandValue = viewModel.UnitInfor.bsd_landvalueofunit * viewModel.UnitInfor.bsd_netsaleablearea;
             viewModel.TotalReservation.LandValue_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.LandValue);
+            viewModel.TotalReservation.TotalTax = Math.Round(((viewModel.TotalReservation.NetSellingPrice - viewModel.TotalReservation.LandValue) * 10) / 100);
             viewModel.TotalReservation.TotalTax_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.TotalTax);
+            viewModel.TotalReservation.MaintenanceFee = Math.Round((viewModel.TotalReservation.NetSellingPrice * viewModel.Quote.maintenancefreespercent) / 100);
             viewModel.TotalReservation.MaintenanceFee_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.MaintenanceFee);
+            viewModel.TotalReservation.NetSellingPriceAfterVAT = viewModel.TotalReservation.NetSellingPrice + viewModel.TotalReservation.TotalTax;
             viewModel.TotalReservation.NetSellingPriceAfterVAT_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.NetSellingPriceAfterVAT);
+            viewModel.TotalReservation.TotalAmount = viewModel.TotalReservation.NetSellingPriceAfterVAT + viewModel.TotalReservation.MaintenanceFee;
             viewModel.TotalReservation.TotalAmount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.TotalAmount);
+
         }
     }
 }

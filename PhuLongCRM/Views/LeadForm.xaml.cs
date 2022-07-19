@@ -245,17 +245,17 @@ namespace PhuLongCRM.Views
 
             if (viewModel.TypeIdCard != null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid))
             {
-                if (viewModel.TypeIdCard?.Val == "100000000" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 9))// CMND
+                if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 9))// CMND
                 {
                     ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                     return;
                 }
-                if (viewModel.TypeIdCard?.Val == "100000001" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 12))// CCCD
+                if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 12))// CCCD
                 {
                     ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                     return;
                 }
-                if (viewModel.TypeIdCard?.Val == "100000002" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 8))// Passport
+                if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 8))// Passport
                 {
                     ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                     return;
@@ -349,22 +349,22 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.TypeIdCard?.Val == "100000000" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 9))// CMND
+            if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 9))// CMND
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 12))// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 12))// CCCD
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000002" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 8))// Passport
+            if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 8))// Passport
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
             }
-            if (!StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 10))
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 10))
             {
                 ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
                 return;
