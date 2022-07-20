@@ -24,6 +24,8 @@ namespace PhuLongCRM.iOS.Renderers
 
 			if (e.NewElement != null)
 				SetupLayer();
+			if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
+				OverrideUserInterfaceStyle = UIKit.UIUserInterfaceStyle.Light;
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

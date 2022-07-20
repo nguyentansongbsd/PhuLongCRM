@@ -14,6 +14,8 @@ namespace PhuLongCRM.iOS.Renderers
         protected override IShellSectionRenderer CreateShellSectionRenderer(ShellSection shellSection)
         {
             var renderer = base.CreateShellSectionRenderer(shellSection);
+            if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
+                OverrideUserInterfaceStyle = UIKit.UIUserInterfaceStyle.Light;
             if (DeviceInfo.Version.Major >= 15 && renderer != null)
             {
                 if (renderer is ShellSectionRenderer shellRenderer)
