@@ -1,5 +1,6 @@
 ﻿using System;
 using PhuLongCRM.iOS.Renderers;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -11,7 +12,8 @@ namespace PhuLongCRM.iOS.Renderers
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
-            //OverrideUserInterfaceStyle = UIKit.UIUserInterfaceStyle.Light;
+            if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
+                OverrideUserInterfaceStyle = UIKit.UIUserInterfaceStyle.Light;
         }
     }
 }

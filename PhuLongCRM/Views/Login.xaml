@@ -10,8 +10,8 @@
              x:Class="PhuLongCRM.Views.Login">
     <ContentPage.Content>
         <AbsoluteLayout>
-            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,20">
-                <StackLayout Margin="20,0" Spacing="10" VerticalOptions="Center">
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,20" >
+                <StackLayout Margin="20,0" Spacing="10" VerticalOptions="Center" >
                     <Image Source="phulong_contact_logo.png" Margin="0,15" />
                     <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="White" Padding="0" HeightRequest="65">
                         <Grid Margin="10,5" RowDefinitions="Auto,Auto" RowSpacing="0" VerticalOptions="Center">
