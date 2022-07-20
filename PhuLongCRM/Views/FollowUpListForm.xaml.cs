@@ -158,7 +158,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_phuong_thuc_phat);
                 return;
             }
-            if (viewModel.Refund <= 0)
+            if (viewModel.TakeOutMoney.Id == "100000000" && viewModel.Refund < 0 || viewModel.TakeOutMoney.Id == "100000000" && viewModel.FULDetail.bsd_totalamountpaid < viewModel.Refund)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_tien_hoan_lai);
                 return;

@@ -11,12 +11,13 @@ namespace PhuLongCRM.ViewModels
     public class ListViewMultiTabsViewModel : ListViewBaseViewModel2<Models.OptionSetFilter>
     {
         public List<Models.OptionSetFilter> ItemSelecteds { get; set; } = new List<Models.OptionSetFilter>();
+        public string Key { get; set; }
         public ListViewMultiTabsViewModel(string fetch, string entity)
         {
             PreLoadData = new Command(() =>
             {
                 EntityName = entity;
-                FetchXml = fetch.Replace("fetch version='1.0'", $"fetch version='1.0' count='15' page='{Page}'");
+                FetchXml = fetch.Replace("fetch version='1.0'", $"fetch version='1.0' count='15' page='{Page}'").Replace("%25key%25", $"%25{Key}%25"); ;
             });
         }
         public override async Task<List<Models.OptionSetFilter>> LoadItems()
