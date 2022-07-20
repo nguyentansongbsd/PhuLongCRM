@@ -382,18 +382,25 @@ namespace PhuLongCRM.Controls
                     <attribute name='contactid' alias='Val' />
                     <attribute name='fullname' alias='Label' />
                     <attribute name='mobilephone' alias='SDT' />
-                    <attribute name='bsd_identitycardnumber' alias='CMND' />
+                    <attribute name='bsd_identitycardnumber' alias='CMND' />bsd_identitycardnumberid
                     <attribute name='bsd_passport' alias='HC' />
                     <order attribute='fullname' descending='false' />                   
                     <filter type='and'>
                         <condition attribute='statecode' operator='eq' value='0' />
                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                        <filter type='or'>
+                            <condition attribute='bsd_fullname' operator='like' value='%25key%25' />
+                            <condition attribute='bsd_identitycardnumber' operator='like' value='%25key%25' />
+                            <condition attribute='mobilephone' operator='like' value='%25key%25' />
+                            <condition attribute='emailaddress1' operator='like' value='%25key%25' />
+                            <condition attribute='bsd_customercode' operator='like' value='%25key%25' />
+                        </filter>
                     </filter>
                   </entity>
                 </fetch>";
             string entity = "contacts";
 
-            ListContact = new ListViewMultiTabs(fetch,entity);
+            ListContact = new ListViewMultiTabs(fetch,entity, moreInfo: true);
             ListContact.ItemTapped = async (item) =>
             {
                 if (item != null)
@@ -421,17 +428,27 @@ namespace PhuLongCRM.Controls
                                 <attribute name='fullname' alias='Label' />
                                 <attribute name='leadid' alias='Val' />
                                 <attribute name='mobilephone' alias='SDT' />
+                                <attribute name='bsd_identitycardnumberid' alias='CMND' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     {loadNewLead}
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                    <filter type='or'>
+                                        <condition attribute='lastname' operator='like' value='%25key%25' />
+                                        <condition attribute='mobilephone' operator='like' value='%25key%25' />
+                                        <condition entityname='Topic' attribute='bsd_name' operator='like' value='%25key%25' />
+                                        <condition attribute='bsd_customercode' operator='like' value='%25key%25' />
+                                    </filter>
                                 </filter>
+                                <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' link-type='inner' alias='Topic'>
+                                    <attribute name='bsd_name' />
+                                </link-entity>
                               </entity>
                             </fetch>";
 
             string entity = "leads";
 
-            ListLead = new ListViewMultiTabs(fetch, entity);
+            ListLead = new ListViewMultiTabs(fetch, entity, moreInfo: true);
             ListLead.ItemTapped = async (item) =>
             {
                 if (item != null)
@@ -456,13 +473,19 @@ namespace PhuLongCRM.Controls
                                 <filter type='and'>
                                     <condition attribute='statecode' operator='eq' value='0' />
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                    <filter type='or'>
+                                        <condition attribute='name' operator='like' value='%25key%25' />
+                                        <condition attribute='telephone1' operator='like' value='%25key%25' />
+                                        <condition attribute='bsd_registrationcode' operator='like' value='%25key%25' />
+                                        <condition attribute='bsd_customercode' operator='like' value='%25key%25' />
+                                    </filter>
                                 </filter>
                               </entity>
                             </fetch>";
    
             string entity = "accounts";
 
-            ListAccount = new ListViewMultiTabs(fetch, entity);
+            ListAccount = new ListViewMultiTabs(fetch, entity, moreInfo: true);
             ListAccount.ItemTapped = async (item) =>
             {
                 if (item != null)

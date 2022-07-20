@@ -5,7 +5,7 @@
       x:Class="PhuLongCRM.Controls.ListViewMultiTabs"
       RowDefinitions="Auto,*">
     <controls:SearchBarFrame x:Name="searchBar" Grid.Row="0" Margin="10,10,10,5">
-        <controls:SearchBar SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
+        <controls:SearchBar Text="{Binding Key}" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
     </controls:SearchBarFrame>
     <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" BackgroundColor="White" />
 </Grid>
