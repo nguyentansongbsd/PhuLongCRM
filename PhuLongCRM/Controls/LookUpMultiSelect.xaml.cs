@@ -197,6 +197,7 @@ namespace PhuLongCRM.Controls
             btnClose.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
             btnClose.Text = Language.luu;//"Lưu";
             btnClose.Clicked += SaveButton_Clicked;
+            btnClose.FontAttributes = FontAttributes.Bold;
             grid.Children.Add(btnClose);
             Grid.SetColumn(btnClose, 0);
             Grid.SetRow(btnClose, 0);

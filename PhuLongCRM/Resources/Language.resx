@@ -1837,7 +1837,7 @@
     <value>Vui lòng chọn người tham dự bắt buộc.</value>
   </data>
 	<data name="vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau" xml:space="preserve">
-    <value>Vui lòng chọn thời gian kết thúc và thời gian bắt đầu.</value>
+    <value>Vui lòng chọn thời gian bắt đầu và thời gian kết thúc.</value>
   </data>
 	<data name="vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau" xml:space="preserve">
     <value>Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu.</value>
@@ -2632,7 +2632,7 @@
     <value>Giữ chỗ/ Sản phẩm/ Nhân viên/ Ngày</value>
   </data>
 	<data name="quy_trinh_ban_title" xml:space="preserve">
-    <value>Quy Trình Bán</value>
+    <value>Quy Trình Bán Hàng</value>
   </data>
 	<data name="thoi_gian_giu_cho_dai_han" xml:space="preserve">
     <value>Thời gian giữ chỗ dài hạn (ngày)</value>

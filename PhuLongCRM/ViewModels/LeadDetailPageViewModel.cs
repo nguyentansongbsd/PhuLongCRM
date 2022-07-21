@@ -569,18 +569,17 @@ namespace PhuLongCRM.ViewModels
             }
         }
         // check id
-        public async Task<bool> CheckID(string identitycardnumber, string leadid)
+        public async Task<bool> CheckID(string identitycardnumber)
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='lead'>
-                                    <attribute name='fullname' />
-                                    <filter type='and'>
-                                        <condition attribute='bsd_identitycardnumberid' operator='eq' value='" + identitycardnumber + @"' />
-                                        <condition attribute='leadid' operator='ne' value='" + leadid + @"' />
-                                    </filter>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("leads", fetch);
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='contact'>
+                                <attribute name='fullname' />
+                                <filter type='and'>
+                                  <condition attribute='bsd_identitycardnumber' operator='eq' value='{identitycardnumber}' />
+                                </filter>
+                              </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetch);
             if (result != null && result.value.Count > 0)
             {
                 return false;
