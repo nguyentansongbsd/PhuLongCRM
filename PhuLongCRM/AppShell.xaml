@@ -10,9 +10,9 @@
        xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
        ios:Page.UseSafeArea="true"
        Shell.BackgroundColor="{StaticResource NavigationPrimary}"
-       Shell.TabBarIsVisible="False" 
+       Shell.TabBarIsVisible="False"
        Shell.TitleColor="White"
-       FlyoutHeaderBehavior="Fixed"
+       FlyoutHeaderBehavior="Fixed" FlyoutBackgroundColor="{AppThemeBinding Light=White,Dark=White}"
        FlyoutBackdrop="#C0808080"
        ForegroundColor="White"
        Title="PhuLongCRM" x:Class="PhuLongCRM.AppShell">

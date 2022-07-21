@@ -43,7 +43,7 @@
             </ScrollView>
 
             <StackLayout AbsoluteLayout.LayoutBounds="0,1,1,60" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White">
-                <Button x:Name="btnSave" Text="{x:Static lang:Language.tao_cong_viec}" Clicked="SaveTask_Clicked" TextColor="White" BackgroundColor="{StaticResource NavigationPrimary}" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="40" Margin="10" Padding="10,5"/>
+                <Button x:Name="btnSave" Text="{x:Static lang:Language.tao_cong_viec}" FontAttributes="Bold"  Clicked="SaveTask_Clicked" TextColor="White" BackgroundColor="{StaticResource NavigationPrimary}" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="40" Margin="10" Padding="10,5"/>
             </StackLayout>
 
             <controls:CenterModal x:Name="centerModal"/>
