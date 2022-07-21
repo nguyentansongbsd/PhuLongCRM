@@ -405,6 +405,7 @@ namespace PhuLongCRM.Controls
             btnClose.BorderWidth = 1;
             btnClose.HeightRequest = 40;
             btnClose.Clicked += CloseAddress_Clicked;
+            btnClose.FontAttributes = FontAttributes.Bold;
             grid.Children.Add(btnClose);
             Grid.SetColumn(btnClose, 0);
             Grid.SetRow(btnClose, 0);
@@ -418,6 +419,7 @@ namespace PhuLongCRM.Controls
             btnSave.BorderWidth = 1;
             btnSave.HeightRequest = 40;
             btnSave.Clicked += ConfirmAddress_Clicked;
+            btnSave.FontAttributes = FontAttributes.Bold;
             grid.Children.Add(btnSave);
             Grid.SetColumn(btnSave, 1);
             Grid.SetRow(btnSave, 0);

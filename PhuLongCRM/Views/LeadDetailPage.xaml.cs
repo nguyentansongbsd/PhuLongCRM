@@ -156,20 +156,22 @@ namespace PhuLongCRM.Views
         private async void LeadQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            bool _isID = await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid, viewModel.singleLead.leadid.ToString());
+            bool _isID = await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid);
             CrmApiResponse apiResponse = await viewModel.Qualify(viewModel.singleLead.leadid);
             if (apiResponse.IsSuccess == true)
             {
-                if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
-                if (CustomerPage.NeedToRefreshAccount.HasValue) CustomerPage.NeedToRefreshAccount = true;
-                if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
-                if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
-                await viewModel.LoadOneLead(Id.ToString());
-                LoadingHelper.Hide();
                 if (_isID)
-                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                {
+                    if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
+                    if (CustomerPage.NeedToRefreshAccount.HasValue) CustomerPage.NeedToRefreshAccount = true;
+                    if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
+                    if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
+                    await viewModel.LoadOneLead(Id.ToString());
+                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong); 
+                }
                 else
                     ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
+                LoadingHelper.Hide();
             }
             else
             {
