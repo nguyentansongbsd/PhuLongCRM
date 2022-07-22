@@ -3390,4 +3390,7 @@
   <data name="ngay_in_vbtt" xml:space="preserve">
     <value>DA printed date</value>
   </data>
+	<data name="ten_dang_nhap_hoac_mat_khau_khong_chinh_xac" xml:space="preserve">
+    <value>Incorrect username or password.</value>
+  </data>
 </root>

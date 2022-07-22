@@ -95,7 +95,7 @@
         <AbsoluteLayout>
             <ScrollView Padding="0,0,0,60" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
                 <StackLayout >
-                    <Grid RowDefinitions="Auto,80">
+                    <Grid RowDefinitions="Auto,120">
                         <CarouselView x:Name="carouseView" ItemsSource="{Binding Collections}" Grid.Row="0" HeightRequest="200" IsVisible="{Binding ShowCollections}">
                             <CarouselView.ItemTemplate>
                                 <DataTemplate >
@@ -112,26 +112,26 @@
 
                         <Grid RowDefinitions="Auto,Auto" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="EndAndExpand" Margin="8">
                             <Grid ColumnDefinitions="50,50" Grid.Row="0" Margin="10,0" IsVisible="{Binding ShowCollections}">
-                                <telerikPrimitives:RadBorder BorderColor="White" CornerRadius="5" BorderThickness="1" BackgroundColor="White" Grid.Column="0" Padding="4,2">
+                                <telerikPrimitives:RadBorder BorderColor="#80FFFFFF" CornerRadius="5" BorderThickness="1" BackgroundColor="#90FFFFFF" Grid.Column="0" Padding="4,2">
                                     <telerikPrimitives:RadBorder.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ScollTo_Video_Tapped"/>
                                     </telerikPrimitives:RadBorder.GestureRecognizers>
                                     <Grid ColumnDefinitions="20,10">
-                                        <Label TextColor="#444444" FontSize="14" Text="&#xf03d;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
-                                        <Label TextColor="#444444" FontSize="14" FontAttributes="Bold" Text="{Binding TotalMedia}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        <Label TextColor="#111111" FontSize="14" Text="&#xf03d;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
+                                        <Label TextColor="#111111" FontSize="14" FontAttributes="Bold" Text="{Binding TotalMedia}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     </Grid>
                                 </telerikPrimitives:RadBorder>
-                                <telerikPrimitives:RadBorder BorderColor="White" CornerRadius="5" BorderThickness="1" BackgroundColor="White" Grid.Column="1" Padding="4,2">
+                                <telerikPrimitives:RadBorder BorderColor="#80FFFFFF" CornerRadius="5" BorderThickness="1" BackgroundColor="#90FFFFFF" Grid.Column="1" Padding="4,2">
                                     <telerikPrimitives:RadBorder.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ScollTo_Image_Tapped"/>
                                     </telerikPrimitives:RadBorder.GestureRecognizers>
                                     <Grid ColumnDefinitions="20,10">
-                                        <Label TextColor="#444444" FontSize="14" Text="&#xf03e;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
-                                        <Label TextColor="#444444" FontSize="14" FontAttributes="Bold" Text="{Binding TotalPhoto}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        <Label TextColor="#111111" FontSize="14" Text="&#xf03e;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
+                                        <Label TextColor="#111111" FontSize="14" FontAttributes="Bold" Text="{Binding TotalPhoto}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     </Grid>
                                 </telerikPrimitives:RadBorder>
                             </Grid>
-                            <telerikPrimitives:RadBorder BorderColor="#808080" CornerRadius="10" BorderThickness="1" BackgroundColor="White" Grid.Row="1" >
+                            <telerikPrimitives:RadBorder BorderColor="#808080" CornerRadius="10" BorderThickness="1" Grid.Row="1" BackgroundColor="#FFFFFF">
                                 <StackLayout Margin="15" Spacing="10">
                                     <Grid ColumnDefinitions="Auto,Auto,*">
                                         <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="5" BackgroundColor="{Binding StatusCode.Background}" VerticalOptions="StartAndExpand" HorizontalOptions="Start">

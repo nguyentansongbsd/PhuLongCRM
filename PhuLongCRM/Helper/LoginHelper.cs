@@ -62,5 +62,22 @@ namespace PhuLongCRM.Helper
             var response = await client.SendAsync(request);
             return response;
         }
+        public static async Task<GetTokenResponse> getSharePointToken()
+        {
+            var client = BsdHttpClient.Instance();
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://login.microsoftonline.com/{OrgConfig.TeantId}/oauth2/token");
+            var formContent = new FormUrlEncodedContent(new[]
+                {
+                        new KeyValuePair<string, string>("client_id", OrgConfig.ClientId_ForUserCRM),
+                        new KeyValuePair<string, string>("client_secret", OrgConfig.ClientSecret_ForUserCRM),
+                        new KeyValuePair<string, string>("grant_type", "client_credentials"),
+                        new KeyValuePair<string, string>("resource", OrgConfig.GraphReSource)
+                    });
+            request.Content = formContent;
+            var response = await client.SendAsync(request);
+            var body = await response.Content.ReadAsStringAsync();
+            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+            return tokenData;
+        }
     }
 }

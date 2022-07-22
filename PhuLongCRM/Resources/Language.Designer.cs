@@ -7927,6 +7927,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tên đăng nhập hoặc mật khẩu không chính xác..
+        /// </summary>
+        internal static string ten_dang_nhap_hoac_mat_khau_khong_chinh_xac {
+            get {
+                return ResourceManager.GetString("ten_dang_nhap_hoac_mat_khau_khong_chinh_xac", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tên đăng nhập không đúng..
         /// </summary>
         internal static string ten_dang_nhap_khong_dung {

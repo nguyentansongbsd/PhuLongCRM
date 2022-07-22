@@ -82,43 +82,43 @@ namespace PhuLongCRM.Helper
             return null;
         }
 
-        //public static async Task<T> RetrieveImagesSharePoint<T>(string url) where T : class
-        //{
-        //    try
-        //    {
-        //        var client = BsdHttpClient.Instance();
-        //        string fileListUrl = $"{OrgConfig.GraphApi}{OrgConfig.SharepointSiteId}/lists/{url}";
-        //        var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", UserLogged.AccessTokenSharePoint);
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        var response = await client.SendAsync(request);
+        public static async Task<T> RetrieveImagesSharePoint<T>(string url) where T : class
+        {
+            try
+            {
+                var client = BsdHttpClient.Instance();
+                string fileListUrl = $"{OrgConfig.GraphApi}{OrgConfig.SP_SiteId}/lists/{url}";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", UserLogged.AccessTokenSharePoint);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.SendAsync(request);
 
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var body = await response.Content.ReadAsStringAsync();
-        //            var api_response = JsonConvert.DeserializeObject<T>(body);
-        //            return api_response;
-        //        }
-        //        else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-        //        {
-        //            var loginSharePonit = await LoginHelper.getSharePointToken();
-        //            if (loginSharePonit.access_token != null)
-        //            {
-        //                UserLogged.AccessTokenSharePoint = loginSharePonit.access_token;
-        //                var api_response = await RetrieveImagesSharePoint<T>(url);
-        //                return api_response;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //    }
-        //    return null;
-        //}
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var api_response = JsonConvert.DeserializeObject<T>(body);
+                    return api_response;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    var loginSharePonit = await LoginHelper.getSharePointToken();
+                    if (loginSharePonit.access_token != null)
+                    {
+                        UserLogged.AccessTokenSharePoint = loginSharePonit.access_token;
+                        var api_response = await RetrieveImagesSharePoint<T>(url);
+                        return api_response;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return null;
+        }
 
         /// <summary>
         /// Set giá trị Null cho field lookup

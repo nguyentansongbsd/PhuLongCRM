@@ -7,7 +7,7 @@ namespace PhuLongCRM.Models
 {
     public class CollectionData
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string MediaSourceId { get; set; }
         public string ImageSource { get; set; }
         public string ImageSourceBase64 { get; set; }

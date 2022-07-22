@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.Helper;
+﻿using Newtonsoft.Json;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
 using Stormlion.PhotoBrowser;
@@ -6,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 namespace PhuLongCRM.ViewModels
@@ -416,55 +419,56 @@ namespace PhuLongCRM.ViewModels
         }
         public async Task LoadAllCollection()
         {
-            // khoa lai vi phu long chua co hinh anh va video
+            if (ProjectId != null)
+            {
+                GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+                var client = BsdHttpClient.Instance();
+                string name_folder = ProjectName + "_" + ProjectId.ToString().Replace("-", "");
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ProjectID}/root:/{name_folder}:/children?$select=name,eTag";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
 
-            //if (ProjectId != null)
-            //{
-            //    string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-            //                      <entity name='sharepointdocument'>
-            //                        <attribute name='documentid' />
-            //                        <attribute name='absoluteurl' />
-            //                        <attribute name='fullname' />
-            //                        <attribute name='filetype' />
-            //                        <attribute name='relativelocation' />
-            //                        <order attribute='relativelocation' descending='false' />
-            //                        <link-entity name='bsd_project' from='bsd_projectid' to='regardingobjectid' link-type='inner' alias='ad'>
-            //                          <filter type='and'>
-            //                            <condition attribute='bsd_projectid' operator='eq' value='{ProjectId}' />
-            //                          </filter>
-            //                        </link-entity>
-            //                      </entity>
-            //                    </fetch>";
-            //    var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<SharePonitModel>>("sharepointdocuments", fetchXml);
+                    if (result == null || result.value.Any() == false)
+                    {
+                        ShowCollections = false;
+                        return;
+                    }
+                    ShowCollections = true;
+                    Photos = new List<Photo>();
+                    List<SharePointGraphModel> list = result.value;
+                    var videos = list.Where(x => x.type == "video").ToList();
+                    var images = list.Where(x => x.type == "image").ToList();
+                    this.TotalMedia = videos.Count;
+                    this.TotalPhoto = images.Count;
 
-            //    if (result == null || result.value.Any() == false)
-            //    {
-            //        ShowCollections = false;
-            //        return;
-            //    }
+                    foreach (var item in videos)
+                    {
+                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem/thumbnails");
+                        if (urlVideo != null)
+                        {
+                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
+                        }
+                    }
 
-            //    Photos = new List<Photo>();
-            //    List<SharePonitModel> list = result.value;
-            //    var videos = list.Where(x => x.filetype == "mp4" || x.filetype == "flv" || x.filetype == "m3u8" || x.filetype == "3gp" || x.filetype == "mov" || x.filetype == "avi" || x.filetype == "wmv").ToList();
-            //    var images = list.Where(x => x.filetype == "jpg" || x.filetype == "jpeg" || x.filetype == "png").ToList();
-            //    this.TotalMedia = videos.Count;
-            //    this.TotalPhoto = images.Count;
-
-            //    foreach (var item in videos)
-            //    {
-            //        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SharePointProjectId}/items/{item.documentid}/driveItem/thumbnails");
-            //        string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
-            //        Collections.Add(new CollectionData {Id = item.documentid, MediaSourceId = item.documentid.ToString(), ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
-            //    }
-
-            //    foreach (var item in images)
-            //    {
-            //        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SharePointProjectId}/items/{item.documentid}/driveItem/thumbnails");
-            //        string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
-            //        this.Photos.Add(new Photo { URL = url });
-            //        Collections.Add(new CollectionData { Id = item.documentid, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
-            //    }
-            //}
+                    foreach (var item in images)
+                    {
+                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem/thumbnails");
+                        if (urlVideo != null)
+                        {
+                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                            this.Photos.Add(new Photo { URL = url });
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
+                        }
+                    }
+                }
+            }
         }
         public async Task LoadDataEvent()
         {

@@ -24,18 +24,17 @@ namespace PhuLongCRM.Views
         {
             if (videoView != null)
             {
-                // khoa lai vi phu long chua co hinh anh va video
-                //var result = await CrmHelper.RetrieveImagesSharePoint<GrapDownLoadUrlModel>($"{folderId}/items/{mediaSourceId}/driveItem");
-                //if (result != null)
-                //{
-                //    string url = result.MicrosoftGraphDownloadUrl;
-                //    videoView.Source = url;
-                //    OnCompleted?.Invoke(true);
-                //}
-                //else
-                //{
-                //    OnCompleted?.Invoke(false);
-                //}
+                var result = await CrmHelper.RetrieveImagesSharePoint<GrapDownLoadUrlModel>($"{folderId}/items/{mediaSourceId}/driveItem");
+                if (result != null)
+                {
+                    string url = result.MicrosoftGraphDownloadUrl;
+                    videoView.Source = url;
+                    OnCompleted?.Invoke(true);
+                }
+                else
+                {
+                    OnCompleted?.Invoke(false);
+                }
             }
         }
     }

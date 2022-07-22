@@ -26,5 +26,15 @@ namespace PhuLongCRM.Config
         //public const string ClientSecret_ForUserCRM = "ZpH8Q~XRbEoDfJjPgGnBV3OwEVkiMBGNJJwhraRs";
         //public const string Redirect_Uri = "https://facebook.com";
         //public const string Scope = "https://org957ed874.crm5.dynamics.com/.default";
+
+        //sharepoint
+        public const string GraphApi = "https://graph.microsoft.com/v1.0/sites/";
+        public const string GraphReSource = "https://graph.microsoft.com";
+        public const string SP_SiteId = "245fb505-41a2-4630-923b-b233fdd09865";
+        public const string SP_UnitID = "3c197b5b-a1b2-46a1-8d6c-7e45c2b53a13";
+        public const string SP_ProjectID = "128241a3-19be-410e-afab-7cc233fba735";
+
+        public const string Graph_UnitID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9Jbexk8sqGhRo1sfkXCtToT";
+        public const string Graph_ProjectID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9KjQYISvhkOQa-rfMIz-6c1";
     }
 }
