@@ -158,39 +158,38 @@ namespace PhuLongCRM.Views
         }
         private void ItemSlider_Tapped(object sender, EventArgs e)
         {
-            // khoa lai vi phu long chua co hinh anh va video
+            LoadingHelper.Show();
+            var item = (CollectionData)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.SharePointType == SharePointType.Image)
+            {
+                var img = viewModel.Photos.SingleOrDefault(x => x.URL == item.ImageSource);
+                var index = viewModel.Photos.IndexOf(img);
 
-            //LoadingHelper.Show();
-            //var item = (CollectionData)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            //if (item.SharePointType == SharePointType.Image)
-            //{
-            //    var img = viewModel.Photos.SingleOrDefault(x => x.URL == item.ImageSource);
-            //    var index = viewModel.Photos.IndexOf(img);
-
-            //    new PhotoBrowser()
-            //    {
-            //        Photos = viewModel.Photos,
-            //        StartIndex = index,
-            //        EnableGrid = true
-            //    }.Show();
-            //}
-            //else if (item.SharePointType == SharePointType.Video)
-            //{
-            //    ShowMedia showMedia = new ShowMedia(Config.OrgConfig.SharePointProjectId, item.MediaSourceId);
-            //    showMedia.OnCompleted = async (isSuccess) => {
-            //        if (isSuccess)
-            //        {
-            //            await Navigation.PushAsync(showMedia);
-            //            LoadingHelper.Hide();
-            //        }
-            //        else
-            //        {
-            //            LoadingHelper.Hide();
-            //            ToastMessageHelper.ShortMessage("Không lấy được video");
-            //        }
-            //    };
-            //}
-            //LoadingHelper.Hide();
+                new PhotoBrowser()
+                {
+                    Photos = viewModel.Photos,
+                    StartIndex = index,
+                    EnableGrid = true
+                }.Show();
+            }
+            else if (item.SharePointType == SharePointType.Video)
+            {
+                ShowMedia showMedia = new ShowMedia(Config.OrgConfig.SP_ProjectID, item.MediaSourceId);
+                showMedia.OnCompleted = async (isSuccess) =>
+                {
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(showMedia);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage("Không lấy được video");
+                    }
+                };
+            }
+            LoadingHelper.Hide();
         }
         private void ScollTo_Video_Tapped(object sender, EventArgs e)
         {

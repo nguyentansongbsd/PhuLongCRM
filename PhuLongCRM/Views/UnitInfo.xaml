@@ -31,43 +31,39 @@
             <converter:InformationLabelConverter x:Key="InformationLabelConverter"/>
             <converter:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
             <converter:HidePriceOnDirectSaleConverter x:Key="HidePriceOnDirectSaleConverter"/>
-            <DataTemplate x:Key="Media">
-                <Grid>
-                    <ffimageloading:CachedImage Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="300"/>
-                    <Label Text="&#xf144;" TextColor="#F1F1F1" FontSize="35" FontFamily="FontAwesomeRegular" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Meida_Tapped" CommandParameter="{Binding .}"/>
-                    </Grid.GestureRecognizers>
-                </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="Image">
-                <ffimageloading:CachedImage Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="300">
-                    <ffimageloading:CachedImage.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Image_Tapped" CommandParameter="{Binding .}"/>
-                    </ffimageloading:CachedImage.GestureRecognizers>
-                </ffimageloading:CachedImage>
-            </DataTemplate>
-            <helper:CollectionDataTemplateSelector x:Key="ItemTemplate" Media="{StaticResource Media}" Image="{StaticResource Image}"/>
+            <converter:NullToHideConverter x:Key="nullToHideConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView Padding="0,0,0,60" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
                 <StackLayout>
-                    <Grid RowDefinitions="Auto,150">
-                        <CarouselView ItemsSource="{Binding Collections}" ItemTemplate="{StaticResource ItemTemplate}" Grid.Row="0" HeightRequest="200" IsVisible="{Binding ShowCollections}"/>
+                    <Grid RowDefinitions="Auto,120">
+                        <CarouselView x:Name="carouseView" ItemsSource="{Binding Collections}" Grid.Row="0" HeightRequest="200" IsVisible="{Binding ShowCollections}">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate >
+                                    <Grid>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ItemSlider_Tapped" CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+                                        <ffimageloading:CachedImage Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>
+                                        <Label Text="&#xf144;" IsVisible="{Binding MediaSourceId,Converter={StaticResource nullToHideConverter}}" TextColor="#F1F1F1" FontSize="35" FontFamily="FontAwesomeRegular" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
                         <Grid RowDefinitions="Auto,Auto" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="EndAndExpand" Margin="8">
                             <Grid ColumnDefinitions="50,50" Grid.Row="0" Margin="10,0" IsVisible="{Binding ShowCollections}">
-                                <telerikPrimitives:RadBorder BorderColor="White" CornerRadius="5" BorderThickness="1" BackgroundColor="White" Grid.Column="0" Padding="4,2">
+                                <telerikPrimitives:RadBorder BorderColor="#80FFFFFF" CornerRadius="5" BorderThickness="1" BackgroundColor="#80FFFFFF" Grid.Column="0" Padding="4,2">
                                     <Grid ColumnDefinitions="20,10">
-                                        <Label TextColor="#444444" FontSize="14" Text="&#xf03d;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
-                                        <Label TextColor="#444444" FontSize="14" FontAttributes="Bold" Text="{Binding TotalMedia}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        <Label TextColor="#111111" FontSize="14" Text="&#xf03d;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
+                                        <Label TextColor="#111111" FontSize="14" FontAttributes="Bold" Text="{Binding TotalMedia}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     </Grid>
                                 </telerikPrimitives:RadBorder>
-                                <telerikPrimitives:RadBorder BorderColor="White" CornerRadius="5" BorderThickness="1" BackgroundColor="White" Grid.Column="1" Padding="4,2">
+                                <telerikPrimitives:RadBorder BorderColor="#80FFFFFF" CornerRadius="5" BorderThickness="1" BackgroundColor="#80FFFFFF" Grid.Column="1" Padding="4,2">
                                     <Grid ColumnDefinitions="20,10">
-                                        <Label TextColor="#444444" FontSize="14" Text="&#xf03e;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
-                                        <Label TextColor="#444444" FontSize="14" FontAttributes="Bold" Text="{Binding TotalPhoto}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        <Label TextColor="#111111" FontSize="14" Text="&#xf03e;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
+                                        <Label TextColor="#111111" FontSize="14" FontAttributes="Bold" Text="{Binding TotalPhoto}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     </Grid>
                                 </telerikPrimitives:RadBorder>
                             </Grid>

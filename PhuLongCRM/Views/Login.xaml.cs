@@ -213,14 +213,14 @@ namespace PhuLongCRM.Views
                         if (employeeModel.bsd_name != UserName)
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_khong_dung);
+                            ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
                             return;
                         }
 
                         if (employeeModel.bsd_password != Password)
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.mat_khau_khong_dung);
+                            ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
                             return;
                         }
 
@@ -256,7 +256,7 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
+                        ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
                     }
                 }
             }

@@ -8,6 +8,8 @@ using PhuLongCRM.ViewModels;
 using FFImageLoading.Forms;
 using System.Collections.ObjectModel;
 using PhuLongCRM.Resources;
+using System.Linq;
+using Stormlion.PhotoBrowser;
 
 namespace PhuLongCRM.Views
 {
@@ -267,34 +269,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
-        private async void Meida_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            Grid mediaElement = (Grid)sender;
-            var a = (TapGestureRecognizer)mediaElement.GestureRecognizers[0];
-            CollectionData item = a.CommandParameter as CollectionData;
-            if (item != null)
-            {
-                LoadingHelper.Show();
-                //await Navigation.PushAsync(new ShowMedia(item.MediaSourceId));
-                LoadingHelper.Hide();
-
-            }
-            LoadingHelper.Hide();
-        }
-
-        private void Image_Tapped(object sender, EventArgs e)
-        {
-            CachedImage image = (CachedImage)sender;
-            var a = (TapGestureRecognizer)image.GestureRecognizers[0];
-            CollectionData item = a.CommandParameter as CollectionData;
-            if (item != null)
-            {
-                viewModel.photoBrowser.StartIndex = item.Index;
-                viewModel.photoBrowser.Show();
-            }
-        }
         private async void OpenEvent_Tapped(object sender, EventArgs e)
         {
             if (viewModel.Event == null)
@@ -354,6 +328,41 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
+        }
+        private void ItemSlider_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = (CollectionData)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.SharePointType == SharePointType.Image)
+            {
+                var img = viewModel.Photos.SingleOrDefault(x => x.URL == item.ImageSource);
+                var index = viewModel.Photos.IndexOf(img);
+
+                new PhotoBrowser()
+                {
+                    Photos = viewModel.Photos,
+                    StartIndex = index,
+                    EnableGrid = true
+                }.Show();
+            }
+            else if (item.SharePointType == SharePointType.Video)
+            {
+                ShowMedia showMedia = new ShowMedia(Config.OrgConfig.SP_ProjectID, item.MediaSourceId);
+                showMedia.OnCompleted = async (isSuccess) =>
+                {
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(showMedia);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage("Không lấy được video");
+                    }
+                };
+            }
+            LoadingHelper.Hide();
         }
     }
 }
