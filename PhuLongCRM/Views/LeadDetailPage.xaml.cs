@@ -247,17 +247,19 @@ namespace PhuLongCRM.Views
         {
             string phone = viewModel.singleLead.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84",""); // thêm sdt ở đây
             if (phone != string.Empty)
-            {              
-                var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                if (checkVadate == true)
-                {
-                    SmsMessage sms = new SmsMessage(null, phone);
-                    await Sms.ComposeAsync(sms);                   
-                }
-                else
-                {
-                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                }
+            {
+                SmsMessage sms = new SmsMessage(null, phone);
+                await Sms.ComposeAsync(sms);
+                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
+                //if (checkVadate == true)
+                //{
+                //    SmsMessage sms = new SmsMessage(null, phone);
+                //    await Sms.ComposeAsync(sms);                   
+                //}
+                //else
+                //{
+                //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                //}
             }
             else
             {
@@ -268,16 +270,17 @@ namespace PhuLongCRM.Views
         {
             string phone = viewModel.singleLead.mobilephone.Replace(" ","").Replace("+84-","").Replace("84", ""); // thêm sdt ở đây
             if (phone != string.Empty)
-            {              
-                var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                if (checkVadate == true)
-                {
-                    await Launcher.OpenAsync($"tel:{phone}");                   
-                }
-                else
-                {
-                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                }
+            {
+                await Launcher.OpenAsync($"tel:{phone}");
+                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
+                //if (checkVadate == true)
+                //{
+                //    await Launcher.OpenAsync($"tel:{phone}");                   
+                //}
+                //else
+                //{
+                //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                //}
             }
             else
             {

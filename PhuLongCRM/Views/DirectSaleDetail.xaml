@@ -330,8 +330,6 @@
                                                         </telerikPrimitives:RadBorder>
                                                         <Label Grid.Column="1" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                     </Grid>
-                                                    <!--<Label Text="{Binding name}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}"/>
-                                                    <Label Text="{Binding statuscode_label}" FontAttributes="Bold" FontSize="15" TextColor="#333333"/>-->
                                                     <Label FontSize="15" TextColor="#333333">
                                                         <Label.FormattedText>
                                                             <FormattedString>

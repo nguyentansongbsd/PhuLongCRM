@@ -3393,4 +3393,7 @@
 	<data name="ten_dang_nhap_hoac_mat_khau_khong_chinh_xac" xml:space="preserve">
     <value>Tên đăng nhập hoặc mật khẩu không chính xác.</value>
   </data>
+  <data name="thien_chi" xml:space="preserve">
+    <value>Thiện chí</value>
+  </data>
 </root>

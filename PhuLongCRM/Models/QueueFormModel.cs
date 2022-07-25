@@ -115,5 +115,7 @@ namespace PhuLongCRM.Models
 
         public string statuscode_format { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString())?.Name; } }
         public string statuscode_color { get { return QueuesStatusCodeData.GetQueuesById(statuscode.ToString())?.BackGroundColor; } }
+
+        public bool bsd_queueforproject { get; set; }
     }
 }

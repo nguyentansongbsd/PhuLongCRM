@@ -2254,7 +2254,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expired.
+        ///   Looks up a localized string similar to Expied.
         /// </summary>
         internal static string da_het_han {
             get {
@@ -7924,6 +7924,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect username or password..
+        /// </summary>
+        internal static string ten_dang_nhap_hoac_mat_khau_khong_chinh_xac {
+            get {
+                return ResourceManager.GetString("ten_dang_nhap_hoac_mat_khau_khong_chinh_xac", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username is incorrect..
         /// </summary>
         internal static string ten_dang_nhap_khong_dung {
@@ -8109,6 +8118,15 @@ namespace PhuLongCRM.Resources {
         internal static string theo_loai_unit {
             get {
                 return ResourceManager.GetString("theo_loai_unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thiện chí.
+        /// </summary>
+        internal static string thien_chi {
+            get {
+                return ResourceManager.GetString("thien_chi", resourceCulture);
             }
         }
         

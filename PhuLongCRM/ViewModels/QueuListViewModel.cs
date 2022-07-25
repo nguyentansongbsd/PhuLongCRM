@@ -68,6 +68,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_queuenumber' />
                         <attribute name='bsd_queuingexpired' />
                         <attribute name='createdon' />
+                        <attribute name='bsd_bookingtime' />
                         <order attribute='bsd_bookingtime' descending='true' />
                         <filter type='and'>                          
                             <filter type='or'>

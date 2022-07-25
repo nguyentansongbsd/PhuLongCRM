@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PhuLongCRM.Models;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
 namespace PhuLongCRM.Controls
 {
     public partial class LookUpView : Grid
     {
+        
         public ListView lookUpListView { get; set; }
 
         private bool ClearingSearchBar = false;
-
+        
         public LookUpView()
         {
             InitializeComponent();
         }
 
-        public void SetList<T>(List<T> list, string Name) where T : class
+        public void SetList<T>(List<T> list, string Name,object fieldToFilter = null) where T : class
         {
             if (string.IsNullOrWhiteSpace(searchBar.Text) == false)
             {
@@ -70,7 +72,14 @@ namespace PhuLongCRM.Controls
                 }
                 else
                 {
-                    lookUpListView.ItemsSource = list.Where(x => GetValObjDy(x, Name).ToString().ToLower().Contains(text.ToLower()));
+                    if (fieldToFilter == null)
+                    {
+                        lookUpListView.ItemsSource = list.Where(x => GetValObjDy(x, Name).ToString().ToLower().Contains(text.ToLower()) || GetValObjDy(x, Name).ToString().ToLower().Contains(text.ToLower()));
+                    }
+                    else
+                    {
+                        
+                    }
                 }
             };
         }
