@@ -209,19 +209,24 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_queuingexpired' />
                                 <attribute name='opportunityid' />
                                 <attribute name='statuscode' />
+                                <attribute name='bsd_queuenumber' />
+                                <attribute name='bsd_queueforproject' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     <condition attribute='parentaccountid' operator='eq' uitype='account' value='{accountid}' />
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                 </filter>  
-                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
+                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' visible='false' link-type='outer' alias='a_edc3f143ba81e911a83b000d3a07be23'>
                                     <attribute name='bsd_name' alias='bsd_project_name'/>
                                 </link-entity>
-                                <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
-                                  <attribute name='name' alias='account_name'/>
+                                <link-entity name='account' from='accountid' to='parentaccountid' visible='false' link-type='outer' alias='a_87ea9a00777ee911a83b000d3a07fbb4'>
+                                    <attribute name='name' alias='account_name'/>
                                 </link-entity>
-                                <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer' alias='a_884f5ec290d1eb11bacc000d3a80021e'>
-                                  <attribute name='bsd_fullname' alias='contact_name'/>
+                                <link-entity name='contact' from='contactid' to='parentcontactid' visible='false' link-type='outer' alias='a_8eea9a00777ee911a83b000d3a07fbb4'>
+                                    <attribute name='bsd_fullname' alias='contact_name'/>
+                                </link-entity>
+                                <link-entity name='product' from='productid' to='bsd_units' visible='false' link-type='outer' alias='a_5025d361ba81e911a83b000d3a07be23'>
+                                    <attribute name='name' alias='bsd_units_name'/>
                                 </link-entity>
                               </entity>
                             </fetch>";
@@ -459,13 +464,15 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='mobilephone' alias='bsd_contacmobilephone'/>
                                         <attribute name='bsd_contactaddress' alias='bsd_contactaddress'/>
                                     </link-entity>         
-                                    <link-entity name='account' from='accountid' to='bsd_developeraccount' link-type='outer' alias='aa'>
+                                    <link-entity name='account' from='accountid' to='bsd_developeraccount' link-type='inner' alias='aa'>
+                                        <filter type='and'>
+                                            <condition attribute='bsd_mandatorysecondary' operator='eq' value='1' />
+                                        </filter>
                                         <attribute name='bsd_name' alias='bsd_developeraccount_name' />
                                     </link-entity>
                                     <filter type='and'>
-                                      <condition attribute='bsd_developeraccount' operator='eq' value='{accountid}' />
-                                      <condition attribute='statuscode' operator='eq' value='100000000' />
-                                      <condition attribute='bsd_mandatorysecondary' operator='eq' value='1' />
+                                        <condition attribute='bsd_developeraccount' operator='eq' value='{accountid}' />
+                                        <condition attribute='statuscode' operator='eq' value='100000000' />
                                     </filter>
                                   </entity>
                                 </fetch>"; // 100000000 == Applying

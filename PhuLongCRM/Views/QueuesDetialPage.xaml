@@ -79,37 +79,21 @@
                 <StackLayout>
                     <telerikPrimitives:RadBorder BorderColor="#808080" CornerRadius="10" BorderThickness="1" VerticalOptions="Start" Margin="8">
                         <Grid RowDefinitions="*,Auto" RowSpacing="1" BackgroundColor="#808080">
-                            <StackLayout Grid.Row="0" BackgroundColor="White" Padding="16">
-                                <Grid ColumnDefinitions="*,Auto">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Source={x:Static lang:Language.ma_giu_cho},StringFormat='{0}: '}" FontSize="15" TextColor="#999999" />
-                                        <Label Text="{Binding Queue.bsd_queuenumber}" FontSize="15" TextColor="#999999" FontAttributes="Bold"/>
-                                    </StackLayout>
-                                    <!--<Label FontSize="15" TextColor="#999999" Grid.Column="0">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding Source={x:Static lang:Language.ma_giu_cho},StringFormat='{0}: '}"/>
-                                                <Span Text="{Binding Queue.bsd_queuenumber}"/>
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>-->
-                                    <StackLayout Grid.Column="1" IsVisible="{Binding Queue.bsd_expired}" HorizontalOptions="End" Orientation="Horizontal">
-                                        <Label Text="{x:Static lang:Language.da_het_han}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" TextColor="Red"/>
-                                        <Label Text="&#xf1da;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="15" TextColor="Red"/>
-                                    </StackLayout>
-                                </Grid>
-                                <Grid ColumnDefinitions="Auto,*">
-                                    <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Start" CornerRadius="5" Padding="3,2" BackgroundColor="{Binding QueueStatusCode.BackGroundColor}">
-                                        <Label Text="{Binding QueueStatusCode.Name}" TextColor="White" FontSize="14" FontAttributes="Bold" />
-                                    </telerikPrimitives:RadBorder>
-                                    <Label Grid.Column="1" Text="{Binding Queue.name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" VerticalTextAlignment="Center"/>
-
-                                </Grid>
-                                <!--<StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                    <Label Text="{Binding Queue.unit_name}" TextColor="#333333" FontSize="15"/>
-                                </StackLayout>-->
+                            <StackLayout Grid.Row="0" BackgroundColor="White">
                                 <StackLayout Orientation="Horizontal">
+                                    <Grid ColumnDefinitions="Auto,*" Margin="16,16,0,0">
+                                        <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Start" CornerRadius="5" Padding="3,2" BackgroundColor="{Binding QueueStatusCode.BackGroundColor}">
+                                            <Label Text="{Binding QueueStatusCode.Name}" TextColor="White" FontSize="14" FontAttributes="Bold" />
+                                        </telerikPrimitives:RadBorder>
+                                        <Label Grid.Column="1" Text="{Binding Queue.name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}" VerticalTextAlignment="Center"/>
+                                    </Grid>
+
+                                    <telerikPrimitives:RadBorder IsVisible="{Binding Queue.bsd_expired}" BackgroundColor="Red" BorderColor="Red" BorderThickness="1" Padding="6" Margin="{OnPlatform iOS='0,0,-1,0'}"  VerticalOptions="Start" HorizontalOptions="EndAndExpand" CornerRadius="0,0,0,10">
+                                        <Label Text="{x:Static lang:Language.da_het_han}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>
+                                    </telerikPrimitives:RadBorder>
+                                </StackLayout>
+
+                                <StackLayout Orientation="Horizontal" Margin="16,0">
                                     <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#333333" />
                                     <Label Text="{Binding Customer.Label}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold">
                                         <Label.GestureRecognizers>
@@ -118,25 +102,20 @@
                                     </Label>
                                 </StackLayout>
 
-                                <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Horizontal" Margin="16,0">
+                                    <Label Text="{Binding Source={x:Static lang:Language.ma_giu_cho},StringFormat='{0}: '}" FontSize="15" TextColor="#333333" />
+                                    <Label Text="{Binding Queue.bsd_queuenumber}" FontSize="15" TextColor="#444444" FontAttributes="Bold"/>
+                                </StackLayout>
+
+                                <StackLayout Orientation="Horizontal" Margin="16,0">
                                     <Label Text="{Binding Source={x:Static lang:Language.giu_cho_du_an},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
                                     <Label Text="{Binding QueueProject}" TextColor="Red" FontAttributes="Bold" FontSize="15"/>
                                 </StackLayout>
 
-                                <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Horizontal" Margin="16,0,16,16">
                                     <Label Text="{Binding Source={x:Static lang:Language.phi_giu_cho_da_thanh_toan},StringFormat='{0}: '}" FontSize="15" TextColor="#333333" />
                                     <Label Text="{Binding Queue.bsd_queuingfeepaid_format,StringFormat='{0} đ'}" IsVisible="{Binding Queue.bsd_queuingfee,Converter={StaticResource NullToHideConverter}}" FontSize="15" TextColor="Red" FontAttributes="Bold" />
                                 </StackLayout>
-
-                                <!--<StackLayout Orientation="Horizontal">
-                                    <Label Text="Ngân sách:" FontSize="15" TextColor="#333333" />
-                                    <Label Text="{Binding Queue.budgetamount,StringFormat='{0:#,0} đ'}" IsVisible="{Binding Queue.budgetamount,Converter={StaticResource NullToHideConverter}}" FontSize="15" TextColor="#333333" />
-                                </StackLayout>-->
-
-                                <!--<StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Source={x:Static lang:Language.da_het_han},StringFormat='{0}: '}" FontSize="15" TextColor="#333333"/>
-                                    <Label Text="{Binding Queue.bsd_expired_format}" TextColor="#333333" FontSize="15"/>
-                                </StackLayout>-->
                             </StackLayout>
                             <Grid Grid.Row="1" ColumnDefinitions="*,1,*" BackgroundColor="White">
                                 <Label Grid.Column="0" TextColor="#939393" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Margin="0,8">
@@ -504,7 +483,7 @@
                 <Button x:Name="btnHuyGiuCho" Text="{x:Static lang:Language.huy_giu_cho}" Clicked="HuyGiuCho_Clicked" IsVisible="{Binding ShowBtnHuyGiuCho}" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" />
                 <Button x:Name="btnBangTinhGia" Text="{x:Static lang:Language.bang_tinh_gia_btn}" Clicked="CreateQuotation_Clicked" TextColor="White" IsVisible="{Binding ShowBtnBangTinhGia}" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10"/>
             </Grid>-->
-            
+
             <controls:FloatingButtonGroup x:Name="floatingButtonGroup" ItemsSource="{Binding BindingContext.ButtonCommandList,Source={x:Reference this}}"/>
 
             <views:ActivityPopupContentView x:Name="ActivityPopup" HidePopupActivity="ActivityPopup_HidePopupActivity"/>

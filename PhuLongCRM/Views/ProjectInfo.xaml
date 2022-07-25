@@ -435,9 +435,24 @@
                                                 <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                     <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                 </telerikPrimitives:RadBorder>
-                                                <Label Grid.Column="1" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                <Label Grid.Column="1" FontSize="15" VerticalOptions="Center" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold">
+                                                    <Label.Text>
+                                                        <MultiBinding StringFormat="({0}: {1}) {2}">
+                                                            <Binding Source="{x:Static lang:Language.ma}" />
+                                                            <Binding Path="bsd_queuenumber" />
+                                                            <Binding Path="name" />
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
                                             </Grid>
                                             <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customername}"/>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}:  '}" FontSize="15" TextColor="Gray"/>
+                                                <Label Text="{Binding project_name}" FontSize="15" TextColor="Black"/>
+                                                <Label Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='- {0}:  '}" IsVisible="{Binding bsd_units_name,Converter={x:StaticResource nullToHideConverter}}" FontSize="15" TextColor="Gray"/>
+                                                <Label Text="{Binding bsd_units_name}" FontSize="15" TextColor="Black" IsVisible="{Binding bsd_units_name,Converter={x:StaticResource nullToHideConverter}}" />
+                                                <Label Text="{Binding Source={x:Static lang:Language.thien_chi},StringFormat='- {0}'}" FontSize="15" TextColor="Black" IsVisible="{Binding bsd_queueforproject}" />
+                                            </StackLayout>
                                             <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_het_han}" Text="{Binding bsd_queuingexpired, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
                                             <StackLayout.GestureRecognizers>
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiuChoItem_Tapped" CommandParameter="{Binding opportunityid}"/>

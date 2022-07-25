@@ -34,7 +34,7 @@
                                             <Label Text="{Binding Source={x:Static lang:Language.ma},StringFormat='{0}: '}" TextColor="Gray" FontSize="14" Grid.Column="0"/>
                                             <Label Text="{Binding bsd_queuenumber}" TextColor="Gray" FontSize="14" Grid.Column="1" LineBreakMode="TailTruncation" />
                                         </Grid>
-                                        <Label Text="{Binding createdon,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="14" TextColor="Gray"/>
+                                        <Label Text="{Binding bsd_bookingtime,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="14" TextColor="Gray"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="1" Grid.Column="0">
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">

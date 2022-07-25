@@ -386,6 +386,8 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='statuscode' />
                                 <attribute name='bsd_queuingexpired' />
                                 <attribute name='opportunityid' />
+                                <attribute name='bsd_queuenumber' />
+                                <attribute name='bsd_queueforproject' />
                                 <order attribute='bsd_bookingtime' descending='false' />
                                 <filter type='and'>
                                     <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
@@ -395,14 +397,17 @@ namespace PhuLongCRM.ViewModels
                                     <value>100000000</value>
                                   </condition>
                                 </filter>
-                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
+                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' visible='false' link-type='outer' alias='a_edc3f143ba81e911a83b000d3a07be23'>
                                     <attribute name='bsd_name' alias='project_name'/>
                                 </link-entity>
-                                <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
-                                  <attribute name='name' alias='account_name'/>
+                                <link-entity name='account' from='accountid' to='parentaccountid' visible='false' link-type='outer' alias='a_87ea9a00777ee911a83b000d3a07fbb4'>
+                                    <attribute name='name' alias='account_name'/>
                                 </link-entity>
-                                <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer' alias='a_884f5ec290d1eb11bacc000d3a80021e'>
-                                  <attribute name='bsd_fullname' alias='contact_name'/>
+                                <link-entity name='contact' from='contactid' to='parentcontactid' visible='false' link-type='outer' alias='a_8eea9a00777ee911a83b000d3a07fbb4'>
+                                    <attribute name='bsd_fullname' alias='contact_name'/>
+                                </link-entity>
+                                <link-entity name='product' from='productid' to='bsd_units' visible='false' link-type='outer' alias='a_5025d361ba81e911a83b000d3a07be23'>
+                                    <attribute name='name' alias='bsd_units_name'/>
                                 </link-entity>
                               </entity>
                             </fetch>";

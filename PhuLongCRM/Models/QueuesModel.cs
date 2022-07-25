@@ -14,6 +14,8 @@ namespace PhuLongCRM.Models
         public string project_name { get; set; }
         public string contact_name { get; set; }
         public string account_name { get; set; }
+        public string bsd_units_name { get; set; }
+        public bool bsd_queueforproject { get; set; }
 
         private DateTime _createdon;
         public DateTime createdon { get => _createdon.AddHours(7); set { _createdon = value; OnPropertyChanged(nameof(createdon)); } }
