@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using PhuLongCRM.Controls;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Stormlion.PhotoBrowser;
+using System.Collections.Generic;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -68,6 +72,7 @@ namespace PhuLongCRM.ViewModels
         public ObservableCollection<FloatButtonItem> ButtonCommandList { get; set; } = new ObservableCollection<FloatButtonItem>();
 
         public string CodeContac = LookUpMultipleTabs.CodeContac;
+        public List<Photo> Photos { get; set; }
 
         public ContactDetailPageViewModel()
         {
@@ -156,50 +161,62 @@ namespace PhuLongCRM.ViewModels
             }
             var tmp = result.value.FirstOrDefault();
             this.singleContact = tmp;
+            await GetImageCMND();
         }
 
         public async Task GetImageCMND()
         {
-            ShowCMND = true;
+            if (this.singleContact.contactid != Guid.Empty)
+            {
+                var frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
+                var behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
 
-            //var result = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<Thumbnail>>();
+                GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+                var client = BsdHttpClient.Instance();
+                string name_folder = singleContact.bsd_fullname + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{name_folder}:/children?$select=name,eTag";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
 
-            //var a = result.value;
-            //MyImage = a[0].medium.url;
-
-            //if (this.singleContact.contactid != Guid.Empty)
-            //{
-            //    var frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
-            //    var behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
-
-            //    string token = (await CrmHelper.getSharePointToken()).access_token;
-            //    var client = BsdHttpClient.Instance();
-            //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            //    var front_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource
-            //                    + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFileByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + frontImage_name + "')/$value");
-            //    var front_result = await client.SendAsync(front_request);
-            //    if (front_result.IsSuccessStatusCode)
-            //    {
-            //        ShowCMND = true;
-            //        singleContact.bsd_mattruoccmnd_base64 = Convert.ToBase64String(front_result.Content.ReadAsByteArrayAsync().Result);
-            //        CollectionCMNDs.Add(new PhotoCMND { ImageSoure = singleContact.bsd_mattruoccmnd_source });
-            //        frontImage = OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_layouts/15/download.aspx?SourceUrl=/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + frontImage_name + "&access_token=" + token;
-            //    }
-
-            //    var behind_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource
-            //                    + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFileByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + behindImage_name + "')/$value");
-            //    var behind_result = await client.SendAsync(behind_request);
-            //    if (behind_result.IsSuccessStatusCode)
-            //    {
-            //        ShowCMND = true;
-            //        var abc = behind_result.Content.ReadAsByteArrayAsync().Result;
-            //        singleContact.bsd_matsaucmnd_base64 = Convert.ToBase64String(behind_result.Content.ReadAsByteArrayAsync().Result);
-            //        CollectionCMNDs.Add(new PhotoCMND { ImageSoure = singleContact.bsd_matsaucmnd_source });
-            //        // behindImage = OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_layouts/15/download.aspx?SourceUrl=/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + behindImage_name + "&access_token=" + token;
-            //    }
-            //}
+                    if (result == null || result.value.Any() == false)
+                    {
+                        ShowCMND = false;
+                        return;
+                    }
+                    ShowCMND = true;
+                    Photos = new List<Photo>();
+                    List<SharePointGraphModel> list = result.value;
+                    foreach(var item in list)
+                    {
+                        if (item.name.Contains("_front.jpg"))
+                        {
+                            var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            if (urlVideo != null)
+                            {
+                                string url = urlVideo.value.SingleOrDefault().large.url;
+                                Photos.Add(new Photo { URL = url });
+                                singleContact.bsd_mattruoccmnd_source = url;
+                            }
+                        }
+                        else if (item.name.Contains("_behind.jpg"))
+                        {
+                            var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            if (urlVideo != null)
+                            {
+                                string url = urlVideo.value.SingleOrDefault().large.url;
+                                Photos.Add(new Photo { URL = url });
+                                singleContact.bsd_matsaucmnd_source = url;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // giao dich
@@ -427,10 +444,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='activitytypecode' />
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
-                                        <filter type='or'>
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{singleContact.contactid}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
-                                        </filter>
+                                        <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
                                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>

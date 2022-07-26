@@ -33,8 +33,10 @@ namespace PhuLongCRM.Config
         public const string SP_SiteId = "245fb505-41a2-4630-923b-b233fdd09865";
         public const string SP_UnitID = "3c197b5b-a1b2-46a1-8d6c-7e45c2b53a13";
         public const string SP_ProjectID = "128241a3-19be-410e-afab-7cc233fba735";
+        public const string SP_ContactID = "166b0309-79b1-414b-9613-ce3529e89642";
 
         public const string Graph_UnitID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9Jbexk8sqGhRo1sfkXCtToT";
         public const string Graph_ProjectID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9KjQYISvhkOQa-rfMIz-6c1";
+        public const string Graph_ContactID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9IJA2sWsXlLQZYTzjUp6JZC";
     }
 }

@@ -26,7 +26,6 @@ namespace PhuLongCRM.Views
         private ContactDetailPageViewModel viewModel;
         private Guid Id;
         private PhotoBrowser photoBrowser;
-        PhotoShow photoShow;
         public ContactDetailPage(Guid contactId)
         {
             InitializeComponent();
@@ -165,7 +164,6 @@ namespace PhuLongCRM.Views
             if (Id != null && viewModel.singleContact.contactid == Guid.Empty)
             {
                 await viewModel.loadOneContact(Id);
-                await viewModel.GetImageCMND();
                 if (viewModel.singleContact.gendercode != null)
                 { 
                    viewModel.singleGender = ContactGender.GetGenderById(viewModel.singleContact.gendercode); 
@@ -178,7 +176,6 @@ namespace PhuLongCRM.Views
                 {
                     viewModel.SingleLocalization = null;
                 }
-                photoShow = new PhotoShow(viewModel.CollectionCMNDs);
             }
         }
 
@@ -186,42 +183,39 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.singleContact.bsd_mattruoccmnd_source != null)
             {
-                photoShow.Show(this,0);
-            }    
-            //if (!string.IsNullOrWhiteSpace(viewModel.frontImage))
-            //{
-            //    photoBrowser = new PhotoBrowser
-            //    {
-            //        Photos = new List<Photo>
-            //    {
-            //        new Photo{
-            //            URL = viewModel.frontImage
-            //        }
-            //    }
-            //    };
-            //    photoBrowser.Show();
-            //}
+                new PhotoBrowser()
+                {
+                    Photos = viewModel.Photos,
+                    StartIndex = 0,
+                    EnableGrid = true
+                }.Show();
+            }
         }
 
         private void CMNDBehind_Tapped(object sender, EventArgs e)
         {
-            if (viewModel.singleContact.bsd_matsaucmnd_source != null)
+            if (viewModel.singleContact.bsd_matsaucmnd_source != null && viewModel.singleContact.bsd_mattruoccmnd_source != null)
             {
-                photoShow.Show(this, 1);
+                new PhotoBrowser()
+                {
+                    Photos = viewModel.Photos,
+                    StartIndex = 1,
+                    EnableGrid = true
+                }.Show();
             }
-            //if (!string.IsNullOrWhiteSpace(viewModel.behindImage))
-            //{
-            //    photoBrowser = new PhotoBrowser
-            //    {
-            //        Photos = new List<Photo>
-            //    {
-            //        new Photo{
-            //            URL = viewModel.behindImage
-            //        }
-            //    }
-            //    };
-            //    photoBrowser.Show();
-            //}
+            else
+            {
+                if (viewModel.singleContact.bsd_matsaucmnd_source != null && viewModel.singleContact.bsd_mattruoccmnd_source == null)
+                {
+                    new PhotoBrowser()
+                    {
+                        Photos = viewModel.Photos,
+                        StartIndex = 0,
+                        EnableGrid = true
+                    }.Show();
+                }
+            }
+                
         }
 
         #region Tab giao dich
