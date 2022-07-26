@@ -635,10 +635,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='activitytypecode' />
                                     <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
-                                        <filter type='or'>
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{leadID}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{leadID}' />
-                                        </filter>
+                                        <condition attribute='regardingobjectid' operator='eq' value='{leadID}' />
                                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                     </filter>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>

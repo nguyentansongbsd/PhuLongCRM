@@ -15,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace PhuLongCRM.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LookUpAddress : StackLayout
+    public partial class LookUpAddress : Grid
     {
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(LookUpAddress), null, BindingMode.TwoWay);
         public string Placeholder { get => (string)GetValue(PlaceholderProperty); set => SetValue(PlaceholderProperty, value); }
@@ -56,16 +56,24 @@ namespace PhuLongCRM.Controls
 
         private static void AddressCopyChang(BindableObject bindable, object oldValue, object newValue)
         {
-            if (newValue == null) return;
             LookUpAddress control = (LookUpAddress)bindable;
-            control.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = control, Converter = new Converters.NullToHideConverter() });
+            if (newValue == null)
+            {
+                control.BtnCopy.IsVisible = false;
+                return;
+            }
+            if (!control.root)
+                control.BtnCopy.IsVisible = true;
+            else
+                control.BtnCopy.IsVisible = false;
+            //control.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = control, Converter = new Converters.NullToHideConverter() });
         }
 
         public AddressModel AddressCopy { get => (AddressModel)GetValue(AddressCopyProperty); set { SetValue(AddressCopyProperty, value); } }
 
         public static readonly BindableProperty EnableCopyAddressProperty = BindableProperty.Create(nameof(EnableCopyAddress), typeof(bool), typeof(LookUpAddress), false, BindingMode.TwoWay);
         public bool EnableCopyAddress { get => (bool)GetValue(EnableCopyAddressProperty); set => SetValue(EnableCopyAddressProperty, value); }
-
+        private bool root;
         public LookUpAddress()
         {
             InitializeComponent();
@@ -73,7 +81,7 @@ namespace PhuLongCRM.Controls
             this.Entry.SetBinding(EntryNoneBorder.PlaceholderProperty, "Placeholder");
             this.Entry.SetBinding(EntryNoneBorder.TextProperty, "Address");
             this.BtnClear.SetBinding(Button.IsVisibleProperty, new Binding("Address") { Source = this, Converter = new Converters.NullToHideConverter() });
-            this.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = this, Converter = new Converters.NullToHideConverter() });
+            //this.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = this, Converter = new Converters.NullToHideConverter() });
 
             list_country_lookup = new ObservableCollection<Models.LookUp>();
             list_province_lookup = new ObservableCollection<Models.LookUp>();
@@ -83,7 +91,13 @@ namespace PhuLongCRM.Controls
         public void Clear_Clicked(object sender, EventArgs e)
         {
             this.SelectedItem = null;
-            Address = null;
+            Country = Province = District = null;
+            Address = LineAddress = null;
+            if (root && AddressCopy != null)
+            {
+                AddressCopy = null;
+                root = false;
+            }
         }
         public void HideClearButton()
         {
@@ -372,23 +386,28 @@ namespace PhuLongCRM.Controls
                 LineAddress = SelectedItem.lineaddress;
             if (!string.IsNullOrWhiteSpace(SelectedItem.address))
                 Address = SelectedItem.address;
-            if (EnableCopyAddress == true)
-                AddressCopy = new AddressModel
-                {
-                    country_id = SelectedItem.country_id,
-                    country_name = SelectedItem.country_name,
-                    country_name_en = SelectedItem.country_name_en,
-                    province_id = SelectedItem.province_id,
-                    province_name = SelectedItem.province_name,
-                    province_name_en = SelectedItem.province_name_en,
-                    district_id = SelectedItem.district_id,
-                    district_name = SelectedItem.district_name,
-                    district_name_en = SelectedItem.district_name_en,
-                    address = SelectedItem.address,
-                    address_en = SelectedItem.address_en,
-                    lineaddress = SelectedItem.lineaddress,
-                    lineaddress_en = SelectedItem.lineaddress_en
-                };
+            //if (EnableCopyAddress == true)
+            //{
+            //    if (AddressCopy == null)
+            //        root = true;
+
+            //    AddressCopy = new AddressModel
+            //    {
+            //        country_id = SelectedItem.country_id,
+            //        country_name = SelectedItem.country_name,
+            //        country_name_en = SelectedItem.country_name_en,
+            //        province_id = SelectedItem.province_id,
+            //        province_name = SelectedItem.province_name,
+            //        province_name_en = SelectedItem.province_name_en,
+            //        district_id = SelectedItem.district_id,
+            //        district_name = SelectedItem.district_name,
+            //        district_name_en = SelectedItem.district_name_en,
+            //        address = SelectedItem.address,
+            //        address_en = SelectedItem.address_en,
+            //        lineaddress = SelectedItem.lineaddress,
+            //        lineaddress_en = SelectedItem.lineaddress_en
+            //    };
+            //}
         }
         public void Footer()
         {
@@ -490,6 +509,9 @@ namespace PhuLongCRM.Controls
             Address = SelectedItem.address = string.Join(", ", _address);
             SelectedItem.address_en = string.Join(", ", _address_en);
             if (EnableCopyAddress == true)
+            {
+                if (AddressCopy == null)
+                    root = true;
                 AddressCopy = new AddressModel
                 {
                     country_id = SelectedItem.country_id,
@@ -506,6 +528,7 @@ namespace PhuLongCRM.Controls
                     lineaddress = SelectedItem.lineaddress,
                     lineaddress_en = SelectedItem.lineaddress_en
                 };
+            }
             await CenterModal.Hide();
         }
 
