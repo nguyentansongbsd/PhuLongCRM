@@ -432,13 +432,25 @@ namespace PhuLongCRM.ViewModels
             return data;
         }
 
-        public async Task LoadContactForLookup() // bubg
+        public async Task LoadContactForLookup(string keyWord = null) // bubg
         {
+            string condition = string.Empty;
+            if (!string.IsNullOrWhiteSpace(keyWord))
+            {
+                condition = $@"<condition attribute='fullname' operator='like' value='%25{keyWord}%25' />
+                              <condition attribute='bsd_customercode' operator='like' value='%25{keyWord}%25' />
+                              <condition attribute='mobilephone' operator='like' value='%25{keyWord}%25' />
+                              <condition attribute='bsd_identitycardnumber' operator='like' value='%25{keyWord}%25' />";
+            }
+
             string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
                     <attribute name='contactid' alias='Id' />
                     <attribute name='fullname' alias='Name' />
                     <order attribute='fullname' descending='false' />
+                    <filter type='or'>
+                        {condition}
+                    </filter>
                     <filter type='and'>
                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                         <condition attribute='statuscode' operator='in'>

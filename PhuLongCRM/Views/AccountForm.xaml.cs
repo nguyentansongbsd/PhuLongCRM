@@ -150,13 +150,15 @@ namespace PhuLongCRM.Views
                     viewModel.LocalizationOptionList.Add(item);
                 }
                 LoadingHelper.Hide();
-            };         
+            };
             //Lookup_BusinessType.PreShow = async () =>
             //{
             //    LoadingHelper.Show();
             //    viewModel.LoadBusinessTypeForLookup();
             //    LoadingHelper.Hide();
-            //};            
+            //};
+
+            
             Lookup_PrimaryContact.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
@@ -332,6 +334,14 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
                 return;
             }
+        }
+
+        private async void Lookup_PrimaryContact_SearchPress(System.Object sender, LookUpChangeEvent e)
+        {
+            LoadingHelper.Show();
+            await viewModel.LoadContactForLookup(e.Item.ToString());
+            Lookup_PrimaryContact.ResetItemSource();
+            LoadingHelper.Hide();
         }
     }
 }
