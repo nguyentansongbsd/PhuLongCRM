@@ -46,9 +46,9 @@
 	<string>PhuLongCRM cần quyền truy cập vào thư viện hình để lấy hình ảnh làm ảnh đại diện.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>PhuLongCRM cần quyền truy cập vào danh bạ để lấy số điện thoại</string>
+	<key>CFBundleVersion</key>
+	<string>28</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>CFBundleVersion</key>
-	<string>27</string>
 </dict>
 </plist>

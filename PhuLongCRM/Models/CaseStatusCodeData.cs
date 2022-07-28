@@ -28,5 +28,15 @@ namespace PhuLongCRM.Models
         {
             return CaseStatusData().SingleOrDefault(x => x.Val == id);
         }
+
+        public static List<OptionSet> GetCaseStatusCodeByIds(List<string> ids)
+        {
+            List<OptionSet> data = new List<OptionSet>();
+            foreach (var item in ids)
+            {
+                data.Add(CaseStatusData().SingleOrDefault(x => x.Val == item));
+            }
+            return data;
+        }
     }
 }
