@@ -215,7 +215,7 @@ namespace PhuLongCRM.ViewModels
 
             if (!string.IsNullOrWhiteSpace(singlePhanHoi.subjectId))
             {
-                this.Subject = new OptionSet(singlePhanHoi.subjectId, singlePhanHoi.subjectTitle);
+                this.Subject = CaseSubjectData.GetCaseSubjectById(singlePhanHoi.subjectId);
             }
             if (!string.IsNullOrWhiteSpace(singlePhanHoi.parentCaseId))
             {
