@@ -67,17 +67,15 @@ namespace PhuLongCRM.Views
                             numberFormated = sdt,
                             IsSelected = false
                         };
-                        if (viewModel.LeadConvert.Where(x => x.mobilephone == sdt).ToList().Count <= 0)
+                        if (viewModel.LeadConvert.Where(x => x.mobilephone.Contains(sdt) == true).ToList().Count <= 0)
                         {
                             item.IsConvertToLead = false;
-                            viewModel.Contacts.Add(item);
-                           // SelectedContact.Add(item);
                         }
                         else
                         {
                             item.IsConvertToLead = true;
-                            viewModel.Contacts.Add(item);
                         }
+                        viewModel.Contacts.Add(item);
                     }
                 }
                 viewModel.total = viewModel.Contacts.Count();
@@ -91,12 +89,12 @@ namespace PhuLongCRM.Views
             {
                 foreach (var item in viewModel.Contacts)
                 {
-                    if (item.numberFormated != null)
+                    if (item.numberFormated != null && item.IsConvertToLead == false)
                     {
                         item.IsSelected = e.NewValue.Value;
                     }
                 }
-                if (e.NewValue.Value) { viewModel.numberChecked = viewModel.total; button_toLead.isVisible = true; }
+                if (e.NewValue.Value) { var SelectedContact = this.viewModel.Contacts.Where(x => x.IsSelected == true && x.IsConvertToLead == false); viewModel.numberChecked = SelectedContact.Count(); button_toLead.isVisible = true; }
                 else { viewModel.numberChecked = 0; button_toLead.isVisible = false; }
             }
 
@@ -148,7 +146,7 @@ namespace PhuLongCRM.Views
 
         private async void ConvertToLead_Clicked(object sender, EventArgs e)
         {
-            var SelectedContact = this.viewModel.Contacts.Where(x => x.IsSelected == true);
+            var SelectedContact = this.viewModel.Contacts.Where(x => x.IsSelected == true && x.IsConvertToLead == false);
             if (SelectedContact.Any() == false)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_contact_de_chuyen_sang_khach_hang_tiem_nang);
@@ -183,6 +181,7 @@ namespace PhuLongCRM.Views
                 }
             }
             ToastMessageHelper.ShortMessage(Language.chuyen_thanh_cong);
+            if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
             this.reset();
         }
 
