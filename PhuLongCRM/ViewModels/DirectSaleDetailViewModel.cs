@@ -301,6 +301,8 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_queuingfeepaid' />
                         <attribute name='bsd_collectedqueuingfee' />
                         <attribute name='bsd_queuingexpired' />
+                        <attribute name='bsd_queuenumber' />
+                        <attribute name='bsd_queueforproject' />
                         <order attribute='statuscode' descending='false' />
                         <filter type='and'>
                             <condition attribute='bsd_units' operator='eq' value='{unitId}'/>
@@ -310,11 +312,14 @@ namespace PhuLongCRM.ViewModels
                                 <value>100000000</value>
                             </condition>
                         </filter>
-                        <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer'>
-                           <attribute name='fullname'  alias='contact_name'/>
+                        <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' visible='false' link-type='outer' alias='a_edc3f143ba81e911a83b000d3a07be23'>
+                            <attribute name='bsd_name' alias='project_name'/>
                         </link-entity>
-                        <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer'>
-                           <attribute name='name'  alias='account_name'/>
+                        <link-entity name='account' from='accountid' to='parentaccountid' visible='false' link-type='outer' alias='a_87ea9a00777ee911a83b000d3a07fbb4'>
+                            <attribute name='name' alias='account_name'/>
+                        </link-entity>
+                        <link-entity name='contact' from='contactid' to='parentcontactid' visible='false' link-type='outer' alias='a_8eea9a00777ee911a83b000d3a07fbb4'>
+                            <attribute name='bsd_fullname' alias='contact_name'/>
                         </link-entity>
                       </entity>
                     </fetch>";
@@ -328,10 +333,10 @@ namespace PhuLongCRM.ViewModels
             var data = result.value;
             ShowMoreDanhSachDatCho = data.Count < 5 ? false : true;
 
-            foreach (var x in data)
+            foreach (var item in data)
             {
                 //x.statuscode_label = QueuesStatusCodeData.GetQueuesById(x.statuscode.ToString()).Name;
-                QueueList.Add(x);
+                QueueList.Add(item);
             }
             //if (QueueList.Any(x=>x.statuscode == 100000000))  // chỗ này đang bị lỗi khi có 2 giữ chỗ queue
             //{

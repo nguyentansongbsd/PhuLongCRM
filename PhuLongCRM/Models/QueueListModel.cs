@@ -15,6 +15,7 @@ namespace PhuLongCRM.Models
         public string project_name { get; set; }
         public string contact_name { get; set; }
         public string account_name { get; set; }
+        public bool bsd_queueforproject { get; set; }
 
         public decimal bsd_queuingfee { get; set; }
         public string bsd_queuingfee_format
