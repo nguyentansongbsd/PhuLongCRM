@@ -94,7 +94,6 @@ namespace PhuLongCRM.Views
 
                 if (lead.statuscode == "3") // qualified
                 {
-                    floatingButtonGroup.IsVisible = false;
                     if (lead.account_id != Guid.Empty)
                     {
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.di_den_kh_doanh_nghiep, "FontAwesomeRegular", "\uf1ad", null, GoToAccount));

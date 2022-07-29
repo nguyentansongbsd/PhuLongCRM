@@ -378,7 +378,6 @@ namespace PhuLongCRM.Views
             string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
-                LoadingHelper.Show();
                 SmsMessage sms = new SmsMessage(null, phone);
                 await Sms.ComposeAsync(sms);
                 //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
@@ -396,7 +395,6 @@ namespace PhuLongCRM.Views
             }
             else
             {
-                LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
@@ -406,7 +404,6 @@ namespace PhuLongCRM.Views
             string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
             if (phone != string.Empty)
             {
-                LoadingHelper.Show();
                 await Launcher.OpenAsync($"tel:{phone}");
                 //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
                 //if (checkVadate == true)
@@ -422,7 +419,6 @@ namespace PhuLongCRM.Views
             }
             else
             {
-                LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
             }
         }
