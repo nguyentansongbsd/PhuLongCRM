@@ -64,6 +64,7 @@
                                 <telerikChart:RadCartesianChart.Grid>
                                     <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1" />
                                 </telerikChart:RadCartesianChart.Grid>
+
                                 <telerikChart:RadCartesianChart.Series>
                                     <telerikChart:BarSeries ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding CommissionTransactionChart}" CombineMode="Cluster"/>
                                     <telerikChart:BarSeries ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding CommissionTransactionChart2}" CombineMode="Cluster"/>
@@ -124,6 +125,7 @@
                                 <telerikChart:RadCartesianChart.Grid>
                                     <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
                                 </telerikChart:RadCartesianChart.Grid>
+
                                 <telerikChart:RadCartesianChart.Series>
                                     <telerikChart:LineSeries Stroke="#2196F3" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQueue}" />
                                     <telerikChart:LineSeries Stroke="#FA7803" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQuote}" />

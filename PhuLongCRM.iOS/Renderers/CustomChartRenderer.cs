@@ -23,7 +23,7 @@ namespace PhuLongCRM.iOS.Renderers
                 //tKChartNumericAxis.Style.LabelStyle.TextColor = UIColor.Red;
                 //tKChartNumericAxis.Style.LabelStyle.TextAlignment = TKChartAxisLabelAlignment.Left;
                 //this.Control.AddAxis(tKChartNumericAxis);
-                
+
                 //this.Control.YAxis.Style.LineHidden = false;
                 //this.Control.YAxis.Style.LabelStyle.TextAlignment = TKChartAxisLabelAlignment.VerticalCenter;
                 //this.Control.YAxis.Style.LabelStyle.FirstLabelTextAlignment = TKChartAxisLabelAlignment.VerticalCenter;

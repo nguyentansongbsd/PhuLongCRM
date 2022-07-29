@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -18,15 +19,26 @@ namespace PhuLongCRM
         public BlankPage()
         {
             InitializeComponent();
-            this.BindingContext = this;
-            MyDate = null;// new DateTime(2022, 06, 18, 22, 00, 00);
+            //this.BindingContext = this;
+            //MyDate = null;// new DateTime(2022, 06, 18, 22, 00, 00);
+
+            
         }
 
         async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
             //this.MyDate = null;
             //this.MyDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 00, 00);
-            await DisplayAlert("", MyDate.ToString(), "ok");
+            //await DisplayAlert("", MyDate.ToString(), "ok");
+
+            await Task.Run(() =>
+            {
+                System.Diagnostics.Debug.WriteLine("1");
+            });
+
+            
+            System.Diagnostics.Debug.WriteLine("2");
+
         }
     }
 }
