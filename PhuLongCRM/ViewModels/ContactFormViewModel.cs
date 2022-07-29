@@ -225,14 +225,6 @@ namespace PhuLongCRM.ViewModels
 
             if (result.IsSuccess)
             {
-                //if (singleContact.bsd_mattruoccmnd_base64 != null)
-                //{
-                //    await UpLoadCMNDFront();
-                //}
-                //if (singleContact.bsd_matsaucmnd_base64 != null)
-                //{
-                //    await UpLoadCMNDBehind();
-                //}
                 return contact.contactid;
             }
             else
@@ -409,89 +401,6 @@ namespace PhuLongCRM.ViewModels
                 list_account_lookup.Add(x);
             }
         }
-
-        //public async Task GetImageCMND()
-        //{
-        //    frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
-        //    behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
-
-        //    string token = (await CrmHelper.getSharePointToken()).access_token;
-        //    var client = BsdHttpClient.Instance();
-        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    var front_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource
-        //                    + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFileByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + frontImage_name + "')/$value");
-        //    var front_result = await client.SendAsync(front_request);
-        //    if (front_result.IsSuccessStatusCode)
-        //    {
-        //        singleContact.bsd_mattruoccmnd_base64 = Convert.ToBase64String(front_result.Content.ReadAsByteArrayAsync().Result);
-        //    }
-
-        //    var behind_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource
-        //                    + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFileByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + behindImage_name + "')/$value");
-        //    var behind_result = await client.SendAsync(behind_request);
-        //    if (behind_result.IsSuccessStatusCode)
-        //    {
-        //        singleContact.bsd_matsaucmnd_base64 = Convert.ToBase64String(behind_result.Content.ReadAsByteArrayAsync().Result);
-        //    }
-        //}
-
-        //public async Task<bool> UpLoadCMNDFront()
-        //{
-        //    frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
-
-        //    string token = (await CrmHelper.getSharePointToken()).access_token;
-
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        //        if (singleContact.bsd_mattruoccmnd_base64 != null)
-        //        {
-        //            byte[] arrByteFront = Convert.FromBase64String(singleContact.bsd_mattruoccmnd_base64);
-
-        //            using (var response = client.PostAsync
-        //            (new Uri(OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFolderByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "')/Files/add(url='" + frontImage_name + "',overwrite=true)")
-        //            , new StreamContent(new MemoryStream(arrByteFront))).Result)
-        //            {
-        //                return response.IsSuccessStatusCode;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //}
-
-        //public async Task<bool> UpLoadCMNDBehind()
-        //{
-        //    behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
-
-        //    string token = (await CrmHelper.getSharePointToken()).access_token;
-
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        //        if (singleContact.bsd_matsaucmnd_base64 != null)
-        //        {
-        //            byte[] arrByteBehind = Convert.FromBase64String(singleContact.bsd_matsaucmnd_base64);
-
-        //            using (var response = client.PostAsync(
-        //            new Uri(OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFolderByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "')/Files/add(url='" + behindImage_name + "',overwrite=true)")
-        //            , new StreamContent(new MemoryStream(arrByteBehind))).Result)
-        //            {
-        //                return response.IsSuccessStatusCode;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //}
 
         public async Task<bool> CheckCMND(string identitycardnumber, string contactid)
         {

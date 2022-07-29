@@ -12,6 +12,10 @@ using PhuLongCRM.Models;
 using System.Linq;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Controls;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Plugin.Media;
+using System.Net.Http.Headers;
 
 namespace PhuLongCRM.Views
 {
@@ -91,7 +95,7 @@ namespace PhuLongCRM.Views
             if (contactId != null)
             {
                 await viewModel.LoadOneContact(contactId);
-                //await viewModel.GetImageCMND();
+                await GetImageCMND();
                 if (viewModel.singleContact.gendercode != null)
                 {
                     viewModel.singleGender = ContactGender.GetGenderById(viewModel.singleContact.gendercode);
@@ -242,7 +246,7 @@ namespace PhuLongCRM.Views
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (QueueForm.NeedToRefresh.HasValue) QueueForm.NeedToRefresh = true;
-
+                    await PostImgSPTrial();
                     await Navigation.PopAsync();
                     ToastMessageHelper.ShortMessage(Language.tao_khach_hang_ca_nhan_thanh_cong);
                     LoadingHelper.Hide();
@@ -264,16 +268,7 @@ namespace PhuLongCRM.Views
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                     if (ContactDetailPage.NeedToRefresh.HasValue) ContactDetailPage.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
-
-                    //if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
-                    //{
-                    //    await viewModel.UpLoadCMNDFront();
-                    //}
-
-                    //if (viewModel.singleContact.bsd_matsaucmnd_base64 != null)
-                    //{
-                    //   await viewModel.UpLoadCMNDBehind();
-                    //}
+                    await PostImgSPTrial();
                     await Navigation.PopAsync();
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                 }
@@ -362,74 +357,71 @@ namespace PhuLongCRM.Views
 
         async void MenuItem_Tapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            //var item = e.Item as OptionSet;
-            //popup_menu_imageCMND.unFocus();
+            var item = e.Item as OptionSet;
+            popup_menu_imageCMND.unFocus();
 
-            //Stream resultStream;
-            //byte[] arrByte;
-            //string base64String;
+            Stream resultStream;
+            byte[] arrByte;
+            string base64String;
 
-            //switch (item.Label)
-            //{
-            //    case "Chụp ảnh":
-                    
-            //        PermissionStatus cameraStatus = await PermissionHelper.RequestCameraPermission();
-            //        if (cameraStatus == PermissionStatus.Granted)
-            //        { 
-            //            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-            //            {
-            //                SaveToAlbum = false,
-            //                PhotoSize = Plugin.Media.Abstractions.PhotoSize.MaxWidthHeight,
-            //                MaxWidthHeight = 600,
-            //            });
+            switch (item.Label)
+            {
+                case "Chụp ảnh":
 
-            //            if (file == null)
-            //                return;
+                    PermissionStatus cameraStatus = await PermissionHelper.RequestCameraPermission();
+                    if (cameraStatus == PermissionStatus.Granted)
+                    {
+                        var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                        {
+                            SaveToAlbum = false,
+                            PhotoSize = Plugin.Media.Abstractions.PhotoSize.MaxWidthHeight,
+                            MaxWidthHeight = 600,
+                        });
 
-            //            resultStream = file.GetStream();
-            //            using (var memoryStream = new MemoryStream())
-            //            {
-            //                resultStream.CopyTo(memoryStream);
-            //                arrByte = memoryStream.ToArray();
-            //            }
-            //            base64String = Convert.ToBase64String(arrByte);
-            //            var tmp1 = base64String.Length;
-            //            if (item.Val == "Front") { viewModel.singleContact.bsd_mattruoccmnd_base64 = base64String; }
-            //            else if (item.Val == "Behind") { viewModel.singleContact.bsd_matsaucmnd_base64 = base64String; }
-            //        }
+                        if (file == null)
+                            return;
 
-            //        break;
-            //    case "Chọn ảnh từ thư viện":
+                        resultStream = file.GetStream();
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            resultStream.CopyTo(memoryStream);
+                            arrByte = memoryStream.ToArray();
+                        }
+                        base64String = Convert.ToBase64String(arrByte);
+                        if (item.Val == "Front") { viewModel.singleContact.bsd_mattruoccmnd_source = base64String; viewModel.singleContact.bsd_mattruoccmnd_base64 = base64String; }
+                        else if (item.Val == "Behind") { viewModel.singleContact.bsd_matsaucmnd_source = base64String; viewModel.singleContact.bsd_matsaucmnd_base64 = base64String; }
+                    }
 
-            //        PermissionStatus storageStatus = await PermissionHelper.RequestPhotosPermission();
-            //        if (storageStatus == PermissionStatus.Granted)
-            //        {
-            //            var file2 = await MediaPicker.PickPhotoAsync();
-            //            if (file2 == null)
-            //                return;
+                    break;
+                case "Chọn ảnh từ thư viện":
 
-            //            Stream result = await file2.OpenReadAsync();
-            //            if (result != null)
-            //            {
-            //                using (var memoryStream = new MemoryStream())
-            //                {
-            //                    result.CopyTo(memoryStream);
-            //                    arrByte = memoryStream.ToArray();
-            //                }
-            //                base64String = Convert.ToBase64String(arrByte);
-            //                var tmp = base64String.Length;
-            //                if (item.Val == "Front") { viewModel.singleContact.bsd_mattruoccmnd_base64 = base64String; }
-            //                else if (item.Val == "Behind") { viewModel.singleContact.bsd_matsaucmnd_base64 = base64String; }
-            //            }
-            //        }
-            //        break;
-            //    default:
-            //        if (item.Val == "Front") { image_detailCMNDImage.Source = viewModel.singleContact.bsd_mattruoccmnd_source; }
-            //        else if (item.Val == "Behind") { image_detailCMNDImage.Source = viewModel.singleContact.bsd_matsaucmnd_source; }
-            //        this.showDetailCMNDImage();
-            //        break;
+                    PermissionStatus storageStatus = await PermissionHelper.RequestPhotosPermission();
+                    if (storageStatus == PermissionStatus.Granted)
+                    {
+                        var file2 = await MediaPicker.PickPhotoAsync();
+                        if (file2 == null)
+                            return;
 
-            //}
+                        Stream result = await file2.OpenReadAsync();
+                        if (result != null)
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                result.CopyTo(memoryStream);
+                                arrByte = memoryStream.ToArray();
+                            }
+                            base64String = Convert.ToBase64String(arrByte);
+                            if (item.Val == "Front") { viewModel.singleContact.bsd_mattruoccmnd_source  = base64String; viewModel.singleContact.bsd_mattruoccmnd_base64 = base64String; }
+                            else if (item.Val == "Behind") { viewModel.singleContact.bsd_matsaucmnd_source = base64String; viewModel.singleContact.bsd_matsaucmnd_base64 = base64String; }
+                        }
+                    }
+                    break;
+                default:
+                    if (item.Val == "Front") { image_detailCMNDImage.Source = viewModel.singleContact.bsd_mattruoccmnd_source; }
+                    else if (item.Val == "Behind") { image_detailCMNDImage.Source = viewModel.singleContact.bsd_matsaucmnd_source; }
+                    this.showDetailCMNDImage();
+                    break;
+            }
         }
 
         private void showDetailCMNDImage()
@@ -483,6 +475,119 @@ namespace PhuLongCRM.Views
             if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_passport, 8))
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
+            }
+        }
+        public async Task PostImgSPTrial()
+        {
+            var client = BsdHttpClient.Instance();
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://login.microsoftonline.com/4353e6d9-783f-491f-b2c3-b6f19a3fcea3/oauth2/token");
+            var formContent = new FormUrlEncodedContent(new[]
+                {
+                        new KeyValuePair<string, string>("client_id", "17b79fd3-80a3-477c-9893-febebcdfb158"),
+                        new KeyValuePair<string, string>("client_secret", "-dj8Q~ZTrhwDxgqi5Z2a2x5ahQ5Q.1m53nXjccjU"),
+                        new KeyValuePair<string, string>("grant_type", "client_credentials"),
+                        new KeyValuePair<string, string>("resource", "https://graph.microsoft.com")
+                    });
+            request.Content = formContent;
+            var response = await client.SendAsync(request);
+            var body = await response.Content.ReadAsStringAsync();
+            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+
+            //
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenData.access_token);
+
+            var frontImage_name = viewModel.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
+            var behindImage_name = viewModel.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
+            var folder = viewModel.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper();
+
+            var url = $"https://graph.microsoft.com/v1.0/drives/b!jGtVPz5thE626o2107toCF1IY_sUMmROiFK-xhiZsKc2VbqgXkfxTo_c3k08feDf/root:/{folder}/{frontImage_name}:/content";
+            if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
+            {
+                byte[] arrByteFront = Convert.FromBase64String(viewModel.singleContact.bsd_mattruoccmnd_base64);
+                HttpContent content = new ByteArrayContent(arrByteFront);
+                using (var response1 = client.PutAsync(url, content))
+                {
+                    if (response1.Result != null)
+                    {
+                        ToastMessageHelper.ShortMessage("Tải lên thành công");
+                    }
+                }
+            }
+
+            var url2 = $"https://graph.microsoft.com/v1.0/drives/b!jGtVPz5thE626o2107toCF1IY_sUMmROiFK-xhiZsKc2VbqgXkfxTo_c3k08feDf/root:/{folder}/{behindImage_name}:/content";
+            if (viewModel.singleContact.bsd_matsaucmnd_base64 != null)
+            {
+                byte[] arrByteFront = Convert.FromBase64String(viewModel.singleContact.bsd_matsaucmnd_base64);
+                HttpContent content = new ByteArrayContent(arrByteFront);
+                using (var response1 = client.PutAsync(url2, content))
+                {
+                    if (response1.Result != null)
+                    {
+                        ToastMessageHelper.ShortMessage("Tải lên thành công");
+                    }
+                }
+            }
+        }
+
+        public async Task GetImageCMND()
+        {
+            if (viewModel.singleContact.contactid != Guid.Empty)
+            {
+                var client = BsdHttpClient.Instance();
+                var req = new HttpRequestMessage(HttpMethod.Post, $"https://login.microsoftonline.com/4353e6d9-783f-491f-b2c3-b6f19a3fcea3/oauth2/token");
+                var formContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("client_id", "17b79fd3-80a3-477c-9893-febebcdfb158"),
+                        new KeyValuePair<string, string>("client_secret", "-dj8Q~ZTrhwDxgqi5Z2a2x5ahQ5Q.1m53nXjccjU"),
+                        new KeyValuePair<string, string>("grant_type", "client_credentials"),
+                        new KeyValuePair<string, string>("resource", "https://graph.microsoft.com")
+                    });
+                req.Content = formContent;
+                var resp = await client.SendAsync(req);
+                var body1 = await resp.Content.ReadAsStringAsync();
+                GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body1);
+
+                //
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenData.access_token);
+
+                var folder = viewModel.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper();
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/b!jGtVPz5thE626o2107toCF1IY_sUMmROiFK-xhiZsKc2VbqgXkfxTo_c3k08feDf/root:/{folder}:/children?$select=name,eTag";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenData.access_token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
+
+                    if (result == null || result.value.Any() == false)
+                    {
+                        return;
+                    }
+                    List<SharePointGraphModel> list = result.value;
+                    foreach (var item in list)
+                    {
+                        if (item.name.Contains("_front.jpg"))
+                        {
+                            //var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            //if (urlVideo != null)
+                            //{
+                            //    string url = urlVideo.value.SingleOrDefault().large.url;
+                            //   viewModel.singleContact.bsd_mattruoccmnd_source = url;
+                            //}
+                        }
+                        else if (item.name.Contains("_behind.jpg"))
+                        {
+                            //var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            //if (urlVideo != null)
+                            //{
+                            //    string url = urlVideo.value.SingleOrDefault().large.url;
+                            //    viewModel.singleContact.bsd_matsaucmnd_source = url;
+                            //}
+                        }
+                    }
+                }
             }
         }
     }
