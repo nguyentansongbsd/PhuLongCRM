@@ -19,69 +19,76 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = viewModel = new DanhBaViewModel();
-            LoadingHelper.Show();           
+            Init();
+        }
+
+        public async void Init()
+        {
+            LoadingHelper.Show();
             viewModel.isCheckedAll = false;
             viewModel.total = 0;
             viewModel.numberChecked = 0;
-
-            LoadContacts().GetAwaiter();
+            await viewModel.LoadContacts();
             LoadingHelper.Hide();
         }
 
         public void reset()
         {
+            LoadingHelper.Show();
             button_toLead.isVisible = false;
             viewModel.reset();
-            LoadContacts().GetAwaiter();
-        }
-
-        public async Task LoadContacts()
-        {
-            PermissionStatus RequestContactsRead = await Permissions.CheckStatusAsync<Permissions.ContactsRead>();
-            if (!Plugin.ContactService.CrossContactService.IsSupported)
-            {
-                ToastMessageHelper.ShortMessage(":( Permission not granted to contact.");
-                await Navigation.PopAsync();
-                return;
-            }
-            if (RequestContactsRead != PermissionStatus.Granted)
-            {
-                RequestContactsRead = await Permissions.RequestAsync<Permissions.ContactsRead>();
-            }   
-            if(RequestContactsRead == PermissionStatus.Granted)
-            {
-                await viewModel.LoadLeadConvert();
-                LoadingHelper.Show();
-                var contacts = (await Plugin.ContactService.CrossContactService.Current.GetContactListAsync()).Where(x => x.Name != null);
-                var aaaaa = contacts.Count();
-                foreach (var tmp in contacts.OrderBy(x => x.Name))
-                {
-                    var numbers = tmp.Numbers;
-                    foreach (var n in numbers)
-                    {
-                        var sdt = n.Replace("-", "").Replace(" ", "").Replace("(", "").Replace(")", "");
-
-                        var item = new Models.DanhBaItemModel
-                        {
-                            Name = tmp.Name,
-                            numberFormated = sdt,
-                            IsSelected = false
-                        };
-                        if (viewModel.LeadConvert.Where(x => x.mobilephone.Contains(sdt) == true).ToList().Count <= 0)
-                        {
-                            item.IsConvertToLead = false;
-                        }
-                        else
-                        {
-                            item.IsConvertToLead = true;
-                        }
-                        viewModel.Contacts.Add(item);
-                    }
-                }
-                viewModel.total = viewModel.Contacts.Count();
-            }    
+            viewModel.LoadContacts().GetAwaiter();
             LoadingHelper.Hide();
         }
+
+        //public async Task LoadContacts()
+        //{
+        //    PermissionStatus RequestContactsRead = await Permissions.CheckStatusAsync<Permissions.ContactsRead>();
+        //    if (!Plugin.ContactService.CrossContactService.IsSupported)
+        //    {
+        //        ToastMessageHelper.ShortMessage(":( Permission not granted to contact.");
+        //        await Navigation.PopAsync();
+        //        return;
+        //    }
+        //    if (RequestContactsRead != PermissionStatus.Granted)
+        //    {
+        //        RequestContactsRead = await Permissions.RequestAsync<Permissions.ContactsRead>();
+        //    }   
+        //    if(RequestContactsRead == PermissionStatus.Granted)
+        //    {
+        //        await viewModel.LoadLeadConvert();
+        //        LoadingHelper.Show();
+        //        var contacts = (await Plugin.ContactService.CrossContactService.Current.GetContactListAsync()).Where(x => x.Name != null);
+        //        var aaaaa = contacts.Count();
+        //        foreach (var tmp in contacts.OrderBy(x => x.Name))
+        //        {
+        //            var numbers = tmp.Numbers;
+        //            foreach (var n in numbers)
+        //            {
+        //                var sdt = n.Replace("-", "").Replace(" ", "").Replace("(", "").Replace(")", "");
+
+        //                var item = new Models.DanhBaItemModel
+        //                {
+        //                    Name = tmp.Name,
+        //                    numberFormated = sdt,
+        //                    IsSelected = false
+        //                };
+        //                if (viewModel.LeadConvert.Where(x => x.mobilephone.Contains(sdt) == true).ToList().Count <= 0)
+        //                {
+        //                    item.IsConvertToLead = false;
+        //                    totalConactActive++;
+        //                }
+        //                else
+        //                {
+        //                    item.IsConvertToLead = true;
+        //                }
+        //                viewModel.Contacts.Add(item);
+        //            }
+        //        }
+        //        viewModel.total = viewModel.Contacts.Count();
+        //    }    
+        //    LoadingHelper.Hide();
+        //}
 
         private void checkAll_IsCheckedChanged(object sender, Telerik.XamarinForms.Primitives.CheckBox.IsCheckedChangedEventArgs e)
         {
@@ -94,8 +101,16 @@ namespace PhuLongCRM.Views
                         item.IsSelected = e.NewValue.Value;
                     }
                 }
-                if (e.NewValue.Value) { var SelectedContact = this.viewModel.Contacts.Where(x => x.IsSelected == true && x.IsConvertToLead == false); viewModel.numberChecked = SelectedContact.Count(); button_toLead.isVisible = true; }
-                else { viewModel.numberChecked = 0; button_toLead.isVisible = false; }
+                if (e.NewValue.Value)
+                {
+                    viewModel.numberChecked = (int)(viewModel.Contacts.Where(x => x.IsSelected == true && x.IsConvertToLead == false)?.Count());
+                    button_toLead.isVisible = viewModel.numberChecked > 0 ? true : false;
+                }
+                else
+                {
+                    viewModel.numberChecked = 0;
+                    button_toLead.isVisible = false;
+                }
             }
 
         }
@@ -119,29 +134,18 @@ namespace PhuLongCRM.Views
             var grid = sender as Grid;
             var tapGes = (TapGestureRecognizer)grid.GestureRecognizers[0];
             var item = (Models.DanhBaItemModel)tapGes.CommandParameter;
-
-
-            if (item.IsSelected == true) // đang là true đổi qua false thì set check all thành false.
+            if (item.IsConvertToLead == false)
             {
-                if (viewModel.isCheckedAll == true)
+                item.IsSelected = !item.IsSelected;
+                viewModel.numberChecked = (int)(viewModel.Contacts.Where(x => x.IsSelected == true && x.IsConvertToLead == false)?.Count());
+                button_toLead.isVisible = viewModel.numberChecked > 0 ? true : false;
+                if (viewModel.numberChecked == viewModel.totalConactActive)
+                    viewModel.isCheckedAll = true;
+                else
                 {
                     viewModel.isCheckedAll = false;
-                    if (viewModel.Contacts.Count > 1)
-                        viewModel.numberChecked = 2;
-                    else
-                        viewModel.numberChecked = 1;
                 }
-                viewModel.numberChecked -= 1;
             }
-            else
-            {
-                viewModel.numberChecked++;
-            }
-            if (viewModel.Contacts.Count > 1)
-                item.IsSelected = !item.IsSelected;
-            // check all
-            viewModel.isCheckedAll = viewModel.numberChecked == viewModel.total;
-            button_toLead.isVisible = viewModel.numberChecked == 0 ? false : true;
         }
 
         private async void ConvertToLead_Clicked(object sender, EventArgs e)
