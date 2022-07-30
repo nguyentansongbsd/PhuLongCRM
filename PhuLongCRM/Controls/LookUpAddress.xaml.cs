@@ -374,40 +374,21 @@ namespace PhuLongCRM.Controls
         {
             if (SelectedItem == null) return;
             if (SelectedItem.district_id != Guid.Empty || !string.IsNullOrWhiteSpace(SelectedItem.district_name))
-                District = new Models.LookUp { Id = SelectedItem.district_id, Name = SelectedItem.district_name, Detail= SelectedItem.district_name_en };
+                District = new Models.LookUp { Id = SelectedItem.district_id, Name = SelectedItem.district_name, Detail = SelectedItem.district_name_en };
             if (SelectedItem.province_id != Guid.Empty || !string.IsNullOrWhiteSpace(SelectedItem.province_name))
+            {
                 Province = new Models.LookUp { Id = SelectedItem.province_id, Name = SelectedItem.province_name, Detail = SelectedItem.province_name_en };
+                await LoadDistrictForLookup();
+            }
             if (SelectedItem.country_id != Guid.Empty || !string.IsNullOrWhiteSpace(SelectedItem.country_name))
             {
                 Country = new Models.LookUp { Id = SelectedItem.country_id, Name = SelectedItem.country_name, Detail = SelectedItem.country_name_en };
                 await LoadProvincesForLookup();
             }
-            if(!string.IsNullOrWhiteSpace(SelectedItem.lineaddress))
+            if (!string.IsNullOrWhiteSpace(SelectedItem.lineaddress))
                 LineAddress = SelectedItem.lineaddress;
             if (!string.IsNullOrWhiteSpace(SelectedItem.address))
                 Address = SelectedItem.address;
-            //if (EnableCopyAddress == true)
-            //{
-            //    if (AddressCopy == null)
-            //        root = true;
-
-            //    AddressCopy = new AddressModel
-            //    {
-            //        country_id = SelectedItem.country_id,
-            //        country_name = SelectedItem.country_name,
-            //        country_name_en = SelectedItem.country_name_en,
-            //        province_id = SelectedItem.province_id,
-            //        province_name = SelectedItem.province_name,
-            //        province_name_en = SelectedItem.province_name_en,
-            //        district_id = SelectedItem.district_id,
-            //        district_name = SelectedItem.district_name,
-            //        district_name_en = SelectedItem.district_name_en,
-            //        address = SelectedItem.address,
-            //        address_en = SelectedItem.address_en,
-            //        lineaddress = SelectedItem.lineaddress,
-            //        lineaddress_en = SelectedItem.lineaddress_en
-            //    };
-            //}
         }
         public void Footer()
         {
