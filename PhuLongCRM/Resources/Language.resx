@@ -1981,7 +1981,7 @@
     <value>Số tháng tính phí quản lý</value>
   </data>
 	<data name="don_gia_phi_quan_ly_thang_m2" xml:space="preserve">
-    <value>Đơn giá phí quản lý (tháng/m2)</value>
+    <value>Đơn giá phí quản lý (tháng/ m²)</value>
   </data>
 	<data name="tien_giu_cho" xml:space="preserve">
     <value>Tiền giữ chỗ</value>
