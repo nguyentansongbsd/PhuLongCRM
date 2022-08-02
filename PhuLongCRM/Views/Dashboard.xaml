@@ -7,7 +7,8 @@
              xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:convertes ="clr-namespace:PhuLongCRM.Converters" xmlns:views="clr-namespace:PhuLongCRM.Views"
-             x:Class="PhuLongCRM.Views.Dashboard">
+             x:Class="PhuLongCRM.Views.Dashboard"
+             xmlns:tt="clr-namespace:TouchTracking.Forms;assembly=TouchTracking.Forms">
     <ContentPage.Resources>
         <ResourceDictionary>
             <convertes:CurrencyFormatConverter x:Key="CurrencyFormat"/>
@@ -24,7 +25,7 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <AbsoluteLayout>
+        <controls:AbsoluteHover x:Name="absoluteHover">
             <RefreshView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
                 <ScrollView Padding="0,0,0,20">
                     <StackLayout Spacing="0">
@@ -93,6 +94,9 @@
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numQueue}" FontSize="18" FontAttributes="Bold" TextColor="#2196F3" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.giu_cho}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <StackLayout.Effects>
+                                        <tt:TouchEffect TouchAction="GiuCho_TouchAction"/>
+                                    </StackLayout.Effects>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="0">
@@ -224,6 +228,6 @@
             </RefreshView>
 
             <views:ActivityPopupContentView x:Name="ActivityPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
-        </AbsoluteLayout>
+        </controls:AbsoluteHover>
     </ContentPage.Content>
 </ContentPage>

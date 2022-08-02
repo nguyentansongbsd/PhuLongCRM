@@ -5,6 +5,7 @@ using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

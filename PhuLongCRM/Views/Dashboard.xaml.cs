@@ -216,5 +216,15 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
+
+        private void GiuCho_TouchAction(object sender, TouchTracking.TouchActionEventArgs args)
+        {
+            if (args != null)
+            {
+                var x = args.Location.X;
+                var y = args.Location.Y;
+                HoverHelper.ShowHover(x, y, "Giữ chỗ tháng này", absoluteHover);
+            }
+        }
     }
 }
