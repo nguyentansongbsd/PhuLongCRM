@@ -217,13 +217,71 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private void GiuCho_TouchAction(object sender, TouchTracking.TouchActionEventArgs args)
+        private void DatCoc_Hover_Tapped(object sender, EventArgs e)
         {
-            if (args != null)
+            try
             {
-                var x = args.Location.X;
-                var y = args.Location.Y;
-                HoverHelper.ShowHover(x, y, "Giữ chỗ tháng này", absoluteHover);
+                PopupHover.ShowHover("Số đặt cọc đã tạo trong tháng này");
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        private void GiaoDich_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover("Số giữ chỗ đã tạo trong tháng này");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void HopDong_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover("Số hợp đồng đã tạo trong tháng này");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void DaBan_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover("Số sản phẩm đã bán trong tháng này");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void TongTien_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover("Tổng tiền có thể nhận trong tháng này");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void DaNhan_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover("Tổng tiền đã nhận trong tháng này");
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

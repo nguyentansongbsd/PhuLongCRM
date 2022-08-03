@@ -42,12 +42,18 @@
                                 <StackLayout Spacing="12">
                                     <Label Text="{Binding TotalCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#D42A16" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TongTien_Hover_Tapped"/>
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center">
                                 <StackLayout Spacing="12">
                                     <Label Text="{Binding TotalPaidCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#2196F3" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.da_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DaNhan_Hover_Tapped"/>
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
@@ -94,27 +100,36 @@
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numQueue}" FontSize="18" FontAttributes="Bold" TextColor="#2196F3" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.giu_cho}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
-                                    <StackLayout.Effects>
-                                        <tt:TouchEffect TouchAction="GiuCho_TouchAction"/>
-                                    </StackLayout.Effects>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiaoDich_Hover_Tapped"/>
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="0">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numQuote}" FontSize="18" FontAttributes="Bold" TextColor="#FA7803" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.dat_coc_dashboard}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DatCoc_Hover_Tapped"/>
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="2" Padding="0">
                                 <StackLayout Margin="2,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numOptionEntry}" FontSize="18" FontAttributes="Bold" TextColor="#0DB302" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.hop_dong}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="HopDong_Hover_Tapped"/>
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="3" Padding="0">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numUnit}" FontSize="18" FontAttributes="Bold" TextColor="#D42A16" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.da_ban}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DaBan_Hover_Tapped"/>
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
@@ -228,6 +243,7 @@
             </RefreshView>
 
             <views:ActivityPopupContentView x:Name="ActivityPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
+            <controls:PopupHover x:Name="PopupHover" />
         </controls:AbsoluteHover>
     </ContentPage.Content>
 </ContentPage>
