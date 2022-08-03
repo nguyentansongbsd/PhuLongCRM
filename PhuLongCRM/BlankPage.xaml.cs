@@ -15,57 +15,17 @@ namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
-        private DateTime? _myDate;
-        public DateTime? MyDate { get => _myDate; set { _myDate = value; OnPropertyChanged(nameof(MyDate)); } }
-
-        private string _img;
-        public string Img { get => _img; set { _img = value; OnPropertyChanged(nameof(Img)); } }
-
-        public int StartNumIdle { get; set; } = 1;
-        public int StartNumRun { get; set; } = 1;
-
-        private System.Timers.Timer aTimerIdle;
-        private System.Timers.Timer aTimerRun;
-        private int NumIdle = 10;
-
         public BlankPage()
         {
             InitializeComponent();
-            this.BindingContext = this;
-            //MyDate = null;// new DateTime(2022, 06, 18, 22, 00, 00);
-            aTimerIdle = new System.Timers.Timer();
-            aTimerIdle.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimerIdle.Interval = 100;
-            aTimerIdle.Enabled = true;
         }
 
-        async void Button_Clicked(System.Object sender, System.EventArgs e)
+        private void AbsoluteLayout_Tapped(object sender, MR.Gestures.TapEventArgs e)
         {
-            //this.MyDate = null;
-            //this.MyDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 00, 00);
-            //await DisplayAlert("", MyDate.ToString(), "ok");
-
-            //var task = Task.Run(() => {
-            //    System.Diagnostics.Debug.WriteLine("ok okookokokok");
-            //});
-
-            //if (task.Wait(TimeSpan.FromSeconds(10)))
-            //{
-            //    System.Diagnostics.Debug.WriteLine("alkjshdflaksd");
-            //}
-            //else
-            //    throw new Exception("Timed out");
-
-            //for (int i = 0; i < 9; i++)
-            //{
-            //    Dinosaur.Source = $"Idle-{i+1}.png";
-            //    await Task.Delay(100);
-            //}
-
-            //await Task.Delay()
-
-            
-
+            if (e != null && e.ViewPosition != null)
+            {
+                ToastMessageHelper.ShortMessage("vi tri " + e.ViewPosition.X + "vi tri " + e.ViewPosition.Y);
+            }
         }
 
         private void Start_Clicked(object sender, EventArgs e)

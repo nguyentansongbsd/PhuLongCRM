@@ -385,7 +385,8 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.Customer!= null)
             {
-                if(viewModel.Customer.Title == viewModel.CodeContact)
+                LoadingHelper.Show();
+                if (viewModel.Customer.Title == viewModel.CodeContact)
                 {
                     ContactDetailPage newPage = new ContactDetailPage(Guid.Parse(viewModel.Customer.Val));
                     newPage.OnCompleted = async (OnCompleted) =>

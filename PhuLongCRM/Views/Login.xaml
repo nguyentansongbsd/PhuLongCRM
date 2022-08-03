@@ -6,11 +6,11 @@
              xmlns:ffimageloadding="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              BackgroundColor="#eeeeee"
-             Shell.NavBarIsVisible="False" 
+             Shell.NavBarIsVisible="False"
              x:Class="PhuLongCRM.Views.Login">
     <ContentPage.Content>
         <AbsoluteLayout>
-            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,20" >
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,20">
                 <StackLayout Margin="20,0" Spacing="10" VerticalOptions="Center" >
                     <Image Source="phulong_contact_logo.png" Margin="0,15" />
                     <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="White" Padding="0" HeightRequest="65">
