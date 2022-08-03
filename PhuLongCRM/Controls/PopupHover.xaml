@@ -7,8 +7,8 @@
                 AbsoluteLayout.LayoutBounds="0,0,1,1" 
                 AbsoluteLayout.LayoutFlags="All" 
                 IsVisible="false">
-    <primitives:RadBorder BackgroundColor="White" BorderColor="White" BorderThickness="1" CornerRadius="0,0,5,0" 
-                          VerticalOptions="Start" HorizontalOptions="Start" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+    <primitives:RadBorder BackgroundColor="White" BorderColor="White" BorderThickness="1" CornerRadius="0,0,5,5" 
+                          VerticalOptions="Start" HorizontalOptions="Fill" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
         <Label x:Name="label" FontSize="15" TextColor="#444444" Padding="10"/>
     </primitives:RadBorder>
     <AbsoluteLayout.GestureRecognizers>
