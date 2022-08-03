@@ -7,8 +7,7 @@
              xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:convertes ="clr-namespace:PhuLongCRM.Converters" xmlns:views="clr-namespace:PhuLongCRM.Views"
-             x:Class="PhuLongCRM.Views.Dashboard"
-             xmlns:tt="clr-namespace:TouchTracking.Forms;assembly=TouchTracking.Forms">
+             x:Class="PhuLongCRM.Views.Dashboard">
     <ContentPage.Resources>
         <ResourceDictionary>
             <convertes:CurrencyFormatConverter x:Key="CurrencyFormat"/>
@@ -25,7 +24,7 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <controls:AbsoluteHover x:Name="absoluteHover">
+        <AbsoluteLayout>
             <RefreshView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
                 <ScrollView Padding="0,0,0,20">
                     <StackLayout Spacing="0">
@@ -244,6 +243,6 @@
 
             <views:ActivityPopupContentView x:Name="ActivityPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
             <controls:PopupHover x:Name="PopupHover" />
-        </controls:AbsoluteHover>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
