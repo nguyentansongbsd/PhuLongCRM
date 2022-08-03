@@ -158,7 +158,6 @@ namespace PhuLongCRM.Views
         }
         private void ItemSlider_Tapped(object sender, EventArgs e)
         {
-            LoadingHelper.Show();
             var item = (CollectionData)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item.SharePointType == SharePointType.Image)
             {
@@ -174,22 +173,21 @@ namespace PhuLongCRM.Views
             }
             else if (item.SharePointType == SharePointType.Video)
             {
+                LoadingHelper.Show();
                 ShowMedia showMedia = new ShowMedia(Config.OrgConfig.SP_ProjectID, item.MediaSourceId);
                 showMedia.OnCompleted = async (isSuccess) =>
                 {
                     if (isSuccess)
                     {
                         await Navigation.PushAsync(showMedia);
-                        LoadingHelper.Hide();
                     }
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không lấy được video");
+                        ToastMessageHelper.ShortMessage(Language.khong_tai_duoc_video);
                     }
                 };
             }
-            LoadingHelper.Hide();
         }
         private void ScollTo_Video_Tapped(object sender, EventArgs e)
         {
