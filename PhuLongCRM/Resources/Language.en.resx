@@ -3396,4 +3396,10 @@
   <data name="thien_chi" xml:space="preserve">
     <value>Thiện chí</value>
   </data>
+  <data name="dang_tai_video_vui_long_doi" xml:space="preserve">
+    <value>Video is loading. Please wait.</value>
+  </data>
+  <data name="khong_tai_duoc_video" xml:space="preserve">
+    <value>Video failed to load.</value>
+  </data>
 </root>
