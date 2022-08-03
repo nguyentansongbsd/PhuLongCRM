@@ -280,6 +280,7 @@ namespace PhuLongCRM.ViewModels
                     new ChartModel { Category = "Sẵn sàng", Value = SanSang },
                     new ChartModel { Category = "Booking", Value = Booking },
                 };
+                UnitChart.Clear();
                 foreach (var item in unitChartModels)
                 {
                     UnitChart.Add(item);
