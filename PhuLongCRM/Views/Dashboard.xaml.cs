@@ -289,5 +289,9 @@ namespace PhuLongCRM.Views
         {
             PopupHover.ShowHover("Biểu đồ hoa hồng 4 tháng gần nhất");
         }
+        private void BieuDoGiaoDich_Hover_Tapped(object sender, EventArgs e)
+        {
+            PopupHover.ShowHover("Biểu đồ các giao dịch 4 tháng gần nhất");
+        }
     }
 }
