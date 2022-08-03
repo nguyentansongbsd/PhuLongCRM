@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -36,6 +37,22 @@ namespace PhuLongCRM.Views
                     OnCompleted?.Invoke(false);
                 }
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            if (videoView.CanSeek == false)
+            {
+                ToastMessageHelper.ShortMessage(Language.dang_tai_video_vui_long_doi);
+                return true;
+            }
+            LoadingHelper.Hide();
+            return base.OnBackButtonPressed();
+        }
+
+        void videoView_MediaOpened(System.Object sender, System.EventArgs e)
+        {
+            LoadingHelper.Hide();
         }
     }
 }

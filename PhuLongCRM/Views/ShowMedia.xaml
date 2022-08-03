@@ -7,7 +7,7 @@
              BackgroundColor="#444444">
     <ContentPage.Content>
         <AbsoluteLayout>
-            <xct:MediaElement x:Name="videoView" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" AutoPlay="True" BackgroundColor="#dddddd" Aspect="AspectFit" />
+            <xct:MediaElement x:Name="videoView" MediaOpened="videoView_MediaOpened" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" AutoPlay="True" BackgroundColor="#dddddd" Aspect="AspectFit" />
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
