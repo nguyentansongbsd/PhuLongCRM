@@ -142,24 +142,31 @@
                             </controls:ExtendedFrame>
                         </Grid>
                         <controls:ExtendedFrame Padding="8" Margin="14,6">
-                            <telerikChart:RadCartesianChart  HeightRequest="250">
-                                <telerikChart:RadCartesianChart.HorizontalAxis>
-                                    <telerikChart:CategoricalAxis LineColor="#A9A9A9" MajorTickThickness="2" PlotMode="BetweenTicks" LabelFitMode="MultiLine" ShowLabels="True" MajorTickBackgroundColor="#A9A9A9" />
-                                </telerikChart:RadCartesianChart.HorizontalAxis>
-                                <telerikChart:RadCartesianChart.VerticalAxis>
-                                    <telerikChart:NumericalAxis Minimum="0" Maximum="30" MajorStep="5" LineColor="#A9A9A9" />
-                                </telerikChart:RadCartesianChart.VerticalAxis>
-                                <telerikChart:RadCartesianChart.Grid>
-                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
-                                </telerikChart:RadCartesianChart.Grid>
+                            <Grid>
+                                <telerikChart:RadCartesianChart  HeightRequest="250">
+                                    <telerikChart:RadCartesianChart.HorizontalAxis>
+                                        <telerikChart:CategoricalAxis LineColor="#A9A9A9" MajorTickThickness="2" PlotMode="BetweenTicks" LabelFitMode="MultiLine" ShowLabels="True" MajorTickBackgroundColor="#A9A9A9" />
+                                    </telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:RadCartesianChart.VerticalAxis>
+                                        <telerikChart:NumericalAxis Minimum="0" Maximum="30" MajorStep="5" LineColor="#A9A9A9" />
+                                    </telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:RadCartesianChart.Grid>
+                                        <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
+                                    </telerikChart:RadCartesianChart.Grid>
 
-                                <telerikChart:RadCartesianChart.Series>
-                                    <telerikChart:LineSeries Stroke="#2196F3" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQueue}" />
-                                    <telerikChart:LineSeries Stroke="#FA7803" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQuote}" />
-                                    <telerikChart:LineSeries Stroke="#0DB302" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthOptionEntry}" />
-                                    <telerikChart:LineSeries Stroke="#D42A16" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthUnit}" />
-                                </telerikChart:RadCartesianChart.Series>
-                            </telerikChart:RadCartesianChart>
+                                    <telerikChart:RadCartesianChart.Series>
+                                        <telerikChart:LineSeries Stroke="#2196F3" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQueue}" />
+                                        <telerikChart:LineSeries Stroke="#FA7803" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQuote}" />
+                                        <telerikChart:LineSeries Stroke="#0DB302" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthOptionEntry}" />
+                                        <telerikChart:LineSeries Stroke="#D42A16" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthUnit}" />
+                                    </telerikChart:RadCartesianChart.Series>
+                                </telerikChart:RadCartesianChart>
+                                <Grid>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BieuDoGiaoDich_Hover_Tapped"/>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </Grid>
                         </controls:ExtendedFrame>
 
                         <Label Text="{x:Static lang:Language.khach_hang_tiem_nang}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>
