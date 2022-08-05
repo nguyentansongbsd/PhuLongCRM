@@ -24,7 +24,7 @@ namespace PhuLongCRM
         {
             if (e != null && e.ViewPosition != null)
             {
-                ToastMessageHelper.ShortMessage("vi tri " + e.ViewPosition.X + "vi tri " + e.ViewPosition.Y);
+                ToastMessageHelper.ShortMessage("vi tri " + e.Touches);
             }
         }
     }
