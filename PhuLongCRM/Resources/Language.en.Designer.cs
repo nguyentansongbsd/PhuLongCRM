@@ -2254,7 +2254,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expied.
+        ///   Looks up a localized string similar to Expired.
         /// </summary>
         internal static string da_het_han {
             get {
@@ -7524,6 +7524,15 @@ namespace PhuLongCRM.Resources {
         internal static string tai_khoan_khong_the_dang_nhap_tren_thiet_bi_nay {
             get {
                 return ResourceManager.GetString("tai_khoan_khong_the_dang_nhap_tren_thiet_bi_nay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document.
+        /// </summary>
+        internal static string tai_lieu {
+            get {
+                return ResourceManager.GetString("tai_lieu", resourceCulture);
             }
         }
         

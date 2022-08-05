@@ -3402,4 +3402,7 @@
   <data name="khong_tai_duoc_video" xml:space="preserve">
     <value>Không tải được video.</value>
   </data>
+  <data name="tai_lieu" xml:space="preserve">
+    <value>Tài liệu</value>
+  </data>
 </root>

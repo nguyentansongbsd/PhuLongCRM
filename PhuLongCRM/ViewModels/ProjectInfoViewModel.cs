@@ -16,6 +16,7 @@ namespace PhuLongCRM.ViewModels
     public class ProjectInfoViewModel : BaseViewModel
     {
         public ObservableCollection<CollectionData> Collections { get; set; } = new ObservableCollection<CollectionData>();
+        public ObservableCollection<CollectionData> PdfFiles { get; set; } = new ObservableCollection<CollectionData>();
 
         public List<Photo> Photos { get; set; }
         private bool _showCollections = false;
@@ -450,29 +451,11 @@ namespace PhuLongCRM.ViewModels
                     List<SharePointGraphModel> list = result.value;
                     var videos = list.Where(x => x.type == "video").ToList();
                     var images = list.Where(x => x.type == "image").ToList();
+                    var pdfs = list.Where(x => x.type == "pdf").ToList();
                     this.TotalMedia = videos.Count;
                     this.TotalPhoto = images.Count;
 
-                    foreach (var item in videos)
-                    {
-                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem/thumbnails");
-                        if (urlVideo != null)
-                        {
-                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
-                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
-                        }
-                    }
-
-                    foreach (var item in images)
-                    {
-                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem/thumbnails");
-                        if (urlVideo != null)
-                        {
-                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
-                            this.Photos.Add(new Photo { URL = url });
-                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
-                        }
-                    }
+                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs));
                 }
             }
         }
@@ -523,6 +506,59 @@ namespace PhuLongCRM.ViewModels
                 this.IsHasPhasesLaunch = true;
             else
                 this.IsHasPhasesLaunch = false;
+        }
+
+        private async static Task<T> LoadFiles<T>(string url) where T : class
+        {
+            var result = await CrmHelper.RetrieveImagesSharePoint<T>(url);
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private async Task GetVideos(List<SharePointGraphModel> data)
+        {
+            foreach (var item in data)
+            {
+                var result = await LoadFiles<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem/thumbnails");
+                if (result != null)
+                {
+                    string url = result.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
+                }
+            }
+        }
+
+        private async Task GetImages(List<SharePointGraphModel> data)
+        {
+            foreach (var item in data)
+            {
+                var result = await LoadFiles<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem/thumbnails");
+                if (result != null)
+                {
+                    string url = result.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                    this.Photos.Add(new Photo { URL = url });
+                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
+                }
+            }
+        }
+
+        private async Task GetPdfs(List<SharePointGraphModel> data)
+        {
+            foreach (var item in data)
+            {
+                var result = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem");
+                if (result != null)
+                {
+                    string url = result.MicrosoftGraphDownloadUrl;
+                    this.PdfFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name });
+                }
+            }
         }
     }
 }

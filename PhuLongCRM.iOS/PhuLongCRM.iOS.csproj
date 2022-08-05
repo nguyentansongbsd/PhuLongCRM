@@ -93,6 +93,7 @@
     <Compile Include="Renderers\EntryNoneBorderRenderer.cs" />
     <Compile Include="Renderers\CustomChartRenderer.cs" />
     <Compile Include="Renderers\LightModeRenderer.cs" />
+    <Compile Include="Services\PdfService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
