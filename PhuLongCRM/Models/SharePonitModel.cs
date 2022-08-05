@@ -33,6 +33,8 @@ namespace PhuLongCRM.Models
                     return "image";
                 else if (name.Contains(".mp4") || name.Contains(".flv") || name.Contains(".m3u8") || name.Contains(".3gp") || name.Contains(".mov") || name.Contains(".avi") || name.Contains(".wmv"))
                     return "video";
+                else if (name.Contains(".pdf"))
+                    return "pdf";
                 else return null;
             }
         }

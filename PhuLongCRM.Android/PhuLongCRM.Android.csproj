@@ -107,6 +107,7 @@
     <Compile Include="Renderers\DatePickerBorderRenderer.cs" />
     <Compile Include="Renderers\TimePickerBorderRenderer.cs" />
     <Compile Include="Renderers\EntryNoneBorderRenderer.cs" />
+    <Compile Include="Services\PdfService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

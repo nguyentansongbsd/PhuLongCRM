@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
@@ -264,6 +265,14 @@ namespace PhuLongCRM.Views
                     nameAvata = projectName.ToUpper();
             }
             return $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={nameAvata}";
+        }
+
+        private void OpenPdfFile_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            DependencyService.Get<IPdfService>().View(item.UrlPdfFile,item.PdfName);
+            LoadingHelper.Hide();
         }
     }
 }
