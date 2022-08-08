@@ -3405,4 +3405,7 @@
   <data name="tai_lieu" xml:space="preserve">
     <value>Tài liệu</value>
   </data>
+	<data name="vui_long_nhap_so_cccd" xml:space="preserve">
+    <value>Vui lòng nhập số căn cước công dân.</value>
+  </data>
 </root>

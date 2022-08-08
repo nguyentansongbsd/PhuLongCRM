@@ -19,9 +19,13 @@ namespace PhuLongCRM.ViewModels
         public List<string> _filterStatus;
         public List<string> FilterStatus { get => _filterStatus; set { _filterStatus = value; OnPropertyChanged(nameof(FilterStatus)); } }
         public ObservableCollection<OptionSet> FiltersProject { get; set; } = new ObservableCollection<OptionSet>();
+        public ObservableCollection<OptionSet> FiltersQueueForProject { get; set; } = new ObservableCollection<OptionSet>();
 
         public OptionSet _filterProject;
         public OptionSet FilterProject { get => _filterProject; set { _filterProject = value; OnPropertyChanged(nameof(FilterProject)); } }
+
+        public OptionSet _filterQueueForProject;
+        public OptionSet FilterQueueForProject { get => _filterQueueForProject; set { _filterQueueForProject = value; OnPropertyChanged(nameof(FilterQueueForProject)); } }
         public string Keyword { get; set; }
         public QueuListViewModel()
         {
@@ -29,6 +33,7 @@ namespace PhuLongCRM.ViewModels
             {
                 string project = null;
                 string status = null;
+                string queueforproject = null;
                 if (FilterStatus != null && FilterStatus.Count > 0)
                 {
                     if (string.IsNullOrWhiteSpace(FilterStatus.Where(x => x == "-1").FirstOrDefault()))
@@ -57,6 +62,14 @@ namespace PhuLongCRM.ViewModels
                 {
                     project = null;
                 }
+                if (FilterQueueForProject != null && FilterQueueForProject.Val != "-1")
+                {
+                    queueforproject = $@"<condition attribute='bsd_queueforproject' operator='eq' value='{FilterQueueForProject.Val}' />";
+                }
+                else
+                {
+                    queueforproject = null;
+                }
 
                 EntityName = "opportunities";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -69,6 +82,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_queuingexpired' />
                         <attribute name='createdon' />
                         <attribute name='bsd_bookingtime' />
+                        <attribute name='bsd_queueforproject' />
                         <order attribute='bsd_bookingtime' descending='true' />
                         <filter type='and'>                          
                             <filter type='or'>
@@ -88,14 +102,21 @@ namespace PhuLongCRM.ViewModels
                             <value>100000008</value>
                           </condition>
                           <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
-                          "+ status + @"
-                            " + project + @"
+                          {status}
+                          {project}
+                          {queueforproject}
                         </filter>
                         <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer'>
                            <attribute name='fullname'  alias='contact_name'/>
                         </link-entity>
                         <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer'>
                            <attribute name='name'  alias='account_name'/>
+                        </link-entity>
+                        <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' visible='false' link-type='outer' alias='a_edc3f143ba81e911a83b000d3a07be23'>
+                            <attribute name='bsd_name' alias='project_name'/>
+                        </link-entity>
+                        <link-entity name='product' from='productid' to='bsd_units' visible='false' link-type='outer' alias='a_5025d361ba81e911a83b000d3a07be23'>
+                            <attribute name='name' alias='bsd_units_name'/>
                         </link-entity>
                       </entity>
                     </fetch>";
@@ -140,6 +161,15 @@ namespace PhuLongCRM.ViewModels
                 {
                     FiltersProject.Add(item);
                 }
+            }
+        }
+        public void LoadQueueForProject()
+        {
+            if (FiltersQueueForProject != null && FiltersQueueForProject.Count == 0)
+            {
+                FiltersQueueForProject.Add(new OptionSet("-1", Language.tat_ca));
+                FiltersQueueForProject.Add(new OptionSet("1", Language.co));
+                FiltersQueueForProject.Add(new OptionSet("0", Language.khong));
             }
         }
     }
