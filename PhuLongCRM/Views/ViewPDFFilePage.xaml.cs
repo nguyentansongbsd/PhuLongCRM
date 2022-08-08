@@ -10,11 +10,11 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             if (Device.RuntimePlatform == Device.iOS)
             {
-                webView.Source = fileUrl;
+                webView.Source = "https://drive.google.com/viewerng/viewer?embedded=true&url="+fileUrl;
             }
             else
             {
-                //webView.Uri = fileUrl;
+                webView.Source = "https://drive.google.com/viewerng/viewer?embedded=true&url=" + fileUrl;
             }
         }
     }

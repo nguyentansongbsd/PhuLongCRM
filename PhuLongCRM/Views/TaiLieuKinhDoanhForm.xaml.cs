@@ -46,7 +46,7 @@ namespace PhuLongCRM.Views
             }
         }
         
-        public async Task<bool> downloadFile_salesliteratureitem(Guid salesliteratureitemid)
+        public async Task<string> downloadFile_salesliteratureitem(Guid salesliteratureitemid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='salesliteratureitem'>
@@ -61,7 +61,7 @@ namespace PhuLongCRM.Views
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<SalesLiteratureItemListModel>>("salesliteratureitems", fetch);
             if(result == null)
             {
-                return false;
+                return null;
             }
 
             var data = result.value.FirstOrDefault();
@@ -69,40 +69,49 @@ namespace PhuLongCRM.Views
             var fileName = data.filename;
             if (data.documentbody == null)
             {
-                return false;
+                return null;
             }
             var body = data.documentbody;
 
             byte[] arr = Convert.FromBase64String(body);
             MemoryStream stream = new MemoryStream(arr);
 
-            DependencyService.Get<IFileService>().SaveFile(fileName, arr, "Download/Conasi");
-
-            return true;
+            return DependencyService.Get<IFileService>().SaveFile(fileName, arr, "Download/PhuLong");
         }
 
         private async void DownloadFileButton_Cliked(object sender, System.EventArgs e)
         {
-            if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
-            {
-                viewModel.IsBusy = true;
-                var item = (SalesLiteratureItemListModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-                
-                var res = await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
-                if (res)
-                {
-                    item.status = 1;
-                    viewModel.list_DownLoad.Add(item);
-                    popup_dowload_file.ItemSource = viewModel.list_DownLoad;
-                    popup_dowload_file.focus();
-                }
-                else
-                {
-                    await DisplayAlert("", "Lỗi. Vui lòng thử lại", "Ok");
-                }
-                popup_dowload_file.isTapable = true;
-                viewModel.IsBusy = false;
-            }
+            var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("", "", PermissionStatus.Granted);
+            var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("", "", PermissionStatus.Granted);
+
+            var item = (SalesLiteratureItemListModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            string filepath = await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
+
+            await Navigation.PushAsync(new ViewPDFFilePage(filepath));
+
+
+
+
+            //if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
+            //{
+            //    viewModel.IsBusy = true;
+            //    var item = (SalesLiteratureItemListModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+
+            //    var res = await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
+            //    if (res)
+            //    {
+            //        item.status = 1;
+            //        viewModel.list_DownLoad.Add(item);
+            //        popup_dowload_file.ItemSource = viewModel.list_DownLoad;
+            //        popup_dowload_file.focus();
+            //    }
+            //    else
+            //    {
+            //        await DisplayAlert("", "Lỗi. Vui lòng thử lại", "Ok");
+            //    }
+            //    popup_dowload_file.isTapable = true;
+            //    viewModel.IsBusy = false;
+            //}
         }
 
         void ListViewFileDownloaded_Tapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
