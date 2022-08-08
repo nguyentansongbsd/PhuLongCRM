@@ -94,6 +94,7 @@
     <Compile Include="Renderers\CustomChartRenderer.cs" />
     <Compile Include="Renderers\LightModeRenderer.cs" />
     <Compile Include="Services\PdfService.cs" />
+    <Compile Include="Services\FileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -182,6 +183,7 @@
     <BundleResource Include="Resources\ic_vietnam.jpg" />
     <BundleResource Include="GoogleService-Info.plist" />
     <BundleResource Include="Resources\image_placeholder.jpg" />
+    <BundleResource Include="Resources\Sites.ReadWrite.All.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

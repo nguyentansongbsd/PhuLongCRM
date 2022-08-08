@@ -6,8 +6,9 @@
     x:Class="PhuLongCRM.BlankPage">
     <!--<Label Text="Trang chu" TextColor="Black" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center"/>-->
     <ContentPage.Content>
-        <mr:AbsoluteLayout Tapped="AbsoluteLayout_Tapped">
+        <!--<mr:AbsoluteLayout Tapped="AbsoluteLayout_Tapped">
             
-        </mr:AbsoluteLayout>
+        </mr:AbsoluteLayout>-->
+        <WebView x:Name="webview" />
     </ContentPage.Content>
 </ContentPage>
