@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using System.IO;
 using PhuLongCRM.Controls;
 using Xamarin.Essentials;
+using PhuLongCRM.IServices;
 
 namespace PhuLongCRM.Views
 {
@@ -76,7 +77,10 @@ namespace PhuLongCRM.Views
             byte[] arr = Convert.FromBase64String(body);
             MemoryStream stream = new MemoryStream(arr);
 
-            return DependencyService.Get<IFileService>().SaveFile(fileName, arr, "Download/PhuLong");
+            await Xamarin.Forms.DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(Guid.NewGuid() + ".pdf", "application / pdf", stream, PDFOpenContext.InApp);
+
+            return "a";
+            //return DependencyService.Get<IFileService>().SaveFile(fileName, arr, "Download/PhuLong");
         }
 
         private async void DownloadFileButton_Cliked(object sender, System.EventArgs e)
@@ -85,9 +89,9 @@ namespace PhuLongCRM.Views
             var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("", "", PermissionStatus.Granted);
 
             var item = (SalesLiteratureItemListModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            string filepath = await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
+            await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
 
-            await Navigation.PushAsync(new ViewPDFFilePage(filepath));
+            //await Navigation.PushAsync(new ViewPDFFilePage(filepath));
 
 
 
