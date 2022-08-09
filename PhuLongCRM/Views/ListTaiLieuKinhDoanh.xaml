@@ -16,7 +16,7 @@
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout BackgroundColor ="White" Padding="20,15" Margin="0,1">
+                                <StackLayout BackgroundColor ="White" Padding="20,15" Margin="0,1" Spacing="10">
                                     <Grid ColumnDefinitions="*,Auto">
                                         <Label Grid.Row="0" Grid.Column="0" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
                                         <Label FontSize="14" Grid.Row="0" Grid.Column="1" Text="{Binding createdon_format}" LineBreakMode="TailTruncation" VerticalTextAlignment="Center"/>
