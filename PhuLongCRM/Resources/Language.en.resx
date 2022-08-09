@@ -3405,4 +3405,7 @@
   <data name="tai_lieu" xml:space="preserve">
     <value>Document</value>
   </data>
+	<data name="vui_long_nhap_so_cccd" xml:space="preserve">
+    <value>Please enter Id Card Number.</value>
+  </data>
 </root>

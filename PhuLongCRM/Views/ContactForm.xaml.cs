@@ -197,9 +197,9 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_thuong_tru);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber))
+            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_cmnd);
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_cccd);
                 return;
             }
             if (!await viewModel.CheckCMND(viewModel.singleContact.bsd_identitycardnumber, id))
@@ -439,12 +439,12 @@ namespace PhuLongCRM.Views
 
         private void CMND_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber)) return;
             if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycardnumber, 9))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
             }
         }
-
         private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
             var num = sender as PhoneEntryControl;
@@ -459,16 +459,13 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-
         private void CCCD_Unfocused(object sender, FocusEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard)) return;
             if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycard, 12))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
         }
-
         private void PassPort_Unfocused(object sender, FocusEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport)) return;
@@ -528,7 +525,6 @@ namespace PhuLongCRM.Views
                 }
             }
         }
-
         public async Task GetImageCMND()
         {
             if (viewModel.singleContact.contactid != Guid.Empty)

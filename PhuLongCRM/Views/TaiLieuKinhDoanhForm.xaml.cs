@@ -80,7 +80,6 @@ namespace PhuLongCRM.Views
             await Xamarin.Forms.DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(Guid.NewGuid() + ".pdf", "application / pdf", stream, PDFOpenContext.InApp);
 
             return "a";
-            //return DependencyService.Get<IFileService>().SaveFile(fileName, arr, "Download/PhuLong");
         }
 
         private async void DownloadFileButton_Cliked(object sender, System.EventArgs e)
@@ -92,9 +91,6 @@ namespace PhuLongCRM.Views
             await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
 
             //await Navigation.PushAsync(new ViewPDFFilePage(filepath));
-
-
-
 
             //if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
             //{

@@ -4,6 +4,7 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -36,7 +37,11 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
-            await viewModel.LoadData();
+            await Task.WhenAll(
+                  viewModel.LoadData(),
+                  viewModel.LoadProject()
+                  );
+            viewModel.LoadStatus();
             LoadingHelper.Hide();
         }    
 
@@ -74,6 +79,19 @@ namespace PhuLongCRM.Views
             {
                 SearchBar_SearchButtonPressed(null, EventArgs.Empty);
             }
+        }
+        private async void FiltersProject_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            LoadingHelper.Show();
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
+        }
+
+        private async void FiltersStatus_SelectedItemChanged(object sender, LookUpChangeEvent e)
+        {
+            LoadingHelper.Show();
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
         }
     }
 }
