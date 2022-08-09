@@ -75,7 +75,6 @@ namespace PhuLongCRM.Views
 
             byte[] arr = Convert.FromBase64String(body);
             MemoryStream stream = new MemoryStream(arr);
-
             return DependencyService.Get<IFileService>().SaveFile(fileName, arr, "Download/PhuLong");
         }
 
@@ -88,9 +87,6 @@ namespace PhuLongCRM.Views
             string filepath = await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
 
             await Navigation.PushAsync(new ViewPDFFilePage(filepath));
-
-
-
 
             //if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
             //{
