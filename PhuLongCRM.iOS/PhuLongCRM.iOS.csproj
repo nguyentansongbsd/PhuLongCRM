@@ -95,6 +95,8 @@
     <Compile Include="Renderers\LightModeRenderer.cs" />
     <Compile Include="Services\PdfService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\PreviewControllerDS.cs" />
+    <Compile Include="Services\PDFSaveAndOpen.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
