@@ -5893,6 +5893,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ngày sửa đổi.
+        /// </summary>
+        internal static string ngay_sua_doi {
+            get {
+                return ResourceManager.GetString("ngay_sua_doi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ngày tải lên HĐ.
         /// </summary>
         internal static string ngay_tai_len_hd {
@@ -7981,6 +7990,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tên tệp.
+        /// </summary>
+        internal static string ten_tep {
+            get {
+                return ResourceManager.GetString("ten_tep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tên người dùng.
         /// </summary>
         internal static string ten_user {
@@ -8607,6 +8625,15 @@ namespace PhuLongCRM.Resources {
         internal static string thong_tin_san_pham_title {
             get {
                 return ResourceManager.GetString("thong_tin_san_pham_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông Tin Tài Liệu.
+        /// </summary>
+        internal static string thong_tin_tai_lieu_title {
+            get {
+                return ResourceManager.GetString("thong_tin_tai_lieu_title", resourceCulture);
             }
         }
         

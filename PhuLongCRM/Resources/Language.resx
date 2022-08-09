@@ -3408,4 +3408,13 @@
 	<data name="vui_long_nhap_so_cccd" xml:space="preserve">
     <value>Vui lòng nhập số căn cước công dân.</value>
   </data>
+	<data name="thong_tin_tai_lieu_title" xml:space="preserve">
+    <value>Thông Tin Tài Liệu</value>
+  </data>
+	<data name="ten_tep" xml:space="preserve">
+    <value>Tên tệp</value>
+  </data>
+	<data name="ngay_sua_doi" xml:space="preserve">
+    <value>Ngày sửa đổi</value>
+  </data>
 </root>

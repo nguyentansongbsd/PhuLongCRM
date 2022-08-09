@@ -3408,4 +3408,13 @@
 	<data name="vui_long_nhap_so_cccd" xml:space="preserve">
     <value>Please enter Id Card Number.</value>
   </data>
+	<data name="thong_tin_tai_lieu_title" xml:space="preserve">
+    <value>Sales Literature</value>
+  </data>
+	<data name="ten_tep" xml:space="preserve">
+    <value>File name</value>
+  </data>
+	<data name="ngay_sua_doi" xml:space="preserve">
+    <value>Modified on</value>
+  </data>
 </root>
