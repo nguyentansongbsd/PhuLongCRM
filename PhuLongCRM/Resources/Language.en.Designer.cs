@@ -9562,6 +9562,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter Id Card Number..
+        /// </summary>
+        internal static string vui_long_nhap_so_cccd {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_so_cccd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter Identity Card Number..
         /// </summary>
         internal static string vui_long_nhap_so_cmnd {
