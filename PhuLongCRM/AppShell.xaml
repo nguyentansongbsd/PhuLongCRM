@@ -104,11 +104,11 @@
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#666666" Glyph="&#xf0ca;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
-    <ShellContent Title="{x:Static lang:Language.tai_lieu_kinh_doanh}" ContentTemplate="{DataTemplate views:ListTaiLieuKinhDoanh}">
+    <!--<ShellContent Title="{x:Static lang:Language.tai_lieu_kinh_doanh}" ContentTemplate="{DataTemplate views:ListTaiLieuKinhDoanh}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf07c;" Size="18"/>
         </ShellContent.Icon>
-    </ShellContent>
+    </ShellContent>-->
     <ShellContent Title="{x:Static lang:Language.danh_sach_theo_doi_title}" ContentTemplate="{DataTemplate views:FollowUpListPage}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf0ca;" Size="18"/>

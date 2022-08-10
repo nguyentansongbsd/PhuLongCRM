@@ -18,29 +18,54 @@ namespace PhuLongCRM.Droid.Services
 {
     public class PDFSaveAndOpen : IPDFSaveAndOpen
     {
-        [Obsolete]
         public async Task SaveAndView(string fileName, string contentType, MemoryStream stream, PDFOpenContext context)
         {
             string exception = string.Empty;
             string root = null;
 
-            if (ContextCompat.CheckSelfPermission(Forms.Context, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+            if (ContextCompat.CheckSelfPermission(Android.App.Application.Context, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
             {
-                ActivityCompat.RequestPermissions((Activity)Forms.Context, new String[] { Manifest.Permission.WriteExternalStorage }, 1);
+                ActivityCompat.RequestPermissions((Activity)Android.App.Application.Context, new String[] { Manifest.Permission.WriteExternalStorage }, 1);
             }
 
-            string filePath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads);
-            string fullName = Path.Combine(filePath, fileName);
+            //if (Android.OS.Environment.IsExternalStorageEmulated)
+            //{
+            //    root = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+            //}
+            //else
+            //    root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
 
-            // If the file exist on device delete it
-            if (System.IO.File.Exists(fullName))
-            {
-                // Note: In the second run of this method, the file exists
-                System.IO.File.Delete(fullName);
-            }
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            Java.IO.File dir = new Java.IO.File(sdCard.AbsolutePath + "/" + "Download/PDFFiles");
+            dir.Mkdirs();
 
-            // Write bytes on "My documents"
-            System.IO.File.WriteAllBytes(fullName, stream.ToArray());
+            var filePath = Path.Combine(dir.Path, fileName);
+
+            //using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+            //{
+            //    int length = data.Length;
+            //    fs.Write(data, 0, length);
+            //}
+
+            //Java.IO.File myDir = new Java.IO.File(root + "/PDFFiles");
+            //myDir.Mkdir();
+
+            //Java.IO.File file = new Java.IO.File(myDir, fileName);
+
+            //if (file.Exists()) file.Delete();
+
+            //try
+            //{
+            //    FileOutputStream outs = new FileOutputStream(file);
+            //    outs.Write(stream.ToArray());
+
+            //    outs.Flush();
+            //    outs.Close();
+            //}
+            //catch (Exception e)
+            //{
+            //    exception = e.ToString();
+            //}
 
             //if (file.Exists() && contentType != "application/html")
             //{
@@ -48,17 +73,17 @@ namespace PhuLongCRM.Droid.Services
             //    string mimeType = MimeTypeMap.Singleton.GetMimeTypeFromExtension(extension);
             //    Intent intent = new Intent(Intent.ActionView);
             //    intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
-            //    Android.Net.Uri path = FileProvider.GetUriForFile(Forms.Context, Android.App.Application.Context.PackageName + ".provider", file);
+            //    Android.Net.Uri path = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".provider", file);
             //    intent.SetDataAndType(path, mimeType);
             //    intent.AddFlags(ActivityFlags.GrantReadUriPermission);
 
             //    switch (context)
             //    {
             //        case PDFOpenContext.InApp:
-            //            Forms.Context.StartActivity(intent);
+            //            Android.App.Application.Context.StartActivity(intent);
             //            break;
             //        case PDFOpenContext.ChooseApp:
-            //            Forms.Context.StartActivity(Intent.CreateChooser(intent, "Choose App"));
+            //            Android.App.Application.Context.StartActivity(Intent.CreateChooser(intent, "Choose App"));
             //            break;
             //        default:
             //            break;
