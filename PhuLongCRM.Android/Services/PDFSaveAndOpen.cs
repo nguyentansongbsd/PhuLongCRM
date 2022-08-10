@@ -18,66 +18,77 @@ namespace PhuLongCRM.Droid.Services
 {
     public class PDFSaveAndOpen : IPDFSaveAndOpen
     {
-        [Obsolete]
         public async Task SaveAndView(string fileName, string contentType, MemoryStream stream, PDFOpenContext context)
         {
             string exception = string.Empty;
             string root = null;
 
-            if (ContextCompat.CheckSelfPermission(Forms.Context, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+            if (ContextCompat.CheckSelfPermission(Android.App.Application.Context, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
             {
-                ActivityCompat.RequestPermissions((Activity)Forms.Context, new String[] { Manifest.Permission.WriteExternalStorage }, 1);
+                ActivityCompat.RequestPermissions((Activity)Android.App.Application.Context, new String[] { Manifest.Permission.WriteExternalStorage }, 1);
             }
 
-            if (Android.OS.Environment.IsExternalStorageEmulated)
-            {
-                root = Android.OS.Environment.ExternalStorageDirectory.ToString();
-            }
-            else
-                root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            //if (Android.OS.Environment.IsExternalStorageEmulated)
+            //{
+            //    root = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+            //}
+            //else
+            //    root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
 
-            Java.IO.File myDir = new Java.IO.File(root + "/PDFFiles");
-            myDir.Mkdir();
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            Java.IO.File dir = new Java.IO.File(sdCard.AbsolutePath + "/" + "Download/PDFFiles");
+            dir.Mkdirs();
 
-            Java.IO.File file = new Java.IO.File(myDir, fileName);
+            var filePath = Path.Combine(dir.Path, fileName);
 
-            if (file.Exists()) file.Delete();
+            //using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+            //{
+            //    int length = data.Length;
+            //    fs.Write(data, 0, length);
+            //}
 
-            try
-            {
-                FileOutputStream outs = new FileOutputStream(file);
-                outs.Write(stream.ToArray());
+            //Java.IO.File myDir = new Java.IO.File(root + "/PDFFiles");
+            //myDir.Mkdir();
 
-                outs.Flush();
-                outs.Close();
-            }
-            catch (Exception e)
-            {
-                exception = e.ToString();
-            }
+            //Java.IO.File file = new Java.IO.File(myDir, fileName);
 
-            if (file.Exists() && contentType != "application/html")
-            {
-                string extension = MimeTypeMap.GetFileExtensionFromUrl(Android.Net.Uri.FromFile(file).ToString());
-                string mimeType = MimeTypeMap.Singleton.GetMimeTypeFromExtension(extension);
-                Intent intent = new Intent(Intent.ActionView);
-                intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
-                Android.Net.Uri path = FileProvider.GetUriForFile(Forms.Context, Android.App.Application.Context.PackageName + ".provider", file);
-                intent.SetDataAndType(path, mimeType);
-                intent.AddFlags(ActivityFlags.GrantReadUriPermission);
+            //if (file.Exists()) file.Delete();
 
-                switch (context)
-                {
-                    case PDFOpenContext.InApp:
-                        Forms.Context.StartActivity(intent);
-                        break;
-                    case PDFOpenContext.ChooseApp:
-                        Forms.Context.StartActivity(Intent.CreateChooser(intent, "Choose App"));
-                        break;
-                    default:
-                        break;
-                }
-            }
+            //try
+            //{
+            //    FileOutputStream outs = new FileOutputStream(file);
+            //    outs.Write(stream.ToArray());
+
+            //    outs.Flush();
+            //    outs.Close();
+            //}
+            //catch (Exception e)
+            //{
+            //    exception = e.ToString();
+            //}
+
+            //if (file.Exists() && contentType != "application/html")
+            //{
+            //    string extension = MimeTypeMap.GetFileExtensionFromUrl(Android.Net.Uri.FromFile(file).ToString());
+            //    string mimeType = MimeTypeMap.Singleton.GetMimeTypeFromExtension(extension);
+            //    Intent intent = new Intent(Intent.ActionView);
+            //    intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+            //    Android.Net.Uri path = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".provider", file);
+            //    intent.SetDataAndType(path, mimeType);
+            //    intent.AddFlags(ActivityFlags.GrantReadUriPermission);
+
+            //    switch (context)
+            //    {
+            //        case PDFOpenContext.InApp:
+            //            Android.App.Application.Context.StartActivity(intent);
+            //            break;
+            //        case PDFOpenContext.ChooseApp:
+            //            Android.App.Application.Context.StartActivity(Intent.CreateChooser(intent, "Choose App"));
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
         }
     }
 }

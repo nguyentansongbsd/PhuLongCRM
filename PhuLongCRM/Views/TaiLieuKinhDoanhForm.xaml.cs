@@ -76,7 +76,8 @@ namespace PhuLongCRM.Views
             byte[] arr = Convert.FromBase64String(body);
             MemoryStream stream = new MemoryStream(arr);
 
-            await Xamarin.Forms.DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(Guid.NewGuid() + ".pdf", "application/pdf", stream, PDFOpenContext.ChooseApp);
+            //await Xamarin.Forms.DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(fileName, "application/pdf", stream, PDFOpenContext.ChooseApp);
+            DependencyService.Get<IFileService>().SaveFile(fileName, arr, stream);
 
             return "a";
         }
