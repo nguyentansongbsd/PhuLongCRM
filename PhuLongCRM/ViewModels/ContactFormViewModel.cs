@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.Helper;
+﻿using Newtonsoft.Json;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
 using System;
@@ -196,6 +197,7 @@ namespace PhuLongCRM.ViewModels
                 address = singleContact.bsd_permanentaddress1,
                 lineaddress = singleContact.bsd_permanentaddress
             };
+            await GetImageCMND();        
         }
 
         public async Task<Boolean> updateContact(ContactFormModel contact)
@@ -487,6 +489,91 @@ namespace PhuLongCRM.ViewModels
             else
             {
                 return true;
+            }
+        }
+        public async Task PostCMND()
+        {
+            GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+            var client = BsdHttpClient.Instance();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+
+            var frontImage_name = singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
+            var behindImage_name = singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
+            var folder = singleContact.bsd_fullname + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
+
+            var url_front = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{folder}/{frontImage_name}:/content";
+            if (singleContact.bsd_mattruoccmnd_base64 != null)
+            {
+                byte[] arrByteFront = Convert.FromBase64String(singleContact.bsd_mattruoccmnd_base64);
+                HttpContent content = new ByteArrayContent(arrByteFront);
+                using (var response1 = client.PutAsync(url_front, content))
+                {
+                    if (response1.Result != null)
+                    {
+                    }
+                }
+            }
+
+            var url_behind = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{folder}/{behindImage_name}:/content";
+            if (singleContact.bsd_matsaucmnd_base64 != null)
+            {
+                byte[] arrByteFront = Convert.FromBase64String(singleContact.bsd_matsaucmnd_base64);
+                HttpContent content = new ByteArrayContent(arrByteFront);
+                using (var response1 = client.PutAsync(url_behind, content))
+                {
+                    if (response1.Result != null)
+                    {
+                    }
+                }
+            }
+        }
+        public async Task GetImageCMND()
+        {
+            if (this.singleContact.contactid != Guid.Empty)
+            {
+                var frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
+                var behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
+
+                GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+                var client = BsdHttpClient.Instance();
+                string name_folder = singleContact.bsd_fullname + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{name_folder}:/children?$select=name,eTag";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
+
+                    if (result == null || result.value.Any() == false)
+                    {
+                        return;
+                    }
+                    List<SharePointGraphModel> list = result.value;
+                    foreach (var item in list)
+                    {
+                        if (item.name.Contains("_front.jpg"))
+                        {
+                            var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            if (urlVideo != null)
+                            {
+                                string url = urlVideo.value.SingleOrDefault().large.url;
+                                singleContact.bsd_mattruoccmnd_source = url;
+                            }
+                        }
+                        else if (item.name.Contains("_behind.jpg"))
+                        {
+                            var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            if (urlVideo != null)
+                            {
+                                string url = urlVideo.value.SingleOrDefault().large.url;
+                                singleContact.bsd_matsaucmnd_source = url;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

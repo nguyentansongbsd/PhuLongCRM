@@ -3417,4 +3417,13 @@
 	<data name="ngay_sua_doi" xml:space="preserve">
     <value>Ngày sửa đổi</value>
   </data>
+	<data name="thong_tin_du_an_canh_tranh_title" xml:space="preserve">
+		<value>Thông Tin Dự Án Cạnh Tranh</value>
+	</data>
+	<data name="diem_manh" xml:space="preserve">
+    <value>Điểm mạnh</value>
+  </data>
+	<data name="diem_yeu" xml:space="preserve">
+    <value>Điểm yếu</value>
+  </data>
 </root>

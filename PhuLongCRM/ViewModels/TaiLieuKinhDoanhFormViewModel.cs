@@ -81,7 +81,11 @@ namespace PhuLongCRM.ViewModels
         {
             string fetch = $@"<fetch version='1.0' count='3' page='{PageThongTinUnit}' output-format='xml-platform' mapping='logical' distinct='false'>
                             <entity name='product'>
-                                <all-attributes/>
+                                <attribute name='productid' />
+                                <attribute name='bsd_units' />
+                                <attribute name='name' />
+                                <attribute name='productnumber' />
+                                <attribute name='statuscode' />
                                 <link-entity name='productsalesliterature' intersect='true' visible='false' to='productid' from='productid'>
                                     <link-entity name='salesliterature' to='salesliteratureid' from='salesliteratureid' alias='ab'>
                                         <filter type='and'>

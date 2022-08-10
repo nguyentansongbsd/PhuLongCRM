@@ -262,7 +262,7 @@ namespace PhuLongCRM.Views
         private void ItemHopDong_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var itemId = (Guid)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             ContractDetailPage contractDetail = new ContractDetailPage(itemId);
             contractDetail.OnCompleted = async (isSuccess) =>
             {
