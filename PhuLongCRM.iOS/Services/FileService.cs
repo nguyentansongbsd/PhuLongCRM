@@ -14,7 +14,7 @@ namespace PhuLongCRM.iOS.Services
             //throw new NotImplementedException();
         }
 
-        public string SaveFile(string name, byte[] data, string location = "Download/PhuLong")
+        public string SaveFile(string name, byte[] data, MemoryStream stream, string location = "Download/PhuLong")
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var path = Path.Combine(documentsPath, name.Replace(' ', '_'));
