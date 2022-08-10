@@ -63,7 +63,7 @@
 
                     <StackLayout x:Name="ThongTin" IsVisible="true">
                         <!--DATAGRID THONG TIN UNIT   -->
-                        <telerikPrimitives:RadExpander IsExpanded="False" AutomationId="masterCardExpander">
+                        <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander">
                             <telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
                                     <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_san_pham_title}"/>
@@ -74,54 +74,26 @@
                                     <StackLayout BindableLayout.ItemsSource="{Binding list_thongtinunit}" BackgroundColor="#dddddd" Spacing="1">
                                         <BindableLayout.EmptyViewTemplate>
                                             <DataTemplate>
-                                                <Label Text="Không có dữ liệu" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
                                             </DataTemplate>
                                         </BindableLayout.EmptyViewTemplate>
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <StackLayout BackgroundColor="White" Padding="10,5">
-                                                    <Grid ColumnDefinitions="*,Auto">
-                                                        <Label Grid.Column="0" Text="{Binding bsd_projectname}" TextColor="#333333" FontAttributes="Bold" FontSize="16"/>
-                                                        <Label Grid.Column="1" Text="{Binding createdonformat}" FontSize="15" TextColor="Gray"/>
+                                                <StackLayout BackgroundColor="White" Padding="15,10" Spacing="5">
+                                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1" Grid.Column="0">
+                                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
+                                                            <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                                        </telerikPrimitives:RadBorder>
+                                                        <Label Grid.Column="1" Text="{Binding name}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                     </Grid>
-                                                    <Label FontSize="16">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="Mã Units: " TextColor="#555555"/>
-                                                                <Span Text="{Binding name}" TextColor="#333333"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                    <Label FontSize="16">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="Mã Units(SAMS): " TextColor="#555555"/>
-                                                                <Span Text="{Binding bsd_unitscodesams}" TextColor="#333333"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                    <Label FontSize="16">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="Trạng Thái: " TextColor="#555555"/>
-                                                                <Span Text="{Binding statuscodevalue}" TextColor="#333333"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                    <Label FontSize="16">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="Mô Tả: " TextColor="#555555"/>
-                                                                <Span Text="{Binding description}" TextColor="#333333"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
+                                                    <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding bsd_projectname}" LineBreakMode="NoWrap"/>
+                                                    <controls:FieldListViewItem Title="{x:Static lang:Language.ma}" Text="{Binding productnumber}" TextColor="Gray"/>
                                                 </StackLayout>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </StackLayout>
                                     <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
-                                    <Button Text="Xem thêm" Clicked="ShowMoreThongTinUnit_Clicked" IsVisible="{Binding ShowMoreThongTinUnit}" Margin="0,10" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
+                                    <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreThongTinUnit_Clicked" IsVisible="{Binding ShowMoreThongTinUnit}" Margin="0,10" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
                                 </StackLayout>
                             </telerikPrimitives:RadExpander.Content>
                         </telerikPrimitives:RadExpander>
@@ -130,7 +102,7 @@
                         <telerikPrimitives:RadExpander IsExpanded="False" AutomationId="masterCardExpander">
                             <telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                    <Label Style="{StaticResource ExpanderHeadingText}" Text="Thông Tin Dự Án Cạnh Tranh"/>
+                                    <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_du_an_canh_tranh_title}"/>
                                 </telerikPrimitives:ExpanderHeader>
                             </telerikPrimitives:RadExpander.Header>
                             <telerikPrimitives:RadExpander.Content>
@@ -138,46 +110,24 @@
                                     <StackLayout BindableLayout.ItemsSource="{Binding list_thongtinduancanhtranh}" BackgroundColor="#dddddd" Spacing="1">
                                         <BindableLayout.EmptyViewTemplate>
                                             <DataTemplate>
-                                                <Label Text="Không có dữ liệu" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
                                             </DataTemplate>
                                         </BindableLayout.EmptyViewTemplate>
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <StackLayout BackgroundColor="White" Padding="10,5">
+                                                <StackLayout BackgroundColor="White" Padding="15,10" Spacing="5">
                                                     <Grid ColumnDefinitions="*,Auto">
-                                                        <Label Grid.Column="0" Text="{Binding name}" TextColor="#333333" FontAttributes="Bold" FontSize="16"/>
+                                                        <Label Grid.Column="0" Text="{Binding name}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                         <Label Grid.Column="1" Text="{Binding createdonformat}" FontSize="15" TextColor="Gray"/>
                                                     </Grid>
-                                                    <Label FontSize="16">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="Website: " TextColor="#555555"/>
-                                                                <Span Text="{Binding websiteurl}" TextColor="#333333"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                    <Label FontSize="16">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="Điểm Mạnh: " TextColor="#555555"/>
-                                                                <Span Text="{Binding strengths}" TextColor="#333333"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                    <Label FontSize="16">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="Điểm Yếu: " TextColor="#555555"/>
-                                                                <Span Text="{Binding weaknesses}" TextColor="#333333"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
+                                                    <controls:FieldListViewItem Title="{x:Static lang:Language.diem_manh}" Text="{Binding strengths}"/>
+                                                    <controls:FieldListViewItem Title="{x:Static lang:Language.diem_yeu}" Text="{Binding weaknesses}"/>
                                                 </StackLayout>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </StackLayout>
                                     <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
-                                    <Button Text="Xem thêm" Clicked="ShowMoreDuAnCanhTranh_Clicked" IsVisible="{Binding ShowMoreDuAnCanhTranh}" Margin="0,10" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
+                                    <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreDuAnCanhTranh_Clicked" IsVisible="{Binding ShowMoreDuAnCanhTranh}" Margin="0,10" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
                                 </StackLayout>
                             </telerikPrimitives:RadExpander.Content>
                         </telerikPrimitives:RadExpander>

@@ -3417,4 +3417,13 @@
 	<data name="ngay_sua_doi" xml:space="preserve">
     <value>Modified on</value>
   </data>
+	<data name="thong_tin_du_an_canh_tranh_title" xml:space="preserve">
+		<value>Competitors Information</value>
+	</data>
+	<data name="diem_manh" xml:space="preserve">
+    <value>Strength</value>
+  </data>
+	<data name="diem_yeu" xml:space="preserve">
+    <value>Weakness</value>
+  </data>
 </root>
