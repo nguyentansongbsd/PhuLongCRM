@@ -6,7 +6,7 @@ namespace PhuLongCRM.IServices
 {
 	public interface IPDFSaveAndOpen
 	{
-		Task SaveAndView(string fileName, String contentType, MemoryStream stream, PDFOpenContext context);
+		Task SaveAndView(string fileName, byte[] data, string location = "Download/PDFFiles");
 	}
 	public enum PDFOpenContext
 	{

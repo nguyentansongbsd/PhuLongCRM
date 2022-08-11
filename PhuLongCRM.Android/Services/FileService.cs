@@ -78,8 +78,6 @@ namespace PhuLongCRM.Droid.Services
                 Intent intent = new Intent(Intent.ActionView);
                 intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
                 Android.Net.Uri path = support.Content.FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".fileprovider", file);
-
-                //Android.Net.Uri path = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".provider", file);
                 intent.SetDataAndType(path, mimeType);
                 intent.AddFlags(ActivityFlags.GrantReadUriPermission);
 

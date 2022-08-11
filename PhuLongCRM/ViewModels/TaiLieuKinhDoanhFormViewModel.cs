@@ -148,6 +148,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='modifiedon' />
                                     <attribute name='salesliteratureitemid' />
                                     <attribute name='filename' />
+                                    <attribute name='documentbody' />
                                     <order attribute='modifiedon' descending='false' />
                                     <filter type='and'>
                                         <condition attribute='salesliteratureid' operator='eq' value='{salesliteratureid}' />

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              Title="{x:Static lang:Language.tai_lieu_kinh_doanh}"
@@ -143,17 +143,18 @@
                             </BindableLayout.EmptyViewTemplate>
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout BackgroundColor="White" Padding="15,10" Spacing="10">
-                                        <Grid ColumnDefinitions="*,Auto">
+                                    <StackLayout BackgroundColor="White" Padding="15,10" >
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PdfFile_Tapped" CommandParameter="{Binding .}"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
                                             <Label Grid.Column="0" Text="{Binding title_label}" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" FontSize="16"/>
-                                            <Label Grid.Column="1" Text="&#xf56d;" FontFamily="FontAwesomeSolid" FontSize="16" TextColor="#444444" Padding="5">
-                                                <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DownloadFileButton_Cliked" CommandParameter="{Binding .}"/>
-                                                </Label.GestureRecognizers>
-                                            </Label>
+                                            <Label Grid.Column="1" Text="{Binding modifiedon,StringFormat='{0:dd/MM/yyyy}'}" FontSize="15" TextColor="#666666" Padding="5"/>
                                         </Grid>
-                                        <controls:FieldListViewItem Title="{x:Static lang:Language.ten_tep}" Text="{Binding filename}" LineBreakMode="NoWrap"/>
-                                        <controls:FieldListViewItem Title="{x:Static lang:Language.ngay_sua_doi}" Text="{Binding modifiedon}"/>
+                                        <StackLayout BackgroundColor="White" Orientation="Horizontal" Spacing="10" >
+                                            <Label Text="&#xf1c1;" FontFamily="FontAwesomeSolid" FontSize="18" TextColor="Red" VerticalOptions="Start"/>
+                                            <Label Text="{Binding filename}" FontSize="13" TextColor="#444444" VerticalOptions="Center"/>
+                                        </StackLayout>
                                     </StackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

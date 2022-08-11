@@ -1,13 +1,4 @@
-﻿//using System;
-//using System.IO;
-//using System.Runtime.CompilerServices;
-//using System.Threading.Tasks;
-//using PhuLongCRM.iOS.Services;
-//using PhuLongCRM.IServices;
-//using QuickLook;
-//using UIKit;
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.IO;
 using Xamarin.Forms;
@@ -22,13 +13,14 @@ namespace PhuLongCRM.iOS.Services
 {
 	public class PDFSaveAndOpen : IPDFSaveAndOpen
 	{
-        public async Task SaveAndView(string fileName, string contentType, MemoryStream stream, PDFOpenContext context)
+        public async Task SaveAndView(string fileName, byte[] data, string location = "Download/PDFFiles")
         {
             //Get the root path in iOS device.
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string filePath = Path.Combine(path, fileName);
 
             //Create a file and write the stream into it.
+            MemoryStream stream = new MemoryStream(data);
             FileStream fileStream = File.Open(filePath, FileMode.Create);
             stream.Position = 0;
             stream.CopyTo(fileStream);

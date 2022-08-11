@@ -46,72 +46,27 @@ namespace PhuLongCRM.Views
             }
         }
         
-        public async Task<string> downloadFile_salesliteratureitem(Guid salesliteratureitemid)
+        private async void PdfFile_Tapped(object sender, System.EventArgs e)
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='salesliteratureitem'>
-                                    <attribute name='filename' />
-                                    <attribute name='documentbody' />
-                                    <order attribute='modifiedon' descending='false' />
-                                    <filter type='and'>
-                                        <condition attribute='salesliteratureitemid' operator='eq' value='{" + salesliteratureitemid + @"}' />
-                                    </filter>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<SalesLiteratureItemListModel>>("salesliteratureitems", fetch);
-            if(result == null)
+            try
             {
-                return null;
+                var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
+                var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
+
+                if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
+                {
+                    LoadingHelper.Show();
+                    var item = (SalesLiteratureItemListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+                    byte[] arr = Convert.FromBase64String(item.documentbody);
+                    await DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(item.filename, arr);
+                    LoadingHelper.Hide();
+                }
             }
-
-            var data = result.value.FirstOrDefault();
-
-            var fileName = data.filename;
-            if (data.documentbody == null)
+            catch(Exception ex)
             {
-                return null;
+                LoadingHelper.Hide();
             }
-            var body = data.documentbody;
-
-            byte[] arr = Convert.FromBase64String(body);
-            MemoryStream stream = new MemoryStream(arr);
-
-            //await Xamarin.Forms.DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(fileName, "application/pdf", stream, PDFOpenContext.ChooseApp);
-            DependencyService.Get<IFileService>().SaveFile(fileName, arr, stream);
-
-            return "a";
-        }
-
-        private async void DownloadFileButton_Cliked(object sender, System.EventArgs e)
-        {
-            var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("", "", PermissionStatus.Granted);
-            var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("", "", PermissionStatus.Granted);
-
-            var item = (SalesLiteratureItemListModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
-
-            //await Navigation.PushAsync(new ViewPDFFilePage(filepath));
-
-            //if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
-            //{
-            //    viewModel.IsBusy = true;
-            //    var item = (SalesLiteratureItemListModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-
-            //    var res = await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
-            //    if (res)
-            //    {
-            //        item.status = 1;
-            //        viewModel.list_DownLoad.Add(item);
-            //        popup_dowload_file.ItemSource = viewModel.list_DownLoad;
-            //        popup_dowload_file.focus();
-            //    }
-            //    else
-            //    {
-            //        await DisplayAlert("", "Lỗi. Vui lòng thử lại", "Ok");
-            //    }
-            //    popup_dowload_file.isTapable = true;
-            //    viewModel.IsBusy = false;
-            //}
+            
         }
 
         void ListViewFileDownloaded_Tapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
