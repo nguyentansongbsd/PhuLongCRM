@@ -2920,6 +2920,24 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Strength.
+        /// </summary>
+        internal static string diem_manh {
+            get {
+                return ResourceManager.GetString("diem_manh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weakness.
+        /// </summary>
+        internal static string diem_yeu {
+            get {
+                return ResourceManager.GetString("diem_yeu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         internal static string dien_thoai {
@@ -8460,6 +8478,15 @@ namespace PhuLongCRM.Resources {
         internal static string thong_tin_du_an {
             get {
                 return ResourceManager.GetString("thong_tin_du_an", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Competitors Information.
+        /// </summary>
+        internal static string thong_tin_du_an_canh_tranh_title {
+            get {
+                return ResourceManager.GetString("thong_tin_du_an_canh_tranh_title", resourceCulture);
             }
         }
         
