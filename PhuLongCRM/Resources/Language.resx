@@ -1384,7 +1384,7 @@
     <value>Chỉnh sửa thất bại.</value>
   </data>
 	<data name="xem_anh_mat_truoc_cmnd" xml:space="preserve">
-    <value>Xem ảnh mặt trước cmnd</value>
+    <value>Xem ảnh mặt trước CMND</value>
   </data>
 	<data name="chup_anh" xml:space="preserve">
     <value>Chụp ảnh</value>
@@ -1393,7 +1393,7 @@
     <value>Chọn ảnh từ thư viện</value>
   </data>
 	<data name="xem_anh_mat_sau_cmnd" xml:space="preserve">
-    <value>Xem ảnh mặt sau cmnd</value>
+    <value>Xem ảnh mặt sau CMND</value>
   </data>
 	<data name="bang_gia_goc_dmb" xml:space="preserve">
     <value>Bảng giá gốc (ĐMB)</value>

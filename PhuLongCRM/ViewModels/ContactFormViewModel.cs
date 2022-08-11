@@ -2,6 +2,7 @@
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using Stormlion.PhotoBrowser;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

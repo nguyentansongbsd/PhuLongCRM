@@ -326,24 +326,24 @@ namespace PhuLongCRM.Views
         public void MatTruocCMND_Tapped(object sender, System.EventArgs e)
         {
             List<OptionSet> menuItem = new List<OptionSet>();
-            if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
+            if (viewModel.singleContact.bsd_mattruoccmnd_source != null)
             {
-                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_truoc_cmnd, Val = "Front" });
+                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_truoc_cmnd, Val = "Front" ,Title="Show"});
             }
-            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Front" });
-            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Front" });
+            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Front", Title = "Take" });
+            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Front", Title = "Select" });
             this.showMenuImageCMND(menuItem);
         }
 
         private void MatSauCMND_Tapped(object sender, System.EventArgs e)
         {
             List<OptionSet> menuItem = new List<OptionSet>();
-            if (viewModel.singleContact.bsd_matsaucmnd_base64 != null)
+            if (viewModel.singleContact.bsd_matsaucmnd_source != null)
             {
-                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_sau_cmnd, Val = "Behind" });
+                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_sau_cmnd, Val = "Behind", Title = "Show" });
             }
-            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Behind" });
-            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Behind" });
+            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Behind", Title = "Take" });
+            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Behind", Title = "Select" });
             this.showMenuImageCMND(menuItem);
         }
 
@@ -363,9 +363,9 @@ namespace PhuLongCRM.Views
             byte[] arrByte;
             string base64String;
 
-            switch (item.Label)
+            switch (item.Title)
             {
-                case "Chụp ảnh":
+                case "Take":
 
                     PermissionStatus cameraStatus = await PermissionHelper.RequestCameraPermission();
                     if (cameraStatus == PermissionStatus.Granted)
@@ -392,7 +392,7 @@ namespace PhuLongCRM.Views
                     }
 
                     break;
-                case "Chọn ảnh từ thư viện":
+                case "Select":
 
                     PermissionStatus storageStatus = await PermissionHelper.RequestPhotosPermission();
                     if (storageStatus == PermissionStatus.Granted)
