@@ -26,37 +26,42 @@ namespace PhuLongCRM.Droid.Services
             dir.Mkdirs();
 
             Java.IO.File file = new Java.IO.File(dir, fileName);
-            if (file.Exists()) file.Delete();
+            if (file.Exists())
+            {
+                //file.Delete();
+                System.IO.File.Delete(file.Path);
+            }
 
-            
             try
             {
-                //var filePath = Path.Combine(dir.Path, fileName);
-                //using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
-                //{
-                //    int length = data.Length;
-                //    fs.Write(data, 0, length);
-                //}
                 MemoryStream stream = new MemoryStream(data);
                 FileOutputStream outs = new FileOutputStream(file);
                 outs.Write(stream.ToArray());
                 outs.Flush();
                 outs.Close();
+
+                string extension = MimeTypeMap.GetFileExtensionFromUrl(Android.Net.Uri.FromFile(file).ToString());
+                string mimeType = MimeTypeMap.Singleton.GetMimeTypeFromExtension(extension);
+                Intent intent = new Intent(Intent.ActionView);
+                intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+                Android.Net.Uri path = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".fileprovider", file);
+                intent.SetDataAndType(path, mimeType);
+                intent.AddFlags(ActivityFlags.GrantReadUriPermission);
+
+                Android.App.Application.Context.StartActivity(intent);
             }
             catch (Exception e)
             {
                 var a = e.ToString();
+                if (file.Exists())
+                {
+                    //file.Delete();
+                    System.IO.File.Delete(file.Path);
+                }
+
+
             }
 
-            string extension = MimeTypeMap.GetFileExtensionFromUrl(Android.Net.Uri.FromFile(file).ToString());
-            string mimeType = MimeTypeMap.Singleton.GetMimeTypeFromExtension(extension);
-            Intent intent = new Intent(Intent.ActionView);
-            intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
-            Android.Net.Uri path = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".fileprovider", file);
-            intent.SetDataAndType(path, mimeType);
-            intent.AddFlags(ActivityFlags.GrantReadUriPermission);
-
-            Android.App.Application.Context.StartActivity(intent);
         }
     }
 }
