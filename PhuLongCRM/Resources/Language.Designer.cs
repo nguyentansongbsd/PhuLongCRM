@@ -9877,7 +9877,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xem ảnh mặt sau cmnd.
+        ///   Looks up a localized string similar to Xem ảnh mặt sau CMND.
         /// </summary>
         internal static string xem_anh_mat_sau_cmnd {
             get {
@@ -9886,7 +9886,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xem ảnh mặt trước cmnd.
+        ///   Looks up a localized string similar to Xem ảnh mặt trước CMND.
         /// </summary>
         internal static string xem_anh_mat_truoc_cmnd {
             get {

@@ -114,7 +114,7 @@
                                         </telerikPrimitives:RadBorder.GestureRecognizers>
                                         <Grid>
                                             <Label Text="{x:Static lang:Language.mat_truoc_cmnd}" FontSize="15" TextColor="#444444" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                            <ffimageloading:CachedImage Source="{Binding singleContact.bsd_mattruoccmnd_source}" DownsampleWidth="500" Aspect="AspectFill" IsVisible="{Binding singleContact.bsd_mattruoccmnd_base64, Converter={StaticResource NullToHideConverter}}"/>
+                                            <ffimageloading:CachedImage Source="{Binding singleContact.bsd_mattruoccmnd_source}" DownsampleWidth="500" Aspect="AspectFill" IsVisible="{Binding singleContact.bsd_mattruoccmnd_source, Converter={StaticResource NullToHideConverter}}"/>
                                         </Grid>
                                     </telerikPrimitives:RadBorder>
                                     <telerikPrimitives:RadBorder x:Name="MatSauCMND" BorderThickness="1" BorderColor="#f1f1f1f1" CornerRadius="5" Grid.Column="1">
@@ -123,7 +123,7 @@
                                         </telerikPrimitives:RadBorder.GestureRecognizers>
                                         <Grid>
                                             <Label Text="{x:Static lang:Language.mat_sau_cmnd}" FontSize="15" TextColor="#444444" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                            <ffimageloading:CachedImage Source="{Binding singleContact.bsd_matsaucmnd_source}" DownsampleWidth="500" Aspect="AspectFill" IsVisible="{Binding singleContact.bsd_matsaucmnd_base64, Converter={StaticResource NullToHideConverter}}"/>
+                                            <ffimageloading:CachedImage Source="{Binding singleContact.bsd_matsaucmnd_source}" DownsampleWidth="500" Aspect="AspectFill" IsVisible="{Binding singleContact.bsd_matsaucmnd_source, Converter={StaticResource NullToHideConverter}}"/>
                                         </Grid>
                                     </telerikPrimitives:RadBorder>
                                 </Grid>

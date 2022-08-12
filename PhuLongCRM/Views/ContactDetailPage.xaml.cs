@@ -25,7 +25,6 @@ namespace PhuLongCRM.Views
         public static OptionSet FromCustomer = null;
         private ContactDetailPageViewModel viewModel;
         private Guid Id;
-        private PhotoBrowser photoBrowser;
         public ContactDetailPage(Guid contactId)
         {
             InitializeComponent();

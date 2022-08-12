@@ -168,9 +168,6 @@ namespace PhuLongCRM.ViewModels
         {
             if (this.singleContact.contactid != Guid.Empty)
             {
-                var frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
-                var behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
-
                 GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
                 var client = BsdHttpClient.Instance();
                 string name_folder = singleContact.bsd_fullname + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
@@ -192,28 +189,31 @@ namespace PhuLongCRM.ViewModels
                     ShowCMND = true;
                     Photos = new List<Photo>();
                     List<SharePointGraphModel> list = result.value;
-                    foreach(var item in list)
+                    string url_front = null;
+                    string url_behind = null;
+                    foreach (var item in list)
                     {
                         if (item.name.Contains("_front.jpg"))
                         {
                             var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
-                            if (urlVideo != null)
-                            {
-                                string url = urlVideo.value.SingleOrDefault().large.url;
-                                Photos.Add(new Photo { URL = url });
-                                singleContact.bsd_mattruoccmnd_source = url;
-                            }
+                            url_front = urlVideo.value.SingleOrDefault().large.url;
                         }
                         else if (item.name.Contains("_behind.jpg"))
                         {
                             var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
-                            if (urlVideo != null)
-                            {
-                                string url = urlVideo.value.SingleOrDefault().large.url;
-                                Photos.Add(new Photo { URL = url });
-                                singleContact.bsd_matsaucmnd_source = url;
-                            }
+                            url_behind = urlVideo.value.SingleOrDefault().large.url;
+                                
                         }
+                    }
+                    if (url_front != null)
+                    {
+                        Photos.Add(new Photo { URL = url_front });
+                        singleContact.bsd_mattruoccmnd_source = url_front;
+                    }
+                    if (url_behind != null)
+                    {
+                        Photos.Add(new Photo { URL = url_behind });
+                        singleContact.bsd_matsaucmnd_source = url_behind;
                     }
                 }
             }
