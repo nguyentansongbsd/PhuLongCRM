@@ -8,6 +8,11 @@ using application = Android.App;
 using PhuLongCRM.Droid.Services;
 using PhuLongCRM.Controls;
 using System.Threading.Tasks;
+using Android.Webkit;
+using Android.Support.V4.Content;
+using PhuLongCRM.IServices;
+using Java.IO;
+using System;
 
 [assembly: Dependency(typeof(FileService))]
 namespace PhuLongCRM.Droid.Services
@@ -25,7 +30,7 @@ namespace PhuLongCRM.Droid.Services
             intent.AddFlags(ActivityFlags.GrantReadUriPermission);
             intent.AddFlags(ActivityFlags.ClearWhenTaskReset);
 
-            var fileLocation = new Java.IO.File(Environment.ExternalStorageDirectory + "/" + location, fileName);
+            var fileLocation = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory + "/" + location, fileName);
 
             var fileURI = support.Content.FileProvider.GetUriForFile(
               application.Application.Context, "PhuLongCRM.Android.fileprovider", fileLocation);
@@ -35,20 +40,69 @@ namespace PhuLongCRM.Droid.Services
             application.Application.Context.StartActivity(intent);
         }
 
-        public string SaveFile(string name, byte[] data, string location = "Download/PhuLong")
+        public string SaveFile(string name, byte[] data, MemoryStream stream, string location = "Download/PDFFiles")
         {
-            Java.IO.File sdCard = Environment.ExternalStorageDirectory;
-            Java.IO.File dir = new Java.IO.File(sdCard.AbsolutePath + "/" + location);
-            dir.Mkdirs();
-
-            var filePath = Path.Combine(dir.Path, name);
-
-            using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+            try
             {
-                int length = data.Length;
-                fs.Write(data, 0, length);
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                Java.IO.File dir = new Java.IO.File(sdCard.AbsolutePath + "/" + location);
+                dir.Mkdirs();
+
+                var filePath = Path.Combine(dir.Path, name);
+
+                using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+                {
+                    int length = data.Length;
+                    fs.Write(data, 0, length);
+                }
+
+                Java.IO.File file = new Java.IO.File(dir, name);
+
+                if (file.Exists()) file.Delete();
+
+                try
+                {
+                    FileOutputStream outs = new FileOutputStream(file);
+                    outs.Write(stream.ToArray());
+
+                    outs.Flush();
+                    outs.Close();
+                }
+                catch (Exception e)
+                {
+                    var a = e.ToString();
+                }
+
+                string extension = MimeTypeMap.GetFileExtensionFromUrl(Android.Net.Uri.FromFile(file).ToString());
+                string mimeType = MimeTypeMap.Singleton.GetMimeTypeFromExtension(extension);
+                Intent intent = new Intent(Intent.ActionView);
+                intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+                Android.Net.Uri path = support.Content.FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".fileprovider", file);
+
+                //Android.Net.Uri path = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".provider", file);
+                intent.SetDataAndType(path, mimeType);
+                intent.AddFlags(ActivityFlags.GrantReadUriPermission);
+
+                Android.App.Application.Context.StartActivity(intent);
+                return filePath;
             }
-            return filePath;
+            catch(Exception ex)
+            {
+                return null;
+            }
+            
+            //switch (context)
+            //{
+            //    case PDFOpenContext.InApp:
+            //        Android.App.Application.Context.StartActivity(intent);
+            //        break;
+            //    case PDFOpenContext.ChooseApp:
+            //        Android.App.Application.Context.StartActivity(Intent.CreateChooser(intent, "Choose App"));
+            //        break;
+            //    default:
+            //        break;
+            //}
+            
         }
 
 

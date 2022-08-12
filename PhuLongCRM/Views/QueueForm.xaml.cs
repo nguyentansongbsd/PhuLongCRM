@@ -173,6 +173,7 @@ namespace PhuLongCRM.Views
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                 if (UnitInfo.NeedToRefreshQueue.HasValue) UnitInfo.NeedToRefreshQueue = true;
                 if (Dashboard.NeedToRefreshQueue.HasValue) Dashboard.NeedToRefreshQueue = true;
+                if (QueueList.NeedToRefresh.HasValue) QueueList.NeedToRefresh = true;
                 await Navigation.PopAsync();       
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
