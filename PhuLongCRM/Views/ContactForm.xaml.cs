@@ -213,17 +213,18 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycardnumber, 9))
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycard, 12))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && !StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycardnumber, 9))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && !StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycard, 12))
-            {
-                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
-                return;
-            }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && !StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_passport, 8))
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
