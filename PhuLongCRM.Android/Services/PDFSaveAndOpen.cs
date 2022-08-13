@@ -52,13 +52,23 @@ namespace PhuLongCRM.Droid.Services
             }
             catch (Exception e)
             {
-                var a = e.ToString();
-                if (file.Exists())
-                {
-                    //file.Delete();
-                    System.IO.File.Delete(file.Path);
-                }
+                //if (ContextCompat.CheckSelfPermission(Android.App.Application.Context, Manifest.Permission.ManageExternalStorage) != Permission.Granted)
+                //{
+                //    ActivityCompat.RequestPermissions((Activity)Forms.Context, new String[] { Manifest.Permission.ManageExternalStorage }, 1);
+                //}
 
+                //var a = e.ToString();
+                //if (file.Exists())
+                //{
+                //    //file.Delete();
+                //    System.IO.File.Delete(file.Path);
+                //}
+                //Intent intent = new Intent();
+                //intent.SetFlags(ActivityFlags.NewTask);
+                //intent.SetAction(Android.Provider.Settings.ActionManageAppAllFilesAccessPermission);
+                //Android.Net.Uri uri = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".fileprovider", file);
+                //intent.SetData(uri);
+                //Android.App.Application.Context.StartActivity(intent);
 
             }
 
