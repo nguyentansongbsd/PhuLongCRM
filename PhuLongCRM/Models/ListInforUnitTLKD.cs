@@ -9,6 +9,7 @@ namespace PhuLongCRM.Models
 {
     public class ListInforUnitTLKD 
     {
+        public Guid productid { get; set; }
         public string name { get; set; }
         public string bsd_projectname { get; set; }
         public string description { get; set; }
