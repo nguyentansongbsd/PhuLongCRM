@@ -80,6 +80,10 @@
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
                                                 <StackLayout BackgroundColor="White" Padding="15,10" Spacing="5">
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToUnit_Tapped" CommandParameter="{Binding productid}"/>
+
+                                                    </StackLayout.GestureRecognizers>
                                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="1" Grid.Column="0">
                                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                             <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>

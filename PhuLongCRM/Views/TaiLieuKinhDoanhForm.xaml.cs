@@ -11,6 +11,7 @@ using System.IO;
 using PhuLongCRM.Controls;
 using Xamarin.Essentials;
 using PhuLongCRM.IServices;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Views
 {
@@ -178,6 +179,25 @@ namespace PhuLongCRM.Views
                 popup_dowload_file.isTapable = true;
             }
             viewModel.IsBusy = false;
+        }
+
+        private async void GoToUnit_Tapped(object sender, EventArgs e)
+        {
+            var id = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            LoadingHelper.Show();
+            UnitInfo unit = new UnitInfo(id);
+            unit.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(unit);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
     }
 }
