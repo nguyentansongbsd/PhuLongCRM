@@ -429,6 +429,11 @@
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout BindableLayout.ItemsSource="{Binding PdfFiles}" Spacing="1" BackgroundColor="#F1F1F1">
+                                        <BindableLayout.EmptyViewTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                            </DataTemplate>
+                                        </BindableLayout.EmptyViewTemplate>
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
                                                 <StackLayout BackgroundColor="White" Padding="25,8" Orientation="Horizontal">

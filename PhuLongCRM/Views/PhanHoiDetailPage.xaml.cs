@@ -214,7 +214,8 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.Case != null)
             {
-                if(!string.IsNullOrWhiteSpace(viewModel.Case.accountId))
+                LoadingHelper.Show();
+                if (!string.IsNullOrWhiteSpace(viewModel.Case.accountId))
                 {
                     AccountDetailPage newPage = new AccountDetailPage(Guid.Parse(viewModel.Case.accountId));
                     newPage.OnCompleted = async (OnCompleted) =>

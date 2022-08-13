@@ -186,7 +186,6 @@ namespace PhuLongCRM.ViewModels
                         ShowCMND = false;
                         return;
                     }
-                    ShowCMND = true;
                     Photos = new List<Photo>();
                     List<SharePointGraphModel> list = result.value;
                     string url_front = null;
@@ -197,12 +196,13 @@ namespace PhuLongCRM.ViewModels
                         {
                             var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
                             url_front = urlVideo.value.SingleOrDefault().large.url;
+                            ShowCMND = true;
                         }
                         else if (item.name.Contains("_behind.jpg"))
                         {
                             var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
                             url_behind = urlVideo.value.SingleOrDefault().large.url;
-                                
+                            ShowCMND = true;
                         }
                     }
                     if (url_front != null)
