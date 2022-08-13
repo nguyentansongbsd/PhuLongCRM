@@ -19,7 +19,6 @@ namespace PhuLongCRM.Views
     public partial class TaiLieuKinhDoanhForm : ContentPage
     {
         public Action<bool> CheckTaiLieuKinhDoanh;
-        
         public TaiLieuKinhDoanhFormViewModel viewModel;
 
         public TaiLieuKinhDoanhForm(Guid literatureid)
@@ -32,11 +31,8 @@ namespace PhuLongCRM.Views
 
         private async void Init()
         {
-            await viewModel.loadData();
-            await viewModel.loadUnit();
-            await viewModel.loadDoiThuCanhTranh();
-            viewModel.IsBusy = false;
-
+            await Task.WhenAll(viewModel.loadData(), viewModel.loadUnit(), viewModel.loadDoiThuCanhTranh());
+            
             if (viewModel.TaiLieuKinhDoanh != null)
             {
                 CheckTaiLieuKinhDoanh(true);
@@ -51,9 +47,11 @@ namespace PhuLongCRM.Views
         {
             try
             {
-                var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
-                var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
-
+                if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() != PermissionStatus.Granted)
+                {
+                    var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
+                    var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
+                }
                 if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
                 {
                     LoadingHelper.Show();
@@ -70,77 +68,28 @@ namespace PhuLongCRM.Views
             
         }
 
-        void ListViewFileDownloaded_Tapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
-        {
-            SalesLiteratureItemListModel item = e.Item as SalesLiteratureItemListModel;
-            this.popup_dowload_file.SelectedItem = null;
-            //DisplayAlert("", item.filename, "OK");
-            if (item.status == 1)
-            {
-                try
-                {
-                    DependencyService.Get<IFileService>().OpenFile(item.filename);
-                }
-                catch
-                {
-                    DisplayAlert("", "Ứng dụng không được hỗ trợ. Không thể mở file", "OK");
-                }
-            }
-            else
-            {
-                
-            }
-        }
-
-        protected override bool OnBackButtonPressed()
-        {
-            if (this.popup_dowload_file.IsVisible)
-            {
-                this.popup_dowload_file.unFocus();
-                return true;
-            }
-
-            return base.OnBackButtonPressed();
-        }
-
         private async void ShowMoreThongTinUnit_Clicked(object sender,EventArgs e)
         {
-            viewModel.IsBusy = true;
+            LoadingHelper.Show();
             viewModel.PageThongTinUnit++;
             await viewModel.loadUnit();
-            viewModel.IsBusy = false;
+            LoadingHelper.Hide();
         }
 
         private async void ShowMoreDuAnCanhTranh_Clicked(object sender,EventArgs e)
         {
-            viewModel.IsBusy = true;
+            LoadingHelper.Show();
             viewModel.PageDuAnCanhTranh++;
             await viewModel.loadDoiThuCanhTranh();
-            viewModel.IsBusy = false;
+            LoadingHelper.Hide();
         }
 
         private async void ShowMoreTaiLieu_Clicked(object sender, EventArgs e)
         {
-            viewModel.IsBusy = true;
+            LoadingHelper.Show();
             viewModel.PageTaiLieu++;
             await viewModel.loadAllSalesLiteratureIten();
-            viewModel.IsBusy = false;
-        }
-
-        private async void ShowFileDownLoad_Tapped(object sender,EventArgs e)
-        {
-            viewModel.IsBusy = true;
-            if (viewModel.list_DownLoad.Count ==0)
-            {
-                await DisplayAlert("", "Chưa có file nào đươc tải", "Ok");
-            }
-            else
-            {
-                popup_dowload_file.focus();
-                popup_dowload_file.isTapable = true;
-            }
-
-            viewModel.IsBusy = false;
+            LoadingHelper.Hide();
         }
 
         private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
@@ -166,22 +115,7 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
-        {
-            viewModel.IsBusy = true;
-            if (viewModel.list_DownLoad.Count == 0)
-            {
-                await DisplayAlert("", "Chưa có file nào đươc tải", "Ok");
-            }
-            else
-            {
-                popup_dowload_file.focus();
-                popup_dowload_file.isTapable = true;
-            }
-            viewModel.IsBusy = false;
-        }
-
-        private async void GoToUnit_Tapped(object sender, EventArgs e)
+        private void GoToUnit_Tapped(object sender, EventArgs e)
         {
             var id = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             LoadingHelper.Show();

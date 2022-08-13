@@ -166,27 +166,8 @@
                         <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
                         <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreTaiLieu_Clicked" IsVisible="{Binding ShowMoreTaiLieu}" Margin="0,10" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
                     </StackLayout>
-
                 </StackLayout>
             </ScrollView>
-
-            <controls:MyListViewMenu x:Name="popup_dowload_file" IsVisible="false" Title="Danh Sách Tệp Tải Xuống"  isTapable="false" ItemTapped="ListViewFileDownloaded_Tapped" >
-                <controls:MyListViewMenu.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="20,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                <Label Text="{Binding filename}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
-                                <Label Text="{Binding statusLabel}" VerticalTextAlignment="Center" TextColor="{Binding statusColor}" HorizontalOptions="End" VerticalOptions="Center" HeightRequest="50"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </controls:MyListViewMenu.ItemTemplate>
-            </controls:MyListViewMenu>
-
-            <controls:ModalContentView IsVisible="{Binding IsBusy}">
-                <ActivityIndicator IsRunning="True" Color="Red" VerticalOptions="Center" HorizontalOptions="Center" />
-            </controls:ModalContentView>
-
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
