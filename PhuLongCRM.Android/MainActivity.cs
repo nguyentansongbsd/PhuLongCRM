@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -9,6 +8,8 @@ using Android.OS;
 using Xamarin.Forms;
 using PhuLongCRM.IServices;
 using Android.Support.V7.App;
+using Android.Support.Design.Widget;
+using Android.Content;
 
 namespace PhuLongCRM.Droid
 {

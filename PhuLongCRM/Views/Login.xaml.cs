@@ -339,7 +339,9 @@ namespace PhuLongCRM.Views
         private void ChangedLanguage()
         {
             lblUserName.Text = Language.ten_dang_nhap;
+            entryUserName.Placeholder = Language.ten_dang_nhap;
             lblPassword.Text = Language.mat_khau;
+            entryPassword.Placeholder = Language.mat_khau;
             lbRemember.Text = Language.ghi_nho_dang_nhap;
             lbfogotPassword.Text = Language.quen_mat_khau;
             btnLogin.Text = Language.dang_nhap;
