@@ -19,7 +19,7 @@ namespace PhuLongCRM.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Build.Tasks.StronglyTypedResourceBuilder", "15.1.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Language_en {
+    public class Language_en {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -33,7 +33,7 @@ namespace PhuLongCRM.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PhuLongCRM.Resources.Language.en", typeof(Language_en).Assembly);
@@ -48,7 +48,7 @@ namespace PhuLongCRM.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -432,6 +432,15 @@ namespace PhuLongCRM.Resources {
         internal static string ca_nhan {
             get {
                 return ResourceManager.GetString("ca_nhan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting.
+        /// </summary>
+        internal static string cai_dat {
+            get {
+                return ResourceManager.GetString("cai_dat", resourceCulture);
             }
         }
         
@@ -6957,6 +6966,15 @@ namespace PhuLongCRM.Resources {
         internal static string phong_thuy {
             get {
                 return ResourceManager.GetString("phong_thuy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PhuLongCRM need permission to manage all files..
+        /// </summary>
+        internal static string phulongcrm_can_quyen_quan_ly_tat_ca_cac_tep {
+            get {
+                return ResourceManager.GetString("phulongcrm_can_quyen_quan_ly_tat_ca_cac_tep", resourceCulture);
             }
         }
         

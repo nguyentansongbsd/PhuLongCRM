@@ -13,6 +13,7 @@ using Xamarin.Forms;
 using PhuLongCRM.IServices;
 using PhuLongCRM.Droid.Services;
 using Android.Support.Design.Widget;
+using PhuLongCRM.Resources;
 
 [assembly: Dependency(typeof(PDFSaveAndOpen))]
 namespace PhuLongCRM.Droid.Services
@@ -28,7 +29,6 @@ namespace PhuLongCRM.Droid.Services
             Java.IO.File file = new Java.IO.File(dir, fileName);
             if (file.Exists())
             {
-                //file.Delete();
                 System.IO.File.Delete(file.Path);
             }
 
@@ -52,23 +52,32 @@ namespace PhuLongCRM.Droid.Services
             }
             catch (Exception e)
             {
-                //if (ContextCompat.CheckSelfPermission(Android.App.Application.Context, Manifest.Permission.ManageExternalStorage) != Permission.Granted)
-                //{
-                //    ActivityCompat.RequestPermissions((Activity)Forms.Context, new String[] { Manifest.Permission.ManageExternalStorage }, 1);
-                //}
+                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.R)
+                {
+                    if (!Android.OS.Environment.IsExternalStorageManager)
+                    {
+                        bool accept = await Xamarin.Forms.Shell.Current.DisplayAlert("", Language.ResourceManager.GetString("phulongcrm_can_quyen_quan_ly_tat_ca_cac_tep",Language.Culture), Language.ResourceManager.GetString("cai_dat", Language.Culture), Language.ResourceManager.GetString("huy",Language.Culture));
 
-                //var a = e.ToString();
-                //if (file.Exists())
-                //{
-                //    //file.Delete();
-                //    System.IO.File.Delete(file.Path);
-                //}
-                //Intent intent = new Intent();
-                //intent.SetFlags(ActivityFlags.NewTask);
-                //intent.SetAction(Android.Provider.Settings.ActionManageAppAllFilesAccessPermission);
-                //Android.Net.Uri uri = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".fileprovider", file);
-                //intent.SetData(uri);
-                //Android.App.Application.Context.StartActivity(intent);
+                        if (accept)
+                        {
+                            try
+                            {
+                                Android.Net.Uri uri = Android.Net.Uri.Parse("package:" + Android.App.Application.Context.ApplicationInfo.PackageName);
+                                Intent intent = new Intent(Android.Provider.Settings.ActionManageAppAllFilesAccessPermission);
+                                intent.SetData(uri);
+                                intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+                                Android.App.Application.Context.StartActivity(intent);
+                            }
+                            catch (Exception ex)
+                            {
+                                Intent intent = new Intent();
+                                intent.SetAction(Android.Provider.Settings.ActionManageAppAllFilesAccessPermission);
+                                intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+                                Android.App.Application.Context.StartActivity(intent);
+                            }
+                        }
+                    }
+                }
 
             }
 

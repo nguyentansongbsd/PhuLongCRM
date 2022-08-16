@@ -3426,4 +3426,10 @@
 	<data name="diem_yeu" xml:space="preserve">
     <value>Điểm yếu</value>
   </data>
+  <data name="cai_dat" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="phulongcrm_can_quyen_quan_ly_tat_ca_cac_tep" xml:space="preserve">
+    <value>PhuLongCRM cần quyền quản lý tất cả các tệp.</value>
+  </data>
 </root>
