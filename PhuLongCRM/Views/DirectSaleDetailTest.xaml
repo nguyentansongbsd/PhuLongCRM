@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhuLongCRM.Views.DirectSaleDetailTest"
+             xmlns:lang="clr-namespace:PhuLongCRM.Resources" 
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" xmlns:controls="clr-namespace:PhuLongCRM.Controls"
+             Title="{x:Static lang:Language.gio_hang}">
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="statusCodeUnit">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="0" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" BackgroundColor="{StaticResource NavigationPrimary}" Padding="0,0,0,1">
+                    <StackLayout x:Name="stackBlocks" BindableLayout.ItemsSource="{Binding DirectSaleResult}" HorizontalOptions="Fill" Spacing="10" Orientation="Horizontal" Padding="10" BackgroundColor="White">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <telerikPrimitives:RadBorder Style="{StaticResource rabBorder_Blocks}" >
+                                    <telerikPrimitives:RadBorder.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Block_Tapped" CommandParameter="{Binding}" />
+                                    </telerikPrimitives:RadBorder.GestureRecognizers>
+                                    <Label Style="{StaticResource Lb_Block}" TextColor="#B3B3B3" FontSize="15">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} ({1})">
+                                                <Binding Path="name" />
+                                                <Binding Path="sumQty" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </telerikPrimitives:RadBorder>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+
+                <CollectionView ItemsSource="{Binding Floors}" Grid.Row="2" RemainingItemsThresholdReached="CollectionView_RemainingItemsThresholdReached">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <telerikPrimitives:RadBorder CornerRadius="12" BorderColor="Transparent" BorderThickness="0" BackgroundColor="#F9F9F9" Padding="0,10">
+                                <!--<telerikPrimitives:RadBorder.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ItemFloor_Tapped" CommandParameter="{Binding bsd_floorid}"/>
+                                    </telerikPrimitives:RadBorder.GestureRecognizers>-->
+                                <StackLayout>
+                                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" Margin="10">
+                                        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="12" FontSize="16" FontAttributes="Bold" TextColor="#333333">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} {1} ({2})">
+                                                    <Binding Source="{x:Static lang:Language.tang}" />
+                                                    <Binding Path="name" />
+                                                    <Binding Path="sumQty" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+
+                                        <Label TextType="Html" Grid.Row="1" Grid.Column="0">
+                                            <![CDATA[
+    <div style=" display: flex;">
+      <div
+        style="
+          background-color: red;
+          padding: 10px;
+          height: 50px;
+          width: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 10px;
+        "
+      >
+        0
+      </div>
+      <div
+        style="
+          background-color: blue;
+          padding: 10px;
+          height: 50px;
+          width: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 10px;
+        "
+      >
+        100
+      </div>
+    </div>
+
+    ]]>
+                                        </Label>
+                                    </Grid>
+                                </StackLayout>
+                            </telerikPrimitives:RadBorder>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                
+
+
+                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*,*,*" Margin="20" RowSpacing="15" ColumnSpacing="20">
+                    <Label x:Name="test" Grid.Row="0" Grid.Column="0" Text="{Binding Block.NumChuanBiInBlock}" BackgroundColor="#F1C50D" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="1"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Block.NumSanSangInBlock}" BackgroundColor="#2FCC71" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="2"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Block.NumBookingInBlock}" BackgroundColor="#00CED1" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="3"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="0" Grid.Column="3" Text="{Binding Block.NumGiuChoInBlock}" BackgroundColor="#04A8F4" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="4"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Block.NumDatCocInBlock}" BackgroundColor="#14A184" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="5"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Block.NumDongYChuyenCoInBlock}" BackgroundColor="#8F44AD" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="6"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Block.NumDaDuTienCocInBlock}" BackgroundColor="#e67e22" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="7"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding Block.NumOptionInBlock}" BackgroundColor="#808080" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="8"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="2" Grid.Column="0" Text="{Binding Block.NumThanhToanDot1InBlock}" BackgroundColor="#808080" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="9"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Block.NumSignedDAInBlock}" BackgroundColor="#A0DB8E" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="10"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="2" Grid.Column="2" Text="{Binding Block.NumQualifiedInBlock}" BackgroundColor="#6897BB" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="11"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="2" Grid.Column="3" Text="{Binding Block.NumDaBanInBlock}" BackgroundColor="#BF3A2B" Style="{StaticResource statusCodeUnit}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="12"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Grid>
+            <controls:PopupHover x:Name="PopupHover" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
