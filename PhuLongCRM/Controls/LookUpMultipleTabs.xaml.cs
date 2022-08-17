@@ -382,7 +382,9 @@ namespace PhuLongCRM.Controls
                     <attribute name='contactid' alias='Val' />
                     <attribute name='fullname' alias='Label' />
                     <attribute name='mobilephone' alias='SDT' />
-                    <attribute name='bsd_identitycardnumber' alias='CMND' />bsd_identitycardnumberid
+                    <attribute name='bsd_identitycardnumber' alias='CMND' />
+                    <attribute name='bsd_identitycard' alias='CCCD' />
+                    <attribute name='bsd_customercode' alias='CustomerCode'/>
                     <attribute name='bsd_passport' alias='HC' />
                     <order attribute='fullname' descending='false' />                   
                     <filter type='and'>
@@ -428,6 +430,7 @@ namespace PhuLongCRM.Controls
                                 <attribute name='fullname' alias='Label' />
                                 <attribute name='leadid' alias='Val' />
                                 <attribute name='mobilephone' alias='SDT' />
+                                <attribute name='bsd_customercode' alias='CustomerCode'/>
                                 <attribute name='bsd_identitycardnumberid' alias='CMND' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
@@ -468,6 +471,7 @@ namespace PhuLongCRM.Controls
                                 <attribute name='name' alias='Label'/>
                                 <attribute name='accountid' alias='Val'/>
                                 <attribute name='telephone1' alias='SDT'/>
+                                <attribute name='bsd_customercode' alias='CustomerCode'/>
                                 <attribute name='bsd_registrationcode' alias='SoGPKD'/>
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
