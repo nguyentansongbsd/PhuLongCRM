@@ -3432,4 +3432,31 @@
   <data name="phulongcrm_can_quyen_quan_ly_tat_ca_cac_tep" xml:space="preserve">
     <value>PhuLongCRM need permission to manage all files.</value>
   </data>
+  <data name="vui_long_cap_nhat_ma_khach_hang_de_tao_ma_qr" xml:space="preserve">
+    <value>Please update customer code to generate QR code.</value>
+  </data>
+  <data name="so_dat_coc_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Deposits made this month.</value>
+  </data>
+  <data name="so_giu_cho_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Queues created this month.</value>
+  </data>
+  <data name="so_hop_dong_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Number of contracts created this month.</value>
+  </data>
+  <data name="so_san_pham_da_ban_trong_thang_nay" xml:space="preserve">
+    <value>Number of units sold this month.</value>
+  </data>
+  <data name="tong_tien_co_the_nhan_trong_thang_nay" xml:space="preserve">
+    <value>Total amount can receive this month.</value>
+  </data>
+  <data name="tong_tien_da_nhan_trong_thang_nay" xml:space="preserve">
+    <value>Total amount received this month.</value>
+  </data>
+  <data name="bieu_do_hoa_hong_4_thang_gan_nhat" xml:space="preserve">
+    <value>Rose chart for the last 4 months.</value>
+  </data>
+  <data name="bieu_do_giao_dich_4_thang_gan_nhat" xml:space="preserve">
+    <value>Chart of transactions in the last 4 months.</value>
+  </data>
 </root>

@@ -3432,4 +3432,31 @@
   <data name="phulongcrm_can_quyen_quan_ly_tat_ca_cac_tep" xml:space="preserve">
     <value>PhuLongCRM cần quyền quản lý tất cả các tệp.</value>
   </data>
+  <data name="vui_long_cap_nhat_ma_khach_hang_de_tao_ma_qr" xml:space="preserve">
+    <value>Vui lòng cập nhật mã khách hàng để tạo mã QR.</value>
+  </data>
+  <data name="so_dat_coc_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Số đặt cọc đã tạo trong tháng này.</value>
+  </data>
+  <data name="so_giu_cho_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Số giữ chỗ đã tạo trong tháng này.</value>
+  </data>
+  <data name="so_hop_dong_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Số hợp đồng đã tạo trong tháng này.</value>
+  </data>
+  <data name="so_san_pham_da_ban_trong_thang_nay" xml:space="preserve">
+    <value>Số sản phẩm đã bán trong tháng này.</value>
+  </data>
+  <data name="tong_tien_co_the_nhan_trong_thang_nay" xml:space="preserve">
+    <value>Tổng tiền có thể nhận trong tháng này.</value>
+  </data>
+  <data name="tong_tien_da_nhan_trong_thang_nay" xml:space="preserve">
+    <value>Tổng tiền đã nhận trong tháng này.</value>
+  </data>
+  <data name="bieu_do_hoa_hong_4_thang_gan_nhat" xml:space="preserve">
+    <value>Biểu đồ hoa hồng 4 tháng gần nhất.</value>
+  </data>
+  <data name="bieu_do_giao_dich_4_thang_gan_nhat" xml:space="preserve">
+    <value>Biểu đồ các giao dịch 4 tháng gần nhất.</value>
+  </data>
 </root>

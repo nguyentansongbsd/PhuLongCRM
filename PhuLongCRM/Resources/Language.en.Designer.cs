@@ -19,7 +19,7 @@ namespace PhuLongCRM.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Build.Tasks.StronglyTypedResourceBuilder", "15.1.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Language_en {
+    internal class Language_en {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -33,7 +33,7 @@ namespace PhuLongCRM.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PhuLongCRM.Resources.Language.en", typeof(Language_en).Assembly);
@@ -48,7 +48,7 @@ namespace PhuLongCRM.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -387,6 +387,24 @@ namespace PhuLongCRM.Resources {
         internal static string bien_do_chenh_lech_dien_tich {
             get {
                 return ResourceManager.GetString("bien_do_chenh_lech_dien_tich", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart of transactions in the last 4 months..
+        /// </summary>
+        internal static string bieu_do_giao_dich_4_thang_gan_nhat {
+            get {
+                return ResourceManager.GetString("bieu_do_giao_dich_4_thang_gan_nhat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rose chart for the last 4 months..
+        /// </summary>
+        internal static string bieu_do_hoa_hong_4_thang_gan_nhat {
+            get {
+                return ResourceManager.GetString("bieu_do_hoa_hong_4_thang_gan_nhat", resourceCulture);
             }
         }
         
@@ -7312,6 +7330,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deposits made this month..
+        /// </summary>
+        internal static string so_dat_coc_da_tao_trong_thang_nay {
+            get {
+                return ResourceManager.GetString("so_dat_coc_da_tao_trong_thang_nay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile phone.
         /// </summary>
         internal static string so_dien_thoai {
@@ -7362,6 +7389,15 @@ namespace PhuLongCRM.Resources {
         internal static string so_giay_phep_kinh_doanh_da_tao_trong_du_lieu_doanh_nghiep {
             get {
                 return ResourceManager.GetString("so_giay_phep_kinh_doanh_da_tao_trong_du_lieu_doanh_nghiep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queues created this month..
+        /// </summary>
+        internal static string so_giu_cho_da_tao_trong_thang_nay {
+            get {
+                return ResourceManager.GetString("so_giu_cho_da_tao_trong_thang_nay", resourceCulture);
             }
         }
         
@@ -7420,6 +7456,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of contracts created this month..
+        /// </summary>
+        internal static string so_hop_dong_da_tao_trong_thang_nay {
+            get {
+                return ResourceManager.GetString("so_hop_dong_da_tao_trong_thang_nay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number ID.
         /// </summary>
         internal static string so_id {
@@ -7443,6 +7488,15 @@ namespace PhuLongCRM.Resources {
         internal static string so_nha_duong_phuong {
             get {
                 return ResourceManager.GetString("so_nha_duong_phuong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of units sold this month..
+        /// </summary>
+        internal static string so_san_pham_da_ban_trong_thang_nay {
+            get {
+                return ResourceManager.GetString("so_san_pham_da_ban_trong_thang_nay", resourceCulture);
             }
         }
         
@@ -8950,6 +9004,24 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total amount can receive this month..
+        /// </summary>
+        internal static string tong_tien_co_the_nhan_trong_thang_nay {
+            get {
+                return ResourceManager.GetString("tong_tien_co_the_nhan_trong_thang_nay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total amount received this month..
+        /// </summary>
+        internal static string tong_tien_da_nhan_trong_thang_nay {
+            get {
+                return ResourceManager.GetString("tong_tien_da_nhan_trong_thang_nay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Handover condition amount.
         /// </summary>
         internal static string tong_tien_dkbg {
@@ -9189,6 +9261,15 @@ namespace PhuLongCRM.Resources {
         internal static string vo_hieu_luc_mandatory_sts {
             get {
                 return ResourceManager.GetString("vo_hieu_luc_mandatory_sts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please update customer code to generate QR code..
+        /// </summary>
+        internal static string vui_long_cap_nhat_ma_khach_hang_de_tao_ma_qr {
+            get {
+                return ResourceManager.GetString("vui_long_cap_nhat_ma_khach_hang_de_tao_ma_qr", resourceCulture);
             }
         }
         

@@ -557,6 +557,12 @@ namespace PhuLongCRM.Views
 
         private async void GenerateQRCode(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_customercode))
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_cap_nhat_ma_khach_hang_de_tao_ma_qr);
+                return;
+            }
+
             LoadingHelper.Show();
             List<string> info = new List<string>();
             info.Add(viewModel.singleAccount.bsd_customercode);

@@ -39,7 +39,6 @@
             </StackLayout>
         </DataTemplate>
     </Shell.ItemTemplate>
-
     <Shell.FlyoutHeader>
         <StackLayout BackgroundColor="White" HeightRequest="130">
             <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="0" HorizontalOptions="Start" Margin="18,34,18,18">
