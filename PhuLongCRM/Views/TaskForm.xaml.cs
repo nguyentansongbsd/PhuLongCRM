@@ -101,19 +101,19 @@ namespace PhuLongCRM.Views
         }
         private void DateStart_Selected(object sender, EventArgs e)
         {
-            if (viewModel.TaskFormModel.scheduledstart.HasValue && viewModel.TaskFormModel.scheduledend.HasValue)
+            if (viewModel.TaskFormModel.scheduledstart != null && viewModel.TaskFormModel.scheduledend != null)
             {
-                if (viewModel.TaskFormModel.scheduledstart > viewModel.TaskFormModel.scheduledend || viewModel.TaskFormModel.scheduledstart == viewModel.TaskFormModel.scheduledend)
+                if (this.compareDateTime(viewModel.TaskFormModel.scheduledstart, viewModel.TaskFormModel.scheduledend) != -1)
                 {
-                    ToastMessageHelper.ShortMessage(Language.thoi_gian_bat_dau_phai_nho_hon_thoi_gian_ket_thuc);
+                    ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
                 }
             }
         }
         private void DateEnd_Selected(object sender, EventArgs e)
         {
-            if (viewModel.TaskFormModel.scheduledstart.HasValue && viewModel.TaskFormModel.scheduledend.HasValue)
+            if (viewModel.TaskFormModel.scheduledstart != null && viewModel.TaskFormModel.scheduledend != null)
             {
-                if (viewModel.TaskFormModel.scheduledstart > viewModel.TaskFormModel.scheduledend || viewModel.TaskFormModel.scheduledstart == viewModel.TaskFormModel.scheduledend)
+                if (this.compareDateTime(viewModel.TaskFormModel.scheduledstart, viewModel.TaskFormModel.scheduledend) != -1)
                 {
                     ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
                 }
@@ -157,10 +157,13 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if ((viewModel.TaskFormModel.scheduledstart.HasValue && viewModel.TaskFormModel.scheduledend.HasValue) && (viewModel.TaskFormModel.scheduledstart > viewModel.TaskFormModel.scheduledend))
+            if (viewModel.TaskFormModel.scheduledstart != null && viewModel.TaskFormModel.scheduledend != null)
             {
-                ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
-                return;
+                if (this.compareDateTime(viewModel.TaskFormModel.scheduledstart, viewModel.TaskFormModel.scheduledend) != -1)
+                {
+                    ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
+                    return;
+                }
             }
 
             LoadingHelper.Show();
@@ -212,6 +215,26 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
                 }
             }
+        }
+        private int compareDateTime(DateTime? date, DateTime? date1)
+        {
+            if (date != null && date1 != null)
+            {
+                DateTime timeStart = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, date.Value.Hour, date.Value.Minute, 0);
+                DateTime timeEnd = new DateTime(date1.Value.Year, date1.Value.Month, date1.Value.Day, date1.Value.Hour, date1.Value.Minute, 0);
+                int result = DateTime.Compare(timeStart, timeEnd);
+                if (result < 0)
+                    return -1;
+                else if (result == 0)
+                    return 0;
+                else
+                    return 1;
+            }
+            if (date == null && date1 != null)
+                return -1;
+            if (date1 == null && date != null)
+                return 1;
+            return 0;
         }
     }
 }

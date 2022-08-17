@@ -78,23 +78,40 @@ namespace PhuLongCRM.Controls
                 Grid grid = new Grid();
                 grid.BackgroundColor = Color.White; //Color.FromHex("#eeeeee");
                 //grid.Padding = new Thickness(1, 0, 0, 0);
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Star });
                 grid.Margin = new Thickness(0, 1, 0, 0);
                 grid.Padding = new Thickness(10, 5, 10, 5);
 
                 Label lb = new Label();
-                lb.TextColor = Color.FromHex("#111111");
+                lb.TextColor = (Color)App.Current.Resources["NavigationPrimary"];
                 lb.FontSize = 15;
+                lb.FontAttributes = FontAttributes.Bold;
                 lb.SetBinding(Label.TextProperty, "Label");
                 lb.BackgroundColor = Color.White;
                 lb.VerticalOptions = LayoutOptions.Center;
+                lb.LineBreakMode = LineBreakMode.TailTruncation;
                 //  lb.Padding = 10;
 
                 grid.Children.Add(lb);
-                Grid.SetColumn(lb, 0);
+                Grid.SetColumn(lb, 1);
                 Grid.SetRow(lb, 0);
 
-                if(moreInfo)
+                Label lb_code = new Label();
+                lb_code.TextColor = Color.Gray;
+                lb_code.FontSize = 15;
+                lb_code.SetBinding(Label.TextProperty, "CustomerCode");
+                // lb_code.SetBinding(Label.TextProperty, new Binding("CustomerCode") { Source = grid, StringFormat = "({0})" });
+                lb_code.BackgroundColor = Color.White;
+                lb_code.VerticalOptions = LayoutOptions.Center;
+                //  lb.Padding = 10;
+
+                grid.Children.Add(lb_code);
+                Grid.SetColumn(lb_code, 0);
+                Grid.SetRow(lb_code, 0);
+
+                if (moreInfo)
                 {
                     grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                     FieldListViewItem lb_sdt = new FieldListViewItem();
@@ -103,6 +120,7 @@ namespace PhuLongCRM.Controls
                     grid.Children.Add(lb_sdt);
                     Grid.SetColumn(lb_sdt, 0);
                     Grid.SetRow(lb_sdt, 1);
+                    Grid.SetColumnSpan(lb_sdt, 2);
 
                     grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                     FieldListViewItem lb_id = new FieldListViewItem();
@@ -111,6 +129,7 @@ namespace PhuLongCRM.Controls
                     grid.Children.Add(lb_id);
                     Grid.SetColumn(lb_id, 0);
                     Grid.SetRow(lb_id, 2);
+                    Grid.SetColumnSpan(lb_id, 2);
                 }
 
                 if (isSelect == true)

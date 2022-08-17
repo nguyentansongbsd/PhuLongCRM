@@ -170,7 +170,7 @@ namespace PhuLongCRM.ViewModels
             {
                 GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
                 var client = BsdHttpClient.Instance();
-                string name_folder = singleContact.bsd_fullname + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
+                string name_folder = StringFormatHelper.ReplaceNameContact(singleContact.bsd_fullname) + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
                 string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{name_folder}:/children?$select=name,eTag";
                 var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);

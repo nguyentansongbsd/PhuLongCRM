@@ -59,5 +59,29 @@ namespace PhuLongCRM.Helper
             }
             return false;
         }
+        public static string ReplaceNameContact(string name)
+        {
+            if(!string.IsNullOrWhiteSpace(name))
+            {
+                return name.Replace("#", "-")
+                    .Replace("%", "-")
+                    .Replace("&", "-")
+                    .Replace("*", "-")
+                    .Replace("~", "-")
+                    .Replace("+", "-")
+                    .Replace("{", "-")
+                    .Replace("}", "-")
+                    .Replace("|", "-")
+                    .Replace(":", "-")
+                    .Replace("<", "-")
+                    .Replace(".", "-")
+                    .Replace(">", "-")
+                    .Replace("/", "-")
+                    .Replace("?", "-")
+                    .Replace(@"\","-")
+                    .Replace('"', '-');
+            }
+            return null;
+        }
     }
 }
