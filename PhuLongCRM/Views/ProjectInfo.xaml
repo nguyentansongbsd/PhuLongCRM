@@ -94,7 +94,7 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView Padding="0,0,0,60" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-                <StackLayout >
+                <StackLayout>
                     <Grid RowDefinitions="Auto,120">
                         <CarouselView x:Name="carouseView" ItemsSource="{Binding Collections}" Grid.Row="0" HeightRequest="200" IsVisible="{Binding ShowCollections}">
                             <CarouselView.ItemTemplate>
@@ -166,7 +166,7 @@
                                         </controls:ExtendedFrame>
                                         <Label Text="{Binding Project.bsd_name}" Grid.Column="1" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                         <StackLayout Grid.Column="1" Grid.Row="1">
-                                            <controls:FieldListViewItem Title="{x:Static lang:Language.giu_cho_du_an}" Text="{Binding Project.bsd_queueproject_format}" TitleTextColor="#444444" TextColor="#444444" FontAttributes="None" LineBreakMode="NoWrap"/>
+                                            <controls:FieldListViewItem Title="{x:Static lang:Language.giu_cho_du_an}" Text="{Binding Project.bsd_queueproject_format}" TitleTextColor="#444444" TextColor="Red" FontAttributes="None" LineBreakMode="NoWrap"/>
                                             <controls:FieldListViewItem Title="{x:Static lang:Language.mo_hinh}" Text="{Binding ProjectType.Label}" TitleTextColor="#444444" TextColor="#444444" LineBreakMode="NoWrap"/>
                                         </StackLayout>
                                     </Grid>

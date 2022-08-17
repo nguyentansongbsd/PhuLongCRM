@@ -9,6 +9,7 @@
         <!--<mr:AbsoluteLayout Tapped="AbsoluteLayout_Tapped">
             
         </mr:AbsoluteLayout>-->
+        
         <WebView x:Name="webview" />
     </ContentPage.Content>
 </ContentPage>

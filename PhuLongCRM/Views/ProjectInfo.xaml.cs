@@ -34,37 +34,47 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
-            await Task.WhenAll(
-                viewModel.LoadData(),
-                viewModel.LoadAllCollection(),
-                viewModel.CheckEvent(),
-                viewModel.LoadThongKe(),
-                viewModel.LoadThongKeGiuCho(),
-                viewModel.LoadThongKeHopDong(),
-                viewModel.LoadThongKeBangTinhGia(),
-                viewModel.CheckPhasesLaunch()
-            );
-            if(viewModel.Project.bsd_projectslogo == null)
-            {
-                avataProject.Source = StringAvata(viewModel.ProjectName);
-            }    
-            if (viewModel.IsHasPhasesLaunch == false && viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
-            {
-                viewModel.IsShowBtnGiuCho = true;
-            }
-            else
-            {
-                viewModel.IsShowBtnGiuCho = false;
-            }
+            await viewModel.LoadData();
 
             if (viewModel.Project != null)
             {
                 viewModel.ProjectType = ProjectTypeData.GetProjectType(viewModel.Project.bsd_projecttype);
-                viewModel.PropertyUsageType = PropertyUsageTypeData.GetPropertyUsageTypeById(viewModel.Project.bsd_propertyusagetype.ToString());
+                //viewModel.PropertyUsageType = PropertyUsageTypeData.GetPropertyUsageTypeById(viewModel.Project.bsd_propertyusagetype.ToString());
                 //if (viewModel.Project.bsd_handoverconditionminimum.HasValue)
                 //{
                 //    viewModel.HandoverCoditionMinimum = HandoverCoditionMinimumData.GetHandoverCoditionMinimum(viewModel.Project.bsd_handoverconditionminimum.Value.ToString());
                 //}
+                
+                await Task.WhenAll(
+                        viewModel.LoadAllCollection(),
+                        viewModel.CheckEvent(),
+                        viewModel.LoadThongKe(),
+                        viewModel.LoadThongKeGiuCho(),
+                        viewModel.LoadThongKeHopDong(),
+                        viewModel.LoadThongKeBangTinhGia(),
+                        viewModel.CheckPhasesLaunch()
+                    );
+
+                try
+                {
+                    if (viewModel.Project.bsd_projectslogo == null)
+                    {
+                        avataProject.Source = StringAvata(viewModel.ProjectName);
+                    }
+                    if (viewModel.IsHasPhasesLaunch == false && viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
+                    {
+                        viewModel.IsShowBtnGiuCho = true;
+                    }
+                    else
+                    {
+                        viewModel.IsShowBtnGiuCho = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
                 OnCompleted?.Invoke(true);
             }
             else
@@ -271,7 +281,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            DependencyService.Get<IPdfService>().View(item.UrlPdfFile,item.PdfName);
+            DependencyService.Get<IPdfService>().View(item.UrlPdfFile, item.PdfName);
             LoadingHelper.Hide();
         }
     }

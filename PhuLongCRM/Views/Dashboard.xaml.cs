@@ -221,7 +221,7 @@ namespace PhuLongCRM.Views
         {
             try
             {
-                PopupHover.ShowHover("Số đặt cọc đã tạo trong tháng này");
+                PopupHover.ShowHover(Language.so_dat_coc_da_tao_trong_thang_nay);
             }
             catch(Exception ex)
             {
@@ -233,7 +233,7 @@ namespace PhuLongCRM.Views
         {
             try
             {
-                PopupHover.ShowHover("Số giữ chỗ đã tạo trong tháng này");
+                PopupHover.ShowHover(Language.so_giu_cho_da_tao_trong_thang_nay);
             }
             catch (Exception ex)
             {
@@ -244,7 +244,7 @@ namespace PhuLongCRM.Views
         {
             try
             {
-                PopupHover.ShowHover("Số hợp đồng đã tạo trong tháng này");
+                PopupHover.ShowHover(Language.so_hop_dong_da_tao_trong_thang_nay);
             }
             catch (Exception ex)
             {
@@ -255,7 +255,7 @@ namespace PhuLongCRM.Views
         {
             try
             {
-                PopupHover.ShowHover("Số sản phẩm đã bán trong tháng này");
+                PopupHover.ShowHover(Language.so_san_pham_da_ban_trong_thang_nay);
             }
             catch (Exception ex)
             {
@@ -266,7 +266,7 @@ namespace PhuLongCRM.Views
         {
             try
             {
-                PopupHover.ShowHover("Tổng tiền có thể nhận trong tháng này");
+                PopupHover.ShowHover(Language.tong_tien_co_the_nhan_trong_thang_nay);
             }
             catch (Exception ex)
             {
@@ -277,7 +277,7 @@ namespace PhuLongCRM.Views
         {
             try
             {
-                PopupHover.ShowHover("Tổng tiền đã nhận trong tháng này");
+                PopupHover.ShowHover(Language.tong_tien_da_nhan_trong_thang_nay);
             }
             catch (Exception ex)
             {
@@ -287,11 +287,11 @@ namespace PhuLongCRM.Views
 
         private void BieuDo_Hover_Tapped(object sender, EventArgs e)
         {
-            PopupHover.ShowHover("Biểu đồ hoa hồng 4 tháng gần nhất");
+            PopupHover.ShowHover(Language.bieu_do_hoa_hong_4_thang_gan_nhat);
         }
         private void BieuDoGiaoDich_Hover_Tapped(object sender, EventArgs e)
         {
-            PopupHover.ShowHover("Biểu đồ các giao dịch 4 tháng gần nhất");
+            PopupHover.ShowHover(Language.bieu_do_giao_dich_4_thang_gan_nhat);
         }
     }
 }
