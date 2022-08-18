@@ -37,7 +37,6 @@ namespace PhuLongCRM.Views
                 VisualStateManager.GoToState(rd, "Selected");
                 VisualStateManager.GoToState(lb, "Selected");
                 NumberUnitInBlock(viewModel.DirectSaleResult[0]);
-               await viewModel.LoadFloor();
             }
             else
             {
@@ -84,14 +83,50 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Hide();
         }
-        public void NumberUnitInBlock(DirectSaleModel block)
+        public async void NumberUnitInBlock(DirectSaleModel block)
         {
-            if (block != null)
+            if (block != null && block != viewModel.Block)
             {
+                viewModel.NumUniBlock = new Block();
                 var arrStatus = block.stringQty.Split(',');
+                viewModel.NumUniBlock.NumChuanBiInBlock = int.Parse(arrStatus[0]);
+                viewModel.NumUniBlock.NumSanSangInBlock = int.Parse(arrStatus[1]);
+                viewModel.NumUniBlock.NumBookingInBlock = int.Parse(arrStatus[2]);
+                viewModel.NumUniBlock.NumGiuChoInBlock = int.Parse(arrStatus[3]);
+                viewModel.NumUniBlock.NumDatCocInBlock = int.Parse(arrStatus[4]);
+                viewModel.NumUniBlock.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
+                viewModel.NumUniBlock.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
+                viewModel.NumUniBlock.NumOptionInBlock = int.Parse(arrStatus[7]);
+                viewModel.NumUniBlock.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
+                viewModel.NumUniBlock.NumSignedDAInBlock = int.Parse(arrStatus[9]);
+                viewModel.NumUniBlock.NumQualifiedInBlock = int.Parse(arrStatus[10]);
+                viewModel.NumUniBlock.NumDaBanInBlock = int.Parse(arrStatus[11]);
                 viewModel.Block = block;
-                
+                viewModel.Page = 0;
+                viewModel.Floors.Clear();
+                await viewModel.LoadFloor();
             }
+        }
+        private async void ItemFloor_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = sender as Grid;
+            var a = item.Children[15] as FlexLayout;
+            //int CurrentFloor = collectionFloor.Children..IndexOf(item);
+            //FlexLayout units = ((stackFloors.Children[CurrentFloor] as RadBorder).Content as StackLayout).Children[3] as FlexLayout;
+            //if (viewModel.Block.Floors[CurrentFloor].Units.Count == 0)
+            //{
+            //    var floorId = (Guid)(item.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            //    await viewModel.LoadUnitByFloor(floorId);
+            //    BindableLayout.SetItemsSource(units, viewModel.Block.Floors[CurrentFloor].Units);
+            //    SaveLoadedBlock();
+            //    units.IsVisible = !units.IsVisible;
+            //}
+            //else
+            //{
+            //    SetContentFloor(CurrentFloor);
+            //}
+            LoadingHelper.Hide();
         }
         private void NumberUnit_Tapped(object sender, EventArgs e)
         {
@@ -120,16 +155,6 @@ namespace PhuLongCRM.Views
                 PopupHover.ShowHover(Language.du_dieu_dien);
             else if (item == 12)
                 PopupHover.ShowHover(Language.da_ban);
-        }
-
-        private async void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        {
-            await viewModel.LoadFloor();
-        }
-
-        private async void CollectionView_RemainingItemsThresholdReached(object sender, EventArgs e)
-        {
-            await viewModel.LoadFloor();
         }
     }
 }
