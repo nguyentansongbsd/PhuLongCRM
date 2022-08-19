@@ -261,7 +261,7 @@
                                             <controls:FormLabelValue Text="AAAA" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>-->
                                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                                <controls:FormLabel Text="{x:Static lang:Language.giu_cho}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                                <controls:FormLabel Text="{x:Static lang:Language.giu_cho_btg}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                                 <controls:FormLabelValue Text="{Binding Reservation.queue_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}" Padding="25,10" HorizontalTextAlignment="End">
                                                     <controls:FormLabelValue.GestureRecognizers>
                                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToQueueDetail_Tapped"/>
