@@ -14,16 +14,16 @@ namespace PhuLongCRM.ViewModels
 {
     public class DirectSaleDetailTestViewModel : BaseViewModel
     {
-        private int Page = 0;
+        public int Page = 0;
 
-        private int Size = 5;
+        public int Size = 5;
         public ICommand LoadData
         {
             get => new Command(async () =>
             {
-                IsBusy = true;
+                LoadingHelper.Show();
                 await LoadFloor();
-                IsBusy = false;
+                LoadingHelper.Hide();
             });
         }
 
@@ -36,11 +36,14 @@ namespace PhuLongCRM.ViewModels
         private DirectSaleModel _block;
         public DirectSaleModel Block { get => _block; set { _block = value; OnPropertyChanged(nameof(Block)); } }
 
+        private Block _numUnitblock;
+        public Block NumUniBlock { get => _numUnitblock; set { _numUnitblock = value; OnPropertyChanged(nameof(NumUniBlock)); } }
+
         private ObservableCollection<Floor> _floors;
         public ObservableCollection<Floor> Floors { get => _floors; set { _floors = value; OnPropertyChanged(nameof(Floors)); } }
         public DirectSaleDetailTestViewModel()
         {
-            Floors = new ObservableCollection<Floor>(); 
+            Floors = new ObservableCollection<Floor>();
         }
         public async Task LoadTotalDirectSale()
         {
@@ -62,11 +65,27 @@ namespace PhuLongCRM.ViewModels
             if(Block != null && Block.listFloor != null)
             {
                 Page += 1;
-                var list = Block.listFloor.Take(Page * Size);
-                foreach(var floor in list)
+                var list = Block.listFloor.Skip(Page*Size).Take(Size);
+                foreach(var item in list)
                 {
-
-                    Floors.Add(new Floor { bsd_name = floor.name, TotalUnitInFloor = int.Parse(floor.sumQty)});
+                    Floor floor = new Floor();
+                    floor.bsd_floorid = Guid.Parse(item.ID);
+                    floor.bsd_name = item.name;
+                    var arrStatusInFloor = item.stringQty.Split(',');
+                    floor.NumChuanBiInFloor = int.Parse(arrStatusInFloor[0]);
+                    floor.NumSanSangInFloor = int.Parse(arrStatusInFloor[1]);
+                    floor.NumBookingInFloor = int.Parse(arrStatusInFloor[2]);
+                    floor.NumGiuChoInFloor = int.Parse(arrStatusInFloor[3]);
+                    floor.NumDatCocInFloor = int.Parse(arrStatusInFloor[4]);
+                    floor.NumDongYChuyenCoInFloor = int.Parse(arrStatusInFloor[5]);
+                    floor.NumDaDuTienCocInFloor = int.Parse(arrStatusInFloor[6]);
+                    floor.NumOptionInFloor = int.Parse(arrStatusInFloor[7]);
+                    floor.NumThanhToanDot1InFloor = int.Parse(arrStatusInFloor[8]);
+                    floor.NumSignedDAInFloor = int.Parse(arrStatusInFloor[9]);
+                    floor.NumQualifiedInFloor = int.Parse(arrStatusInFloor[10]);
+                    floor.NumDaBanInFloor = int.Parse(arrStatusInFloor[11]);
+                    floor.TotalUnitInFloor = int.Parse(item.sumQty);
+                    Floors.Add(floor);
                 }
             }
         }
