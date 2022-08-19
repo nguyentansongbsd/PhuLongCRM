@@ -3459,4 +3459,7 @@
   <data name="bieu_do_giao_dich_4_thang_gan_nhat" xml:space="preserve">
     <value>Biểu đồ các giao dịch 4 tháng gần nhất.</value>
   </data>
+  <data name="giu_cho_btg" xml:space="preserve">
+    <value>Giữ chỗ</value>
+  </data>
 </root>

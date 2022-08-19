@@ -3459,4 +3459,7 @@
   <data name="bieu_do_giao_dich_4_thang_gan_nhat" xml:space="preserve">
     <value>Chart of transactions in the last 4 months.</value>
   </data>
+  <data name="giu_cho_btg" xml:space="preserve">
+    <value>Queue</value>
+  </data>
 </root>

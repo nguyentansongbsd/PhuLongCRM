@@ -3739,6 +3739,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Giữ chỗ.
+        /// </summary>
+        internal static string giu_cho_btg {
+            get {
+                return ResourceManager.GetString("giu_cho_btg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giữ Chỗ.
         /// </summary>
         internal static string giu_cho_btn {

@@ -603,7 +603,7 @@ namespace PhuLongCRM.ViewModels
         {
             var model = new
             {
-                datesign = DateTime.Now.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") // DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year + " " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second,
+                datesign = DateTime.Now.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") 
             };
 
             var json = JsonConvert.SerializeObject(model);

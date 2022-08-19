@@ -3741,6 +3741,15 @@ namespace PhuLongCRM.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Queue.
         /// </summary>
+        internal static string giu_cho_btg {
+            get {
+                return ResourceManager.GetString("giu_cho_btg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queue.
+        /// </summary>
         internal static string giu_cho_btn {
             get {
                 return ResourceManager.GetString("giu_cho_btn", resourceCulture);
@@ -4765,7 +4774,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign quotation.
+        ///   Looks up a localized string similar to Sign Quotation.
         /// </summary>
         internal static string ky_bang_tinh_gia {
             get {
