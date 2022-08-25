@@ -14,9 +14,9 @@
                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseContent_Tapped"/>
                 </BoxView.GestureRecognizers>
             </BoxView>
-            <Grid VerticalOptions="CenterAndExpand" Margin="20,0">
+            <Grid VerticalOptions="CenterAndExpand" Margin="20">
                 <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="White" Padding="10">
-                    <Grid x:Name="grid_body" RowDefinitions="Auto,*" Padding="0,0,0,10">
+                    <Grid x:Name="grid_body" RowDefinitions="Auto,*">
                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
                             <Label x:Name="title" Grid.Column="0" TextColor="#666666" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                             <Label Grid.Column="1" Text="&#xf057;" FontFamily="FontAwesomeRegular" VerticalOptions="Center" FontSize="18" Padding="6" TextColor="#666666">

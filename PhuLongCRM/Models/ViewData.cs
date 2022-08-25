@@ -15,6 +15,7 @@ namespace PhuLongCRM.Models
 
         public static string GetViewByIds(string ids)
         {
+            if (string.IsNullOrWhiteSpace(ids)) return null;
             List<string> list = new List<string>();
             string[] Ids = ids.Split(',');
             foreach (var item in Ids)

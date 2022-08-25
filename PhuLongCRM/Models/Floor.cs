@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PhuLongCRM.Models
 {
-    public class Floor 
+    public class Floor : BaseViewModel
     {
         public Guid bsd_floorid { get; set; }
         public string bsd_name { get; set; }
@@ -27,5 +27,7 @@ namespace PhuLongCRM.Models
         public int NumQualifiedInFloor { get; set; }
         public int NumDaBanInFloor { get; set; }
         public int TotalUnitInFloor { get; set; }
+        private bool _iShow;
+        public bool iShow { get => _iShow; set { _iShow = value; OnPropertyChanged(nameof(iShow)); } }
     }
 }
