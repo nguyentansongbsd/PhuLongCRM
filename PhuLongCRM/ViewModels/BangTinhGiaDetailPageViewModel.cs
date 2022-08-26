@@ -585,8 +585,8 @@ namespace PhuLongCRM.ViewModels
             string path = $"/quotes({Reservation.quoteid})";
 
             IDictionary<string, object> data = new Dictionary<string, object>();
-            data["bsd_quotationprinteddate"] = DateTime.Now.ToUniversalTime();
-            data["bsd_expireddateofsigningqf"] = DateTime.Now.AddDays(this.Reservation.quotationvalidate).ToUniversalTime();
+            data["bsd_quotationprinteddate"] = DateTime.Now.Date.ToUniversalTime();
+            data["bsd_expireddateofsigningqf"] = DateTime.Now.Date.AddDays(this.Reservation.quotationvalidate).ToUniversalTime();
 
             CrmApiResponse apiResponse = await CrmHelper.PatchData(path, data);
             if (apiResponse.IsSuccess)
@@ -599,7 +599,7 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<bool> SignQuotation()
+        public async Task<CrmApiResponse> SignQuotation()
         {
             var model = new
             {
@@ -609,15 +609,7 @@ namespace PhuLongCRM.ViewModels
             var json = JsonConvert.SerializeObject(model);
 
             var apiResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})//Microsoft.Dynamics.CRM.bsd_Action_QuotationReservation_ConvertToReservation", json);
-
-            if (apiResponse.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return apiResponse;
         }
 
         public async Task<bool> UpdateQuotes(string option)
