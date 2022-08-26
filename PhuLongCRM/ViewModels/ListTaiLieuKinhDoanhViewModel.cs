@@ -23,7 +23,6 @@ namespace PhuLongCRM.ViewModels
                             <order attribute='name' descending='true' />
                             <filter type='and'>
                                 <condition attribute='name' operator='like' value='%{Keyword}%' />
-                                <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                             </filter>
                             <link-entity name='subject' from='subjectid' to='subjectid' visible='false' link-type='outer'>
                                 <attribute name='title' alias='subjecttitle'/>

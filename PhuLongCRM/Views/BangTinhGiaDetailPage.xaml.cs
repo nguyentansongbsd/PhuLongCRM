@@ -463,7 +463,8 @@ namespace PhuLongCRM.Views
             }
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
-                if (await viewModel.SignQuotation())
+                var res = await viewModel.SignQuotation();
+                if (res.IsSuccess)
                 {
                     NeedToRefresh = true;
                     OnAppearing();
@@ -482,7 +483,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.ky_bang_tinh_gia_that_bai_vui_long_thu_lai);
+                    ToastMessageHelper.ShortMessage(res.ErrorResponse.error.message);
                 }
             }
         }
