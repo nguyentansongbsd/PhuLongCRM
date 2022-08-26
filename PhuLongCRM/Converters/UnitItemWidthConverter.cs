@@ -12,7 +12,7 @@ namespace PhuLongCRM.Converters
         {
             Thickness thickness = (Thickness)value;
             var padding = thickness.Left;
-            var width = (Application.Current.MainPage.Width - (padding * 2 + 8 + 8)) / 2; // padding * 2 la tong trai va phai, 8 la tong marrign trai phai cua 1 item unit
+            var width = (Application.Current.MainPage.Width - (padding * 2 + 8 + 8 + 20)) / 2; // padding * 2 la tong trai va phai, 8 la tong marrign trai phai cua 1 item unit
             return width;
         }
 
