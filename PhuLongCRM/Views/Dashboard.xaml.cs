@@ -143,33 +143,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
 
-            if (NeedToRefreshMeet == true && viewModel.Meet.activityid != Guid.Empty)
-            {
-                LoadingHelper.Show();
-                await Task.WhenAll(
-                    viewModel.loadFromToMeet(viewModel.Meet.activityid),
-                    viewModel.loadMeet(viewModel.Meet.activityid)
-                    );
-                LoadingHelper.Hide();
-            }
-
-            if (NeedToRefreshPhoneCall == true && viewModel.PhoneCall.activityid != Guid.Empty)
-            {
-                LoadingHelper.Show();
-                await Task.WhenAll(
-                    viewModel.loadPhoneCall(viewModel.PhoneCall.activityid),
-                    viewModel.loadFromTo(viewModel.PhoneCall.activityid)
-                    );
-                LoadingHelper.Hide();
-            }
-
-            if (NeedToRefreshTask == true && viewModel.TaskDetail.activityid != Guid.Empty)
-            {
-                LoadingHelper.Show();
-                await viewModel.loadTask(viewModel.TaskDetail.activityid);
-                LoadingHelper.Hide();
-            }
-
             if (NeedToRefreshTask == true || NeedToRefreshPhoneCall == true || NeedToRefreshMeet == true)
             {
                 LoadingHelper.Show();

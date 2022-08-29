@@ -171,8 +171,8 @@
 
                         <Label Text="{x:Static lang:Language.khach_hang_tiem_nang}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>
                         <controls:ExtendedFrame Padding="0" Margin="14,6">
-                            <Grid ColumnDefinitions="*,*" RowDefinitions="200" Padding="8">
-                                <telerikChart:RadPieChart Grid.Column="0">
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="60,60,60" Padding="8">
+                                <telerikChart:RadPieChart Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
                                     <telerikChart:RadPieChart.Series>
                                         <telerikChart:DonutSeries InnerRadiusFactor="0.7" ValueBinding="Value" ItemsSource="{Binding LeadsChart}" />
                                     </telerikChart:RadPieChart.Series>
@@ -186,31 +186,33 @@
                                         </telerikChart:ChartPalette>
                                     </telerikChart:RadPieChart.Palette>
                                 </telerikChart:RadPieChart>
-                                <StackLayout Grid.Column="1" Spacing="28" VerticalOptions="Center">
-                                    <StackLayout Orientation="Horizontal" Spacing="8" Padding="0,4">
-                                        <Label Text="{Binding numKHMoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#2C95F6" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        <Label Text="{x:Static lang:Language.khach_hang_moi}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal" Spacing="8" >
-                                        <Label Text="{Binding numKHDaChuyenDoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#F6E22D" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        <Label Text="{x:Static lang:Language.da_chuyen_doi}" FontSize="15" TextColor="#333333" VerticalOptions="Center"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal" Spacing="8">
-                                        <Label Text="{Binding numKHKhongChuyenDoi}" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#932CF6" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        <Label Text="{x:Static lang:Language.khong_chuyen_doi}" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
-                                    </StackLayout>
-                                </StackLayout>
+
+                                <Grid Grid.Column="1" Grid.Row="0" VerticalOptions="Center" ColumnDefinitions="30,*">
+                                    <Label Text="{Binding numKHMoi}" Grid.Column="0" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#2C95F6" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.khach_hang_moi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1" Grid.Row="1" VerticalOptions="Center" ColumnDefinitions="30,*">
+                                    <Label Text="{Binding numKHDaChuyenDoi}" Grid.Column="0" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#F6E22D" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.da_chuyen_doi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1" Grid.Row="2" VerticalOptions="Center" ColumnDefinitions="30,*">
+                                    <Label Text="{Binding numKHKhongChuyenDoi}" Grid.Column="0" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#932CF6" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                    <Label Text="{x:Static lang:Language.khong_chuyen_doi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
+                                </Grid>
                             </Grid>
                         </controls:ExtendedFrame>
 
-                        <StackLayout Orientation="Horizontal" Padding="14,14,14,8">
-                            <Label Text="{x:Static lang:Language.cong_viec_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
-                            <Label Text="{Binding Source={x:Static lang:Language.xem_them},StringFormat='{0} >>'}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
+                        <Grid Padding="14,14,14,8" ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="{x:Static lang:Language.cong_viec_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
+                            <Label Grid.Column="1" Text="{Binding Source={x:Static lang:Language.xem_them},StringFormat='{0} >>'}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ShowMore_Tapped"/>
                                 </Label.GestureRecognizers>
                             </Label>
-                        </StackLayout>
+                        </Grid>
+                           
                         <StackLayout x:Name="stTaskList" BindableLayout.ItemsSource="{Binding Activities}" Padding="14" Spacing="8">
                             <BindableLayout.EmptyView>
                                 <Label Text="{x:Static lang:Language.hom_nay_khong_co_cong_vec}" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>

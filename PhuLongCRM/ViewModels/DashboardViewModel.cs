@@ -50,13 +50,6 @@ namespace PhuLongCRM.ViewModels
         private int _numKHKhongChuyenDoi;
         public int numKHKhongChuyenDoi { get => _numKHKhongChuyenDoi; set { _numKHKhongChuyenDoi = value; OnPropertyChanged(nameof(numKHKhongChuyenDoi)); } }
 
-        private PhoneCellModel _phoneCall;
-        public PhoneCellModel PhoneCall { get => _phoneCall; set { _phoneCall = value; OnPropertyChanged(nameof(PhoneCall)); } }
-        private TaskFormModel _taskDetail;
-        public TaskFormModel TaskDetail { get => _taskDetail; set { _taskDetail = value; OnPropertyChanged(nameof(TaskDetail)); } }
-        private MeetingModel _meet;
-        public MeetingModel Meet { get => _meet; set { _meet = value; OnPropertyChanged(nameof(Meet)); } }
-
         #region Hoat dong
         private StatusCodeModel _activityStatusCode;
         public StatusCodeModel ActivityStatusCode { get => _activityStatusCode; set { _activityStatusCode = value; OnPropertyChanged(nameof(ActivityStatusCode)); } }
@@ -80,6 +73,7 @@ namespace PhuLongCRM.ViewModels
         public DateTime second_Month { get; set; }
         public DateTime third_Month { get; set; }
         public DateTime fourth_Month { get; set; }
+        private List<DateTime> four_Month { get; set; }
         // tổng tiền hoa đồng format
         private string _totalCommission;
         public string TotalCommission { get => _totalCommission; set { _totalCommission = value; OnPropertyChanged(nameof(TotalCommission)); } }
@@ -103,10 +97,11 @@ namespace PhuLongCRM.ViewModels
             second_Month = dateAfter.AddMonths(1);
             third_Month = second_Month.AddMonths(1);
             fourth_Month = dateBefor;
-
-            PhoneCall = new PhoneCellModel();
-            TaskDetail = new TaskFormModel();
-            Meet = new MeetingModel();
+            four_Month = new List<DateTime>();
+            four_Month.Add(first_Month);
+            four_Month.Add(second_Month);
+            four_Month.Add(third_Month);
+            four_Month.Add(fourth_Month);
         }
 
         public async Task LoadCommissionTransactions()
@@ -221,10 +216,10 @@ namespace PhuLongCRM.ViewModels
         }
         public async Task LoadQueueFourMonths()
         {
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                     <entity name='opportunity'>
-                                        <attribute name='bsd_bookingtime' alias='Date'/>
-                                        <attribute name='opportunityid' alias='Id' />
+                                        <attribute name='bsd_bookingtime' groupby='true' alias='group' dategrouping='month'/>
+                                        <attribute name='opportunityid' aggregate='count' alias='count' />
                                             <filter type='and'>
                                                 <condition attribute='bsd_bookingtime' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                                 <condition attribute='statuscode' operator='in'>
@@ -235,32 +230,46 @@ namespace PhuLongCRM.ViewModels
                                             </filter>
                                     </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("opportunities", fetchXml);
-            if (result == null) return;
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("opportunities", fetchXml);
+            if (result == null || result.value.Count == 0) return;
 
-            var countQueueFr = result.value.Where(x => x.Date.ToLocalTime().Month == first_Month.Month).Count();
-            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countQueueFr };
+            foreach (var time in four_Month)
+            {
+                int count = 0;
+                foreach (var item in result.value)
+                {
+                    if (item.group == time.Month.ToString())
+                    {
+                        count = item.count;
+                        break;
+                    }
+                }
+                DataMonthQueue.Add(new ChartModel() { Category = time.ToString("MM/yyyy"), Value = count });
+                if (time.Month == dateBefor.Month)
+                    numQueue = count;
+            }
+           // List<CountChartModel> abc = new List<CountChartModel>();
+           // abc.Add(new CountChartModel { group = "5" });
+           // abc.Add(new CountChartModel { group = "6" });
+           // abc.Add(new CountChartModel { group = "7" });
+           // abc.Add(new CountChartModel { group = "8" });
 
-            var countQueueSe = result.value.Where(x => x.Date.ToLocalTime().Month == second_Month.Month).Count();
-            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countQueueSe };
+           // foreach (var item in result.value)
+           // {
+           //     abc.Add(item);
+           // }
 
-            var countQueueTh = result.value.Where(x => x.Date.ToLocalTime().Month == third_Month.Month).Count();
-            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countQueueTh };
+           //var anm =  abc.GroupBy(x => x.group)
+           //   .Select(x => (group: x.Key, count: x.Sum(p => p.count))
+           //   ).ToList();
 
-            var countQueueFo = this.numQueue = result.value.Where(x => x.Date.ToLocalTime().Month == fourth_Month.Month).Count();
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countQueueFo };
-
-            this.DataMonthQueue.Add(chartFirstMonth);
-            this.DataMonthQueue.Add(chartSecondMonth);
-            this.DataMonthQueue.Add(chartThirdMonth);
-            this.DataMonthQueue.Add(chartFourthMonth);
         }
         public async Task LoadQuoteFourMonths()
         {
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                   <entity name='quote'>
-                                    <attribute name='bsd_deposittime' alias='Date' />
-                                    <attribute name='quoteid' alias='Id' />
+                                    <attribute name='bsd_deposittime' groupby='true' alias='group' dategrouping='month' />
+                                    <attribute name='quoteid' aggregate='count' alias='count'/>
                                     <filter type='and'>
                                       <condition attribute='statuscode' operator='in'>
                                         <value>3</value>
@@ -272,33 +281,32 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("quotes", fetchXml);
-            if (result == null) return;
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("quotes", fetchXml);
+            if (result == null || result.value.Count == 0) return;
 
-            var countQuoteFr = result.value.Where(x => x.Date.ToLocalTime().Month == first_Month.Month).Count();
-            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countQuoteFr };
-
-            var countQuoteSe = result.value.Where(x => x.Date.ToLocalTime().Month == second_Month.Month).Count();
-            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countQuoteSe };
-
-            var countQuoteTh = result.value.Where(x => x.Date.ToLocalTime().Month == third_Month.Month).Count();
-            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countQuoteTh };
-
-            var countQuoteFo = this.numQuote = result.value.Where(x => x.Date.ToLocalTime().Month == fourth_Month.Month).Count();
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countQuoteFo };
-
-            this.DataMonthQuote.Add(chartFirstMonth);
-            this.DataMonthQuote.Add(chartSecondMonth);
-            this.DataMonthQuote.Add(chartThirdMonth);
-            this.DataMonthQuote.Add(chartFourthMonth);
+            foreach (var time in four_Month)
+            {
+                int count = 0;
+                foreach (var item in result.value)
+                {
+                    if (item.group == time.Month.ToString())
+                    {
+                        count = item.count;
+                        break;
+                    }
+                }
+                DataMonthQuote.Add(new ChartModel() { Category = time.ToString("MM/yyyy"), Value = count });
+                if (time.Month == dateBefor.Month)
+                    numQuote = count;
+            }
         }
         public async Task LoadOptionEntryFourMonths()
         {
             // ngoại trừ các sts Terminated , 1st Installment, Option, Qualify, Signed D.A
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                   <entity name='salesorder'>
-                                    <attribute name='createdon' alias='Date'/>
-                                    <attribute name='quoteid' alias='Id'/>
+                                    <attribute name='salesorderid' aggregate='count' alias='count'/>
+                                    <attribute name='createdon' groupby='true' alias='group' dategrouping='month'/>
                                     <filter type='and'>
                                       <condition attribute='statuscode' operator='not-in'>
                                         <value>100000006</value>
@@ -312,33 +320,31 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("salesorders", fetchXml);
-            if (result == null) return;
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("salesorders", fetchXml);
+            if (result == null || result.value.Count == 0) return;
 
-            var countOptionEntryFr = result.value.Where(x => x.Date.ToLocalTime().Month == first_Month.Month).Count();
-            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countOptionEntryFr };
-
-            var countOptionEntrySe = result.value.Where(x => x.Date.ToLocalTime().Month == second_Month.Month).Count();
-            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countOptionEntrySe };
-
-            var countOptionEntryTh = result.value.Where(x => x.Date.ToLocalTime().Month == third_Month.Month).Count();
-            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countOptionEntryTh };
-
-            var countOptionEntryFo = this.numOptionEntry = result.value.Where(x => x.Date.ToLocalTime().Month == fourth_Month.Month).Count();
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countOptionEntryFo };
-
-            this.DataMonthOptionEntry.Add(chartFirstMonth);
-            this.DataMonthOptionEntry.Add(chartSecondMonth);
-            this.DataMonthOptionEntry.Add(chartThirdMonth);
-            this.DataMonthOptionEntry.Add(chartFourthMonth);
+            foreach (var time in four_Month)
+            {
+                int count = 0;
+                foreach (var item in result.value)
+                {
+                    if (item.group == time.Month.ToString())
+                    {
+                        count = item.count;
+                        break;
+                    }
+                }
+                DataMonthOptionEntry.Add(new ChartModel() { Category = time.ToString("MM/yyyy"), Value = count });
+                if (time.Month == dateBefor.Month)
+                    numOptionEntry = count;
+            }
         }
         public async Task LoadUnitFourMonths()
         {
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                   <entity name='salesorder'>
-                                    <attribute name='salesorderid' alias='Id'/>
-                                    <attribute name='bsd_signedcontractdate' alias='Date' />
-                                    <order attribute='createdon' descending='true' />
+                                    <attribute name='salesorderid' aggregate='count' alias='count'/>
+                                    <attribute name='createdon' groupby='true' alias='group' dategrouping='month'/>
                                     <filter type='and'>
                                       <condition attribute='bsd_unitstatus' operator='eq' value='100000002' />
                                       <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
@@ -346,36 +352,31 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DashboardChartModel>>("salesorders", fetchXml);
-            if (result == null) return;
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("salesorders", fetchXml);
+            if (result == null || result.value.Count == 0) return;
 
-            var countUnitFr = result.value.Where(x => x.Date.ToLocalTime().Month == first_Month.Month).Count();
-            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = countUnitFr };
-
-            var countUnitSe = result.value.Where(x => x.Date.ToLocalTime().Month == second_Month.Month).Count();
-            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = countUnitSe };
-
-            var countUnitTh = result.value.Where(x => x.Date.ToLocalTime().Month == third_Month.Month).Count();
-            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = countUnitTh };
-
-            var countUnitFo = this.numUnit = result.value.Where(x => x.Date.ToLocalTime().Month == fourth_Month.Month).Count();
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = countUnitFo };
-
-            this.DataMonthUnit.Add(chartFirstMonth);
-            this.DataMonthUnit.Add(chartSecondMonth);
-            this.DataMonthUnit.Add(chartThirdMonth);
-            this.DataMonthUnit.Add(chartFourthMonth);
+            foreach(var time in four_Month)
+            {
+                int count = 0;
+                foreach (var item in result.value)
+                {
+                    if (item.group == time.Month.ToString())
+                    {
+                        count = item.count;
+                        break;
+                    }
+                }
+                DataMonthUnit.Add(new ChartModel() { Category = time.ToString("MM/yyyy"), Value = count });
+                if (time.Month == dateBefor.Month)
+                    numUnit = count;
+            }
         }
         public async Task LoadLeads()
         {
-            ChartModel chartKHMoi = new ChartModel();
-            ChartModel chartKHDaChuyenDoi = new ChartModel();
-            ChartModel chartKHKhongChuyenDoi = new ChartModel();
-
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                   <entity name='lead'>
-                                    <attribute name='statuscode' alias='Label'/>
-                                    <attribute name='leadid' alias='Val' />
+                                    <attribute name='leadid' aggregate='count' alias='count'/>
+	                                <attribute name='statuscode' groupby='true' alias='group' />
                                     <filter type='and'>
                                       <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                       <condition attribute='statuscode' operator='ne' value='2'/>
@@ -383,27 +384,29 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("leads", fetchXml);
             if (result != null && result.value.Count > 0)
             {
-                numKHMoi = result.value.Where(x => x.Label == "1").Count();
-                numKHDaChuyenDoi = result.value.Where(x => x.Label == "3").Count();
-                numKHKhongChuyenDoi = result.value.Where(x => x.Label == "4" || x.Label == "5" || x.Label == "6" || x.Label == "7").Count();
-
-                chartKHMoi = new ChartModel() { Category = Language.khach_hang_moi, Value = numKHMoi };
-                chartKHDaChuyenDoi = new ChartModel() { Category = Language.da_chuyen_doi, Value = numKHDaChuyenDoi };
-                chartKHKhongChuyenDoi = new ChartModel() { Category = Language.khong_chuyen_doi, Value = numKHKhongChuyenDoi };
+                foreach (var item in result.value)
+                {
+                    if (item.group == "1")
+                        numKHMoi += item.count;
+                    else if (item.group == "3")
+                        numKHDaChuyenDoi += item.count;
+                    else
+                        numKHKhongChuyenDoi += item.count;
+                }
             }
-            else
-            {
-                chartKHMoi = new ChartModel() { Category = Language.khach_hang_moi, Value = 1 };
-                chartKHDaChuyenDoi = new ChartModel() { Category = Language.da_chuyen_doi, Value = 1 };
-                chartKHKhongChuyenDoi = new ChartModel() { Category = Language.khong_chuyen_doi, Value = 1 };
-            }
+            if (numKHMoi == 0)
+                numKHMoi = 1;
+            if (numKHDaChuyenDoi == 0)
+                numKHDaChuyenDoi = 1;
+            if (numKHKhongChuyenDoi == 0)
+                numKHKhongChuyenDoi = 1;
 
-            this.LeadsChart.Add(chartKHMoi);
-            this.LeadsChart.Add(chartKHDaChuyenDoi);
-            this.LeadsChart.Add(chartKHKhongChuyenDoi);
+            LeadsChart.Add(new ChartModel() { Category = Language.khach_hang_moi, Value = numKHMoi });
+            LeadsChart.Add(new ChartModel() { Category = Language.da_chuyen_doi, Value = numKHDaChuyenDoi });
+            LeadsChart.Add(new ChartModel() { Category = Language.khong_chuyen_doi, Value = numKHKhongChuyenDoi });
         }
 
         public async Task LoadTasks()
@@ -632,6 +635,9 @@ namespace PhuLongCRM.ViewModels
 
             this.TotalCommissionAMonth = 0;
             this.TotalPaidCommissionAMonth = 0;
+            this.numKHMoi = 0;
+            this.numKHDaChuyenDoi = 0;
+            this.numKHKhongChuyenDoi = 0;
 
             await Task.WhenAll(
                  this.LoadTasks(),
@@ -645,447 +651,11 @@ namespace PhuLongCRM.ViewModels
                  this.LoadCommissionTransactions()
                 );
         }
-
-        public async Task loadPhoneCall(Guid id)
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                            <entity name='phonecall'>
-                                <attribute name='subject' />
-                                <attribute name='statecode' />
-                                <attribute name='prioritycode' />
-                                <attribute name='scheduledend' alias='scheduledend' />
-                                <attribute name='createdby' />
-                                <attribute name='regardingobjectid' />
-                                <attribute name='activityid' />
-                                <attribute name='statuscode' />
-                                <attribute name='scheduledstart' alias='scheduledstart' />
-                                <attribute name='actualdurationminutes' />
-                                <attribute name='description' />
-                                <attribute name='activitytypecode' />
-                                <attribute name='phonenumber' />
-                                <order attribute='subject' descending='false' />
-                                <filter type='and'>
-                                    <condition attribute='activityid' operator='eq' uitype='phonecall' value='" + id + @"' />
-                                </filter>
-                                <link-entity name='account' from='accountid' to='regardingobjectid' visible='false' link-type='outer' alias='a_9b4f4019bdc24dd79b1858c2d087a27d'>
-                                    <attribute name='accountid' alias='account_id' />                  
-                                    <attribute name='bsd_name' alias='account_name'/>
-                                </link-entity>
-                                <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer' alias='a_66b6d0af970a40c9a0f42838936ea5ce'>
-                                    <attribute name='contactid' alias='contact_id' />                  
-                                    <attribute name='fullname' alias='contact_name'/>
-                                </link-entity>
-                                <link-entity name='lead' from='leadid' to='regardingobjectid' visible='false' link-type='outer' alias='a_fb87dbfd8304e911a98b000d3aa2e890'>
-                                    <attribute name='leadid' alias='lead_id'/>                  
-                                    <attribute name='fullname' alias='lead_name'/>
-                                </link-entity>
-                                <link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' link-type='outer' alias='aa'>
-                                    <attribute name='bsd_name' alias='user_name'/>
-                                    <attribute name='bsd_employeeid' alias='user_id'/>
-                                </link-entity>
-                            </entity>
-                          </fetch>";
-
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhoneCellModel>>("phonecalls", fetch);
-            if (result == null || result.value == null)
-                return;
-            var data = result.value.FirstOrDefault();
-            PhoneCall = data;
-
-            if (data.scheduledend != null && data.scheduledstart != null)
-            {
-                PhoneCall.scheduledend = data.scheduledend.Value.ToLocalTime();
-                PhoneCall.scheduledstart = data.scheduledstart.Value.ToLocalTime();
-            }
-
-            if (PhoneCall.contact_id != Guid.Empty)
-            {
-                PhoneCall.Customer = new CustomerLookUp
-                {
-                    Name = PhoneCall.contact_name
-                };
-            }
-            else if (PhoneCall.account_id != Guid.Empty)
-            {
-                PhoneCall.Customer = new CustomerLookUp
-                {
-                    Name = PhoneCall.account_name
-                };
-            }
-            else if (PhoneCall.lead_id != Guid.Empty)
-            {
-                PhoneCall.Customer = new CustomerLookUp
-                {
-                    Name = PhoneCall.lead_name
-                };
-            }
-
-            if (PhoneCall.statecode == 0)
-                ShowGridButton = true;
-            else
-                ShowGridButton = false;
-        }
-
-        public async Task loadFromTo(Guid id)
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' >
-                                    <entity name='phonecall' >
-                                        <attribute name='subject' />
-                                        <attribute name='activityid' />
-                                        <order attribute='subject' descending='false' />
-                                        <filter type='and' >
-                                            <condition attribute='activityid' operator='eq' value='" + id + @"' />
-                                        </filter>
-                                        <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='ab' >
-                                            <attribute name='partyid' alias='partyID'/>
-                                            <attribute name='participationtypemask' alias='typemask' />
-                                            <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='partyaccount' >
-                                                <attribute name='bsd_name' alias='account_name'/>
-                                            </link-entity>
-                                            <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='partycontact' >
-                                                <attribute name='fullname' alias='contact_name'/>
-                                            </link-entity>
-                                            <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='partylead' >
-                                                <attribute name='fullname' alias='lead_name'/>
-                                            </link-entity>
-                                            <link-entity name='systemuser' from='systemuserid' to='partyid' link-type='outer' alias='partyuser' >
-                                                <attribute name='fullname' alias='user_name'/>
-                                            </link-entity>
-                                        </link-entity>
-                                    </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PartyModel>>("phonecalls", fetch);
-            if (result == null || result.value == null)
-                return;
-            var data = result.value;
-            if (data.Any())
-            {
-                foreach (var item in data)
-                {
-                    if (item.typemask == 1) // from call
-                    {
-                        PhoneCall.call_from = item.user_name;
-                    }
-                    else if (item.typemask == 2) // to call
-                    {
-                        if (item.contact_name != null && item.contact_name != string.Empty)
-                        {
-                            PhoneCall.call_to = item.contact_name;
-                        }
-                        else if (item.account_name != null && item.account_name != string.Empty)
-                        {
-                            PhoneCall.call_to = item.account_name;
-                        }
-                        else if (item.lead_name != null && item.lead_name != string.Empty)
-                        {
-                            PhoneCall.call_to = item.lead_name;
-                        }
-                    }
-                }
-            }
-        }
-
-        public async Task loadTask(Guid id)
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                              <entity name='task'>
-                                <attribute name='subject' />
-                                <attribute name='statecode' />
-                                <attribute name='scheduledend' />
-                                <attribute name='activityid' />
-                                <attribute name='statuscode' />
-                                <attribute name='scheduledstart' />
-                                <attribute name='description' />
-                                <order attribute='subject' descending='false' />
-                                <filter type='and' >
-                                    <condition attribute='activityid' operator='eq' value='" + id + @"' />
-                                </filter>
-                                <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ah'>
-    	                            <attribute name='accountid' alias='account_id' />                  
-    	                            <attribute name='bsd_name' alias='account_name'/>
-                                </link-entity>
-                                <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='ai'>
-	                            <attribute name='contactid' alias='contact_id' />                  
-                                    <attribute name='fullname' alias='contact_name'/>
-                                </link-entity>
-                                <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='aj'>
-	                            <attribute name='leadid' alias='lead_id'/>                  
-                                    <attribute name='fullname' alias='lead_name'/>
-                                </link-entity>
-                              </entity>
-                            </fetch>";
-
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<TaskFormModel>>("tasks", fetch);
-            if (result == null || result.value == null) return;
-            TaskDetail = result.value.FirstOrDefault();
-
-            this.ScheduledStartTask = TaskDetail.scheduledstart.Value.ToLocalTime();
-            this.ScheduledEndTask = TaskDetail.scheduledend.Value.ToLocalTime();
-
-            if (TaskDetail.contact_id != Guid.Empty)
-            {
-                TaskDetail.Customer = new CustomerLookUp
-                {
-                    Name = TaskDetail.contact_name
-                };
-            }
-            else if (TaskDetail.account_id != Guid.Empty)
-            {
-                TaskDetail.Customer = new CustomerLookUp
-                {
-                    Name = TaskDetail.account_name
-                };
-            }
-            else if (TaskDetail.lead_id != Guid.Empty)
-            {
-                TaskDetail.Customer = new CustomerLookUp
-                {
-                    Name = TaskDetail.lead_name
-                };
-            }
-
-            if (TaskDetail.statecode == 0)
-                ShowGridButton = true;
-            else
-                ShowGridButton = false;
-        }
-
-        public async Task loadMeet(Guid id)
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                            <entity name='appointment'>
-                                <attribute name='subject' />
-                                <attribute name='statecode' />
-                                <attribute name='createdby' />
-                                <attribute name='statuscode' />
-                                <attribute name='requiredattendees' />
-                                <attribute name='prioritycode' />
-                                <attribute name='scheduledstart' />
-                                <attribute name='scheduledend' />
-                                <attribute name='scheduleddurationminutes' />
-                                <attribute name='bsd_mmeetingformuploaded' />
-                                <attribute name='optionalattendees' />
-                                <attribute name='isalldayevent' />
-                                <attribute name='location' />
-                                <attribute name='activityid' />
-                                <attribute name='description' />
-                                <order attribute='createdon' descending='true' />
-                                <filter type='and'>
-                                    <condition attribute='activityid' operator='eq' uitype='appointment' value='" + id + @"' />
-                                </filter>               
-                                <link-entity name='contact' from='contactid' to='regardingobjectid' visible='false' link-type='outer' alias='contacts'>
-                                  <attribute name='contactid' alias='contact_id' />                  
-                                  <attribute name='fullname' alias='contact_name'/>
-                                </link-entity>
-                                <link-entity name='account' from='accountid' to='regardingobjectid' visible='false' link-type='outer' alias='accounts'>
-                                    <attribute name='accountid' alias='account_id' />                  
-                                    <attribute name='bsd_name' alias='account_name'/>
-                                </link-entity>
-                                <link-entity name='lead' from='leadid' to='regardingobjectid' visible='false' link-type='outer' alias='leads'>
-                                    <attribute name='leadid' alias='lead_id'/>                  
-                                    <attribute name='fullname' alias='lead_name'/>
-                                </link-entity>
-                            </entity>
-                          </fetch>";
-
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<MeetingModel>>("appointments", fetch);
-            if (result == null || result.value == null)
-                return;
-            var data = result.value.FirstOrDefault();
-            Meet = data;
-
-            if (data.scheduledend != null && data.scheduledstart != null)
-            {
-                Meet.scheduledend = data.scheduledend.Value.ToLocalTime();
-                Meet.scheduledstart = data.scheduledstart.Value.ToLocalTime();
-            }
-
-            if (Meet.contact_id != Guid.Empty)
-            {
-                Meet.Customer = new CustomerLookUp
-                {
-                    Name = Meet.contact_name
-                };
-            }
-            else if (Meet.account_id != Guid.Empty)
-            {
-                Meet.Customer = new CustomerLookUp
-                {
-                    Name = Meet.account_name
-                };
-            }
-            else if (Meet.lead_id != Guid.Empty)
-            {
-                Meet.Customer = new CustomerLookUp
-                {
-                    Name = Meet.lead_name
-                };
-            }
-
-            if (Meet.statecode == 0)
-                ShowGridButton = true;
-            else
-                ShowGridButton = false;
-        }
-
-        public async Task loadFromToMeet(Guid id)
-        {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
-                                <entity name='appointment'>
-                                    <attribute name='subject' />
-                                    <attribute name='createdon' />
-                                    <attribute name='activityid' />
-                                    <order attribute='createdon' descending='false' />
-                                    <filter type='and'>
-                                        <condition attribute='activityid' operator='eq' value='" + id + @"' />
-                                    </filter>
-                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='ab'>
-                                        <attribute name='partyid' alias='partyID'/>
-                                        <attribute name='participationtypemask' alias='typemask'/>
-                                      <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='partyaccount'>
-                                        <attribute name='bsd_name' alias='account_name'/>
-                                      </link-entity>
-                                      <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='partycontact'>
-                                        <attribute name='fullname' alias='contact_name'/>
-                                      </link-entity>
-                                      <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='partylead'>
-                                        <attribute name='fullname' alias='lead_name'/>
-                                      </link-entity>
-                                      <link-entity name='systemuser' from='systemuserid' to='partyid' link-type='outer' alias='partyuser'>
-                                        <attribute name='fullname' alias='user_name'/>
-                                      </link-entity>
-                                    </link-entity>
-                                </entity>
-                              </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PartyModel>>("appointments", fetch);
-            if (result == null || result.value == null)
-                return;
-            var data = result.value;
-            if (data.Any())
-            {
-                List<string> required = new List<string>();
-                List<string> optional = new List<string>();
-                foreach (var item in data)
-                {
-                    if (item.typemask == 5) // from call
-                    {
-                        if (item.contact_name != null && item.contact_name != string.Empty)
-                        {
-                            required.Add(item.contact_name);
-                        }
-                        else if (item.account_name != null && item.account_name != string.Empty)
-                        {
-                            required.Add(item.account_name);
-                        }
-                        else if (item.lead_name != null && item.lead_name != string.Empty)
-                        {
-                            required.Add(item.lead_name);
-                        }
-                    }
-                    else if (item.typemask == 6) // to call
-                    {
-                        if (item.contact_name != null && item.contact_name != string.Empty)
-                        {
-                            optional.Add(item.contact_name);
-                        }
-                        else if (item.account_name != null && item.account_name != string.Empty)
-                        {
-                            optional.Add(item.account_name);
-                        }
-                        else if (item.lead_name != null && item.lead_name != string.Empty)
-                        {
-                            optional.Add(item.lead_name);
-                        }
-                    }
-                }
-                Meet.required = string.Join(", ", required);
-                Meet.optional = string.Join(", ", optional);
-            }
-        }
-
-        public async Task<bool> UpdateStatusPhoneCall(string update)
-        {
-            if (update == CodeCompleted)
-            {
-                PhoneCall.statecode = 1;
-                PhoneCall.statuscode = 2;
-            }
-            else if (update == CodeCancel)
-            {
-                PhoneCall.statecode = 2;
-                PhoneCall.statuscode = 3;
-            }
-
-            IDictionary<string, object> data = new Dictionary<string, object>();
-            data["statecode"] = PhoneCall.statecode;
-            data["statuscode"] = PhoneCall.statuscode;
-
-            string path = "/phonecalls(" + PhoneCall.activityid + ")";
-            CrmApiResponse result = await CrmHelper.PatchData(path, data);
-            if (result.IsSuccess)
-            {
-                ShowGridButton = false;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public async Task<bool> UpdateStatusTask(string update)
-        {
-            if (update == CodeCompleted)
-            {
-                TaskDetail.statecode = 1;
-            }
-            else if (update == CodeCancel)
-            {
-                TaskDetail.statecode = 2;
-            }
-
-            IDictionary<string, object> data = new Dictionary<string, object>();
-            data["statecode"] = TaskDetail.statecode;
-
-            string path = "/tasks(" + TaskDetail.activityid + ")";
-            CrmApiResponse result = await CrmHelper.PatchData(path, data);
-            if (result.IsSuccess)
-            {
-                ShowGridButton = false;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public async Task<bool> UpdateStatusMeet(string update)
-        {
-            if (update == CodeCompleted)
-            {
-                Meet.statecode = 1;
-            }
-            else if (update == CodeCancel)
-            {
-                Meet.statecode = 2;
-            }
-
-            IDictionary<string, object> data = new Dictionary<string, object>();
-            data["statecode"] = Meet.statecode;
-
-            string path = "/appointments(" + Meet.activityid + ")";
-            CrmApiResponse result = await CrmHelper.PatchData(path, data);
-            if (result.IsSuccess)
-            {
-                ShowGridButton = false;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+    }
+    public class CountChartModel
+    {
+        public string group { get; set; }
+        public int count { get; set; }
     }
     public class DashboardChartModel
     {
@@ -1093,6 +663,8 @@ namespace PhuLongCRM.ViewModels
         public DateTime Date { get; set; }
         public decimal CommissionTotal { get; set; }
         public string CommissionStatus { get; set; }
+        public string opportunity_count { get; set; }
+        public string month { get; set; }
     }
     public class CommissionTransaction
     {
