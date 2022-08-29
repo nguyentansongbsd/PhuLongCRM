@@ -6,10 +6,10 @@
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
 		</provider>
 		<receiver android:name="com.PhuLong.CRM.app.ScreenReceiver" android:enabled="true" android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
+			<intent-filter>
+				<action android:name="android.intent.action.USER_PRESENT" />
+			</intent-filter>
+		</receiver>
 	</application>
 	<!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
@@ -33,5 +33,4 @@
 			<data android:scheme="smsto" />
 		</intent>
 	</queries>
-	
 </manifest>
