@@ -46,22 +46,23 @@ namespace PhuLongCRM.Views
                 VisualStateManager.GoToState(rd, "Selected");
                 VisualStateManager.GoToState(lb, "Selected");
                 NumberUnitInBlock(viewModel.DirectSaleResult[0]);
+                if (viewModel.Floors.Count != 0)
+                {
+                    var floor = viewModel.Floors[0];
+                    floor.iShow = true;
+                    await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                    OnCompleted?.Invoke(0);
+                }
+                else
+                {
+                    OnCompleted?.Invoke(1);
+                }
             }
             else
             {
                 OnCompleted?.Invoke(2);
                 return;
             }
-            if (viewModel.Floors.Count != 0)
-            {
-
-                OnCompleted?.Invoke(0);
-            }
-            else
-            {
-                OnCompleted?.Invoke(1);
-            }
-            OnCompleted?.Invoke(0);
         }
         protected async override void OnAppearing()
         {
@@ -107,8 +108,6 @@ namespace PhuLongCRM.Views
         {
             if (block != null && block != viewModel.Block)
             {
-                LoadingHelper.Show();
-                await Task.Delay(100);
                 viewModel.NumUniBlock = new Block();
                 var arrStatus = block.stringQty.Split(',');
                 viewModel.NumUniBlock.NumChuanBiInBlock = int.Parse(arrStatus[0]);
@@ -127,7 +126,6 @@ namespace PhuLongCRM.Views
                 viewModel.Page = -1;
                 viewModel.Floors.Clear();
                 await viewModel.LoadFloor();
-                LoadingHelper.Hide();
             }
         }
         private async void ItemFloor_Tapped(object sender, EventArgs e)

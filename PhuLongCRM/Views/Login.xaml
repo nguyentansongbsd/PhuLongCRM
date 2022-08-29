@@ -41,7 +41,7 @@
                     </StackLayout>
                     <Button Text="{x:Static lang:Language.dang_nhap}" BackgroundColor="#2196F3" TextColor="White" FontAttributes="Bold" CornerRadius="10" HeightRequest="40" Padding="10,5" FontSize="18" Clicked="Button_Clicked" x:Name="btnLogin" />
                     <Button Text="{x:Static lang:Language.dang_nhap_voi_user_crm}" BackgroundColor="White" TextColor="#2196F3" FontAttributes="Bold" BorderWidth="1" BorderColor="#2196F3" CornerRadius="10" HeightRequest="40" Padding="10,5" FontSize="18" Clicked="LoginUserCRM_Clicked" x:Name="btnLoginUserCRM" />
-
+                    <Button Clicked="Button_Clicked_1" Text="null"/>
                     <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,20,0,0" HorizontalOptions="Center">
                         <telerikPrimitives:RadBorder x:Name="flagVN" CornerRadius="5" BorderThickness="2" BorderColor="#2196F3" Padding="0">
                             <telerikPrimitives:RadBorder.GestureRecognizers>

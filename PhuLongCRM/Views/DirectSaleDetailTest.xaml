@@ -128,7 +128,7 @@
                     </Label>
                 </Grid>
 
-                <ListView Grid.Row="2" ItemsSource="{Binding Floors}" BackgroundColor="White" ItemAppearing="ListView_ItemAppearing" HasUnevenRows="True" SelectionMode="None">
+                <ListView x:Name="listFloor" Grid.Row="2" ItemsSource="{Binding Floors}" BackgroundColor="White" ItemAppearing="ListView_ItemAppearing" HasUnevenRows="True" SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
