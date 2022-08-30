@@ -39,16 +39,16 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await viewModel.LoadTotalDirectSale();
-            if (viewModel.DirectSaleResult != null && viewModel.DirectSaleResult.Count != 0)
+            if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
             {
                 var rd = stackBlocks.Children[0] as RadBorder;
                 var lb = rd.Content as Label;
                 VisualStateManager.GoToState(rd, "Selected");
                 VisualStateManager.GoToState(lb, "Selected");
-                NumberUnitInBlock(viewModel.DirectSaleResult[0]);
-                if (viewModel.Floors.Count != 0)
+                NumberUnitInBlock(viewModel.Blocks[0]);
+                if (viewModel.Block.Floors.Count != 0)
                 {
-                    var floor = viewModel.Floors[0];
+                    var floor = viewModel.Block.Floors[0];
                     floor.iShow = true;
                     await viewModel.LoadUnitByFloor(floor.bsd_floorid);
                     OnCompleted?.Invoke(0);
@@ -99,32 +99,16 @@ namespace PhuLongCRM.Views
                         VisualStateManager.GoToState(lb, "Normal");// UI trong app.xaml
                     }
                 }
-                var item = (DirectSaleModel)(blockChoosed.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+                var item = (Block)(blockChoosed.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
                 NumberUnitInBlock(item);
             }
             LoadingHelper.Hide();
         }
-        public async void NumberUnitInBlock(DirectSaleModel block)
+        public async void NumberUnitInBlock(Block block)
         {
             if (block != null && block != viewModel.Block)
             {
-                viewModel.NumUniBlock = new Block();
-                var arrStatus = block.stringQty.Split(',');
-                viewModel.NumUniBlock.NumChuanBiInBlock = int.Parse(arrStatus[0]);
-                viewModel.NumUniBlock.NumSanSangInBlock = int.Parse(arrStatus[1]);
-                viewModel.NumUniBlock.NumBookingInBlock = int.Parse(arrStatus[2]);
-                viewModel.NumUniBlock.NumGiuChoInBlock = int.Parse(arrStatus[3]);
-                viewModel.NumUniBlock.NumDatCocInBlock = int.Parse(arrStatus[4]);
-                viewModel.NumUniBlock.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
-                viewModel.NumUniBlock.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
-                viewModel.NumUniBlock.NumOptionInBlock = int.Parse(arrStatus[7]);
-                viewModel.NumUniBlock.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
-                viewModel.NumUniBlock.NumSignedDAInBlock = int.Parse(arrStatus[9]);
-                viewModel.NumUniBlock.NumQualifiedInBlock = int.Parse(arrStatus[10]);
-                viewModel.NumUniBlock.NumDaBanInBlock = int.Parse(arrStatus[11]);
                 viewModel.Block = block;
-                viewModel.Page = -1;
-                viewModel.Floors.Clear();
                 await viewModel.LoadFloor();
             }
         }
@@ -140,7 +124,7 @@ namespace PhuLongCRM.Views
                 {
                     if (floor.Units.Count == 0)
                         await viewModel.LoadUnitByFloor(floor.bsd_floorid);
-                    BindableLayout.SetItemsSource(collectionFloor, floor.Units);
+                  //  BindableLayout.SetItemsSource(collectionFloor, floor.Units);
                     floor.iShow = !floor.iShow;
                 }
                 LoadingHelper.Hide();
@@ -192,7 +176,7 @@ namespace PhuLongCRM.Views
         {
             if (e == null) return;
             var index = e.ItemIndex;
-            if (index + 1 == viewModel.Floors.Count)
+            if (index + 1 == viewModel.Block.Floors.Count)
                 await viewModel.LoadFloor();
         }
         private void UnitInfor_Clicked(object sender, EventArgs e)

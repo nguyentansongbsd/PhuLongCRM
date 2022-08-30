@@ -51,6 +51,6 @@ namespace PhuLongCRM.Models
         public int TotalUnitInBlock { get => _totalUnitInBlock; set { _totalUnitInBlock = value;OnPropertyChanged(nameof(TotalUnitInBlock)); } }
 
         public IList<Floor> Floors { get; set; } = new ObservableCollection<Floor>();
-
+        public int page { get; set; }// số page cho loadmore
     }
 }

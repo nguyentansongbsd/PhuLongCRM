@@ -15,34 +15,27 @@ namespace PhuLongCRM.ViewModels
 {
     public class DirectSaleDetailTestViewModel : BaseViewModel
     {
-        public int Page = -1;
         private string FilterXml;
         private int Size = 5;
 
         private Unit _unit;
         public Unit Unit { get => _unit; set { _unit = value; OnPropertyChanged(nameof(Unit)); } }
+        public List<DirectSaleModel> Data { get; set; }
 
-        private List<DirectSaleModel> _directSaleResult;
-        public List<DirectSaleModel> DirectSaleResult { get => _directSaleResult; set { _directSaleResult = value; OnPropertyChanged(nameof(DirectSaleResult)); } }
+        public DirectSaleSearchModel Filter { get; set; }
 
-        private DirectSaleSearchModel _filter;
-        public DirectSaleSearchModel Filter { get => _filter; set { _filter = value; OnPropertyChanged(nameof(Filter)); } }
+        private Block _block;
+        public Block Block { get => _block; set { _block = value; OnPropertyChanged(nameof(Block)); } }
 
-        private DirectSaleModel _block;
-        public DirectSaleModel Block { get => _block; set { _block = value; OnPropertyChanged(nameof(Block)); } }
-
-        private Block _numUnitblock;
-        public Block NumUniBlock { get => _numUnitblock; set { _numUnitblock = value; OnPropertyChanged(nameof(NumUniBlock)); } }
-
-        private ObservableCollection<Floor> _floors;
-        public ObservableCollection<Floor> Floors { get => _floors; set { _floors = value; OnPropertyChanged(nameof(Floors)); } }
+        private ObservableCollection<Block> _blocks;
+        public ObservableCollection<Block> Blocks { get => _blocks; set { _blocks = value; OnPropertyChanged(nameof(Blocks)); } }
 
         private bool _isShowBtnBangTinhGia;
         public bool IsShowBtnBangTinhGia { get => _isShowBtnBangTinhGia; set { _isShowBtnBangTinhGia = value; OnPropertyChanged(nameof(IsShowBtnBangTinhGia)); } }
 
         public DirectSaleDetailTestViewModel()
         {
-            Floors = new ObservableCollection<Floor>();
+            Blocks = new ObservableCollection<Block>();
         }
         public async Task LoadTotalDirectSale()
         {
@@ -57,15 +50,39 @@ namespace PhuLongCRM.ViewModels
 
             string content = result.Content;
             ResponseAction responseActions = JsonConvert.DeserializeObject<ResponseAction>(content);
-            DirectSaleResult = JsonConvert.DeserializeObject<List<DirectSaleModel>>(responseActions.output);
+            Data = JsonConvert.DeserializeObject<List<DirectSaleModel>>(responseActions.output);
+
+            foreach (DirectSaleModel model in Data)
+            {
+                Block block = new Block();
+                block.bsd_blockid = Guid.Parse(model.ID);
+                block.bsd_name = model.name;
+                block.TotalUnitInBlock = int.Parse(model.sumQty);
+                var arrStatus = model.stringQty.Split(',');
+                block.NumChuanBiInBlock = int.Parse(arrStatus[0]);
+                block.NumSanSangInBlock = int.Parse(arrStatus[1]);
+                block.NumBookingInBlock = int.Parse(arrStatus[2]);
+                block.NumGiuChoInBlock = int.Parse(arrStatus[3]);
+                block.NumDatCocInBlock = int.Parse(arrStatus[4]);
+                block.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
+                block.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
+                block.NumOptionInBlock = int.Parse(arrStatus[7]);
+                block.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
+                block.NumSignedDAInBlock = int.Parse(arrStatus[9]);
+                block.NumQualifiedInBlock = int.Parse(arrStatus[10]);
+                block.NumDaBanInBlock = int.Parse(arrStatus[11]);
+                block.page = -1;
+                Blocks.Add(block);
+            }
         }
         public async Task LoadFloor()
         {
-            if (Block != null && Block.listFloor != null)
+            if (Block != null && Block.Floors != null)
             {
-                Page += 1;
-                var list = Block.listFloor.Skip(Page * Size).Take(Size);
-                if (Floors.Count == Block.listFloor.Count)
+                var data = Data.SingleOrDefault(x => x.ID == Block.bsd_blockid.ToString());
+                Block.page += 1;
+                var list = data.listFloor.Skip(Block.page * Size).Take(Size);
+                if (Block.Floors.Count == data.listFloor.Count)
                     return;
                 foreach (var item in list)
                 {
@@ -86,7 +103,7 @@ namespace PhuLongCRM.ViewModels
                     floor.NumQualifiedInFloor = int.Parse(arrStatusInFloor[10]);
                     floor.NumDaBanInFloor = int.Parse(arrStatusInFloor[11]);
                     floor.TotalUnitInFloor = int.Parse(item.sumQty);
-                    Floors.Add(floor);
+                    Block.Floors.Add(floor);
                 }
             }
         }
@@ -139,15 +156,13 @@ namespace PhuLongCRM.ViewModels
                 productid = x.productid
             }).Select(y => y.First()).ToList();
 
-            List<Unit> units = new List<Unit>();
+            var units = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units;
             foreach (var item in unitsResult)
             {
                 // dem unit co nhung trang thai giu cho la: queuing, waiting
                 item.NumQueses = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002")).ToList().Count();
                 units.Add(item);
             }
-
-            Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units.AddRange(units);
         }
         public void CreateFilterXml()
         {
