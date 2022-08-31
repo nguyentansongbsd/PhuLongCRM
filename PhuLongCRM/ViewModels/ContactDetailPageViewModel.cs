@@ -17,9 +17,6 @@ namespace PhuLongCRM.ViewModels
 {
     public class ContactDetailPageViewModel : BaseViewModel
     {
-        private ImageSource _myImage;
-        public ImageSource MyImage { get => _myImage; set { _myImage = value; OnPropertyChanged(nameof(MyImage)); } }
-
         private ContactFormModel _singleContact;
         public ContactFormModel singleContact { get { return _singleContact; } set { _singleContact = value; OnPropertyChanged(nameof(singleContact)); } }
 
