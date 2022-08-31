@@ -347,13 +347,5 @@ namespace PhuLongCRM.Views
             btnLogin.Text = Language.dang_nhap;
             btnLoginUserCRM.Text = Language.dang_nhap_voi_user_crm;
         }
-
-        private async void Button_Clicked_1(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            await Task.Delay(1);
-            Application.Current.MainPage = new AppShell();
-            LoadingHelper.Hide();
-        }
     }
 }

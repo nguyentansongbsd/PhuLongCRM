@@ -245,7 +245,7 @@ namespace PhuLongCRM.ViewModels
                 units.Add(item);
             }
 
-            this.Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units.AddRange(units);
+           // this.Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units.AddRange(units);
         }
 
         public async Task LoadUnitById(Guid unitId)
