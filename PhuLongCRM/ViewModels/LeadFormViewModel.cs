@@ -97,7 +97,6 @@ namespace PhuLongCRM.ViewModels
             singleLead = new LeadFormModel();
             list_industrycode_optionset = new ObservableCollection<OptionSet>();
             this.Genders = new List<OptionSet>() { new OptionSet("1",Language.nam), new OptionSet("2", Language.nu), new OptionSet("100000000",Language.khac) };
-            this.loadIndustrycode();
         }
 
         public async Task LoadOneLead()
