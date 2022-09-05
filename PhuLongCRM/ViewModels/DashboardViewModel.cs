@@ -109,94 +109,116 @@ namespace PhuLongCRM.ViewModels
             string attribute = UserLogged.IsLoginByUserCRM ? "bsd_salestaff" : "bsd_employee";
 
             //Phu long khong co file nay <attribute name='bsd_totalcommission' alias='CommissionTotal'/> // 100000003 :Accountant Confirmed
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                     <entity name='bsd_commissiontransaction'>
-                                        <attribute name='bsd_commissiontransactionid' />
-                                        <attribute name='bsd_name' />
-                                        <attribute name='createdon' />
-                                        <attribute name='bsd_totalamountpaid' />
-                                        <attribute name='bsd_totalamount' />
-                                        <attribute name='statuscode' />
-                                        <attribute name='statecode' />
-                                        <order attribute='bsd_name' descending='false' />
+                                        <attribute name='createdon' groupby='true' alias='group' dategrouping='month'/>
+                                        <attribute name='bsd_totalamountpaid' alias='totalamountpaid_sum' aggregate='sum'/>
+                                        <attribute name='bsd_totalamount' alias='totalamount_sum' aggregate='sum'/>
+                                        <attribute name='statuscode' groupby='true' alias='group_sts'/>
                                         <filter type='and'>
                                             <condition attribute='createdon' operator='on-or-after' value='{dateAfter.ToString("yyyy-MM-dd")}' />
                                             <condition attribute='{attribute}' operator='eq' value='{UserLogged.Id}' />
                                         </filter>
                                         <link-entity name='bsd_commissioncalculation' from='bsd_commissioncalculationid' to='bsd_commissioncalculation' link-type='inner'>
-                                            <attribute name='statuscode' alias='statuscode_calculator'/>
                                             <filter type='and'>
                                                 <condition attribute='statuscode' operator='eq' value='100000003' />
                                             </filter>
                                         </link-entity>
                                     </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CommissionTransaction>>("bsd_commissiontransactions", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartCommissionModel>>("bsd_commissiontransactions", fetchXml);
             if (result == null) return;
 
-            decimal countTotalCommissionFr = 0;
-            decimal countTotalCommissionSe = 0;
-            decimal countTotalCommissionTh = 0;
-            decimal countTotalCommissionFo = 0;
+            List<CountChartCommissionModel> value1 = result.value.Where(x => x.group_sts != "100000009").ToList();
+            List<CountChartCommissionModel> value2 = result.value.Where(x => x.group_sts == "100000009").ToList();
 
-            decimal countTotalPaidFr = 0;
-            decimal countTotalPaidSe = 0;
-            decimal countTotalPaidTh = 0;
-            decimal countTotalPaidFo = 0;
+            List<CountChartCommissionModel> four_month = new List<CountChartCommissionModel>();
+            four_month.Add(new CountChartCommissionModel { group = first_Month.Month.ToString() });
+            four_month.Add(new CountChartCommissionModel { group = second_Month.Month.ToString() });
+            four_month.Add(new CountChartCommissionModel { group = third_Month.Month.ToString() });
+            four_month.Add(new CountChartCommissionModel { group = fourth_Month.Month.ToString() });
 
-            foreach (var item in result.value)
-            {
-                // danh sách các hhgd có sts = Accountant Confirmed lấy từ entity Commission Calculator trong 4 tháng từ ngày hiện tại trở về trước
-                if (item.statuscode_calculator == 100000003 && item.createdon.Month == first_Month.Month)
-                {
-                    countTotalCommissionFr += item.bsd_totalamount;
-                    if (item.statuscode == 100000009)
-                        countTotalPaidFr += item.bsd_totalamountpaid;
-                }
-                if (item.statuscode_calculator == 100000003 && item.createdon.Month == second_Month.Month)
-                {
-                    countTotalCommissionSe += item.bsd_totalamount;
-                    if (item.statuscode == 100000009)
-                        countTotalPaidSe += item.bsd_totalamountpaid;
-                }
-                if (item.statuscode_calculator == 100000003 && item.createdon.Month == third_Month.Month)
-                {
-                    countTotalCommissionTh += item.bsd_totalamount;
-                    if (item.statuscode == 100000009)
-                        countTotalPaidTh += item.bsd_totalamountpaid;
-                }
-                if (item.statuscode_calculator == 100000003 && item.createdon.Month == fourth_Month.Month)
-                {
-                    // tổng hhgd và hhgd paid được tính ở tháng hiện tại (sử dụng cho 2 giá trị thống kê)
-                    countTotalCommissionFo += item.bsd_totalamount;
-                    TotalCommissionAMonth += item.bsd_totalamount;
-                    if (item.statuscode == 100000009)
-                    {
-                        countTotalPaidFo += item.bsd_totalamountpaid;
-                        TotalPaidCommissionAMonth += item.bsd_totalamountpaid;
-                    }
-                }
-            }
+            four_month.AddRange(value1);
+            var data = four_month.GroupBy(x => x.group)
+               .Select(x => (group: x.Key, totalamount_sum: x.Sum(p => p.totalamount_sum))
+               ).ToList();
 
-            ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionFr) };
-            ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionSe) };
-            ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionTh) };
-            ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionFo) };
+            CommissionTransactionChart.Add(new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = TotalAMonth(data[0].totalamount_sum) });
+            CommissionTransactionChart.Add(new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = TotalAMonth(data[1].totalamount_sum) });
+            CommissionTransactionChart.Add(new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = TotalAMonth(data[2].totalamount_sum) });
+            CommissionTransactionChart.Add(new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = TotalAMonth(data[3].totalamount_sum) });
+            TotalCommissionAMonth = data[3].totalamount_sum;
 
-            ChartModel chartFirstMonth2 = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidFr) };
-            ChartModel chartSecondMonth2 = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidSe) };
-            ChartModel chartThirdMonth2 = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidTh) };
-            ChartModel chartFourthMonth2 = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidFo) };
+            four_month.Clear();
+            four_month.Add(new CountChartCommissionModel { group = first_Month.Month.ToString() });
+            four_month.Add(new CountChartCommissionModel { group = second_Month.Month.ToString() });
+            four_month.Add(new CountChartCommissionModel { group = third_Month.Month.ToString() });
+            four_month.Add(new CountChartCommissionModel { group = fourth_Month.Month.ToString() });
 
-            this.CommissionTransactionChart.Add(chartFirstMonth);
-            this.CommissionTransactionChart.Add(chartSecondMonth);
-            this.CommissionTransactionChart.Add(chartThirdMonth);
-            this.CommissionTransactionChart.Add(chartFourthMonth);
+            four_month.AddRange(value2);
+            var data2 = four_month.GroupBy(x => x.group)
+               .Select(x => (group: x.Key, totalamountpaid_sum: x.Sum(p => p.totalamountpaid_sum))
+               ).ToList();
 
-            this.CommissionTransactionChart2.Add(chartFirstMonth2);
-            this.CommissionTransactionChart2.Add(chartSecondMonth2);
-            this.CommissionTransactionChart2.Add(chartThirdMonth2);
-            this.CommissionTransactionChart2.Add(chartFourthMonth2);
+            CommissionTransactionChart2.Add(new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = TotalAMonth(data2[0].totalamountpaid_sum) });
+            CommissionTransactionChart2.Add(new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = TotalAMonth(data2[1].totalamountpaid_sum) });
+            CommissionTransactionChart2.Add(new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = TotalAMonth(data2[2].totalamountpaid_sum) });
+            CommissionTransactionChart2.Add(new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = TotalAMonth(data2[3].totalamountpaid_sum) });
+            TotalPaidCommissionAMonth = data2[3].totalamountpaid_sum;
+
+            //foreach (var item in result.value)
+            //{
+            //    // danh sách các hhgd có sts = Accountant Confirmed lấy từ entity Commission Calculator trong 4 tháng từ ngày hiện tại trở về trước
+            //    if (item.statuscode_calculator == 100000003 && item.createdon.Month == first_Month.Month)
+            //    {
+            //        countTotalCommissionFr += item.bsd_totalamount;
+            //        if (item.statuscode == 100000009)
+            //            countTotalPaidFr += item.bsd_totalamountpaid;
+            //    }
+            //    if (item.statuscode_calculator == 100000003 && item.createdon.Month == second_Month.Month)
+            //    {
+            //        countTotalCommissionSe += item.bsd_totalamount;
+            //        if (item.statuscode == 100000009)
+            //            countTotalPaidSe += item.bsd_totalamountpaid;
+            //    }
+            //    if (item.statuscode_calculator == 100000003 && item.createdon.Month == third_Month.Month)
+            //    {
+            //        countTotalCommissionTh += item.bsd_totalamount;
+            //        if (item.statuscode == 100000009)
+            //            countTotalPaidTh += item.bsd_totalamountpaid;
+            //    }
+            //    if (item.statuscode_calculator == 100000003 && item.createdon.Month == fourth_Month.Month)
+            //    {
+            //        // tổng hhgd và hhgd paid được tính ở tháng hiện tại (sử dụng cho 2 giá trị thống kê)
+            //        countTotalCommissionFo += item.bsd_totalamount;
+            //        TotalCommissionAMonth += item.bsd_totalamount;
+            //        if (item.statuscode == 100000009)
+            //        {
+            //            countTotalPaidFo += item.bsd_totalamountpaid;
+            //            TotalPaidCommissionAMonth += item.bsd_totalamountpaid;
+            //        }
+            //    }
+            //}
+
+            //ChartModel chartFirstMonth = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionFr) };
+            //ChartModel chartSecondMonth = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionSe) };
+            //ChartModel chartThirdMonth = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionTh) };
+            //ChartModel chartFourthMonth = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalCommissionFo) };
+
+            //ChartModel chartFirstMonth2 = new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidFr) };
+            //ChartModel chartSecondMonth2 = new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidSe) };
+            //ChartModel chartThirdMonth2 = new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidTh) };
+            //ChartModel chartFourthMonth2 = new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = TotalAMonth(countTotalPaidFo) };
+
+            //this.CommissionTransactionChart.Add(chartFirstMonth);
+            //this.CommissionTransactionChart.Add(chartSecondMonth);
+            //this.CommissionTransactionChart.Add(chartThirdMonth);
+            //this.CommissionTransactionChart.Add(chartFourthMonth);
+
+            //this.CommissionTransactionChart2.Add(chartFirstMonth2);
+            //this.CommissionTransactionChart2.Add(chartSecondMonth2);
+            //this.CommissionTransactionChart2.Add(chartThirdMonth2);
+            //this.CommissionTransactionChart2.Add(chartFourthMonth2);
 
             //format sau khi tính tổng
             TotalCommission = StringFormatHelper.FormatCurrency(TotalCommissionAMonth);
@@ -231,38 +253,24 @@ namespace PhuLongCRM.ViewModels
                                     </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("opportunities", fetchXml);
-            if (result == null || result.value.Count == 0) return;
+            if (result == null) return;
 
-            foreach (var time in four_Month)
-            {
-                int count = 0;
-                foreach (var item in result.value)
-                {
-                    if (item.group == time.Month.ToString())
-                    {
-                        count = item.count;
-                        break;
-                    }
-                }
-                DataMonthQueue.Add(new ChartModel() { Category = time.ToString("MM/yyyy"), Value = count });
-                if (time.Month == dateBefor.Month)
-                    numQueue = count;
-            }
-           // List<CountChartModel> abc = new List<CountChartModel>();
-           // abc.Add(new CountChartModel { group = "5" });
-           // abc.Add(new CountChartModel { group = "6" });
-           // abc.Add(new CountChartModel { group = "7" });
-           // abc.Add(new CountChartModel { group = "8" });
+            List<CountChartModel> four_month = new List<CountChartModel>();
+            four_month.Add(new CountChartModel { group = first_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = second_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = third_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = fourth_Month.Month.ToString() });
+            four_month.AddRange(result.value);
 
-           // foreach (var item in result.value)
-           // {
-           //     abc.Add(item);
-           // }
+            var data = four_month.GroupBy(x => x.group)
+               .Select(x => (group: x.Key, count: x.Sum(p => p.count))
+               ).ToList();
 
-           //var anm =  abc.GroupBy(x => x.group)
-           //   .Select(x => (group: x.Key, count: x.Sum(p => p.count))
-           //   ).ToList();
-
+            DataMonthQueue.Add(new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = data[0].count });
+            DataMonthQueue.Add(new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = data[1].count });
+            DataMonthQueue.Add(new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = data[2].count });
+            DataMonthQueue.Add(new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = data[3].count });
+            numQueue = data[3].count;
         }
         public async Task LoadQuoteFourMonths()
         {
@@ -282,23 +290,24 @@ namespace PhuLongCRM.ViewModels
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("quotes", fetchXml);
-            if (result == null || result.value.Count == 0) return;
+            if (result == null) return;
 
-            foreach (var time in four_Month)
-            {
-                int count = 0;
-                foreach (var item in result.value)
-                {
-                    if (item.group == time.Month.ToString())
-                    {
-                        count = item.count;
-                        break;
-                    }
-                }
-                DataMonthQuote.Add(new ChartModel() { Category = time.ToString("MM/yyyy"), Value = count });
-                if (time.Month == dateBefor.Month)
-                    numQuote = count;
-            }
+            List<CountChartModel> four_month = new List<CountChartModel>();
+            four_month.Add(new CountChartModel { group = first_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = second_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = third_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = fourth_Month.Month.ToString() });
+            four_month.AddRange(result.value);
+
+            var data = four_month.GroupBy(x => x.group)
+               .Select(x => (group: x.Key, count: x.Sum(p => p.count))
+               ).ToList();
+
+            DataMonthQuote.Add(new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = data[0].count });
+            DataMonthQuote.Add(new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = data[1].count });
+            DataMonthQuote.Add(new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = data[2].count });
+            DataMonthQuote.Add(new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = data[3].count });
+            numQuote = data[3].count;
         }
         public async Task LoadOptionEntryFourMonths()
         {
@@ -321,23 +330,24 @@ namespace PhuLongCRM.ViewModels
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("salesorders", fetchXml);
-            if (result == null || result.value.Count == 0) return;
+            if (result == null) return;
 
-            foreach (var time in four_Month)
-            {
-                int count = 0;
-                foreach (var item in result.value)
-                {
-                    if (item.group == time.Month.ToString())
-                    {
-                        count = item.count;
-                        break;
-                    }
-                }
-                DataMonthOptionEntry.Add(new ChartModel() { Category = time.ToString("MM/yyyy"), Value = count });
-                if (time.Month == dateBefor.Month)
-                    numOptionEntry = count;
-            }
+            List<CountChartModel> four_month = new List<CountChartModel>();
+            four_month.Add(new CountChartModel { group = first_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = second_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = third_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = fourth_Month.Month.ToString() });
+            four_month.AddRange(result.value);
+
+            var data = four_month.GroupBy(x => x.group)
+               .Select(x => (group: x.Key, count: x.Sum(p => p.count))
+               ).ToList();
+
+            DataMonthOptionEntry.Add(new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = data[0].count });
+            DataMonthOptionEntry.Add(new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = data[1].count });
+            DataMonthOptionEntry.Add(new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = data[2].count });
+            DataMonthOptionEntry.Add(new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = data[3].count });
+            numOptionEntry = data[3].count;
         }
         public async Task LoadUnitFourMonths()
         {
@@ -353,23 +363,24 @@ namespace PhuLongCRM.ViewModels
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("salesorders", fetchXml);
-            if (result == null || result.value.Count == 0) return;
+            if (result == null) return;
 
-            foreach(var time in four_Month)
-            {
-                int count = 0;
-                foreach (var item in result.value)
-                {
-                    if (item.group == time.Month.ToString())
-                    {
-                        count = item.count;
-                        break;
-                    }
-                }
-                DataMonthUnit.Add(new ChartModel() { Category = time.ToString("MM/yyyy"), Value = count });
-                if (time.Month == dateBefor.Month)
-                    numUnit = count;
-            }
+            List<CountChartModel> four_month = new List<CountChartModel>();
+            four_month.Add(new CountChartModel { group = first_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = second_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = third_Month.Month.ToString() });
+            four_month.Add(new CountChartModel { group = fourth_Month.Month.ToString() });
+            four_month.AddRange(result.value);
+
+            var data = four_month.GroupBy(x => x.group)
+               .Select(x => (group: x.Key, count: x.Sum(p => p.count))
+               ).ToList();
+
+            DataMonthUnit.Add(new ChartModel() { Category = first_Month.ToString("MM/yyyy"), Value = data[0].count });
+            DataMonthUnit.Add(new ChartModel() { Category = second_Month.ToString("MM/yyyy"), Value = data[1].count });
+            DataMonthUnit.Add(new ChartModel() { Category = third_Month.ToString("MM/yyyy"), Value = data[2].count });
+            DataMonthUnit.Add(new ChartModel() { Category = fourth_Month.ToString("MM/yyyy"), Value = data[3].count });
+            numUnit = data[3].count;
         }
         public async Task LoadLeads()
         {
@@ -656,6 +667,12 @@ namespace PhuLongCRM.ViewModels
     {
         public string group { get; set; }
         public int count { get; set; }
+    }
+    public class CountChartCommissionModel : CountChartModel
+    {
+        public decimal totalamountpaid_sum { get; set; }
+        public decimal totalamount_sum { get; set; }
+        public string group_sts { get; set; }
     }
     public class DashboardChartModel
     {
