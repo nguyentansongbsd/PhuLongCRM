@@ -467,7 +467,7 @@ namespace PhuLongCRM.Views
                 btnQueue.IsVisible = false;
                 viewModel.IsShowBtnBangTinhGia = false;
             }
-            btnQueue.IsVisible = !viewModel.Unit.bsd_vippriority;
+            gridBtn.IsVisible = !viewModel.Unit.bsd_vippriority;
             btnQuote.IsVisible = viewModel.IsShowBtnBangTinhGia;
 
             //set button
@@ -490,7 +490,7 @@ namespace PhuLongCRM.Views
             else if (btnQueue.IsVisible == false && btnQuote.IsVisible == true)
             {
                 gridBtn.IsVisible = true;
-                Grid.SetColumn(btnQueue, 0);
+                Grid.SetColumn(btnQuote, 0);
                 Grid.SetColumnSpan(btnQuote, 2);
             }
             // set vip

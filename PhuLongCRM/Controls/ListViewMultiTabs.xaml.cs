@@ -154,6 +154,7 @@ namespace PhuLongCRM.Controls
                 grid.Children.Add(grid_tap);
                 Grid.SetColumn(grid_tap, 0);
                 Grid.SetRow(grid_tap, 0);
+                Grid.SetColumnSpan(grid_tap, 2);
                 if (moreInfo)
                 {
                     Grid.SetRowSpan(grid_tap, 3);
