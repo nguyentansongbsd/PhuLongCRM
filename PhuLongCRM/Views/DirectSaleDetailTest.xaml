@@ -7,15 +7,6 @@
              Title="{x:Static lang:Language.gio_hang}">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="BackgroundColor" Value="#F9F9F9"/>
-                <Setter Property="Padding" Value="17,8,0,8"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-                <Setter Property="IndicatorText" Value=""/>
-                <Setter Property="IndicatorLocation" Value="End"/>
-                <Setter Property="IndicatorFontSize" Value="18"/>
-                <Setter Property="IndicatorColor" Value="#939393"/>
-            </Style>
             <Style TargetType="Label" x:Key="statusCodeUnit">
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="TextColor" Value="White"/>
@@ -128,7 +119,7 @@
                     </Label>
                 </Grid>
 
-                <ListView x:Name="listFloor" Grid.Row="2" ItemsSource="{Binding Block.Floors}" BackgroundColor="White" ItemAppearing="ListView_ItemAppearing" HasUnevenRows="True" SelectionMode="None">
+                <ListView x:Name="listFloor" Grid.Row="2" ItemsSource="{Binding Block.Floors}" BackgroundColor="White" ItemAppearing="ListView_ItemAppearing" HasUnevenRows="True" SelectionMode="None" SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

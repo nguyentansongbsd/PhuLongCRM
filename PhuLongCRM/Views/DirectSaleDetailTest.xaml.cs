@@ -124,11 +124,12 @@ namespace PhuLongCRM.Views
                 {
                     if (floor.Units.Count == 0)
                         await viewModel.LoadUnitByFloor(floor.bsd_floorid);
-                  //  BindableLayout.SetItemsSource(collectionFloor, floor.Units);
+                    //BindableLayout.SetItemsSource(collectionFloor, floor.Units);
                     floor.iShow = !floor.iShow;
                 }
                 LoadingHelper.Hide();
             }
+            (((RadBorder)((StackLayout)item.Parent).Parent).Parent as ViewCell).ForceUpdateSize();
         }
         private async void UnitItem_Tapped(object sender, EventArgs e)
         {

@@ -436,5 +436,19 @@ namespace PhuLongCRM.Views
             gridButton.IsVisible = !viewModel.Unit.bsd_vippriority;
             LoadingHelper.Hide();
         }
+
+        async void ScrollView_Scrolled(System.Object sender, Xamarin.Forms.ScrolledEventArgs e)
+        {
+            if (!(sender is ScrollView scrollView))
+                return;
+
+            var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
+
+            if (scrollingSpace > e.ScrollY)
+                return;
+
+            await DisplayAlert("", "asdfasd", "ok");
+            return;
+        }
     }
 }
