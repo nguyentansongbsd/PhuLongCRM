@@ -261,7 +261,10 @@ namespace PhuLongCRM.ViewModels
             data["bsd_localization"] = contact.bsd_localization;
             data["bsd_dategrant"] = contact.bsd_dategrant.HasValue ? (DateTime.Parse(contact.bsd_dategrant.ToString()).ToLocalTime()).ToString("yyy-MM-dd") : null;
             data["bsd_placeofissue"] = contact.bsd_placeofissue;
-            data["bsd_passport"] = contact.bsd_passport;
+            if (!string.IsNullOrWhiteSpace(contact.bsd_passport))
+            {
+                data["bsd_passport"] = contact.bsd_passport;
+            }
             data["bsd_issuedonpassport"] = contact.bsd_issuedonpassport.HasValue ? (DateTime.Parse(contact.bsd_issuedonpassport.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
             data["bsd_placeofissuepassport"] = contact.bsd_placeofissuepassport;
             data["bsd_jobtitlevn"] = contact.bsd_jobtitlevn;
