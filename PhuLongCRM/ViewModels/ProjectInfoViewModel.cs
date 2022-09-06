@@ -104,8 +104,9 @@ namespace PhuLongCRM.ViewModels
         public int Option { get=>_option; set { _option = value;OnPropertyChanged(nameof(Option)); } }
         private int _signedDA = 0;
         public int SignedDA { get=>_signedDA; set { _signedDA = value;OnPropertyChanged(nameof(SignedDA)); } }
+
         private int _qualified = 0;
-        public int Qualified { get=>_qualified; set { OnPropertyChanged(nameof(Qualified)); } }
+        public int Qualified { get=>_qualified; set { _qualified = value; OnPropertyChanged(nameof(Qualified)); } }
 
         public bool IsLoadedGiuCho { get; set; }
 
@@ -203,68 +204,74 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadThongKe()
         {
-            unitChartModels = new List<ChartModel>()
-            {
-                new ChartModel {Category ="Giữ chỗ",Value=1},
-                new ChartModel { Category = "Đặt cọc", Value = 1 },
-                new ChartModel {Category ="Đồng ý chuyển cọc",Value=1 },
-                new ChartModel { Category = "Đã đủ tiền cọc", Value = 1 },
-                new ChartModel { Category = "Option", Value = 1 },
-                new ChartModel {Category ="Thanh toán đợt 1",Value=1},
-                new ChartModel { Category = "Signed D.A", Value = 1 },
-                new ChartModel { Category = "Qualified", Value = 1 },
-                new ChartModel { Category = "Đã bán", Value =  1},
-                new ChartModel {Category ="Chuẩn bị", Value=1},
-                new ChartModel { Category = "Sẵn sàng", Value = 1 },
-                new ChartModel { Category = "Booking", Value = 1 },
-            };
-            foreach (var item in unitChartModels)
-            {
-                UnitChart.Add(item);
-            }
-
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                              <entity name='product'>
-                                <attribute name='name' />
-                                <attribute name='productnumber' />
-                                <attribute name='statecode' />
-                                <attribute name='productstructure' />
-                                <attribute name='statuscode' />
-                                <attribute name='bsd_projectcode' />
-                                <attribute name='createdon' />
-                                <attribute name='bsd_unitscodesams' />
-                                <attribute name='productid' />
-                                <order attribute='createdon' descending='true' />
-                                <filter type='and'>
-                                    <condition attribute='statuscode' operator='not-in'>
-                                        <value>0</value>
-                                    </condition>
-                                    <condition attribute='bsd_projectcode' operator='eq' uitype='bsd_project' value='" + this.ProjectId + @"'/>
-                                  </filter>
-                              </entity>
-                            </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Unit>>("products", fetchXml);
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='product'>
+                                    <attribute name='statuscode' groupby='true' alias='group'/>
+                                    <attribute name='productid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                        <condition attribute='statuscode' operator='not-in'>
+                                            <value>0</value>
+                                        </condition>
+                                        <condition attribute='bsd_projectcode' operator='eq' uitype='bsd_project' value='{ProjectId}'/>
+                                      </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("products", fetchXml);
             if (result == null || result.value.Any() == false)
             {
                 IsShowBtnGiuCho = true;
+                unitChartModels = new List<ChartModel>()
+                {
+                    new ChartModel {Category ="Giữ chỗ",Value=1},
+                    new ChartModel { Category = "Đặt cọc", Value = 1 },
+                    new ChartModel {Category ="Đồng ý chuyển cọc",Value=1 },
+                    new ChartModel { Category = "Đã đủ tiền cọc", Value = 1 },
+                    new ChartModel { Category = "Option", Value = 1 },
+                    new ChartModel {Category ="Thanh toán đợt 1",Value=1},
+                    new ChartModel { Category = "Signed D.A", Value = 1 },
+                    new ChartModel { Category = "Qualified", Value = 1 },
+                    new ChartModel { Category = "Đã bán", Value =  1},
+                    new ChartModel {Category ="Chuẩn bị", Value=1},
+                    new ChartModel { Category = "Sẵn sàng", Value = 1 },
+                    new ChartModel { Category = "Booking", Value = 1 },
+                };
+                foreach (var item in unitChartModels)
+                {
+                    UnitChart.Add(item);
+                }
             }
             else
             {
                 IsShowBtnGiuCho = false;
                 var data = result.value;
-                NumUnit = data.Count;
-                ChuanBi = data.Where(x => x.statuscode == 1).Count();
-                SanSang = data.Where(x => x.statuscode == 100000000).Count();
-                GiuCho = data.Where(x => x.statuscode == 100000004).Count();
-                DatCoc = data.Where(x => x.statuscode == 100000006).Count();
-                DongYChuyenCoc = data.Where(x => x.statuscode == 100000005).Count();
-                DaDuTienCoc = data.Where(x => x.statuscode == 100000003).Count();
-                ThanhToanDot1 = data.Where(x => x.statuscode == 100000001).Count();
-                DaBan = data.Where(x => x.statuscode == 100000002).Count();
-                Booking = data.Where(x => x.statuscode == 100000007).Count();
-                Option = data.Where(x => x.statuscode == 100000010).Count();
-                SignedDA = data.Where(x => x.statuscode == 100000009).Count();
-                Qualified = data.Where(x => x.statuscode == 100000008).Count();
+                foreach (var item in data)
+                {
+                    if (item.group == "1")
+                        ChuanBi = item.count;
+                    else if (item.group == "100000000")
+                        SanSang = item.count;
+                    else if (item.group == "100000004")
+                        GiuCho = item.count;
+                    else if (item.group == "100000006")
+                        DatCoc = item.count;
+                    else if (item.group == "100000005")
+                        DongYChuyenCoc = item.count;
+                    else if (item.group == "100000003")
+                        DaDuTienCoc = item.count;
+                    else if (item.group == "100000001")
+                        ThanhToanDot1 = item.count;
+                    else if (item.group == "100000002")
+                        DaBan = item.count;
+                    else if (item.group == "100000007")
+                        Booking = item.count;
+                    else if (item.group == "100000010")
+                        Option = item.count;
+                    else if (item.group == "100000009")
+                        SignedDA = item.count;
+                    else if (item.group == "100000008")
+                        Qualified = item.count;
+                    NumUnit += item.count;
+                }
 
                 unitChartModels = new List<ChartModel>()
                 {
@@ -281,7 +288,6 @@ namespace PhuLongCRM.ViewModels
                     new ChartModel { Category = "Sẵn sàng", Value = SanSang },
                     new ChartModel { Category = "Booking", Value = Booking },
                 };
-                UnitChart.Clear();
                 foreach (var item in unitChartModels)
                 {
                     UnitChart.Add(item);
@@ -291,12 +297,11 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadThongKeGiuCho()
         {
-            string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                   <entity name='opportunity'>
-                                    <attribute name='name' />
-                                    <order attribute='createdon' descending='true' />
+                                    <attribute name='name' aggregate='count' alias='count'/>
                                     <filter type='and'>
-                                      <condition attribute='bsd_project' operator='eq' uitype='bsd_project' value='{" + ProjectId + @"}' />
+                                      <condition attribute='bsd_project' operator='eq' uitype='bsd_project' value='{ProjectId}' />
                                       <condition attribute='statuscode' operator='in'>
                                         <value>100000000</value>
                                         <value>100000002</value>
@@ -304,17 +309,16 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueueFormModel>>("opportunities", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("opportunities", fetchXml);
             if (result == null || result.value.Any() == false) return;
 
-            SoGiuCho = result.value.Count();
+            SoGiuCho = result.value.FirstOrDefault().count;
         }
         public async Task LoadThongKeHopDong()
         {
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                               <entity name='salesorder'>
-                                <attribute name='name' />
-                                <order attribute='createdon' descending='true' />
+                                <attribute name='name' aggregate='count' alias='count'/>
                                 <filter type='and'>
                                     <condition attribute='statuscode' operator='ne' value='100000006' />
                                 </filter>
@@ -325,17 +329,16 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity>
                               </entity>
                             </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionEntry>>("salesorders", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("salesorders", fetchXml);
             if (result == null || result.value.Any() == false) return;
 
-            SoHopDong = result.value.Count();
+            SoHopDong = result.value.FirstOrDefault().count;
         }
         public async Task LoadThongKeBangTinhGia()
         {
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                               <entity name='quote'>
-                                <attribute name='name' />
-                                <order attribute='createdon' descending='true' />
+                                <attribute name='name' aggregate='count' alias='count'/>
                                 <filter type='and'>
                                   <condition attribute='statuscode' operator='eq' value='100000007' />
                                 </filter>
@@ -346,16 +349,15 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity>
                               </entity>
                             </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QuoteModel>>("quotes", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("quotes", fetchXml);
             if (result == null || result.value.Any() == false) return;
-            SoBangTinhGia = result.value.Count();
+            SoBangTinhGia = result.value.FirstOrDefault().count;
         }
         public async Task LoadThongKeDatCoc()
         {
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                               <entity name='quote'>
-                                <attribute name='name' />
-                                <order attribute='createdon' descending='true' />
+                                <attribute name='name' aggregate='count' alias='count'/>
                                 <filter type='and'>
                                   <condition attribute='statuscode' operator='in'>
                                     <value>100000000</value>
@@ -373,9 +375,9 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity>
                               </entity>
                             </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QuoteModel>>("quotes", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("quotes", fetchXml);
             if (result == null || result.value.Any() == false) return;
-            SoDatCoc = result.value.Count();
+            SoDatCoc = result.value.FirstOrDefault().count;
         }
         public async Task LoadGiuCho()
         {

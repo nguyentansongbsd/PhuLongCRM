@@ -52,7 +52,8 @@ namespace PhuLongCRM.Views
                         viewModel.LoadThongKeGiuCho(),
                         viewModel.LoadThongKeHopDong(),
                         viewModel.LoadThongKeBangTinhGia(),
-                        viewModel.CheckPhasesLaunch()
+                        viewModel.CheckPhasesLaunch(),
+                        viewModel.LoadThongKeDatCoc()
                     );
 
                 try
