@@ -151,7 +151,7 @@
                             <controls:LookUp x:Name="lookupDieuKienBanGiao" Placeholder="{x:Static lang:Language.chon_dieu_kien_ban_giao}" NameDisplay="Label" BottomModal="{Reference lookUpModal}" SelectedItem="{Binding HandoverCondition}" ItemsSource="{Binding HandoverConditions}" SelectedItemChange="HandoverCondition_SelectedItemChange"/>
 
                             <controls:FormLabelRequired Text="{x:Static lang:Language.phuong_thuc_thanh_toan}"  Margin="0,10,0,0"/>
-                            <controls:LookUp x:Name="lookupPhuongThucThanhToan" Placeholder="{x:Static lang:Language.chon_phuong_thuc_thanh_toan}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentScheme}" ItemsSource="{Binding PaymentSchemes}" SelectedItemChange="PTTT_SelectedItemChange"/>
+                            <controls:LookUp x:Name="lookupPhuongThucThanhToan" Placeholder="{x:Static lang:Language.chon_phuong_thuc_thanh_toan}" BottomModal="{Reference lookUpModal}" NameDisplay="bsd_name" SelectedItem="{Binding PaymentScheme}" ItemsSource="{Binding PaymentSchemes}" SelectedItemChange="PTTT_SelectedItemChange"/>
 
                             <controls:FormLabel Text="{x:Static lang:Language.loai_gop_dot}"  Margin="0,10,0,0"/>
                             <controls:LookUp x:Name="lookupLoaiGopDot" Placeholder="{x:Static lang:Language.chon_loai_gop_dot}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentSchemeType}" ItemsSource="{Binding PaymentSchemeTypes}" SelectedItemChange="LoaiGopDot_SelectedItemChange"/>
