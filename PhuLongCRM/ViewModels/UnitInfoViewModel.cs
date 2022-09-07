@@ -355,49 +355,36 @@ namespace PhuLongCRM.ViewModels
                 list_danhsachhopdong.Add(x);
             }
         }
-
         public async Task CheckShowBtnBangTinhGia()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
-                              <entity name='bsd_phaseslaunch'>
-                                <attribute name='bsd_name' />
-                                <attribute name='createdon' />
-                                <attribute name='bsd_phaseslaunchid' />
-                                <order attribute='createdon' descending='true' />
-                                <link-entity name='product' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='al'>
-                                  <filter type='and'>
-                                    <condition attribute='productid' operator='eq' value='{UnitId}' />
-                                  </filter>
-                                </link-entity><link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='an' >
-                                   <attribute name='bsd_startdate' alias='startdate_event' />
-                                   <attribute name='bsd_enddate' alias='enddate_event'/>
-                                   <attribute name='statuscode' alias='statuscode_event'/>
-                                </link-entity>
-                              </entity>
-                            </fetch>";
+                                  <entity name='bsd_phaseslaunch'>
+                                    <attribute name='bsd_name' />
+                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner'>
+                                      <filter type='and'>
+                                        <condition attribute='bsd_enddate' operator='on-or-after' value='{DateTime.Now.ToString("yyyy-MM-dd")}' />
+                                        <condition attribute='bsd_startdate' operator='on-or-before' value='{DateTime.Now.ToString("yyyy-MM-dd")}' />
+                                        <condition attribute='statuscode' operator='eq' value='100000000' />
+                                      </filter>
+                                    </link-entity>
+                                    <link-entity name='product' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner'>
+                                      <filter type='and'>
+                                        <condition attribute='productid' operator='eq' value='{UnitId}' />
+                                        <condition attribute='statuscode' operator='in'>
+                                          <value>100000000</value>
+                                          <value>100000004</value>
+                                        </condition>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhasesLanchModel>>("bsd_phaseslaunchs", fetchXml);
             if (result == null || result.value.Any() == false) return;
 
-            var data = result.value;
-            foreach (var item in data)
-            {
-                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
-                {
-                    if (UnitInfo.statuscode == 100000000 || UnitInfo.statuscode == 100000004)
-                    {
-                        IsShowBtnBangTinhGia = true;
-                    }
-                    else
-                    {
-                        IsShowBtnBangTinhGia = false;
-                    }
-                    return;
-                }
-                else
-                {
-                    IsShowBtnBangTinhGia = false;
-                }
-            }
+            if(result.value.Count > 0)
+                IsShowBtnBangTinhGia = true;
+            else
+                IsShowBtnBangTinhGia = false;
         }
 
         public async Task LoadAllCollection()
