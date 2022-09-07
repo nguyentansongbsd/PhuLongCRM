@@ -47,8 +47,8 @@ namespace PhuLongCRM.ViewModels
         public ObservableCollection<OptionSet> PromotionsSelected { get; set; } = new ObservableCollection<OptionSet>();
         public ObservableCollection<OptionSet> Promotions { get; set; } = new ObservableCollection<OptionSet>();
 
-        private List<OptionSet> _paymentSchemes;
-        public List<OptionSet> PaymentSchemes { get => _paymentSchemes; set { _paymentSchemes = value; OnPropertyChanged(nameof(PaymentSchemes)); } }
+        private List<PaymentSchemeModel> _paymentSchemes;
+        public List<PaymentSchemeModel> PaymentSchemes { get => _paymentSchemes; set { _paymentSchemes = value; OnPropertyChanged(nameof(PaymentSchemes)); } }
         private List<OptionSet> _paymentSchemeTypes;
         public List<OptionSet> PaymentSchemeTypes { get => _paymentSchemeTypes; set { _paymentSchemeTypes = value; OnPropertyChanged(nameof(PaymentSchemeTypes)); } }
         private List<OptionSet> _discountLists;
@@ -70,9 +70,9 @@ namespace PhuLongCRM.ViewModels
         private LookUp _customerReferral;
         public LookUp CustomerReferral { get => _customerReferral; set { _customerReferral = value; OnPropertyChanged(nameof(CustomerReferral)); } }
 
-        public OptionSet paymentSheme_Temp { get; set; }
-        private OptionSet _paymentScheme;
-        public OptionSet PaymentScheme { get => _paymentScheme; set { _paymentScheme = value; OnPropertyChanged(nameof(PaymentScheme)); } }
+        public PaymentSchemeModel paymentSheme_Temp { get; set; }
+        private PaymentSchemeModel _paymentScheme;
+        public PaymentSchemeModel PaymentScheme { get => _paymentScheme; set { _paymentScheme = value; OnPropertyChanged(nameof(PaymentScheme)); } }
         private OptionSet _paymentSchemeType;
         public OptionSet PaymentSchemeType { get => _paymentSchemeType; set { _paymentSchemeType = value; OnPropertyChanged(nameof(PaymentSchemeType)); } }
         private OptionSet _discountList;
@@ -163,6 +163,8 @@ namespace PhuLongCRM.ViewModels
             ListCollaborator = new List<LookUp>();
             ListCustomerReferral = new List<LookUp>();
             SalesAgents = new List<OptionSet>();
+            PaymentSchemes = new List<PaymentSchemeModel>();
+            HandoverConditions = new List<HandoverConditionModel>();
         }
 
         public async Task CheckTaoLichThanhToan()
@@ -370,7 +372,7 @@ namespace PhuLongCRM.ViewModels
                 this.DiscountExchangeList = new OptionSet(this.Quote.discountpromotion_id, this.Quote.discountpromotion_name);
             }
 
-            this.paymentSheme_Temp = this.PaymentScheme = new OptionSet(this.Quote.paymentscheme_id.ToString(), this.Quote.paymentscheme_name);
+            this.paymentSheme_Temp = this.PaymentScheme = new PaymentSchemeModel() { bsd_paymentschemeid = this.Quote.paymentscheme_id, bsd_name = this.Quote.paymentscheme_name };
             this.DiscountList = this.Quote.discountlist_id != Guid.Empty ? new OptionSet(this.Quote.discountlist_id.ToString(), this.Quote.discountlist_name) : null;
             this.PhasesLaunchId = this.Quote._bsd_phaseslaunchid_value;
             this.UnitType = this.Quote._bsd_unittype_value;
@@ -614,8 +616,10 @@ namespace PhuLongCRM.ViewModels
             Guid unitId = this.QuoteId != Guid.Empty ? this.Quote._bsd_projectcode_value : this.UnitInfor._bsd_projectcode_value;
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_paymentscheme'>
-                                    <attribute name='bsd_name' alias='Label'/>
-                                    <attribute name='bsd_paymentschemeid' alias='Val' />
+                                    <attribute name='bsd_name'/>
+                                    <attribute name='bsd_paymentschemeid'/>
+                                    <attribute name='bsd_startdate' />
+                                    <attribute name='bsd_enddate' />
                                     <order attribute='createdon' descending='false' />
                                     <filter type='and'>
                                       <condition attribute='statuscode' operator='eq' value='100000000' />
@@ -623,9 +627,15 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_paymentschemes", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PaymentSchemeModel>>("bsd_paymentschemes", fetchXml);
             if (result == null || result.value.Count == 0) return;
-            this.PaymentSchemes = result.value;
+            foreach (var item in result.value)
+            {
+                if (item.bsd_startdate.Date.ToLocalTime() <= DateTime.Now.Date && item.bsd_enddate.Date.ToLocalTime() >= DateTime.Now.Date)
+                {
+                    this.PaymentSchemes.Add(item);
+                }
+            }
         }
 
         // Load Dieu kien ban giao
@@ -641,8 +651,12 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_priceperm2' />
                                     <attribute name='bsd_amount' />
                                     <attribute name='bsd_percent' />
+                                    <attribute name='bsd_startdate' alias='startdate' />
+                                    <attribute name='bsd_enddate' alias='enddate'/>
                                     <order attribute='bsd_name' descending='true' />
                                     <filter type='and'>
+                                        <condition attribute='bsd_enddate' operator='not-null' />
+                                        <condition attribute='bsd_startdate' operator='not-null' />
                                         <condition attribute='statuscode' operator='eq' value='100000000' />
                                         <condition attribute='bsd_phaselaunch' operator='eq' uitype='bsd_phaseslaunch' value='{PhasesLaunchId}' />
                                     </filter>
@@ -650,7 +664,13 @@ namespace PhuLongCRM.ViewModels
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HandoverConditionModel>>("bsd_packagesellings", fetchXml);
             if (result == null || result.value.Count == 0) return;
-            this.HandoverConditions = result.value;
+            foreach (var item in result.value)
+            {
+                if (item.startdate.Date.ToLocalTime() <= DateTime.Now.Date && item.enddate.Date.ToLocalTime() >= DateTime.Now.ToLocalTime())
+                {
+                    this.HandoverConditions.Add(item);
+                }
+            }
         }
 
         // Load handover condition khi cap nha
@@ -1408,7 +1428,7 @@ namespace PhuLongCRM.ViewModels
 
             if (this.PaymentScheme != null)
             {
-                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
+                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.bsd_paymentschemeid})";
             }
             else
             {
@@ -1449,8 +1469,8 @@ namespace PhuLongCRM.ViewModels
 
             if (this.PaymentScheme != null)
             {
-                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.Val})";
-                this.Quote.paymentscheme_id = Guid.Parse(this.PaymentScheme.Val);
+                data["bsd_paymentscheme@odata.bind"] = $"/bsd_paymentschemes({this.PaymentScheme.bsd_paymentschemeid})";
+                this.Quote.paymentscheme_id = this.PaymentScheme.bsd_paymentschemeid;
             }
             else
             {

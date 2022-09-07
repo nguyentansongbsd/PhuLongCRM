@@ -116,7 +116,7 @@ namespace PhuLongCRM.Views
                 }
 
                 await viewModel.CheckTaoLichThanhToan();
-                Guid id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
+                Guid id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.bsd_paymentschemeid.ToString());
                 await Task.WhenAll(
                     viewModel.LoadDiscountChilds(),
                     viewModel.LoadDiscountChildsPaymentSchemes(id.ToString()),
@@ -393,7 +393,7 @@ namespace PhuLongCRM.Views
         private async void PTTT_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
             LoadingHelper.Show();
-            if (viewModel.PaymentScheme.Val != viewModel.Quote.paymentscheme_id.ToString())
+            if (viewModel.PaymentScheme.bsd_paymentschemeid != viewModel.Quote.paymentscheme_id)
             {
                 if (viewModel.Quote.paymentscheme_id != Guid.Empty)
                 {
@@ -426,7 +426,7 @@ namespace PhuLongCRM.Views
                     {
                         if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                         viewModel.paymentSheme_Temp = viewModel.PaymentScheme;
-                        viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
+                        viewModel.Quote.paymentscheme_id = viewModel.PaymentScheme.bsd_paymentschemeid;
                     }
                     else
                     {
@@ -436,7 +436,7 @@ namespace PhuLongCRM.Views
                 }
                 
                 viewModel.DiscountChildsPaymentSchemes.Clear();
-                var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
+                var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.bsd_paymentschemeid.ToString());
                 await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
             }
             LoadingHelper.Hide();
@@ -1098,7 +1098,7 @@ namespace PhuLongCRM.Views
 
                                 this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia_title;
 
-                                viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
+                                viewModel.Quote.paymentscheme_id = viewModel.PaymentScheme.bsd_paymentschemeid;
                                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                                 LoadingHelper.Hide();
                             }
