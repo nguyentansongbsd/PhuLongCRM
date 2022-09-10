@@ -155,6 +155,11 @@ namespace PhuLongCRM.ViewModels
 
         public bool IsHadLichThanhToan { get; set; }
 
+        public bool IsLocked { get; set; }
+        public bool IsExpiredDiscount { get; set; }
+        public bool IsExpiredInternel { get; set; }
+        public bool IsExpiredExchange { get; set; }
+
         public ReservationFormViewModel()
         {
             SelectedPromotionIds = new List<string>();
@@ -554,10 +559,14 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='bsd_discounttype' from='bsd_discounttypeid' to='bsd_discountlist' visible='false' link-type='outer' alias='a_182aff31ba81e911a83b000d3a07be23'>
                                       <attribute name='bsd_name' alias='discount_name'/>
                                        <attribute name='bsd_discounttypeid' alias='discount_id'/>
+                                      <attribute name='bsd_startdate' alias='startdate_discountlist'/>
+                                      <attribute name='bsd_enddate' alias='enddate_discountlist'/>
                                     </link-entity>
                                     <link-entity name='bsd_interneldiscount' from='bsd_interneldiscountid' to='bsd_internaldiscountlist' visible='false' link-type='outer' alias='a_7514fc37ba81e911a83b000d3a07be23'>
                                       <attribute name='bsd_name' alias='internel_name'/>
                                       <attribute name='bsd_interneldiscountid' alias='internel_id'/>
+                                      <attribute name='bsd_startdate' alias='startdate_internellist'/>
+                                      <attribute name='bsd_enddate' alias='enddate_internellist'/>
                                     </link-entity>
                                     <link-entity name='bsd_discountonpaymentscheme' from='bsd_discountonpaymentschemeid' to='bsd_discountonpaymentscheme' visible='false' link-type='outer' alias='a_e829ff31ba81e911a83b000d3a07be23'>
                                       <attribute name='bsd_name' alias='paymentscheme_name'/>
@@ -566,28 +575,54 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='bsd_discountpromotion' from='bsd_discountpromotionid' to='bsd_promotiondiscountlist' visible='false' link-type='outer' alias='a_feadc62e2b23eb11a813000d3a07be14'>
                                       <attribute name='bsd_name' alias='promotion_name'/>
                                       <attribute name='bsd_discountpromotionid' alias='promotion_id' />
+                                      <attribute name='bsd_startdate' alias='startdate_exchangelist'/>
+                                      <attribute name='bsd_enddate' alias='enddate_exchangelist'/>
                                     </link-entity>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhasesLanchModel>>("bsd_phaseslaunchs", fetchXml);
             if (result == null || result.value.Any() == false) return;
 
-            this.PhasesLanchModel = result.value.SingleOrDefault();
-            if (PhasesLanchModel.discount_id != Guid.Empty)
+            try
             {
-                this.DiscountList = new OptionSet() { Val = PhasesLanchModel.discount_id.ToString(), Label = PhasesLanchModel.discount_name };
-                await LoadDiscountChilds();
+                this.PhasesLanchModel = result.value.SingleOrDefault();
+                if (PhasesLanchModel.discount_id != Guid.Empty)
+                {
+                    if (PhasesLanchModel.startdate_discountlist.Date.ToLocalTime() <= DateTime.Now.Date && PhasesLanchModel.enddate_discountlist.Date.ToLocalTime() >= DateTime.Now.Date)
+                    {
+                        this.DiscountList = new OptionSet() { Val = PhasesLanchModel.discount_id.ToString(), Label = PhasesLanchModel.discount_name };
+                        this.IsExpiredDiscount = false;
+                    }
+                    else this.IsExpiredDiscount = true;
+                    await LoadDiscountChilds();
+                }
+                if (PhasesLanchModel.internel_id != Guid.Empty)
+                {
+                    if (PhasesLanchModel.startdate_internellist.Date.ToLocalTime() <= DateTime.Now.Date && PhasesLanchModel.enddate_internellist.Date.ToLocalTime() >= DateTime.Now.Date)
+                    {
+                        this.DiscountInternelList = new OptionSet() { Val = PhasesLanchModel.internel_id.ToString(), Label = PhasesLanchModel.internel_name };
+                        this.IsExpiredInternel = false;
+                    }
+                    else this.IsExpiredInternel = true;
+                    await LoadDiscountChildsInternel();
+                }
+                if (PhasesLanchModel.promotion_id != Guid.Empty)
+                {
+                    if (PhasesLanchModel.startdate_exchangelist.Date.ToLocalTime() <= DateTime.Now.Date && PhasesLanchModel.enddate_exchangelist.Date.ToLocalTime() >= DateTime.Now.Date)
+                    {
+                        this.DiscountExchangeList = new OptionSet() { Val = PhasesLanchModel.promotion_id.ToString(), Label = PhasesLanchModel.promotion_name };
+                        this.IsExpiredExchange = false;
+                    }
+                    else this.IsExpiredExchange = true;
+
+                    await LoadDiscountChildsExchange();
+                }
             }
-            if (PhasesLanchModel.internel_id != Guid.Empty)
+            catch(Exception ex)
             {
-                this.DiscountInternelList = new OptionSet() { Val = PhasesLanchModel.internel_id.ToString(), Label = PhasesLanchModel.internel_name };
-                await LoadDiscountChildsInternel();
+
             }
-            if (PhasesLanchModel.promotion_id != Guid.Empty)
-            {
-                this.DiscountExchangeList = new OptionSet() { Val = PhasesLanchModel.promotion_id.ToString(), Label = PhasesLanchModel.promotion_name };
-                await LoadDiscountChildsExchange();
-            }
+            
 
         }
 
@@ -744,8 +779,11 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadDiscountChildsExchange()
         {
             // new_type -> loai cua discounts (precent:100000000 or amount:100000001)
-            if (DiscountExchangeList == null) return;
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            List<DiscountChildOptionSet> data = new List<DiscountChildOptionSet>();
+            var result = new RetrieveMultipleApiResponse<DiscountChildOptionSet>();
+            if (this.IsExpiredExchange == false && this.DiscountExchangeList != null)
+            {
+                string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_discount'>
                                     <attribute name='bsd_discountid' alias='Val'/>
                                     <attribute name='bsd_name' alias='Label'/>
@@ -764,10 +802,41 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
-            if (result == null || result.value.Any() == false) return;
+                result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
+                if (result != null && result.value.Any() == true)
+                {
+                    data.AddRange(result.value);
+                }
+            }
 
-            foreach (var item in result.value)
+            string fetchXml2 = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <attribute name='bsd_amount'/>
+                                    <attribute name='bsd_percentage'/>
+                                    <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
+                                    <attribute name='bsd_startdate'/>
+                                    <attribute name='bsd_enddate'/>
+                                    <attribute name='createdon'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_special' operator='eq' value='1'/>
+                                      <condition attribute='bsd_discounttype' operator='eq' value='100000006'/>
+                                      <condition attribute='statuscode' operator='eq' value='100000000'/>
+                                      <condition attribute='bsd_phaseslaunch' operator='eq' value='{this.PhasesLaunchId}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml2);
+            if (result2 != null && result2.value.Any() == true)
+            {
+                data.AddRange(result2.value);
+            }
+            if (data.Count() < 0) return;
+
+            foreach (var item in data)
             {
                 item.IsEnableChecked = (this.IsHadLichThanhToan == true || item.IsExpired == true || item.IsNotApplied == true) ? false : true;
                 this.DiscountChildsExchanges.Add(item);
@@ -796,8 +865,11 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadDiscountChilds()
         {
             // new_type -> loai cua discounts (precent:100000000 or amount:100000001)
-            if (DiscountList == null) return;
-            string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            List<DiscountChildOptionSet> data = new List<DiscountChildOptionSet>();
+            var result = new RetrieveMultipleApiResponse<DiscountChildOptionSet>();
+            if (this.IsExpiredDiscount == false && this.DiscountList != null)
+            {
+                string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_discount'>
                                     <attribute name='bsd_discountid' alias='Val'/>
                                     <attribute name='bsd_name' alias='Label'/>
@@ -818,10 +890,42 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
-            if (result == null || result.value.Any() == false) return;
+                result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
+                if (result != null && result.value.Any() == true)
+                {
+                    data.AddRange(result.value);
+                }
+            }
+            
+            string fetchXml2 = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <attribute name='bsd_amount'/>
+                                    <attribute name='bsd_percentage'/>
+                                    <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
+                                    <attribute name='bsd_startdate'/>
+                                    <attribute name='bsd_enddate'/>
+                                    <attribute name='createdon'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_special' operator='eq' value='1'/>
+                                      <condition attribute='bsd_discounttype' operator='eq' value='100000000'/>
+                                      <condition attribute='statuscode' operator='eq' value='100000000'/>
+                                      <condition attribute='bsd_phaseslaunch' operator='eq' value='{this.PhasesLaunchId}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            
+            var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml2);
+            if (result2 != null || result2.value.Any() == true)
+            {
+                data.AddRange(result2.value);
+            }
+            if (data.Count() < 0) return;
 
-            foreach (var item in result.value)
+            foreach (var item in data)
             {
                 item.IsEnableChecked = (this.IsHadLichThanhToan == true || item.IsExpired == true || item.IsNotApplied == true) ? false : true;
                 this.DiscountChilds.Add(item);
@@ -832,8 +936,11 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadDiscountChildsInternel()
         {
             // new_type -> loai cua discounts (precent:100000000 or amount:100000001)
-            if (DiscountInternelList == null) return;
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            List<DiscountChildOptionSet> data = new List<DiscountChildOptionSet>();
+            var result = new RetrieveMultipleApiResponse<DiscountChildOptionSet>();
+            if (this.IsExpiredInternel == false && this.DiscountInternelList != null)
+            {
+                string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_discount'>
                                     <attribute name='bsd_discountid' alias='Val'/>
                                     <attribute name='bsd_name' alias='Label'/>
@@ -852,10 +959,41 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
-            if (result == null || result.value.Any() == false) return;
-
-            foreach (var item in result.value)
+                result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
+                if (result != null && result.value.Any() == true)
+                {
+                    data.AddRange(result.value);
+                }
+            }
+            
+            string fetchXml2 = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <attribute name='bsd_amount'/>
+                                    <attribute name='bsd_percentage'/>
+                                    <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
+                                    <attribute name='bsd_startdate'/>
+                                    <attribute name='bsd_enddate'/>
+                                    <attribute name='createdon'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_special' operator='eq' value='1'/>
+                                      <condition attribute='bsd_discounttype' operator='eq' value='100000004'/>
+                                      <condition attribute='statuscode' operator='eq' value='100000000'/>
+                                      <condition attribute='bsd_phaseslaunch' operator='eq' value='{this.PhasesLaunchId}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml2);
+            if (result2 != null && result2.value.Any() == true)
+            {
+                data.AddRange(result2.value);
+            }
+            if (data.Count() < 0) return;
+            
+            foreach (var item in data)
             {
                 item.IsEnableChecked = (this.IsHadLichThanhToan == true || item.IsExpired == true || item.IsNotApplied == true) ? false : true;
                 this.DiscountChildsInternel.Add(item);
@@ -905,17 +1043,42 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                   </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
-            if (result == null || result.value.Any() == false) return;
+            string fetchXml2 = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_discount'>
+                                    <attribute name='bsd_discountid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <attribute name='bsd_amount'/>
+                                    <attribute name='bsd_percentage'/>
+                                    <attribute name='new_type'/>
+                                    <attribute name='bsd_method'/>
+                                    <attribute name='bsd_startdate'/>
+                                    <attribute name='bsd_enddate'/>
+                                    <attribute name='createdon'/>
+                                    <order attribute='bsd_name' descending='false' />
+                                    <filter type='and'>
+                                      <condition attribute='bsd_special' operator='eq' value='1'/>
+                                      <condition attribute='bsd_discounttype' operator='eq' value='100000002'/>
+                                      <condition attribute='statuscode' operator='eq' value='100000000'/>
+                                      <condition attribute='bsd_phaseslaunch' operator='eq' value='{this.PhasesLaunchId}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
 
-            foreach (var item in result.value)
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
+            var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml2);
+            if ((result == null || result.value.Any() == false)&&(result2 == null || result2.value.Any() == false)) return;
+            List<DiscountChildOptionSet> data = new List<DiscountChildOptionSet>();
+            data.AddRange(result.value);
+            data.AddRange(result2.value);
+
+            foreach (var item in data)
             {
                 item.IsEnableChecked = (this.IsHadLichThanhToan == true || item.IsExpired == true || item.IsNotApplied == true) ? false : true;
                 this.DiscountChildsPaymentSchemes.Add(item);
             }
         }
 
-        public async Task LoadDiscountSpecialPaymentSchemes()
+        public async Task LoadDiscountSpecialPaymentSchemes() // hien tai khong dung
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_discount'>
@@ -1390,7 +1553,6 @@ namespace PhuLongCRM.ViewModels
             return response;
         }
 
-
         public async Task<CrmApiResponse> UpdatePaymentShemes()
         {
             string path = $"/quotes({this.Quote.quoteid})";
@@ -1677,6 +1839,12 @@ namespace PhuLongCRM.ViewModels
             }
 
             return data;
+        }
+
+        public async Task<CrmApiResponse> DeleteQuote()
+        {
+            var result = await CrmHelper.DeleteRecord($"/quotes({this.QuoteId})");
+            return result;
         }
 
     }

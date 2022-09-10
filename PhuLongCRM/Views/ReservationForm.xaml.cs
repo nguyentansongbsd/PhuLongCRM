@@ -84,6 +84,7 @@ namespace PhuLongCRM.Views
                 viewModel.PaymentSchemeType = PaymentSchemeTypeData.GetPaymentSchemeTypeById("100000000");
 
                 await Task.WhenAll(viewModel.LoadTaxCode(),viewModel.LoadPhasesLaunch());
+                viewModel.IsLocked = false;
                 SetPreOpen();
                 // set giá trị trong tính tiền
                 InitTotal();
@@ -109,6 +110,11 @@ namespace PhuLongCRM.Views
                 entryNhanVienDaiLy.IsEnabled = false;
                 _isEnableCheck = true;
 
+                if (viewModel.Quote.bsd_paymentschemestype == "100000001") // Type = Gop dau
+                {
+                    datePickerNgayBatDauTinhLTT.IsVisible = true;
+                }
+
                 if (viewModel.Queue == null)
                 { 
                     lblGiuCho.IsVisible = false;
@@ -128,7 +134,8 @@ namespace PhuLongCRM.Views
                     viewModel.LoadPromotions(),
                     viewModel.LoadCoOwners()
                     ) ;
-                
+
+                viewModel.IsLocked = false;
                 SetPreOpen();
 
                 viewModel.PaymentSchemeType = PaymentSchemeTypeData.GetPaymentSchemeTypeById(viewModel.Quote.bsd_paymentschemestype);
@@ -1111,6 +1118,7 @@ namespace PhuLongCRM.Views
                         else
                         {
                             ToastMessageHelper.LongMessage(responseGetTotal.ErrorResponse.error.message);
+                            await viewModel.DeleteQuote();
                             // set lại id = null khi thất bại để chạy vào create
                             viewModel.quotedetailid = Guid.Empty;
                             LoadingHelper.Hide();
@@ -1227,6 +1235,7 @@ namespace PhuLongCRM.Views
             viewModel.TotalReservation.NetSellingPriceAfterVAT_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.NetSellingPriceAfterVAT));
             viewModel.TotalReservation.TotalAmount_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.TotalAmount));
         }
+
         private void InitTotal()
         {
             if (viewModel.TotalReservation == null)

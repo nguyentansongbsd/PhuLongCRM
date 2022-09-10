@@ -439,16 +439,16 @@ namespace PhuLongCRM.Views
 
         async void ScrollView_Scrolled(System.Object sender, Xamarin.Forms.ScrolledEventArgs e)
         {
-            if (!(sender is ScrollView scrollView))
-                return;
+            //if (!(sender is ScrollView scrollView))
+            //    return;
 
-            var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
+            //var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
 
-            if (scrollingSpace > e.ScrollY)
-                return;
+            //if (scrollingSpace > e.ScrollY)
+            //    return;
 
-            await DisplayAlert("", "asdfasd", "ok");
-            return;
+            //await DisplayAlert("", "asdfasd", "ok");
+            //return;
         }
     }
 }
