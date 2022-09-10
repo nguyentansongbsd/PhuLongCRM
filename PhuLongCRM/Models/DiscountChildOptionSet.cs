@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.Resources;
 using System;
 namespace PhuLongCRM.Models
 {
@@ -9,9 +10,32 @@ namespace PhuLongCRM.Models
             get
             {
                 if (bsd_method == 100000001)
-                    return Label + $" - {StringFormatHelper.FormatCurrency(bsd_amount)} đ";
+                {
+                    string _label = Label + $" - {StringFormatHelper.FormatCurrency(bsd_amount)} đ";
+                    if (IsExpired)
+                    {
+                        _label = _label + $" ({Language.het_han})";
+                    }
+                    if (IsNotApplied)
+                    {
+                        _label = _label + $" ({Language.khong_ap_dung})";
+                    }
+                    return _label;
+                }
+                    
                 else if (bsd_method == 100000000)
-                    return Label + $" - {StringFormatHelper.FormatPercent(bsd_percentage)}%";
+                {
+                    string _label = Label + $" - {StringFormatHelper.FormatPercent(bsd_percentage)}%";
+                    if (IsExpired)
+                    {
+                        _label = _label + $" ({Language.het_han})";
+                    }
+                    if (IsNotApplied)
+                    {
+                        _label = _label + $" ({Language.khong_ap_dung})";
+                    }
+                    return _label;
+                }
                 else
                     return null;
             }

@@ -6,8 +6,8 @@ namespace PhuLongCRM.Config
 {
     public class OrgConfig
     {
-        //public const string VerApp = "PL.CRM - VerDemo - Ver 4.0 - Song ngữ";
-        public const string VerApp = "PL.CRM - Version 4.1.4";
+        //public const string VerApp = "PL.CRM - VerDemo - Ver 4.1.5";
+        public const string VerApp = "PL.CRM - Version 4.1";
 
         public const string ApiUrl = "https://phulongdev.api.crm5.dynamics.com/api/data/v9.1";
         public const string Resource = "https://phulongdev.crm5.dynamics.com/";

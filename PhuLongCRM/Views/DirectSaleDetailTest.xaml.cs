@@ -79,6 +79,7 @@ namespace PhuLongCRM.Views
         public async void Block_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
+            await Task.Delay(1);
             var blockChoosed = sender as RadBorder;
             if (blockChoosed != null)
             {
@@ -129,7 +130,7 @@ namespace PhuLongCRM.Views
                 }
                 LoadingHelper.Hide();
             }
-            (((RadBorder)((StackLayout)item.Parent).Parent).Parent as ViewCell).ForceUpdateSize();
+            //(((RadBorder)((StackLayout)item.Parent).Parent).Parent as ViewCell).ForceUpdateSize();
         }
         private async void UnitItem_Tapped(object sender, EventArgs e)
         {
@@ -180,6 +181,21 @@ namespace PhuLongCRM.Views
             if (index + 1 == viewModel.Block.Floors.Count)
                 await viewModel.LoadFloor();
         }
+
+        private async void ScrollView_Scrolled(System.Object sender, Xamarin.Forms.ScrolledEventArgs e)
+        {
+            //if (!(sender is ScrollView scrollView))
+            //    return;
+
+            //var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
+
+            //if (scrollingSpace > e.ScrollY)
+            //    return;
+            //await viewModel.LoadFloor();
+            //await DisplayAlert("", "asdfasd", "ok");
+            //return;
+        }
+
         private void UnitInfor_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();

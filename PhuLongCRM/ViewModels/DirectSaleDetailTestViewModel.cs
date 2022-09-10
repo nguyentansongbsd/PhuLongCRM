@@ -16,7 +16,7 @@ namespace PhuLongCRM.ViewModels
     public class DirectSaleDetailTestViewModel : BaseViewModel
     {
         private string FilterXml;
-        private int Size = 5;
+        private int Size = 3;
 
         private Unit _unit;
         public Unit Unit { get => _unit; set { _unit = value; OnPropertyChanged(nameof(Unit)); } }
@@ -80,11 +80,11 @@ namespace PhuLongCRM.ViewModels
             if (Block != null && Block.Floors != null)
             {
                 var data = Data.SingleOrDefault(x => x.ID == Block.bsd_blockid.ToString());
-                Block.page += 1;
-                var list = data.listFloor.Skip(Block.page * Size).Take(Size);
-                if (Block.Floors.Count == data.listFloor.Count)
-                    return;
-                foreach (var item in list)
+                //Block.page += 1;
+                //var list = data.listFloor.Skip(Block.page * Size).Take(Size);
+                //if (Block.Floors.Count == data.listFloor.Count)
+                //    return;
+                foreach (var item in data.listFloor)
                 {
                     Floor floor = new Floor();
                     floor.bsd_floorid = Guid.Parse(item.ID);
