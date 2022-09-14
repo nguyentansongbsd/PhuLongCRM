@@ -17,7 +17,6 @@ namespace PhuLongCRM.Droid
     [Activity(Label = "Phu Long CRM", Icon = "@drawable/logo_pl_480", Theme = "@style/MainTheme", MainLauncher = true , ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        ScreenReceiver receiver;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -33,7 +32,7 @@ namespace PhuLongCRM.Droid
 
             LoadApplication(new App());
             DependencyService.Get<ILoadingService>().Initilize();
-            receiver = new ScreenReceiver();
+           // receiver = new ScreenReceiver();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -42,16 +41,16 @@ namespace PhuLongCRM.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected override void OnResume()
-        {
-            base.OnResume();
-            RegisterReceiver(receiver, new IntentFilter("com.xamarin.example.TEST"));
-        }
+        //protected override void OnResume()
+        //{
+        //    base.OnResume();
+        //    //RegisterReceiver(receiver, new IntentFilter("com.xamarin.example.TEST"));
+        //}
 
-        protected override void OnPause()
-        {
-            UnregisterReceiver(receiver);
-            base.OnPause();
-        }
+        //protected override void OnPause()
+        //{
+        //   // UnregisterReceiver(receiver);
+        //    base.OnPause();
+        //}
     }
 }
