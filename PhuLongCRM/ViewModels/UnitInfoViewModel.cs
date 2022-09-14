@@ -127,6 +127,7 @@ namespace PhuLongCRM.ViewModels
                 </link-entity>
                 <link-entity name='bsd_unittype' from='bsd_unittypeid' to='bsd_unittype' visible='false' link-type='outer' alias='a_493690ec6ce2e811a94e000d3a1bc2d1'>
                   <attribute name='bsd_name'  alias='bsd_unittype_name'/>
+                  <attribute name='bsd_unittypeid' alias='bsd_unittype_value'/>
                 </link-entity>
                 <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
                   <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
@@ -393,29 +394,60 @@ namespace PhuLongCRM.ViewModels
             {
                 GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
                 var client = BsdHttpClient.Instance();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // load unit type
+                string name_folder_unitype = UnitInfo.bsd_unittype_name + "_" + UnitInfo.bsd_unittype_value.ToString().Replace("-", "").ToUpper();
+                string fileUrl1 = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_UnitTypeID}/root:/{name_folder_unitype}:/children?$select=name,eTag";
+                var request_unitype = new HttpRequestMessage(HttpMethod.Get, fileUrl1);
+                var response_unitype = await client.SendAsync(request_unitype);
+                if (response_unitype.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response_unitype.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
+
+                    List<SharePointGraphModel> list = result.value;
+                    var videos = list.Where(x => x.type == "video").ToList();
+                    var images = list.Where(x => x.type == "image").ToList();
+                    this.TotalMedia += videos.Count;
+                    this.TotalPhoto += images.Count;
+
+                    foreach (var item in videos)
+                    {
+                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_UnitTypeID}/items/{item.id}/driveItem/thumbnails");
+                        if (urlVideo != null)
+                        {
+                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
+                        }
+                    }
+                    foreach (var item in images)
+                    {
+                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_UnitTypeID}/items/{item.id}/driveItem/thumbnails");
+                        if (urlVideo != null)
+                        {
+                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                            this.Photos.Add(new Photo { URL = url });
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
+                        }
+                    }
+                }
+
+                //load hinh anh unit
                 string name_folder = UnitInfo.name.Replace(".", "-") + "_" + UnitInfo.productid.ToString().Replace("-", "").ToUpper();
                 string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_UnitID}/root:/{name_folder}:/children?$select=name,eTag";
                 var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await client.SendAsync(request);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var body = await response.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
 
-                    if (result == null || result.value.Any() == false)
-                    {
-                        ShowCollections = false;
-                        return;
-                    }
-                    ShowCollections = true;
-                    Photos = new List<Photo>();
                     List<SharePointGraphModel> list = result.value;
                     var videos = list.Where(x => x.type == "video").ToList();
                     var images = list.Where(x => x.type == "image").ToList();
-                    this.TotalMedia = videos.Count;
-                    this.TotalPhoto = images.Count;
+                    this.TotalMedia += videos.Count;
+                    this.TotalPhoto += images.Count;
 
                     foreach (var item in videos)
                     {
@@ -437,6 +469,10 @@ namespace PhuLongCRM.ViewModels
                         }
                     }
                 }
+                if (Collections.Count > 0)
+                    ShowCollections = true;
+                else
+                    ShowCollections = false;
             }
         }
 
