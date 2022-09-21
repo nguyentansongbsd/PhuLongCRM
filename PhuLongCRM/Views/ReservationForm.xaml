@@ -179,7 +179,7 @@
                             </StackLayout>
 
                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_noi_bo}" Margin="0,10,0,0"/>
-                            <controls:LookUp x:Name="lookupChieuKhauNoiBo" IsEnabled="{Binding IsLocked}" Placeholder="{x:Static lang:Language.chon_chiet_khau_noi_bo}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountInternelLists}" SelectedItem="{Binding DiscountInternelList}" SelectedItemChange="DiscountInternelListItem_Changed"/>
+                            <controls:LookUp x:Name="lookupChieuKhauNoiBo" IsEnabled="{Binding IsLocked}" BackgroundColor="Red" Placeholder="{x:Static lang:Language.chon_chiet_khau_noi_bo}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountInternelLists}" SelectedItem="{Binding DiscountInternelList}" SelectedItemChange="DiscountInternelListItem_Changed"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChildsInternel}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
