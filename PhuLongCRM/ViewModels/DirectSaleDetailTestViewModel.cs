@@ -82,8 +82,8 @@ namespace PhuLongCRM.ViewModels
                 var data = Data.SingleOrDefault(x => x.ID == Block.bsd_blockid.ToString());
                 //Block.page += 1;
                 //var list = data.listFloor.Skip(Block.page * Size).Take(Size);
-                //if (Block.Floors.Count == data.listFloor.Count)
-                //    return;
+                if (Block.Floors.Count == data.listFloor.Count)
+                    return;
                 foreach (var item in data.listFloor)
                 {
                     Floor floor = new Floor();

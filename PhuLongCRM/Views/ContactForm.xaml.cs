@@ -291,8 +291,7 @@ namespace PhuLongCRM.Views
             Lookup_GenderOptions.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                ContactGender.GetGenders();
-                foreach (var item in ContactGender.GenderOptions)
+                foreach (var item in ContactGender.GenderData())
                 {
                     viewModel.GenderOptions.Add(item);
                 }

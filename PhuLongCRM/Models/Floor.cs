@@ -11,8 +11,8 @@ namespace PhuLongCRM.Models
     {
         public Guid bsd_floorid { get; set; }
         public string bsd_name { get; set; }
-        public List<Unit> Units { get; set; } = new List<Unit>();
-        //public ObservableCollection<Unit> Units { get; set; } = new ObservableCollection<Unit>();
+        //public List<Unit> Units { get; set; } = new List<Unit>();
+        public ObservableCollection<Unit> Units { get; set; } = new ObservableCollection<Unit>();
         //private ObservableCollection<Unit> _units;
         //public ObservableCollection<Unit> Units { get => _units; set { _units = value; OnPropertyChanged(nameof(Units)); } }
 

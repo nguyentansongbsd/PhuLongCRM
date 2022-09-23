@@ -44,12 +44,6 @@ namespace PhuLongCRM.Views
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
                 FromCustomer = new OptionSet { Val = viewModel.singleLead.leadid.ToString(), Label = viewModel.singleLead.lastname, Title = viewModel.CodeLead };
-                viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
-                viewModel.Area = AreaData.GetAreaById(viewModel.singleLead.bsd_area);
-                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard))
-                {
-                    viewModel.TypeIdCard = TypeIdCardData.GetTypeIdCardById(viewModel.singleLead.bsd_typeofidcard);
-                }
                 OnCompleted?.Invoke(true);
             }
             else
@@ -61,11 +55,6 @@ namespace PhuLongCRM.Views
             if (NeedToRefreshLeadDetail == true)
             {
                 await viewModel.LoadOneLead(Id.ToString());
-                if (viewModel.singleLead.new_gender != null) { await viewModel.loadOneGender(viewModel.singleLead.new_gender); }
-                if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }
-                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_customergroup)) viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
-                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_area)) viewModel.Area = AreaData.GetAreaById(viewModel.singleLead.bsd_area);
-                viewModel.PhongThuy = null;
                 LoadDataPhongThuy();
                 NeedToRefreshLeadDetail = false;
             }
@@ -131,7 +120,6 @@ namespace PhuLongCRM.Views
             else
                 floatingButtonGroup.IsVisible = false;
         }
-
         private async void Update(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -149,9 +137,7 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
                 }
             };
-            
         }
-
         private async void LeadQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -178,7 +164,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
             }
         }
-
         private async void LeadDisQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -222,7 +207,6 @@ namespace PhuLongCRM.Views
             
             LoadingHelper.Hide();
         }
-
         private async void ReactivateLead(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -249,16 +233,6 @@ namespace PhuLongCRM.Views
             {
                 SmsMessage sms = new SmsMessage(null, phone);
                 await Sms.ComposeAsync(sms);
-                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                //if (checkVadate == true)
-                //{
-                //    SmsMessage sms = new SmsMessage(null, phone);
-                //    await Sms.ComposeAsync(sms);                   
-                //}
-                //else
-                //{
-                //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                //}
             }
             else
             {
@@ -271,15 +245,6 @@ namespace PhuLongCRM.Views
             if (phone != string.Empty)
             {
                 await Launcher.OpenAsync($"tel:{phone}");
-                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                //if (checkVadate == true)
-                //{
-                //    await Launcher.OpenAsync($"tel:{phone}");                   
-                //}
-                //else
-                //{
-                //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                //}
             }
             else
             {
@@ -290,36 +255,17 @@ namespace PhuLongCRM.Views
         private async Task LoadDataThongTin(string leadid)
         {
             if (leadid != null && viewModel.singleLead == null)
-            {
-                try
-                {
-                    await viewModel.LoadOneLead(leadid);
-                    if (viewModel.singleLead.new_gender != null) { await viewModel.loadOneGender(viewModel.singleLead.new_gender); }
-                    if (viewModel.singleLead.industrycode != null) { await viewModel.loadOneIndustrycode(viewModel.singleLead.industrycode); }                
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
+                await viewModel.LoadOneLead(leadid);
         }
 
         #region TabPhongThuy
         private void LoadDataPhongThuy()
         {
-            try
-            {
-                viewModel.LoadPhongThuy();
-                if (viewModel.PhongThuy.gioi_tinh != 0 && viewModel.PhongThuy.gioi_tinh != 100000000 && viewModel.PhongThuy.nam_sinh != 0)
-                    phongthuy_info.IsVisible = true;
-                else
-                    phongthuy_info.IsVisible = false;
-            }
-            catch(Exception ex)
-            {
-
-            }
-            
+            viewModel.LoadPhongThuy();
+            if (viewModel.PhongThuy.gioi_tinh != 0 && viewModel.PhongThuy.gioi_tinh != 100000000 && viewModel.PhongThuy.nam_sinh != 0)
+                phongthuy_info.IsVisible = true;
+            else
+                phongthuy_info.IsVisible = false;
         }
 
         private void ShowImage_Tapped(object sender, EventArgs e)

@@ -59,7 +59,7 @@ namespace PhuLongCRM.Views
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead._campaignid_value))
                     viewModel.Campaign = new OptionSet { Val = viewModel.singleLead._campaignid_value, Label = viewModel.singleLead.campaignid_label };
 
-                viewModel.IndustryCode = viewModel.list_industrycode_optionset.SingleOrDefault(x => x.Val == viewModel.singleLead.industrycode);
+                viewModel.IndustryCode = LeadIndustryCode.GetIndustryCodeById(viewModel.singleLead.industrycode);
                 viewModel.Rating = RatingData.GetRatingById(viewModel.singleLead.leadqualitycode.ToString());
                 viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
 
@@ -153,7 +153,7 @@ namespace PhuLongCRM.Views
             lookUpLinhVuc.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                viewModel.loadIndustrycode();
+                viewModel.IndustryCodes = LeadIndustryCode.LeadIndustryCodeData();
                 LoadingHelper.Hide();
             };
 

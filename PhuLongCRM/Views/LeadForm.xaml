@@ -123,7 +123,7 @@
                                 <controls:MainEditor x:Name="description_text" Text="{Binding singleLead.description}" Placeholder="{x:Static lang:Language.nhap_mo_ta}" FontSize="15" HeightRequest="100"/>
 
                                 <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.linh_vuc}" FontSize="15"/>
-                                <controls:LookUp x:Name="lookUpLinhVuc" Placeholder="{x:Static lang:Language.chon_linh_vuc}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding IndustryCode}" ItemsSource="{Binding list_industrycode_optionset}"/>
+                                <controls:LookUp x:Name="lookUpLinhVuc" Placeholder="{x:Static lang:Language.chon_linh_vuc}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding IndustryCode}" ItemsSource="{Binding IndustryCodes}"/>
 
                                 <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.doanh_thu_moi_nam}" FontSize="15" />
                                 <controls:DecimalEntry x:Name="test" Price="{Binding singleLead.revenue}" Placeholder="{x:Static lang:Language.nhap_doanh_thu_moi_nam}" />

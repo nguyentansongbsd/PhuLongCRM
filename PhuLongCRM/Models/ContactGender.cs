@@ -8,11 +8,9 @@ namespace PhuLongCRM.Models
 {
     public class ContactGender
     {
-        public static List<OptionSet> GenderOptions;
-
-        public static void GetGenders()
+        public static List<OptionSet> GenderData()
         {
-            GenderOptions = new List<OptionSet>()
+            return new List<OptionSet>()
             {
                 new OptionSet("1",Language.nam),
                 new OptionSet("2",Language.nu),
@@ -21,13 +19,7 @@ namespace PhuLongCRM.Models
         }
         public static OptionSet GetGenderById(string Id)
         {
-            GetGenders();
-            if (Id != string.Empty)
-            {
-                OptionSet optionSet = GenderOptions.Single(x => x.Val == Id);
-                return optionSet;
-            }
-            return null;
+            return GenderData().SingleOrDefault(x => x.Val == Id);
         }
     }
 }
