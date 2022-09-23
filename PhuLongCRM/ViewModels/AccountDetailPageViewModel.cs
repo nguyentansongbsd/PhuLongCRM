@@ -34,7 +34,7 @@ namespace PhuLongCRM.ViewModels
 
         public ObservableCollection<ReservationListModel> list_thongtinquotation { get; set; } = new ObservableCollection<ReservationListModel>();
         public ObservableCollection<ContractModel> list_thongtincontract { get; set; }
-        public ObservableCollection<HoatDongListModel> list_thongtincase { get; set; }
+        public ObservableCollection<ActivityListModel> Cares { get; set; }
 
         public ObservableCollection<MandatorySecondaryModel> _list_MandatorySecondary;
         public ObservableCollection<MandatorySecondaryModel> list_MandatorySecondary { get => _list_MandatorySecondary; set { _list_MandatorySecondary = value; OnPropertyChanged(nameof(list_MandatorySecondary)); } }
@@ -78,7 +78,7 @@ namespace PhuLongCRM.ViewModels
 
             list_thongtinqueing = new ObservableCollection<QueueFormModel>();
             list_thongtincontract = new ObservableCollection<ContractModel>();
-            list_thongtincase = new ObservableCollection<HoatDongListModel>();
+            Cares = new ObservableCollection<ActivityListModel>();
             list_MandatorySecondary = new ObservableCollection<MandatorySecondaryModel>();
             MandatorySecondary = new MandatorySecondaryModel();
             isLoadMore = false;
@@ -353,87 +353,80 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task LoadCaseForAccountForm()
+        public async Task LoadCase()
         {
-            if (list_thongtincase != null && singleAccount != null && singleAccount.accountid != Guid.Empty)
-            {
-                await Task.WhenAll(
-                    LoadActiviy(singleAccount.accountid, "task", "tasks"),
-                    LoadActiviy(singleAccount.accountid, "phonecall", "phonecalls"),
-                    LoadActiviy(singleAccount.accountid, "appointment", "appointments")
-                );
-            }
-            ShowMoreCase = list_thongtincase.Count < (3 * PageCase) ? false : true;
-        }
-
-        public async Task LoadActiviy(Guid accountID, string entity, string entitys)
-        {
-            string callto = null;
-            if (entity == "phonecall")
-            {
-                callto = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
-                                        <filter type='and'>
-                                            <condition attribute='participationtypemask' operator='eq' value='2' />
-                                        </filter>
-                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
-                                            <attribute name='fullname' alias='callto_contact_name'/>
-                                        </link-entity>
-                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
-                                            <attribute name='bsd_name' alias='callto_account_name'/>
-                                        </link-entity>
-                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
-                                            <attribute name='fullname' alias='callto_lead_name'/>
-                                        </link-entity>
-                                    </link-entity>";
-            }
-
-            string fetch = $@"<fetch version='1.0' count='3' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='true'>
-                                <entity name='{entity}'>
+            if (Cares == null)
+                Cares = new ObservableCollection<ActivityListModel>();
+            if (singleAccount == null || singleAccount.accountid == Guid.Empty) return;
+            string fetch = $@"<fetch version='1.0' count='5' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='false'>
+                                <entity name='activitypointer'>
                                     <attribute name='subject' />
                                     <attribute name='statecode' />
                                     <attribute name='activityid' />
                                     <attribute name='scheduledstart' />
                                     <attribute name='scheduledend' /> 
                                     <attribute name='activitytypecode' />
-                                    <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
-                                        <condition attribute='regardingobjectid' operator='eq' value='{accountID}' />
-                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                        <condition attribute='activitytypecode' operator='in'>
+                                            <value>4212</value>
+                                            <value>4210</value>
+                                            <value>4201</value>
+                                        </condition>
+	                                    <filter type='or'>
+                                            <condition entityname='meet' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='task' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='phonecall' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                        </filter>
+                                        <condition attribute='regardingobjectid' operator='eq' value='{singleAccount.accountid}' />
                                     </filter>
-                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='party'/>
-                                    <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
-                                        <attribute name='bsd_name' alias='accounts_bsd_name'/>
+                                    <link-entity name='appointment' from='activityid' to='activityid' alias='meet' link-type='outer'>
+                                        <attribute name='requiredattendees' />
                                     </link-entity>
-                                    <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
-                                        <attribute name='fullname' alias='contact_bsd_fullname'/>
+                                    <link-entity name='task' from='activityid' to='activityid' alias='task' link-type='outer'>
+                                        <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer'>
+                                            <attribute name='bsd_name' alias='task_account_name'/>
+                                        </link-entity>
+                                        <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer'>
+                                            <attribute name='fullname' alias='task_contact_name'/>
+                                        </link-entity>
+                                        <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
+                                            <attribute name='fullname' alias='task_lead_name'/>
+                                        </link-entity>
                                     </link-entity>
-                                    <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
-                                        <attribute name='fullname' alias='lead_fullname'/>
+                                    <link-entity name='phonecall' from='activityid' to='activityid' alias='phonecall' link-type='outer'>
+                                        <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer'>
+                                            <filter type='and'>
+                                                <condition attribute='participationtypemask' operator='eq' value='2' />
+                                            </filter>
+                                            <link-entity name='contact' from='contactid' to='partyid' link-type='outer'>
+                                                <attribute name='fullname' alias='phonecall_contact_name'/>
+                                            </link-entity>
+                                            <link-entity name='account' from='accountid' to='partyid' link-type='outer'>
+                                                <attribute name='bsd_name' alias='phonecall_account_name'/>
+                                            </link-entity>
+                                            <link-entity name='lead' from='leadid' to='partyid' link-type='outer'>
+                                                <attribute name='fullname' alias='phonecall_lead_name'/>
+                                            </link-entity>
+                                        </link-entity>
                                     </link-entity>
-                                    {callto}
                                 </entity>
                             </fetch>";
 
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>(entitys, fetch);
-            if (result == null || result.value.Count == 0) return;
-
-            var data = result.value;
-            if (entity == "appointment")
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ActivityListModel>>("activitypointers", fetch);
+            if (result != null && result.value.Count > 0)
             {
-                foreach (var item in data)
+                foreach (var item in result.value)
                 {
-                    item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
-                    list_thongtincase.Add(item);
+                    if (item.activitytypecode == "appointment")
+                        item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
+                    else if (item.activitytypecode == "task")
+                        item.customer = item.task__customer;
+                    else if (item.activitytypecode == "phonecall")
+                        item.customer = item.phonecall_customer;
+                    Cares.Add(item);
                 }
             }
-            else
-            {
-                foreach (var item in data)
-                {
-                    item.customer = item.regarding_name;
-                    list_thongtincase.Add(item);
-                }
-            }
+            ShowMoreCase = Cares.Count < (5 * PageCase) ? false : true;
         }
 
         // tab nguoi uy quyyen
