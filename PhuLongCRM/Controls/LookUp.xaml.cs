@@ -42,6 +42,7 @@ namespace PhuLongCRM.Controls
         public LookUp()
         {
             InitializeComponent();
+            var a = this.IsEnabled;
             this.Entry.BindingContext = this;
             this.Entry.SetBinding(EntryNoneBorder.PlaceholderProperty, "Placeholder");
             this.BtnClear.SetBinding(Button.IsVisibleProperty, new Binding("SelectedItem") { Source = this, Converter = new Converters.NullToHideConverter() });
