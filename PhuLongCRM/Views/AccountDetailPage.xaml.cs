@@ -94,8 +94,8 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 viewModel.PageCase = 1;
-                viewModel.list_thongtincase.Clear();
-                await viewModel.LoadCaseForAccountForm();
+                viewModel.Cares.Clear();
+                await viewModel.LoadCase();
                 ActivityPopup.Refresh();
                 NeedToRefreshActivity = false;
                 LoadingHelper.Hide();
@@ -189,13 +189,13 @@ namespace PhuLongCRM.Views
             if (Id != null)
             {
                 LoadingHelper.Show();
-                if (viewModel.list_thongtinqueing.Count == 0 && viewModel.list_thongtinquotation.Count == 0 && viewModel.list_thongtincontract.Count == 0 && viewModel.list_thongtincase.Count == 0)
+                if (viewModel.list_thongtinqueing.Count == 0 && viewModel.list_thongtinquotation.Count == 0 && viewModel.list_thongtincontract.Count == 0 && viewModel.Cares.Count == 0)
                 {
                     await Task.WhenAll(
                         viewModel.LoadDSQueueingAccount(AccountId),
                         viewModel.LoadDSQuotationAccount(AccountId),
                         viewModel.LoadDSContractAccount(AccountId),
-                        viewModel.LoadCaseForAccountForm()
+                        viewModel.LoadCase()
                         ); 
                 }
                 LoadingHelper.Hide();
@@ -230,7 +230,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             viewModel.PageCase++;
-            await viewModel.LoadCaseForAccountForm();
+            await viewModel.LoadCase();
             LoadingHelper.Hide();
         }
 
@@ -281,7 +281,7 @@ namespace PhuLongCRM.Views
 
         private void CaseItem_Tapped(object sender, EventArgs e)
         {
-            var item = (HoatDongListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var item = (ActivityListModel)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item != null && item.activityid != Guid.Empty)
             {
                 ActivityPopup.ShowActivityPopup(item.activityid, item.activitytypecode);

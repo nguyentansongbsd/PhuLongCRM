@@ -70,12 +70,12 @@ namespace PhuLongCRM.Views
                 NeedToRefreshQueues = false;
                 LoadingHelper.Hide();
             }
-            if (NeedToRefreshActivity == true && viewModel.list_chamsockhachhang != null)
+            if (NeedToRefreshActivity == true && viewModel.Cares != null)
             {
                 LoadingHelper.Show();
-                viewModel.PageChamSocKhachHang = 1;
-                viewModel.list_chamsockhachhang.Clear();
-                await viewModel.LoadCaseForContactForm();
+                viewModel.PageCase = 1;
+                viewModel.Cares.Clear();
+                await viewModel.LoadCase();
                 ActivityPopup.Refresh();
                 NeedToRefreshActivity = false;
                 LoadingHelper.Hide();
@@ -220,24 +220,24 @@ namespace PhuLongCRM.Views
         #region Tab giao dich
         private async Task LoadDataGiaoDich(string Id)
         {
-            if (viewModel.list_danhsachdatcho == null || viewModel.list_danhsachdatcoc == null || viewModel.list_danhsachhopdong == null || viewModel.list_chamsockhachhang == null)
+            if (viewModel.list_danhsachdatcho == null || viewModel.list_danhsachdatcoc == null || viewModel.list_danhsachhopdong == null || viewModel.Cares == null)
             {
                 LoadingHelper.Show();
                 viewModel.PageDanhSachDatCho = 1;
                 viewModel.PageDanhSachDatCoc = 1;
                 viewModel.PageDanhSachHopDong = 1;
-                viewModel.PageChamSocKhachHang = 1;
+                viewModel.PageCase = 1;
 
                 viewModel.list_danhsachdatcho = new ObservableCollection<QueueFormModel>();
                 viewModel.list_danhsachdatcoc = new ObservableCollection<ReservationListModel>();
                 viewModel.list_danhsachhopdong = new ObservableCollection<ContractModel>();
-                viewModel.list_chamsockhachhang = new ObservableCollection<HoatDongListModel>();
+                viewModel.Cares = new ObservableCollection<ActivityListModel>();
 
                 await Task.WhenAll(
                    viewModel.LoadQueuesForContactForm(Id),
                    viewModel.LoadReservationForContactForm(Id),
                    viewModel.LoadOptoinEntryForContactForm(Id),
-                   viewModel.LoadCaseForContactForm()
+                   viewModel.LoadCase()
                );
                 LoadingHelper.Hide();
             }          
@@ -273,8 +273,8 @@ namespace PhuLongCRM.Views
         private async void ShowMoreChamSocKhachHang_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            viewModel.PageChamSocKhachHang++;
-            await viewModel.LoadCaseForContactForm();
+            viewModel.PageCase++;
+            await viewModel.LoadCase();
             LoadingHelper.Hide();
         }
 
@@ -323,9 +323,9 @@ namespace PhuLongCRM.Views
             };
         }
 
-        private async void CaseItem_Tapped(object sender, EventArgs e)
+        private void CaseItem_Tapped(object sender, EventArgs e)
         {
-            var item = (HoatDongListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var item = (ActivityListModel)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item != null && item.activityid != Guid.Empty)
             {
                 ActivityPopup.ShowActivityPopup(item.activityid, item.activitytypecode);

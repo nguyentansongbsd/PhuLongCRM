@@ -378,7 +378,7 @@
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout>
-                                        <StackLayout x:Name="datagrid_chamsockhachhang" BindableLayout.ItemsSource="{Binding list_chamsockhachhang}" BackgroundColor="#eeeeee" Spacing="1">
+                                        <StackLayout x:Name="datagrid_chamsockhachhang" BindableLayout.ItemsSource="{Binding Cares}" BackgroundColor="#eeeeee" Spacing="1">
                                             <BindableLayout.EmptyViewTemplate>
                                                 <DataTemplate>
                                                     <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
@@ -386,25 +386,23 @@
                                             </BindableLayout.EmptyViewTemplate>
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate>
-                                                    <StackLayout BackgroundColor ="White" Padding="15,10" Margin="0,1" Spacing="10">
-                                                        <StackLayout.GestureRecognizers>
+                                                    <Grid ColumnDefinitions="Auto,*" BackgroundColor ="White" Padding="15,10" Margin="0,1" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                                                        <Grid.GestureRecognizers>
                                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CaseItem_Tapped" CommandParameter="{Binding .}"/>
-                                                        </StackLayout.GestureRecognizers>
-                                                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto" Grid.Row="0" Grid.Column="0">
-                                                            <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statecode_color}" VerticalOptions="Start">
-                                                                <Label Grid.Column="0" Text="{Binding statecode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
-                                                            </telerikPrimitives:RadBorder>
-                                                            <Label Grid.Column="1" Text="{Binding subject}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
-                                                        </Grid>
-                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.loai_actitivty}" Text="{Binding activitytypecode_format}"/>
-                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer}"/>
-                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_bat_dau}" Text="{Binding scheduledstart_format, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
-                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_ket_thuc}" Text="{Binding scheduledend_format, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
-                                                    </StackLayout>
+                                                        </Grid.GestureRecognizers>
+                                                        <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statecode_color}" VerticalOptions="Start">
+                                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding statecode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
+                                                        </telerikPrimitives:RadBorder>
+                                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding subject}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                                                        <controls:FieldListViewItem Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Title="{x:Static lang:Language.loai_actitivty}" Text="{Binding activitytypecode_format}"/>
+                                                        <controls:FieldListViewItem Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer}"/>
+                                                        <controls:FieldListViewItem Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Title="{x:Static lang:Language.thoi_gian_bat_dau}" Text="{Binding scheduledstart_format, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
+                                                        <controls:FieldListViewItem Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Title="{x:Static lang:Language.thoi_gian_ket_thuc}" Text="{Binding scheduledend_format, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
+                                                    </Grid>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
-                                        <Button Clicked="ShowMoreChamSocKhachHang_Clicked" IsVisible="{Binding ShowMoreChamSocKhachHang}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
+                                        <Button Clicked="ShowMoreChamSocKhachHang_Clicked" IsVisible="{Binding ShowMoreCase}" BorderColor="{StaticResource NavigationPrimary}" CornerRadius="5" BorderWidth="1" BackgroundColor="Transparent" Text="{x:Static lang:Language.xem_them}" TextTransform="None" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" Margin="0,5,0,10" Padding="30,0,30,0"/>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>

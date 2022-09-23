@@ -32,7 +32,6 @@ namespace PhuLongCRM.Droid
 
             LoadApplication(new App());
             DependencyService.Get<ILoadingService>().Initilize();
-           // receiver = new ScreenReceiver();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -40,17 +39,5 @@ namespace PhuLongCRM.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
-        //protected override void OnResume()
-        //{
-        //    base.OnResume();
-        //    //RegisterReceiver(receiver, new IntentFilter("com.xamarin.example.TEST"));
-        //}
-
-        //protected override void OnPause()
-        //{
-        //   // UnregisterReceiver(receiver);
-        //    base.OnPause();
-        //}
     }
 }

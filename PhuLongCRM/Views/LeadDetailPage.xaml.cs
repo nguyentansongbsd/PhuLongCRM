@@ -62,8 +62,8 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 viewModel.PageCase = 1;
-                viewModel.list_customercare?.Clear();
-                await viewModel.LoadCaseForLead();
+                viewModel.Cares?.Clear();
+                await viewModel.LoadCase();
                 ActivityPopup.Refresh();
                 NeedToRefreshActivity = false;
                 LoadingHelper.Hide();
@@ -368,7 +368,7 @@ namespace PhuLongCRM.Views
         }
         private void CareItem_Tapped(object sender, EventArgs e)
         {
-            var item = (HoatDongListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var item = (ActivityListModel)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item != null && item.activityid != Guid.Empty)
             {
                 ActivityPopup.ShowActivityPopup(item.activityid, item.activitytypecode);
@@ -378,7 +378,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             viewModel.PageCase++;
-            await viewModel.LoadCaseForLead();
+            await viewModel.LoadCase();
             LoadingHelper.Hide();
         }
         private void ActivityPopup_HidePopupActivity(object sender, EventArgs e)
@@ -433,10 +433,10 @@ namespace PhuLongCRM.Views
                     TabThongTin.IsVisible = false;
                     TabCustomerCare.IsVisible = true;
                     TabPhongThuy.IsVisible = false;
-                    if (viewModel.list_customercare == null)
+                    if (viewModel.Cares == null)
                     {
                         LoadingHelper.Show();
-                        await viewModel.LoadCaseForLead();
+                        await viewModel.LoadCase();
                         LoadingHelper.Hide();
                     }
                 }
