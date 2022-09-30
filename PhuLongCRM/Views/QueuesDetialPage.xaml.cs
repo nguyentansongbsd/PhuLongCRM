@@ -448,6 +448,7 @@ namespace PhuLongCRM.Views
                 SetButtons();
                 if (QueueList.NeedToRefresh.HasValue) QueueList.NeedToRefresh = true;
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
+                if (DirectSaleDetailTest.NeedToRefreshDirectSale.HasValue) DirectSaleDetailTest.NeedToRefreshDirectSale = true;
                 if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
                 if (ProjectInfo.NeedToRefreshNumQueue.HasValue) ProjectInfo.NeedToRefreshNumQueue = true;
                 if (UnitInfo.NeedToRefreshQueue.HasValue) UnitInfo.NeedToRefreshQueue = true;

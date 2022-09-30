@@ -32,6 +32,7 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = viewModel = new DirectSaleDetailTestViewModel();
+            NeedToRefreshDirectSale = false;
             viewModel.Filter = filter;
             viewModel.CreateFilterXml();
             Init();
@@ -71,7 +72,7 @@ namespace PhuLongCRM.Views
             // giu cho thanh cong hoac huy giu cho thanh cong
             if (NeedToRefreshDirectSale == true)
             {
-                await LoadUnit(viewModel.Unit.productid);
+                await ShowUnit(viewModel.Unit.productid);
                 RefreshDirectSale = true;
                 NeedToRefreshDirectSale = false;
             }
@@ -135,9 +136,13 @@ namespace PhuLongCRM.Views
         private async void UnitItem_Tapped(object sender, EventArgs e)
         {
             var unitId = (Guid)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            await ShowUnit(unitId);
+            PopupUnit.IsVisible = true;
+        }
+        private async Task ShowUnit(Guid unitId)
+        {
             await LoadUnit(unitId);
             CreatePopupUnit(unitId);
-            PopupUnit.IsVisible = true;
         }
         private async Task LoadUnit(Guid unitId)
         {
@@ -521,6 +526,22 @@ namespace PhuLongCRM.Views
                 Grid.SetColumnSpan(labelName, 3);
             }
         }
+
+        private async void PopupUnit_Close(object sender, EventArgs e)
+        {
+            if (RefreshDirectSale == true)
+            {
+                if (viewModel.Block != null && viewModel.Block.Floors != null && viewModel.Block.Floors.Count != 0)
+                {
+                    LoadingHelper.Show();
+                    var floor = viewModel.Block.Floors.SingleOrDefault(x => x.bsd_floorid == viewModel.Unit.floorid);
+                    floor.Units.Clear();
+                    await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                    LoadingHelper.Hide();
+                }
+                RefreshDirectSale = false;
+            }    
+        }
     }
     public class QueuesControl : BsdListView
     {
@@ -565,6 +586,11 @@ namespace PhuLongCRM.Views
                         Padding = 10,
                         BackgroundColor = Color.White
                     };
+
+                    TapGestureRecognizer tapped = new TapGestureRecognizer();
+                    tapped.Tapped += Tapped_Tapped;
+                    tapped.SetBinding(TapGestureRecognizer.CommandParameterProperty, new Binding("."));
+                    grid.GestureRecognizers.Add(tapped);
 
                     //status
                     RadBorder radBorder = new RadBorder{CornerRadius = 5,VerticalOptions =LayoutOptions.Start};
@@ -649,6 +675,26 @@ namespace PhuLongCRM.Views
                 });
             }
             this.ItemTemplate = dataTemplate;
+        }
+
+        private void Tapped_Tapped(object sender, EventArgs e)
+        {
+            var item = (QueueListModel)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item == null) return;
+            LoadingHelper.Show();
+            QueuesDetialPage queuesDetialPage = new QueuesDetialPage(item.opportunityid);
+            queuesDetialPage.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(queuesDetialPage);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
     }
     public class QueuesControlViewModel : ListViewBaseViewModel2<QueueListModel>
