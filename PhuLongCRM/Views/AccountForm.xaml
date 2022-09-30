@@ -9,26 +9,6 @@
              ios:Page.UseSafeArea="true"
              x:Name="rootPage"
              x:Class="PhuLongCRM.Views.AccountForm">
-    <ContentPage.Resources>
-        <!--tab thong tin-->
-        <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-            <Setter Property="IndicatorText" Value="&#xf105;"/>
-            <Setter Property="IndicatorLocation" Value="End"/>
-            <Setter Property="IndicatorFontSize" Value="18"/>
-            <Setter Property="IndicatorColor" Value="#939393"/>
-            <Setter Property="BackgroundColor" Value="#F2F2F2"/>
-            <Setter Property="BorderColor" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="17,8"/>
-            <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-        </Style>
-        <Style x:Key="ExpanderHeadingText" TargetType="Label">
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="VerticalTextAlignment" Value="Center" />
-            <Setter Property="TextColor" Value="#444444"/>
-        </Style>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,60">
@@ -69,7 +49,7 @@
                     <controls:LookUp x:Name="Lookup_PrimaryContact" Placeholder="{x:Static lang:Language.chon_nguoi_dai_dien}" SearchPress="Lookup_PrimaryContact_SearchPress" IsSearchPress="True" ItemsSource="{Binding PrimaryContactOptionList}" SelectedItem="{Binding PrimaryContact}" BottomModal="{x:Reference BottomModal}" NameDisplay="Name" Margin="10,0" />
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.giay_phep_kinh_doanh}" Margin="10,10,10,0"/>
-                    <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_giay_phep_kinh_doanh}" Text="{Binding singleAccount.bsd_registrationcode}" FontSize="15" IsEnabled="{Binding IsOfficial}" Margin="10,0" Unfocused="so_gpkd_Unfocused" />
+                    <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_giay_phep_kinh_doanh}" Text="{Binding singleAccount.bsd_registrationcode}" FontSize="15" IsEnabled="{Binding IsOfficial}" Margin="10,0" Unfocused="so_gpkd_Unfocused" Keyboard="Numeric" />
 
                     <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" FontSize="15" Margin="10,10,10,0"/>
                     <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleAccount.bsd_issuedon}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False" Margin="10,0" />

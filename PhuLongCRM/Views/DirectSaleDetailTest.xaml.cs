@@ -414,7 +414,7 @@ namespace PhuLongCRM.Views
                 Grid.SetColumnSpan(gridhuong, 5);
 
                 // btn xem thong tin
-                RadBorder radBorderUnitInf = new RadBorder { CornerRadius = 10, BorderColor = Color.FromHex("#2196F3"), BorderThickness = 1, BackgroundColor = Color.White, Padding = 8, HorizontalOptions = LayoutOptions.Fill };
+                RadBorder radBorderUnitInf = new RadBorder { CornerRadius = 10, BorderColor = Color.FromHex("#2196F3"), BorderThickness = 1, BackgroundColor = Color.White, Padding = 8, HorizontalOptions = LayoutOptions.Fill,Margin = new Thickness(0,5) };
                 TapGestureRecognizer tapUnitInf = new TapGestureRecognizer();
                 tapUnitInf.Tapped += UnitInfor_Clicked;
                 radBorderUnitInf.GestureRecognizers.Add(tapUnitInf);
