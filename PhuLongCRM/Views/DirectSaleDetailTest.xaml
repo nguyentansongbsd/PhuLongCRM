@@ -119,7 +119,7 @@
                     </Label>
                 </Grid>
 
-                <ScrollView Grid.Row="2" Scrolled="ScrollView_Scrolled">
+                <ScrollView x:Name="stackFloors" Grid.Row="2" Scrolled="ScrollView_Scrolled">
                     <StackLayout BindableLayout.ItemsSource="{Binding Block.Floors}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
@@ -254,8 +254,8 @@
                     </ListView.ItemTemplate>
                 </ListView>-->
             </Grid>
-            <controls:CenterPopup x:Name="PopupUnit" Title="{x:Static lang:Language.thong_tin_san_pham_title}"/>
-            <controls:PopupHover x:Name="PopupHover" />
+            <controls:CenterPopup x:Name="PopupUnit" Title="{x:Static lang:Language.thong_tin_san_pham_title}" Close="PopupUnit_Close"/>
+            <controls:PopupHover x:Name="PopupHover"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

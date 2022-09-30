@@ -173,7 +173,7 @@
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <Label Text="{Binding Source={x:Static lang:Language.bien_do_chenh_lech_dien_tich},StringFormat='% {0} (+/-)'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
-                                            <Label Text="{Binding UnitInfo.bsd_areavariance_format}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" Grid.Column="1" Padding="0,10,25,10"/>
+                                            <Label Text="{Binding UnitInfo.bsd_areavariance_format,StringFormat='{0}%'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" Grid.Column="1" Padding="0,10,25,10"/>
                                         </Grid>
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
