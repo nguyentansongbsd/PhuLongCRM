@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
@@ -33,37 +34,48 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
-            await Task.WhenAll(
-                viewModel.LoadData(),
-                viewModel.LoadAllCollection(),
-                viewModel.CheckEvent(),
-                viewModel.LoadThongKe(),
-                viewModel.LoadThongKeGiuCho(),
-                viewModel.LoadThongKeHopDong(),
-                viewModel.LoadThongKeBangTinhGia(),
-                viewModel.CheckPhasesLaunch()
-            );
-            if(viewModel.Project.bsd_projectslogo == null)
-            {
-                avataProject.Source = StringAvata(viewModel.ProjectName);
-            }    
-            if (viewModel.IsHasPhasesLaunch == false && viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
-            {
-                viewModel.IsShowBtnGiuCho = true;
-            }
-            else
-            {
-                viewModel.IsShowBtnGiuCho = false;
-            }
+            await viewModel.LoadData();
 
             if (viewModel.Project != null)
             {
                 viewModel.ProjectType = ProjectTypeData.GetProjectType(viewModel.Project.bsd_projecttype);
-                viewModel.PropertyUsageType = PropertyUsageTypeData.GetPropertyUsageTypeById(viewModel.Project.bsd_propertyusagetype.ToString());
+                //viewModel.PropertyUsageType = PropertyUsageTypeData.GetPropertyUsageTypeById(viewModel.Project.bsd_propertyusagetype.ToString());
                 //if (viewModel.Project.bsd_handoverconditionminimum.HasValue)
                 //{
                 //    viewModel.HandoverCoditionMinimum = HandoverCoditionMinimumData.GetHandoverCoditionMinimum(viewModel.Project.bsd_handoverconditionminimum.Value.ToString());
                 //}
+                
+                await Task.WhenAll(
+                        viewModel.LoadAllCollection(),
+                        viewModel.CheckEvent(),
+                        viewModel.LoadThongKe(),
+                        viewModel.LoadThongKeGiuCho(),
+                        viewModel.LoadThongKeHopDong(),
+                        viewModel.LoadThongKeBangTinhGia(),
+                        viewModel.CheckPhasesLaunch(),
+                        viewModel.LoadThongKeDatCoc()
+                    );
+
+                try
+                {
+                    if (viewModel.Project.bsd_projectslogo == null)
+                    {
+                        avataProject.Source = StringAvata(viewModel.ProjectName);
+                    }
+                    if (viewModel.IsHasPhasesLaunch == false && viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
+                    {
+                        viewModel.IsShowBtnGiuCho = true;
+                    }
+                    else
+                    {
+                        viewModel.IsShowBtnGiuCho = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
                 OnCompleted?.Invoke(true);
             }
             else
@@ -71,7 +83,6 @@ namespace PhuLongCRM.Views
                 OnCompleted?.Invoke(false);
             }
         }
-
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -94,7 +105,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-
         private void GiuCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -113,7 +123,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private async void ShowMoreListDatCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -121,7 +130,6 @@ namespace PhuLongCRM.Views
             await viewModel.LoadGiuCho();
             LoadingHelper.Hide();
         }
-
         private void ChuDauTu_Tapped(System.Object sender, System.EventArgs e)
         {
             LoadingHelper.Show();
@@ -141,7 +149,6 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -161,56 +168,49 @@ namespace PhuLongCRM.Views
                 }
             };
         }
-
         private void ItemSlider_Tapped(object sender, EventArgs e)
         {
-            // khoa lai vi phu long chua co hinh anh va video
+            var item = (CollectionData)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item.SharePointType == SharePointType.Image)
+            {
+                var img = viewModel.Photos.SingleOrDefault(x => x.URL == item.ImageSource);
+                var index = viewModel.Photos.IndexOf(img);
 
-            //LoadingHelper.Show();
-            //var item = (CollectionData)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            //if (item.SharePointType == SharePointType.Image)
-            //{
-            //    var img = viewModel.Photos.SingleOrDefault(x => x.URL == item.ImageSource);
-            //    var index = viewModel.Photos.IndexOf(img);
-
-            //    new PhotoBrowser()
-            //    {
-            //        Photos = viewModel.Photos,
-            //        StartIndex = index,
-            //        EnableGrid = true
-            //    }.Show();
-            //}
-            //else if (item.SharePointType == SharePointType.Video)
-            //{
-            //    ShowMedia showMedia = new ShowMedia(Config.OrgConfig.SharePointProjectId, item.MediaSourceId);
-            //    showMedia.OnCompleted = async (isSuccess) => {
-            //        if (isSuccess)
-            //        {
-            //            await Navigation.PushAsync(showMedia);
-            //            LoadingHelper.Hide();
-            //        }
-            //        else
-            //        {
-            //            LoadingHelper.Hide();
-            //            ToastMessageHelper.ShortMessage("Không lấy được video");
-            //        }
-            //    };
-            //}
-            //LoadingHelper.Hide();
+                new PhotoBrowser()
+                {
+                    Photos = viewModel.Photos,
+                    StartIndex = index,
+                    EnableGrid = true
+                }.Show();
+            }
+            else if (item.SharePointType == SharePointType.Video)
+            {
+                LoadingHelper.Show();
+                ShowMedia showMedia = new ShowMedia(Config.OrgConfig.SP_ProjectID, item.MediaSourceId);
+                showMedia.OnCompleted = async (isSuccess) =>
+                {
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(showMedia);
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tai_duoc_video);
+                    }
+                };
+            }
         }
-
         private void ScollTo_Video_Tapped(object sender, EventArgs e)
         {
             var index = viewModel.Collections.IndexOf(viewModel.Collections.FirstOrDefault(x => x.SharePointType == SharePointType.Video));
             carouseView.ScrollTo(index, position: ScrollToPosition.End);
         }
-
         private void ScollTo_Image_Tapped(object sender, EventArgs e)
         {
             var index = viewModel.Collections.IndexOf(viewModel.Collections.FirstOrDefault(x => x.SharePointType == SharePointType.Image));
             carouseView.ScrollTo(index, position: ScrollToPosition.End);
         }
-
         private async void OpenEvent_Tapped(object sender, EventArgs e)
         {
             if (viewModel.Event == null)
@@ -219,12 +219,10 @@ namespace PhuLongCRM.Views
             }
             ContentEvent.IsVisible = true;
         }
-
         private void CloseContentEvent_Tapped(object sender, EventArgs e)
         {
             ContentEvent.IsVisible = false;
         }
-
         private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
         {
             if (e.Item != null)
@@ -278,6 +276,14 @@ namespace PhuLongCRM.Views
                     nameAvata = projectName.ToUpper();
             }
             return $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={nameAvata}";
+        }
+
+        private void OpenPdfFile_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            DependencyService.Get<IPdfService>().View(item.UrlPdfFile, item.PdfName);
+            LoadingHelper.Hide();
         }
     }
 }

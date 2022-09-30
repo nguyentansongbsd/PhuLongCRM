@@ -115,6 +115,8 @@ namespace PhuLongCRM.Views
                 Block block = new Block();
                 block.bsd_blockid = Guid.Parse(item.ID);
                 block.bsd_name = item.name;
+                var arrStatus = item.stringQty.Split(',');
+                block.TotalUnitInBlock = int.Parse(arrStatus[0]) + int.Parse(arrStatus[1]) + int.Parse(arrStatus[2]) + int.Parse(arrStatus[3]) + int.Parse(arrStatus[4]) + int.Parse(arrStatus[5]) + int.Parse(arrStatus[6]) + int.Parse(arrStatus[7]) + int.Parse(arrStatus[8]) + int.Parse(arrStatus[9]) + int.Parse(arrStatus[10]) + int.Parse(arrStatus[11]);
                 blocks.Add(block);
             }
             viewModel.Blocks = blocks;
@@ -213,8 +215,6 @@ namespace PhuLongCRM.Views
 
         public void SetButton()
         {
-            btnBangTinhGia.IsVisible = viewModel.IsShowBtnBangTinhGia;
-
             if (btnGiuCho.IsVisible == false && btnBangTinhGia.IsVisible == false)
             {
                 gridButton.IsVisible = false;
@@ -241,6 +241,29 @@ namespace PhuLongCRM.Views
                 Grid.SetColumn(btnBangTinhGia, 0);
                 Grid.SetColumnSpan(btnBangTinhGia, 2);
             }
+
+            //gridButton = new Grid();
+            //if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == false)
+            //{
+            //    gridButton.IsVisible = false;
+            //}
+            //gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+            //if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == true)
+            //{
+            //    gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+            //    Grid.SetColumn(btnGiuCho, 0);
+            //    Grid.SetColumn(btnBangTinhGia, 1);
+            //}
+            //else if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == false)
+            //{
+            //    Grid.SetColumn(btnGiuCho, 0);
+            //    Grid.SetColumn(btnBangTinhGia, 0);
+            //}
+            //else if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == true)
+            //{
+            //    Grid.SetColumn(btnBangTinhGia, 0);
+            //    Grid.SetColumn(btnGiuCho, 0);
+            //}
         }
 
         private void UnitInfor_Clicked(object sender, EventArgs e)
@@ -370,7 +393,6 @@ namespace PhuLongCRM.Views
             viewModel.QueueList.Clear();
             await Task.WhenAll(
                 viewModel.LoadQueues(unitId),
-                //viewModel.CheckShowBtnBangTinhGia(unitId),
                 viewModel.LoadUnitById(unitId)
                 );
 
@@ -395,15 +417,38 @@ namespace PhuLongCRM.Views
             if (viewModel.UnitStatusCode.Id == "1" || viewModel.UnitStatusCode.Id == "100000000" || viewModel.UnitStatusCode.Id == "100000004"
                 || viewModel.UnitStatusCode.Id == "100000007")
             {
-                btnGiuCho.IsVisible = true;
+                btnGiuCho.IsVisible = viewModel.Unit.bsd_vippriority ? false : true;
+                if (viewModel.Unit.statuscode != 1 && viewModel.IsShowBtnBangTinhGia == true)
+                {
+                    viewModel.IsShowBtnBangTinhGia = true;
+                }
+                else
+                {
+                    viewModel.IsShowBtnBangTinhGia = false;
+                }
             }
             else
             {
                 btnGiuCho.IsVisible = false;
+                viewModel.IsShowBtnBangTinhGia = false;
             }
             SetButton();
             gridButton.IsVisible = !viewModel.Unit.bsd_vippriority;
             LoadingHelper.Hide();
+        }
+
+        async void ScrollView_Scrolled(System.Object sender, Xamarin.Forms.ScrolledEventArgs e)
+        {
+            //if (!(sender is ScrollView scrollView))
+            //    return;
+
+            //var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
+
+            //if (scrollingSpace > e.ScrollY)
+            //    return;
+
+            //await DisplayAlert("", "asdfasd", "ok");
+            //return;
         }
     }
 }

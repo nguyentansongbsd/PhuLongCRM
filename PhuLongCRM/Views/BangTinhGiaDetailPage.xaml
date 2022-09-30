@@ -10,23 +10,6 @@
              Title="{x:Static lang:Language.bang_tinh_gia_title}"
              x:Name="this">
     <ContentPage.Resources>
-        <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-            <Setter Property="IndicatorText" Value="&#xf105;"/>
-            <Setter Property="IndicatorLocation" Value="End"/>
-            <Setter Property="IndicatorFontSize" Value="18"/>
-            <Setter Property="IndicatorColor" Value="#939393"/>
-            <Setter Property="BackgroundColor" Value="#50F2F2F2"/>
-            <Setter Property="BorderColor" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="17,8"/>
-            <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-        </Style>
-        <Style x:Key="ExpanderHeadingText" TargetType="Label">
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="VerticalTextAlignment" Value="Center" />
-            <Setter Property="TextColor" Value="#444444"/>
-        </Style>
         <converters:NullToHideConverter x:Key="NullToHideConverter" />
         <converters:ReservationReservationFormConverter x:Key="ReservationFormConverter" />
         <converters:ReservationStatusCodeConverter x:Key="StatusCodeConverter"/>
@@ -117,7 +100,7 @@
                                                 </StackLayout>
                                             </StackLayout>
                                             <StackLayout BackgroundColor="White" Padding="25,10">
-                                                <controls:FormLabel Text="{x:Static lang:Language.chiet_khau}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
+                                                <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_chung}" FontSize="15" TextColor="#444444" VerticalOptions="Start"/>
                                                 <controls:FormLabelValue Text="{Binding Reservation.discountlist_name}" FontAttributes="Bold" FontSize="15" TextColor="#444444" HorizontalOptions="End"/>
                                                 <StackLayout BindableLayout.ItemsSource="{Binding ListDiscount}" BackgroundColor="#eeeeee" Spacing="1">
                                                     <BindableLayout.ItemTemplate>
@@ -261,7 +244,7 @@
                                             <controls:FormLabelValue Text="AAAA" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#1399D5" Padding="25,10" HorizontalTextAlignment="End"/>
                                         </Grid>-->
                                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                                <controls:FormLabel Text="{x:Static lang:Language.giu_cho}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
+                                                <controls:FormLabel Text="{x:Static lang:Language.giu_cho_btg}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
                                                 <controls:FormLabelValue Text="{Binding Reservation.queue_name}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}" Padding="25,10" HorizontalTextAlignment="End">
                                                     <controls:FormLabelValue.GestureRecognizers>
                                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToQueueDetail_Tapped"/>
@@ -579,7 +562,7 @@
                         <Grid ColumnDefinitions="4*,6*">
                             <controls:FormLabel Text="{x:Static lang:Language.gia_tri}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
                             <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
-                                <Label Text="{Binding PromotionItem.bsd_values_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                <Label Text="{Binding PromotionItem.bsd_values_format,StringFormat='{0} đ'}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </telerikPrimitives:RadBorder>
                         </Grid>
 

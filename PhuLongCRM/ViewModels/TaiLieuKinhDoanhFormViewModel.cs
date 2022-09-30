@@ -13,24 +13,15 @@ namespace PhuLongCRM.ViewModels
     public class TaiLieuKinhDoanhFormViewModel : BaseViewModel
     {
         public Guid salesliteratureid { get; set; }
-        private ListInforUnitTLKD _singleListInforUnitTLKD;
-        public ListInforUnitTLKD singleListInforUnitTLKD { get => _singleListInforUnitTLKD; set { _singleListInforUnitTLKD = value; OnPropertyChanged(nameof(singleListInforUnitTLKD)); } }
-        private ListInforDoithucanhtranhTLKD _singleListInforDoithucanhtranhTLKD;
-        public ListInforDoithucanhtranhTLKD singleListInforDoithucanhtranhTLKD { get => _singleListInforDoithucanhtranhTLKD; set { _singleListInforDoithucanhtranhTLKD = value; OnPropertyChanged(nameof(singleListInforDoithucanhtranhTLKD)); } }
 
         public ObservableCollection<ListInforUnitTLKD> list_thongtinunit { get; set; }
         public ObservableCollection<ListInforDoithucanhtranhTLKD> list_thongtinduancanhtranh { get; set; }
-
         private ObservableCollection<SalesLiteratureItemListModel> _list_salesliteratureitem;
         public ObservableCollection<SalesLiteratureItemListModel> list_salesliteratureitem { get => _list_salesliteratureitem; set { _list_salesliteratureitem = value; OnPropertyChanged(nameof(list_salesliteratureitem)); } }
-
-        private List<SalesLiteratureItemListModel> _list_DownLoad;
-        public List<SalesLiteratureItemListModel> list_DownLoad { get => _list_DownLoad; set { _list_DownLoad = value; OnPropertyChanged(nameof(list_DownLoad)); } }
 
         private TaiLieuKinhDoanhFormModel _TaiLieuKinhDoanhFormModel;
         public TaiLieuKinhDoanhFormModel TaiLieuKinhDoanh { get => _TaiLieuKinhDoanhFormModel; set { _TaiLieuKinhDoanhFormModel = value; OnPropertyChanged(nameof(TaiLieuKinhDoanh)); } }
 
-        
         private bool _showMoreThongTinUnit;
         public bool ShowMoreThongTinUnit { get => _showMoreThongTinUnit; set { _showMoreThongTinUnit = value; OnPropertyChanged(nameof(ShowMoreThongTinUnit)); } }
 
@@ -49,7 +40,6 @@ namespace PhuLongCRM.ViewModels
             list_thongtinunit = new ObservableCollection<ListInforUnitTLKD>();
             list_thongtinduancanhtranh = new ObservableCollection<ListInforDoithucanhtranhTLKD>();
             list_salesliteratureitem = new ObservableCollection<SalesLiteratureItemListModel>();
-            list_DownLoad = new List<SalesLiteratureItemListModel>(); 
         }
 
         public async Task loadData()
@@ -81,7 +71,11 @@ namespace PhuLongCRM.ViewModels
         {
             string fetch = $@"<fetch version='1.0' count='3' page='{PageThongTinUnit}' output-format='xml-platform' mapping='logical' distinct='false'>
                             <entity name='product'>
-                                <all-attributes/>
+                                <attribute name='productid' />
+                                <attribute name='bsd_units' />
+                                <attribute name='name' />
+                                <attribute name='productnumber' />
+                                <attribute name='statuscode' />
                                 <link-entity name='productsalesliterature' intersect='true' visible='false' to='productid' from='productid'>
                                     <link-entity name='salesliterature' to='salesliteratureid' from='salesliteratureid' alias='ab'>
                                         <filter type='and'>
@@ -144,6 +138,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='modifiedon' />
                                     <attribute name='salesliteratureitemid' />
                                     <attribute name='filename' />
+                                    <attribute name='documentbody' />
                                     <order attribute='modifiedon' descending='false' />
                                     <filter type='and'>
                                         <condition attribute='salesliteratureid' operator='eq' value='{salesliteratureid}' />

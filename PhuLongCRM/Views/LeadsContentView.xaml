@@ -32,10 +32,6 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout BackgroundColor ="White" Padding="20" Margin="0,1">
-                                    <!--<Grid Grid.Row="0" ColumnDefinitions="Auto,*">
-                                        <Label Text="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" BackgroundColor="{Binding leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Padding="3,0" Margin="0,2" FontSize="11" FontAttributes="Bold" TextColor="White" Grid.Column="0" VerticalTextAlignment="Center"/>
-                                        <Label Text="{Binding fullname}" FontAttributes="Bold" FontSize="16" TextColor="#026294" Grid.Column="1"/>
-                                    </Grid>-->
                                     <Grid ColumnDefinitions="Auto,Auto,Auto,*" Grid.Row="0">
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding leadqualitycode_color}" Grid.Column="0">
                                             <Label Text="{Binding leadqualitycode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>

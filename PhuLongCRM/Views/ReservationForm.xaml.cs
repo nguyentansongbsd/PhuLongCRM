@@ -84,7 +84,10 @@ namespace PhuLongCRM.Views
                 viewModel.PaymentSchemeType = PaymentSchemeTypeData.GetPaymentSchemeTypeById("100000000");
 
                 await Task.WhenAll(viewModel.LoadTaxCode(),viewModel.LoadPhasesLaunch());
+                viewModel.IsLocked = false;
                 SetPreOpen();
+                // set giá trị trong tính tiền
+                InitTotal();
                 CheckReservation?.Invoke(0);
             }
             else
@@ -107,6 +110,11 @@ namespace PhuLongCRM.Views
                 entryNhanVienDaiLy.IsEnabled = false;
                 _isEnableCheck = true;
 
+                if (viewModel.Quote.bsd_paymentschemestype == "100000001") // Type = Gop dau
+                {
+                    datePickerNgayBatDauTinhLTT.IsVisible = true;
+                }
+
                 if (viewModel.Queue == null)
                 { 
                     lblGiuCho.IsVisible = false;
@@ -114,7 +122,7 @@ namespace PhuLongCRM.Views
                 }
 
                 await viewModel.CheckTaoLichThanhToan();
-                Guid id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
+                Guid id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.bsd_paymentschemeid.ToString());
                 await Task.WhenAll(
                     viewModel.LoadDiscountChilds(),
                     viewModel.LoadDiscountChildsPaymentSchemes(id.ToString()),
@@ -126,7 +134,8 @@ namespace PhuLongCRM.Views
                     viewModel.LoadPromotions(),
                     viewModel.LoadCoOwners()
                     ) ;
-                
+
+                viewModel.IsLocked = false;
                 SetPreOpen();
 
                 viewModel.PaymentSchemeType = PaymentSchemeTypeData.GetPaymentSchemeTypeById(viewModel.Quote.bsd_paymentschemestype);
@@ -391,7 +400,7 @@ namespace PhuLongCRM.Views
         private async void PTTT_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
             LoadingHelper.Show();
-            if (viewModel.PaymentScheme.Val != viewModel.Quote.paymentscheme_id.ToString())
+            if (viewModel.PaymentScheme.bsd_paymentschemeid != viewModel.Quote.paymentscheme_id)
             {
                 if (viewModel.Quote.paymentscheme_id != Guid.Empty)
                 {
@@ -424,7 +433,7 @@ namespace PhuLongCRM.Views
                     {
                         if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
                         viewModel.paymentSheme_Temp = viewModel.PaymentScheme;
-                        viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
+                        viewModel.Quote.paymentscheme_id = viewModel.PaymentScheme.bsd_paymentschemeid;
                     }
                     else
                     {
@@ -434,7 +443,7 @@ namespace PhuLongCRM.Views
                 }
                 
                 viewModel.DiscountChildsPaymentSchemes.Clear();
-                var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.Val);
+                var id = await viewModel.GetDiscountPamentSchemeListId(viewModel.PaymentScheme.bsd_paymentschemeid.ToString());
                 await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
             }
             LoadingHelper.Hide();
@@ -605,7 +614,7 @@ namespace PhuLongCRM.Views
         private void PromotionItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var itemPromotion = (OptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var itemPromotion = (OptionSet)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             itemPromotion.Selected = !itemPromotion.Selected;
             LoadingHelper.Hide();
         }
@@ -1061,7 +1070,7 @@ namespace PhuLongCRM.Views
 
             LoadingHelper.Show();
 
-            if (viewModel.QuoteId == Guid.Empty)
+            if(this.Title == Language.tao_bang_tinh_gia_title) //(viewModel.QuoteId == Guid.Empty)
             {
                 CrmApiResponse response = await viewModel.CreateQuote();
                 if (response.IsSuccess)
@@ -1096,7 +1105,7 @@ namespace PhuLongCRM.Views
 
                                 this.Title = buttonSave.Text = Language.cap_nhat_bang_tinh_gia_title;
 
-                                viewModel.Quote.paymentscheme_id = Guid.Parse(viewModel.PaymentScheme.Val);
+                                viewModel.Quote.paymentscheme_id = viewModel.PaymentScheme.bsd_paymentschemeid;
                                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                                 LoadingHelper.Hide();
                             }
@@ -1109,6 +1118,11 @@ namespace PhuLongCRM.Views
                         else
                         {
                             ToastMessageHelper.LongMessage(responseGetTotal.ErrorResponse.error.message);
+                            await viewModel.DeleteQuote();
+                            // set lại id = null khi thất bại để chạy vào create
+                            viewModel.quotedetailid = Guid.Empty;
+                            viewModel.QuoteId = Guid.Empty;
+                            viewModel.Quote.quoteid = Guid.Empty;
                             LoadingHelper.Hide();
                         }
 
@@ -1213,15 +1227,40 @@ namespace PhuLongCRM.Views
         private void SetTotals(CrmApiResponse data)
         {
             viewModel.TotalReservation = JsonConvert.DeserializeObject<TotalReservationModel>(data.Content);
-            viewModel.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.ListedPrice);
+            viewModel.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.ListedPrice));
+            viewModel.TotalReservation.Discount_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.Discount));
+            viewModel.TotalReservation.HandoverAmount_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.HandoverAmount));
+            viewModel.TotalReservation.NetSellingPrice_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.NetSellingPrice));
+            viewModel.TotalReservation.LandValue_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.LandValue));
+            viewModel.TotalReservation.TotalTax_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.TotalTax));
+            viewModel.TotalReservation.MaintenanceFee_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.MaintenanceFee));
+            viewModel.TotalReservation.NetSellingPriceAfterVAT_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.NetSellingPriceAfterVAT));
+            viewModel.TotalReservation.TotalAmount_format = StringFormatHelper.FormatCurrency(Math.Round(viewModel.TotalReservation.TotalAmount));
+        }
+
+        private void InitTotal()
+        {
+            if (viewModel.TotalReservation == null)
+                viewModel.TotalReservation = new TotalReservationModel();
+
+            viewModel.TotalReservation.ListedPrice_format = StringFormatHelper.FormatCurrency(viewModel.UnitInfor.price);
+            viewModel.TotalReservation.Discount = 0;
             viewModel.TotalReservation.Discount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.Discount);
+            viewModel.TotalReservation.HandoverAmount = 0;
             viewModel.TotalReservation.HandoverAmount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.HandoverAmount);
+            viewModel.TotalReservation.NetSellingPrice = viewModel.UnitInfor.price + viewModel.TotalReservation.HandoverAmount - viewModel.TotalReservation.Discount;
             viewModel.TotalReservation.NetSellingPrice_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.NetSellingPrice);
+            viewModel.TotalReservation.LandValue = viewModel.UnitInfor.bsd_landvalueofunit * viewModel.UnitInfor.bsd_netsaleablearea;
             viewModel.TotalReservation.LandValue_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.LandValue);
+            viewModel.TotalReservation.TotalTax = Math.Round(((viewModel.TotalReservation.NetSellingPrice - viewModel.TotalReservation.LandValue) * 10) / 100);
             viewModel.TotalReservation.TotalTax_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.TotalTax);
+            viewModel.TotalReservation.MaintenanceFee = Math.Round((viewModel.TotalReservation.NetSellingPrice * viewModel.Quote.maintenancefreespercent) / 100);
             viewModel.TotalReservation.MaintenanceFee_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.MaintenanceFee);
+            viewModel.TotalReservation.NetSellingPriceAfterVAT = viewModel.TotalReservation.NetSellingPrice + viewModel.TotalReservation.TotalTax;
             viewModel.TotalReservation.NetSellingPriceAfterVAT_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.NetSellingPriceAfterVAT);
+            viewModel.TotalReservation.TotalAmount = viewModel.TotalReservation.NetSellingPriceAfterVAT + viewModel.TotalReservation.MaintenanceFee;
             viewModel.TotalReservation.TotalAmount_format = StringFormatHelper.FormatCurrency(viewModel.TotalReservation.TotalAmount);
+
         }
     }
 }

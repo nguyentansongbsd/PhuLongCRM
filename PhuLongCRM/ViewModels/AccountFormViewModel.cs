@@ -318,7 +318,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_email2"] = singleAccount.bsd_email2;
             data["websiteurl"] = singleAccount.websiteurl;
             data["fax"] = singleAccount.fax;
-            data["telephone1"] = singleAccount.telephone1.Contains("-") ? singleAccount.telephone1.Replace("+", "").Replace("-", "") : singleAccount.telephone1;
+            data["telephone1"] = singleAccount.telephone1;//.Contains("-") ? singleAccount.telephone1.Replace("+", "").Replace("-", "") : singleAccount.telephone1;
             data["bsd_registrationcode"] = singleAccount.bsd_registrationcode;
             data["bsd_issuedon"] = singleAccount.bsd_issuedon.HasValue ? (DateTime.Parse(singleAccount.bsd_issuedon.ToString()).ToLocalTime()).ToString("yyyy-MM-dd\"T\"HH:mm:ss\"Z\"") : null;
             data["bsd_placeofissue"] = singleAccount.bsd_placeofissue;
@@ -432,15 +432,31 @@ namespace PhuLongCRM.ViewModels
             return data;
         }
 
-        public async Task LoadContactForLookup() // bubg
+        public async Task LoadContactForLookup(string keyWord = null) // bubg
         {
+            string condition = string.Empty;
+            if (!string.IsNullOrWhiteSpace(keyWord))
+            {
+                condition = $@"<condition attribute='fullname' operator='like' value='%25{keyWord}%25' />
+                              <condition attribute='bsd_customercode' operator='like' value='%25{keyWord}%25' />
+                              <condition attribute='mobilephone' operator='like' value='%25{keyWord}%25' />
+                              <condition attribute='bsd_identitycardnumber' operator='like' value='%25{keyWord}%25' />";
+            }
+
             string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
                     <attribute name='contactid' alias='Id' />
                     <attribute name='fullname' alias='Name' />
                     <order attribute='fullname' descending='false' />
+                    <filter type='or'>
+                        {condition}
+                    </filter>
                     <filter type='and'>
-                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                        <condition attribute='statuscode' operator='in'>
+                            <value>100000000</value>
+                            <value>1</value>
+                        </condition>
                     </filter>
                   </entity>
                 </fetch>";

@@ -45,18 +45,8 @@ namespace PhuLongCRM.Views
                 if (page_before == "ContactDetailPage" && ContactDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(ContactDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = ContactDetailPage.FromCustomer;
-                    if (viewModel.Required == null)
-                    {
-                        List<OptionSetFilter> item = new List<OptionSetFilter>();
-                        item.Add(new OptionSetFilter
-                        {
-                            Val = ContactDetailPage.FromCustomer.Val,
-                            Label = ContactDetailPage.FromCustomer.Label,
-                            Title = ContactDetailPage.FromCustomer.Title,
-                            Selected = true
-                        });
-                        viewModel.Required = item;
-                    }
+                    Lookup_Required.IsVisible = false;
+                    RequiredMapping.IsVisible = true;
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                     Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
@@ -64,18 +54,8 @@ namespace PhuLongCRM.Views
                 else if (page_before == "LeadDetailPage" && LeadDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(LeadDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = LeadDetailPage.FromCustomer;
-                    if (viewModel.Required == null)
-                    {
-                        List<OptionSetFilter> item = new List<OptionSetFilter>();
-                        item.Add(new OptionSetFilter
-                        {
-                            Val = LeadDetailPage.FromCustomer.Val,
-                            Label = LeadDetailPage.FromCustomer.Label,
-                            Title = LeadDetailPage.FromCustomer.Title,
-                            Selected = true
-                        });
-                        viewModel.Required = item;
-                    }
+                    Lookup_Required.IsVisible = false;
+                    RequiredMapping.IsVisible = true;
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                     Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
@@ -83,18 +63,8 @@ namespace PhuLongCRM.Views
                 else if (page_before == "AccountDetailPage" && AccountDetailPage.FromCustomer != null && !string.IsNullOrWhiteSpace(AccountDetailPage.FromCustomer.Val))
                 {
                     viewModel.CustomerMapping = AccountDetailPage.FromCustomer;
-                    if (viewModel.Required == null)
-                    {
-                        List<OptionSetFilter> item = new List<OptionSetFilter>();
-                        item.Add(new OptionSetFilter
-                        {
-                            Val = AccountDetailPage.FromCustomer.Val,
-                            Label = AccountDetailPage.FromCustomer.Label,
-                            Title = AccountDetailPage.FromCustomer.Title,
-                            Selected = true
-                        });
-                        viewModel.Required = item;
-                    }
+                    Lookup_Required.IsVisible = false;
+                    RequiredMapping.IsVisible = true;
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                     Lookup_Option.ne_customer = Guid.Parse(viewModel.CustomerMapping.Val);
@@ -102,29 +72,27 @@ namespace PhuLongCRM.Views
                 else if (page_before == "QueuesDetialPage" && QueuesDetialPage.FromQueue != null && !string.IsNullOrWhiteSpace(QueuesDetialPage.FromQueue.Val))
                 {
                     viewModel.CustomerMapping = QueuesDetialPage.FromQueue;
-                    if (viewModel.Required == null)
-                    {
-                        List<OptionSetFilter> item = new List<OptionSetFilter>();
-                        item.Add(new OptionSetFilter
-                        {
-                            Val = QueuesDetialPage.CustomerFromQueue.Val,
-                            Label = QueuesDetialPage.CustomerFromQueue.Label,
-                            Title = QueuesDetialPage.CustomerFromQueue.Title,
-                            Selected = true
-                        });
-                        viewModel.Required = item;
-                    }
+                    viewModel.Customer = QueuesDetialPage.CustomerFromQueue;
+                    viewModel.Customer.Selected = true; // phân biệt customer là required của queue
+                    lb_requiredMapping.Text = QueuesDetialPage.CustomerFromQueue.Label;
+                    Lookup_Option.ne_customer = Guid.Parse(QueuesDetialPage.CustomerFromQueue.Val);
+                    Lookup_Required.IsVisible = false;
+                    RequiredMapping.IsVisible = true;
                     Lookup_Customer.IsVisible = false;
                     RegardingMapping.IsVisible = true;
                 }
                 else
                 {
+                    Lookup_Required.IsVisible = true;
+                    RequiredMapping.IsVisible = false;
                     Lookup_Customer.IsVisible = true;
                     RegardingMapping.IsVisible = false;
                 }
             }
             else
             {
+                Lookup_Required.IsVisible = true;
+                RequiredMapping.IsVisible = false;
                 Lookup_Customer.IsVisible = true;
                 RegardingMapping.IsVisible = false;
             }
@@ -150,8 +118,10 @@ namespace PhuLongCRM.Views
 
             if (viewModel.MeetingModel.activityid != Guid.Empty)
             {
-                OnCompleted?.Invoke(true);
+                DatePickerStart.ReSetTime();
+                DatePickerEnd.ReSetTime();
                 IsInit = true;
+                OnCompleted?.Invoke(true);
             }
             else
                 OnCompleted?.Invoke(false);
@@ -306,13 +276,15 @@ namespace PhuLongCRM.Views
                     if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend) != -1)
                     {
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
-                        viewModel.MeetingModel.scheduledstart = viewModel.MeetingModel.scheduledend;
+                        //viewModel.MeetingModel.scheduledstart = viewModel.MeetingModel.scheduledend;
                     }
-                    if(viewModel.MeetingModel.isalldayevent)
+                    if (viewModel.MeetingModel.isalldayevent)
                     {
-                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
                         viewModel.MeetingModel.isalldayevent = false;
-                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
+                    }
+                    if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend.Value.AddDays(-1)) == 0)
+                    {
+                        viewModel.MeetingModel.isalldayevent = true;
                     }
                 }
             }
@@ -327,20 +299,16 @@ namespace PhuLongCRM.Views
                     if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend) != -1)
                     {
                         ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
-                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart;
+                        //viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart;
                     }
                     if (viewModel.MeetingModel.isalldayevent)
                     {
-                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
                         viewModel.MeetingModel.isalldayevent = false;
-                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
                     }
                     // chưa word ok, do control
                     if (this.compareDateTime(viewModel.MeetingModel.scheduledstart, viewModel.MeetingModel.scheduledend.Value.AddDays(-1)) == 0)
                     {
-                        CBallDay.CheckedChanged -= AllDayEvent_changeChecked;
                         viewModel.MeetingModel.isalldayevent = true;
-                        CBallDay.CheckedChanged += AllDayEvent_changeChecked;
                     }
                 }
                 else
@@ -354,8 +322,6 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.MeetingModel.scheduledstart != null)
             {
-                DatePickerStart.Date_Selected -= DatePickerStart_DateSelected;
-                DatePickerEnd.Date_Selected -= DatePickerEnd_DateSelected;
                 if (viewModel.MeetingModel.isalldayevent)
                 {
                     var timeStart = viewModel.MeetingModel.scheduledstart.Value;
@@ -371,25 +337,27 @@ namespace PhuLongCRM.Views
                     }
 
                     viewModel.MeetingModel.scheduledstart = new DateTime(timeStart.Year, timeStart.Month, timeStart.Day, 7, 0, 0);
+                    DatePickerStart.ReSetTime();
                     viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddDays(1);
+                    DatePickerEnd.ReSetTime();
                 }
                 else
                 {
-                    var dateStart = viewModel.MeetingModel.scheduledstart.Value;
-                    TimeSpan timeStart = viewModel.MeetingModel.timeStart;
+                    //var dateStart = viewModel.MeetingModel.scheduledstart.Value;
+                    //TimeSpan timeStart = viewModel.MeetingModel.timeStart;
 
-                    if (viewModel.MeetingModel.timeStart != new TimeSpan(0, 0, 0))
-                        viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, timeStart.Hours, timeStart.Minutes, timeStart.Seconds);
-                    else
-                        viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, dateStart.Hour, dateStart.Minute, dateStart.Second);
+                    //viewModel.MeetingModel.scheduledstart = null;
+                    //if (viewModel.MeetingModel.timeStart != new TimeSpan(0, 0, 0))
+                    //    viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, timeStart.Hours, timeStart.Minutes, timeStart.Seconds);
+                    //else
+                    //    viewModel.MeetingModel.scheduledstart = new DateTime(dateStart.Year, dateStart.Month, dateStart.Day, dateStart.Hour, dateStart.Minute, dateStart.Second);
 
-                    if (viewModel.MeetingModel.scheduleddurationminutes > 0)
-                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
-                    else
-                        viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(1);
+                    //viewModel.MeetingModel.scheduledend = null;
+                    //if (viewModel.MeetingModel.scheduleddurationminutes > 0)
+                    //    viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(viewModel.MeetingModel.scheduleddurationminutes);
+                    //else
+                    //    viewModel.MeetingModel.scheduledend = viewModel.MeetingModel.scheduledstart.Value.AddMinutes(1);
                 }
-                DatePickerStart.Date_Selected += DatePickerStart_DateSelected;
-                DatePickerEnd.Date_Selected += DatePickerEnd_DateSelected;
             }
             else
             {
@@ -397,6 +365,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
             }    
         }
+
         private bool CheckCusomer(List<OptionSetFilter> required = null, List<OptionSetFilter> option = null, OptionSet customer = null)
         {
             // kiểm tra từ kh hàng- kh liên quan k check
@@ -423,6 +392,11 @@ namespace PhuLongCRM.Views
             }
             else
                 return false;
+        }
+
+        private void ClearDate_Clicked(object sender, EventArgs e)
+        {
+            viewModel.MeetingModel.isalldayevent = false;
         }
     }
 }

@@ -15,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace PhuLongCRM.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LookUpAddress : StackLayout
+    public partial class LookUpAddress : Grid
     {
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(LookUpAddress), null, BindingMode.TwoWay);
         public string Placeholder { get => (string)GetValue(PlaceholderProperty); set => SetValue(PlaceholderProperty, value); }
@@ -56,16 +56,24 @@ namespace PhuLongCRM.Controls
 
         private static void AddressCopyChang(BindableObject bindable, object oldValue, object newValue)
         {
-            if (newValue == null) return;
             LookUpAddress control = (LookUpAddress)bindable;
-            control.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = control, Converter = new Converters.NullToHideConverter() });
+            if (newValue == null)
+            {
+                control.BtnCopy.IsVisible = false;
+                return;
+            }
+            if (!control.root)
+                control.BtnCopy.IsVisible = true;
+            else
+                control.BtnCopy.IsVisible = false;
+            //control.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = control, Converter = new Converters.NullToHideConverter() });
         }
 
         public AddressModel AddressCopy { get => (AddressModel)GetValue(AddressCopyProperty); set { SetValue(AddressCopyProperty, value); } }
 
         public static readonly BindableProperty EnableCopyAddressProperty = BindableProperty.Create(nameof(EnableCopyAddress), typeof(bool), typeof(LookUpAddress), false, BindingMode.TwoWay);
         public bool EnableCopyAddress { get => (bool)GetValue(EnableCopyAddressProperty); set => SetValue(EnableCopyAddressProperty, value); }
-
+        private bool root;
         public LookUpAddress()
         {
             InitializeComponent();
@@ -73,7 +81,7 @@ namespace PhuLongCRM.Controls
             this.Entry.SetBinding(EntryNoneBorder.PlaceholderProperty, "Placeholder");
             this.Entry.SetBinding(EntryNoneBorder.TextProperty, "Address");
             this.BtnClear.SetBinding(Button.IsVisibleProperty, new Binding("Address") { Source = this, Converter = new Converters.NullToHideConverter() });
-            this.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = this, Converter = new Converters.NullToHideConverter() });
+            //this.BtnCopy.SetBinding(RadBorder.IsVisibleProperty, new Binding("AddressCopy") { Source = this, Converter = new Converters.NullToHideConverter() });
 
             list_country_lookup = new ObservableCollection<Models.LookUp>();
             list_province_lookup = new ObservableCollection<Models.LookUp>();
@@ -83,7 +91,13 @@ namespace PhuLongCRM.Controls
         public void Clear_Clicked(object sender, EventArgs e)
         {
             this.SelectedItem = null;
-            Address = null;
+            Country = Province = District = null;
+            Address = LineAddress = null;
+            if (root && AddressCopy != null)
+            {
+                AddressCopy = null;
+                root = false;
+            }
         }
         public void HideClearButton()
         {
@@ -199,6 +213,9 @@ namespace PhuLongCRM.Controls
                                     <attribute name='bsd_countryid' alias='Id'/>
                                     <attribute name='bsd_nameen' alias='Detail'/>
                                     <order attribute='bsd_priority' descending='false' />
+                                    <filter type='and'>
+                                        <condition attribute='statecode' operator='eq' value='0' />
+                                    </filter>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Models.LookUp>>("bsd_countries", fetch);
@@ -249,7 +266,8 @@ namespace PhuLongCRM.Controls
                                     <attribute name='bsd_nameen' alias='Detail'/>
                                     <order attribute='bsd_priority' descending='false' />
                                     <filter type='and'>
-                                      <condition attribute='bsd_country' operator='eq' value='" + Country.Id + @"' />
+                                        <condition attribute='bsd_country' operator='eq' value='" + Country.Id + @"' />
+                                        <condition attribute='statecode' operator='eq' value='0' />
                                     </filter>
                                   </entity>
                                 </fetch>";
@@ -302,7 +320,8 @@ namespace PhuLongCRM.Controls
                                 <attribute name='bsd_nameen' alias='Detail'/>
                                 <order attribute='new_name' descending='false' />
                                 <filter type='and'>
-                                  <condition attribute='new_province' operator='eq' value='" + Province.Id + @"' />
+                                    <condition attribute='new_province' operator='eq' value='" + Province.Id + @"' />
+                                    <condition attribute='statecode' operator='eq' value='0' />
                                 </filter>
                               </entity>
                             </fetch>";
@@ -355,35 +374,21 @@ namespace PhuLongCRM.Controls
         {
             if (SelectedItem == null) return;
             if (SelectedItem.district_id != Guid.Empty || !string.IsNullOrWhiteSpace(SelectedItem.district_name))
-                District = new Models.LookUp { Id = SelectedItem.district_id, Name = SelectedItem.district_name, Detail= SelectedItem.district_name_en };
+                District = new Models.LookUp { Id = SelectedItem.district_id, Name = SelectedItem.district_name, Detail = SelectedItem.district_name_en };
             if (SelectedItem.province_id != Guid.Empty || !string.IsNullOrWhiteSpace(SelectedItem.province_name))
+            {
                 Province = new Models.LookUp { Id = SelectedItem.province_id, Name = SelectedItem.province_name, Detail = SelectedItem.province_name_en };
+                await LoadDistrictForLookup();
+            }
             if (SelectedItem.country_id != Guid.Empty || !string.IsNullOrWhiteSpace(SelectedItem.country_name))
             {
                 Country = new Models.LookUp { Id = SelectedItem.country_id, Name = SelectedItem.country_name, Detail = SelectedItem.country_name_en };
                 await LoadProvincesForLookup();
             }
-            if(!string.IsNullOrWhiteSpace(SelectedItem.lineaddress))
+            if (!string.IsNullOrWhiteSpace(SelectedItem.lineaddress))
                 LineAddress = SelectedItem.lineaddress;
             if (!string.IsNullOrWhiteSpace(SelectedItem.address))
                 Address = SelectedItem.address;
-            if (EnableCopyAddress == true)
-                AddressCopy = new AddressModel
-                {
-                    country_id = SelectedItem.country_id,
-                    country_name = SelectedItem.country_name,
-                    country_name_en = SelectedItem.country_name_en,
-                    province_id = SelectedItem.province_id,
-                    province_name = SelectedItem.province_name,
-                    province_name_en = SelectedItem.province_name_en,
-                    district_id = SelectedItem.district_id,
-                    district_name = SelectedItem.district_name,
-                    district_name_en = SelectedItem.district_name_en,
-                    address = SelectedItem.address,
-                    address_en = SelectedItem.address_en,
-                    lineaddress = SelectedItem.lineaddress,
-                    lineaddress_en = SelectedItem.lineaddress_en
-                };
         }
         public void Footer()
         {
@@ -400,6 +405,7 @@ namespace PhuLongCRM.Controls
             btnClose.BorderWidth = 1;
             btnClose.HeightRequest = 40;
             btnClose.Clicked += CloseAddress_Clicked;
+            btnClose.FontAttributes = FontAttributes.Bold;
             grid.Children.Add(btnClose);
             Grid.SetColumn(btnClose, 0);
             Grid.SetRow(btnClose, 0);
@@ -413,6 +419,7 @@ namespace PhuLongCRM.Controls
             btnSave.BorderWidth = 1;
             btnSave.HeightRequest = 40;
             btnSave.Clicked += ConfirmAddress_Clicked;
+            btnSave.FontAttributes = FontAttributes.Bold;
             grid.Children.Add(btnSave);
             Grid.SetColumn(btnSave, 1);
             Grid.SetRow(btnSave, 0);
@@ -483,22 +490,29 @@ namespace PhuLongCRM.Controls
             Address = SelectedItem.address = string.Join(", ", _address);
             SelectedItem.address_en = string.Join(", ", _address_en);
             if (EnableCopyAddress == true)
-                AddressCopy = new AddressModel
+            {
+                if (AddressCopy == null)
+                    root = true;
+                if (root)
                 {
-                    country_id = SelectedItem.country_id,
-                    country_name = SelectedItem.country_name,
-                    country_name_en = SelectedItem.country_name_en,
-                    province_id = SelectedItem.province_id,
-                    province_name = SelectedItem.province_name,
-                    province_name_en = SelectedItem.province_name_en,
-                    district_id = SelectedItem.district_id,
-                    district_name = SelectedItem.district_name,
-                    district_name_en = SelectedItem.district_name_en,
-                    address = SelectedItem.address,
-                    address_en = SelectedItem.address_en,
-                    lineaddress = SelectedItem.lineaddress,
-                    lineaddress_en = SelectedItem.lineaddress_en
-                };
+                    AddressCopy = new AddressModel
+                    {
+                        country_id = SelectedItem.country_id,
+                        country_name = SelectedItem.country_name,
+                        country_name_en = SelectedItem.country_name_en,
+                        province_id = SelectedItem.province_id,
+                        province_name = SelectedItem.province_name,
+                        province_name_en = SelectedItem.province_name_en,
+                        district_id = SelectedItem.district_id,
+                        district_name = SelectedItem.district_name,
+                        district_name_en = SelectedItem.district_name_en,
+                        address = SelectedItem.address,
+                        address_en = SelectedItem.address_en,
+                        lineaddress = SelectedItem.lineaddress,
+                        lineaddress_en = SelectedItem.lineaddress_en
+                    };
+                }
+            }
             await CenterModal.Hide();
         }
 

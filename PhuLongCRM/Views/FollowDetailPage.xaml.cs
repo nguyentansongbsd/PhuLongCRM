@@ -107,7 +107,7 @@ namespace PhuLongCRM.Views
             if(viewModel.FollowDetail.bsd_reservation_id != Guid.Empty)
             {
                 LoadingHelper.Show();
-                BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(viewModel.FollowDetail.bsd_reservation_id);
+                BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(viewModel.FollowDetail.bsd_reservation_id, true);
                 bangTinhGiaDetail.OnCompleted = async (OnCompleted) =>
                 {
                     if (OnCompleted == true)

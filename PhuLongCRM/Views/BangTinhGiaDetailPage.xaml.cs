@@ -463,7 +463,8 @@ namespace PhuLongCRM.Views
             }
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
-                if (await viewModel.SignQuotation())
+                var res = await viewModel.SignQuotation();
+                if (res.IsSuccess)
                 {
                     NeedToRefresh = true;
                     OnAppearing();
@@ -473,14 +474,16 @@ namespace PhuLongCRM.Views
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
+                    if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
                     this.Title = Language.dat_coc_title;
+                    InitContract(true);
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.bang_tinh_gia_da_duoc_ky);
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.ky_bang_tinh_gia_that_bai_vui_long_thu_lai);
+                    ToastMessageHelper.ShortMessage(res.ErrorResponse.error.message);
                 }
             }
         }
@@ -682,7 +685,9 @@ namespace PhuLongCRM.Views
                     if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                     if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
+                    if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
+                    if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.da_huy_dat_coc);
                 }

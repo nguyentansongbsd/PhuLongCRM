@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.Helper;
+﻿using Newtonsoft.Json;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
 using Stormlion.PhotoBrowser;
@@ -6,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace PhuLongCRM.ViewModels
@@ -16,7 +19,6 @@ namespace PhuLongCRM.ViewModels
         public List<CollectionData> Collections { get => _collections; set { _collections = value; OnPropertyChanged(nameof(Collections)); } }
 
         public List<Photo> Photos;
-        public PhotoBrowser photoBrowser;
 
         private int _totalMedia;
         public int TotalMedia { get => _totalMedia; set { _totalMedia = value; OnPropertyChanged(nameof(TotalMedia)); } }
@@ -80,10 +82,6 @@ namespace PhuLongCRM.ViewModels
             list_danhsachdatcho = new ObservableCollection<QueuesModel>();
             Photos = new List<Photo>();
             Collections = new List<CollectionData>();
-            photoBrowser = new PhotoBrowser
-            {
-                Photos = Photos,
-            };
         }
 
         public async Task LoadUnit()
@@ -129,6 +127,7 @@ namespace PhuLongCRM.ViewModels
                 </link-entity>
                 <link-entity name='bsd_unittype' from='bsd_unittypeid' to='bsd_unittype' visible='false' link-type='outer' alias='a_493690ec6ce2e811a94e000d3a1bc2d1'>
                   <attribute name='bsd_name'  alias='bsd_unittype_name'/>
+                  <attribute name='bsd_unittypeid' alias='bsd_unittype_value'/>
                 </link-entity>
                 <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
                   <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
@@ -144,7 +143,7 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<UnitInfoModel>>("products", fetchXml);
             if (result == null || result.value.Count == 0) return;
             UnitInfo = result.value.FirstOrDefault();
-            //await LoadAllCollection();
+            await LoadAllCollection();
         }
 
         public async Task LoadQueues()
@@ -158,20 +157,25 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='statuscode' />
                         <attribute name='bsd_queuingexpired' />
                         <attribute name='opportunityid' />
+                        <attribute name='bsd_queuenumber' />
+                        <attribute name='bsd_queueforproject' />
                         <order attribute='statecode' descending='false' />
                         <order attribute='statuscode' descending='true' />
                         <filter type='and'>
                           <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                           <condition attribute='bsd_units' operator='eq' value='{UnitInfo.productid}' />
                         </filter>
-                        <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer'>
-                           <attribute name='fullname' alias='contact_name'/>
+                        <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' visible='false' link-type='outer' alias='a_edc3f143ba81e911a83b000d3a07be23'>
+                           <attribute name='bsd_name' alias='project_name'/>
                         </link-entity>
-                        <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer'>
-                           <attribute name='name'  alias='account_name'/>
+                        <link-entity name='account' from='accountid' to='parentaccountid' visible='false' link-type='outer' alias='a_87ea9a00777ee911a83b000d3a07fbb4'>
+                           <attribute name='name' alias='account_name'/>
                         </link-entity>
-                        <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' visible='false' link-type='outer' alias='a_805e44d019dbeb11bacb002248168cad'>
-                          <attribute name='bsd_name' alias='project_name'/>
+                        <link-entity name='contact' from='contactid' to='parentcontactid' visible='false' link-type='outer' alias='a_8eea9a00777ee911a83b000d3a07fbb4'>
+                           <attribute name='bsd_fullname' alias='contact_name'/>
+                        </link-entity>
+                        <link-entity name='product' from='productid' to='bsd_units' visible='false' link-type='outer' alias='a_5025d361ba81e911a83b000d3a07be23'>
+                           <attribute name='name' alias='bsd_units_name'/>
                         </link-entity>
                       </entity>
                     </fetch>";
@@ -352,114 +356,124 @@ namespace PhuLongCRM.ViewModels
                 list_danhsachhopdong.Add(x);
             }
         }
-
         public async Task CheckShowBtnBangTinhGia()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
-                              <entity name='bsd_phaseslaunch'>
-                                <attribute name='bsd_name' />
-                                <attribute name='createdon' />
-                                <attribute name='bsd_phaseslaunchid' />
-                                <order attribute='createdon' descending='true' />
-                                <link-entity name='product' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='al'>
-                                  <filter type='and'>
-                                    <condition attribute='productid' operator='eq' value='{UnitId}' />
-                                  </filter>
-                                </link-entity><link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='an' >
-                                   <attribute name='bsd_startdate' alias='startdate_event' />
-                                   <attribute name='bsd_enddate' alias='enddate_event'/>
-                                   <attribute name='statuscode' alias='statuscode_event'/>
-                                </link-entity>
-                              </entity>
-                            </fetch>";
+                                  <entity name='bsd_phaseslaunch'>
+                                    <attribute name='bsd_name' />
+                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner'>
+                                      <filter type='and'>
+                                        <condition attribute='bsd_enddate' operator='on-or-after' value='{DateTime.Now.ToString("yyyy-MM-dd")}' />
+                                        <condition attribute='bsd_startdate' operator='on-or-before' value='{DateTime.Now.ToString("yyyy-MM-dd")}' />
+                                        <condition attribute='statuscode' operator='eq' value='100000000' />
+                                      </filter>
+                                    </link-entity>
+                                    <link-entity name='product' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner'>
+                                      <filter type='and'>
+                                        <condition attribute='productid' operator='eq' value='{UnitId}' />
+                                        <condition attribute='statuscode' operator='in'>
+                                          <value>100000000</value>
+                                          <value>100000004</value>
+                                        </condition>
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhasesLanchModel>>("bsd_phaseslaunchs", fetchXml);
             if (result == null || result.value.Any() == false) return;
 
-            var data = result.value;
-            foreach (var item in data)
-            {
-                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
-                {
-                    if (UnitInfo.statuscode == 100000000 || UnitInfo.statuscode == 100000004)
-                    {
-                        IsShowBtnBangTinhGia = true;
-                    }
-                    else
-                    {
-                        IsShowBtnBangTinhGia = false;
-                    }
-                    return;
-                }
-                else
-                {
-                    IsShowBtnBangTinhGia = false;
-                }
-            }
+            if(result.value.Count > 0)
+                IsShowBtnBangTinhGia = true;
+            else
+                IsShowBtnBangTinhGia = false;
         }
 
         public async Task LoadAllCollection()
         {
-            //if (UnitId != null && UnitInfo != null && !string.IsNullOrWhiteSpace(UnitInfo.name))
-            //{
-            //    var Folder = UnitInfo.name.Replace('.', '-') + "_" + UnitId.ToString().Replace("-", string.Empty).ToUpper();
-            //    var Category = "Units";
-            //    var category_value = "product";
+            if (UnitInfo != null)
+            {
+                GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+                var client = BsdHttpClient.Instance();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // load unit type
+                string name_folder_unitype = UnitInfo.bsd_unittype_name + "_" + UnitInfo.bsd_unittype_value.ToString().Replace("-", "").ToUpper();
+                string fileUrl1 = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_UnitTypeID}/root:/{name_folder_unitype}:/children?$select=name,eTag";
+                var request_unitype = new HttpRequestMessage(HttpMethod.Get, fileUrl1);
+                var response_unitype = await client.SendAsync(request_unitype);
+                if (response_unitype.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response_unitype.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
 
-            //    GetTokenResponse getTokenResponse = await CrmHelper.getSharePointToken();
-            //    var client = BsdHttpClient.Instance();
-            //    string fileListUrl = $"{OrgConfig.SharePointResource}/sites/" + OrgConfig.SharePointSiteName + "/_api/web/Lists/GetByTitle('" + Category + "')/RootFolder/Folders('" + Folder + "')/Files";
-            //    var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                    List<SharePointGraphModel> list = result.value;
+                    var videos = list.Where(x => x.type == "video").ToList();
+                    var images = list.Where(x => x.type == "image").ToList();
+                    this.TotalMedia += videos.Count;
+                    this.TotalPhoto += images.Count;
 
-            //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        TotalMedia = 0;
-            //        TotalPhoto = 0;
-            //        var body = await response.Content.ReadAsStringAsync();
-            //        SharePointFieldResult sharePointFieldResult = JsonConvert.DeserializeObject<SharePointFieldResult>(body);
-            //        var list = sharePointFieldResult.value;
-            //        foreach (var item in list)
-            //        {
-            //            var names = item.Name.ToLower().Split('.');
-            //            string type_item = names[names.Count() - 1];
-            //            if (type_item == "flv" || type_item == "mp4" || type_item == "m3u8" || type_item == "3gp" || type_item == "mov" || type_item == "avi" || type_item == "wmv")
-            //            {
-            //                var soucre = OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_layouts/15/download.aspx?SourceUrl=/sites/" + OrgConfig.SharePointSiteName + "/" + category_value + "/" + Folder + "/" + item.Name + "&access_token=" + getTokenResponse.access_token;
-            //                if (Device.RuntimePlatform == Device.iOS)
-            //                {
-            //                    soucre = await DependencyService.Get<IUrlEnCodeSevice>().GetUrlEnCode(soucre);
-            //                }
-            //                var mediaItem = await CrossMediaManager.Current.Extractor.CreateMediaItem(soucre);
-            //                var image = await CrossMediaManager.Current.Extractor.GetVideoFrame(mediaItem, TimeSpan.FromSeconds(5));
-            //                //ImageSource imageSource = image.ToImageSource();
+                    foreach (var item in videos)
+                    {
+                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_UnitTypeID}/items/{item.id}/driveItem/thumbnails");
+                        if (urlVideo != null)
+                        {
+                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
+                        }
+                    }
+                    foreach (var item in images)
+                    {
+                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_UnitTypeID}/items/{item.id}/driveItem/thumbnails");
+                        if (urlVideo != null)
+                        {
+                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                            this.Photos.Add(new Photo { URL = url });
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
+                        }
+                    }
+                }
 
-            //                //Collections.Add(new CollectionData { MediaSource = soucre, ImageSource = imageSource, Index = TotalMedia });
-            //                //TotalMedia++;
-            //            }
-            //            else if (type_item == "jpg" || type_item == "jpeg" || type_item == "png")
-            //            {
-            //                var soucre = OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_layouts/15/download.aspx?SourceUrl=/sites/" + OrgConfig.SharePointSiteName + "/" + category_value + "/" + Folder + "/" + item.Name + "&access_token=" + getTokenResponse.access_token;
-            //                if (Device.RuntimePlatform == Device.iOS)
-            //                {
-            //                    soucre = await DependencyService.Get<IUrlEnCodeSevice>().GetUrlEnCode(soucre);
-            //                }
-            //                Photos.Add(new Photo { URL = soucre });
-            //                Collections.Add(new CollectionData { MediaSourceId = null, ImageSource = soucre, Index = TotalPhoto });
-            //                TotalPhoto++;
-            //            }
-            //        }
-            //    }
-            //    if (Collections != null && Collections.Count > 0)
-            //    {
-            //        ShowCollections = true;
-            //    }
-            //    else
-            //    {
-            //        ShowCollections = false;
-            //    }
-            //}
+                //load hinh anh unit
+                string name_folder = UnitInfo.name.Replace(".", "-") + "_" + UnitInfo.productid.ToString().Replace("-", "").ToUpper();
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_UnitID}/root:/{name_folder}:/children?$select=name,eTag";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                var response = await client.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
+
+                    List<SharePointGraphModel> list = result.value;
+                    var videos = list.Where(x => x.type == "video").ToList();
+                    var images = list.Where(x => x.type == "image").ToList();
+                    this.TotalMedia += videos.Count;
+                    this.TotalPhoto += images.Count;
+
+                    foreach (var item in videos)
+                    {
+                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_UnitID}/items/{item.id}/driveItem/thumbnails");
+                        if (urlVideo != null)
+                        {
+                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
+                        }
+                    }
+                    foreach (var item in images)
+                    {
+                        var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_UnitID}/items/{item.id}/driveItem/thumbnails");
+                        if (urlVideo != null)
+                        {
+                            string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
+                            this.Photos.Add(new Photo { URL = url });
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
+                        }
+                    }
+                }
+                if (Collections.Count > 0)
+                    ShowCollections = true;
+                else
+                    ShowCollections = false;
+            }
         }
 
         public async Task LoadDataEvent()

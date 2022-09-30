@@ -1,4 +1,4 @@
-using PhuLongCRM.Controls;
+﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
@@ -281,7 +281,7 @@ namespace PhuLongCRM.ViewModels
             data["statecode"] = MeetingModel.statecode;
             data["statuscode"] = MeetingModel.statuscode;
 
-            if (Customer != null)
+            if (Customer != null && Customer.Selected == false) // selected = flase là customer từ page khác queue
             {
                 if (Customer.Title == CodeLead)
                 {
@@ -334,6 +334,21 @@ namespace PhuLongCRM.ViewModels
                 }
                 else if (CustomerMapping.Title == CodeQueue)
                 {
+                    if (Customer != null && Customer.Selected == true) // selected = true là required từ queue
+                    {
+                        if (Customer.Title == CodeContac) // khách hàng từ queue k có lead
+                        {
+                            item_required["partyid_contact@odata.bind"] = "/contacts(" + Customer.Val + ")";
+                            item_required["participationtypemask"] = 5;
+                            arrayMeeting.Add(item_required);
+                        }
+                        else if (Customer.Title == CodeAccount)
+                        {
+                            item_required["partyid_account@odata.bind"] = "/accounts(" + Customer.Val + ")";
+                            item_required["participationtypemask"] = 5;
+                            arrayMeeting.Add(item_required);
+                        }
+                    }
                     data["regardingobjectid_opportunity_appointment@odata.bind"] = "/opportunities(" + CustomerMapping.Val + ")";
                 }
             }
@@ -446,125 +461,6 @@ namespace PhuLongCRM.ViewModels
             else
             {
                 return false;
-            }
-        }
-
-        public async Task LoadLeadsLookUp()
-        {
-            LeadsLookUpRequired = new List<OptionSetFilter>();
-            LeadsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                              <entity name='lead'>
-                                <attribute name='fullname' alias='Label' />
-                                <attribute name='leadid' alias='Val' />
-                                <attribute name='mobilephone' alias='SDT' />
-                                <order attribute='createdon' descending='true' />
-                                <filter type='and'>
-                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
-                                </filter>
-                              </entity>
-                            </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSetFilter>>("leads", fetch);
-            if (result == null || result.value == null)
-                return;
-            var data = result.value;
-            foreach (var item in data)
-            {
-                item.Title = CodeLead;
-                LeadsLookUpRequired.Add(item);
-                LeadsLookUpOptional.Add(new OptionSetFilter { Val = item.Val, Label = item.Label, Title = CodeLead });
-            }
-        }
-
-        public async Task LoadContactsLookUp()
-        {
-            ContactsLookUpRequired = new List<OptionSetFilter>();
-            ContactsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                  <entity name='contact'>
-                    <attribute name='contactid' alias='Val' />
-                    <attribute name='fullname' alias='Label' />
-                    <attribute name='mobilephone' alias='SDT' />
-                    <attribute name='bsd_identitycardnumber' alias='CMND' />
-                    <attribute name='bsd_passport' alias='HC' />
-                    <order attribute='fullname' descending='false' />                   
-                    <filter type='and'>
-                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
-                    </filter>
-                  </entity>
-                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSetFilter>>("contacts", fetch);
-            if (result == null || result.value == null)
-                return;
-            var data = result.value;
-            foreach (var item in data)
-            {
-                item.Title = CodeContac;
-                ContactsLookUpRequired.Add(item);
-                ContactsLookUpOptional.Add(new OptionSetFilter { Val = item.Val, Label = item.Label, Title = CodeContac });
-            }
-        }
-
-        public async Task LoadAccountsLookUp()
-        {
-            AccountsLookUpRequired = new List<OptionSetFilter>();
-            AccountsLookUpOptional = new List<OptionSetFilter>();
-            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                              <entity name='account'>
-                                <attribute name='name' alias='Label'/>
-                                <attribute name='accountid' alias='Val'/>
-                                <attribute name='telephone1' alias='SDT'/>
-                                <attribute name='bsd_registrationcode' alias='SoGPKD'/>
-                                <order attribute='createdon' descending='true' />
-                                <filter type='and'>
-                                    <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
-                                </filter>
-                              </entity>
-                            </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSetFilter>>("accounts", fetch);
-            if (result == null || result.value == null)
-                return;
-            var data = result.value;
-            foreach (var item in data)
-            {
-                item.Title = CodeAccount;
-                AccountsLookUpRequired.Add(item);
-                AccountsLookUpOptional.Add(new OptionSetFilter { Val = item.Val, Label = item.Label, Title = CodeAccount });
-            }
-        }
-
-        public async Task LoadAllLookUp()
-        {
-            if (LeadsLookUpRequired == null && ContactsLookUpRequired == null && AccountsLookUpRequired == null
-                && LeadsLookUpOptional == null && ContactsLookUpOptional == null && AccountsLookUpOptional == null)
-            {
-                await Task.WhenAll(
-                    LoadLeadsLookUp(),
-                    LoadContactsLookUp(),
-                    LoadAccountsLookUp()
-                );
-            }
-            if (AllsLookUpRequired.Count <= 0)
-            {
-                AllsLookUpRequired.Add(LeadsLookUpRequired);
-                AllsLookUpRequired.Add(ContactsLookUpRequired);
-                AllsLookUpRequired.Add(AccountsLookUpRequired);
-            }
-            if (AllsLookUpOptional.Count <= 0)
-            {
-                AllsLookUpOptional.Add(LeadsLookUpOptional);
-                AllsLookUpOptional.Add(ContactsLookUpOptional);
-                AllsLookUpOptional.Add(AccountsLookUpOptional);
-            }
-        }
-
-        public void SetTabs()
-        {
-            if (Tabs.Count <= 0)
-            {
-                Tabs.Add("KH Tiềm Năng");
-                Tabs.Add("KH Cá Nhân");
-                Tabs.Add("KH Doanh Nghiệp");
             }
         }
     }

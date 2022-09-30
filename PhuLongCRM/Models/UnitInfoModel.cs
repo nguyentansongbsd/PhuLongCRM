@@ -33,7 +33,7 @@ namespace PhuLongCRM.Models
         public string bsd_depositamount_format { get => StringFormatHelper.FormatCurrency(bsd_depositamount); }
         public decimal bsd_queuingfee { get; set; } // Queuing Amount
         public string bsd_queuingfee_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfee); }
-        public Guid _bsd_unittype_value { get; set; }
+        public Guid bsd_unittype_value { get; set; }
         public string bsd_unittype_name { get; set; }
 
         public bool bsd_vippriority { get; set; }

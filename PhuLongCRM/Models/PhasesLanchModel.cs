@@ -21,5 +21,12 @@ namespace PhuLongCRM.Models
         public string paymentscheme_name { get; set; }
         public Guid promotion_id { get; set; }
         public string promotion_name { get; set; }
+
+        public DateTime startdate_discountlist { get; set; }
+        public DateTime enddate_discountlist { get; set; }
+        public DateTime startdate_internellist { get; set; }
+        public DateTime enddate_internellist { get; set; }
+        public DateTime startdate_exchangelist { get; set; }
+        public DateTime enddate_exchangelist { get; set; }
     }
 }

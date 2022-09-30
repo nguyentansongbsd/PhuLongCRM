@@ -42,8 +42,16 @@ namespace PhuLongCRM.Helper
                 {
                     if (UserLogged.IsLoginByUserCRM)
                     {
-                        await Shell.Current.DisplayAlert("", "Phiên bản đăng nhập hết hạn.", "Ok");
-                        await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
+                        var refreshTokenResponse = await LoginHelper.RefreshToken_UserCRM();
+                        if (refreshTokenResponse.IsSuccessStatusCode)
+                        {
+                            var body = await refreshTokenResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
+                            UserLogged.RefreshToken = tokenData.refresh_token;
+                            var api_Response = await RetrieveMultiple<T>(EntityName, FetchXml);
+                            return api_Response;
+                        }
                     }
                     else
                     {
@@ -74,44 +82,43 @@ namespace PhuLongCRM.Helper
             return null;
         }
 
-        //public static async Task<T> RetrieveImagesSharePoint<T>(string url) where T : class
-        //{
-        //    try
-        //    {
-        //        var client = BsdHttpClient.Instance();
-        //        string fileListUrl = $"{OrgConfig.GraphApi}{OrgConfig.SharepointSiteId}/lists/{url}";
-        //        var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", UserLogged.AccessTokenSharePoint);
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        var response = await client.SendAsync(request);
+        public static async Task<T> RetrieveImagesSharePoint<T>(string url) where T : class
+        {
+            try
+            {
+                var client = BsdHttpClient.Instance();
+                string fileListUrl = $"{OrgConfig.GraphApi}{OrgConfig.SP_SiteId}/lists/{url}";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", UserLogged.AccessTokenSharePoint);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.SendAsync(request);
 
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var body = await response.Content.ReadAsStringAsync();
-        //            var api_response = JsonConvert.DeserializeObject<T>(body);
-        //            return api_response;
-        //        }
-        //        else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-        //        {
-        //            var loginSharePonit = await LoginHelper.getSharePointToken();
-        //            if (loginSharePonit.access_token != null)
-        //            {
-        //                UserLogged.AccessTokenSharePoint = loginSharePonit.access_token;
-        //                var api_response = await RetrieveImagesSharePoint<T>(url);
-        //                return api_response;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //    }
-        //    return null;
-        //}
-
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var api_response = JsonConvert.DeserializeObject<T>(body);
+                    return api_response;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    var loginSharePonit = await LoginHelper.getSharePointToken();
+                    if (loginSharePonit.access_token != null)
+                    {
+                        UserLogged.AccessTokenSharePoint = loginSharePonit.access_token;
+                        var api_response = await RetrieveImagesSharePoint<T>(url);
+                        return api_response;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return null;
+        }
 
         /// <summary>
         /// Set giá trị Null cho field lookup
@@ -139,23 +146,47 @@ namespace PhuLongCRM.Helper
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    var reLoginResponse = await LoginHelper.Login();
-                    if (reLoginResponse.IsSuccessStatusCode)
+                    if (UserLogged.IsLoginByUserCRM)
                     {
-                        var body = await reLoginResponse.Content.ReadAsStringAsync();
-                        GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
-                        UserLogged.AccessToken = tokenData.access_token;
-
-                        var api_response = await SetNullLookupField(EntityName, Id, FieldName);
-                        return api_response;
+                        var refreshTokenResponse = await LoginHelper.RefreshToken_UserCRM();
+                        if (refreshTokenResponse.IsSuccessStatusCode)
+                        {
+                            var body = await refreshTokenResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
+                            UserLogged.RefreshToken = tokenData.refresh_token;
+                            var api_Response = await SetNullLookupField(EntityName, Id, FieldName);
+                            return api_Response;
+                        }
+                        else
+                        {
+                            return new CrmApiResponse()
+                            {
+                                IsSuccess = false,
+                                ErrorResponse = new ErrorResponse() { error = new Error() { message = refreshTokenResponse.RequestMessage.ToString() } }
+                            };
+                        }
                     }
                     else
                     {
-                        return new CrmApiResponse()
+                        var reLoginResponse = await LoginHelper.Login();
+                        if (reLoginResponse.IsSuccessStatusCode)
                         {
-                            IsSuccess = false,
-                            ErrorResponse = new ErrorResponse() { error = new Error() { message = reLoginResponse.RequestMessage.ToString() } }
-                        };
+                            var body = await reLoginResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
+
+                            var api_response = await SetNullLookupField(EntityName, Id, FieldName);
+                            return api_response;
+                        }
+                        else
+                        {
+                            return new CrmApiResponse()
+                            {
+                                IsSuccess = false,
+                                ErrorResponse = new ErrorResponse() { error = new Error() { message = reLoginResponse.RequestMessage.ToString() } }
+                            };
+                        }
                     }
                 }
                 else
@@ -227,8 +258,16 @@ namespace PhuLongCRM.Helper
                 {
                     if (UserLogged.IsLoginByUserCRM)
                     {
-                        await Shell.Current.DisplayAlert("", "Phiên bản đăng nhập hết hạn.", "Ok");
-                        await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
+                        var refreshTokenResponse = await LoginHelper.RefreshToken_UserCRM();
+                        if (refreshTokenResponse.IsSuccessStatusCode)
+                        {
+                            var body = await refreshTokenResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
+                            UserLogged.RefreshToken = tokenData.refresh_token;
+                            var api_Response = await PostData(path, formContent);
+                            return api_Response;
+                        }
                     }
                     else
                     {
@@ -305,8 +344,16 @@ namespace PhuLongCRM.Helper
                 {
                     if (UserLogged.IsLoginByUserCRM)
                     {
-                        await Shell.Current.DisplayAlert("", "Phiên bản đăng nhập hết hạn.", "Ok");
-                        await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
+                        var refreshTokenResponse = await LoginHelper.RefreshToken_UserCRM();
+                        if (refreshTokenResponse.IsSuccessStatusCode)
+                        {
+                            var body = await refreshTokenResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
+                            UserLogged.RefreshToken = tokenData.refresh_token;
+                            var api_Response = await PatchData(path, formContent);
+                            return api_Response;
+                        }
                     }
                     else
                     {
@@ -364,8 +411,16 @@ namespace PhuLongCRM.Helper
                 {
                     if (UserLogged.IsLoginByUserCRM)
                     {
-                        await Shell.Current.DisplayAlert("", "Phiên bản đăng nhập hết hạn.", "Ok");
-                        await Shell.Current.Navigation.PushAsync(new LoginByUserCRMPage());
+                        var refreshTokenResponse = await LoginHelper.RefreshToken_UserCRM();
+                        if (refreshTokenResponse.IsSuccessStatusCode)
+                        {
+                            var body = await refreshTokenResponse.Content.ReadAsStringAsync();
+                            GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                            UserLogged.AccessToken = tokenData.access_token;
+                            UserLogged.RefreshToken = tokenData.refresh_token;
+                            var api_Response = await DeleteRecord(path);
+                            return api_Response;
+                        }
                     }
                     else
                     {

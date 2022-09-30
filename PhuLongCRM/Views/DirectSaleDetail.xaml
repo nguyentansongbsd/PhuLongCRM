@@ -108,8 +108,15 @@
                                         <telerikPrimitives:RadBorder.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Block_Tapped" CommandParameter="{Binding}" />
                                         </telerikPrimitives:RadBorder.GestureRecognizers>
-                                        <Label Text="{Binding bsd_name}" Style="{StaticResource lblBlocks}" TextColor="#B3B3B3" FontSize="15"/>
-                                        <!--,StringFormat='Toà {0}'-->
+                                        <Label Style="{StaticResource lblBlocks}" TextColor="#B3B3B3" FontSize="15">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} ({1})">
+                                                    <Binding Path="bsd_name" />
+                                                    <Binding Path="TotalUnitInBlock" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                        <!--,StringFormat='Toà {0}'TotalUnitInBlock-->
                                     </telerikPrimitives:RadBorder>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
@@ -133,7 +140,7 @@
                     <Label Grid.Row="2" Grid.Column="3" Text="{Binding Block.NumDaBanInBlock}" BackgroundColor="#BF3A2B" Style="{StaticResource statusCodeUnit}"/>
                 </Grid>
 
-                <ScrollView Grid.Row="2">
+                <ScrollView Grid.Row="2" Scrolled="ScrollView_Scrolled">
                     <StackLayout x:Name="stackFloors" BindableLayout.ItemsSource="{Binding Block.Floors}" Spacing="20" >
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
@@ -145,9 +152,10 @@
                                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Margin="16,0,16,0">
                                             <Label Grid.Column="0" FontSize="16" FontAttributes="Bold" TextColor="#333333">
                                                 <Label.Text>
-                                                    <MultiBinding StringFormat="{}{0} {1}">
+                                                    <MultiBinding StringFormat="{}{0} {1} ({2})">
                                                         <Binding Source="{x:Static lang:Language.tang}" />
                                                         <Binding Path="bsd_name" />
+                                                        <Binding Path="TotalUnitInFloor" />
                                                     </MultiBinding>
                                                 </Label.Text>
                                             </Label>
@@ -259,7 +267,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}:'}"/>
                                         <Span Text=" "/>
-                                        <Span Text="{Binding Unit.bsd_netsaleablearea_format}"/>
+                                        <Span Text="{Binding Unit.bsd_netsaleablearea_format}" FontAttributes="Bold"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -316,14 +324,20 @@
                                                     <StackLayout.GestureRecognizers>
                                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiuChoItem_Tapped" CommandParameter="{Binding opportunityid}"/>
                                                     </StackLayout.GestureRecognizers>
-                                                    <Grid ColumnDefinitions="Auto,*">
+                                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">
                                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                             <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                         </telerikPrimitives:RadBorder>
-                                                        <Label Grid.Column="1" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                        <Label Grid.Column="1" FontSize="15" VerticalOptions="Center" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold">
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="({0}: {1}) {2}">
+                                                                    <Binding Source="{x:Static lang:Language.ma}" />
+                                                                    <Binding Path="bsd_queuenumber" />
+                                                                    <Binding Path="name" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
                                                     </Grid>
-                                                    <!--<Label Text="{Binding name}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource NavigationPrimary}"/>
-                                                    <Label Text="{Binding statuscode_label}" FontAttributes="Bold" FontSize="15" TextColor="#333333"/>-->
                                                     <Label FontSize="15" TextColor="#333333">
                                                         <Label.FormattedText>
                                                             <FormattedString>
@@ -333,6 +347,11 @@
                                                             </FormattedString>
                                                         </Label.FormattedText>
                                                     </Label>
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Label Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}:  '}" FontSize="15" TextColor="Black"/>
+                                                        <Label Text="{Binding project_name}" FontSize="15" TextColor="Black"/>
+                                                        <Label Text="{Binding Source={x:Static lang:Language.thien_chi},StringFormat='- {0}'}" FontSize="15" TextColor="Black" IsVisible="{Binding bsd_queueforproject}" />
+                                                    </StackLayout>
                                                     <Label FontSize="15" TextColor="#333333" >
                                                         <Label.FormattedText>
                                                             <FormattedString>

@@ -1066,7 +1066,7 @@
     <value>Đại lý/ Sàn giao dịch</value>
   </data>
 	<data name="nhan_vien_dai_ly_san" xml:space="preserve">
-    <value>Nhân viên Đại lý/ Sàn</value>
+    <value>Nhân viên đại lý/ sàn</value>
   </data>
 	<data name="khach_hang_gioi_thieu" xml:space="preserve">
     <value>Khách hàng giới thiệu</value>
@@ -1384,7 +1384,7 @@
     <value>Chỉnh sửa thất bại.</value>
   </data>
 	<data name="xem_anh_mat_truoc_cmnd" xml:space="preserve">
-    <value>Xem ảnh mặt trước cmnd</value>
+    <value>Xem ảnh mặt trước CMND</value>
   </data>
 	<data name="chup_anh" xml:space="preserve">
     <value>Chụp ảnh</value>
@@ -1393,7 +1393,7 @@
     <value>Chọn ảnh từ thư viện</value>
   </data>
 	<data name="xem_anh_mat_sau_cmnd" xml:space="preserve">
-    <value>Xem ảnh mặt sau cmnd</value>
+    <value>Xem ảnh mặt sau CMND</value>
   </data>
 	<data name="bang_gia_goc_dmb" xml:space="preserve">
     <value>Bảng giá gốc (ĐMB)</value>
@@ -1837,7 +1837,7 @@
     <value>Vui lòng chọn người tham dự bắt buộc.</value>
   </data>
 	<data name="vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau" xml:space="preserve">
-    <value>Vui lòng chọn thời gian kết thúc và thời gian bắt đầu.</value>
+    <value>Vui lòng chọn thời gian bắt đầu và thời gian kết thúc.</value>
   </data>
 	<data name="vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau" xml:space="preserve">
     <value>Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu.</value>
@@ -1981,7 +1981,7 @@
     <value>Số tháng tính phí quản lý</value>
   </data>
 	<data name="don_gia_phi_quan_ly_thang_m2" xml:space="preserve">
-    <value>Đơn giá phí quản lý (tháng/m2)</value>
+    <value>Đơn giá phí quản lý (tháng/ m²)</value>
   </data>
 	<data name="tien_giu_cho" xml:space="preserve">
     <value>Tiền giữ chỗ</value>
@@ -2085,11 +2085,8 @@
 	<data name="khong_ap_dung" xml:space="preserve">
     <value>Không áp dụng</value>
   </data>
-	<data name="chieu_khau_chung" xml:space="preserve">
-    <value>Chiếu khấu chung</value>
-  </data>
 	<data name="chon_chiet_khau_chung" xml:space="preserve">
-    <value>Chọn chiếu khấu chung</value>
+    <value>Chọn chiết khấu chung</value>
   </data>
 	<data name="chon_chiet_khau_noi_bo" xml:space="preserve">
     <value>Chọn Chiết khấu nội bộ</value>
@@ -2635,7 +2632,7 @@
     <value>Giữ chỗ/ Sản phẩm/ Nhân viên/ Ngày</value>
   </data>
 	<data name="quy_trinh_ban_title" xml:space="preserve">
-    <value>Quy Trình Bán</value>
+    <value>Quy Trình Bán Hàng</value>
   </data>
 	<data name="thoi_gian_giu_cho_dai_han" xml:space="preserve">
     <value>Thời gian giữ chỗ dài hạn (ngày)</value>
@@ -3199,7 +3196,7 @@
 		<value>Thông Tin Người Dùng</value>
 	</data>
 	<data name="ten_user" xml:space="preserve">
-		<value>Tên user</value>
+		<value>Tên người dùng</value>
 	</data>
 	<data name="don_vi_kinh_doanh" xml:space="preserve">
 		<value>Đơn vị kinh doanh</value>
@@ -3392,5 +3389,83 @@
   </data>
   <data name="ngay_in_vbtt" xml:space="preserve">
     <value>Ngày in</value>
+  </data>
+	<data name="ten_dang_nhap_hoac_mat_khau_khong_chinh_xac" xml:space="preserve">
+    <value>Tên đăng nhập hoặc mật khẩu không chính xác.</value>
+  </data>
+  <data name="thien_chi" xml:space="preserve">
+    <value>Thiện chí</value>
+  </data>
+  <data name="dang_tai_video_vui_long_doi" xml:space="preserve">
+    <value>Đang tải video. Vui lòng đợi.</value>
+  </data>
+  <data name="khong_tai_duoc_video" xml:space="preserve">
+    <value>Không tải được video.</value>
+  </data>
+  <data name="tai_lieu" xml:space="preserve">
+    <value>Tài liệu</value>
+  </data>
+	<data name="vui_long_nhap_so_cccd" xml:space="preserve">
+    <value>Vui lòng nhập số căn cước công dân.</value>
+  </data>
+	<data name="thong_tin_tai_lieu_title" xml:space="preserve">
+    <value>Thông Tin Tài Liệu</value>
+  </data>
+	<data name="ten_tep" xml:space="preserve">
+    <value>Tên tệp</value>
+  </data>
+	<data name="ngay_sua_doi" xml:space="preserve">
+    <value>Ngày sửa đổi</value>
+  </data>
+	<data name="thong_tin_du_an_canh_tranh_title" xml:space="preserve">
+		<value>Thông Tin Dự Án Cạnh Tranh</value>
+	</data>
+	<data name="diem_manh" xml:space="preserve">
+    <value>Điểm mạnh</value>
+  </data>
+	<data name="diem_yeu" xml:space="preserve">
+    <value>Điểm yếu</value>
+  </data>
+  <data name="cai_dat" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="phulongcrm_can_quyen_quan_ly_tat_ca_cac_tep" xml:space="preserve">
+    <value>PhuLongCRM cần quyền quản lý tất cả các tệp.</value>
+  </data>
+  <data name="vui_long_cap_nhat_ma_khach_hang_de_tao_ma_qr" xml:space="preserve">
+    <value>Vui lòng cập nhật mã khách hàng để tạo mã QR.</value>
+  </data>
+  <data name="so_dat_coc_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Số đặt cọc đã tạo trong tháng này.</value>
+  </data>
+  <data name="so_giu_cho_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Số giữ chỗ đã tạo trong tháng này.</value>
+  </data>
+  <data name="so_hop_dong_da_tao_trong_thang_nay" xml:space="preserve">
+    <value>Số hợp đồng đã tạo trong tháng này.</value>
+  </data>
+  <data name="so_san_pham_da_ban_trong_thang_nay" xml:space="preserve">
+    <value>Số sản phẩm đã bán trong tháng này.</value>
+  </data>
+  <data name="tong_tien_co_the_nhan_trong_thang_nay" xml:space="preserve">
+    <value>Tổng tiền có thể nhận trong tháng này.</value>
+  </data>
+  <data name="tong_tien_da_nhan_trong_thang_nay" xml:space="preserve">
+    <value>Tổng tiền đã nhận trong tháng này.</value>
+  </data>
+  <data name="bieu_do_hoa_hong_4_thang_gan_nhat" xml:space="preserve">
+    <value>Biểu đồ hoa hồng 4 tháng gần nhất.</value>
+  </data>
+  <data name="bieu_do_giao_dich_4_thang_gan_nhat" xml:space="preserve">
+    <value>Biểu đồ các giao dịch 4 tháng gần nhất.</value>
+  </data>
+  <data name="giu_cho_btg" xml:space="preserve">
+    <value>Giữ chỗ</value>
+  </data>
+  <data name="theo_san_pham" xml:space="preserve">
+    <value>Theo sản phẩm</value>
+  </data>
+  <data name="theo_gia_niem_yet" xml:space="preserve">
+    <value>Theo giá niêm yết</value>
   </data>
 </root>

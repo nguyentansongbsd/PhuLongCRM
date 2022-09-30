@@ -86,7 +86,8 @@ namespace PhuLongCRM.ViewModels
                                   <attribute name='name' alias='unitName'/>
                                 </link-entity>
                                 <link-entity name='subject' from='subjectid' to='subjectid' visible='false' link-type='outer' >
-                                  <attribute name='title' alias='subjectTitle'/>
+                                    <attribute name='title' alias='subjectTitle'/>
+                                    <attribute name='subjectid' alias ='subjectId'/>
                                 </link-entity>
                                 <link-entity name='incident' from='incidentid' to='parentcaseid' link-type='outer' alias='aa'>    
                                     <attribute name='title' alias='parentCaseTitle' />
@@ -96,9 +97,14 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhanHoiFormModel>>("incidents", fetch);
             if (result == null || result.value == null)
                 return;
-            Case = result.value.FirstOrDefault();
-
-            if(Case.statuscode != 1)
+            var data = result.value.FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(data.subjectId))
+            {
+                data.subjectTitle = CaseSubjectData.GetCaseSubjectById(data.subjectId).Label;
+            }
+            
+            this.Case = data;
+            if (Case.statuscode != 1)
             {
                 ShowButton = true;
                 ShowFloatingButtonGroup = false;
@@ -117,7 +123,7 @@ namespace PhuLongCRM.ViewModels
             {
                 CustomerName = Case.contactName;
             }
-
+            
             CaseType = CaseTypeData.GetCaseById(Case.casetypecode);
             Origin = CaseOriginData.GetOriginById(Case.caseorigincode);
             StatusCode = CaseStatusCodeData.GetCaseStatusCodeById(Case.statuscode.ToString());

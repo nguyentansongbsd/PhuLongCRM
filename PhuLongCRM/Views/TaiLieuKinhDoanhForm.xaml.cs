@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 using System.IO;
 using PhuLongCRM.Controls;
 using Xamarin.Essentials;
+using PhuLongCRM.IServices;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.Views
 {
@@ -17,7 +19,6 @@ namespace PhuLongCRM.Views
     public partial class TaiLieuKinhDoanhForm : ContentPage
     {
         public Action<bool> CheckTaiLieuKinhDoanh;
-        
         public TaiLieuKinhDoanhFormViewModel viewModel;
 
         public TaiLieuKinhDoanhForm(Guid literatureid)
@@ -30,12 +31,8 @@ namespace PhuLongCRM.Views
 
         private async void Init()
         {
-            await viewModel.loadData();
-            await viewModel.loadUnit();
-            await viewModel.loadDoiThuCanhTranh();
-            await viewModel.loadAllSalesLiteratureIten();
-            viewModel.IsBusy = false;
-
+            await Task.WhenAll(viewModel.loadData(), viewModel.loadUnit(), viewModel.loadDoiThuCanhTranh());
+            
             if (viewModel.TaiLieuKinhDoanh != null)
             {
                 CheckTaiLieuKinhDoanh(true);
@@ -46,136 +43,95 @@ namespace PhuLongCRM.Views
             }
         }
         
-        public async Task<bool> downloadFile_salesliteratureitem(Guid salesliteratureitemid)
+        private async void PdfFile_Tapped(object sender, System.EventArgs e)
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='salesliteratureitem'>
-                                    <attribute name='filename' />
-                                    <attribute name='documentbody' />
-                                    <order attribute='modifiedon' descending='false' />
-                                    <filter type='and'>
-                                        <condition attribute='salesliteratureitemid' operator='eq' value='{" + salesliteratureitemid + @"}' />
-                                    </filter>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<SalesLiteratureItemListModel>>("salesliteratureitems", fetch);
-            if(result == null)
+            try
             {
-                return false;
-            }
-
-            var data = result.value.FirstOrDefault();
-
-            var fileName = data.filename;
-            if (data.documentbody == null)
-            {
-                return false;
-            }
-            var body = data.documentbody;
-
-            byte[] arr = Convert.FromBase64String(body);
-            MemoryStream stream = new MemoryStream(arr);
-
-            DependencyService.Get<IFileService>().SaveFile(fileName, arr, "Download/Conasi");
-
-            return true;
-        }
-
-        private async void DownloadFileButton_Cliked(object sender, System.EventArgs e)
-        {
-            if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
-            {
-                viewModel.IsBusy = true;
-                var item = (SalesLiteratureItemListModel)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-                
-                var res = await this.downloadFile_salesliteratureitem(item.salesliteratureitemid);
-                if (res)
+                if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() != PermissionStatus.Granted)
                 {
-                    item.status = 1;
-                    viewModel.list_DownLoad.Add(item);
-                    popup_dowload_file.ItemSource = viewModel.list_DownLoad;
-                    popup_dowload_file.focus();
+                    var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
+                    var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
                 }
-                else
+                if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
                 {
-                    await DisplayAlert("", "Lỗi. Vui lòng thử lại", "Ok");
-                }
-                popup_dowload_file.isTapable = true;
-                viewModel.IsBusy = false;
-            }
-        }
-
-        void ListViewFileDownloaded_Tapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
-        {
-            SalesLiteratureItemListModel item = e.Item as SalesLiteratureItemListModel;
-            this.popup_dowload_file.SelectedItem = null;
-            //DisplayAlert("", item.filename, "OK");
-            if (item.status == 1)
-            {
-                try
-                {
-                    DependencyService.Get<IFileService>().OpenFile(item.filename);
-                }
-                catch
-                {
-                    DisplayAlert("", "Ứng dụng không được hỗ trợ. Không thể mở file", "OK");
+                    LoadingHelper.Show();
+                    var item = (SalesLiteratureItemListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+                    byte[] arr = Convert.FromBase64String(item.documentbody);
+                    await DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(item.filename, arr);
+                    LoadingHelper.Hide();
                 }
             }
-            else
+            catch(Exception ex)
             {
-                
+                LoadingHelper.Hide();
             }
-        }
-
-        protected override bool OnBackButtonPressed()
-        {
-            if (this.popup_dowload_file.IsVisible)
-            {
-                this.popup_dowload_file.unFocus();
-                return true;
-            }
-
-            return base.OnBackButtonPressed();
+            
         }
 
         private async void ShowMoreThongTinUnit_Clicked(object sender,EventArgs e)
         {
-            viewModel.IsBusy = true;
+            LoadingHelper.Show();
             viewModel.PageThongTinUnit++;
             await viewModel.loadUnit();
-            viewModel.IsBusy = false;
+            LoadingHelper.Hide();
         }
 
         private async void ShowMoreDuAnCanhTranh_Clicked(object sender,EventArgs e)
         {
-            viewModel.IsBusy = true;
+            LoadingHelper.Show();
             viewModel.PageDuAnCanhTranh++;
             await viewModel.loadDoiThuCanhTranh();
-            viewModel.IsBusy = false;
+            LoadingHelper.Hide();
         }
 
         private async void ShowMoreTaiLieu_Clicked(object sender, EventArgs e)
         {
-            viewModel.IsBusy = true;
+            LoadingHelper.Show();
             viewModel.PageTaiLieu++;
             await viewModel.loadAllSalesLiteratureIten();
-            viewModel.IsBusy = false;
+            LoadingHelper.Hide();
         }
 
-        private async void ShowFileDownLoad_Tapped(object sender,EventArgs e)
+        private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
         {
-            viewModel.IsBusy = true;
-            if (viewModel.list_DownLoad.Count ==0)
+            if (e.Item != null)
             {
-                await DisplayAlert("", "Chưa có file nào đươc tải", "Ok");
+                if ((int)e.Item == 0)
+                {
+                    ThongTin.IsVisible = true;
+                    ThongTinTaiLieu.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    if (viewModel.list_salesliteratureitem != null && viewModel.list_salesliteratureitem.Count <= 0)
+                    {
+                        LoadingHelper.Show();
+                        await viewModel.loadAllSalesLiteratureIten();
+                        LoadingHelper.Hide();
+                    }
+                    ThongTin.IsVisible = false;
+                    ThongTinTaiLieu.IsVisible = true;
+                }
             }
-            else
-            {
-                popup_dowload_file.focus();
-                popup_dowload_file.isTapable = true;
-            }
+        }
 
-            viewModel.IsBusy = false;
+        private void GoToUnit_Tapped(object sender, EventArgs e)
+        {
+            var id = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            LoadingHelper.Show();
+            UnitInfo unit = new UnitInfo(id);
+            unit.OnCompleted = async (isSuccess) => {
+                if (isSuccess)
+                {
+                    await Navigation.PushAsync(unit);
+                    LoadingHelper.Hide();
+                }
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+            };
         }
     }
 }

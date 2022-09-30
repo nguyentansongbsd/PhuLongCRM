@@ -8,16 +8,6 @@
              x:Class="PhuLongCRM.Views.ReservationForm">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="IndicatorText" Value="&#xf105;"/>
-                <Setter Property="IndicatorLocation" Value="End"/>
-                <Setter Property="IndicatorFontSize" Value="18"/>
-                <Setter Property="IndicatorColor" Value="#808080"/>
-                <Setter Property="BackgroundColor" Value="#F2F2F2"/>
-                <Setter Property="BorderColor" Value="Transparent"/>
-                <Setter Property="Padding" Value="5,10"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-            </Style>
             <Style x:Key="TitleFormStyle" TargetType="Label">
                 <Setter Property="VerticalTextAlignment" Value="Center"/>
                 <Setter Property="TextColor" Value="White"/>
@@ -151,13 +141,13 @@
                             <controls:LookUp x:Name="lookupDieuKienBanGiao" Placeholder="{x:Static lang:Language.chon_dieu_kien_ban_giao}" NameDisplay="Label" BottomModal="{Reference lookUpModal}" SelectedItem="{Binding HandoverCondition}" ItemsSource="{Binding HandoverConditions}" SelectedItemChange="HandoverCondition_SelectedItemChange"/>
 
                             <controls:FormLabelRequired Text="{x:Static lang:Language.phuong_thuc_thanh_toan}"  Margin="0,10,0,0"/>
-                            <controls:LookUp x:Name="lookupPhuongThucThanhToan" Placeholder="{x:Static lang:Language.chon_phuong_thuc_thanh_toan}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentScheme}" ItemsSource="{Binding PaymentSchemes}" SelectedItemChange="PTTT_SelectedItemChange"/>
+                            <controls:LookUp x:Name="lookupPhuongThucThanhToan" Placeholder="{x:Static lang:Language.chon_phuong_thuc_thanh_toan}" BottomModal="{Reference lookUpModal}" NameDisplay="bsd_name" SelectedItem="{Binding PaymentScheme}" ItemsSource="{Binding PaymentSchemes}" SelectedItemChange="PTTT_SelectedItemChange"/>
 
                             <controls:FormLabel Text="{x:Static lang:Language.loai_gop_dot}"  Margin="0,10,0,0"/>
                             <controls:LookUp x:Name="lookupLoaiGopDot" Placeholder="{x:Static lang:Language.chon_loai_gop_dot}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding PaymentSchemeType}" ItemsSource="{Binding PaymentSchemeTypes}" SelectedItemChange="LoaiGopDot_SelectedItemChange"/>
 
                             <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_bat_dau_tinh_ltt}" IsVisible="{Binding Path=IsVisible, Source={Reference datePickerNgayBatDauTinhLTT}}"/>
-                            <controls:DatePickerControl x:Name="datePickerNgayBatDauTinhLTT" IsVisible="false" Date="{Binding Quote.bsd_startingdatecalculateofps}" Placeholder="{x:Static lang:Language.chon_ngay_bat_dau_tinh_ltt}" DisplayFormat="dd/MM/yyyy" SpinnerFormat="dd/MM/yyyy"/>
+                            <controls:DatePickerBoderControl x:Name="datePickerNgayBatDauTinhLTT" IsVisible="false" Date="{Binding Quote.bsd_startingdatecalculateofps}" Placeholder="{x:Static lang:Language.chon_ngay_bat_dau_tinh_ltt}" ShowTime="False"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChildsPaymentSchemes}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -166,18 +156,14 @@
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiscountChildPaymentSchemeItem_Tapped" CommandParameter="{Binding .}" />
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildPaymentSchemeItem_CheckedChanged"/>
-                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                                                <Label Text="{Binding Label}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
-                                                <Label Text="{Binding Source={x:Static lang:Language.het_han},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
-                                                <Label Text="{Binding Source={x:Static lang:Language.khong_ap_dung},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
-                                            </StackLayout>
+                                            <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                         </StackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
 
                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_chung}" Margin="0,10,0,0"/>
-                            <controls:LookUp x:Name="lookupChieuKhau" Placeholder="{x:Static lang:Language.chon_chiet_khau_chung}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" SelectedItemChange="DiscountListItem_Changed"/>
+                            <controls:LookUp x:Name="lookupChieuKhau" IsEnabled="{Binding IsLocked}" Placeholder="{x:Static lang:Language.chon_chiet_khau_chung}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" SelectedItemChange="DiscountListItem_Changed"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChilds}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -186,18 +172,14 @@
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiscountChildItem_Tapped" CommandParameter="{Binding .}" />
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildItem_CheckedChanged"/>
-                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                                                <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
-                                                <Label Text="{Binding Source={x:Static lang:Language.het_han},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
-                                                <Label Text="{Binding Source={x:Static lang:Language.khong_ap_dung},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
-                                            </StackLayout>
+                                            <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                         </StackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
 
                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_noi_bo}" Margin="0,10,0,0"/>
-                            <controls:LookUp x:Name="lookupChieuKhauNoiBo" Placeholder="{x:Static lang:Language.chon_chiet_khau_noi_bo}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountInternelLists}" SelectedItem="{Binding DiscountInternelList}" SelectedItemChange="DiscountInternelListItem_Changed"/>
+                            <controls:LookUp x:Name="lookupChieuKhauNoiBo" IsEnabled="{Binding IsLocked}" Placeholder="{x:Static lang:Language.chon_chiet_khau_noi_bo}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountInternelLists}" SelectedItem="{Binding DiscountInternelList}" SelectedItemChange="DiscountInternelListItem_Changed"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChildsInternel}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -206,11 +188,7 @@
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiscountChildInternelItem_Tapped" CommandParameter="{Binding .}" />
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildInternelItem_CheckedChanged"/>
-                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                                                <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
-                                                <Label Text="{Binding Source={x:Static lang:Language.het_han},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
-                                                <Label Text="{Binding Source={x:Static lang:Language.khong_ap_dung},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
-                                            </StackLayout>
+                                            <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                         </StackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
@@ -258,7 +236,7 @@
                             </StackLayout>
 
                             <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_quy_doi}" Margin="0,10,0,0"/>
-                            <controls:LookUp x:Name="lookupChieuKhauQuyDoi" Placeholder="{x:Static lang:Language.chon_chiet_khau_quy_doi}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountExchangeLists}" SelectedItem="{Binding DiscountExchangeList}" SelectedItemChange="DiscountListExchangeItem_Changed"/>
+                            <controls:LookUp x:Name="lookupChieuKhauQuyDoi" IsEnabled="{Binding IsLocked}" Placeholder="{x:Static lang:Language.chon_chiet_khau_quy_doi}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountExchangeLists}" SelectedItem="{Binding DiscountExchangeList}" SelectedItemChange="DiscountListExchangeItem_Changed"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChildsExchanges}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -267,11 +245,7 @@
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DiscountChildExchangeItem_Tapped" CommandParameter="{Binding .}" />
                                             </StackLayout.GestureRecognizers>
                                             <CheckBox Color="#2093EE" HeightRequest="35" IsEnabled="{Binding IsEnableChecked}" IsChecked="{Binding Selected}" CheckedChanged="DiscountChildExchangeItem_CheckedChanged"/>
-                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                                                <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
-                                                <Label Text="{Binding Source={x:Static lang:Language.het_han},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsExpired}" FontSize="15" VerticalOptions="CenterAndExpand"/>
-                                                <Label Text="{Binding Source={x:Static lang:Language.khong_ap_dung},StringFormat='({0})'}" TextColor="{Binding ItemColor}" IsVisible="{Binding IsNotApplied}" FontSize="15" VerticalOptions="CenterAndExpand"/>
-                                            </StackLayout>
+                                            <Label Text="{Binding name_format}" FontSize="15" TextColor="{Binding ItemColor}" VerticalOptions="CenterAndExpand"/>
                                         </StackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
@@ -398,16 +372,16 @@
                                     <StackLayout Padding="10">
 
                                         <controls:FormLabel Text="{x:Static lang:Language.dai_ly_san_giao_dich}"/>
-                                        <controls:LookUp x:Name="lookupDaiLySanGiaoDich" Placeholder="{x:Static lang:Language.chon_dai_ly_san_giao_dich}" SelectedItemChange="SalesAgent_SelectedItemChange" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding SalesAgent}" ItemsSource="{Binding SalesAgents}"/>
+                                        <controls:LookUp x:Name="lookupDaiLySanGiaoDich" Placeholder="{x:Static lang:Language.chon_dai_ly_san_giao_dich}" SelectedItemChange="SalesAgent_SelectedItemChange" BottomModal="{Reference lookUpModal}" NameDisplay="Label" SelectedItem="{Binding SalesAgent}" ItemsSource="{Binding SalesAgents}" IsEnabled="False"/>
 
                                         <controls:FormLabel Text="{x:Static lang:Language.nhan_vien_dai_ly_san}" Margin="0,10,0,0"/>
-                                        <controls:MainEntry x:Name="entryNhanVienDaiLy" Placeholder="{x:Static lang:Language.nhap_nhan_vien_dao_ly}" Text="{Binding Quote.bsd_nameofstaffagent}"/>
+                                        <controls:MainEntry x:Name="entryNhanVienDaiLy" Placeholder="{x:Static lang:Language.nhap_nhan_vien_dao_ly}" Text="{Binding Quote.bsd_nameofstaffagent}" IsEnabled="False"/>
 
                                         <controls:FormLabel Text="{x:Static lang:Language.cong_tac_vien}" FontSize="15" Margin="0,10,0,0"/>
-                                        <controls:LookUp x:Name="lookUpCollaborator" Grid.Column="1" Grid.Row="3" Placeholder="{x:Static lang:Language.chon_cong_tac_vien}" ItemsSource="{Binding ListCollaborator}" SelectedItem="{Binding Collaborator}" NameDisplay="Name" BottomModal="{x:Reference lookUpModal}" SelectedItemChange="lookUpCollaborator_SelectedItemChange"/>
+                                        <controls:LookUp x:Name="lookUpCollaborator" Grid.Column="1" Grid.Row="3" Placeholder="{x:Static lang:Language.chon_cong_tac_vien}" ItemsSource="{Binding ListCollaborator}" SelectedItem="{Binding Collaborator}" NameDisplay="Name" BottomModal="{x:Reference lookUpModal}" SelectedItemChange="lookUpCollaborator_SelectedItemChange" IsEnabled="False"/>
 
                                         <controls:FormLabel Text="{x:Static lang:Language.khach_hang_gioi_thieu}" FontSize="15" Margin="0,10,0,0"/>
-                                        <controls:LookUp x:Name="lookUpCustomerReferral" Grid.Column="1" Grid.Row="3" Placeholder="{x:Static lang:Language.chon_khach_hang_gioi_thieu}" ItemsSource="{Binding ListCustomerReferral}" SelectedItem="{Binding CustomerReferral}" NameDisplay="Name" BottomModal="{x:Reference lookUpModal}" SelectedItemChange="lookUpCustomerReferral_SelectedItemChange"/>
+                                        <controls:LookUp x:Name="lookUpCustomerReferral" Grid.Column="1" Grid.Row="3" Placeholder="{x:Static lang:Language.chon_khach_hang_gioi_thieu}" ItemsSource="{Binding ListCustomerReferral}" SelectedItem="{Binding CustomerReferral}" NameDisplay="Name" BottomModal="{x:Reference lookUpModal}" SelectedItemChange="lookUpCustomerReferral_SelectedItemChange" IsEnabled="False"/>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -517,13 +491,13 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
-                                        <StackLayout BackgroundColor="#eeeeee" Padding="0,0,0,1" Orientation="Horizontal" Spacing="0">
-                                            <StackLayout.GestureRecognizers>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="#eeeeee" Padding="0,0,0,1" ColumnSpacing="0">
+                                            <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PromotionItem_Tapped" CommandParameter="{Binding .}"/>
-                                            </StackLayout.GestureRecognizers>
-                                            <Label Text="{Binding Label}" FontSize="15" HorizontalOptions="FillAndExpand" TextColor="#333333" BackgroundColor="White" Padding="10"/>
-                                            <Label Text="&#xf00c;" IsVisible="{Binding Selected}" HorizontalOptions="End" BackgroundColor="White" Padding="10" FontFamily="FontAwesomeSolid" FontSize="15" TextColor="{StaticResource NavigationPrimary}"/>
-                                        </StackLayout>
+                                            </Grid.GestureRecognizers>
+                                            <Label Grid.Column="0" Text="{Binding Label}" FontSize="15" HorizontalOptions="FillAndExpand" TextColor="#333333" BackgroundColor="White" Padding="10"/>
+                                            <Label Grid.Column="1" Text="&#xf00c;" IsVisible="{Binding Selected}" HorizontalOptions="End" BackgroundColor="White" Padding="10" FontFamily="FontAwesomeSolid" FontSize="15" TextColor="{StaticResource NavigationPrimary}"/>
+                                        </Grid>
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

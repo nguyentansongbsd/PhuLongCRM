@@ -52,13 +52,14 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
+                datePickerNgayCap.ReSetTime();
                 customerCode.IsVisible = true;
                 lookUpLeadSource.IsEnabled = false;
 
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead._campaignid_value))
                     viewModel.Campaign = new OptionSet { Val = viewModel.singleLead._campaignid_value, Label = viewModel.singleLead.campaignid_label };
 
-                viewModel.IndustryCode = viewModel.list_industrycode_optionset.SingleOrDefault(x => x.Val == viewModel.singleLead.industrycode);
+                viewModel.IndustryCode = LeadIndustryCode.GetIndustryCodeById(viewModel.singleLead.industrycode);
                 viewModel.Rating = RatingData.GetRatingById(viewModel.singleLead.leadqualitycode.ToString());
                 viewModel.CustomerGroup = CustomerGroupData.GetCustomerGroupById(viewModel.singleLead.bsd_customergroup);
 
@@ -67,6 +68,10 @@ namespace PhuLongCRM.Views
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_typeofidcard))
                 {
                     viewModel.TypeIdCard = TypeIdCardData.GetTypeIdCardById(viewModel.singleLead.bsd_typeofidcard);
+                    if (viewModel.TypeIdCard?.Val == "100000002")
+                        lb_soID.Keyboard = Keyboard.Default;
+                    else
+                        lb_soID.Keyboard = Keyboard.Numeric;
                 }
 
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_area))
@@ -148,7 +153,7 @@ namespace PhuLongCRM.Views
             lookUpLinhVuc.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                viewModel.loadIndustrycode();
+                viewModel.IndustryCodes = LeadIndustryCode.LeadIndustryCodeData();
                 LoadingHelper.Hide();
             };
 
@@ -218,15 +223,17 @@ namespace PhuLongCRM.Views
 
         private void MainEntry_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.TypeIdCard?.Val == "100000000" && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
+            if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid)) return;
+
+            if (viewModel.TypeIdCard?.Val == "100000000" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 9))// CMND
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && viewModel.singleLead.bsd_identitycardnumberid.Length != 12 )// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 12))// CCCD
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
             }
-            if (viewModel.TypeIdCard?.Val == "100000002" && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
+            if (viewModel.TypeIdCard?.Val == "100000002" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 8))// Passport
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
             }
@@ -234,6 +241,13 @@ namespace PhuLongCRM.Views
 
         private void TypeIdCard_ItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
         {
+            if (viewModel.TypeIdCard?.Val == "100000002")
+                lb_soID.Keyboard = Keyboard.Default;
+            else
+                lb_soID.Keyboard = Keyboard.Numeric;
+
+            if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid)) return;
+
             if (viewModel.TypeIdCard == null)
             {
                 viewModel.singleLead.bsd_identitycardnumberid = null;
@@ -241,17 +255,17 @@ namespace PhuLongCRM.Views
 
             if (viewModel.TypeIdCard != null && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid))
             {
-                if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
+                if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 9))// CMND
                 {
                     ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                     return;
                 }
-                if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 12)// CCCD
+                if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 12))// CCCD
                 {
                     ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                     return;
                 }
-                if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
+                if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 8))// Passport
                 {
                     ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                     return;
@@ -345,22 +359,22 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 9)// CMND
+            if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 9))// CMND
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 12)// CCCD
+            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 12))// CCCD
             {
                 ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
                 return;
             }
-            if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.singleLead.bsd_identitycardnumberid.Length != 8)// Passport
+            if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 8))// Passport
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
             }
-            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode) && viewModel.singleLead.bsd_registrationcode.Length != 10)
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 10))
             {
                 ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
                 return;
@@ -408,6 +422,14 @@ namespace PhuLongCRM.Views
             }
         }
 
-        
+        private void so_gpkd_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode)) return;
+            if (!StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 10))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
+        }
     }
 }

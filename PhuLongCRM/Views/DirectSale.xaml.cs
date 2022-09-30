@@ -125,7 +125,27 @@ namespace PhuLongCRM.Views
 
                 DirectSaleSearchModel filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent,viewModel.UnitCode, directions,views, unitStatus,viewModel.NetArea?.Id,viewModel.Price?.Id);
 
-                DirectSaleDetail directSaleDetail = new DirectSaleDetail(filter);//,viewModel.Blocks
+                //DirectSaleDetail directSaleDetail = new DirectSaleDetail(filter);//,viewModel.Blocks
+                //directSaleDetail.OnCompleted = async (Success) =>
+                //{
+                //    if (Success == 0)
+                //    {
+                //        await Navigation.PushAsync(directSaleDetail);
+                //        LoadingHelper.Hide();
+                //    }
+                //    else if (Success == 1)
+                //    {
+                //        LoadingHelper.Hide();
+                //        ToastMessageHelper.LongMessage(Language.khong_co_san_pham);
+                //    }
+                //    else if (Success == 2)
+                //    {
+                //        LoadingHelper.Hide();
+                //        ToastMessageHelper.LongMessage(Language.khong_co_san_pham);
+                //    }
+                //};
+
+                DirectSaleDetailTest directSaleDetail = new DirectSaleDetailTest(filter);//,viewModel.Blocks
                 directSaleDetail.OnCompleted = async (Success) =>
                 {
                     if (Success == 0)

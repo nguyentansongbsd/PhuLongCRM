@@ -31,43 +31,39 @@
             <converter:InformationLabelConverter x:Key="InformationLabelConverter"/>
             <converter:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
             <converter:HidePriceOnDirectSaleConverter x:Key="HidePriceOnDirectSaleConverter"/>
-            <DataTemplate x:Key="Media">
-                <Grid>
-                    <ffimageloading:CachedImage Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="300"/>
-                    <Label Text="&#xf144;" TextColor="#F1F1F1" FontSize="35" FontFamily="FontAwesomeRegular" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Meida_Tapped" CommandParameter="{Binding .}"/>
-                    </Grid.GestureRecognizers>
-                </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="Image">
-                <ffimageloading:CachedImage Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="300">
-                    <ffimageloading:CachedImage.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Image_Tapped" CommandParameter="{Binding .}"/>
-                    </ffimageloading:CachedImage.GestureRecognizers>
-                </ffimageloading:CachedImage>
-            </DataTemplate>
-            <helper:CollectionDataTemplateSelector x:Key="ItemTemplate" Media="{StaticResource Media}" Image="{StaticResource Image}"/>
+            <converter:NullToHideConverter x:Key="nullToHideConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView Padding="0,0,0,60" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
                 <StackLayout>
-                    <Grid RowDefinitions="Auto,150">
-                        <CarouselView ItemsSource="{Binding Collections}" ItemTemplate="{StaticResource ItemTemplate}" Grid.Row="0" HeightRequest="200" IsVisible="{Binding ShowCollections}"/>
+                    <Grid RowDefinitions="Auto,120">
+                        <CarouselView x:Name="carouseView" ItemsSource="{Binding Collections}" Grid.Row="0" HeightRequest="200" IsVisible="{Binding ShowCollections}">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate >
+                                    <Grid>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ItemSlider_Tapped" CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+                                        <ffimageloading:CachedImage Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>
+                                        <Label Text="&#xf144;" IsVisible="{Binding MediaSourceId,Converter={StaticResource nullToHideConverter}}" TextColor="#F1F1F1" FontSize="35" FontFamily="FontAwesomeRegular" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
                         <Grid RowDefinitions="Auto,Auto" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="EndAndExpand" Margin="8">
                             <Grid ColumnDefinitions="50,50" Grid.Row="0" Margin="10,0" IsVisible="{Binding ShowCollections}">
-                                <telerikPrimitives:RadBorder BorderColor="White" CornerRadius="5" BorderThickness="1" BackgroundColor="White" Grid.Column="0" Padding="4,2">
+                                <telerikPrimitives:RadBorder BorderColor="#80FFFFFF" CornerRadius="5" BorderThickness="1" BackgroundColor="#80FFFFFF" Grid.Column="0" Padding="4,2">
                                     <Grid ColumnDefinitions="20,10">
-                                        <Label TextColor="#444444" FontSize="14" Text="&#xf03d;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
-                                        <Label TextColor="#444444" FontSize="14" FontAttributes="Bold" Text="{Binding TotalMedia}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        <Label TextColor="#111111" FontSize="14" Text="&#xf03d;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
+                                        <Label TextColor="#111111" FontSize="14" FontAttributes="Bold" Text="{Binding TotalMedia}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     </Grid>
                                 </telerikPrimitives:RadBorder>
-                                <telerikPrimitives:RadBorder BorderColor="White" CornerRadius="5" BorderThickness="1" BackgroundColor="White" Grid.Column="1" Padding="4,2">
+                                <telerikPrimitives:RadBorder BorderColor="#80FFFFFF" CornerRadius="5" BorderThickness="1" BackgroundColor="#80FFFFFF" Grid.Column="1" Padding="4,2">
                                     <Grid ColumnDefinitions="20,10">
-                                        <Label TextColor="#444444" FontSize="14" Text="&#xf03e;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
-                                        <Label TextColor="#444444" FontSize="14" FontAttributes="Bold" Text="{Binding TotalPhoto}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        <Label TextColor="#111111" FontSize="14" Text="&#xf03e;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0"/>
+                                        <Label TextColor="#111111" FontSize="14" FontAttributes="Bold" Text="{Binding TotalPhoto}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     </Grid>
                                 </telerikPrimitives:RadBorder>
                             </Grid>
@@ -177,7 +173,7 @@
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                             <Label Text="{Binding Source={x:Static lang:Language.bien_do_chenh_lech_dien_tich},StringFormat='% {0} (+/-)'}" FontSize="15" TextColor="#333333" Grid.Column="0" Padding="25,10,0,10"/>
-                                            <Label Text="{Binding UnitInfo.bsd_areavariance_format}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" Grid.Column="1" Padding="0,10,25,10"/>
+                                            <Label Text="{Binding UnitInfo.bsd_areavariance_format,StringFormat='{0}%'}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" TextColor="#333333" Grid.Column="1" Padding="0,10,25,10"/>
                                         </Grid>
 
                                         <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
@@ -288,10 +284,24 @@
                                                             <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                                 <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                             </telerikPrimitives:RadBorder>
-                                                            <Label Grid.Column="1" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                            <Label Grid.Column="1" FontSize="15" VerticalOptions="Center" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold">
+                                                                <Label.Text>
+                                                                    <MultiBinding StringFormat="({0}: {1}) {2}">
+                                                                        <Binding Source="{x:Static lang:Language.ma}" />
+                                                                        <Binding Path="bsd_queuenumber" />
+                                                                        <Binding Path="name" />
+                                                                    </MultiBinding>
+                                                                </Label.Text>
+                                                            </Label>
                                                         </Grid>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customername}"/>
-                                                        <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding project_name}"/>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <Label Text="{Binding Source={x:Static lang:Language.du_an},StringFormat='{0}:  '}" FontSize="15" TextColor="Gray"/>
+                                                            <Label Text="{Binding project_name}" FontSize="15" TextColor="Black"/>
+                                                            <Label Text="{Binding Source={x:Static lang:Language.san_pham},StringFormat='- {0}:  '}" IsVisible="{Binding bsd_units_name,Converter={x:StaticResource nullToHideConverter}}" FontSize="15" TextColor="Gray"/>
+                                                            <Label Text="{Binding bsd_units_name}" FontSize="15" TextColor="Black" IsVisible="{Binding bsd_units_name,Converter={x:StaticResource nullToHideConverter}}" />
+                                                            <Label Text="{Binding Source={x:Static lang:Language.thien_chi},StringFormat='- {0}'}" FontSize="15" TextColor="Black" IsVisible="{Binding bsd_queueforproject}" />
+                                                        </StackLayout>
                                                         <controls:FieldListViewItem Title="{x:Static lang:Language.thoi_gian_het_han}" Text="{Binding bsd_queuingexpired, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"/>
                                                     </StackLayout>
                                                 </DataTemplate>

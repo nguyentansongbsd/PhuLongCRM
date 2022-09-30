@@ -38,7 +38,7 @@ namespace PhuLongCRM.Models
         public string bsd_description { get; set; } // mô tả dự án nghiên cứu r&d
 
         public string bsd_projecttype { get; set; }
-        public int bsd_propertyusagetype { get; set; }
+        public string bsd_propertyusagetype { get; set; }
         public int? bsd_handoverconditionminimum { get; set; }
         public int bsd_queuesperunit { get; set; }
         public int bsd_unitspersalesman { get; set; }

@@ -75,6 +75,7 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ClearCookies.cs" />
     <Compile Include="Services\LoadingService.cs" />
     <Compile Include="Renderers\BorderEntryRenderer.cs" />
     <Compile Include="Services\ToastMessage.cs" />
@@ -92,6 +93,10 @@
     <Compile Include="Renderers\EntryNoneBorderRenderer.cs" />
     <Compile Include="Renderers\CustomChartRenderer.cs" />
     <Compile Include="Renderers\LightModeRenderer.cs" />
+    <Compile Include="Services\PdfService.cs" />
+    <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\PreviewControllerDS.cs" />
+    <Compile Include="Services\PDFSaveAndOpen.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -180,6 +185,7 @@
     <BundleResource Include="Resources\ic_vietnam.jpg" />
     <BundleResource Include="GoogleService-Info.plist" />
     <BundleResource Include="Resources\image_placeholder.jpg" />
+    <BundleResource Include="Resources\Sites.ReadWrite.All.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -215,8 +221,5 @@
       <Name>PhuLongCRM</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Renderers\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

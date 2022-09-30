@@ -42,5 +42,15 @@ namespace PhuLongCRM.Models
         {
             return QuoteStatusData().SingleOrDefault(x => x.Id == id);
         }
+        public static List<StatusCodeModel> GetQuoteByIds(string ids)
+        {
+            List<StatusCodeModel> listQueue = new List<StatusCodeModel>();
+            string[] Ids = ids.Split(',');
+            foreach (var item in Ids)
+            {
+                listQueue.Add(GetQuoteStatusCodeById(item));
+            }
+            return listQueue;
+        }
     }
 }

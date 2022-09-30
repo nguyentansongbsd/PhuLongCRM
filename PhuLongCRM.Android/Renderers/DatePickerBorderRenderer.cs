@@ -19,7 +19,7 @@ namespace PhuLongCRM.Droid.Renderers
             if (e.NewElement != null)
             {
                 Control.SetBackgroundResource(Resource.Drawable.bg_main_entry);
-                Control.SetPadding(15, 18, 15, 18);
+                Control.SetPadding(15, 26, 15, 26);
             }
         }
     }

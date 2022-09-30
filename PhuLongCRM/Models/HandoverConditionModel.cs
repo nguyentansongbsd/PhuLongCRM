@@ -33,7 +33,7 @@ namespace PhuLongCRM.Models
         public string bsd_name { get; set; }
         public string bsd_description { get; set; }
 
-        public DateTime? _bsd_startdate;
+        private DateTime? _bsd_startdate;
         public DateTime? bsd_startdate
         {
             get => this._bsd_startdate;
@@ -48,7 +48,7 @@ namespace PhuLongCRM.Models
         }
         public bool hide_startdate { get { return _bsd_startdate.HasValue ? true : false; } }
 
-        public DateTime? _bsd_enddate;
+        private DateTime? _bsd_enddate;
         public DateTime? bsd_enddate
         {
             get => this._bsd_enddate;
@@ -67,6 +67,8 @@ namespace PhuLongCRM.Models
         public bool hide_byunittype { get { return _bsd_enddate.HasValue ? true : false; } }
         public int bsd_unittype { get; set; }
         public string name_unit_type { get; set; }
+        public DateTime startdate { get; set; }
+        public DateTime enddate { get; set; }
     }
     public class HandoverConditionMethod
     {

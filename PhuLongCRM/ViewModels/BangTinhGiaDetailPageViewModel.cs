@@ -585,8 +585,8 @@ namespace PhuLongCRM.ViewModels
             string path = $"/quotes({Reservation.quoteid})";
 
             IDictionary<string, object> data = new Dictionary<string, object>();
-            data["bsd_quotationprinteddate"] = DateTime.Now.ToUniversalTime();
-            data["bsd_expireddateofsigningqf"] = DateTime.Now.AddDays(this.Reservation.quotationvalidate).ToUniversalTime();
+            data["bsd_quotationprinteddate"] = DateTime.Now.Date.ToUniversalTime();
+            data["bsd_expireddateofsigningqf"] = DateTime.Now.Date.AddDays(this.Reservation.quotationvalidate).ToUniversalTime();
 
             CrmApiResponse apiResponse = await CrmHelper.PatchData(path, data);
             if (apiResponse.IsSuccess)
@@ -599,25 +599,17 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<bool> SignQuotation()
+        public async Task<CrmApiResponse> SignQuotation()
         {
             var model = new
             {
-                datesign = DateTime.Now.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") // DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year + " " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second,
+                datesign = DateTime.Now.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") 
             };
 
             var json = JsonConvert.SerializeObject(model);
 
             var apiResponse = await CrmHelper.PostData($"/quotes({Reservation.quoteid})//Microsoft.Dynamics.CRM.bsd_Action_QuotationReservation_ConvertToReservation", json);
-
-            if (apiResponse.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return apiResponse;
         }
 
         public async Task<bool> UpdateQuotes(string option)
@@ -828,7 +820,10 @@ namespace PhuLongCRM.ViewModels
             {
                 return;
             }
-            Discount = result.value.FirstOrDefault();
+            var data = result.value.FirstOrDefault();
+            data.bsd_startdate = data.bsd_startdate.ToLocalTime();
+            data.bsd_enddate = data.bsd_enddate.ToLocalTime();
+            Discount = data;
            // await LoadDiscountItems(Discount.bsd_discountid);
         }
         public async Task LoadDiscountItems(Guid discount_id)

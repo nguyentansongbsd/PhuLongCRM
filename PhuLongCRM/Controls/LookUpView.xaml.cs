@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PhuLongCRM.Models;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
 namespace PhuLongCRM.Controls
 {
     public partial class LookUpView : Grid
     {
+        public event EventHandler<LookUpChangeEvent> SearchPress;
         public ListView lookUpListView { get; set; }
 
+        public static readonly BindableProperty IsSearchPressProperty = BindableProperty.Create(nameof(IsSearchPress), typeof(bool), typeof(LookUpView), false, BindingMode.TwoWay);
+        public bool IsSearchPress { get => (bool)GetValue(IsSearchPressProperty); set => SetValue(IsSearchPressProperty, value); }
+
         private bool ClearingSearchBar = false;
+        private string text = string.Empty;
 
         public LookUpView()
         {
@@ -19,17 +25,22 @@ namespace PhuLongCRM.Controls
 
         public void SetList<T>(List<T> list, string Name) where T : class
         {
-            if (string.IsNullOrWhiteSpace(searchBar.Text) == false)
+            if (IsSearchPress == false && string.IsNullOrWhiteSpace(searchBar.Text) == false)
             {
                 ClearingSearchBar = true;
                 searchBar.Text = null;
                 ClearingSearchBar = false;
             }
-            
+
+            if (lookUpListView == null && IsSearchPress == true)
+            {
+                searchBar.SearchButtonPressed += SearchBar_SearchButtonPressed;
+            }
+
             if (lookUpListView == null)
             {
                 lookUpListView = new ListView(ListViewCachingStrategy.RecycleElement);
-               // lookUpListView = new ListView();
+                // lookUpListView = new ListView();
                 lookUpListView.BackgroundColor = Color.White;
                 lookUpListView.HasUnevenRows = true;
                 lookUpListView.SelectionMode = ListViewSelectionMode.None;
@@ -54,25 +65,38 @@ namespace PhuLongCRM.Controls
                 lookUpListView.ItemTapped += LookUpListView_ItemTapped;
                 Grid.SetRow(lookUpListView, 1);
                 this.Children.Add(lookUpListView);
+
+                searchBar.TextChanged += async (object sender, TextChangedEventArgs e) =>
+                {
+                    if (ClearingSearchBar) return;
+
+                    text = e.NewTextValue;
+                    if (IsSearchPress == false)
+                    {
+                        if (string.IsNullOrWhiteSpace(text))
+                        {
+                            lookUpListView.ItemsSource = list;
+                        }
+                        else
+                        {
+                            lookUpListView.ItemsSource = list.Where(x => GetValObjDy(x, Name).ToString().ToLower().Contains(text.ToLower()));
+                        }
+                    }
+                    else if (string.IsNullOrWhiteSpace(text) && IsSearchPress == true)
+                    {
+                        SearchPress?.Invoke(sender, new LookUpChangeEvent() { Item = text });
+                    }
+                };
             }
             else
             {
                 lookUpListView.ItemsSource = list;
             }
-            searchBar.TextChanged += async (object sender, TextChangedEventArgs e) =>
-            {
-                if (ClearingSearchBar) return;
+        }
 
-                var text = e.NewTextValue;
-                if (string.IsNullOrWhiteSpace(text))
-                {
-                    lookUpListView.ItemsSource = list;
-                }
-                else
-                {
-                    lookUpListView.ItemsSource = list.Where(x => GetValObjDy(x, Name).ToString().ToLower().Contains(text.ToLower()));
-                }
-            };
+        private void SearchBar_SearchButtonPressed(object sender, EventArgs e)
+        {
+            SearchPress?.Invoke(sender, new LookUpChangeEvent() { Item = text });
         }
 
         private void LookUpListView_ItemTapped(object sender, ItemTappedEventArgs e)

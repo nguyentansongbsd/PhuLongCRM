@@ -4,16 +4,16 @@
        xmlns:converters="clr-namespace:PhuLongCRM.Converters"
        xmlns:controls="clr-namespace:PhuLongCRM.Controls"
        xmlns:views="clr-namespace:PhuLongCRM.Views"
-       xmlns:plcrm="clr-namespace:PhuLongCRM"
        xmlns:lang="clr-namespace:PhuLongCRM.Resources"
        xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
        xmlns:ffimageTranformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
        xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+       xmlns:blankpage ="clr-namespace:PhuLongCRM"
        ios:Page.UseSafeArea="true"
        Shell.BackgroundColor="{StaticResource NavigationPrimary}"
        Shell.TabBarIsVisible="False"
        Shell.TitleColor="White"
-       FlyoutHeaderBehavior="Fixed"
+       FlyoutHeaderBehavior="Fixed" FlyoutBackgroundColor="{AppThemeBinding Light=White,Dark=White}"
        FlyoutBackdrop="#C0808080"
        ForegroundColor="White"
        Title="PhuLongCRM" x:Class="PhuLongCRM.AppShell">
@@ -39,7 +39,6 @@
             </StackLayout>
         </DataTemplate>
     </Shell.ItemTemplate>
-
     <Shell.FlyoutHeader>
         <StackLayout BackgroundColor="White" HeightRequest="130">
             <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="0" HorizontalOptions="Start" Margin="18,34,18,18">
@@ -61,7 +60,7 @@
             <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
         </StackLayout>
     </Shell.FlyoutHeader>
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" >
         <ShellContent Title="{x:Static lang:Language.trang_chu_title}" ContentTemplate="{DataTemplate views:Dashboard}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf015;" Size="18"/>
@@ -104,11 +103,11 @@
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#666666" Glyph="&#xf0ca;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
-    <!--<ShellContent Title="{x:Static lang:Language.tai_lieu_kinh_doanh}" ContentTemplate="{DataTemplate views:ListTaiLieuKinhDoanh}">
+    <ShellContent Title="{x:Static lang:Language.tai_lieu_kinh_doanh}" ContentTemplate="{DataTemplate views:ListTaiLieuKinhDoanh}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf07c;" Size="18"/>
         </ShellContent.Icon>
-    </ShellContent>-->
+    </ShellContent>
     <ShellContent Title="{x:Static lang:Language.danh_sach_theo_doi_title}" ContentTemplate="{DataTemplate views:FollowUpListPage}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf0ca;" Size="18"/>

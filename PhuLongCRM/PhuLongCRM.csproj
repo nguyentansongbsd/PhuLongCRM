@@ -39,7 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Settings\" />
-    <Folder Include="IServices\" />
     <Folder Include="Fonts\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Resources\" />
@@ -93,6 +92,9 @@
     <EmbeddedResource Update="Controls\LookUpViewAddress.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Controls\PopupHover.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Language.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
@@ -100,6 +102,9 @@
     <EmbeddedResource Update="Resources\Language.en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DirectSaleDetailTest.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FollowUpListForm.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

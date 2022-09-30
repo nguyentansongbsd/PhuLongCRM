@@ -91,8 +91,8 @@ namespace PhuLongCRM.Models
         {
             return new List<StatusCodeModel>()
             {
-                new StatusCodeModel("100000000","By Unit","#06CF79"),
-                new StatusCodeModel("100000001","By Listed Price","#03ACF5"),
+                new StatusCodeModel("100000000",Language.theo_san_pham,"#06CF79"),
+                new StatusCodeModel("100000001",Language.theo_gia_niem_yet,"#03ACF5"),
                 new StatusCodeModel("0","","#f1f1f1")
             };
         }

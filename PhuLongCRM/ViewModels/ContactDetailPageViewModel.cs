@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using PhuLongCRM.Controls;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Stormlion.PhotoBrowser;
+using System.Collections.Generic;
 
 namespace PhuLongCRM.ViewModels
 {
     public class ContactDetailPageViewModel : BaseViewModel
     {
-        private ImageSource _myImage;
-        public ImageSource MyImage { get => _myImage; set { _myImage = value; OnPropertyChanged(nameof(MyImage)); } }
-
         private ContactFormModel _singleContact;
         public ContactFormModel singleContact { get { return _singleContact; } set { _singleContact = value; OnPropertyChanged(nameof(singleContact)); } }
 
@@ -43,11 +44,12 @@ namespace PhuLongCRM.ViewModels
         public bool ShowMoreDanhSachHopDong { get => _showMoreDanhSachHopDong; set { _showMoreDanhSachHopDong = value; OnPropertyChanged(nameof(ShowMoreDanhSachHopDong)); } }
         public int PageDanhSachHopDong { get; set; } = 1;
 
-        private ObservableCollection<HoatDongListModel> _list_chamsockhachhang;
-        public ObservableCollection<HoatDongListModel> list_chamsockhachhang { get => _list_chamsockhachhang; set { _list_chamsockhachhang = value; OnPropertyChanged(nameof(list_chamsockhachhang)); } }
-        private bool _showMoreChamSocKhachHang;
-        public bool ShowMoreChamSocKhachHang { get => _showMoreChamSocKhachHang; set { _showMoreChamSocKhachHang = value; OnPropertyChanged(nameof(ShowMoreChamSocKhachHang)); } }
-        public int PageChamSocKhachHang { get; set; } = 1;
+        private ObservableCollection<ActivityListModel> cares;
+        public ObservableCollection<ActivityListModel> Cares { get => cares; set { cares = value; OnPropertyChanged(nameof(Cares)); } }
+
+        private bool _showMoreCase;
+        public bool ShowMoreCase { get => _showMoreCase; set { _showMoreCase = value; OnPropertyChanged(nameof(ShowMoreCase)); } }
+        public int PageCase { get; set; } = 1;
 
         private PhongThuyModel _PhongThuy;
         public PhongThuyModel PhongThuy { get => _PhongThuy; set { _PhongThuy = value; OnPropertyChanged(nameof(PhongThuy)); } }
@@ -68,6 +70,7 @@ namespace PhuLongCRM.ViewModels
         public ObservableCollection<FloatButtonItem> ButtonCommandList { get; set; } = new ObservableCollection<FloatButtonItem>();
 
         public string CodeContac = LookUpMultipleTabs.CodeContac;
+        public List<Photo> Photos { get; set; }
 
         public ContactDetailPageViewModel()
         {
@@ -156,50 +159,62 @@ namespace PhuLongCRM.ViewModels
             }
             var tmp = result.value.FirstOrDefault();
             this.singleContact = tmp;
+            await GetImageCMND();
         }
 
         public async Task GetImageCMND()
         {
-            ShowCMND = true;
+            if (this.singleContact.contactid != Guid.Empty)
+            {
+                GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+                var client = BsdHttpClient.Instance();
+                string name_folder = StringFormatHelper.ReplaceNameContact(singleContact.bsd_fullname) + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{name_folder}:/children?$select=name,eTag";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
 
-            //var result = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<Thumbnail>>();
-
-            //var a = result.value;
-            //MyImage = a[0].medium.url;
-
-            //if (this.singleContact.contactid != Guid.Empty)
-            //{
-            //    var frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
-            //    var behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
-
-            //    string token = (await CrmHelper.getSharePointToken()).access_token;
-            //    var client = BsdHttpClient.Instance();
-            //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            //    var front_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource
-            //                    + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFileByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + frontImage_name + "')/$value");
-            //    var front_result = await client.SendAsync(front_request);
-            //    if (front_result.IsSuccessStatusCode)
-            //    {
-            //        ShowCMND = true;
-            //        singleContact.bsd_mattruoccmnd_base64 = Convert.ToBase64String(front_result.Content.ReadAsByteArrayAsync().Result);
-            //        CollectionCMNDs.Add(new PhotoCMND { ImageSoure = singleContact.bsd_mattruoccmnd_source });
-            //        frontImage = OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_layouts/15/download.aspx?SourceUrl=/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + frontImage_name + "&access_token=" + token;
-            //    }
-
-            //    var behind_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource
-            //                    + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFileByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + behindImage_name + "')/$value");
-            //    var behind_result = await client.SendAsync(behind_request);
-            //    if (behind_result.IsSuccessStatusCode)
-            //    {
-            //        ShowCMND = true;
-            //        var abc = behind_result.Content.ReadAsByteArrayAsync().Result;
-            //        singleContact.bsd_matsaucmnd_base64 = Convert.ToBase64String(behind_result.Content.ReadAsByteArrayAsync().Result);
-            //        CollectionCMNDs.Add(new PhotoCMND { ImageSoure = singleContact.bsd_matsaucmnd_source });
-            //        // behindImage = OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_layouts/15/download.aspx?SourceUrl=/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + behindImage_name + "&access_token=" + token;
-            //    }
-            //}
+                    if (result == null || result.value.Any() == false)
+                    {
+                        ShowCMND = false;
+                        return;
+                    }
+                    Photos = new List<Photo>();
+                    List<SharePointGraphModel> list = result.value;
+                    string url_front = null;
+                    string url_behind = null;
+                    foreach (var item in list)
+                    {
+                        if (item.name.Contains("_front.jpg"))
+                        {
+                            var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            url_front = urlVideo.value.SingleOrDefault().large.url;
+                            ShowCMND = true;
+                        }
+                        else if (item.name.Contains("_behind.jpg"))
+                        {
+                            var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            url_behind = urlVideo.value.SingleOrDefault().large.url;
+                            ShowCMND = true;
+                        }
+                    }
+                    if (url_front != null)
+                    {
+                        Photos.Add(new Photo { URL = url_front });
+                        singleContact.bsd_mattruoccmnd_source = url_front;
+                    }
+                    if (url_behind != null)
+                    {
+                        Photos.Add(new Photo { URL = url_behind });
+                        singleContact.bsd_matsaucmnd_source = url_behind;
+                    }
+                }
+            }
         }
 
         // giao dich
@@ -215,19 +230,24 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_queuingexpired' />
                                 <attribute name='statuscode' />
                                 <attribute name='opportunityid' />
+                                <attribute name='bsd_queuenumber' />
+                                <attribute name='bsd_queueforproject' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='parentcontactid' operator='eq' uitype='contact' value='{customerId}' />
                                   <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                </filter> 
-                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner' alias='ab'>
+                                </filter>
+                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' visible='false' link-type='outer' alias='a_edc3f143ba81e911a83b000d3a07be23'>
                                     <attribute name='bsd_name' alias='bsd_project_name'/>
                                 </link-entity>
-                                <link-entity name='account' from='accountid' to='customerid' visible='false' link-type='outer' alias='a_434f5ec290d1eb11bacc000d3a80021e'>
-                                  <attribute name='name' alias='account_name'/>
+                                <link-entity name='account' from='accountid' to='parentaccountid' visible='false' link-type='outer' alias='a_87ea9a00777ee911a83b000d3a07fbb4'>
+                                    <attribute name='name' alias='account_name'/>
                                 </link-entity>
-                                <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer' alias='a_884f5ec290d1eb11bacc000d3a80021e'>
-                                  <attribute name='bsd_fullname' alias='contact_name'/>
+                                <link-entity name='contact' from='contactid' to='parentcontactid' visible='false' link-type='outer' alias='a_8eea9a00777ee911a83b000d3a07fbb4'>
+                                    <attribute name='bsd_fullname' alias='contact_name'/>
+                                </link-entity>
+                                <link-entity name='product' from='productid' to='bsd_units' visible='false' link-type='outer' alias='a_5025d361ba81e911a83b000d3a07be23'>
+                                    <attribute name='name' alias='bsd_units_name'/>
                                 </link-entity>
                               </entity>
                             </fetch>";
@@ -376,295 +396,81 @@ namespace PhuLongCRM.ViewModels
         }
 
         // CHAM SOC KHACH HANG
-        public async Task LoadCaseForContactForm()
+        public async Task LoadCase()
         {
-            if(list_chamsockhachhang != null && singleContact.contactid != Guid.Empty)
-            {
-                await Task.WhenAll(
-                LoadActiviy("task", "tasks"),
-                LoadActiviy("phonecall", "phonecalls"),
-                LoadActiviy("appointment", "appointments")
-                //LoadTasks(singleContact.contactid),
-                //LoadMettings(singleContact.contactid),
-                //LoadPhoneCalls(singleContact.contactid)
-                );
-            }
-            ShowMoreChamSocKhachHang = list_chamsockhachhang.Count < (3* PageChamSocKhachHang) ? false : true;
-        }
-
-        public async Task LoadActiviy(string entity, string entitys)
-        {
-            string forphonecall = null;
-            if (entity == "phonecall")
-            {
-                forphonecall = @"<link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
-                                        <filter type='and'>
-                                            <condition attribute='participationtypemask' operator='eq' value='2' />
-                                        </filter>
-                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
-                                            <attribute name='fullname' alias='callto_contact_name'/>
-                                        </link-entity>
-                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
-                                            <attribute name='bsd_name' alias='callto_account_name'/>
-                                        </link-entity>
-                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
-                                            <attribute name='fullname' alias='callto_lead_name'/>
-                                        </link-entity>
-                                    </link-entity>";
-            }
-            string fetch = $@"<fetch version='1.0' count='3' page='{PageChamSocKhachHang}' output-format='xml-platform' mapping='logical' distinct='true'>
-                                <entity name='{entity}'>
+            if (Cares == null)
+                Cares = new ObservableCollection<ActivityListModel>();
+            if (singleContact == null || singleContact.contactid == Guid.Empty) return;
+            string fetch = $@"<fetch version='1.0' count='5' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='false'>
+                                <entity name='activitypointer'>
                                     <attribute name='subject' />
                                     <attribute name='statecode' />
                                     <attribute name='activityid' />
                                     <attribute name='scheduledstart' />
                                     <attribute name='scheduledend' /> 
                                     <attribute name='activitytypecode' />
-                                    <order attribute='modifiedon' descending='true' />
                                     <filter type='and'>
-                                        <filter type='or'>
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{singleContact.contactid}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
+                                        <condition attribute='activitytypecode' operator='in'>
+                                            <value>4212</value>
+                                            <value>4210</value>
+                                            <value>4201</value>
+                                        </condition>
+	                                    <filter type='or'>
+                                            <condition entityname='meet' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='task' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='phonecall' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                                         </filter>
-                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                        <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
                                     </filter>
-                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='inner' alias='party'/>
-                                    <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
-                                        <attribute name='bsd_name' alias='accounts_bsd_name'/>
+                                    <link-entity name='appointment' from='activityid' to='activityid' alias='meet' link-type='outer'>
+                                        <attribute name='requiredattendees' />
                                     </link-entity>
-                                    <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
-                                        <attribute name='fullname' alias='contact_bsd_fullname'/>
+                                    <link-entity name='task' from='activityid' to='activityid' alias='task' link-type='outer'>
+                                        <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer'>
+                                            <attribute name='bsd_name' alias='task_account_name'/>
+                                        </link-entity>
+                                        <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer'>
+                                            <attribute name='fullname' alias='task_contact_name'/>
+                                        </link-entity>
+                                        <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
+                                            <attribute name='fullname' alias='task_lead_name'/>
+                                        </link-entity>
                                     </link-entity>
-                                    <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
-                                        <attribute name='fullname' alias='lead_fullname'/>
+                                    <link-entity name='phonecall' from='activityid' to='activityid' alias='phonecall' link-type='outer'>
+                                        <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer'>
+                                            <filter type='and'>
+                                                <condition attribute='participationtypemask' operator='eq' value='2' />
+                                            </filter>
+                                            <link-entity name='contact' from='contactid' to='partyid' link-type='outer'>
+                                                <attribute name='fullname' alias='phonecall_contact_name'/>
+                                            </link-entity>
+                                            <link-entity name='account' from='accountid' to='partyid' link-type='outer'>
+                                                <attribute name='bsd_name' alias='phonecall_account_name'/>
+                                            </link-entity>
+                                            <link-entity name='lead' from='leadid' to='partyid' link-type='outer'>
+                                                <attribute name='fullname' alias='phonecall_lead_name'/>
+                                            </link-entity>
+                                        </link-entity>
                                     </link-entity>
-                                    {forphonecall}
                                 </entity>
                             </fetch>";
 
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>(entitys, fetch);
-            if (result == null || result.value.Count == 0) return;
-            var data = result.value;
-            if (entity == "appointment")
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ActivityListModel>>("activitypointers", fetch);
+            if (result != null && result.value.Count > 0)
             {
-                foreach (var item in data)
+                foreach (var item in result.value)
                 {
-                    item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
-                    list_chamsockhachhang.Add(item);
+                    if (item.activitytypecode == "appointment")
+                        item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
+                    else if (item.activitytypecode == "task")
+                        item.customer = item.task__customer;
+                    else if (item.activitytypecode == "phonecall")
+                        item.customer = item.phonecall_customer;
+                    Cares.Add(item);
                 }
             }
-            else
-            {
-                foreach (var item in data)
-                {
-                    item.customer = item.regarding_name;
-                    list_chamsockhachhang.Add(item);
-                }
-            }
+            ShowMoreCase = Cares.Count < (5 * PageCase) ? false : true;
         }
-
-        public async Task LoadTasks(Guid contactID)
-        {
-            string fetchXml = $@"<fetch version='1.0' count='3' page='{PageChamSocKhachHang}' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='task'>
-                                    <attribute name='subject' />
-                                    <attribute name='activityid' />
-                                    <attribute name='scheduledstart' />
-                                    <attribute name='scheduledend' />
-                                    <attribute name='activitytypecode' />
-                                    <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
-                                    <filter type='and'>
-                                        <filter type='or'>
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
-                                        </filter>
-                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                    </filter>
-                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
-                                        <attribute name='bsd_name' alias='accounts_bsd_name'/>
-                                    </link-entity>
-                                    <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
-                                        <attribute name='fullname' alias='contact_bsd_fullname'/>
-                                    </link-entity>
-                                    <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
-                                        <attribute name='fullname' alias='lead_fullname'/>
-                                    </link-entity>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>("tasks", fetchXml);
-            if (result == null || result.value.Count == 0) return;
-
-            foreach (var item in result.value)
-            {
-                if (!string.IsNullOrWhiteSpace(item.contact_bsd_fullname))
-                {
-                    item.customer = item.contact_bsd_fullname;
-                }
-                if (!string.IsNullOrWhiteSpace(item.accounts_bsd_name))
-                {
-                    item.customer = item.accounts_bsd_name;
-                }
-                if (!string.IsNullOrWhiteSpace(item.lead_fullname))
-                {
-                    item.customer = item.lead_fullname;
-                }
-
-                this.list_chamsockhachhang.Add(item);
-            }
-        }
-
-        public async Task LoadMettings(Guid contactID)
-        {
-            string fetchXml = $@"<fetch version='1.0' count='3' page='{PageChamSocKhachHang}' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='appointment'>
-                                    <attribute name='subject' />
-                                    <attribute name='activityid' />
-                                    <attribute name='scheduledstart' />
-                                    <attribute name='scheduledend' />
-                                    <attribute name='activitytypecode' />   
-                                    <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
-                                   <filter type='and'>
-                                        <filter type='or'>
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
-                                        </filter>
-                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                    </filter>
-                                   <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
-                                        <attribute name='bsd_name' alias='accounts_bsd_name'/>
-                                    </link-entity>
-                                    <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
-                                        <attribute name='fullname' alias='contact_bsd_fullname'/>
-                                    </link-entity>
-                                    <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
-                                        <attribute name='fullname' alias='lead_fullname'/>
-                                    </link-entity>
-                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
-                                        <filter type='and'>
-                                            <condition attribute='participationtypemask' operator='eq' value='5' />
-                                        </filter>
-                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
-                                            <attribute name='fullname' alias='callto_contact_name'/>
-                                        </link-entity>
-                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
-                                            <attribute name='bsd_name' alias='callto_account_name'/>
-                                        </link-entity>
-                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
-                                            <attribute name='fullname' alias='callto_lead_name'/>
-                                        </link-entity>
-                                    </link-entity>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>("appointments", fetchXml);
-            if (result == null || result.value.Count == 0) return;
-
-            foreach (var item in result.value)
-            {
-                var meet = list_chamsockhachhang.FirstOrDefault(x => x.activityid == item.activityid);
-                if (meet != null)
-                {
-                    if (!string.IsNullOrWhiteSpace(item.callto_contact_name))
-                    {
-                        string new_customer = ", " + item.callto_contact_name;
-                        meet.customer += new_customer;
-                    }
-                    if (!string.IsNullOrWhiteSpace(item.callto_account_name))
-                    {
-                        string new_customer = ", " + item.callto_account_name;
-                        meet.customer += new_customer;
-                    }
-                    if (!string.IsNullOrWhiteSpace(item.callto_lead_name))
-                    {
-                        string new_customer = ", " + item.callto_lead_name;
-                        meet.customer += new_customer;
-                    }
-                }
-                else
-                {
-                    if (!string.IsNullOrWhiteSpace(item.callto_contact_name))
-                    {
-                        item.customer = item.callto_contact_name;
-                    }
-                    if (!string.IsNullOrWhiteSpace(item.callto_account_name))
-                    {
-                        item.customer = item.callto_account_name;
-                    }
-                    if (!string.IsNullOrWhiteSpace(item.callto_lead_name))
-                    {
-                        item.customer = item.callto_lead_name;
-                    }
-                    this.list_chamsockhachhang.Add(item);
-                }
-            }
-        }
-
-        public async Task LoadPhoneCalls(Guid contactID)
-        {
-            string fetchXml = $@"<fetch version='1.0' count='3' page='{PageChamSocKhachHang}' output-format='xml-platform' mapping='logical' distinct='false'>
-                                  <entity name='phonecall'>
-                                    <attribute name='subject' />
-                                    <attribute name='activityid' />
-                                    <attribute name='scheduledstart' />
-                                    <attribute name='scheduledend' />
-                                    <attribute name='activitytypecode' />
-                                    <attribute name='createdon' />
-                                    <order attribute='modifiedon' descending='false' />
-                                    <filter type='and'>
-                                        <filter type='or'>
-                                            <condition entityname='party' attribute='partyid' operator='eq' value='{contactID}'/>
-                                            <condition attribute='regardingobjectid' operator='eq' value='{contactID}' />
-                                        </filter>
-                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                    </filter>
-                                     <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
-                                        <attribute name='bsd_name' alias='accounts_bsd_name'/>
-                                    </link-entity>
-                                    <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
-                                        <attribute name='fullname' alias='contact_bsd_fullname'/>
-                                    </link-entity>
-                                    <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
-                                        <attribute name='fullname' alias='lead_fullname'/>
-                                    </link-entity>
-                                    <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
-                                        <filter type='and'>
-                                            <condition attribute='participationtypemask' operator='eq' value='2' />
-                                        </filter>
-                                        <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
-                                            <attribute name='fullname' alias='callto_contact_name'/>
-                                        </link-entity>
-                                        <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
-                                            <attribute name='bsd_name' alias='callto_accounts_name'/>
-                                        </link-entity>
-                                        <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
-                                            <attribute name='fullname' alias='callto_lead_name'/>
-                                        </link-entity>
-                                    </link-entity>
-                                  </entity>
-                                </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>("phonecalls", fetchXml);
-            if (result == null || result.value.Count == 0) return;
-
-            foreach (var item in result.value)
-            {
-                if (!string.IsNullOrWhiteSpace(item.callto_contact_name))
-                {
-                    item.customer = item.callto_contact_name;
-                }
-                if (!string.IsNullOrWhiteSpace(item.callto_account_name))
-                {
-                    item.customer = item.callto_account_name;
-                }
-                if (!string.IsNullOrWhiteSpace(item.callto_lead_name))
-                {
-                    item.customer = item.callto_lead_name;
-                }
-
-                this.list_chamsockhachhang.Add(item);
-            }
-        }
-
         // phon thuy
         public void LoadPhongThuy()
         {

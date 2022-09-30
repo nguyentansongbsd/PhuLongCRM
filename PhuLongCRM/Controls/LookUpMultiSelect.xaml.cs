@@ -197,6 +197,7 @@ namespace PhuLongCRM.Controls
             btnClose.BackgroundColor = (Color)Application.Current.Resources["NavigationPrimary"];
             btnClose.Text = Language.luu;//"Lưu";
             btnClose.Clicked += SaveButton_Clicked;
+            btnClose.FontAttributes = FontAttributes.Bold;
             grid.Children.Add(btnClose);
             Grid.SetColumn(btnClose, 0);
             Grid.SetRow(btnClose, 0);
@@ -361,6 +362,11 @@ namespace PhuLongCRM.Controls
                                     <value>0</value>
                                   </condition>";
             }
+            string ne_cus = null;
+            if (ne_customer != Guid.Empty)
+            {
+                ne_cus = "<condition attribute='leadid' operator='ne' value='" + ne_customer + @"' />";
+            }
 
             string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='lead'>
@@ -371,6 +377,7 @@ namespace PhuLongCRM.Controls
                                 <filter type='and'>
                                     {loadNewLead}
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
+                                    {ne_cus}
                                 </filter>
                               </entity>
                             </fetch>";

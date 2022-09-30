@@ -31,7 +31,7 @@
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                <Label Grid.Column="1" Text="{Binding CustomerName}" TextColor="{StaticResource NavigationPrimary}" FontSize="15">
+                                <Label Grid.Column="1" Text="{Binding CustomerName}" TextColor="{StaticResource NavigationPrimary}" FontSize="15" FontAttributes="Bold">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Customer_Tapped"/>
                                     </Label.GestureRecognizers>
@@ -97,7 +97,7 @@
             <Grid IsVisible="{Binding ShowButton}" Padding="10,15,10,10" VerticalOptions="EndAndExpand" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="White">
                 <Button Clicked="MoLaiPhanHoi_Clicked" Text="{x:Static lang:Language.mo_lai_phan_hoi}" BackgroundColor="#1399D5" TextColor="White" FontAttributes="Bold" HeightRequest="35" Padding="10,5" FontSize="16" CornerRadius="5"/>
             </Grid>
-            <controls:CenterModal x:Name="centerModalUpdateCase" Title="{x:Static lang:Language.cap_nhat_phan_hoi}">
+            <controls:CenterModal x:Name="centerModalUpdateCase" Title="{x:Static lang:Language.giai_quyet_phan_hoi}">
                 <controls:CenterModal.Body>
                     <ScrollView>
                         <StackLayout Spacing="5" Padding="10">

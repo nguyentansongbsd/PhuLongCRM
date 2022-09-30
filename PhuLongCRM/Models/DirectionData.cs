@@ -10,6 +10,7 @@ namespace PhuLongCRM.Models
     {
         public static OptionSet GetDiretionById(string diretionId)
         {
+            if(string.IsNullOrWhiteSpace(diretionId)) return null;
             var diretion = Directions().Single(x=>x.Val == diretionId);
             return diretion;
         }

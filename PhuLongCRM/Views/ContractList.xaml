@@ -15,8 +15,8 @@
                 </controls:SearchBarFrame>
 
                 <Grid ColumnDefinitions="*,*" Grid.Row="1" Margin="10,5">
-                    <controls:Filter x:Name="FiltersStatus" Grid.Column="0" Placeholder="{x:Static lang:Language.tinh_trang}" SelectedItemChanged="FiltersStatus_SelectedItemChanged" ItemsSource="{Binding FiltersStatus}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label" SelectedIds="{Binding FilterStatus}" Multiple="True" SelectedDisplay="Selected"/>
-                    <controls:Filter x:Name="FiltersProject" Grid.Column="1" Placeholder="{x:Static lang:Language.du_an}" SelectedItemChange="FiltersProject_SelectedItemChange" ItemsSource="{Binding FiltersProject}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label" SelectedItem="{Binding FilterProject}" Multiple="False"/>
+                    <controls:Filter x:Name="FiltersProject" Grid.Column="0" Placeholder="{x:Static lang:Language.du_an}" SelectedItemChange="FiltersProject_SelectedItemChange" ItemsSource="{Binding FiltersProject}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label" SelectedItem="{Binding FilterProject}" Multiple="False"/>
+                    <controls:Filter x:Name="FiltersStatus" Grid.Column="1" Placeholder="{x:Static lang:Language.tinh_trang}" SelectedItemChanged="FiltersStatus_SelectedItemChanged" ItemsSource="{Binding FiltersStatus}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label" SelectedIds="{Binding FilterStatus}" Multiple="True" SelectedDisplay="Selected"/>
                 </Grid>
 
                 <controls:BsdListView x:Name="listView" Grid.Row="2" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped">

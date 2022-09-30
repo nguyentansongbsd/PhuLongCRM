@@ -1,6 +1,8 @@
-﻿using PhuLongCRM.Helper;
+﻿using Newtonsoft.Json;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
+using Stormlion.PhotoBrowser;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -111,6 +113,9 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_country' alias='_bsd_country_value'/>
                                 <attribute name='bsd_postalcode' />
                                 <attribute name='bsd_contactaddress' />
+                                <attribute name='bsd_identitycard' />
+                                <attribute name='bsd_identitycarddategrant' />
+                                <attribute name='bsd_placeofissueidentitycard' />
                                 <attribute name='bsd_customercode' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
@@ -193,6 +198,7 @@ namespace PhuLongCRM.ViewModels
                 address = singleContact.bsd_permanentaddress1,
                 lineaddress = singleContact.bsd_permanentaddress
             };
+            await GetImageCMND();        
         }
 
         public async Task<Boolean> updateContact(ContactFormModel contact)
@@ -222,14 +228,6 @@ namespace PhuLongCRM.ViewModels
 
             if (result.IsSuccess)
             {
-                //if (singleContact.bsd_mattruoccmnd_base64 != null)
-                //{
-                //    await UpLoadCMNDFront();
-                //}
-                //if (singleContact.bsd_matsaucmnd_base64 != null)
-                //{
-                //    await UpLoadCMNDBehind();
-                //}
                 return contact.contactid;
             }
             else
@@ -254,7 +252,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_fullname"] = contact.bsd_fullname;
             data["emailaddress1"] = contact.emailaddress1;
             data["birthdate"] = contact.birthdate.HasValue ? (DateTime.Parse(contact.birthdate.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
-            data["mobilephone"] = contact.mobilephone.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
+            data["mobilephone"] = contact.mobilephone;//.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
             data["gendercode"] = contact.gendercode;
             if (checkCMND != contact.bsd_identitycardnumber)
             {
@@ -263,22 +261,28 @@ namespace PhuLongCRM.ViewModels
             data["bsd_localization"] = contact.bsd_localization;
             data["bsd_dategrant"] = contact.bsd_dategrant.HasValue ? (DateTime.Parse(contact.bsd_dategrant.ToString()).ToLocalTime()).ToString("yyy-MM-dd") : null;
             data["bsd_placeofissue"] = contact.bsd_placeofissue;
-            data["bsd_passport"] = contact.bsd_passport;
+            if (!string.IsNullOrWhiteSpace(contact.bsd_passport))
+            {
+                data["bsd_passport"] = contact.bsd_passport;
+            }
             data["bsd_issuedonpassport"] = contact.bsd_issuedonpassport.HasValue ? (DateTime.Parse(contact.bsd_issuedonpassport.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
             data["bsd_placeofissuepassport"] = contact.bsd_placeofissuepassport;
             data["bsd_jobtitlevn"] = contact.bsd_jobtitlevn;
-            data["telephone1"] = !string.IsNullOrWhiteSpace(contact.telephone1) && contact.telephone1.Contains("-") ? contact.telephone1.Replace("+", "").Replace("-", "") : string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1;
+            data["telephone1"] = string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1;//!string.IsNullOrWhiteSpace(contact.telephone1) && contact.telephone1.Contains("-") ? contact.telephone1.Replace("+", "").Replace("-", "") : string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1
             data["statuscode"] = this.CustomerStatusReason?.Val;
-          //  data["bsd_housenumberstreet"] = contact.bsd_housenumberstreet;
-          //  data["bsd_contactaddress"] = contact.bsd_contactaddress;
-          //  data["bsd_diachi"] = contact.bsd_diachi;
-          ////  data["bsd_postalcode"] = contact.bsd_postalcode;
-          //  data["bsd_housenumber"] = contact.bsd_housenumberstreet;
+            data["bsd_identitycard"] = contact.bsd_identitycard;
+            data["bsd_identitycarddategrant"] = contact.bsd_identitycarddategrant.HasValue ? (DateTime.Parse(contact.bsd_identitycarddategrant.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
+            data["bsd_placeofissueidentitycard"] = contact.bsd_placeofissueidentitycard;
+            //  data["bsd_housenumberstreet"] = contact.bsd_housenumberstreet;
+            //  data["bsd_contactaddress"] = contact.bsd_contactaddress;
+            //  data["bsd_diachi"] = contact.bsd_diachi;
+            ////  data["bsd_postalcode"] = contact.bsd_postalcode;
+            //  data["bsd_housenumber"] = contact.bsd_housenumberstreet;
 
-          //  data["bsd_permanentaddress1"] = contact.bsd_permanentaddress1;
-          //  data["bsd_diachithuongtru"] = contact.bsd_diachithuongtru;
-          //  data["bsd_permanenthousenumber"] = contact.bsd_permanentaddress;
-          //  data["bsd_permanentaddress"] = contact.bsd_permanentaddress;
+            //  data["bsd_permanentaddress1"] = contact.bsd_permanentaddress1;
+            //  data["bsd_diachithuongtru"] = contact.bsd_diachithuongtru;
+            //  data["bsd_permanenthousenumber"] = contact.bsd_permanentaddress;
+            //  data["bsd_permanentaddress"] = contact.bsd_permanentaddress;
 
             data["bsd_type"] = this.ContactType.Val;
 
@@ -404,89 +408,6 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        //public async Task GetImageCMND()
-        //{
-        //    frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
-        //    behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
-
-        //    string token = (await CrmHelper.getSharePointToken()).access_token;
-        //    var client = BsdHttpClient.Instance();
-        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    var front_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource
-        //                    + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFileByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + frontImage_name + "')/$value");
-        //    var front_result = await client.SendAsync(front_request);
-        //    if (front_result.IsSuccessStatusCode)
-        //    {
-        //        singleContact.bsd_mattruoccmnd_base64 = Convert.ToBase64String(front_result.Content.ReadAsByteArrayAsync().Result);
-        //    }
-
-        //    var behind_request = new HttpRequestMessage(HttpMethod.Get, OrgConfig.SharePointResource
-        //                    + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFileByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "/" + behindImage_name + "')/$value");
-        //    var behind_result = await client.SendAsync(behind_request);
-        //    if (behind_result.IsSuccessStatusCode)
-        //    {
-        //        singleContact.bsd_matsaucmnd_base64 = Convert.ToBase64String(behind_result.Content.ReadAsByteArrayAsync().Result);
-        //    }
-        //}
-
-        //public async Task<bool> UpLoadCMNDFront()
-        //{
-        //    frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
-
-        //    string token = (await CrmHelper.getSharePointToken()).access_token;
-
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        //        if (singleContact.bsd_mattruoccmnd_base64 != null)
-        //        {
-        //            byte[] arrByteFront = Convert.FromBase64String(singleContact.bsd_mattruoccmnd_base64);
-
-        //            using (var response = client.PostAsync
-        //            (new Uri(OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFolderByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "')/Files/add(url='" + frontImage_name + "',overwrite=true)")
-        //            , new StreamContent(new MemoryStream(arrByteFront))).Result)
-        //            {
-        //                return response.IsSuccessStatusCode;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //}
-
-        //public async Task<bool> UpLoadCMNDBehind()
-        //{
-        //    behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
-
-        //    string token = (await CrmHelper.getSharePointToken()).access_token;
-
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        //        if (singleContact.bsd_matsaucmnd_base64 != null)
-        //        {
-        //            byte[] arrByteBehind = Convert.FromBase64String(singleContact.bsd_matsaucmnd_base64);
-
-        //            using (var response = client.PostAsync(
-        //            new Uri(OrgConfig.SharePointResource + "/sites/" + OrgConfig.SharePointSiteName + "/_api/web/GetFolderByServerRelativeUrl('/sites/" + OrgConfig.SharePointSiteName + "/" + IMAGE_CMND_FOLDER + "')/Files/add(url='" + behindImage_name + "',overwrite=true)")
-        //            , new StreamContent(new MemoryStream(arrByteBehind))).Result)
-        //            {
-        //                return response.IsSuccessStatusCode;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //}
-
         public async Task<bool> CheckCMND(string identitycardnumber, string contactid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -572,6 +493,91 @@ namespace PhuLongCRM.ViewModels
             else
             {
                 return true;
+            }
+        }
+        public async Task PostCMND()
+        {
+            GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+            var client = BsdHttpClient.Instance();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+
+            var frontImage_name = singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
+            var behindImage_name = singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
+            var folder = StringFormatHelper.ReplaceNameContact(singleContact.bsd_fullname) + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
+
+            var url_front = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{folder}/{frontImage_name}:/content";
+            if (singleContact.bsd_mattruoccmnd_base64 != null)
+            {
+                byte[] arrByteFront = Convert.FromBase64String(singleContact.bsd_mattruoccmnd_base64);
+                HttpContent content = new ByteArrayContent(arrByteFront);
+                using (var response1 = client.PutAsync(url_front, content))
+                {
+                    if (response1.Result != null)
+                    {
+                    }
+                }
+            }
+
+            var url_behind = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{folder}/{behindImage_name}:/content";
+            if (singleContact.bsd_matsaucmnd_base64 != null)
+            {
+                byte[] arrByteFront = Convert.FromBase64String(singleContact.bsd_matsaucmnd_base64);
+                HttpContent content = new ByteArrayContent(arrByteFront);
+                using (var response1 = client.PutAsync(url_behind, content))
+                {
+                    if (response1.Result != null)
+                    {
+                    }
+                }
+            }
+        }
+        public async Task GetImageCMND()
+        {
+            if (this.singleContact.contactid != Guid.Empty)
+            {
+                var frontImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_front.jpg";
+                var behindImage_name = this.singleContact.contactid.ToString().Replace("-", String.Empty).ToUpper() + "_behind.jpg";
+
+                GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+                var client = BsdHttpClient.Instance();
+                string name_folder = StringFormatHelper.ReplaceNameContact(singleContact.bsd_fullname) + "_" + singleContact.contactid.ToString().Replace("-", "").ToUpper();
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ContactID}/root:/{name_folder}:/children?$select=name,eTag";
+                var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RetrieveMultipleApiResponse<SharePointGraphModel>>(body);
+
+                    if (result == null || result.value.Any() == false)
+                    {
+                        return;
+                    }
+                    List<SharePointGraphModel> list = result.value;
+                    foreach (var item in list)
+                    {
+                        if (item.name.Contains("_front.jpg"))
+                        {
+                            var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            if (urlVideo != null)
+                            {
+                                string url = urlVideo.value.SingleOrDefault().large.url;
+                                singleContact.bsd_mattruoccmnd_source = url;
+                            }
+                        }
+                        else if (item.name.Contains("_behind.jpg"))
+                        {
+                            var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
+                            if (urlVideo != null)
+                            {
+                                string url = urlVideo.value.SingleOrDefault().large.url;
+                                singleContact.bsd_matsaucmnd_source = url;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

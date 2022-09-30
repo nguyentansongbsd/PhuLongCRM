@@ -9,35 +9,25 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                <!--<SearchBar Grid.Row="0" Text="{Binding Keyword}" Placeholder="Từ khoá" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>-->
-                <!--<controls:BsdListView x:Name="listView" Grid.Row="1"  HasUnevenRows="True" ItemTapped="listView_ItemTapped">
+                <controls:SearchBarFrame Margin="10,5" Grid.Row="0">
+                    <controls:SearchBar Text="{Binding Keyword}" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
+                </controls:SearchBarFrame>
+                <controls:BsdListView x:Name="listView" Grid.Row="1"  HasUnevenRows="True" ItemTapped="listView_ItemTapped">
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto" BackgroundColor ="White" Padding="15,10" Margin="0,1">
-                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding name}" FontSize="18" FontAttributes="Bold" TextColor="Black" LineBreakMode="TailTruncation"/>
-                                    <Label FontSize="16" Grid.Row="0" Grid.Column="1" Text="{Binding createdon_format}" LineBreakMode="TailTruncation" VerticalTextAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="16" LineBreakMode="TailTruncation">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="Dự Án: "/>
-                                                <Span Text="{Binding subjecttitle}" TextColor="Black"/>
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                    <Label FontSize="16" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" LineBreakMode="TailTruncation">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="Loại: "/>
-                                                <Span Text="{Binding literaturetypecode_format}" TextColor="Black"/>
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                </Grid>
+                                <StackLayout BackgroundColor ="White" Padding="20,15" Margin="0,1" Spacing="10">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                                        <Label FontSize="14" Grid.Row="0" Grid.Column="1" Text="{Binding createdon_format}" LineBreakMode="TailTruncation" VerticalTextAlignment="Center"/>
+                                    </Grid>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.tieu_de}" Text="{Binding subjecttitle}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.loai}" Text="{Binding literaturetypecode_format}"/>
+                                </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </controls:BsdListView.ItemTemplate>
-                </controls:BsdListView>-->
+                </controls:BsdListView>
             </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>

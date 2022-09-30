@@ -64,7 +64,7 @@ namespace PhuLongCRM.Views
             Lookup_ResolutionType.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                viewModel.ResolutionTypes = CaseStatusCodeData.CaseStatusData();
+                viewModel.ResolutionTypes = CaseStatusCodeData.GetCaseStatusCodeByIds(new List<string>() {"5","1000"});
                 LoadingHelper.Hide();
             };
             Lookup_BillableTime.PreOpenAsync = async () =>
@@ -214,7 +214,8 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.Case != null)
             {
-                if(!string.IsNullOrWhiteSpace(viewModel.Case.accountId))
+                LoadingHelper.Show();
+                if (!string.IsNullOrWhiteSpace(viewModel.Case.accountId))
                 {
                     AccountDetailPage newPage = new AccountDetailPage(Guid.Parse(viewModel.Case.accountId));
                     newPage.OnCompleted = async (OnCompleted) =>

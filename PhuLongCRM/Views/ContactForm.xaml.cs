@@ -12,6 +12,10 @@ using PhuLongCRM.Models;
 using System.Linq;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Controls;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Plugin.Media;
+using System.Net.Http.Headers;
 
 namespace PhuLongCRM.Views
 {
@@ -69,6 +73,8 @@ namespace PhuLongCRM.Views
 
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
+                datePickerNgayCap.ReSetTime();
+                datePickerNgayCapHoChieu.ReSetTime();
                 customerCode.IsVisible = true;
                 viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById(viewModel.singleContact.statuscode);
                 OnCompleted?.Invoke(true);
@@ -89,7 +95,6 @@ namespace PhuLongCRM.Views
             if (contactId != null)
             {
                 await viewModel.LoadOneContact(contactId);
-                //await viewModel.GetImageCMND();
                 if (viewModel.singleContact.gendercode != null)
                 {
                     viewModel.singleGender = ContactGender.GetGenderById(viewModel.singleContact.gendercode);
@@ -169,19 +174,31 @@ namespace PhuLongCRM.Views
                     return;
                 }
             }
-            if (string.IsNullOrWhiteSpace(viewModel.Address1.lineaddress))
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.telephone1) && viewModel.singleContact.telephone1 != "+84")
+            {
+                string telephone = string.Empty;
+                telephone = viewModel.singleContact.telephone1.Contains("-") ? viewModel.singleContact.telephone1.Split('-')[1] : viewModel.singleContact.telephone1;
+
+                if (telephone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                    return;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(viewModel.Address1?.lineaddress))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(viewModel.Address2.lineaddress))
+            if (string.IsNullOrWhiteSpace(viewModel.Address2?.lineaddress))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_thuong_tru);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber))
+            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_cmnd);
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_cccd);
                 return;
             }
             if (!await viewModel.CheckCMND(viewModel.singleContact.bsd_identitycardnumber, id))
@@ -196,18 +213,19 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && viewModel.singleContact.bsd_identitycardnumber.Length != 9)
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycard, 12))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && !StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycardnumber, 9))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && viewModel.singleContact.bsd_identitycard.Length != 12)
-            {
-                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
-                return;
-            }
-            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && viewModel.singleContact.bsd_passport.Length != 8)
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && !StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_passport, 8))
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
@@ -228,7 +246,7 @@ namespace PhuLongCRM.Views
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
                     if (QueueForm.NeedToRefresh.HasValue) QueueForm.NeedToRefresh = true;
-
+                    await viewModel.PostCMND();
                     await Navigation.PopAsync();
                     ToastMessageHelper.ShortMessage(Language.tao_khach_hang_ca_nhan_thanh_cong);
                     LoadingHelper.Hide();
@@ -250,16 +268,7 @@ namespace PhuLongCRM.Views
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                     if (ContactDetailPage.NeedToRefresh.HasValue) ContactDetailPage.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
-
-                    //if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
-                    //{
-                    //    await viewModel.UpLoadCMNDFront();
-                    //}
-
-                    //if (viewModel.singleContact.bsd_matsaucmnd_base64 != null)
-                    //{
-                    //   await viewModel.UpLoadCMNDBehind();
-                    //}
+                    await viewModel.PostCMND();
                     await Navigation.PopAsync();
                     ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
                 }
@@ -282,8 +291,7 @@ namespace PhuLongCRM.Views
             Lookup_GenderOptions.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                ContactGender.GetGenders();
-                foreach (var item in ContactGender.GenderOptions)
+                foreach (var item in ContactGender.GenderData())
                 {
                     viewModel.GenderOptions.Add(item);
                 }
@@ -318,24 +326,24 @@ namespace PhuLongCRM.Views
         public void MatTruocCMND_Tapped(object sender, System.EventArgs e)
         {
             List<OptionSet> menuItem = new List<OptionSet>();
-            if (viewModel.singleContact.bsd_mattruoccmnd_base64 != null)
+            if (viewModel.singleContact.bsd_mattruoccmnd_source != null)
             {
-                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_truoc_cmnd, Val = "Front" });
+                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_truoc_cmnd, Val = "Front" ,Title="Show"});
             }
-            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Front" });
-            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Front" });
+            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Front", Title = "Take" });
+            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Front", Title = "Select" });
             this.showMenuImageCMND(menuItem);
         }
 
         private void MatSauCMND_Tapped(object sender, System.EventArgs e)
         {
             List<OptionSet> menuItem = new List<OptionSet>();
-            if (viewModel.singleContact.bsd_matsaucmnd_base64 != null)
+            if (viewModel.singleContact.bsd_matsaucmnd_source != null)
             {
-                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_sau_cmnd, Val = "Behind" });
+                menuItem.Add(new OptionSet { Label = Language.xem_anh_mat_sau_cmnd, Val = "Behind", Title = "Show" });
             }
-            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Behind" });
-            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Behind" });
+            menuItem.Add(new OptionSet { Label = Language.chup_anh, Val = "Behind", Title = "Take" });
+            menuItem.Add(new OptionSet { Label = Language.chon_anh_ty_thu_vien, Val = "Behind", Title = "Select" });
             this.showMenuImageCMND(menuItem);
         }
 
@@ -348,74 +356,71 @@ namespace PhuLongCRM.Views
 
         async void MenuItem_Tapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            //var item = e.Item as OptionSet;
-            //popup_menu_imageCMND.unFocus();
+            var item = e.Item as OptionSet;
+            popup_menu_imageCMND.unFocus();
 
-            //Stream resultStream;
-            //byte[] arrByte;
-            //string base64String;
+            Stream resultStream;
+            byte[] arrByte;
+            string base64String;
 
-            //switch (item.Label)
-            //{
-            //    case "Chụp ảnh":
-                    
-            //        PermissionStatus cameraStatus = await PermissionHelper.RequestCameraPermission();
-            //        if (cameraStatus == PermissionStatus.Granted)
-            //        { 
-            //            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-            //            {
-            //                SaveToAlbum = false,
-            //                PhotoSize = Plugin.Media.Abstractions.PhotoSize.MaxWidthHeight,
-            //                MaxWidthHeight = 600,
-            //            });
+            switch (item.Title)
+            {
+                case "Take":
 
-            //            if (file == null)
-            //                return;
+                    PermissionStatus cameraStatus = await PermissionHelper.RequestCameraPermission();
+                    if (cameraStatus == PermissionStatus.Granted)
+                    {
+                        var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                        {
+                            SaveToAlbum = false,
+                            PhotoSize = Plugin.Media.Abstractions.PhotoSize.MaxWidthHeight,
+                            MaxWidthHeight = 600,
+                        });
 
-            //            resultStream = file.GetStream();
-            //            using (var memoryStream = new MemoryStream())
-            //            {
-            //                resultStream.CopyTo(memoryStream);
-            //                arrByte = memoryStream.ToArray();
-            //            }
-            //            base64String = Convert.ToBase64String(arrByte);
-            //            var tmp1 = base64String.Length;
-            //            if (item.Val == "Front") { viewModel.singleContact.bsd_mattruoccmnd_base64 = base64String; }
-            //            else if (item.Val == "Behind") { viewModel.singleContact.bsd_matsaucmnd_base64 = base64String; }
-            //        }
+                        if (file == null)
+                            return;
 
-            //        break;
-            //    case "Chọn ảnh từ thư viện":
+                        resultStream = file.GetStream();
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            resultStream.CopyTo(memoryStream);
+                            arrByte = memoryStream.ToArray();
+                        }
+                        base64String = Convert.ToBase64String(arrByte);
+                        if (item.Val == "Front") { viewModel.singleContact.bsd_mattruoccmnd_source = base64String; viewModel.singleContact.bsd_mattruoccmnd_base64 = base64String; }
+                        else if (item.Val == "Behind") { viewModel.singleContact.bsd_matsaucmnd_source = base64String; viewModel.singleContact.bsd_matsaucmnd_base64 = base64String; }
+                    }
 
-            //        PermissionStatus storageStatus = await PermissionHelper.RequestPhotosPermission();
-            //        if (storageStatus == PermissionStatus.Granted)
-            //        {
-            //            var file2 = await MediaPicker.PickPhotoAsync();
-            //            if (file2 == null)
-            //                return;
+                    break;
+                case "Select":
 
-            //            Stream result = await file2.OpenReadAsync();
-            //            if (result != null)
-            //            {
-            //                using (var memoryStream = new MemoryStream())
-            //                {
-            //                    result.CopyTo(memoryStream);
-            //                    arrByte = memoryStream.ToArray();
-            //                }
-            //                base64String = Convert.ToBase64String(arrByte);
-            //                var tmp = base64String.Length;
-            //                if (item.Val == "Front") { viewModel.singleContact.bsd_mattruoccmnd_base64 = base64String; }
-            //                else if (item.Val == "Behind") { viewModel.singleContact.bsd_matsaucmnd_base64 = base64String; }
-            //            }
-            //        }
-            //        break;
-            //    default:
-            //        if (item.Val == "Front") { image_detailCMNDImage.Source = viewModel.singleContact.bsd_mattruoccmnd_source; }
-            //        else if (item.Val == "Behind") { image_detailCMNDImage.Source = viewModel.singleContact.bsd_matsaucmnd_source; }
-            //        this.showDetailCMNDImage();
-            //        break;
+                    PermissionStatus storageStatus = await PermissionHelper.RequestPhotosPermission();
+                    if (storageStatus == PermissionStatus.Granted)
+                    {
+                        var file2 = await MediaPicker.PickPhotoAsync();
+                        if (file2 == null)
+                            return;
 
-            //}
+                        Stream result = await file2.OpenReadAsync();
+                        if (result != null)
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                result.CopyTo(memoryStream);
+                                arrByte = memoryStream.ToArray();
+                            }
+                            base64String = Convert.ToBase64String(arrByte);
+                            if (item.Val == "Front") { viewModel.singleContact.bsd_mattruoccmnd_source  = base64String; viewModel.singleContact.bsd_mattruoccmnd_base64 = base64String; }
+                            else if (item.Val == "Behind") { viewModel.singleContact.bsd_matsaucmnd_source = base64String; viewModel.singleContact.bsd_matsaucmnd_base64 = base64String; }
+                        }
+                    }
+                    break;
+                default:
+                    if (item.Val == "Front") { image_detailCMNDImage.Source = viewModel.singleContact.bsd_mattruoccmnd_source; }
+                    else if (item.Val == "Behind") { image_detailCMNDImage.Source = viewModel.singleContact.bsd_matsaucmnd_source; }
+                    this.showDetailCMNDImage();
+                    break;
+            }
         }
 
         private void showDetailCMNDImage()
@@ -433,28 +438,12 @@ namespace PhuLongCRM.Views
 
         private void CMND_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (viewModel.singleContact.bsd_identitycardnumber.Length != 9)
+            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber)) return;
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycardnumber, 9))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_khong_hop_le_gioi_han_9_ky_tu);
             }
         }
-
-        private void PassPort_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
-        {
-            if (viewModel.singleContact.bsd_passport.Length != 8)
-            {
-                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
-            }
-        }
-
-        private void CCCD_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
-        {
-            if (viewModel.singleContact.bsd_identitycard.Length != 12 )
-            {
-                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
-            }
-        }
-
         private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
             var num = sender as PhoneEntryControl;
@@ -467,6 +456,21 @@ namespace PhuLongCRM.Views
                 {
                     ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 }
+            }
+        }
+        private void CCCD_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_identitycard, 12))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_cccd_khong_hop_le_gioi_han_12_ky_tu);
+            }
+        }
+        private void PassPort_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport)) return;
+            if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_passport, 8))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
             }
         }
     }

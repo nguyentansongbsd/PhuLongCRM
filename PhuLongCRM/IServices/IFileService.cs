@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace PhuLongCRM.Controls
 {
     public interface IFileService
     {
-        void SaveFile(string name, byte[] data, string location = "Download/Conasi");
-        void OpenFile(string fileName, string location = "Download/Conasi");
+        string SaveFile(string name, byte[] data, MemoryStream stream, string location = "Download/PhuLong");
+        void OpenFile(string fileName, string location = "Download/PhuLong");
     }
 }

@@ -20,6 +20,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshBTG = null;
         public static bool? NeedToRefreshDC = null;
         public static bool? NeedToRefreshActivity = null;
+        public static bool? NeedToRefresh = null;
         public static OptionSet FromQueue = null;
         public static OptionSet CustomerFromQueue = null;
         public QueuesDetialPageViewModel viewModel;
@@ -31,6 +32,7 @@ namespace PhuLongCRM.Views
             NeedToRefreshBTG = false;
             NeedToRefreshActivity = false;
             NeedToRefreshDC = false;
+            NeedToRefresh = false;
             Init();
         }
 
@@ -53,6 +55,14 @@ namespace PhuLongCRM.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            if(NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadQueue();
+                SetButtons();
+                NeedToRefreshBTG = false;
+                LoadingHelper.Hide();
+            }    
             if (viewModel.BangTinhGiaList != null && NeedToRefreshBTG == true)
             {
                 LoadingHelper.Show();
@@ -89,6 +99,8 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Queue != null)
             {
+                if (viewModel.ButtonCommandList.Count > 0)
+                    viewModel.ButtonCommandList.Clear();
                 if (viewModel.ShowCare)
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
@@ -373,7 +385,8 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.Customer!= null)
             {
-                if(viewModel.Customer.Title == viewModel.CodeContact)
+                LoadingHelper.Show();
+                if (viewModel.Customer.Title == viewModel.CodeContact)
                 {
                     ContactDetailPage newPage = new ContactDetailPage(Guid.Parse(viewModel.Customer.Val));
                     newPage.OnCompleted = async (OnCompleted) =>
@@ -435,6 +448,7 @@ namespace PhuLongCRM.Views
                 SetButtons();
                 if (QueueList.NeedToRefresh.HasValue) QueueList.NeedToRefresh = true;
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
+                if (DirectSaleDetailTest.NeedToRefreshDirectSale.HasValue) DirectSaleDetailTest.NeedToRefreshDirectSale = true;
                 if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
                 if (ProjectInfo.NeedToRefreshNumQueue.HasValue) ProjectInfo.NeedToRefreshNumQueue = true;
                 if (UnitInfo.NeedToRefreshQueue.HasValue) UnitInfo.NeedToRefreshQueue = true;

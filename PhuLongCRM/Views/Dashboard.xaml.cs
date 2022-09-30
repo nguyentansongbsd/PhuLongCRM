@@ -143,33 +143,6 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
 
-            if (NeedToRefreshMeet == true && viewModel.Meet.activityid != Guid.Empty)
-            {
-                LoadingHelper.Show();
-                await Task.WhenAll(
-                    viewModel.loadFromToMeet(viewModel.Meet.activityid),
-                    viewModel.loadMeet(viewModel.Meet.activityid)
-                    );
-                LoadingHelper.Hide();
-            }
-
-            if (NeedToRefreshPhoneCall == true && viewModel.PhoneCall.activityid != Guid.Empty)
-            {
-                LoadingHelper.Show();
-                await Task.WhenAll(
-                    viewModel.loadPhoneCall(viewModel.PhoneCall.activityid),
-                    viewModel.loadFromTo(viewModel.PhoneCall.activityid)
-                    );
-                LoadingHelper.Hide();
-            }
-
-            if (NeedToRefreshTask == true && viewModel.TaskDetail.activityid != Guid.Empty)
-            {
-                LoadingHelper.Show();
-                await viewModel.loadTask(viewModel.TaskDetail.activityid);
-                LoadingHelper.Hide();
-            }
-
             if (NeedToRefreshTask == true || NeedToRefreshPhoneCall == true || NeedToRefreshMeet == true)
             {
                 LoadingHelper.Show();
@@ -215,6 +188,83 @@ namespace PhuLongCRM.Views
                 await Navigation.PushAsync(scanQR);
                 LoadingHelper.Hide();
             }
+        }
+
+        private void DatCoc_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover(Language.so_dat_coc_da_tao_trong_thang_nay);
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        private void GiaoDich_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover(Language.so_giu_cho_da_tao_trong_thang_nay);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void HopDong_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover(Language.so_hop_dong_da_tao_trong_thang_nay);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void DaBan_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover(Language.so_san_pham_da_ban_trong_thang_nay);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void TongTien_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover(Language.tong_tien_co_the_nhan_trong_thang_nay);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void DaNhan_Hover_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                PopupHover.ShowHover(Language.tong_tien_da_nhan_trong_thang_nay);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void BieuDo_Hover_Tapped(object sender, EventArgs e)
+        {
+            PopupHover.ShowHover(Language.bieu_do_hoa_hong_4_thang_gan_nhat);
+        }
+        private void BieuDoGiaoDich_Hover_Tapped(object sender, EventArgs e)
+        {
+            PopupHover.ShowHover(Language.bieu_do_giao_dich_4_thang_gan_nhat);
         }
     }
 }

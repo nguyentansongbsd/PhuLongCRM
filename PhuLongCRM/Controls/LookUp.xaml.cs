@@ -12,6 +12,7 @@ namespace PhuLongCRM.Controls
     {
         public Func<Task> PreOpenAsync;
         public Action PreOpen;
+        public event EventHandler<LookUpChangeEvent> SearchPress;
 
         public event EventHandler<LookUpChangeEvent> SelectedItemChange;
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(LookUp), null, BindingMode.TwoWay);
@@ -25,20 +26,18 @@ namespace PhuLongCRM.Controls
         }
 
         public static readonly BindableProperty NameDipslayProperty = BindableProperty.Create(nameof(NameDisplay), typeof(string), typeof(LookUp), null, BindingMode.TwoWay, propertyChanged: DisplayNameChang);
+        public string NameDisplay { get => (string)GetValue(NameDipslayProperty); set { SetValue(NameDipslayProperty, value); } }
 
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(LookUp), null, BindingMode.TwoWay, null);
         public IEnumerable ItemsSource { get => (IEnumerable)GetValue(ItemsSourceProperty); set { SetValue(ItemsSourceProperty, value); } }
 
+        public static readonly BindableProperty IsSearchPressProperty = BindableProperty.Create(nameof(IsSearchPress), typeof(bool), typeof(LookUp), false, BindingMode.TwoWay);
+        public bool IsSearchPress { get => (bool)GetValue(IsSearchPressProperty); set => SetValue(IsSearchPressProperty, value); }
+
         public ContentView ModalPopup { get; set; }
-
         public BottomModal BottomModal { get; set; }
-
-        public string NameDisplay { get => (string)GetValue(NameDipslayProperty); set { SetValue(NameDipslayProperty, value); } }
-
         public bool FocusSearchBarOnTap = false;
-
         public bool PreOpenOneTime { get; set; } = true;
-
 
         public LookUp()
         {
@@ -92,6 +91,7 @@ namespace PhuLongCRM.Controls
             if (_lookUpView == null)
             {
                 _lookUpView = new LookUpView();
+                _lookUpView.IsSearchPress = IsSearchPress;
                 _lookUpView.SetList(ItemsSource.Cast<object>().ToList(), NameDisplay);
                 _lookUpView.lookUpListView.ItemTapped += async (lookUpSender, lookUpTapEvent) =>
                 {
@@ -102,6 +102,7 @@ namespace PhuLongCRM.Controls
                     }
                     await BottomModal.Hide();
                 };
+                _lookUpView.SearchPress += _lookUpView_SearchPress;
             }
             else
             {
@@ -112,11 +113,20 @@ namespace PhuLongCRM.Controls
             BottomModal.ModalContent = _lookUpView;
             await BottomModal.Show();
 
-
             if (FocusSearchBarOnTap)
             {
                 _lookUpView.FocusSearchBarOnTap();
             }
+        }
+
+        private void _lookUpView_SearchPress(object sender, LookUpChangeEvent e)
+        {
+            SearchPress?.Invoke(sender, e);
+        }
+
+        public void ResetItemSource()
+        {
+            _lookUpView.SetList(ItemsSource.Cast<object>().ToList(), NameDisplay);
         }
     }
 }
