@@ -820,7 +820,10 @@ namespace PhuLongCRM.ViewModels
             {
                 return;
             }
-            Discount = result.value.FirstOrDefault();
+            var data = result.value.FirstOrDefault();
+            data.bsd_startdate = data.bsd_startdate.ToLocalTime();
+            data.bsd_enddate = data.bsd_enddate.ToLocalTime();
+            Discount = data;
            // await LoadDiscountItems(Discount.bsd_discountid);
         }
         public async Task LoadDiscountItems(Guid discount_id)

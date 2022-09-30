@@ -491,13 +491,13 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
-                                        <StackLayout BackgroundColor="#eeeeee" Padding="0,0,0,1" Orientation="Horizontal" Spacing="0">
-                                            <StackLayout.GestureRecognizers>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="#eeeeee" Padding="0,0,0,1" ColumnSpacing="0">
+                                            <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PromotionItem_Tapped" CommandParameter="{Binding .}"/>
-                                            </StackLayout.GestureRecognizers>
-                                            <Label Text="{Binding Label}" FontSize="15" HorizontalOptions="FillAndExpand" TextColor="#333333" BackgroundColor="White" Padding="10"/>
-                                            <Label Text="&#xf00c;" IsVisible="{Binding Selected}" HorizontalOptions="End" BackgroundColor="White" Padding="10" FontFamily="FontAwesomeSolid" FontSize="15" TextColor="{StaticResource NavigationPrimary}"/>
-                                        </StackLayout>
+                                            </Grid.GestureRecognizers>
+                                            <Label Grid.Column="0" Text="{Binding Label}" FontSize="15" HorizontalOptions="FillAndExpand" TextColor="#333333" BackgroundColor="White" Padding="10"/>
+                                            <Label Grid.Column="1" Text="&#xf00c;" IsVisible="{Binding Selected}" HorizontalOptions="End" BackgroundColor="White" Padding="10" FontFamily="FontAwesomeSolid" FontSize="15" TextColor="{StaticResource NavigationPrimary}"/>
+                                        </Grid>
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

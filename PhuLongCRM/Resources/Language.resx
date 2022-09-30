@@ -3462,4 +3462,10 @@
   <data name="giu_cho_btg" xml:space="preserve">
     <value>Giữ chỗ</value>
   </data>
+  <data name="theo_san_pham" xml:space="preserve">
+    <value>Theo sản phẩm</value>
+  </data>
+  <data name="theo_gia_niem_yet" xml:space="preserve">
+    <value>Theo giá niêm yết</value>
+  </data>
 </root>

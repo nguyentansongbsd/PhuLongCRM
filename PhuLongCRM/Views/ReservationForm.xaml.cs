@@ -614,7 +614,7 @@ namespace PhuLongCRM.Views
         private void PromotionItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            var itemPromotion = (OptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            var itemPromotion = (OptionSet)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             itemPromotion.Selected = !itemPromotion.Selected;
             LoadingHelper.Hide();
         }
@@ -1121,6 +1121,8 @@ namespace PhuLongCRM.Views
                             await viewModel.DeleteQuote();
                             // set lại id = null khi thất bại để chạy vào create
                             viewModel.quotedetailid = Guid.Empty;
+                            viewModel.QuoteId = Guid.Empty;
+                            viewModel.Quote.quoteid = Guid.Empty;
                             LoadingHelper.Hide();
                         }
 

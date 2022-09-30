@@ -3462,4 +3462,10 @@
   <data name="giu_cho_btg" xml:space="preserve">
     <value>Queue</value>
   </data>
+  <data name="theo_san_pham" xml:space="preserve">
+    <value>By Unit</value>
+  </data>
+  <data name="theo_gia_niem_yet" xml:space="preserve">
+    <value>By Listed Price</value>
+  </data>
 </root>
