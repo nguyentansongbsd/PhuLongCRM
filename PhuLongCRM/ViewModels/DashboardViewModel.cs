@@ -408,16 +408,11 @@ namespace PhuLongCRM.ViewModels
                         numKHKhongChuyenDoi += item.count;
                 }
             }
-            if (numKHMoi == 0)
-                numKHMoi = 1;
-            if (numKHDaChuyenDoi == 0)
-                numKHDaChuyenDoi = 1;
-            if (numKHKhongChuyenDoi == 0)
-                numKHKhongChuyenDoi = 1;
 
-            LeadsChart.Add(new ChartModel() { Category = Language.khach_hang_moi, Value = numKHMoi });
-            LeadsChart.Add(new ChartModel() { Category = Language.da_chuyen_doi, Value = numKHDaChuyenDoi });
-            LeadsChart.Add(new ChartModel() { Category = Language.khong_chuyen_doi, Value = numKHKhongChuyenDoi });
+            LeadsChart.Add(new ChartModel() { Category = Language.khach_hang_moi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHMoi });
+            LeadsChart.Add(new ChartModel() { Category = Language.da_chuyen_doi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHDaChuyenDoi });
+            LeadsChart.Add(new ChartModel() { Category = Language.khong_chuyen_doi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHKhongChuyenDoi });
+            
         }
 
         public async Task LoadTasks()

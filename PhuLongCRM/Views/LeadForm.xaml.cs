@@ -380,6 +380,17 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (viewModel.Address1 == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
+                return;
+            }
+            if (viewModel.Address2 == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_thuong_tru);
+                return;
+            }
+
             LoadingHelper.Show();
 
             viewModel.singleLead.industrycode = viewModel.IndustryCode != null ? viewModel.IndustryCode.Val : null;

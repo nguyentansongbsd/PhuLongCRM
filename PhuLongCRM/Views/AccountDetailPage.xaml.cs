@@ -33,7 +33,6 @@ namespace PhuLongCRM.Views
             NeedToRefreshAccount = false;
             NeedToRefreshMandatory = false;
             NeedToRefreshActivity = false;
-            LoadingHelper.Show();
             Init();
         }
 
@@ -49,7 +48,6 @@ namespace PhuLongCRM.Views
             }
             else
                 OnCompleted?.Invoke(false);
-            LoadingHelper.Hide();
         }
 
         protected override async void OnAppearing()
@@ -333,7 +331,7 @@ namespace PhuLongCRM.Views
         #endregion
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
+            string phone = viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10);
             if (phone != string.Empty)
             {
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
@@ -355,7 +353,7 @@ namespace PhuLongCRM.Views
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Replace(" ", "").Replace("+84-", "").Replace("84", "");
+            string phone = viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10);
             if (phone != string.Empty)
             {
                 await Launcher.OpenAsync($"tel:{phone}");
@@ -378,8 +376,13 @@ namespace PhuLongCRM.Views
 
         private void NguoiDaiDien_Tapped(object sender, EventArgs e)
         {
-            if (viewModel.PrimaryContact.contactid != null)
+            if (viewModel.PrimaryContact.contactid != null )
             {
+                if (viewModel.PrimaryContact.employee_id != UserLogged.Id)
+                {
+                    ToastMessageHelper.ShortMessage(Language.khong_the_xem_khach_hang);
+                    return;
+                }
                 LoadingHelper.Show();
                 ContactDetailPage newPage = new ContactDetailPage(viewModel.PrimaryContact.contactid);
                 newPage.OnCompleted = async (OnCompleted) =>

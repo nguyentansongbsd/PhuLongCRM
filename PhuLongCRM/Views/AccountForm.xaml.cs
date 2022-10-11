@@ -190,7 +190,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_loai_khach_hang);
                 return;
             }
-            if (viewModel.singleAccount.bsd_name == null)
+            if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_name))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_ten_cong_ty);
                 return;

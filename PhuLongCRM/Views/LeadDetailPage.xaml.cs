@@ -228,7 +228,7 @@ namespace PhuLongCRM.Views
         }
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleLead.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84",""); // thêm sdt ở đây
+            string phone = viewModel.singleLead.mobilephone.Substring(viewModel.singleLead.mobilephone.Length - 10, 10);
             if (phone != string.Empty)
             {
                 SmsMessage sms = new SmsMessage(null, phone);
@@ -241,7 +241,7 @@ namespace PhuLongCRM.Views
         }
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleLead.mobilephone.Replace(" ","").Replace("+84-","").Replace("84", ""); // thêm sdt ở đây
+            string phone = viewModel.singleLead.mobilephone.Substring(viewModel.singleLead.mobilephone.Length - 10, 10);
             if (phone != string.Empty)
             {
                 await Launcher.OpenAsync($"tel:{phone}");

@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -299,6 +300,12 @@ namespace PhuLongCRM.Views
             {
                 if (viewModel.PhoneCall.callto_lead_id != Guid.Empty)
                 {
+                    if (viewModel.PhoneCall.lead_employee_id != UserLogged.Id)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khong_the_xem_khach_hang);
+                        return;
+                    }
+                    LoadingHelper.Show();
                     LeadDetailPage newPage = new LeadDetailPage(viewModel.PhoneCall.callto_lead_id);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
@@ -317,6 +324,12 @@ namespace PhuLongCRM.Views
                 }
                 else if (viewModel.PhoneCall.callto_contact_id != Guid.Empty)
                 {
+                    if (viewModel.PhoneCall.contact_employee_id != UserLogged.Id)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khong_the_xem_khach_hang);
+                        return;
+                    }
+                    LoadingHelper.Show();
                     ContactDetailPage newPage = new ContactDetailPage(viewModel.PhoneCall.callto_contact_id);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
@@ -335,6 +348,12 @@ namespace PhuLongCRM.Views
                 }
                 else if (viewModel.PhoneCall.callto_account_id != Guid.Empty)
                 {
+                    if (viewModel.PhoneCall.account_employee_id != UserLogged.Id)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khong_the_xem_khach_hang);
+                        return;
+                    }
+                    LoadingHelper.Show();
                     AccountDetailPage newPage = new AccountDetailPage(viewModel.PhoneCall.callto_account_id);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
@@ -358,6 +377,12 @@ namespace PhuLongCRM.Views
             {
                 if (viewModel.Task.lead_id != Guid.Empty)
                 {
+                    if (viewModel.Task.lead_employee_id != UserLogged.Id)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khong_the_xem_khach_hang);
+                        return;
+                    }
+                    LoadingHelper.Show();
                     LeadDetailPage newPage = new LeadDetailPage(viewModel.Task.lead_id);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
@@ -376,6 +401,12 @@ namespace PhuLongCRM.Views
                 }
                 else if (viewModel.Task.contact_id != Guid.Empty)
                 {
+                    if (viewModel.Task.contact_employee_id != UserLogged.Id)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khong_the_xem_khach_hang);
+                        return;
+                    }
+                    LoadingHelper.Show();
                     ContactDetailPage newPage = new ContactDetailPage(viewModel.Task.contact_id);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
@@ -394,6 +425,12 @@ namespace PhuLongCRM.Views
                 }
                 else if (viewModel.Task.account_id != Guid.Empty)
                 {
+                    if (viewModel.Task.acount_employee_id != UserLogged.Id)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khong_the_xem_khach_hang);
+                        return;
+                    }
+                    LoadingHelper.Show();
                     AccountDetailPage newPage = new AccountDetailPage(viewModel.Task.account_id);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {

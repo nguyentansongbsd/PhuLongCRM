@@ -201,7 +201,7 @@
                                     <Label Text="{x:Static lang:Language.danh_sach_bang_tinh_gia}" FontSize="15" TextColor="#808080" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                                 <Grid Grid.RowSpan="2" Grid.Column="1">
-                                    <telerikChart:RadPieChart WidthRequest="250" >
+                                    <telerikChart:RadPieChart WidthRequest="250" IsTabStop="True" >
                                         <telerikChart:RadPieChart.Series>
                                             <telerikChart:DonutSeries InnerRadiusFactor="0.8" ValueBinding="Value" ItemsSource="{Binding UnitChart}" />
                                         </telerikChart:RadPieChart.Series>

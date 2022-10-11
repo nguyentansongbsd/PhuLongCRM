@@ -199,6 +199,12 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (viewModel.AddressContact == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi);
+                return;
+            }
+
             LoadingHelper.Show();
 
             bool isSuccess = await viewModel.UpdateUserInfor();

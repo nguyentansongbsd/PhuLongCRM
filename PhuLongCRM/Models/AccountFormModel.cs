@@ -32,6 +32,8 @@ namespace PhuLongCRM.Models
         private string _primarycontactpermanentaddress;
         public string primarycontactpermanentaddress { get { return _primarycontactpermanentaddress; } set { _primarycontactpermanentaddress = value; OnPropertyChanged(nameof(primarycontactpermanentaddress)); } }
 
+        public Guid contact_employee_id { get; set; }
+
         private string _bsd_businesstype;
         public string bsd_businesstype { get { return _bsd_businesstype; } set { _bsd_businesstype = value; OnPropertyChanged(nameof(bsd_businesstype)); } }
 

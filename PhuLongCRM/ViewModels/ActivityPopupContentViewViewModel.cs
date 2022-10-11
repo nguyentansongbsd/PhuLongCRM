@@ -153,14 +153,17 @@ namespace PhuLongCRM.ViewModels
                                             <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='partyaccount' >
                                                 <attribute name='bsd_name' alias='account_name'/>
                                                 <attribute name='accountid' alias='account_id'/>
+                                                <attribute name='bsd_employee' alias='account_employee_id'/>
                                             </link-entity>
                                             <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='partycontact' >
                                                 <attribute name='fullname' alias='contact_name'/>
                                                 <attribute name='contactid' alias='contact_id'/>
+                                                <attribute name='bsd_employee' alias='contact_employee_id'/>
                                             </link-entity>
                                             <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='partylead' >
                                                 <attribute name='fullname' alias='lead_name'/>
                                                 <attribute name='leadid' alias='lead_id'/>
+                                                <attribute name='bsd_employee' alias='lead_employee_id'/>
                                             </link-entity>
                                             <link-entity name='systemuser' from='systemuserid' to='partyid' link-type='outer' alias='partyuser' >
                                                 <attribute name='fullname' alias='user_name'/>
@@ -188,16 +191,19 @@ namespace PhuLongCRM.ViewModels
                         {
                             PhoneCall.call_to = item.contact_name;
                             PhoneCall.callto_contact_id = item.contact_id;
+                            PhoneCall.contact_employee_id = item.contact_employee_id;
                         }
                         else if (item.account_name != null && item.account_name != string.Empty)
                         {
                             PhoneCall.call_to = item.account_name;
                             PhoneCall.callto_account_id = item.account_id;
+                            PhoneCall.account_employee_id = item.account_employee_id;
                         }
                         else if (item.lead_name != null && item.lead_name != string.Empty)
                         {
                             PhoneCall.call_to = item.lead_name;
                             PhoneCall.callto_lead_id = item.lead_id;
+                            PhoneCall.lead_employee_id = item.lead_employee_id;
                         }
                     }
                 }
@@ -253,14 +259,17 @@ namespace PhuLongCRM.ViewModels
                                 <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ah'>
     	                            <attribute name='accountid' alias='account_id' />                  
     	                            <attribute name='bsd_name' alias='account_name'/>
+                                    <attribute name='bsd_employee' alias='acount_employee_id'/>
                                 </link-entity>
                                 <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='ai'>
 	                                <attribute name='contactid' alias='contact_id' />                  
                                     <attribute name='fullname' alias='contact_name'/>
+                                    <attribute name='bsd_employee' alias='contact_employee_id'/>
                                 </link-entity>
                                 <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='aj'>
 	                                <attribute name='leadid' alias='lead_id'/>                  
                                     <attribute name='fullname' alias='lead_name'/>
+                                    <attribute name='bsd_employee' alias='lead_employee_id'/>
                                 </link-entity>
                                 <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias='ab'>
                                     <attribute name='opportunityid' alias='queue_id'/>                  

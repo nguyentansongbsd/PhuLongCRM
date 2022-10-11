@@ -1720,7 +1720,7 @@
     <value>Chỉnh Sửa Khách Hàng Tiềm Năng</value>
   </data>
 	<data name="so_dien_thoai_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
-    <value>Số điện thoại không hợp lệ (Gồm 10 ký tự)</value>
+    <value>Số điện thoại không hợp lệ (Gồm 10 ký tự).</value>
   </data>
 	<data name="vui_long_chon_tieu_de" xml:space="preserve">
     <value>Vui lòng chọn tiêu đề.</value>
@@ -3187,10 +3187,10 @@
 		<value>Tạo QR code</value>
 	</data>
 	<data name="tao_qr_code_thanh_cong" xml:space="preserve">
-		<value>Tạo QR code thành công</value>
+		<value>Tạo QR code thành công.</value>
 	</data>
 	<data name="tao_qr_code_that_bai" xml:space="preserve">
-		<value>Tạo QR code thất bại</value>
+		<value>Tạo QR code thất bại.</value>
 	</data>
 	<data name="thong_tin_user_title" xml:space="preserve">
 		<value>Thông Tin Người Dùng</value>
@@ -3467,5 +3467,17 @@
   </data>
   <data name="theo_gia_niem_yet" xml:space="preserve">
     <value>Theo giá niêm yết</value>
+  </data>
+  <data name="danh_cho_ban_hang" xml:space="preserve">
+    <value>Dành Cho Bán Hàng</value>
+  </data>
+  <data name="khong_the_xem_khach_hang" xml:space="preserve">
+    <value>Không thể xem khách hàng.</value>
+  </data>
+  <data name="vui_long_chon_dia_chi" xml:space="preserve">
+    <value>Vui lòng chọn địa chỉ.</value>
+  </data>
+  <data name="so_cccd_da_duoc_su_dung" xml:space="preserve">
+    <value>Số CCCD đã được sử dụng.</value>
   </data>
 </root>
