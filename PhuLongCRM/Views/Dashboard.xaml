@@ -58,7 +58,7 @@
                         </Grid>
                         <controls:ExtendedFrame Margin="14,6" Padding="8">
                             <Grid>
-                                <telerikChart:RadCartesianChart HeightRequest="250" >
+                                <telerikChart:RadCartesianChart HeightRequest="250" IsTabStop="True">
                                     <telerikChart:RadCartesianChart.ChartBehaviors>
                                         <telerikChart:ChartSelectionBehavior DataPointSelectionMode="None" SeriesSelectionMode="Single" />
                                     </telerikChart:RadCartesianChart.ChartBehaviors>
@@ -143,7 +143,7 @@
                         </Grid>
                         <controls:ExtendedFrame Padding="8" Margin="14,6">
                             <Grid>
-                                <telerikChart:RadCartesianChart  HeightRequest="250">
+                                <telerikChart:RadCartesianChart  HeightRequest="250" IsTabStop="True">
                                     <telerikChart:RadCartesianChart.HorizontalAxis>
                                         <telerikChart:CategoricalAxis LineColor="#A9A9A9" MajorTickThickness="2" PlotMode="BetweenTicks" LabelFitMode="MultiLine" ShowLabels="True" MajorTickBackgroundColor="#A9A9A9" />
                                     </telerikChart:RadCartesianChart.HorizontalAxis>
@@ -172,7 +172,7 @@
                         <Label Text="{x:Static lang:Language.khach_hang_tiem_nang}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>
                         <controls:ExtendedFrame Padding="0" Margin="14,6">
                             <Grid ColumnDefinitions="*,*" RowDefinitions="60,60,60" Padding="8">
-                                <telerikChart:RadPieChart Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
+                                <telerikChart:RadPieChart Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" IsTabStop="True">
                                     <telerikChart:RadPieChart.Series>
                                         <telerikChart:DonutSeries InnerRadiusFactor="0.7" ValueBinding="Value" ItemsSource="{Binding LeadsChart}" />
                                     </telerikChart:RadPieChart.Series>

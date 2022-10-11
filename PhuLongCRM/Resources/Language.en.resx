@@ -3187,10 +3187,10 @@
 		<value>Generate QR code</value>
 	</data>
 	<data name="tao_qr_code_thanh_cong" xml:space="preserve">
-		<value>Generate QR code successed</value>
+		<value>Generate QR code successed.</value>
 	</data>
 	<data name="tao_qr_code_that_bai" xml:space="preserve">
-		<value>Generate QR code failed</value>
+		<value>Generate QR code failed.</value>
 	</data>
 	<data name="thong_tin_user_title" xml:space="preserve">
 		<value>User Information</value>
@@ -3467,5 +3467,17 @@
   </data>
   <data name="theo_gia_niem_yet" xml:space="preserve">
     <value>By Listed Price</value>
+  </data>
+  <data name="danh_cho_ban_hang" xml:space="preserve">
+    <value>For Sales</value>
+  </data>
+  <data name="khong_the_xem_khach_hang" xml:space="preserve">
+    <value>Can't view customer.</value>
+  </data>
+  <data name="vui_long_chon_dia_chi" xml:space="preserve">
+    <value>Please choose address.</value>
+  </data>
+  <data name="so_cccd_da_duoc_su_dung" xml:space="preserve">
+    <value>The Identity Card already in use.</value>
   </data>
 </root>

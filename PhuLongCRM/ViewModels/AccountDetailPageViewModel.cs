@@ -128,6 +128,7 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='mobilephone' alias='primarycontacttelephohne'/>
                                         <attribute name='bsd_contactaddress' alias='primarycontactaddress'/>
                                         <attribute name='bsd_permanentaddress1' alias='primarycontactpermanentaddress'/>
+                                        <attribute name='bsd_employee' alias='contact_employee_id'/>
                                     </link-entity>
                                     <filter type='and'>
                                       <condition attribute='accountid' operator='eq' value='" + accountid + @"' />
@@ -161,15 +162,12 @@ namespace PhuLongCRM.ViewModels
             singleAccount.bsd_permanentaddress1 = LoadAddress(tmp.bsd_permanentaddress1);
             PrimaryContact = new ContactFormModel()
             {
-                contactid = tmp._primarycontactid_value
-                ,
-                bsd_fullname = tmp.primarycontactname
-                ,
-                mobilephone = tmp.primarycontacttelephohne
-                ,
-                bsd_contactaddress = LoadAddress(tmp.primarycontactaddress)
-                ,
-                bsd_permanentaddress1 = LoadAddress(tmp.primarycontactpermanentaddress)
+                contactid = tmp._primarycontactid_value,
+                bsd_fullname = tmp.primarycontactname,
+                mobilephone = tmp.primarycontacttelephohne,
+                bsd_contactaddress = LoadAddress(tmp.primarycontactaddress),
+                bsd_permanentaddress1 = LoadAddress(tmp.primarycontactpermanentaddress),
+                employee_id = tmp.contact_employee_id
             };
         }
 

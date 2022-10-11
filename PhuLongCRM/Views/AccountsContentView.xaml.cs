@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using Xamarin.Forms;
@@ -43,7 +44,12 @@ namespace PhuLongCRM.Views
                     await Navigation.PushAsync(newPage);
                     LoadingHelper.Hide();
                 }
-                LoadingHelper.Hide();
+                else
+                {
+                    LoadingHelper.Hide();
+                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                }
+                
             };
         }
 

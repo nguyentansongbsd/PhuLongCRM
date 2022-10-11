@@ -373,8 +373,8 @@ namespace PhuLongCRM.Views
         #endregion
 
         private async void NhanTin_Tapped(object sender, EventArgs e)
-        {           
-            string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
+        {
+            string phone = viewModel.singleContact.mobilephone.Substring(viewModel.singleContact.mobilephone.Length - 10, 10);
             if (phone != string.Empty)
             {
                 SmsMessage sms = new SmsMessage(null, phone);
@@ -399,8 +399,8 @@ namespace PhuLongCRM.Views
         }
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
-        {          
-            string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
+        {
+            string phone = viewModel.singleContact.mobilephone.Substring(viewModel.singleContact.mobilephone.Length - 10, 10);
             if (phone != string.Empty)
             {
                 await Launcher.OpenAsync($"tel:{phone}");

@@ -90,10 +90,10 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap}"/>
                                 <controls:MainEntry Text="{Binding singleLead.bsd_placeofissue}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_noi_cap}" Margin="0,0,0,5"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_lien_lac}"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_lien_lac}"/>
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference centerModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_thuong_tru}"/>
+                                <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_thuong_tru}"/>
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference centerModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" />
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>

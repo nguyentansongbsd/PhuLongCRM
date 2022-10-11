@@ -65,5 +65,8 @@ namespace PhuLongCRM.Models
         public int statuscode { get; set; }
         public DateTime createdon { get; set; }
 
+        public Guid acount_employee_id { get; set; }
+        public Guid contact_employee_id { get; set; }
+        public Guid lead_employee_id { get; set; }
     }
 }

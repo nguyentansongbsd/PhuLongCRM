@@ -151,6 +151,7 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.FollowDetail != null)
             {
+                LoadingHelper.Show();
                 if (viewModel.FollowDetail.contact_id_oe != Guid.Empty || viewModel.FollowDetail.contact_id_re != Guid.Empty)
                 {
                     ContactDetailPage newPage;

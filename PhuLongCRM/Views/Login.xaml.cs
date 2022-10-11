@@ -32,6 +32,7 @@ namespace PhuLongCRM.Views
         public string VerApp { get => _verApp; set { _verApp = value; OnPropertyChanged(nameof(VerApp)); } }
 
         public string ImeiNum { get; set; }
+
         public Login()
         {
             InitializeComponent();
@@ -74,6 +75,7 @@ namespace PhuLongCRM.Views
         {
             base.OnAppearing();
         }
+
         private void IsRemember_Tapped(object sender, EventArgs e)
         {
             checkboxRememberAcc.IsChecked = !checkboxRememberAcc.IsChecked;
@@ -336,8 +338,10 @@ namespace PhuLongCRM.Views
         {
            await Navigation.PushAsync(new LoginByUserCRMPage());
         }
+
         private void ChangedLanguage()
         {
+            lblforsales.Text = Language.danh_cho_ban_hang;
             lblUserName.Text = Language.ten_dang_nhap;
             entryUserName.Placeholder = Language.ten_dang_nhap;
             lblPassword.Text = Language.mat_khau;

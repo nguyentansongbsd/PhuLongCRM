@@ -16,7 +16,7 @@ namespace PhuLongCRM.Resources {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Language {
+    public class Language {
         
         private static System.Resources.ResourceManager resourceMan;
         
@@ -27,7 +27,7 @@ namespace PhuLongCRM.Resources {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static System.Resources.ResourceManager ResourceManager {
+        public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
                     System.Resources.ResourceManager temp = new System.Resources.ResourceManager("PhuLongCRM.Resources.Language", typeof(Language).Assembly);
@@ -38,7 +38,7 @@ namespace PhuLongCRM.Resources {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static System.Globalization.CultureInfo Culture {
+        public static System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -6740,6 +6740,30 @@ namespace PhuLongCRM.Resources {
         internal static string theo_gia_niem_yet {
             get {
                 return ResourceManager.GetString("theo_gia_niem_yet", resourceCulture);
+            }
+        }
+        
+        internal static string danh_cho_ban_hang {
+            get {
+                return ResourceManager.GetString("danh_cho_ban_hang", resourceCulture);
+            }
+        }
+        
+        internal static string khong_the_xem_khach_hang {
+            get {
+                return ResourceManager.GetString("khong_the_xem_khach_hang", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_chon_dia_chi {
+            get {
+                return ResourceManager.GetString("vui_long_chon_dia_chi", resourceCulture);
+            }
+        }
+        
+        internal static string so_cccd_da_duoc_su_dung {
+            get {
+                return ResourceManager.GetString("so_cccd_da_duoc_su_dung", resourceCulture);
             }
         }
     }

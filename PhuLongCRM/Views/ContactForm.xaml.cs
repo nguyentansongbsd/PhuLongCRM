@@ -201,6 +201,12 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_cccd);
                 return;
             }
+            if (!await viewModel.CheckCCCD(viewModel.singleContact.bsd_identitycard,id))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_cccd_da_duoc_su_dung);
+                return;
+            }
+
             if (!await viewModel.CheckCMND(viewModel.singleContact.bsd_identitycardnumber, id))
             {
                 ToastMessageHelper.ShortMessage(Language.so_cmnd_da_duoc_su_dung);
@@ -239,9 +245,9 @@ namespace PhuLongCRM.Views
             if (id == null)
             {
                 LoadingHelper.Show();               
-                var created = await viewModel.createContact(viewModel.singleContact);
+                var result = await viewModel.createContact(viewModel.singleContact);
 
-                if (created != new Guid())
+                if (result.IsSuccess)
                 {
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
@@ -254,15 +260,15 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.tao_khach_hang_ca_nhan_that_bai);
+                    ToastMessageHelper.LongMessage(result.ErrorResponse.error.message);
                 }
             }
             else
             {
                 LoadingHelper.Show();               
-                var updated = await viewModel.updateContact(viewModel.singleContact);
+                var result = await viewModel.updateContact(viewModel.singleContact);
 
-                if (updated)
+                if (result.IsSuccess)
                 {
                     LoadingHelper.Hide();
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
@@ -275,7 +281,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
+                    ToastMessageHelper.LongMessage(result.ErrorResponse.error.message);
                 }
             }
         }

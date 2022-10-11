@@ -201,40 +201,23 @@ namespace PhuLongCRM.ViewModels
             await GetImageCMND();        
         }
 
-        public async Task<Boolean> updateContact(ContactFormModel contact)
+        public async Task<CrmApiResponse> updateContact(ContactFormModel contact)
         {
             string path = "/contacts(" + contact.contactid + ")";
             var content = await this.getContent(contact);
 
             CrmApiResponse result = await CrmHelper.PatchData(path, content);
-
-            if (result.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return result;
         }
 
-        public async Task<Guid> createContact(ContactFormModel contact)
+        public async Task<CrmApiResponse> createContact(ContactFormModel contact)
         {
             string path = "/contacts";
             contact.contactid = Guid.NewGuid();
             var content = await this.getContent(contact);
 
             CrmApiResponse result = await CrmHelper.PostData(path, content);
-
-            if (result.IsSuccess)
-            {
-                return contact.contactid;
-            }
-            else
-            {
-                return new Guid();
-            }
-
+            return result;
         }
 
         public async Task<Boolean> DeletLookup(string fieldName, Guid contactId)
@@ -430,13 +413,13 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<bool> CheckPassport(string bsd_passport, string contactid)
+        public async Task<bool> CheckCCCD(string identitycard, string contactid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='contact'>
                                     <attribute name='fullname' />
                                     <filter type='and'>
-                                        <condition attribute='bsd_passport' operator='eq' value='" + bsd_passport + @"' />
+                                        <condition attribute='bsd_identitycard' operator='eq' value='" + identitycard + @"' />
                                         <condition attribute='contactid' operator='ne' value='" + contactid + @"' />
                                     </filter>
                                   </entity>
@@ -452,13 +435,13 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<bool> CheckCCCD(string idcard, string contactid)
+        public async Task<bool> CheckPassport(string bsd_passport, string contactid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='contact'>
                                     <attribute name='fullname' />
                                     <filter type='and'>
-                                        <condition attribute='bsd_idcard' operator='eq' value='" + idcard + @"' />
+                                        <condition attribute='bsd_passport' operator='eq' value='" + bsd_passport + @"' />
                                         <condition attribute='contactid' operator='ne' value='" + contactid + @"' />
                                     </filter>
                                   </entity>

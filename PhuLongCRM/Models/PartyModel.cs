@@ -59,5 +59,9 @@ namespace PhuLongCRM.Models
                     return "";
             }
         }
+
+        public Guid contact_employee_id { get; set; }
+        public Guid account_employee_id { get; set; }
+        public Guid lead_employee_id { get; set; }
     }
 }
