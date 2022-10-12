@@ -3295,7 +3295,7 @@
 		<value>Chỉnh Sửa Bảng Tính Giá</value>
 	</data>
 	<data name="vui_long_nhap_email" xml:space="preserve">
-		<value>Vui lòng nhập email</value>
+		<value>Vui lòng nhập email.</value>
 	</data>
 	<data name="thong_tin_lien_he_title" xml:space="preserve">
 		<value>Thông tin liên hệ</value>

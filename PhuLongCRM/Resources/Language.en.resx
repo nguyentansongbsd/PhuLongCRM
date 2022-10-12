@@ -3295,7 +3295,7 @@
 		<value>Edit Quotation</value>
 	</data>
 	<data name="vui_long_nhap_email" xml:space="preserve">
-		<value>Please enter email</value>
+		<value>Please enter email.</value>
 	</data>
 	<data name="thong_tin_lien_he_title" xml:space="preserve">
 		<value>Contact Info</value>
