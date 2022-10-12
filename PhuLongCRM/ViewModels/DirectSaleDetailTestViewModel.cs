@@ -360,5 +360,65 @@ namespace PhuLongCRM.ViewModels
                 }
             }
         }
+        public async Task UpdateTotalDirectSale(Floor floor)
+        {
+            string json = JsonConvert.SerializeObject(Filter);
+            var input = new
+            {
+                input = json
+            };
+            string body = JsonConvert.SerializeObject(input);
+            CrmApiResponse result = await CrmHelper.PostData("/bsd_Action_DirectSale_GetTotalQty", body);
+            if (result.IsSuccess == false && result.Content == null) return;
+
+            string content = result.Content;
+            ResponseAction responseActions = JsonConvert.DeserializeObject<ResponseAction>(content);
+            var newData = JsonConvert.DeserializeObject<List<DirectSaleModel>>(responseActions.output);
+
+            var data = newData.SingleOrDefault(x => x.ID == Block.bsd_blockid.ToString());
+            if(data != null)
+            {
+                Block.TotalUnitInBlock = int.Parse(data.sumQty);
+                var arrStatus = data.stringQty.Split(',');
+                Block.NumChuanBiInBlock = int.Parse(arrStatus[0]);
+                Block.NumSanSangInBlock = int.Parse(arrStatus[1]);
+                Block.NumBookingInBlock = int.Parse(arrStatus[2]);
+                Block.NumGiuChoInBlock = int.Parse(arrStatus[3]);
+                Block.NumDatCocInBlock = int.Parse(arrStatus[4]);
+                Block.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
+                Block.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
+                Block.NumOptionInBlock = int.Parse(arrStatus[7]);
+                Block.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
+                Block.NumSignedDAInBlock = int.Parse(arrStatus[9]);
+                Block.NumQualifiedInBlock = int.Parse(arrStatus[10]);
+                Block.NumDaBanInBlock = int.Parse(arrStatus[11]);
+
+                if (data.listFloor != null)
+                {
+                   var newFloor =  data.listFloor.SingleOrDefault(x => x.ID == Unit.floorid.ToString());
+                    //Block.Floors.SingleOrDefault(x => x.bsd_floorid == Unit.floorid);
+                    if (newFloor != null)
+                    {
+                        if (floor != null)
+                        {
+                            var arrStatusInFloor = newFloor.stringQty.Split(',');
+                            floor.NumChuanBiInFloor = int.Parse(arrStatusInFloor[0]);
+                            floor.NumSanSangInFloor = int.Parse(arrStatusInFloor[1]);
+                            floor.NumBookingInFloor = int.Parse(arrStatusInFloor[2]);
+                            floor.NumGiuChoInFloor = int.Parse(arrStatusInFloor[3]);
+                            floor.NumDatCocInFloor = int.Parse(arrStatusInFloor[4]);
+                            floor.NumDongYChuyenCoInFloor = int.Parse(arrStatusInFloor[5]);
+                            floor.NumDaDuTienCocInFloor = int.Parse(arrStatusInFloor[6]);
+                            floor.NumOptionInFloor = int.Parse(arrStatusInFloor[7]);
+                            floor.NumThanhToanDot1InFloor = int.Parse(arrStatusInFloor[8]);
+                            floor.NumSignedDAInFloor = int.Parse(arrStatusInFloor[9]);
+                            floor.NumQualifiedInFloor = int.Parse(arrStatusInFloor[10]);
+                            floor.NumDaBanInFloor = int.Parse(arrStatusInFloor[11]);
+                            floor.TotalUnitInFloor = int.Parse(newFloor.sumQty);
+                        }
+                    }
+                }
+            }   
+        }
     }
 }

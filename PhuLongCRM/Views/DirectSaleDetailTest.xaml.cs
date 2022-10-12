@@ -519,6 +519,7 @@ namespace PhuLongCRM.Views
             if (viewModel.Unit.bsd_vippriority)
             {
                 Grid.SetColumn(labelName, 3);
+                Grid.SetColumnSpan(labelName, 1);
             }
             else
             {
@@ -537,6 +538,7 @@ namespace PhuLongCRM.Views
                     var floor = viewModel.Block.Floors.SingleOrDefault(x => x.bsd_floorid == viewModel.Unit.floorid);
                     floor.Units.Clear();
                     await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                    await viewModel.UpdateTotalDirectSale(floor);
                     LoadingHelper.Hide();
                 }
                 RefreshDirectSale = false;
