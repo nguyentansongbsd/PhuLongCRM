@@ -30,9 +30,7 @@ namespace PhuLongCRM.ViewModels
         public bool ShowCollections { get => _showCollections; set { _showCollections = value; OnPropertyChanged(nameof(ShowCollections)); } }
         public Guid UnitId { get; set; }
 
-        private ObservableCollection<ReservationListModel> _bangTinhGiaList;
-        public ObservableCollection<ReservationListModel> BangTinhGiaList { get => _bangTinhGiaList; set { _bangTinhGiaList = value; OnPropertyChanged(nameof(BangTinhGiaList)); } }
-
+        public ObservableCollection<ReservationListModel> BangTinhGiaList { get; set; } = new ObservableCollection<ReservationListModel>();
         public ObservableCollection<QueuesModel> _list_danhsachdatcho;
         public ObservableCollection<QueuesModel> list_danhsachdatcho { get => _list_danhsachdatcho; set { _list_danhsachdatcho = value; OnPropertyChanged(nameof(list_danhsachdatcho)); } }
         public ObservableCollection<ReservationListModel> list_danhsachdatcoc { get; set; } = new ObservableCollection<ReservationListModel>();
@@ -181,7 +179,11 @@ namespace PhuLongCRM.ViewModels
                     </fetch>";
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueuesModel>>("opportunities", fetch);
-            if (result == null || result.value.Count == 0) return;
+            if (result == null || result.value.Count == 0)
+            {
+                ShowMoreDanhSachDatCho = false;
+                return;
+            }
 
             IsLoaded = true;
             var data = result.value;

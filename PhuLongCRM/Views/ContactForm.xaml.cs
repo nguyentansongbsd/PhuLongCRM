@@ -160,7 +160,7 @@ namespace PhuLongCRM.Views
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.emailaddress1))
             {
-                Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+                Regex regex = new Regex(@"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$");
                 Match match = regex.Match(viewModel.singleContact.emailaddress1);
                 if (!match.Success)
                 {

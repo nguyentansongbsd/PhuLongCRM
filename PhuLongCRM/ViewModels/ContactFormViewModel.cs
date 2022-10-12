@@ -233,7 +233,7 @@ namespace PhuLongCRM.ViewModels
             data["lastname"] = contact.bsd_fullname;
             data["firstname"] = "";
             data["bsd_fullname"] = contact.bsd_fullname;
-            data["emailaddress1"] = contact.emailaddress1;
+            data["emailaddress1"] = contact.emailaddress1.Trim();
             data["birthdate"] = contact.birthdate.HasValue ? (DateTime.Parse(contact.birthdate.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
             data["mobilephone"] = contact.mobilephone;//.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
             data["gendercode"] = contact.gendercode;

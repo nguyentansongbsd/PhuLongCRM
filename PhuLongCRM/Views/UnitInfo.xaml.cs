@@ -297,7 +297,6 @@ namespace PhuLongCRM.Views
 
                     if (viewModel.IsLoaded == false)
                     {
-                        viewModel.BangTinhGiaList = new ObservableCollection<ReservationListModel>();
                         await Task.WhenAll(
                             viewModel.LoadQueues(),
                             viewModel.LoadDanhSachDatCoc(),
