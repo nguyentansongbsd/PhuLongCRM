@@ -89,7 +89,9 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.ListCase != null && viewModel.ListCase.Count <= 0)
             {
+                LoadingHelper.Show();
                 await viewModel.LoadListCase(Id);
+                LoadingHelper.Hide();
             }
         }
 

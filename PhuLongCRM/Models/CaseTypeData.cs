@@ -14,7 +14,6 @@ namespace PhuLongCRM.Models
                 new OptionSet("1",Language.cau_hoi),
                 new OptionSet("2",Language.van_de),
                 new OptionSet("3",Language.yeu_cau),
-                new OptionSet("0",""),
             };
         }
 

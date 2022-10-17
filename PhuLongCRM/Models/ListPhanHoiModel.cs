@@ -9,7 +9,7 @@ namespace PhuLongCRM.Models
         public string subjecttitle { get; set; }
 
         public int caseorigincode { get; set; }
-        public string caseorigincodevalue => CaseOriginData.GetOriginById(caseorigincode.ToString()).Label;
+        public string caseorigincodevalue => CaseOriginData.GetOriginById(caseorigincode.ToString())?.Label;
 
         public string _productid_value { get; set; }
         public string description { get; set; }
@@ -23,7 +23,7 @@ namespace PhuLongCRM.Models
             }
         }
         public int statuscode { get; set; }
-        public string statuscodevalue => CaseStatusCodeData.GetCaseStatusCodeById(this.statuscode.ToString()).Label;
+        public string statuscodevalue => CaseStatusCodeData.GetCaseStatusCodeById(this.statuscode.ToString())?.Label;
 
         public Guid incidentid { get; set; }
         public string case_nameaccount { get; set; }
@@ -49,7 +49,7 @@ namespace PhuLongCRM.Models
         }
 
         public int casetypecode { get; set; }
-        public string casetypecodevalue => CaseTypeData.GetCaseById(this.casetypecode.ToString()).Label;
+        public string casetypecodevalue => CaseTypeData.GetCaseById(this.casetypecode.ToString())?.Label;
 
         public Guid parentcaseid { get; set; }
     }
