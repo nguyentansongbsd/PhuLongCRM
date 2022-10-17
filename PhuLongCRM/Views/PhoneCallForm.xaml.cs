@@ -316,5 +316,20 @@ namespace PhuLongCRM.Views
                 viewModel.PhoneCellModel.phonenumber = string.Empty;
             }
         }
+
+        private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            var num = sender as PhoneEntryControl;
+            if (!string.IsNullOrWhiteSpace(num.Text))
+            {
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
+            }
+        }
     }
 }

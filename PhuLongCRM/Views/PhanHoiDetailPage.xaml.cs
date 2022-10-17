@@ -177,6 +177,7 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            LoadingHelper.Show();
             if (await viewModel.UpdateCaseResolution())
             {
                 await viewModel.LoadCase(viewModel.Case.incidentid);
@@ -194,6 +195,7 @@ namespace PhuLongCRM.Views
 
         private async void MoLaiPhanHoi_Clicked(object sender, EventArgs e)
         {
+            LoadingHelper.Show();
             viewModel.Case.statecode = 0;
             viewModel.Case.statuscode = 1;
             if (await viewModel.UpdateCase())

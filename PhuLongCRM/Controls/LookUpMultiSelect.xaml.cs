@@ -323,6 +323,7 @@ namespace PhuLongCRM.Controls
                     <attribute name='bsd_passport' alias='HC' />
                     <order attribute='fullname' descending='false' />                   
                     <filter type='and'>
+                        <condition attribute='statuscode' operator='ne' value='2' />
                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                         " + ne_cus + @"
                     </filter>
@@ -375,6 +376,7 @@ namespace PhuLongCRM.Controls
                                 <attribute name='mobilephone' alias='SDT' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
+                                    <condition attribute='statuscode' operator='ne' value='7' />
                                     {loadNewLead}
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                                     {ne_cus}
@@ -422,6 +424,10 @@ namespace PhuLongCRM.Controls
                                 <attribute name='bsd_registrationcode' alias='SoGPKD'/>
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
+                                    <condition attribute='statuscode' operator='not-in'>
+                                        <value>2</value>
+                                        <value>100000001</value>
+                                    </condition>
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='" + UserLogged.Id + @"' />
                                     " + ne_cus + @"
                                 </filter>
