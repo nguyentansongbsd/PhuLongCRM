@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Controls;
+using System.Text.RegularExpressions;
 
 namespace PhuLongCRM.Views
 {
@@ -347,6 +348,12 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (!checkEmail(viewModel.singleLead.emailaddress1))
+            {
+                ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
+                return;
+            }
+
             if (viewModel.singleLead.new_birthday != null && (DateTime.Now.Year - DateTime.Parse(viewModel.singleLead.new_birthday.ToString()).Year < 18))
             {
                 ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
@@ -441,6 +448,24 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
                 return;
             }
+        }
+
+        private void emailaddress1_text_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.singleLead.emailaddress1)) return;
+            if (!checkEmail(viewModel.singleLead.emailaddress1))
+            {
+                ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
+                return;
+            }
+        }
+        private bool checkEmail(string email)
+        {
+            string validEmailPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
+            + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
+            + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+            var ValidEmailRegex = new Regex(validEmailPattern, RegexOptions.IgnoreCase);
+            return ValidEmailRegex.IsMatch(email);
         }
     }
 }

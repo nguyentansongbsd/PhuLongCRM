@@ -70,7 +70,7 @@
                                 <controls:MainEntry x:Name="jobtitle_text" Text="{Binding singleLead.jobtitle}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_chuc_vu}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.email}"/>
-                                <controls:MainEntry x:Name="emailaddress1_text" Keyboard="Email" Text="{Binding singleLead.emailaddress1}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_email}" Margin="0,0,0,5"/>
+                                <controls:MainEntry x:Name="emailaddress1_text" Keyboard="Email" Text="{Binding singleLead.emailaddress1}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_email}" Margin="0,0,0,5" Unfocused="emailaddress1_text_Unfocused"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.gioi_tinh}"/>
                                 <controls:LookUp x:Name="lookUpGioiTinh" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
