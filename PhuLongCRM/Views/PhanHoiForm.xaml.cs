@@ -5,6 +5,7 @@ using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -57,7 +58,7 @@ namespace PhuLongCRM.Views
             lookupCaseType.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                viewModel.CaseTypes = CaseTypeData.CasesData();
+                viewModel.CaseTypes = CaseTypeData.CasesData().Where(x=>x.Val != "0").ToList();
                 LoadingHelper.Hide();
             };
 
@@ -71,7 +72,7 @@ namespace PhuLongCRM.Views
             lookupCaseOrigin.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                viewModel.CaseOrigins = CaseOriginData.Origins();
+                viewModel.CaseOrigins = CaseOriginData.Origins().Where(x => x.Val != "0").ToList();
                 LoadingHelper.Hide();
             };
 
