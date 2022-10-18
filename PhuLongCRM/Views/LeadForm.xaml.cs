@@ -348,7 +348,7 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (!checkEmail(viewModel.singleLead.emailaddress1))
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.emailaddress1) && !checkEmail(viewModel.singleLead.emailaddress1))
             {
                 ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
                 return;
@@ -357,7 +357,7 @@ namespace PhuLongCRM.Views
             if (viewModel.singleLead.new_birthday != null && (DateTime.Now.Year - DateTime.Parse(viewModel.singleLead.new_birthday.ToString()).Year < 18))
             {
                 ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
-                return ;
+                return;
             }
 
             if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.TypeIdCard == null)

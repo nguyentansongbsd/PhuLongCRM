@@ -669,10 +669,7 @@ namespace PhuLongCRM.ViewModels
             }
 
             data["budgetamount"] = QueueFormModel.budgetamount;
-            if(QueueFormModel.bsd_units_id == Guid.Empty)
-            {
-                data["estimatedvalue"] = 0;
-            }    
+            data["estimatedvalue"] = 0;
             data["description"] = QueueFormModel.description;
 
             if (DailyOption == null || DailyOption.Id == Guid.Empty)

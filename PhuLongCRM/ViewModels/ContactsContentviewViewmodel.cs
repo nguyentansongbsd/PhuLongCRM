@@ -40,7 +40,7 @@ namespace PhuLongCRM.ViewModels
                     <order attribute='createdon' descending='true' />
                     <filter type='or'>
                         <condition attribute='bsd_fullname' operator='like' value='%25{Keyword}%25' />
-                        <condition attribute='bsd_identitycardnumber' operator='like' value='%25{Keyword}%25' />
+                        <condition attribute='bsd_identitycard' operator='like' value='%25{Keyword}%25' />
                         <condition attribute='mobilephone' operator='like' value='%25{Keyword}%25' />
                         <condition attribute='emailaddress1' operator='like' value='%25{Keyword}%25' />
                         <condition attribute='bsd_customercode' operator='like' value='%25{Keyword}%25' />

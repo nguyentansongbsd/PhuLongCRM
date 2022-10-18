@@ -7,7 +7,7 @@ namespace PhuLongCRM.Config
     public class OrgConfig
     {
         //public const string VerApp = "PL.CRM - VerDemo - Ver 4.2";
-        public const string VerApp = "PL.CRM - UAT - Ver 1.0.2";
+        public const string VerApp = "PL.CRM - UAT - Ver 1.0";
         //public const string VerApp = "PL.CRM - Version 4.1";
 
         public const string ApiUrl = "https://phulongtmp.api.crm5.dynamics.com/api/data/v9.1";
