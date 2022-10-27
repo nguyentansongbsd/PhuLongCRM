@@ -62,7 +62,7 @@ namespace PhuLongCRM.Views
                     {
                         avataProject.Source = StringAvata(viewModel.ProjectName);
                     }
-                    if (viewModel.IsHasPhasesLaunch == false && viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002")
+                    if (viewModel.Project.bsd_queueproject && viewModel.Project.statuscode == "861450002") // sts = publish
                     {
                         viewModel.IsShowBtnGiuCho = true;
                     }

@@ -258,11 +258,10 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_email);
                 return;
             }
-            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            
             if (!string.IsNullOrWhiteSpace(viewModel.singleAccount.emailaddress1))
             {
-                Match match = regex.Match(viewModel.singleAccount.emailaddress1);
-                if (!match.Success)
+                if (!ValidEmailHelper.CheckValidEmail(viewModel.singleAccount.emailaddress1))
                 {
                     ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
                     return;
@@ -270,8 +269,7 @@ namespace PhuLongCRM.Views
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_email2))
             {
-                Match match = regex.Match(viewModel.singleAccount.bsd_email2);
-                if (!match.Success)
+                if (!ValidEmailHelper.CheckValidEmail(viewModel.singleAccount.bsd_email2))
                 {
                     ToastMessageHelper.ShortMessage(Language.email_2_sai_dinh_dang_vui_long_thu_lai);
                     return;

@@ -63,6 +63,7 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='description' />
                 <attribute name='activitytypecode' />
                 <attribute name='phonenumber' />
+                <attribute name='bsd_employee' />
                 <order attribute='subject' descending='false' />
                 <filter type='and'>
                     <condition attribute='activityid' operator='eq' uitype='phonecall' value='" + id + @"' />
@@ -130,7 +131,6 @@ namespace PhuLongCRM.ViewModels
                     Name = PhoneCall.queue_name
                 };
             }
-
 
             if (PhoneCall.statecode == 0 || PhoneCall.statecode == 3)
                 ShowGridButton = true;

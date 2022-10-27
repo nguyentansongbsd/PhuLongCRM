@@ -219,5 +219,6 @@ namespace PhuLongCRM.Models
         public Guid contact_employee_id { get; set; }
         public Guid account_employee_id { get; set; }
         public Guid lead_employee_id { get; set; }
+        public Guid bsd_employee { get; set; }
     }
 }
