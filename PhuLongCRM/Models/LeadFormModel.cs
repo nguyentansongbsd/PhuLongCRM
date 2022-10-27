@@ -345,5 +345,7 @@ namespace PhuLongCRM.Models
                 }
             }
         }
+        public Guid employee_id { get; set; }
+        public Guid owner_id { get; set; }
     }
 }

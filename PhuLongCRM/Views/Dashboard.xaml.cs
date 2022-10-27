@@ -213,6 +213,7 @@ namespace PhuLongCRM.Views
 
             }
         }
+
         private void HopDong_Hover_Tapped(object sender, EventArgs e)
         {
             try
@@ -224,6 +225,7 @@ namespace PhuLongCRM.Views
 
             }
         }
+
         private void DaBan_Hover_Tapped(object sender, EventArgs e)
         {
             try
@@ -235,6 +237,7 @@ namespace PhuLongCRM.Views
 
             }
         }
+
         private void TongTien_Hover_Tapped(object sender, EventArgs e)
         {
             try
@@ -246,6 +249,7 @@ namespace PhuLongCRM.Views
 
             }
         }
+
         private void DaNhan_Hover_Tapped(object sender, EventArgs e)
         {
             try
@@ -262,6 +266,7 @@ namespace PhuLongCRM.Views
         {
             PopupHover.ShowHover(Language.bieu_do_hoa_hong_4_thang_gan_nhat);
         }
+
         private void BieuDoGiaoDich_Hover_Tapped(object sender, EventArgs e)
         {
             PopupHover.ShowHover(Language.bieu_do_giao_dich_4_thang_gan_nhat);

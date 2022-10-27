@@ -348,7 +348,7 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.emailaddress1) && !checkEmail(viewModel.singleLead.emailaddress1))
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.emailaddress1) && !ValidEmailHelper.CheckValidEmail(viewModel.singleLead.emailaddress1))
             {
                 ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
                 return;
@@ -453,19 +453,11 @@ namespace PhuLongCRM.Views
         private void emailaddress1_text_Unfocused(object sender, FocusEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.emailaddress1)) return;
-            if (!checkEmail(viewModel.singleLead.emailaddress1))
+            if (!ValidEmailHelper.CheckValidEmail(viewModel.singleLead.emailaddress1))
             {
                 ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
                 return;
             }
-        }
-        private bool checkEmail(string email)
-        {
-            string validEmailPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
-            + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
-            + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
-            var ValidEmailRegex = new Regex(validEmailPattern, RegexOptions.IgnoreCase);
-            return ValidEmailRegex.IsMatch(email);
         }
     }
 }

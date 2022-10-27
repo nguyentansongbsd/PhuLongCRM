@@ -103,24 +103,31 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.singleAccount.accountid != Guid.Empty)
             {
-                if (viewModel.ButtonCommandList.Count > 0)
-                    viewModel.ButtonCommandList.Clear();
-
-                if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_imageqrcode))
+                if (viewModel.IsCurrentRecordOfUser)
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
+                    if (viewModel.ButtonCommandList.Count > 0)
+                        viewModel.ButtonCommandList.Clear();
+
+                    if (string.IsNullOrWhiteSpace(viewModel.singleAccount.bsd_imageqrcode))
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
+                    }
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+
+                    if (viewModel.singleAccount.statuscode != "100000000")
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
+
+                    if (viewModel.singleAccount.statuscode == "2")
+                        floatingButtonGroup.IsVisible = false;
+                    else
+                        floatingButtonGroup.IsVisible = true;
                 }
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
-
-                if (viewModel.singleAccount.statuscode != "100000000")
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chinh_sua, "FontAwesomeRegular", "\uf044", null, Update));
-
-                if (viewModel.singleAccount.statuscode == "2")
-                    floatingButtonGroup.IsVisible = false;
                 else
-                    floatingButtonGroup.IsVisible = true;
+                {
+                    floatingButtonGroup.IsVisible = false;
+                }
             }
         }
 
@@ -133,11 +140,11 @@ namespace PhuLongCRM.Views
 
                 viewModel.singleAccount.bsd_address = await SetAddress();
 
-                if (viewModel.singleAccount.bsd_businesstype != null)
+                if (viewModel.singleAccount?.bsd_businesstype != null)
                 {
                     viewModel.GetTypeById(viewModel.singleAccount.bsd_businesstype);
                 }
-                if (viewModel.singleAccount.bsd_localization != null)
+                if (viewModel.singleAccount?.bsd_localization != null)
                 {
                     viewModel.Localization = AccountLocalization.GetLocalizationById(viewModel.singleAccount.bsd_localization);
                 }
@@ -234,6 +241,7 @@ namespace PhuLongCRM.Views
 
         private void ChiTietDatCoc_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             var item = (ReservationListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item == null) return;
 
@@ -259,6 +267,7 @@ namespace PhuLongCRM.Views
 
         private void ItemHopDong_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             ContractDetailPage contractDetail = new ContractDetailPage(itemId);
@@ -279,6 +288,7 @@ namespace PhuLongCRM.Views
 
         private void CaseItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             var item = (ActivityListModel)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item != null && item.activityid != Guid.Empty)
             {
@@ -422,6 +432,7 @@ namespace PhuLongCRM.Views
 
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);

@@ -68,6 +68,8 @@ namespace PhuLongCRM.ViewModels
 
         public string CodeAccount = LookUpMultipleTabs.CodeAccount;
 
+        public bool IsCurrentRecordOfUser { get; set; }
+
         public AccountDetailPageViewModel()
         {
             BusinessTypeOptions = new ObservableCollection<OptionSet>();
@@ -107,7 +109,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_permanentaddress1' />
                                 <attribute name='bsd_groupgstregisttationnumber' />
                                 <attribute name='statuscode' />
-                                <attribute name='ownerid' />
+                                <attribute name='ownerid' alias='owner_id'/>
                                 <attribute name='createdon' />
                                 <attribute name='address1_composite' alias='bsd_address' />
                                 <attribute name='bsd_companycode' />
@@ -122,6 +124,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_businesstype' />
                                 <attribute name='bsd_customercode' />
                                 <attribute name='bsd_imageqrcode' />
+                                <attribute name='bsd_employee' alias='employee_id'/>
                                 <order attribute='createdon' descending='true' />
                                     <link-entity name='contact' from='contactid' to='primarycontactid' visible='false' link-type='outer' alias='contacts'>
                                         <attribute name='bsd_fullname' alias='primarycontactname'/>
@@ -169,6 +172,7 @@ namespace PhuLongCRM.ViewModels
                 bsd_permanentaddress1 = LoadAddress(tmp.primarycontactpermanentaddress),
                 employee_id = tmp.contact_employee_id
             };
+            this.IsCurrentRecordOfUser = (singleAccount.owner_id == UserLogged.Id || singleAccount.employee_id == UserLogged.Id) ? true : false;
         }
 
         public void GetTypeById(string loai)
@@ -356,6 +360,18 @@ namespace PhuLongCRM.ViewModels
             if (Cares == null)
                 Cares = new ObservableCollection<ActivityListModel>();
             if (singleAccount == null || singleAccount.accountid == Guid.Empty) return;
+            string attribute = string.Empty;
+            string value = string.Empty;
+            if (singleAccount.employee_id != Guid.Empty)
+            {
+                attribute = "bsd_employee";
+                value = singleAccount.employee_id.ToString();
+            }
+            else
+            {
+                attribute = "ownerid";
+                value = singleAccount.owner_id.ToString();
+            }
             string fetch = $@"<fetch version='1.0' count='5' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='activitypointer'>
                                     <attribute name='subject' />
@@ -371,9 +387,9 @@ namespace PhuLongCRM.ViewModels
                                             <value>4201</value>
                                         </condition>
 	                                    <filter type='or'>
-                                            <condition entityname='meet' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='task' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='phonecall' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='meet' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='task' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='phonecall' attribute='{attribute}' operator='eq' value='{value}' />
                                         </filter>
                                         <condition attribute='regardingobjectid' operator='eq' value='{singleAccount.accountid}' />
                                     </filter>
