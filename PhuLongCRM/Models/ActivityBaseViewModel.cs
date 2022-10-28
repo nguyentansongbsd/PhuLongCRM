@@ -157,7 +157,8 @@ namespace PhuLongCRM.Models
             {
                 foreach (var item in items)
                 {
-                    item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
+                    string customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
+                    item.customer = !string.IsNullOrWhiteSpace(customer) ? customer : item.regarding_name;
                 }
             }
             else
