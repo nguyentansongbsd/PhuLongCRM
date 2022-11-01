@@ -5,11 +5,11 @@
     x:Class="PhuLongCRM.BlankPage">
     <ContentPage.Content>
         <AbsoluteLayout>
-            <StackLayout Margin="0,100,0,0">
+            <!--<StackLayout Margin="0,100,0,0">
                 <controls:LookUp x:Name="lookupChieuKhau" IsEnabled="False" Placeholder="test" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" />
             </StackLayout>
             
-            <controls:BottomModal x:Name="lookUpModal"/>
+            <controls:BottomModal x:Name="lookUpModal"/>-->
             <Button Text="Push to firebase" Clicked="Button_Clicked"/>
         </AbsoluteLayout>
         

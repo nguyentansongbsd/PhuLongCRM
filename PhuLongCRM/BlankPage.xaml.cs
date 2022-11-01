@@ -39,22 +39,7 @@ namespace PhuLongCRM
         {
             try
             {
-                Firebase.Database.
                 
-                var options = FirebaseOptions.Builder()
-                            .SetApplicationId("1:998946335721:android:94837bae80edd709fcb978")
-                            .SetApiKey("AIzaSyC1p-TwiVz5Tb2Cj8zCN3iy4O-8qfeV1Kg")
-                            .SetDatabaseUrl("https://sundihome-bsd.firebaseio.com")
-                            .Build();
-
-
-                var collection = firebaseClient
-                        .Child("test").Child("DirectSaleData")
-                        .
-                        .Subscribe(async (dbevent) =>
-                        {
-
-                        });
             }
             catch (Exception ex)
             {
@@ -64,7 +49,7 @@ namespace PhuLongCRM
         }
 
 
-        private void AbsoluteLayout_Tapped(object sender, MR.Gestures.TapEventArgs e)
+        private async void AbsoluteLayout_Tapped(object sender, MR.Gestures.TapEventArgs e)
         {
             string id = "08E25682-23E9-41EB-A1B7-6B166562F8AE";
             GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
