@@ -2,6 +2,7 @@
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -73,7 +74,7 @@ namespace PhuLongCRM.Views
 
         private void SetButtonFloatingButton(LeadFormModel lead)
         {
-            if (lead != null)
+            if (lead != null && viewModel.IsCurrentRecordOfUser)
             {
                 viewModel.ButtonCommandList.Clear();
                 if (string.IsNullOrWhiteSpace(lead.bsd_qrcode) && lead.statuscode != "3" && lead.statuscode != "4" && lead.statuscode != "5" && lead.statuscode != "6" && lead.statuscode != "7")
@@ -368,6 +369,7 @@ namespace PhuLongCRM.Views
         }
         private void CareItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             var item = (ActivityListModel)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item != null && item.activityid != Guid.Empty)
             {
@@ -453,6 +455,7 @@ namespace PhuLongCRM.Views
         private async void floatingButtonGroup_ClickedEvent(object sender, EventArgs e)
         {
             var lead = await viewModel.LoadStatusLead();
+            lead.employee_id = viewModel.singleLead.employee_id;
             SetButtonFloatingButton(lead);
         }
     }

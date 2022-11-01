@@ -58,6 +58,7 @@ namespace PhuLongCRM.ViewModels
         public int PageCase { get; set; } = 1;
 
         public bool IsFromQRCode { get; set; }
+        public bool IsCurrentRecordOfUser { get; set; }
 
         public LeadDetailPageViewModel()
         {
@@ -118,6 +119,8 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_permanentaddress1' />
                                     <attribute name='bsd_contactaddress' />
                                     <attribute name='bsd_qrcode' />
+                                    <attribute name='bsd_employee' alias='employee_id'/>
+                                    <attribute name='ownerid' alias='owner_id'/>
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='leadid' operator='eq' value='{" + leadid + @"}' />
@@ -138,10 +141,8 @@ namespace PhuLongCRM.ViewModels
             //                            <attribute name='name'  alias='campaignid_label'/>
             //                        </link-entity>"
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
-            if (result == null)
-            {
-                return;
-            }
+            if (result == null || result.value.Any() == false) return;
+
             var data = result.value.FirstOrDefault();
             singleLead = data;
             if (!string.IsNullOrWhiteSpace(singleLead.new_gender))
@@ -160,6 +161,7 @@ namespace PhuLongCRM.ViewModels
                 singleLead.bsd_dategrant = data.bsd_dategrant.Value.ToLocalTime();
             if (singleLead.new_birthday.HasValue)
                 singleLead.new_birthday = data.new_birthday.Value.ToLocalTime();
+            this.IsCurrentRecordOfUser = (singleLead.owner_id == UserLogged.Id || singleLead.employee_id == UserLogged.Id) ? true : false;
         }
 
         public async Task<CrmApiResponse> Qualify(Guid id)
@@ -309,6 +311,19 @@ namespace PhuLongCRM.ViewModels
             if (Cares == null)
                 Cares = new ObservableCollection<ActivityListModel>();
             if (singleLead == null || singleLead.leadid == Guid.Empty) return;
+
+            string attribute = string.Empty;
+            string value = string.Empty;
+            if (singleLead.employee_id != Guid.Empty)
+            {
+                attribute = "bsd_employee";
+                value = singleLead.employee_id.ToString();
+            }
+            else
+            {
+                attribute = "ownerid";
+                value = singleLead.owner_id.ToString();
+            }
             string fetch = $@"<fetch version='1.0' count='5' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='activitypointer'>
                                     <attribute name='subject' />
@@ -324,9 +339,9 @@ namespace PhuLongCRM.ViewModels
                                             <value>4201</value>
                                         </condition>
 	                                    <filter type='or'>
-                                            <condition entityname='meet' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='task' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='phonecall' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='meet' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='task' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='phonecall' attribute='{attribute}' operator='eq' value='{value}' />
                                         </filter>
                                         <condition attribute='regardingobjectid' operator='eq' value='{singleLead.leadid}' />
                                     </filter>

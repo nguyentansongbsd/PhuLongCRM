@@ -69,8 +69,8 @@ namespace PhuLongCRM.Models
         private string _createdon;
         public string createdon { get { return _createdon; } set { _createdon = value; OnPropertyChanged(nameof(createdon)); } }
 
-        private string _ownerid;
-        public string ownerid { get { return _ownerid; } set { _ownerid = value; OnPropertyChanged(nameof(ownerid)); } }
+        private Guid _owner_id;
+        public Guid owner_id { get { return _owner_id; } set { _owner_id = value; OnPropertyChanged(nameof(owner_id)); } }
 
         private string _gendercode;
         public string gendercode { get { return _gendercode; } set { _gendercode = value; OnPropertyChanged(nameof(gendercode)); } }

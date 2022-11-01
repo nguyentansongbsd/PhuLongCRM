@@ -13,6 +13,7 @@ namespace PhuLongCRM.Droid.Renderers
     {
         public BorderEntryRenderer(Context context) : base(context)
         {
+            DatabaseReference
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Entry> e)

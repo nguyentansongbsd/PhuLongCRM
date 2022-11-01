@@ -72,6 +72,8 @@ namespace PhuLongCRM.ViewModels
         public string CodeContac = LookUpMultipleTabs.CodeContac;
         public List<Photo> Photos { get; set; }
 
+        public bool IsCurrentRecordOfUser { get; set; }
+
         public ContactDetailPageViewModel()
         {
             singleContact = new ContactFormModel();
@@ -96,7 +98,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='birthdate' />
                                     <attribute name='mobilephone' />
                                     <attribute name='createdon' />
-                                    <attribute name='ownerid' />
+                                    <attribute name='ownerid' alias='owner_id'/>
                                     <attribute name='gendercode' />
                                     <attribute name='bsd_identitycardnumber' />
                                     <attribute name='statuscode' />
@@ -139,6 +141,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_postalcode' />
                                     <attribute name='bsd_qrcode' />
                                     <attribute name='bsd_customercode' />
+                                    <attribute name='bsd_employee' alias='employee_id'/>
                                     <order attribute='createdon' descending='true' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
@@ -153,12 +156,10 @@ namespace PhuLongCRM.ViewModels
                                 </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetch);
-            if (result == null)
-            {
-                return;
-            }
+            if (result == null || result.value.Any() == false) return;
             var tmp = result.value.FirstOrDefault();
             this.singleContact = tmp;
+            this.IsCurrentRecordOfUser = (singleContact.owner_id == UserLogged.Id || singleContact.employee_id == UserLogged.Id) ? true : false;
             await GetImageCMND();
         }
 
@@ -401,6 +402,20 @@ namespace PhuLongCRM.ViewModels
             if (Cares == null)
                 Cares = new ObservableCollection<ActivityListModel>();
             if (singleContact == null || singleContact.contactid == Guid.Empty) return;
+
+            string attribute = string.Empty;
+            string value = string.Empty;
+            if (singleContact.employee_id != Guid.Empty)
+            {
+                attribute = "bsd_employee";
+                value = singleContact.employee_id.ToString();
+            }
+            else
+            {
+                attribute = "ownerid";
+                value = singleContact.owner_id.ToString();
+            }
+            
             string fetch = $@"<fetch version='1.0' count='5' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='activitypointer'>
                                     <attribute name='subject' />
@@ -416,9 +431,9 @@ namespace PhuLongCRM.ViewModels
                                             <value>4201</value>
                                         </condition>
 	                                    <filter type='or'>
-                                            <condition entityname='meet' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='task' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='phonecall' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='meet' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='task' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='phonecall' attribute='{attribute}' operator='eq' value='{value}' />
                                         </filter>
                                         <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
                                     </filter>

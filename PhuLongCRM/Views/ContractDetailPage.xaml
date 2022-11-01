@@ -8,23 +8,6 @@
              xmlns:converters="clr-namespace:PhuLongCRM.Converters"
              Title="{Static lang:Language.hop_dong_title}">
     <ContentPage.Resources>
-        <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-            <Setter Property="IndicatorText" Value="&#xf105;"/>
-            <Setter Property="IndicatorLocation" Value="End"/>
-            <Setter Property="IndicatorFontSize" Value="18"/>
-            <Setter Property="IndicatorColor" Value="#939393"/>
-            <Setter Property="BackgroundColor" Value="#50F2F2F2"/>
-            <Setter Property="BorderColor" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="17,8"/>
-            <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-        </Style>
-        <Style x:Key="ExpanderHeadingText" TargetType="Label">
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="VerticalTextAlignment" Value="Center" />
-            <Setter Property="TextColor" Value="#444444"/>
-        </Style>
         <converters:NullToHideConverter x:Key="NullToHideConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>

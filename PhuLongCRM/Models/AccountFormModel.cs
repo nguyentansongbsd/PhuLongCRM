@@ -208,6 +208,8 @@ namespace PhuLongCRM.Models
                 }
             }
         }
+
+        public Guid owner_id { get; set; }
     }
 }
 

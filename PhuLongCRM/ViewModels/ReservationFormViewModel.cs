@@ -594,7 +594,6 @@ namespace PhuLongCRM.ViewModels
                         this.IsExpiredDiscount = false;
                     }
                     else this.IsExpiredDiscount = true;
-                    await LoadDiscountChilds();
                 }
                 if (PhasesLanchModel.internel_id != Guid.Empty)
                 {
@@ -604,7 +603,6 @@ namespace PhuLongCRM.ViewModels
                         this.IsExpiredInternel = false;
                     }
                     else this.IsExpiredInternel = true;
-                    await LoadDiscountChildsInternel();
                 }
                 if (PhasesLanchModel.promotion_id != Guid.Empty)
                 {
@@ -614,16 +612,13 @@ namespace PhuLongCRM.ViewModels
                         this.IsExpiredExchange = false;
                     }
                     else this.IsExpiredExchange = true;
-
-                    await LoadDiscountChildsExchange();
                 }
+                await Task.WhenAll(LoadDiscountChilds(), LoadDiscountChildsInternel(), LoadDiscountChildsExchange());
             }
             catch(Exception ex)
             {
 
             }
-            
-
         }
 
         // Load tax code

@@ -4,6 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="PhuLongCRM.BlankPage">
     <ContentPage.Content>
-        <Label Text="Trang chu" TextColor="Black" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <AbsoluteLayout>
+            <StackLayout Margin="0,100,0,0">
+                <controls:LookUp x:Name="lookupChieuKhau" IsEnabled="False" Placeholder="test" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" />
+            </StackLayout>
+            
+            <controls:BottomModal x:Name="lookUpModal"/>
+            <Button Text="Push to firebase" Clicked="Button_Clicked"/>
+        </AbsoluteLayout>
+        
+        <!--<WebView x:Name="webview" />-->
     </ContentPage.Content>
 </ContentPage>

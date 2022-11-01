@@ -219,7 +219,6 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("products", fetchXml);
             if (result == null || result.value.Any() == false)
             {
-                IsShowBtnGiuCho = true;
                 unitChartModels = new List<ChartModel>()
                 {
                     new ChartModel {Category ="Giữ chỗ",Value=1},
@@ -242,7 +241,6 @@ namespace PhuLongCRM.ViewModels
             }
             else
             {
-                IsShowBtnGiuCho = false;
                 var data = result.value;
                 foreach (var item in data)
                 {

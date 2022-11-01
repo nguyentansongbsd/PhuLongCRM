@@ -90,8 +90,6 @@ namespace PhuLongCRM.Views
 
         public async Task loadData(string contactId)
         {
-            LoadingHelper.Show();
-
             if (contactId != null)
             {
                 await viewModel.LoadOneContact(contactId);
@@ -112,7 +110,6 @@ namespace PhuLongCRM.Views
                     };
                 }
             }
-            LoadingHelper.Hide();
         }
 
         private async void SaveData(string id)
@@ -160,9 +157,7 @@ namespace PhuLongCRM.Views
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.emailaddress1))
             {
-                Regex regex = new Regex(@"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$");
-                Match match = regex.Match(viewModel.singleContact.emailaddress1);
-                if (!match.Success)
+                if (!ValidEmailHelper.CheckValidEmail(viewModel.singleContact.emailaddress1))
                 {
                     ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang);
                     return;
@@ -270,7 +265,6 @@ namespace PhuLongCRM.Views
 
                 if (result.IsSuccess)
                 {
-                    LoadingHelper.Hide();
                     if (CustomerPage.NeedToRefreshContact.HasValue) CustomerPage.NeedToRefreshContact = true;
                     if (ContactDetailPage.NeedToRefresh.HasValue) ContactDetailPage.NeedToRefresh = true;
                     if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
