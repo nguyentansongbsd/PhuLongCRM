@@ -68,20 +68,21 @@ namespace PhuLongCRM.Views
         private async void NewCustomer_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string[] options = new string[] { Language.khach_hang_tiem_nang_option, Language.khach_hang_ca_nhan_option, Language.khach_hang_doanh_nghiep_option };
+            string[] options = new string[] { Language.khach_hang_tiem_nang_option, Language.khach_hang_doanh_nghiep_option }; //, Language.khach_hang_ca_nhan_option
             string asw = await DisplayActionSheet(Language.tao_khach_hang, Language.huy, null, options);
             if (asw == Language.khach_hang_tiem_nang_option)
             {
                 await Navigation.PushAsync(new LeadForm());
             }
-            else if (asw == Language.khach_hang_ca_nhan_option)
-            {
-                await Navigation.PushAsync(new ContactForm());
-            }
             else if (asw == Language.khach_hang_doanh_nghiep_option)
             {
                 await Navigation.PushAsync(new AccountForm());
             }
+            //else if (asw == Language.khach_hang_ca_nhan_option)
+            //{
+            //    await Navigation.PushAsync(new ContactForm());
+            //}
+
             LoadingHelper.Hide();
         }
 

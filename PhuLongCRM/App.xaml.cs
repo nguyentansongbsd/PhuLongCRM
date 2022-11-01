@@ -13,11 +13,11 @@ namespace PhuLongCRM
         public App()
         {
             InitializeComponent();
-            //CultureInfo cultureInfo = new CultureInfo(UserLogged.Language);
-            //Language.Culture = cultureInfo;
-            //MainPage = new AppShell();
-            //Shell.Current.Navigation.PushAsync(new Login(), false);
-            MainPage = new BlankPage();
+            CultureInfo cultureInfo = new CultureInfo(UserLogged.Language);
+            Language.Culture = cultureInfo;
+            MainPage = new AppShell();
+            Shell.Current.Navigation.PushAsync(new Login(), false);
+            //MainPage = new BlankPage();
         }
 
         protected override void OnStart()

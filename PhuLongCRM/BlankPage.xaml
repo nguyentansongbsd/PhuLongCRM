@@ -13,6 +13,7 @@
             </StackLayout>
             
             <controls:BottomModal x:Name="lookUpModal"/>
+            <Button Text="Push to firebase" Clicked="Button_Clicked"/>
         </AbsoluteLayout>
         
         <!--<WebView x:Name="webview" />-->
