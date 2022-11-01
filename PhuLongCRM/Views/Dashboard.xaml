@@ -6,7 +6,9 @@
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
-             xmlns:convertes ="clr-namespace:PhuLongCRM.Converters" xmlns:views="clr-namespace:PhuLongCRM.Views"
+             xmlns:convertes ="clr-namespace:PhuLongCRM.Converters" 
+             xmlns:views="clr-namespace:PhuLongCRM.Views"
+             xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
              x:Class="PhuLongCRM.Views.Dashboard">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -28,6 +30,9 @@
             <RefreshView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
                 <ScrollView Padding="0,0,0,20">
                     <StackLayout Spacing="0">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseToolTips_Tapped"/>
+                        </StackLayout.GestureRecognizers>
                         <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
                             <Label.FormattedText>
                                 <FormattedString>
@@ -36,29 +41,37 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Grid ColumnDefinitions="*,*" Margin="14,6">
-                            <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center">
+                        <Grid x:Name="gridHoaHong" ColumnDefinitions="*,*" Margin="14,6">
+                            <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center"
+                                                    effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.tong_tien_co_the_nhan_trong_thang_nay}">
                                 <StackLayout Spacing="12">
                                     <Label Text="{Binding TotalCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#D42A16" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.tong_tien}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TongTien_Hover_Tapped"/>
-                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
-                            <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center">
+                            <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center"
+                                                    effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.tong_tien_da_nhan_trong_thang_nay}">
                                 <StackLayout Spacing="12">
                                     <Label Text="{Binding TotalPaidCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#2196F3" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.da_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DaNhan_Hover_Tapped"/>
-                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
-                        <controls:ExtendedFrame Margin="14,6" Padding="8">
-                            <Grid>
-                                <telerikChart:RadCartesianChart HeightRequest="250" IsTabStop="True">
+                        <controls:ExtendedFrame x:Name="gridHoaHongChart" Margin="14,6" Padding="8">
+                            <telerikChart:RadCartesianChart HeightRequest="250" IsTabStop="True" 
+                                                            effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_hoa_hong_4_thang_gan_nhat}">
                                     <telerikChart:RadCartesianChart.ChartBehaviors>
                                         <telerikChart:ChartSelectionBehavior DataPointSelectionMode="None" SeriesSelectionMode="Single" />
                                     </telerikChart:RadCartesianChart.ChartBehaviors>
@@ -88,12 +101,6 @@
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BieuDo_Hover_Tapped"/>
                                     </telerikChart:RadCartesianChart.GestureRecognizers>-->
                                 </telerikChart:RadCartesianChart>
-                                <Grid>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BieuDo_Hover_Tapped"/>
-                                    </Grid.GestureRecognizers>
-                                </Grid>
-                            </Grid>
                         </controls:ExtendedFrame>
                         <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
                             <Label.FormattedText>
@@ -103,70 +110,76 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Grid ColumnDefinitions="*,*,*,*" Margin="14,6" ColumnSpacing="8">
-                            <controls:ExtendedFrame Grid.Column="0" Padding="0">
+                        <Grid x:Name="gridGiaoDich" ColumnDefinitions="*,*,*,*" Margin="14,6" ColumnSpacing="8">
+                            <controls:ExtendedFrame Grid.Column="0" Padding="0"
+                                                    effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.so_giu_cho_da_tao_trong_thang_nay}">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numQueue}" FontSize="18" FontAttributes="Bold" TextColor="#2196F3" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.giu_cho}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GiaoDich_Hover_Tapped"/>
-                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
-                            <controls:ExtendedFrame Grid.Column="1" Padding="0">
-                                <StackLayout Margin="6,18" VerticalOptions="Center" >
+                            <controls:ExtendedFrame Grid.Column="1" Padding="0"
+                                                    effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.so_dat_coc_da_tao_trong_thang_nay}">
+                                <StackLayout Margin="6,18" VerticalOptions="Center">
                                     <Label Text="{Binding numQuote}" FontSize="18" FontAttributes="Bold" TextColor="#FA7803" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.dat_coc_dashboard}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DatCoc_Hover_Tapped"/>
-                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
-                            <controls:ExtendedFrame Grid.Column="2" Padding="0">
+                            <controls:ExtendedFrame Grid.Column="2" Padding="0"
+                                                    effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.so_hop_dong_da_tao_trong_thang_nay}">
                                 <StackLayout Margin="2,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numOptionEntry}" FontSize="18" FontAttributes="Bold" TextColor="#0DB302" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.hop_dong}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="HopDong_Hover_Tapped"/>
-                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
-                            <controls:ExtendedFrame Grid.Column="3" Padding="0">
+                            <controls:ExtendedFrame Grid.Column="3" Padding="0"
+                                                    effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.so_san_pham_da_ban_trong_thang_nay}">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numUnit}" FontSize="18" FontAttributes="Bold" TextColor="#D42A16" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static lang:Language.da_ban}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DaBan_Hover_Tapped"/>
-                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
-                        <controls:ExtendedFrame Padding="8" Margin="14,6">
-                            <Grid>
-                                <telerikChart:RadCartesianChart  HeightRequest="250" IsTabStop="True">
-                                    <telerikChart:RadCartesianChart.HorizontalAxis>
-                                        <telerikChart:CategoricalAxis LineColor="#A9A9A9" MajorTickThickness="2" PlotMode="BetweenTicks" LabelFitMode="MultiLine" ShowLabels="True" MajorTickBackgroundColor="#A9A9A9" />
-                                    </telerikChart:RadCartesianChart.HorizontalAxis>
-                                    <telerikChart:RadCartesianChart.VerticalAxis>
-                                        <telerikChart:NumericalAxis Minimum="0" Maximum="30" MajorStep="5" LineColor="#A9A9A9" />
-                                    </telerikChart:RadCartesianChart.VerticalAxis>
-                                    <telerikChart:RadCartesianChart.Grid>
-                                        <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
-                                    </telerikChart:RadCartesianChart.Grid>
+                        <controls:ExtendedFrame x:Name="gridGiaoDichChart" Padding="8" Margin="14,6">
+                            <telerikChart:RadCartesianChart  HeightRequest="250" IsTabStop="True"
+                                                             effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_giao_dich_4_thang_gan_nhat}">
+                                <telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:CategoricalAxis LineColor="#A9A9A9" MajorTickThickness="2" PlotMode="BetweenTicks" LabelFitMode="MultiLine" ShowLabels="True" MajorTickBackgroundColor="#A9A9A9" />
+                                </telerikChart:RadCartesianChart.HorizontalAxis>
+                                <telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:NumericalAxis Minimum="0" Maximum="30" MajorStep="5" LineColor="#A9A9A9" />
+                                </telerikChart:RadCartesianChart.VerticalAxis>
+                                <telerikChart:RadCartesianChart.Grid>
+                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
+                                </telerikChart:RadCartesianChart.Grid>
 
-                                    <telerikChart:RadCartesianChart.Series>
-                                        <telerikChart:LineSeries Stroke="#2196F3" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQueue}" />
-                                        <telerikChart:LineSeries Stroke="#FA7803" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQuote}" />
-                                        <telerikChart:LineSeries Stroke="#0DB302" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthOptionEntry}" />
-                                        <telerikChart:LineSeries Stroke="#D42A16" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthUnit}" />
-                                    </telerikChart:RadCartesianChart.Series>
-                                </telerikChart:RadCartesianChart>
-                                <Grid>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BieuDoGiaoDich_Hover_Tapped"/>
-                                    </Grid.GestureRecognizers>
-                                </Grid>
-                            </Grid>
+                                <telerikChart:RadCartesianChart.Series>
+                                    <telerikChart:LineSeries Stroke="#2196F3" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQueue}" />
+                                    <telerikChart:LineSeries Stroke="#FA7803" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQuote}" />
+                                    <telerikChart:LineSeries Stroke="#0DB302" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthOptionEntry}" />
+                                    <telerikChart:LineSeries Stroke="#D42A16" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthUnit}" />
+                                </telerikChart:RadCartesianChart.Series>
+                            </telerikChart:RadCartesianChart>
                         </controls:ExtendedFrame>
 
                         <Label Text="{x:Static lang:Language.khach_hang_tiem_nang}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>

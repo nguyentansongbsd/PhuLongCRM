@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
@@ -40,6 +41,7 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await viewModel.LoadTotalDirectSale();
+            AddToolTip();
             if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
             {
                 var rd = stackBlocks.Children[0] as RadBorder;
@@ -150,35 +152,6 @@ namespace PhuLongCRM.Views
             await viewModel.LoadUnitById(unitId);
             LoadingHelper.Hide();
         }
-        private void NumberUnit_Tapped(object sender, EventArgs e)
-        {
-            var item = (string)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item == "1")
-                PopupHover.ShowHover(Language.chuan_bi);
-            else if (item == "2")
-                PopupHover.ShowHover(Language.san_sang);
-            else if (item == "3")
-                PopupHover.ShowHover(Language.dat_cho);
-            else if (item == "4")
-                PopupHover.ShowHover(Language.giu_cho);
-            else if (item == "5")
-                PopupHover.ShowHover(Language.dat_coc);
-            else if (item == "6")
-                PopupHover.ShowHover(Language.dong_y_chuyen_coc);
-            else if (item == "7")
-                PopupHover.ShowHover(Language.da_du_tien_coc);
-            else if (item == "8")
-                PopupHover.ShowHover(Language.hoan_tat_dat_coc);
-            else if (item == "9")
-                PopupHover.ShowHover(Language.thanh_toan_dot_1);
-            else if (item == "10")
-                PopupHover.ShowHover(Language.da_ky_ttdc_hddc);
-            else if (item == "11")
-                PopupHover.ShowHover(Language.du_dieu_dien);
-            else if (item == "12")
-                PopupHover.ShowHover(Language.da_ban);
-        }
-
         private async void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             if (e == null) return;
@@ -543,6 +516,25 @@ namespace PhuLongCRM.Views
                 }
                 RefreshDirectSale = false;
             }    
+        }
+
+        private void CloseToolTips_Tapped(object sender, EventArgs e)
+        {
+            foreach (var c in gridStatus.Children)
+            {
+                if (TooltipEffect.GetHasTooltip(c))
+                {
+                    TooltipEffect.SetHasTooltip(c, false);
+                    TooltipEffect.SetHasTooltip(c, true);
+                }
+            }
+        }
+        public void AddToolTip()
+        {
+            foreach (var c in gridStatus.Children)
+            {
+                ListToolTip.ToolTips.Add(c);
+            }
         }
     }
     public class QueuesControl : BsdListView

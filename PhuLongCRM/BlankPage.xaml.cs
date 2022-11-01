@@ -5,6 +5,7 @@ using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -65,9 +66,18 @@ namespace PhuLongCRM
 
         private void AbsoluteLayout_Tapped(object sender, MR.Gestures.TapEventArgs e)
         {
-            if (e != null && e.ViewPosition != null)
+            string id = "08E25682-23E9-41EB-A1B7-6B166562F8AE";
+            GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+            var client = BsdHttpClient.Instance();
+            string fileListUrl = $"https://diaocphulong.sharepoint.com/sites/PhuLong/_layouts/15/download.aspx?UniqueId={id}&Translate=false&tempauth={getTokenResponse.access_token}&ApiVersion=2.0";
+            var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                ToastMessageHelper.ShortMessage("vi tri " + e.Touches);
+                var a = Convert.ToBase64String(response.Content.ReadAsByteArrayAsync().Result);
+                ToastMessageHelper.ShortMessage(a);
             }
 
         }

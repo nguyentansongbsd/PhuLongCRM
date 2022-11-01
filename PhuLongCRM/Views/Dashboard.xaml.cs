@@ -1,7 +1,10 @@
-﻿using System;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
@@ -118,6 +121,7 @@ namespace PhuLongCRM.Views
                 }
 
             });
+            AddToolTip();
             LoadingHelper.Hide();
         }
 
@@ -190,86 +194,59 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private void DatCoc_Hover_Tapped(object sender, EventArgs e)
+        private void CloseToolTips_Tapped(object sender, EventArgs e)
         {
-            try
+            foreach (var c in gridGiaoDich.Children)
             {
-                PopupHover.ShowHover(Language.so_dat_coc_da_tao_trong_thang_nay);
+                if (TooltipEffect.GetHasTooltip(c))
+                {
+                    TooltipEffect.SetHasTooltip(c, false);
+                    TooltipEffect.SetHasTooltip(c, true);
+                }
             }
-            catch(Exception ex)
+            foreach (var c in gridGiaoDichChart.Children)
             {
-
+                if (TooltipEffect.GetHasTooltip(c))
+                {
+                    TooltipEffect.SetHasTooltip(c, false);
+                    TooltipEffect.SetHasTooltip(c, true);
+                }
+            }
+            foreach (var c in gridHoaHong.Children)
+            {
+                if (TooltipEffect.GetHasTooltip(c))
+                {
+                    TooltipEffect.SetHasTooltip(c, false);
+                    TooltipEffect.SetHasTooltip(c, true);
+                }
+            }
+            foreach (var c in gridHoaHongChart.Children)
+            {
+                if (TooltipEffect.GetHasTooltip(c))
+                {
+                    TooltipEffect.SetHasTooltip(c, false);
+                    TooltipEffect.SetHasTooltip(c, true);
+                }
             }
         }
-
-        private void GiaoDich_Hover_Tapped(object sender, EventArgs e)
+        public void AddToolTip()
         {
-            try
+            foreach (var c in gridGiaoDich.Children)
             {
-                PopupHover.ShowHover(Language.so_giu_cho_da_tao_trong_thang_nay);
+                ListToolTip.ToolTips.Add(c);
             }
-            catch (Exception ex)
+            foreach (var c in gridGiaoDichChart.Children)
             {
-
+                ListToolTip.ToolTips.Add(c);
             }
-        }
-
-        private void HopDong_Hover_Tapped(object sender, EventArgs e)
-        {
-            try
+            foreach (var c in gridHoaHong.Children)
             {
-                PopupHover.ShowHover(Language.so_hop_dong_da_tao_trong_thang_nay);
+                ListToolTip.ToolTips.Add(c);
             }
-            catch (Exception ex)
+            foreach (var c in gridHoaHongChart.Children)
             {
-
+                ListToolTip.ToolTips.Add(c);
             }
-        }
-
-        private void DaBan_Hover_Tapped(object sender, EventArgs e)
-        {
-            try
-            {
-                PopupHover.ShowHover(Language.so_san_pham_da_ban_trong_thang_nay);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void TongTien_Hover_Tapped(object sender, EventArgs e)
-        {
-            try
-            {
-                PopupHover.ShowHover(Language.tong_tien_co_the_nhan_trong_thang_nay);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void DaNhan_Hover_Tapped(object sender, EventArgs e)
-        {
-            try
-            {
-                PopupHover.ShowHover(Language.tong_tien_da_nhan_trong_thang_nay);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void BieuDo_Hover_Tapped(object sender, EventArgs e)
-        {
-            PopupHover.ShowHover(Language.bieu_do_hoa_hong_4_thang_gan_nhat);
-        }
-
-        private void BieuDoGiaoDich_Hover_Tapped(object sender, EventArgs e)
-        {
-            PopupHover.ShowHover(Language.bieu_do_giao_dich_4_thang_gan_nhat);
         }
     }
 }
