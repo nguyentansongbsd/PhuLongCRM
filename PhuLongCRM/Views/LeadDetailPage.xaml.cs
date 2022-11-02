@@ -145,6 +145,60 @@ namespace PhuLongCRM.Views
         private async void LeadQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
+            if(!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode))
+            {
+                if (string.IsNullOrWhiteSpace(viewModel.singleLead.companyname))
+                {
+                    bool confirm = await DisplayAlert(Language.chuyen_doi_khach_hang, Language.ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty, Language.co, Language.khong);
+                    if (confirm)
+                    {
+                        LeadForm leadForm = new LeadForm(viewModel.singleLead.leadid);
+                        leadForm.CheckSingleLead = async (IsSuccess) =>
+                        {
+                            if (IsSuccess)
+                            {
+                                await Navigation.PushAsync(leadForm);
+                                LoadingHelper.Hide();
+                            }
+                            else
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                            }
+                        };
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                    }
+                } else if (!string.IsNullOrWhiteSpace(viewModel.singleLead.companyname) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountaddressvn))
+                {
+                    bool confirm = await DisplayAlert(Language.chuyen_doi_khach_hang, Language.dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty, Language.co, Language.huy);
+                    if (confirm)
+                    {
+                        LeadForm leadForm = new LeadForm(viewModel.singleLead.leadid);
+                        leadForm.CheckSingleLead = async (IsSuccess) =>
+                        {
+                            if (IsSuccess)
+                            {
+                                await Navigation.PushAsync(leadForm);
+                                LoadingHelper.Hide();
+                            }
+                            else
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                            }
+                        };
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        return;
+                    }
+                }
+            }
+            LoadingHelper.Show();
             bool _isID = await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid);
             CrmApiResponse apiResponse = await viewModel.Qualify(viewModel.singleLead.leadid);
             if (apiResponse.IsSuccess == true)

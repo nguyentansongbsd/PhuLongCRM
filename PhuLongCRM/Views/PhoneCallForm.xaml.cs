@@ -156,6 +156,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);
                 return;
             }
+            if (!string.IsNullOrWhiteSpace(viewModel.PhoneCellModel.phonenumber) && viewModel.PhoneCellModel.phonenumber .Length != 14)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
             if (viewModel.PhoneCellModel.scheduledstart == null || viewModel.PhoneCellModel.scheduledend == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau);
