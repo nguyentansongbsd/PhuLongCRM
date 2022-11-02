@@ -14,13 +14,14 @@ using System.Timers;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Firebase.Database.Query;
+using PhuLongCRM.ViewModels;
 
 namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
-        FirebaseClient firebaseClient = new FirebaseClient("https://phulong-aff10-default-rtdb.firebaseio.com/",
-                new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult("VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK") });
+        FirebaseClient firebaseClient = new FirebaseClient("https://phulongcrm-590ff-default-rtdb.asia-southeast1.firebasedatabase.app/",
+                new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult("6kEMlaIMDuxmqsmPDZR4BO3wshQvh7hJiTp8xaMr") }); //https://phulong-aff10-default-rtdb.firebaseio.com/ VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK
 
 
 
@@ -39,7 +40,17 @@ namespace PhuLongCRM
         {
             try
             {
-                
+                var collection = firebaseClient
+                    .Child("test").Child("directsale")
+                    .AsObservable<ResponseRealtime>()
+                    .Subscribe(async (dbevent) =>
+                    {
+                        if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete && dbevent.Object != null )
+                        {
+                            
+                        }
+                    });
+
             }
             catch (Exception ex)
             {
@@ -69,11 +80,12 @@ namespace PhuLongCRM
 
         void Button_Clicked(System.Object sender, System.EventArgs e)
         {
-            firebaseClient.Child("test").Child("DirectSaleData").PostAsync(new test { Name ="NgSong"}) ;
+            //firebaseClient.Child("test").Child("directsale").PostAsync(new UnitStatus { id = Guid.NewGuid(), status ="12"}) ;
         }
     }
     public class test
     {
-        public string Name { get; set; }
+        public string id { get; set; }
+        public string status { get; set; }
     }
 }

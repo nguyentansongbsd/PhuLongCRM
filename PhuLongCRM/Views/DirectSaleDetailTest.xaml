@@ -202,6 +202,7 @@
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                 </ScrollView>
+
                 <!--<ListView x:Name="listFloor" Grid.Row="2" ItemsSource="{Binding Block.Floors}" BackgroundColor="White" ItemAppearing="ListView_ItemAppearing" HasUnevenRows="True" SelectionMode="None" SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>

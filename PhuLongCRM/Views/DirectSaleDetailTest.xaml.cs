@@ -5,6 +5,7 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
+using Firebase.Database.Query;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,6 +39,7 @@ namespace PhuLongCRM.Views
             viewModel.CreateFilterXml();
             Init();
         }
+
         public async void Init()
         {
             await viewModel.LoadTotalDirectSale();
@@ -67,6 +69,7 @@ namespace PhuLongCRM.Views
                 return;
             }
         }
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
@@ -79,6 +82,7 @@ namespace PhuLongCRM.Views
                 NeedToRefreshDirectSale = false;
             }
         }
+
         public async void Block_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -108,6 +112,7 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Hide();
         }
+
         public async void NumberUnitInBlock(Block block)
         {
             if (block != null && block != viewModel.Block)
@@ -116,6 +121,7 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadFloor();
             }
         }
+
         private async void ItemFloor_Tapped(object sender, EventArgs e)
         {
             var item = sender as Grid;
@@ -135,23 +141,27 @@ namespace PhuLongCRM.Views
             }
             //(((RadBorder)((StackLayout)item.Parent).Parent).Parent as ViewCell).ForceUpdateSize();
         }
+
         private async void UnitItem_Tapped(object sender, EventArgs e)
         {
             var unitId = (Guid)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             await ShowUnit(unitId);
             PopupUnit.IsVisible = true;
         }
+
         private async Task ShowUnit(Guid unitId)
         {
             await LoadUnit(unitId);
             CreatePopupUnit(unitId);
         }
+
         private async Task LoadUnit(Guid unitId)
         {
             LoadingHelper.Show();
             await viewModel.LoadUnitById(unitId);
             LoadingHelper.Hide();
         }
+
         private async void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             if (e == null) return;
@@ -191,6 +201,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void BangTinhGia_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -213,6 +224,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -231,6 +243,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void GiuCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -248,6 +261,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void CreatePopupUnit(Guid unit_id)
         {
             if (grid == null)
@@ -529,6 +543,7 @@ namespace PhuLongCRM.Views
                 }
             }
         }
+
         public void AddToolTip()
         {
             foreach (var c in gridStatus.Children)
@@ -554,6 +569,7 @@ namespace PhuLongCRM.Views
             await viewModel.LoadData();
             CreateItemTemplate();
         }
+
         public void CreateItemTemplate()
         {
             if (dataTemplate == null)
