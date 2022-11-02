@@ -249,9 +249,11 @@ namespace PhuLongCRM.ViewModels
             string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='contact'>
                                 <attribute name='fullname' alias='Label'/>
-                                <filter type='and'>
-                                  <condition attribute='bsd_identitycardnumber' operator='eq' value='{identitycardnumber}' />
-                                </filter>
+                                    <filter type='or'>
+                                        <condition attribute='bsd_identitycardnumber' operator='eq' value='{identitycardnumber}' />
+                                        <condition attribute='bsd_identitycard' operator='eq' value='{identitycardnumber}' />
+                                        <condition attribute='bsd_passport' operator='eq' value='{identitycardnumber}' />
+                                    </filter>
                               </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("contacts", fetch);

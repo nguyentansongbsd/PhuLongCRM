@@ -19,6 +19,7 @@ namespace PhuLongCRM.ViewModels
         {                   
             PreLoadData = new Command(() =>
             {
+                string filter_sts = string.Empty;
                 string filter_name = string.Empty;
                 string filter_phone = string.Empty;
                 string filter_subject = string.Empty;
@@ -30,6 +31,16 @@ namespace PhuLongCRM.ViewModels
                     filter_phone = $@"<condition attribute='mobilephone' operator='like' value='%25{Keyword}%25' />";
                     filter_subject = $@"<condition entityname='Topic' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />";
                     filter_customercode = $@"<condition attribute='bsd_customercode' operator='like' value='%25{Keyword}%25' />";
+                }
+                else
+                {
+                    filter_sts = $@"<condition attribute='statuscode' operator='not-in'>
+                                    <value>3</value>
+                                    <value>4</value>
+                                    <value>5</value>
+                                    <value>7</value>
+                                    <value>6</value>
+                                  </condition>";
                 }
                 if (!string.IsNullOrWhiteSpace(KeySort))
                 {
@@ -75,6 +86,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_customercode' />
                         {sort}
                         <filter type='and'>
+                            {filter_sts}
                              <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                              <filter type='or'>
                                  '" + filter_name + @"'

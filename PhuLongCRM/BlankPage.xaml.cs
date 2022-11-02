@@ -53,9 +53,7 @@ namespace PhuLongCRM
 
             }
             catch (Exception ex)
-            {
-
-            }
+            {}
 
         }
 

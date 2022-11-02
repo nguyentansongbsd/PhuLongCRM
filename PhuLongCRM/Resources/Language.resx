@@ -3480,4 +3480,16 @@
   <data name="so_cccd_da_duoc_su_dung" xml:space="preserve">
     <value>Số CCCD đã được sử dụng.</value>
   </data>
+	<data name="ngay_cap_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
+    <value>Ngày cấp không được thuộc tương lai.</value>
+  </data>
+	<data name="ngay_cap_cccd_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
+    <value>Ngày cấp CCCD không được thuộc tương lai.</value>
+  </data>
+	<data name="ngay_cap_cmnd_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
+    <value>Ngày cấp CMND không được thuộc tương lai.</value>
+  </data>
+	<data name="ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
+    <value>Ngày cấp hộ chiếu không được thuộc tương lai.</value>
+  </data>
 </root>
