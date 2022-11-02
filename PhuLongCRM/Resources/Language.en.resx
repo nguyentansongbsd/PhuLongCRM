@@ -3492,4 +3492,7 @@
 	<data name="ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
     <value>Passport date grant can't be in the future.</value>
   </data>
+  <data name="khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai" xml:space="preserve">
+    <value>Account/Contact is not owned by you and your team. Please check again.</value>
+  </data>
 </root>

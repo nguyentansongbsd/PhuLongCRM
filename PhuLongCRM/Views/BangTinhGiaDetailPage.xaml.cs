@@ -560,12 +560,12 @@ namespace PhuLongCRM.Views
                 AccountDetailPage newPage = new AccountDetailPage(viewModel.Reservation.salescompany_accountid);
                 newPage.OnCompleted = async (OnCompleted) =>
                 {
-                    if (OnCompleted == true)
+                    if (OnCompleted == 1)
                     {
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(OnCompleted == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -579,12 +579,12 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             ContactDetailPage contactDetailPage = new ContactDetailPage(viewModel.Reservation.collaborator_id);
             contactDetailPage.OnCompleted = async (isSuccess) => {
-                if (isSuccess)
+                if (isSuccess == 1)
                 {
                     await Navigation.PushAsync(contactDetailPage);
                     LoadingHelper.Hide();
                 }
-                else
+                else if(isSuccess == 3)
                 {
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -600,12 +600,12 @@ namespace PhuLongCRM.Views
             {
                 ContactDetailPage contactDetailPage = new ContactDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
                 contactDetailPage.OnCompleted = async (isSuccess) => {
-                    if (isSuccess)
+                    if (isSuccess == 1)
                     {
                         await Navigation.PushAsync(contactDetailPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(isSuccess == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -616,12 +616,12 @@ namespace PhuLongCRM.Views
             {
                 AccountDetailPage accountDetailPage = new AccountDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
                 accountDetailPage.OnCompleted = async (isSuccess) => {
-                    if (isSuccess)
+                    if (isSuccess == 1)
                     {
                         await Navigation.PushAsync(accountDetailPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(isSuccess == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -640,12 +640,12 @@ namespace PhuLongCRM.Views
                     AccountDetailPage newPage = new AccountDetailPage(viewModel.Reservation.purchaser_accountid);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -657,12 +657,12 @@ namespace PhuLongCRM.Views
                     ContactDetailPage newPage = new ContactDetailPage(viewModel.Reservation.purchaser_contactid);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

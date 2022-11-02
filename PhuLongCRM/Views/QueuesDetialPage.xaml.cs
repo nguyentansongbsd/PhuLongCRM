@@ -175,12 +175,12 @@ namespace PhuLongCRM.Views
             AccountDetailPage accountDetail = new AccountDetailPage(viewModel.Queue._bsd_salesagentcompany_value);
             accountDetail.OnCompleted = async (IsSuccess) =>
             {
-                if (IsSuccess)
+                if (IsSuccess == 1)
                 {
                     await Navigation.PushAsync(accountDetail);
                     LoadingHelper.Hide();
                 }
-                else
+                else if(IsSuccess == 3)
                 {
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -195,12 +195,12 @@ namespace PhuLongCRM.Views
                 ContactDetailPage newpage = new ContactDetailPage(viewModel.Queue.collaborator_id);
                 newpage.OnCompleted = async (IsSuccess) =>
                 {
-                    if (IsSuccess)
+                    if (IsSuccess == 1)
                     {
                         await Navigation.PushAsync(newpage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(IsSuccess == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -216,12 +216,12 @@ namespace PhuLongCRM.Views
                 ContactDetailPage newpage = new ContactDetailPage(viewModel.Queue.customerreferral_id);
                 newpage.OnCompleted = async (IsSuccess) =>
                 {
-                    if (IsSuccess)
+                    if (IsSuccess == 1)
                     {
                         await Navigation.PushAsync(newpage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(IsSuccess == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -391,12 +391,12 @@ namespace PhuLongCRM.Views
                     ContactDetailPage newPage = new ContactDetailPage(Guid.Parse(viewModel.Customer.Val));
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -408,12 +408,12 @@ namespace PhuLongCRM.Views
                     AccountDetailPage newPage = new AccountDetailPage(Guid.Parse(viewModel.Customer.Val));
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

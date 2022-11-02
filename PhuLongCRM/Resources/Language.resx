@@ -3492,4 +3492,7 @@
 	<data name="ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
     <value>Ngày cấp hộ chiếu không được thuộc tương lai.</value>
   </data>
+  <data name="khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai" xml:space="preserve">
+    <value>Khách hàng không thuộc sở hữu của bạn và nhóm của bạn. Vui lòng kiểm tra lại. </value>
+  </data>
 </root>

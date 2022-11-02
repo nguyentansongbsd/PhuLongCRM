@@ -60,14 +60,19 @@ namespace PhuLongCRM.Views
                     if (data[1] == "lead")
                     {
                         LeadDetailPage leadDetail = new LeadDetailPage(Guid.Parse(data[2]), true);
-                        leadDetail.OnCompleted = async (isSuccess) =>
+                        leadDetail.OnCompleted = async (onCompleted) =>
                         {
-                            if (isSuccess)
+                            if (onCompleted == 1) // thanh cong
                             {
                                 await Navigation.PushAsync(leadDetail);
                                 LoadingHelper.Hide();
                             }
-                            else
+                            else if(onCompleted == 2) // lead khoong thuoc employee dang dang nhap
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai);
+                            }
+                            else // e = 3 : khong tim thay thoong tin
                             {
                                 LoadingHelper.Hide();
                                 ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -79,12 +84,17 @@ namespace PhuLongCRM.Views
                         AccountDetailPage accountDetail = new AccountDetailPage(Guid.Parse(data[2]));
                         accountDetail.OnCompleted = async (isSuccess) =>
                         {
-                            if (isSuccess)
+                            if (isSuccess == 1) // thanh cong
                             {
                                 await Navigation.PushAsync(accountDetail);
                                 LoadingHelper.Hide();
                             }
-                            else
+                            else if(isSuccess == 2) // KH khong thuoc employee dang dang nhap
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai);
+                            }
+                            else // khong tim thay thong tin
                             {
                                 LoadingHelper.Hide();
                                 ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -96,10 +106,15 @@ namespace PhuLongCRM.Views
                         ContactDetailPage contactDetail = new ContactDetailPage(Guid.Parse(data[2]));
                         contactDetail.OnCompleted = async (isSuccess) =>
                         {
-                            if (isSuccess)
+                            if (isSuccess == 1)// thanh cong
                             {
                                 await Navigation.PushAsync(contactDetail);
                                 LoadingHelper.Hide();
+                            }
+                            else if(isSuccess == 2)
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai);
                             }
                             else
                             {
