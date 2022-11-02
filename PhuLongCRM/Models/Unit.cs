@@ -12,7 +12,8 @@ namespace PhuLongCRM.Models
         public string name { get; set; } 
         public decimal price { get; set; }
         public string price_format { get => StringFormatHelper.FormatCurrency(price); }
-        public int? statuscode { get; set; }
+        private int? _statuscode;
+        public int? statuscode { get=> _statuscode; set { _statuscode = value; OnPropertyChanged(nameof(statuscode)); } }
         public string statuscode_format { get => StatusCodeUnit.GetStatusCodeById(statuscode.ToString())?.Name; }
         public string statuscode_color { get => StatusCodeUnit.GetStatusCodeById(statuscode.ToString())?.Background; }
         public Guid floorid { get; set; }

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Firebase.Database;
+using Firebase.Database.Query;
+using Newtonsoft.Json;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
@@ -15,28 +17,151 @@ namespace PhuLongCRM.ViewModels
 {
     public class DirectSaleDetailTestViewModel : BaseViewModel
     {
-        private string FilterXml;
-        private int Size = 3;
-
-        private Unit _unit;
-        public Unit Unit { get => _unit; set { _unit = value; OnPropertyChanged(nameof(Unit)); } }
-        public List<DirectSaleModel> Data { get; set; }
-
-        public DirectSaleSearchModel Filter { get; set; }
-
-        private Block _block;
-        public Block Block { get => _block; set { _block = value; OnPropertyChanged(nameof(Block)); } }
-
+        public FirebaseClient firebaseClient = new FirebaseClient("https://phulong-aff10-default-rtdb.firebaseio.com/",
+                new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult("VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK") }); //https://phulong-aff10-default-rtdb.firebaseio.com/ VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK //https://phulongcrm-590ff-default-rtdb.asia-southeast1.firebasedatabase.app/  6kEMlaIMDuxmqsmPDZR4BO3wshQvh7hJiTp8xaMr
         private ObservableCollection<Block> _blocks;
         public ObservableCollection<Block> Blocks { get => _blocks; set { _blocks = value; OnPropertyChanged(nameof(Blocks)); } }
+        private Block _block;
+        public Block Block { get => _block; set { _block = value; OnPropertyChanged(nameof(Block)); } }
+        private Unit _unit;
+        public Unit Unit { get => _unit; set { _unit = value; OnPropertyChanged(nameof(Unit)); } }
 
         private bool _isShowBtnBangTinhGia;
         public bool IsShowBtnBangTinhGia { get => _isShowBtnBangTinhGia; set { _isShowBtnBangTinhGia = value; OnPropertyChanged(nameof(IsShowBtnBangTinhGia)); } }
 
+        public List<DirectSaleModel> Data { get; set; }
+        public DirectSaleSearchModel Filter { get; set; }
+
+        private string FilterXml;
+        private int Size = 3;
+        private ResponseRealtime _currentUnit { get; set; }
+
         public DirectSaleDetailTestViewModel()
         {
             Blocks = new ObservableCollection<Block>();
+
+            var condition = firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
+                .Subscribe(async (dbevent) =>
+                {
+                    if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete && dbevent.Object != null && this.Block.Floors.Any(x => x.Units.Count != 0))
+                    {
+                        try
+                        {
+                            var item = dbevent.Object as ResponseRealtime;
+                            this.Block.Floors.Where(x => x.Units.Count != 0).ToList().ForEach(x =>
+                            {
+                                var _unit = x.Units.SingleOrDefault(y => y.productid.ToString().ToLower() == item.id.ToLower());
+                                if (_unit != null)
+                                {
+                                    this._currentUnit = new ResponseRealtime() { id = _unit.productid.ToString(), status = _unit.statuscode.ToString() };
+                                    _unit.statuscode = int.Parse(item.status);
+                                    SetNumStatus(item.status);
+                                }
+                            });
+                            
+                        }
+                        catch (Exception ex)
+                        {
+                            ToastMessageHelper.LongMessage(ex.Message);
+                        }
+                    }
+                });
         }
+
+        private void SetNumStatus(string UnitStatusAffterChange)
+        {
+            try
+            {
+                switch (this._currentUnit.status)
+                {
+                    case "1":
+                        this.Block.NumChuanBiInBlock--;
+                        break;
+                    case "100000000":
+                        this.Block.NumSanSangInBlock--;
+                        break;
+                    case "100000007":
+                        this.Block.NumBookingInBlock--;
+                        break;
+                    case "100000004":
+                        this.Block.NumGiuChoInBlock--;
+                        break;
+                    case "100000006":
+                        this.Block.NumDatCocInBlock--;
+                        break;
+                    case "100000005":
+                        this.Block.NumDongYChuyenCoInBlock--;
+                        break;
+                    case "100000003":
+                        this.Block.NumDaDuTienCocInBlock--;
+                        break;
+                    case "100000010":
+                        this.Block.NumOptionInBlock--;
+                        break;
+                    case "100000001":
+                        this.Block.NumThanhToanDot1InBlock--;
+                        break;
+                    case "100000009":
+                        this.Block.NumSignedDAInBlock--;
+                        break;
+                    case "100000008":
+                        this.Block.NumQualifiedInBlock--;
+                        break;
+                    case "100000002":
+                        this.Block.NumDaBanInBlock--;
+                        break;
+                    default:
+                        break;
+                }
+                switch (UnitStatusAffterChange)
+                {
+                    case "1":
+                        this.Block.NumChuanBiInBlock++;
+                        break;
+                    case "100000000":
+                        this.Block.NumSanSangInBlock++;
+                        break;
+                    case "100000007":
+                        this.Block.NumBookingInBlock++;
+                        break;
+                    case "100000004":
+                        this.Block.NumGiuChoInBlock++;
+                        break;
+                    case "100000006":
+                        this.Block.NumDatCocInBlock++;
+                        break;
+                    case "100000005":
+                        this.Block.NumDongYChuyenCoInBlock++;
+                        break;
+                    case "100000003":
+                        this.Block.NumDaDuTienCocInBlock++;
+                        break;
+                    case "100000010":
+                        this.Block.NumOptionInBlock++;
+                        break;
+                    case "100000001":
+                        this.Block.NumThanhToanDot1InBlock++;
+                        break;
+                    case "100000009":
+                        this.Block.NumSignedDAInBlock++;
+                        break;
+                    case "100000008":
+                        this.Block.NumQualifiedInBlock++;
+                        break;
+                    case "100000002":
+                        this.Block.NumDaBanInBlock++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
+        }
+
         public async Task LoadTotalDirectSale()
         {
             string json = JsonConvert.SerializeObject(Filter);
@@ -75,6 +200,7 @@ namespace PhuLongCRM.ViewModels
                 Blocks.Add(block);
             }
         }
+
         public async Task LoadFloor()
         {
             if (Block != null && Block.Floors != null)
@@ -107,6 +233,7 @@ namespace PhuLongCRM.ViewModels
                 }
             }
         }
+
         public async Task LoadUnitByFloor(Guid floorId)
         {
             string now_date = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
@@ -164,13 +291,14 @@ namespace PhuLongCRM.ViewModels
                 units.Add(item);
             }
         }
+
         public void CreateFilterXml()
         {
             //string StatusReason_Condition = StatusReason == null ? "" : "<condition attribute='statuscode' operator='eq' value='" + StatusReason.Val + @"' />";
             string PhasesLaunch_Condition = (!string.IsNullOrWhiteSpace(Filter.Phase))
                 ? @"<condition attribute='bsd_phaseslaunchid' operator='eq' uitype='bsd_phaseslaunch' value='" + Filter.Phase + @"' />"
                 : "";
-            
+
             string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? $"<condition attribute='name' operator='like' value='%25" + Filter.Unit + "%25'/>" : null;
 
             string Direction_Condition = string.Empty;
@@ -277,6 +405,7 @@ namespace PhuLongCRM.ViewModels
                                     {minPrice_Condition}
                                     {maxPrice_Condition}";
         }
+
         public async Task LoadUnitById(Guid unitId)
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -318,6 +447,7 @@ namespace PhuLongCRM.ViewModels
             Unit = result.value.FirstOrDefault();
             await CheckShowBtnBangTinhGia(unitId);
         }
+
         public async Task CheckShowBtnBangTinhGia(Guid unitId)
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
@@ -360,6 +490,7 @@ namespace PhuLongCRM.ViewModels
                 }
             }
         }
+
         public async Task UpdateTotalDirectSale(Floor floor)
         {
             string json = JsonConvert.SerializeObject(Filter);
@@ -376,7 +507,7 @@ namespace PhuLongCRM.ViewModels
             var newData = JsonConvert.DeserializeObject<List<DirectSaleModel>>(responseActions.output);
 
             var data = newData.SingleOrDefault(x => x.ID == Block.bsd_blockid.ToString());
-            if(data != null)
+            if (data != null)
             {
                 Block.TotalUnitInBlock = int.Parse(data.sumQty);
                 var arrStatus = data.stringQty.Split(',');
@@ -395,7 +526,7 @@ namespace PhuLongCRM.ViewModels
 
                 if (data.listFloor != null)
                 {
-                   var newFloor =  data.listFloor.SingleOrDefault(x => x.ID == Unit.floorid.ToString());
+                    var newFloor = data.listFloor.SingleOrDefault(x => x.ID == Unit.floorid.ToString());
                     //Block.Floors.SingleOrDefault(x => x.bsd_floorid == Unit.floorid);
                     if (newFloor != null)
                     {
@@ -418,7 +549,13 @@ namespace PhuLongCRM.ViewModels
                         }
                     }
                 }
-            }   
+            }
         }
+    }
+
+    public class ResponseRealtime
+    {
+        public string id { get; set; }
+        public string status { get; set; }
     }
 }

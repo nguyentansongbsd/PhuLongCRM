@@ -10,7 +10,7 @@
             </StackLayout>
             
             <controls:BottomModal x:Name="lookUpModal"/>-->
-            <Button Text="Push to firebase" Clicked="Button_Clicked"/>
+            <Button Text="Push to firebase" Clicked="Button_Clicked" Margin="0,100,0,0"/>
         </AbsoluteLayout>
         
         <!--<WebView x:Name="webview" />-->
