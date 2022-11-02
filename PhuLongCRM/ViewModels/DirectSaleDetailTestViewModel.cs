@@ -17,8 +17,8 @@ namespace PhuLongCRM.ViewModels
 {
     public class DirectSaleDetailTestViewModel : BaseViewModel
     {
-        public FirebaseClient firebaseClient = new FirebaseClient("https://phulong-aff10-default-rtdb.firebaseio.com/",
-                new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult("VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK") }); //https://phulong-aff10-default-rtdb.firebaseio.com/ VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK //https://phulongcrm-590ff-default-rtdb.asia-southeast1.firebasedatabase.app/  6kEMlaIMDuxmqsmPDZR4BO3wshQvh7hJiTp8xaMr
+        public FirebaseClient firebaseClient = new FirebaseClient(Config.OrgConfig.LinkFireBase_RealTimeData,
+                new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult(Config.OrgConfig.AuthToken) }); 
         private ObservableCollection<Block> _blocks;
         public ObservableCollection<Block> Blocks { get => _blocks; set { _blocks = value; OnPropertyChanged(nameof(Blocks)); } }
         private Block _block;
@@ -34,41 +34,14 @@ namespace PhuLongCRM.ViewModels
 
         private string FilterXml;
         private int Size = 3;
-        private ResponseRealtime _currentUnit { get; set; }
+        public ResponseRealtime _currentUnit { get; set; }
 
         public DirectSaleDetailTestViewModel()
         {
             Blocks = new ObservableCollection<Block>();
-
-            var condition = firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
-                .Subscribe(async (dbevent) =>
-                {
-                    if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete && dbevent.Object != null && this.Block.Floors.Any(x => x.Units.Count != 0))
-                    {
-                        try
-                        {
-                            var item = dbevent.Object as ResponseRealtime;
-                            this.Block.Floors.Where(x => x.Units.Count != 0).ToList().ForEach(x =>
-                            {
-                                var _unit = x.Units.SingleOrDefault(y => y.productid.ToString().ToLower() == item.id.ToLower());
-                                if (_unit != null)
-                                {
-                                    this._currentUnit = new ResponseRealtime() { id = _unit.productid.ToString(), status = _unit.statuscode.ToString() };
-                                    _unit.statuscode = int.Parse(item.status);
-                                    SetNumStatus(item.status);
-                                }
-                            });
-                            
-                        }
-                        catch (Exception ex)
-                        {
-                            ToastMessageHelper.LongMessage(ex.Message);
-                        }
-                    }
-                });
         }
 
-        private void SetNumStatus(string UnitStatusAffterChange)
+        public void SetNumStatus(string UnitStatusAffterChange)
         {
             try
             {

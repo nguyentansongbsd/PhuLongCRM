@@ -6766,5 +6766,35 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("so_cccd_da_duoc_su_dung", resourceCulture);
             }
         }
+        
+        internal static string ngay_cap_khong_duoc_thuoc_tuong_lai {
+            get {
+                return ResourceManager.GetString("ngay_cap_khong_duoc_thuoc_tuong_lai", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_cap_cccd_khong_duoc_thuoc_tuong_lai {
+            get {
+                return ResourceManager.GetString("ngay_cap_cccd_khong_duoc_thuoc_tuong_lai", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_cap_cmnd_khong_duoc_thuoc_tuong_lai {
+            get {
+                return ResourceManager.GetString("ngay_cap_cmnd_khong_duoc_thuoc_tuong_lai", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai {
+            get {
+                return ResourceManager.GetString("ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai", resourceCulture);
+            }
+        }
+        
+        internal static string khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai {
+            get {
+                return ResourceManager.GetString("khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai", resourceCulture);
+            }
+        }
     }
 }

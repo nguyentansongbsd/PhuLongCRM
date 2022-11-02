@@ -137,12 +137,12 @@ namespace PhuLongCRM.Views
             AccountDetailPage accountDetailPage = new AccountDetailPage(id);
             accountDetailPage.OnCompleted = async (IsSuccess) =>
             {
-                if (IsSuccess)
+                if (IsSuccess == 1)
                 {
                     await Navigation.PushAsync(accountDetailPage);
                     LoadingHelper.Hide();
                 }
-                else
+                else if (IsSuccess == 3)
                 {
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

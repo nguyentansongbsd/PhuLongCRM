@@ -1,14 +1,10 @@
-﻿using FFImageLoading.Forms;
-using PhuLongCRM.Helper;
+﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -20,7 +16,7 @@ namespace PhuLongCRM.Views
     public partial class LeadDetailPage : ContentPage
     {
         public static bool? NeedToRefreshLeadDetail = null;
-        public Action<bool> OnCompleted;
+        public Action<int> OnCompleted;
         private LeadDetailPageViewModel viewModel;
         private Guid Id;
         public static OptionSet FromCustomer = null;
@@ -45,10 +41,17 @@ namespace PhuLongCRM.Views
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
                 FromCustomer = new OptionSet { Val = viewModel.singleLead.leadid.ToString(), Label = viewModel.singleLead.lastname, Title = viewModel.CodeLead };
-                OnCompleted?.Invoke(true);
+                if (viewModel.singleLead.employee_id == UserLogged.Id)
+                {
+                    OnCompleted?.Invoke(1);// Thanh cong
+                }
+                else
+                {
+                    OnCompleted?.Invoke(2);//Record khong thuoc employee dang dang nhap
+                }
             }
             else
-                OnCompleted?.Invoke(false);
+                OnCompleted?.Invoke(3);// loi khoong tim thay record
         }
 
         protected async override void OnAppearing()
@@ -352,12 +355,12 @@ namespace PhuLongCRM.Views
                 ContactDetailPage newPage = new ContactDetailPage(viewModel.singleLead.contact_id);
                 newPage.OnCompleted = async (IsSuccess) =>
                 {
-                    if (IsSuccess)
+                    if (IsSuccess == 1)
                     {
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if (IsSuccess == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
@@ -377,12 +380,12 @@ namespace PhuLongCRM.Views
                 AccountDetailPage newPage = new AccountDetailPage(viewModel.singleLead.account_id);
                 newPage.OnCompleted = async (IsSuccess) =>
                 {
-                    if (IsSuccess)
+                    if (IsSuccess == 1)
                     {
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(IsSuccess == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);

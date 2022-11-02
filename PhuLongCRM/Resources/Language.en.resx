@@ -3498,4 +3498,7 @@
 	<data name="dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty" xml:space="preserve">
     <value>Company address is empty. Please enter company address.</value>
   </data>
+  <data name="khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai" xml:space="preserve">
+    <value>Account/Contact is not owned by you and your team. Please check again.</value>
+  </data>
 </root>

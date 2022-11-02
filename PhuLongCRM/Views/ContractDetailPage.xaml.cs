@@ -84,12 +84,12 @@ namespace PhuLongCRM.Views
                 AccountDetailPage newPage = new AccountDetailPage(viewModel.Contract.salesagentcompany_id);
                 newPage.OnCompleted = async (OnCompleted) =>
                 {
-                    if (OnCompleted == true)
+                    if (OnCompleted == 1)
                     {
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if (OnCompleted == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
