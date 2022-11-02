@@ -3492,4 +3492,10 @@
 	<data name="ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
     <value>Passport date grant can't be in the future.</value>
   </data>
+	<data name="ten_cong_ty_dang_bi_trong_ban_co_muon_dien_thong_tin_khong" xml:space="preserve">
+    <value>Name of company is empty. Do you want to enter name of company?</value>
+  </data>
+	<data name="dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty" xml:space="preserve">
+    <value>Company address is empty. Please enter company address.</value>
+  </data>
 </root>

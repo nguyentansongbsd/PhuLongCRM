@@ -2923,6 +2923,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Địa chỉ công ty đang bị trống. Vui lòng nhập địa chỉ công ty..
+        /// </summary>
+        internal static string dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty {
+            get {
+                return ResourceManager.GetString("dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Địa chỉ liên lạc.
         /// </summary>
         internal static string dia_chi_lien_lac {
@@ -8103,6 +8112,15 @@ namespace PhuLongCRM.Resources {
         internal static string ten_cong_ty {
             get {
                 return ResourceManager.GetString("ten_cong_ty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên công ty đang bị trống. Bạn có muốn nhập tên công ty?.
+        /// </summary>
+        internal static string ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty {
+            get {
+                return ResourceManager.GetString("ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty", resourceCulture);
             }
         }
         

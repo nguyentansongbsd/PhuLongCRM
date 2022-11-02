@@ -3492,4 +3492,10 @@
 	<data name="ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
     <value>Ngày cấp hộ chiếu không được thuộc tương lai.</value>
   </data>
+	<data name="ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty" xml:space="preserve">
+    <value>Tên công ty đang bị trống. Bạn có muốn nhập tên công ty?</value>
+  </data>
+	<data name="dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty" xml:space="preserve">
+    <value>Địa chỉ công ty đang bị trống. Vui lòng nhập địa chỉ công ty.</value>
+  </data>
 </root>
