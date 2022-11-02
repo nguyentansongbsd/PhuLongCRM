@@ -42,9 +42,8 @@
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="3" Text="{Binding fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
                                     </Grid>
-                                    <controls:FieldListViewItem Title="{x:Static lang:Language.ma_khach_hang}" Text="{Binding bsd_customercode}"/>
-                                    <controls:FieldListViewItem Title="{x:Static lang:Language.tieu_de}" Text="{Binding subject}"/>
                                     <controls:FieldListViewItem Title="{x:Static lang:Language.so_dien_thoai}" Text="{Binding mobilephone_format}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.email}" Text="{Binding emailaddress1}"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

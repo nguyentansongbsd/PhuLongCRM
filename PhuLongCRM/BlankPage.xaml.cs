@@ -37,29 +37,12 @@ namespace PhuLongCRM
 
         private async void Init()
         {
-            //try
-            //{
-            //    Firebase.Database.
+            try
+            {
                 
-            //    var options = FirebaseOptions.Builder()
-            //                .SetApplicationId("1:998946335721:android:94837bae80edd709fcb978")
-            //                .SetApiKey("AIzaSyC1p-TwiVz5Tb2Cj8zCN3iy4O-8qfeV1Kg")
-            //                .SetDatabaseUrl("https://sundihome-bsd.firebaseio.com")
-            //                .Build();
-
-
-            //    var collection = firebaseClient
-            //            .Child("test").Child("DirectSaleData")
-            //            .
-            //            .Subscribe(async (dbevent) =>
-            //            {
-
-            //            });
-            //}
-            //catch (Exception ex)
-            //{
-
-            //}
+            }
+            catch (Exception ex)
+            {}
 
         }
 

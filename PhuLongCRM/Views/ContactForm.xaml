@@ -132,7 +132,7 @@
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_the_can_cuoc}" Text="{Binding singleContact.bsd_identitycard}" FontSize="15" Keyboard="Numeric" Unfocused="CCCD_Unfocused" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap_the_can_cuoc}" Margin="0,10,0,0"/>
-                                <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_identitycarddategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap_the_can_cuoc}" ShowTime="False"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_identitycarddategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap_the_can_cuoc}" ShowTime="False" Date_Selected="datePickerNgayCapCCCD_Date_Selected"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap_the_can_cuoc}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Text="{Binding singleContact.bsd_placeofissueidentitycard}" Placeholder="{x:Static lang:Language.nhap_noi_cap_the_can_cuoc}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
@@ -141,7 +141,7 @@
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_cmnd}" Text="{Binding singleContact.bsd_identitycardnumber}" FontSize="15" Keyboard="Numeric" Unfocused="CMND_Unfocused" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" Margin="0,10,0,0"/>
-                                <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleContact.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False"/>
+                                <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleContact.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False" Date_Selected="datePickerNgayCap_Date_Selected"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Text="{Binding singleContact.bsd_placeofissue}" Placeholder="{x:Static lang:Language.nhap_noi_cap}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
@@ -150,7 +150,7 @@
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_ho_chieu}" Text="{Binding singleContact.bsd_passport}" FontSize="15" Unfocused="PassPort_Unfocused" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap_ho_chieu}" Margin="0,10,0,0"/>
-                                <controls:DatePickerBoderControl x:Name="datePickerNgayCapHoChieu" Date="{Binding singleContact.bsd_issuedonpassport}" Placeholder="{x:Static lang:Language.chon_ngay_cap_ho_chieu}" ShowTime="False"/>
+                                <controls:DatePickerBoderControl x:Name="datePickerNgayCapHoChieu" Date="{Binding singleContact.bsd_issuedonpassport}" Placeholder="{x:Static lang:Language.chon_ngay_cap_ho_chieu}" ShowTime="False" Date_Selected="datePickerNgayCapHoChieu_Date_Selected"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap_ho_chieu}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Text="{Binding singleContact.bsd_placeofissuepassport}" Placeholder="{x:Static lang:Language.nhap_noi_cap_ho_chieu}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>

@@ -232,6 +232,24 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (DateTime.Compare((DateTime)viewModel.singleContact.bsd_identitycarddategrant, DateTime.Now) == 1)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_cap_cccd_khong_duoc_thuoc_tuong_lai);
+                return;
+            }
+
+            if (DateTime.Compare((DateTime)viewModel.singleContact.bsd_dategrant, DateTime.Now) == 1)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_cap_cmnd_khong_duoc_thuoc_tuong_lai);
+                return;
+            }
+
+            if (DateTime.Compare((DateTime)viewModel.singleContact.bsd_issuedonpassport, DateTime.Now) == 1)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai);
+                return;
+            }
+
 
             viewModel.singleContact.bsd_localization = viewModel.singleLocalization != null && viewModel.singleLocalization.Val != null ? viewModel.singleLocalization.Val : null;
             viewModel.singleContact.gendercode = viewModel.singleGender != null && viewModel.singleGender.Val != null ? viewModel.singleGender.Val : null;
@@ -471,6 +489,39 @@ namespace PhuLongCRM.Views
             if (!StringFormatHelper.CheckValueID(viewModel.singleContact.bsd_passport, 8))
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
+            }
+        }
+
+        private void datePickerNgayCapHoChieu_Date_Selected(object sender, EventArgs e)
+        {
+            if (viewModel.singleContact != null && viewModel.singleContact.bsd_issuedonpassport != null)
+            {
+                if (DateTime.Compare((DateTime)viewModel.singleContact.bsd_issuedonpassport, DateTime.Now) == 1)
+                {
+                    ToastMessageHelper.ShortMessage(Language.ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai);
+                }
+            }
+        }
+
+        private void datePickerNgayCap_Date_Selected(object sender, EventArgs e)
+        {
+            if (viewModel.singleContact != null && viewModel.singleContact.bsd_dategrant != null)
+            {
+                if (DateTime.Compare((DateTime)viewModel.singleContact.bsd_dategrant, DateTime.Now) == 1)
+                {
+                    ToastMessageHelper.ShortMessage(Language.ngay_cap_cmnd_khong_duoc_thuoc_tuong_lai);
+                }
+            }
+        }
+
+        private void datePickerNgayCapCCCD_Date_Selected(object sender, EventArgs e)
+        {
+            if (viewModel.singleContact != null && viewModel.singleContact.bsd_identitycarddategrant != null)
+            {
+                if (DateTime.Compare((DateTime)viewModel.singleContact.bsd_identitycarddategrant, DateTime.Now) == 1)
+                {
+                    ToastMessageHelper.ShortMessage(Language.ngay_cap_cccd_khong_duoc_thuoc_tuong_lai);
+                }
             }
         }
     }

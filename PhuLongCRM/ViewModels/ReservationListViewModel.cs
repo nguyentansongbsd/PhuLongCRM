@@ -66,6 +66,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='statuscode' />
                         <attribute name='bsd_projectid' alias='bsd_project_id' />
                         <attribute name='quoteid' />
+                        <order attribute='statuscode' descending='true' />
                         <order attribute='createdon' descending='true' />
                         <filter type='and'>
                             <filter type='or'>

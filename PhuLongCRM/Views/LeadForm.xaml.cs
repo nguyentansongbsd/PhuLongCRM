@@ -381,6 +381,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                 return;
             }
+            if (viewModel.singleLead.bsd_dategrant != null && DateTime.Compare((DateTime)viewModel.singleLead.bsd_dategrant, DateTime.Now) == 1)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_duoc_thuoc_tuong_lai);
+                return;
+            }
             if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 10))
             {
                 ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
@@ -457,6 +462,17 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
                 return;
+            }
+        }
+
+        private void datePickerNgayCap_Date_Selected(object sender, EventArgs e)
+        {
+            if (viewModel.singleLead != null && viewModel.singleLead.bsd_dategrant != null)
+            {
+                if (DateTime.Compare((DateTime)viewModel.singleLead.bsd_dategrant, DateTime.Now) == 1)
+                {
+                    ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_duoc_thuoc_tuong_lai);
+                }
             }
         }
     }
