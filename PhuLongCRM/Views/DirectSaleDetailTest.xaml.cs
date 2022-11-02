@@ -56,6 +56,7 @@ namespace PhuLongCRM.Views
                     var floor = viewModel.Block.Floors[0];
                     floor.iShow = true;
                     await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                    SetRealTimeData();
                     OnCompleted?.Invoke(0);
                 }
                 else
@@ -81,6 +82,36 @@ namespace PhuLongCRM.Views
                 RefreshDirectSale = true;
                 NeedToRefreshDirectSale = false;
             }
+        }
+
+        public void SetRealTimeData()
+        {
+            var condition = viewModel.firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
+                .Subscribe(async (dbevent) =>
+                {
+                    if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete && dbevent.Object != null && viewModel.Block.Floors.Any(x => x.Units.Count != 0))
+                    {
+                        try
+                        {
+                            var item = dbevent.Object as ResponseRealtime;
+                            viewModel.Block.Floors.Where(x => x.Units.Count != 0).ToList().ForEach(x =>
+                            {
+                                var _unit = x.Units.SingleOrDefault(y => y.productid.ToString().ToLower() == item.id.ToLower());
+                                if (_unit != null)
+                                {
+                                    viewModel._currentUnit = new ResponseRealtime() { id = _unit.productid.ToString(), status = _unit.statuscode.ToString() };
+                                    _unit.statuscode = int.Parse(item.status);
+                                    viewModel.SetNumStatus(item.status);
+                                }
+                            });
+
+                        }
+                        catch (Exception ex)
+                        {
+                            ToastMessageHelper.LongMessage(ex.Message);
+                        }
+                    }
+                });
         }
 
         public async void Block_Tapped(object sender, EventArgs e)

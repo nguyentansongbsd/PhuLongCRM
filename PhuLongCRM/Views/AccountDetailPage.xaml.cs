@@ -16,7 +16,7 @@ namespace PhuLongCRM.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AccountDetailPage : ContentPage
     {
-        public Action<bool> OnCompleted;
+        public Action<int> OnCompleted;
         private Guid AccountId;
         public static bool? NeedToRefreshAccount = null;
         public static bool? NeedToRefreshMandatory = null;
@@ -44,10 +44,13 @@ namespace PhuLongCRM.Views
             {
                 SetButtonFloatingButton();
                 FromCustomer = new OptionSet { Val = viewModel.singleAccount.accountid.ToString(), Label = viewModel.singleAccount.bsd_name, Title = viewModel.CodeAccount };
-                OnCompleted?.Invoke(true);
+                if (viewModel.singleAccount.employee_id == UserLogged.Id)
+                    OnCompleted?.Invoke(1);//thanh cong
+                else
+                    OnCompleted?.Invoke(2);// KH khong thuoc employee dang dang nhap
             }
             else
-                OnCompleted?.Invoke(false);
+                OnCompleted?.Invoke(3); // khong tim thay thong tin
         }
 
         protected override async void OnAppearing()
@@ -397,12 +400,12 @@ namespace PhuLongCRM.Views
                 ContactDetailPage newPage = new ContactDetailPage(viewModel.PrimaryContact.contactid);
                 newPage.OnCompleted = async (OnCompleted) =>
                 {
-                    if (OnCompleted == true)
+                    if (OnCompleted == 1)
                     {
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(OnCompleted == 3)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

@@ -22,12 +22,6 @@ namespace PhuLongCRM.Config
         public const string Redirect_Uri = "https://crm.phulong.com/";
         public const string Scope = "offline_access https://phulongtmp.crm5.dynamics.com/.default";
 
-        //public const string TeantId = "1958ace9-e5ba-4d51-b458-cca319ff9b4f";
-        //public const string ClientId_ForUserCRM = "1d2267b7-2d9d-4b75-a45d-7531fe7b9494";
-        //public const string ClientSecret_ForUserCRM = "ZpH8Q~XRbEoDfJjPgGnBV3OwEVkiMBGNJJwhraRs";
-        //public const string Redirect_Uri = "https://facebook.com";
-        //public const string Scope = "https://org957ed874.crm5.dynamics.com/.default";
-
         //sharepoint
         public const string GraphApi = "https://graph.microsoft.com/v1.0/sites/";
         public const string GraphReSource = "https://graph.microsoft.com";
@@ -41,5 +35,9 @@ namespace PhuLongCRM.Config
         public const string Graph_UnitID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9Jbexk8sqGhRo1sfkXCtToT";
         public const string Graph_ProjectID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9KjQYISvhkOQa-rfMIz-6c1";
         public const string Graph_ContactID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9IJA2sWsXlLQZYTzjUp6JZC";
+
+        // Info Realtime
+        public const string LinkFireBase_RealTimeData = "https://phulong-aff10-default-rtdb.firebaseio.com/";
+        public const string AuthToken = "VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK";
     }
 }
