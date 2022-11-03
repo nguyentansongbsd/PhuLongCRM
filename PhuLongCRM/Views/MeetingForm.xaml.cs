@@ -139,14 +139,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_chu_de_cuoc_hop);
                 return;
             }
-            if (viewModel.CustomerMapping == null)
-            {
-                if (viewModel.Required == null || viewModel.Required.Count <= 0)
-                {
-                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_tham_du_bat_buoc);
-                    return;
-                }
-            }
             if (viewModel.MeetingModel.scheduledstart == null || viewModel.MeetingModel.scheduledend == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau);

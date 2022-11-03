@@ -10238,5 +10238,24 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("zip_code", resourceCulture);
             }
         }
+        
+        internal static string vui_long_chon_ngay {
+            get {
+                return ResourceManager.GetString("vui_long_chon_ngay", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_th" +
+                        "ong_tin", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
+            }
+        }
     }
 }

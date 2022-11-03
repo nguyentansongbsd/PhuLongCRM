@@ -3499,7 +3499,16 @@
     <value>Địa chỉ công ty đang bị trống. Vui lòng nhập địa chỉ công ty.</value>
   </data>
   <data name="khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai" xml:space="preserve">
-    <value>Khách hàng không thuộc sở hữu của bạn và nhóm của bạn. Vui lòng kiểm tra lại. </value>
+    <value>Khách hàng không thuộc sở hữu của bạn và nhóm của bạn. Vui lòng kiểm tra lại.</value>
+  </data>
+  <data name="vui_long_chon_ngay" xml:space="preserve">
+    <value>Vui lòng chọn ngày.</value>
+  </data>
+  <data name="ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Ngày được chọn không được nhỏ hơn ngày in phiếu tính giá. Vui lòng kiểm tra lại thông tin.</value>
+  </data>
+  <data name="ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Ngày được chọn không được thuộc tương lai. Vui lòng kiểm tra lại thông tin.</value>
   </data>
 	<data name="vui_long_nhap_so_ho_chieu" xml:space="preserve">
     <value>Vui lòng nhập số hộ chiếu.</value>

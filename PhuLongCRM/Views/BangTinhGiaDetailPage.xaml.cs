@@ -457,15 +457,38 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void SignQuotationClicked(object sender, EventArgs e)
+        private void SignQuotationClicked(object sender, EventArgs e)
         {
-            LoadingHelper.Show();
             if (viewModel.InstallmentList.Count == 0)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_tao_lich_thanh_toan);
-                LoadingHelper.Hide();
                 return;
             }
+
+            DateSign_CenterPopup.ShowCenterPopup();
+        }
+
+        private async void Confirm_SignQuotation(object sender, EventArgs e)
+        {
+            if (!viewModel.DateSign.HasValue)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_ngay);
+                return;
+            }
+
+            if (viewModel.DateSign.Value < viewModel.Reservation.bsd_quotationprinteddate)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_thong_tin);
+                return;
+            }
+
+            if (viewModel.DateSign.Value > DateTime.Now)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin);
+                return;
+            }
+
+            LoadingHelper.Show();
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
                 var res = await viewModel.SignQuotation();
@@ -480,8 +503,9 @@ namespace PhuLongCRM.Views
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
                     if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
-                    this.Title = Language.dat_coc_title;
-                    InitContract(true);
+                    //this.Title = Language.dat_coc_title;
+                    //InitContract(true);
+                    DateSign_CenterPopup.CloseContent();
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.bang_tinh_gia_da_duoc_ky);
                 }
