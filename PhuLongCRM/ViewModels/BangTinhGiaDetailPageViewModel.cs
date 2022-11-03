@@ -58,6 +58,9 @@ namespace PhuLongCRM.ViewModels
         private DiscountModel _discount;
         public DiscountModel Discount { get => _discount; set { _discount = value; OnPropertyChanged(nameof(Discount)); } }
 
+        private DateTime? _dateSign;
+        public DateTime? DateSign { get=>_dateSign; set { _dateSign = value;OnPropertyChanged(nameof(DateSign)); } }
+
         private bool _isRefreshing;
         public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
 
@@ -603,7 +606,7 @@ namespace PhuLongCRM.ViewModels
         {
             var model = new
             {
-                datesign = DateTime.Now.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") 
+                datesign = this.DateSign.Value.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") 
             };
 
             var json = JsonConvert.SerializeObject(model);

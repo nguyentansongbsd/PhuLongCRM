@@ -418,7 +418,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
 
             List<QueuesModel> data = result.value;
-            ShowMoreBtnGiuCho = data.Count < 10 ? false : true;
+            ShowMoreBtnGiuCho = data.Count < 5 ? false : true;
             foreach (var item in data)
             {
                 ListGiuCho.Add(item);

@@ -6791,9 +6791,40 @@ namespace PhuLongCRM.Resources {
             }
         }
         
+        internal static string ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty {
+            get {
+                return ResourceManager.GetString("ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty", resourceCulture);
+            }
+        }
+        
+        internal static string dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty {
+            get {
+                return ResourceManager.GetString("dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty", resourceCulture);
+            }
+        }
+        
         internal static string khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai {
             get {
                 return ResourceManager.GetString("khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_chon_ngay {
+            get {
+                return ResourceManager.GetString("vui_long_chon_ngay", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_th" +
+                        "ong_tin", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
             }
         }
     }
