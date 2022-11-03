@@ -299,20 +299,25 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
-                if (await viewModel.DeactiveInstallment())
+                bool confirm = await DisplayAlert(Language.xoa_lich_thanh_toan, Language.ban_co_muon_xoa_lich_thanh_toan_nay_khong, Language.co, Language.khong);
+                if (confirm)
                 {
-                    NeedToRefresh = true;
-                    NeedToRefreshInstallment = true;
-                    OnAppearing();
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.da_xoa_lich_thanh_toan);
-                }
-                else
-                {
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.xoa_lich_thanh_toan_that_bai_vui_long_thu_lai);
+                    if (await viewModel.DeactiveInstallment())
+                    {
+                        NeedToRefresh = true;
+                        NeedToRefreshInstallment = true;
+                        OnAppearing();
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.da_xoa_lich_thanh_toan);
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.xoa_lich_thanh_toan_that_bai_vui_long_thu_lai);
+                    }
                 }
             }
+            LoadingHelper.Hide();
         }
 
         private async void ConfirmSigning(object sender, EventArgs e)
@@ -515,8 +520,8 @@ namespace PhuLongCRM.Views
         private async void CancelQuotes(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string options = await DisplayActionSheet(Language.huy_bang_tinh_gia, Language.dong, Language.xac_nhan);
-            if (options == Language.xac_nhan)
+            bool confirm = await DisplayAlert(Language.huy_bang_tinh_gia, Language.ban_co_muon_huy_bang_tinh_gia_nay_khong, Language.co, Language.khong);
+            if (confirm)
             {
                 viewModel.Reservation.statecode = 3;
                 viewModel.Reservation.statuscode = 6;
@@ -700,26 +705,31 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
-                LoadingHelper.Show();
-                if (await viewModel.CancelDeposit())
+                bool confirm = await DisplayAlert(Language.huy_dat_coc, Language.ban_co_muon_huy_dat_coc_nay_khong, Language.co, Language.khong);
+                if (confirm)
                 {
-                    NeedToRefresh = true;
-                    OnAppearing();
-                    if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
-                    if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
-                    if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
-                    if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
-                    if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
-                    if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
-                    if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.da_huy_dat_coc);
+                    LoadingHelper.Show();
+                    if (await viewModel.CancelDeposit())
+                    {
+                        NeedToRefresh = true;
+                        OnAppearing();
+                        if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
+                        if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
+                        if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
+                        if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
+                        if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
+                        if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
+                        if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.da_huy_dat_coc);
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.huy_dat_coc_that_bai_vui_long_thu_lai);
+                    }
                 }
-                else
-                {
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.huy_dat_coc_that_bai_vui_long_thu_lai);
-                }
+                LoadingHelper.Hide();
             }
         }
 

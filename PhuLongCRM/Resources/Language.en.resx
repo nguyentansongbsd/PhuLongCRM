@@ -3501,6 +3501,18 @@
   <data name="khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai" xml:space="preserve">
     <value>Account/Contact is not owned by you and your team. Please check again.</value>
   </data>
+	<data name="vui_long_nhap_so_ho_chieu" xml:space="preserve">
+    <value>Please enter passport.</value>
+  </data>
+	<data name="ban_co_muon_huy_dat_coc_nay_khong" xml:space="preserve">
+    <value>Do you want to cancel this reservation?</value>
+  </data>
+	<data name="ban_co_muon_xoa_lich_thanh_toan_nay_khong" xml:space="preserve">
+    <value>Do you want to clear this installment?</value>
+  </data>
+	<data name="ban_co_muon_huy_bang_tinh_gia_nay_khong" xml:space="preserve">
+    <value>Do you want to cancel this quotation?</value>
+  </data>
   <data name="vui_long_chon_ngay" xml:space="preserve">
     <value>Please choose date.</value>
   </data>

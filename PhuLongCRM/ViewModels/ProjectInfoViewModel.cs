@@ -390,6 +390,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='opportunityid' />
                                 <attribute name='bsd_queuenumber' />
                                 <attribute name='bsd_queueforproject' />
+                                <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='bsd_bookingtime' descending='false' />
                                 <filter type='and'>
                                     <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
@@ -421,6 +422,14 @@ namespace PhuLongCRM.ViewModels
             ShowMoreBtnGiuCho = data.Count < 5 ? false : true;
             foreach (var item in data)
             {
+                if (!string.IsNullOrWhiteSpace(item.contact_name))
+                {
+                    item.customer_name = item.contact_name;
+                }
+                else if (!string.IsNullOrWhiteSpace(item.account_name))
+                {
+                    item.customer_name = item.account_name;
+                }
                 ListGiuCho.Add(item);
             }
         }

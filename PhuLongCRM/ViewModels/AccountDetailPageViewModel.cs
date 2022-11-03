@@ -213,6 +213,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='statuscode' />
                                 <attribute name='bsd_queuenumber' />
                                 <attribute name='bsd_queueforproject' />
+                                <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     <condition attribute='parentaccountid' operator='eq' uitype='account' value='{accountid}' />

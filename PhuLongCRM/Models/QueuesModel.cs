@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Helper;
+using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -68,5 +69,10 @@ namespace PhuLongCRM.Models
                     return 0;
             }
         }
+        public decimal bsd_queuingfeepaid { get; set; }
+        public string bsd_queuingfeepaid_format { get => StringFormatHelper.FormatCurrency(bsd_queuingfeepaid); }
+
+        private string _customer_name;
+        public string customer_name { get => _customer_name; set { _customer_name = value; OnPropertyChanged(nameof(customer_name)); } }
     }
 }

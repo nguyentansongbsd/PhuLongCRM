@@ -614,8 +614,6 @@ namespace PhuLongCRM.Views
                         new RowDefinition{Height = GridLength.Auto },
                         new RowDefinition{Height = GridLength.Auto },
                         new RowDefinition{Height = GridLength.Auto },
-                        new RowDefinition{Height = GridLength.Auto },
-                        new RowDefinition{Height = GridLength.Auto },
                     }
                     ,
                         ColumnDefinitions =
@@ -673,22 +671,6 @@ namespace PhuLongCRM.Views
                     Grid.SetRow(fieldKH, 1);
                     Grid.SetColumnSpan(fieldKH, 2);
 
-                    //du an
-                    StackLayout stackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-                    FieldListViewItem fieldProject = new FieldListViewItem { TitleTextColor = Color.FromHex("#444444"), Title = Language.du_an, TextColor = Color.FromHex("#444444") };
-                    fieldProject.SetBinding(FieldListViewItem.TextProperty, "project_name");
-                    stackLayout.Children.Add(fieldProject);
-                    // thien chi
-                    Label labelThienChi = new Label { FontSize = 15, TextColor = Color.FromHex("#444444")};
-                    labelThienChi.SetBinding(Label.TextProperty, new Binding() { Source = Language.thien_chi, StringFormat = "- {0}" });
-                    labelThienChi.SetBinding(Label.IsVisibleProperty, new Binding("bsd_queueforproject"));
-                    stackLayout.Children.Add(labelThienChi);
-
-                    grid.Children.Add(stackLayout);
-                    Grid.SetColumn(stackLayout, 0);
-                    Grid.SetRow(stackLayout, 2);
-                    Grid.SetColumnSpan(stackLayout, 2);
-
                     // thoi gian het han
                     FieldListViewItem fieldDate = new FieldListViewItem { TitleTextColor = Color.FromHex("#444444"), Title = Language.thoi_gian_het_han, TextColor = Color.FromHex("#444444") };
                     fieldDate.SetBinding(FieldListViewItem.TextProperty, new Binding("bsd_queuingexpired") { StringFormat = "{0:dd/MM/yyyy - HH:mm}" });
@@ -704,13 +686,6 @@ namespace PhuLongCRM.Views
                     Grid.SetColumn(fieldPaid, 0);
                     Grid.SetRow(fieldPaid, 4);
                     Grid.SetColumnSpan(fieldPaid, 2);
-                    //da_thanh_toan_phi_giu_cho
-                    FieldListViewItem fieldPaid2 = new FieldListViewItem { TitleTextColor = Color.FromHex("#444444"), Title = Language.da_thanh_toan_phi_giu_cho, TextColor = Color.Red, FontAttributes=FontAttributes.Bold };
-                    fieldPaid2.SetBinding(FieldListViewItem.TextProperty, "bsd_collectedqueuingfee_format");
-                    grid.Children.Add(fieldPaid2);
-                    Grid.SetColumn(fieldPaid2, 0);
-                    Grid.SetRow(fieldPaid2, 5);
-                    Grid.SetColumnSpan(fieldPaid2, 2);
 
                     return new ViewCell { View = grid };
                 });

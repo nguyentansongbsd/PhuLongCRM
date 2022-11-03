@@ -3510,4 +3510,16 @@
   <data name="ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
     <value>Ngày được chọn không được thuộc tương lai. Vui lòng kiểm tra lại thông tin.</value>
   </data>
+	<data name="vui_long_nhap_so_ho_chieu" xml:space="preserve">
+    <value>Vui lòng nhập số hộ chiếu.</value>
+  </data>
+	<data name="ban_co_muon_huy_dat_coc_nay_khong" xml:space="preserve">
+    <value>Bạn có muốn hủy đặt cọc này không?</value>
+  </data>
+	<data name="ban_co_muon_xoa_lich_thanh_toan_nay_khong" xml:space="preserve">
+    <value>Bạn có muốn xóa lịch thanh toán này không?</value>
+  </data>
+	<data name="ban_co_muon_huy_bang_tinh_gia_nay_khong" xml:space="preserve">
+    <value>Bạn có muốn hủy bảng tính giá này không?</value>
+  </data>
 </root>

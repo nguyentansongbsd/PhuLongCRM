@@ -64,6 +64,12 @@ namespace PhuLongCRM.ViewModels
 
         private AddressModel _addressCopy;
         public AddressModel AddressCopy { get => _addressCopy; set { _addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
+
+        private OptionSet _typeIdCard;
+        public OptionSet TypeIdCard { get => _typeIdCard; set { _typeIdCard = value; OnPropertyChanged(nameof(TypeIdCard)); } }
+
+        private List<OptionSet> _typeIdCardss;
+        public List<OptionSet> TypeIdCards { get => _typeIdCardss; set { _typeIdCardss = value; OnPropertyChanged(nameof(TypeIdCards)); } }
         public ContactFormViewModel()
         {
             singleContact = new ContactFormModel();
@@ -116,6 +122,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_identitycard' />
                                 <attribute name='bsd_identitycarddategrant' />
                                 <attribute name='bsd_placeofissueidentitycard' />
+                                <attribute name='bsd_typeofidcardlead' />
                                 <attribute name='bsd_customercode' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
@@ -169,6 +176,11 @@ namespace PhuLongCRM.ViewModels
             else
                 IsOfficial = true;
 
+            if (!string.IsNullOrWhiteSpace(singleContact.bsd_typeofidcardlead))
+            {
+                TypeIdCard = TypeIdCardData.GetTypeIdCardById(singleContact.bsd_typeofidcardlead);
+            }
+
             Address1 = new AddressModel
             {
                 country_id = singleContact._bsd_country_value,
@@ -198,7 +210,7 @@ namespace PhuLongCRM.ViewModels
                 address = singleContact.bsd_permanentaddress1,
                 lineaddress = singleContact.bsd_permanentaddress
             };
-            await GetImageCMND();        
+            await GetImageCMND();
         }
 
         public async Task<CrmApiResponse> updateContact(ContactFormModel contact)
@@ -259,6 +271,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_identitycard"] = contact.bsd_identitycard;
             data["bsd_identitycarddategrant"] = contact.bsd_identitycarddategrant.HasValue ? (DateTime.Parse(contact.bsd_identitycarddategrant.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
             data["bsd_placeofissueidentitycard"] = contact.bsd_placeofissueidentitycard;
+            data["bsd_typeofidcardlead"] = this.TypeIdCard?.Val;
             //  data["bsd_housenumberstreet"] = contact.bsd_housenumberstreet;
             //  data["bsd_contactaddress"] = contact.bsd_contactaddress;
             //  data["bsd_diachi"] = contact.bsd_diachi;

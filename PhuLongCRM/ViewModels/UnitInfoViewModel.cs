@@ -157,6 +157,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='opportunityid' />
                         <attribute name='bsd_queuenumber' />
                         <attribute name='bsd_queueforproject' />
+                        <attribute name='bsd_queuingfeepaid' />
                         <order attribute='statecode' descending='false' />
                         <order attribute='statuscode' descending='true' />
                         <filter type='and'>
@@ -191,6 +192,14 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var item in data)
             {
+                if (!string.IsNullOrWhiteSpace(item.contact_name))
+                {
+                    item.customer_name = item.contact_name;
+                }
+                else if (!string.IsNullOrWhiteSpace(item.account_name))
+                {
+                    item.customer_name = item.account_name;
+                }
                 list_danhsachdatcho.Add(item);
             }
             List<QueuesModel> list_sort = new List<QueuesModel>();
