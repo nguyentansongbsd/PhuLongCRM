@@ -511,7 +511,7 @@ namespace PhuLongCRM.Views
         }
         private async void HuyGC(object sender, EventArgs e)
         {
-            bool confirm = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_huy_giu_cho_nay_khong, Language.dong_y, Language.huy);
+            bool confirm = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_huy_giu_cho_nay_khong, Language.co, Language.khong);
             if (confirm == false) return;
 
             string url_action = "";

@@ -3501,4 +3501,16 @@
   <data name="khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai" xml:space="preserve">
     <value>Khách hàng không thuộc sở hữu của bạn và nhóm của bạn. Vui lòng kiểm tra lại. </value>
   </data>
+	<data name="vui_long_nhap_so_ho_chieu" xml:space="preserve">
+    <value>Vui lòng nhập số hộ chiếu.</value>
+  </data>
+	<data name="ban_co_muon_huy_dat_coc_nay_khong" xml:space="preserve">
+    <value>Bạn có muốn hủy đặt cọc này không?</value>
+  </data>
+	<data name="ban_co_muon_xoa_lich_thanh_toan_nay_khong" xml:space="preserve">
+    <value>Bạn có muốn xóa lịch thanh toán này không?</value>
+  </data>
+	<data name="ban_co_muon_huy_bang_tinh_gia_nay_khong" xml:space="preserve">
+    <value>Bạn có muốn hủy bảng tính giá này không?</value>
+  </data>
 </root>

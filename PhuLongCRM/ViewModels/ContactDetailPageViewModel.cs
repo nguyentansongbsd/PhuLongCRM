@@ -233,6 +233,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='opportunityid' />
                                 <attribute name='bsd_queuenumber' />
                                 <attribute name='bsd_queueforproject' />
+                                <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='parentcontactid' operator='eq' uitype='contact' value='{customerId}' />
