@@ -203,7 +203,7 @@ namespace PhuLongCRM.Views
             data["leadid"] = leadFormModel.leadid;
             data["subject"] = leadFormModel.bsd_topic_label;
             data["lastname"] = leadFormModel.lastname;
-            data["bsd_topic@odata.bind"] = "/bsd_topics(B564BDFC-50E2-EC11-BB3D-00224859CF8A)"; //Khách hàng tiềm năng APP
+            data["bsd_topic@odata.bind"] = $"/bsd_topics({Config.OrgConfig.Lead_Topic})";
             data["leadsourcecode"] = "10"; //Orther
             data["telephone1"] = "+84";
 

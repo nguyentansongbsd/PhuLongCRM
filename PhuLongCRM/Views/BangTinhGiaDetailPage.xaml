@@ -783,6 +783,17 @@
                     </StackLayout>
                 </controls:CenterPopup.Body>
             </controls:CenterPopup>
+
+            <controls:CenterPopup x:Name="DateSign_CenterPopup" Title="{x:Static lang:Language.ky_bang_tinh_gia}">
+                <controls:CenterPopup.Body>
+                    <StackLayout Padding="10,0">
+                        <controls:FormLabelRequired Text="{x:Static lang:Language.chon_ngay}" VerticalOptions="Center"/>
+                        <controls:DatePickerBoderControl Date="{Binding DateSign}" Placeholder="{x:Static lang:Language.chon_ngay}" ShowTime="False"/>
+
+                        <Button Text="{x:Static lang:Language.xac_nhan}" Clicked="Confirm_SignQuotation" CornerRadius="5" TextColor="White" HorizontalOptions="End" HeightRequest="40" FontAttributes="Bold"  BorderColor="{x:StaticResource NavigationPrimary}" BorderWidth="1" BackgroundColor="{x:StaticResource NavigationPrimary}"/>
+                    </StackLayout>
+                </controls:CenterPopup.Body>
+            </controls:CenterPopup>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

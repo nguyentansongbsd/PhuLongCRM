@@ -59,9 +59,39 @@
                             </Grid>
                         </StackLayout>
                     </telerikPrimitives:RadBorder>
-                    <controls:TabControl ListTab="thong_tin_title,thong_tin_tai_lieu_title" IndexTab="TabControl_IndexTab"/>
+                    <controls:TabControl ListTab="thong_tin_tai_lieu_title,thong_tin_title" IndexTab="TabControl_IndexTab"/>
 
-                    <StackLayout x:Name="ThongTin" IsVisible="true">
+                    <!--DATAGRID SALES LITERATURE ITEM   -->
+                    <StackLayout Spacing="0" x:Name="ThongTinTaiLieu" IsVisible="true">
+                        <StackLayout BindableLayout.ItemsSource="{Binding list_salesliteratureitem}" BackgroundColor="#dddddd" Spacing="1">
+                            <BindableLayout.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                </DataTemplate>
+                            </BindableLayout.EmptyViewTemplate>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout BackgroundColor="White" Padding="15,10" >
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PdfFile_Tapped" CommandParameter="{Binding .}"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                                            <Label Grid.Column="0" Text="{Binding title_label}" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" FontSize="16"/>
+                                            <Label Grid.Column="1" Text="{Binding modifiedon,StringFormat='{0:dd/MM/yyyy}'}" FontSize="15" TextColor="#666666" Padding="5"/>
+                                        </Grid>
+                                        <StackLayout BackgroundColor="White" Orientation="Horizontal" Spacing="10" >
+                                            <Label Text="&#xf1c1;" FontFamily="FontAwesomeSolid" FontSize="18" TextColor="Red" VerticalOptions="Start"/>
+                                            <Label Text="{Binding filename}" FontSize="13" TextColor="#444444" VerticalOptions="Center"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                        <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
+                        <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreTaiLieu_Clicked" IsVisible="{Binding ShowMoreTaiLieu}" Margin="0,10" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout x:Name="ThongTin" IsVisible="false">
                         <!--DATAGRID THONG TIN UNIT   -->
                         <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander">
                             <telerikPrimitives:RadExpander.Header>
@@ -97,7 +127,7 @@
                                         </BindableLayout.ItemTemplate>
                                     </StackLayout>
                                     <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
-                                    <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreThongTinUnit_Clicked" IsVisible="{Binding ShowMoreThongTinUnit}" Margin="0,10" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
+                                    <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreThongTinUnit_Clicked" IsVisible="{Binding ShowMoreThongTinUnit}" Margin="10,5" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
                                 </StackLayout>
                             </telerikPrimitives:RadExpander.Content>
                         </telerikPrimitives:RadExpander>
@@ -137,35 +167,6 @@
                         </telerikPrimitives:RadExpander>
                     </StackLayout>
 
-                    <!--DATAGRID SALES LITERATURE ITEM   -->
-                    <StackLayout Spacing="0" x:Name="ThongTinTaiLieu" IsVisible="false">
-                        <StackLayout BindableLayout.ItemsSource="{Binding list_salesliteratureitem}" BackgroundColor="#dddddd" Spacing="1">
-                            <BindableLayout.EmptyViewTemplate>
-                                <DataTemplate>
-                                    <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
-                                </DataTemplate>
-                            </BindableLayout.EmptyViewTemplate>
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout BackgroundColor="White" Padding="15,10" >
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="PdfFile_Tapped" CommandParameter="{Binding .}"/>
-                                        </StackLayout.GestureRecognizers>
-                                        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-                                            <Label Grid.Column="0" Text="{Binding title_label}" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" FontSize="16"/>
-                                            <Label Grid.Column="1" Text="{Binding modifiedon,StringFormat='{0:dd/MM/yyyy}'}" FontSize="15" TextColor="#666666" Padding="5"/>
-                                        </Grid>
-                                        <StackLayout BackgroundColor="White" Orientation="Horizontal" Spacing="10" >
-                                            <Label Text="&#xf1c1;" FontFamily="FontAwesomeSolid" FontSize="18" TextColor="Red" VerticalOptions="Start"/>
-                                            <Label Text="{Binding filename}" FontSize="13" TextColor="#444444" VerticalOptions="Center"/>
-                                        </StackLayout>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </StackLayout>
-                        <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
-                        <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreTaiLieu_Clicked" IsVisible="{Binding ShowMoreTaiLieu}" Margin="0,10" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
-                    </StackLayout>
                 </StackLayout>
             </ScrollView>
         </AbsoluteLayout>

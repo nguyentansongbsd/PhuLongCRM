@@ -31,7 +31,7 @@ namespace PhuLongCRM.Views
 
         private async void Init()
         {
-            await Task.WhenAll(viewModel.loadData(), viewModel.loadUnit(), viewModel.loadDoiThuCanhTranh());
+            await Task.WhenAll(viewModel.loadData(), viewModel.loadDoiThuCanhTranh(), viewModel.loadAllSalesLiteratureIten());
             
             if (viewModel.TaiLieuKinhDoanh != null)
             {
@@ -98,19 +98,20 @@ namespace PhuLongCRM.Views
             {
                 if ((int)e.Item == 0)
                 {
-                    ThongTin.IsVisible = true;
-                    ThongTinTaiLieu.IsVisible = false;
+                    ThongTin.IsVisible = false;
+                    ThongTinTaiLieu.IsVisible = true;
+                    
                 }
                 else if ((int)e.Item == 1)
                 {
-                    if (viewModel.list_salesliteratureitem != null && viewModel.list_salesliteratureitem.Count <= 0)
+                    if (viewModel.list_thongtinunit != null && viewModel.list_thongtinunit.Count == 0)
                     {
                         LoadingHelper.Show();
-                        await viewModel.loadAllSalesLiteratureIten();
+                        await viewModel.loadUnit();
                         LoadingHelper.Hide();
                     }
-                    ThongTin.IsVisible = false;
-                    ThongTinTaiLieu.IsVisible = true;
+                    ThongTin.IsVisible = true;
+                    ThongTinTaiLieu.IsVisible = false;
                 }
             }
         }
