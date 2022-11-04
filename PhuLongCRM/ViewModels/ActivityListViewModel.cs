@@ -95,6 +95,7 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='activityid' />
                                         <attribute name='scheduledstart' />
                                         <attribute name='scheduledend' />
+                                        <order attribute='statecode' descending='true' />
                                         <order attribute='modifiedon' descending='true' />
                                         <filter type='and'>
                                             <filter type='or'>

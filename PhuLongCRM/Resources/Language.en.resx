@@ -1189,7 +1189,7 @@
     <value>Error. Please try again.</value>
   </data>
 	<data name="bang_tinh_gia_da_duoc_ky" xml:space="preserve">
-    <value>Quotation signed</value>
+    <value>Quotation signed.</value>
   </data>
 	<data name="ky_bang_tinh_gia_that_bai_vui_long_thu_lai" xml:space="preserve">
     <value>Error. Please try again.</value>
@@ -3513,6 +3513,15 @@
 	<data name="ban_co_muon_huy_bang_tinh_gia_nay_khong" xml:space="preserve">
     <value>Do you want to cancel this quotation?</value>
   </data>
+	<data name="vui_long_chon_quoc_gia" xml:space="preserve">
+    <value>Please choose country.</value>
+  </data>
+	<data name="vui_long_chon_tinh_thanh" xml:space="preserve">
+    <value>Please choose province.</value>
+  </data>
+	<data name="vui_long_chon_quan_huyen" xml:space="preserve">
+    <value>Please choose district.</value>
+		</data>
   <data name="vui_long_chon_ngay" xml:space="preserve">
     <value>Please choose date.</value>
   </data>

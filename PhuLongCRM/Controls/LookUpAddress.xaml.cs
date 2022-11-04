@@ -49,7 +49,7 @@ namespace PhuLongCRM.Controls
 
         public static readonly BindableProperty AddressProperty = BindableProperty.Create(nameof(Address), typeof(string), typeof(LookUpAddress), null, BindingMode.TwoWay);
         public string Address { get => (string)GetValue(AddressProperty); set { SetValue(AddressProperty, value); } }
-        private StackLayout stackLayoutMain { get; set; }
+        private KeyboardView stackLayoutMain { get; set; }
         private Grid gridFooter { get; set; }
 
         public static readonly BindableProperty AddressCopyProperty = BindableProperty.Create(nameof(AddressCopy), typeof(AddressModel), typeof(LookUpAddress), null, BindingMode.TwoWay, propertyChanged: AddressCopyChang);
@@ -128,10 +128,10 @@ namespace PhuLongCRM.Controls
         }
         private void setLookUp()
         {
-            stackLayoutMain = new StackLayout();
+            stackLayoutMain = new KeyboardView();
             stackLayoutMain.Padding = 10;
 
-            FormLabel lbCountry = new FormLabel();
+            FormLabelRequired lbCountry = new FormLabelRequired();
             lbCountry.Text = Language.quoc_gia;
             stackLayoutMain.Children.Add(lbCountry);
 
@@ -152,7 +152,7 @@ namespace PhuLongCRM.Controls
             };
             lookUpCountry.SelectedItemChange += LookUpCountry_SelectedItemChange;
 
-            FormLabel lbProvince = new FormLabel();
+            FormLabelRequired lbProvince = new FormLabelRequired();
             lbProvince.Text = Language.tinh_thanh;
             stackLayoutMain.Children.Add(lbProvince);
 
@@ -167,7 +167,7 @@ namespace PhuLongCRM.Controls
             stackLayoutMain.Children.Add(lookUpProvince);
             lookUpProvince.SelectedItemChange += LookUpProvince_SelectedItemChange;
 
-            FormLabel lbDistrict = new FormLabel();
+            FormLabelRequired lbDistrict = new FormLabelRequired();
             lbDistrict.Text = Language.quan_huyen;
             stackLayoutMain.Children.Add(lbDistrict);
 
@@ -433,6 +433,21 @@ namespace PhuLongCRM.Controls
         {
             List<string> _address = new List<string>();
             List<string> _address_en = new List<string>();
+            if(Country == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_quoc_gia);
+                return;
+            }
+            if (Province == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_tinh_thanh);
+                return;
+            }
+            if (District == null)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_quan_huyen);
+                return;
+            }
             if (string.IsNullOrWhiteSpace(LineAddress))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_nha_duong_phuong);
