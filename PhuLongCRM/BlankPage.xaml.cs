@@ -28,12 +28,15 @@ namespace PhuLongCRM
         public OptionSet DiscountList { get; set; }
         public List<OptionSet> DiscountLists { get; set; }
         public bool IsLocked { get; set; }
+
+        public string Num { get; set; } = "+84-";
+
         public BlankPage()
         {
             InitializeComponent();
             this.BindingContext = this;
 
-            Init();
+            //Init();
         }
 
         private async void Init()

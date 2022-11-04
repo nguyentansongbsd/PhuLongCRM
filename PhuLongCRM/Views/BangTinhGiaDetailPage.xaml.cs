@@ -173,7 +173,7 @@ namespace PhuLongCRM.Views
                 }
                 if (!viewModel.Reservation.bsd_quotationprinteddate.HasValue)
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, Confirm_Quotation));
                 }
                 viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeRegular", "\uf273", null, CancelQuotes));
                 if (viewModel.InstallmentList.Count > 0 && viewModel.Reservation.bsd_quotationprinteddate != null)
@@ -320,21 +320,25 @@ namespace PhuLongCRM.Views
             LoadingHelper.Hide();
         }
 
-        private async void ConfirmSigning(object sender, EventArgs e)
+        private void Confirm_Quotation(object sender, EventArgs e)
         {
-            LoadingHelper.Show();
             if (viewModel.Reservation.bsd_quotationprinteddate.HasValue)
             {
                 ToastMessageHelper.ShortMessage(Language.da_xac_nhan_in);
-                LoadingHelper.Hide();
                 return;
             }
             if (viewModel.InstallmentList.Count == 0)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_tao_lich_thanh_toan);
-                LoadingHelper.Hide();
                 return;
             }
+
+            ConfigQuota_CenterPopup.ShowCenterPopup();
+        }
+
+        private async void ConfirmSigning(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
             bool isSuccess = await viewModel.ConfirmSinging();
             if (isSuccess)
             {
@@ -342,13 +346,20 @@ namespace PhuLongCRM.Views
                 NeedToRefreshInstallment = true;
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                 OnAppearing();
+                ConfigQuota_CenterPopup.CloseContent();
                 ToastMessageHelper.ShortMessage(Language.xac_nhan_in_thanh_cong);
+                LoadingHelper.Hide();
             }
             else
             {
+                LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.xac_nhan_in_that_bai);
             }
-            LoadingHelper.Hide();
+        }
+
+        private void Cancel_ConfirmSigning(object sender, EventArgs e)
+        {
+            ConfigQuota_CenterPopup.CloseContent();
         }
 
         private async void ConfirmReservation(object sender, EventArgs e)

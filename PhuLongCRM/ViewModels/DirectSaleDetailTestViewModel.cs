@@ -41,47 +41,61 @@ namespace PhuLongCRM.ViewModels
             Blocks = new ObservableCollection<Block>();
         }
 
-        public void SetNumStatus(string UnitStatusAffterChange)
+        public void SetNumStatus(string UnitStatusAffterChange,Guid floorId)
         {
             try
             {
+                var floor = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId);
+
                 switch (this._currentUnit.status)
                 {
                     case "1":
                         this.Block.NumChuanBiInBlock--;
+                        floor.NumChuanBiInFloor--;
                         break;
                     case "100000000":
                         this.Block.NumSanSangInBlock--;
+                        floor.NumSanSangInFloor--;
                         break;
                     case "100000007":
                         this.Block.NumBookingInBlock--;
+                        floor.NumBookingInFloor--;
                         break;
                     case "100000004":
                         this.Block.NumGiuChoInBlock--;
+                        floor.NumGiuChoInFloor--;
                         break;
                     case "100000006":
                         this.Block.NumDatCocInBlock--;
+                        floor.NumDatCocInFloor--;
                         break;
                     case "100000005":
                         this.Block.NumDongYChuyenCoInBlock--;
+                        floor.NumDongYChuyenCoInFloor--;
                         break;
                     case "100000003":
                         this.Block.NumDaDuTienCocInBlock--;
+                        floor.NumDaDuTienCocInFloor--;
                         break;
                     case "100000010":
                         this.Block.NumOptionInBlock--;
+                        floor.NumOptionInFloor--;
                         break;
                     case "100000001":
                         this.Block.NumThanhToanDot1InBlock--;
+                        floor.NumThanhToanDot1InFloor--;
                         break;
                     case "100000009":
                         this.Block.NumSignedDAInBlock--;
+                        floor.NumSignedDAInFloor--;
                         break;
                     case "100000008":
                         this.Block.NumQualifiedInBlock--;
+                        floor.NumQualifiedInFloor--;
                         break;
                     case "100000002":
                         this.Block.NumDaBanInBlock--;
+                        floor.NumDaBanInFloor--;
                         break;
                     default:
                         break;
@@ -90,39 +104,51 @@ namespace PhuLongCRM.ViewModels
                 {
                     case "1":
                         this.Block.NumChuanBiInBlock++;
+                        floor.NumChuanBiInFloor++;
                         break;
                     case "100000000":
                         this.Block.NumSanSangInBlock++;
+                        floor.NumSanSangInFloor++;
                         break;
                     case "100000007":
                         this.Block.NumBookingInBlock++;
+                        floor.NumBookingInFloor++;
                         break;
                     case "100000004":
                         this.Block.NumGiuChoInBlock++;
+                        floor.NumGiuChoInFloor++;
                         break;
                     case "100000006":
                         this.Block.NumDatCocInBlock++;
+                        floor.NumDatCocInFloor++;
                         break;
                     case "100000005":
                         this.Block.NumDongYChuyenCoInBlock++;
+                        floor.NumDongYChuyenCoInFloor++;
                         break;
                     case "100000003":
                         this.Block.NumDaDuTienCocInBlock++;
+                        floor.NumDaDuTienCocInFloor++;
                         break;
                     case "100000010":
                         this.Block.NumOptionInBlock++;
+                        floor.NumOptionInFloor++;
                         break;
                     case "100000001":
                         this.Block.NumThanhToanDot1InBlock++;
+                        floor.NumThanhToanDot1InFloor++;
                         break;
                     case "100000009":
                         this.Block.NumSignedDAInBlock++;
+                        floor.NumSignedDAInFloor++;
                         break;
                     case "100000008":
                         this.Block.NumQualifiedInBlock++;
+                        floor.NumQualifiedInFloor++;
                         break;
                     case "100000002":
                         this.Block.NumDaBanInBlock++;
+                        floor.NumDaBanInFloor++;
                         break;
                     default:
                         break;
@@ -133,6 +159,14 @@ namespace PhuLongCRM.ViewModels
 
             }
             
+        }
+
+        public void ChangeStatusUnitPopup(ResponseRealtime item)
+        {
+            if (this.Unit != null && this.Unit.productid == Guid.Parse(item.id))
+            {
+                this.Unit.statuscode = int.Parse(item.status);
+            }
         }
 
         public async Task LoadTotalDirectSale()

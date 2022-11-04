@@ -9,7 +9,7 @@ namespace PhuLongCRM.ViewModels
 {
     public class DirectSaleViewModel : BaseViewModel
     {
-        public ObservableCollection<ProjectList> Projects { get; set; } = new ObservableCollection<ProjectList>();
+        public ObservableCollection<ProjectListModel> Projects { get; set; } = new ObservableCollection<ProjectListModel>();
         public ObservableCollection<OptionSet> PhasesLaunchs { get; set; } = new ObservableCollection<OptionSet>();
         
         private List<OptionSetFilter> _viewOptions;
@@ -51,8 +51,8 @@ namespace PhuLongCRM.ViewModels
         private string _unitCode;
         public string UnitCode { get => _unitCode; set { _unitCode = value; OnPropertyChanged(nameof(UnitCode)); } }
 
-        private ProjectList _project;
-        public ProjectList Project
+        private ProjectListModel _project;
+        public ProjectListModel Project
         {
             get => _project;
             set
@@ -100,7 +100,7 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                   </entity>
                             </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ProjectList>>("bsd_projects", fetchXml);
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ProjectListModel>>("bsd_projects", fetchXml);
             if (result == null || result.value.Any() == false) return;
 
              var data = result.value;
