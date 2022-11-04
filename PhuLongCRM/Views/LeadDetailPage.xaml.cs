@@ -159,11 +159,13 @@ namespace PhuLongCRM.Views
                             {
                                 await Navigation.PushAsync(leadForm);
                                 LoadingHelper.Hide();
+                                return;
                             }
                             else
                             {
                                 LoadingHelper.Hide();
                                 ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                                return;
                             }
                         };
                     }
@@ -183,11 +185,13 @@ namespace PhuLongCRM.Views
                             {
                                 await Navigation.PushAsync(leadForm);
                                 LoadingHelper.Hide();
+                                return;
                             }
                             else
                             {
                                 LoadingHelper.Hide();
                                 ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                                return;
                             }
                         };
                     }

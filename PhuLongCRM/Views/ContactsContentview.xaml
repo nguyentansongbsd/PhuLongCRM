@@ -21,13 +21,13 @@
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
+                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" BackgroundColor ="White" Padding="20" Margin="0,1">
                                     <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand" Grid.Row="0" Grid.Column="0">
                                         <Label Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                     </telerikPrimitives:RadBorder>
                                     <Label Grid.Column="1" Grid.Row="0" Text="{Binding bsd_fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
-                                    <controls:FieldListViewItem Title="{x:Static lang:Language.so_dien_thoai}" Text="{Binding mobilephone_format}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
-                                    <controls:FieldListViewItem Title="{x:Static lang:Language.dia_chi}" Text="{Binding bsd_contactaddress}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.so_dien_thoai}" Text="{Binding mobilephone_format}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.dia_chi_lien_lac}" Text="{Binding bsd_contactaddress}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
                                 </Grid>
                                 <!--<StackLayout BackgroundColor ="White" Padding="20,15" Margin="0,1">
                                     <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">

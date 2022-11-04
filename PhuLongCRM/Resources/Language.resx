@@ -1189,7 +1189,7 @@
     <value>Ký phiếu đặt cọc thất bại. Vui lòng thử lại.</value>
   </data>
 	<data name="bang_tinh_gia_da_duoc_ky" xml:space="preserve">
-    <value>Bảng tính giá đã được ký</value>
+    <value>Bảng tính giá đã được ký.</value>
   </data>
 	<data name="ky_bang_tinh_gia_that_bai_vui_long_thu_lai" xml:space="preserve">
     <value>Ký bảng tính giá thất bại. Vui lòng thử lại.</value>
@@ -3512,5 +3512,14 @@
   </data>
 	<data name="ban_co_muon_huy_bang_tinh_gia_nay_khong" xml:space="preserve">
     <value>Bạn có muốn hủy bảng tính giá này không?</value>
+  </data>
+	<data name="vui_long_chon_quoc_gia" xml:space="preserve">
+    <value>Vui lòng chọn quốc gia.</value>
+  </data>
+	<data name="vui_long_chon_tinh_thanh" xml:space="preserve">
+    <value>Vui lòng chọn tỉnh thành.</value>
+  </data>
+	<data name="vui_long_chon_quan_huyen" xml:space="preserve">
+    <value>Vui lòng chọn quận huyện.</value>
   </data>
 </root>
