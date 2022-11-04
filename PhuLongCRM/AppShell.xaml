@@ -71,6 +71,11 @@
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf0c0;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
+        <ShellContent Title="{x:Static lang:Language.du_an_title}" ContentTemplate="{DataTemplate views:ProjectList}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf64f;" Size="18"/>
+            </ShellContent.Icon>
+        </ShellContent>
         <ShellContent Title="{x:Static lang:Language.dong_bo_danh_ba}" ContentTemplate="{DataTemplate views:DanhBa}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#7D7D7D" Glyph="&#xf2c1;" Size="18"/>

@@ -1141,7 +1141,7 @@
     <value>Ký bảng tính giá</value>
   </data>
 	<data name="xac_nhan_in" xml:space="preserve">
-    <value>Xác nhận in</value>
+    <value>Xác nhận BTG</value>
   </data>
 	<data name="xac_nhan_tai_pdc" xml:space="preserve">
     <value>Xác nhận tải PĐC</value>
@@ -1156,16 +1156,16 @@
     <value>Xóa lịch thanh toán thất bại. Vui lòng thử lại.</value>
   </data>
 	<data name="da_xac_nhan_in" xml:space="preserve">
-    <value>Đã xác nhận in.</value>
+    <value>Đã xác nhận BTG.</value>
   </data>
 	<data name="vui_long_tao_lich_thanh_toan" xml:space="preserve">
     <value>Vui lòng tạo lịch thanh toán.</value>
   </data>
 	<data name="xac_nhan_in_thanh_cong" xml:space="preserve">
-    <value>Xác nhận in thành công.</value>
+    <value>Xác nhận BTG thành công.</value>
   </data>
 	<data name="xac_nhan_in_that_bai" xml:space="preserve">
-    <value>Xác nhận in thất bại.</value>
+    <value>Xác nhận BTG thất bại.</value>
   </data>
 	<data name="da_xac_nhan_tai_phieu_dat_coc" xml:space="preserve">
     <value>Đã xác nhận tải phiếu đặt cọc.</value>
@@ -3530,5 +3530,11 @@
   </data>
 	<data name="vui_long_chon_quan_huyen" xml:space="preserve">
     <value>Vui lòng chọn quận huyện.</value>
+  </data>
+  <data name="du_an_title" xml:space="preserve">
+    <value>Dự Án</value>
+  </data>
+  <data name="du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho" xml:space="preserve">
+    <value>Dự án chưa được công bố, bạn không thể thực hiện giữ chỗ.</value>
   </data>
 </root>

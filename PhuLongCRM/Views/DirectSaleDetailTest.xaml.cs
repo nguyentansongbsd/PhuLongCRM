@@ -43,7 +43,7 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await viewModel.LoadTotalDirectSale();
-            AddToolTip();
+
             if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
             {
                 var rd = stackBlocks.Children[0] as RadBorder;
@@ -56,6 +56,7 @@ namespace PhuLongCRM.Views
                     var floor = viewModel.Block.Floors[0];
                     floor.iShow = true;
                     await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                    AddToolTip();
                     SetRealTimeData();
                     OnCompleted?.Invoke(0);
                 }
@@ -86,31 +87,42 @@ namespace PhuLongCRM.Views
 
         public void SetRealTimeData()
         {
+            bool test = false;
             var condition = viewModel.firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
                 .Subscribe(async (dbevent) =>
                 {
-                    if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete && dbevent.Object != null && viewModel.Block.Floors.Any(x => x.Units.Count != 0))
+                    try
                     {
-                        try
+                        if (dbevent.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && dbevent.Object != null && test == true)
                         {
-                            var item = dbevent.Object as ResponseRealtime;
-                            viewModel.Block.Floors.Where(x => x.Units.Count != 0).ToList().ForEach(x =>
+                            try
                             {
-                                var _unit = x.Units.SingleOrDefault(y => y.productid.ToString().ToLower() == item.id.ToLower());
-                                if (_unit != null)
+                                var item = dbevent.Object as ResponseRealtime;
+                                viewModel.Block.Floors.Where(x => x.Units.Count != 0).ToList().ForEach(x =>
                                 {
-                                    viewModel._currentUnit = new ResponseRealtime() { id = _unit.productid.ToString(), status = _unit.statuscode.ToString() };
-                                    _unit.statuscode = int.Parse(item.status);
-                                    viewModel.SetNumStatus(item.status);
-                                }
-                            });
-
+                                    var _unit = x.Units.SingleOrDefault(y => y.productid.ToString().ToLower() == item.id.ToLower());
+                                    if (_unit != null)
+                                    {
+                                        viewModel._currentUnit = new ResponseRealtime() { id = _unit.productid.ToString(), status = _unit.statuscode.ToString() };
+                                        _unit.statuscode = int.Parse(item.status);
+                                        _unit.NumQueses++;
+                                        viewModel.SetNumStatus(item.status, x.bsd_floorid);
+                                        viewModel.ChangeStatusUnitPopup(item);
+                                    }
+                                });
+                            }
+                            catch (Exception ex)
+                            {
+                                ToastMessageHelper.LongMessage(ex.Message);
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            ToastMessageHelper.LongMessage(ex.Message);
-                        }
+                        test = true;
                     }
+                    catch (Exception ex)
+                    {
+
+                    }
+
                 });
         }
 
@@ -219,7 +231,8 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             UnitInfo unitInfo = new UnitInfo(viewModel.Unit.productid);
-            unitInfo.OnCompleted = async (IsSuccess) => {
+            unitInfo.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(unitInfo);
@@ -237,7 +250,8 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             ReservationForm reservationForm = new ReservationForm(viewModel.Unit.productid, null, null, null, null);
-            reservationForm.CheckReservation = async (isSuccess) => {
+            reservationForm.CheckReservation = async (isSuccess) =>
+            {
                 if (isSuccess == 0)
                 {
                     await Navigation.PushAsync(reservationForm);
@@ -261,7 +275,8 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
-            queuesDetialPage.OnCompleted = async (IsSuccess) => {
+            queuesDetialPage.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(queuesDetialPage);
@@ -279,7 +294,8 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             QueueForm queue = new QueueForm(viewModel.Unit.productid, true);
-            queue.OnCompleted = async (IsSuccess) => {
+            queue.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Shell.Current.Navigation.PushAsync(queue);
@@ -437,7 +453,7 @@ namespace PhuLongCRM.Views
                 Grid.SetColumnSpan(gridhuong, 5);
 
                 // btn xem thong tin
-                RadBorder radBorderUnitInf = new RadBorder { CornerRadius = 10, BorderColor = Color.FromHex("#2196F3"), BorderThickness = 1, BackgroundColor = Color.White, Padding = 8, HorizontalOptions = LayoutOptions.Fill,Margin = new Thickness(0,5) };
+                RadBorder radBorderUnitInf = new RadBorder { CornerRadius = 10, BorderColor = Color.FromHex("#2196F3"), BorderThickness = 1, BackgroundColor = Color.White, Padding = 8, HorizontalOptions = LayoutOptions.Fill, Margin = new Thickness(0, 5) };
                 TapGestureRecognizer tapUnitInf = new TapGestureRecognizer();
                 tapUnitInf.Tapped += UnitInfor_Clicked;
                 radBorderUnitInf.GestureRecognizers.Add(tapUnitInf);
@@ -560,7 +576,7 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                 }
                 RefreshDirectSale = false;
-            }    
+            }
         }
 
         private void CloseToolTips_Tapped(object sender, EventArgs e)
@@ -621,7 +637,7 @@ namespace PhuLongCRM.Views
                         new ColumnDefinition{ Width = GridLength.Auto},
                         new ColumnDefinition{ Width = new GridLength(1,GridUnitType.Star)},
                     },
-                        Margin = new Thickness(0,1,0,0),
+                        Margin = new Thickness(0, 1, 0, 0),
                         Padding = 10,
                         BackgroundColor = Color.White
                     };
@@ -632,7 +648,7 @@ namespace PhuLongCRM.Views
                     grid.GestureRecognizers.Add(tapped);
 
                     //status
-                    RadBorder radBorder = new RadBorder{CornerRadius = 5,VerticalOptions =LayoutOptions.Start};
+                    RadBorder radBorder = new RadBorder { CornerRadius = 5, VerticalOptions = LayoutOptions.Start };
                     radBorder.SetBinding(RadBorder.BackgroundColorProperty, "statuscode_color");
                     Label label = new Label();
                     label.SetBinding(Label.TextProperty, "statuscode_format");
@@ -646,7 +662,7 @@ namespace PhuLongCRM.Views
                     Grid.SetRow(radBorder, 0);
 
                     //ten
-                    Label labelName = new Label { FontSize = 15, TextColor = (Color)Application.Current.Resources["NavigationPrimary"], FontAttributes = FontAttributes.Bold, VerticalOptions=LayoutOptions.Center };
+                    Label labelName = new Label { FontSize = 15, TextColor = (Color)Application.Current.Resources["NavigationPrimary"], FontAttributes = FontAttributes.Bold, VerticalOptions = LayoutOptions.Center };
 
                     labelName.SetBinding(Label.TextProperty, new MultiBinding
                     {
@@ -699,7 +715,8 @@ namespace PhuLongCRM.Views
             if (item == null) return;
             LoadingHelper.Show();
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(item.opportunityid);
-            queuesDetialPage.OnCompleted = async (isSuccess) => {
+            queuesDetialPage.OnCompleted = async (isSuccess) =>
+            {
                 if (isSuccess)
                 {
                     await Navigation.PushAsync(queuesDetialPage);

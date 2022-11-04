@@ -16,7 +16,7 @@
             <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
                 <Button Text="Push to firebase" Clicked="Button_Clicked" Margin="0,100,0,0"/>
 
-                <controls:MainEntry Keyboard="Numeric" Margin="0,300,0,0" HorizontalOptions="FillAndExpand" BackgroundColor="Yellow">
+                <controls:MainEntry Keyboard="Numeric" Text="{Binding Num}"  Margin="0,300,0,0" HorizontalOptions="FillAndExpand" BackgroundColor="Yellow">
                     <controls:MainEntry.Behaviors>
                         <behavior:MaskedBehavior Mask="+84-XXXXXXXXXX" />
                     </controls:MainEntry.Behaviors>
