@@ -92,7 +92,7 @@ namespace PhuLongCRM.Views
         private async void ProjectItem_Tapped(object sender, ItemTappedEventArgs e)
         {
             LoadingHelper.Show();
-            var item = e.Item as ProjectList;
+            var item = e.Item as ProjectListModel;
             viewModel.Project = item;
             await Task.WhenAll(
                 viewModel.LoadPhasesLanch()
