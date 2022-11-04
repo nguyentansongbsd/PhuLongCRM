@@ -7,8 +7,9 @@ namespace PhuLongCRM.Config
     public class OrgConfig
     {
         //public const string VerApp = "PL.CRM - VerDemo - Ver 4.2";
-        public const string VerApp = "PL.CRM - UAT - Ver 1.0";
         //public const string VerApp = "PL.CRM - Version 4.1";
+        //public const string VerApp = "PL.CRM - UAT - Ver 1.0";
+        public const string VerApp = "PL.CRM.UAT - VerDemo 1.0.1";
 
         public const string ApiUrl = "https://phulongtmp.api.crm5.dynamics.com/api/data/v9.1";
         public const string Resource = "https://phulongtmp.crm5.dynamics.com/";
@@ -39,5 +40,9 @@ namespace PhuLongCRM.Config
         // Info Realtime
         public const string LinkFireBase_RealTimeData = "https://phulong-aff10-default-rtdb.firebaseio.com/";
         public const string AuthToken = "VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK";
+
+        //Dong bo danh ba
+        //public const string Lead_Topic = "B564BDFC-50E2-EC11-BB3D-00224859CF8A"; //Khách hàng tiềm năng APP / Org Dev
+        public const string Lead_Topic = "120A7D95-345B-ED11-9561-0022485939B9"; //Khách hàng tiềm năng APP / Org TMP
     }
 }

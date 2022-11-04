@@ -3521,5 +3521,14 @@
   </data>
 	<data name="vui_long_chon_quan_huyen" xml:space="preserve">
     <value>Please choose district.</value>
+		</data>
+  <data name="vui_long_chon_ngay" xml:space="preserve">
+    <value>Please choose date.</value>
+  </data>
+  <data name="ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Selected date mustn't be less than the quotation printed date. Please check again.</value>
+  </data>
+  <data name="ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>The selected date can't be in the future. Please check again.</value>
   </data>
 </root>

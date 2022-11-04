@@ -4516,7 +4516,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Khách hàng không thuộc sở hữu của bạn và nhóm của bạn. Vui lòng kiểm tra lại. .
+        ///   Looks up a localized string similar to Khách hàng không thuộc sở hữu của bạn và nhóm của bạn. Vui lòng kiểm tra lại..
         /// </summary>
         internal static string khach_hang_khong_thuoc_so_huu_cua_ban_va_nhom_cua_ban_vui_long_kiem_lai {
             get {
@@ -5907,6 +5907,25 @@ namespace PhuLongCRM.Resources {
         internal static string ngay_du_kien_ban_giao {
             get {
                 return ResourceManager.GetString("ngay_du_kien_ban_giao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày được chọn không được nhỏ hơn ngày in phiếu tính giá. Vui lòng kiểm tra lại thông tin..
+        /// </summary>
+        internal static string ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_th" +
+                        "ong_tin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày được chọn không được thuộc tương lai. Vui lòng kiểm tra lại thông tin..
+        /// </summary>
+        internal static string ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
             }
         }
         
@@ -9561,6 +9580,15 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_chon_loai_the_id {
             get {
                 return ResourceManager.GetString("vui_long_chon_loai_the_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vui lòng chọn ngày..
+        /// </summary>
+        internal static string vui_long_chon_ngay {
+            get {
+                return ResourceManager.GetString("vui_long_chon_ngay", resourceCulture);
             }
         }
         
