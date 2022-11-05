@@ -79,6 +79,8 @@ namespace PhuLongCRM.ViewModels
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>
+                                <value>100000000</value>
+                                <value>861450001</value>
                               </condition>
                               <filter type='and'>
                                  <condition attribute='statuscode' operator='in'>
@@ -112,7 +114,7 @@ namespace PhuLongCRM.ViewModels
             if (FiltersStatus != null && FiltersStatus.Count == 0)
             {
                 FiltersStatus.Add(new OptionSet("-1", Language.tat_ca));
-                var list = QuoteStatusCodeData.GetQuoteByIds("100000007,6,100000009");
+                var list = QuoteStatusCodeData.GetQuoteByIds("100000007,100000000,861450001,6,100000009");
                 foreach (var item in list)
                 {
                     FiltersStatus.Add(new OptionSet(item.Id, item.Name));

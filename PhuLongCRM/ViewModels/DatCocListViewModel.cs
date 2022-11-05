@@ -90,10 +90,8 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                     <filter type='or'>
                                         <condition attribute='statuscode' operator='in'>
-                                            <value>100000000</value>
                                             <value>100000001</value>
                                             <value>100000006</value>
-                                            <value>861450001</value>
                                             <value>861450002</value>
                                             <value>4</value>                
                                             <value>3</value>
@@ -118,7 +116,7 @@ namespace PhuLongCRM.ViewModels
             if (FiltersStatus != null && FiltersStatus.Count == 0)
             {
                 FiltersStatus.Add(new OptionSet("-1", Language.tat_ca));
-                var list = QuoteStatusCodeData.GetQuoteByIds("100000000,100000001,100000006,861450001,861450002,4,3,6,100000009");
+                var list = QuoteStatusCodeData.GetQuoteByIds("100000001,100000006,861450002,4,3,6,100000009");
                 foreach (var item in list)
                 {
                     FiltersStatus.Add(new OptionSet(item.Id, item.Name));

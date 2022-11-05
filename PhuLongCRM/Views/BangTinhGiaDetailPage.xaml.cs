@@ -149,7 +149,7 @@ namespace PhuLongCRM.Views
             var checkFul = await viewModel.CheckFUL();
             if (viewModel.Reservation.statuscode == 100000000)// (hủy đặt cọc)
             {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_dat_coc, "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
             }
             if (viewModel.Reservation.statuscode == 3 && checkFul == true)// show khi statuscode == 3(Deposited) (tạo ful)
             {
@@ -175,7 +175,7 @@ namespace PhuLongCRM.Views
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, Confirm_Quotation));
                 }
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeRegular", "\uf273", null, CancelQuotes));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeRegular", "\uf273", null, CancelDeposit));//CancelQuotes
                 if (viewModel.InstallmentList.Count > 0 && viewModel.Reservation.bsd_quotationprinteddate != null)
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.ky_bang_tinh_gia, "FontAwesomeRegular", "\uf274", null, SignQuotationClicked));
@@ -735,7 +735,8 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
-                bool confirm = await DisplayAlert(Language.huy_dat_coc, Language.ban_co_muon_huy_dat_coc_nay_khong, Language.co, Language.khong);
+                //bool confirm = await DisplayAlert(Language.huy_dat_coc, Language.ban_co_muon_huy_dat_coc_nay_khong, Language.co, Language.khong);
+                bool confirm = await DisplayAlert(Language.huy_bang_tinh_gia, Language.ban_co_muon_huy_bang_tinh_gia_nay_khong, Language.co, Language.khong);
                 if (confirm)
                 {
                     LoadingHelper.Show();
@@ -751,12 +752,12 @@ namespace PhuLongCRM.Views
                         if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                         if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage(Language.da_huy_dat_coc);
+                        ToastMessageHelper.ShortMessage(Language.da_huy_bang_tinh_gia);
                     }
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage(Language.huy_dat_coc_that_bai_vui_long_thu_lai);
+                        ToastMessageHelper.ShortMessage(Language.huy_bang_tinh_gia_that_bai_vui_long_thu_lai);
                     }
                 }
                 LoadingHelper.Hide();

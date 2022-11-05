@@ -298,7 +298,7 @@ namespace PhuLongCRM.Views
 
             LoadingHelper.Show();
             bool isReservation = false;
-            if (item.statuscode != 100000007)
+            if (item.statuscode != 100000007 && item.statuscode != 100000000 && item.statuscode != 861450001) // Qutation,Reservatoin,Supmit
                 isReservation = true;
             BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(item.quoteid, isReservation);
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>

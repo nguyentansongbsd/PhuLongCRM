@@ -348,6 +348,12 @@ namespace PhuLongCRM.Resources {
             }
         }
         
+        internal static string dong {
+            get {
+                return ResourceManager.GetString("dong", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Bảng tính giá.
         /// </summary>

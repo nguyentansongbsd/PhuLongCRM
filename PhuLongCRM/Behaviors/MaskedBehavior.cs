@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using PhuLongCRM.Controls;
 using Xamarin.Forms;
 
@@ -21,12 +22,14 @@ namespace PhuLongCRM.Behaviors
         protected override void OnAttachedTo(MainEntry entry)
         {
             entry.TextChanged += OnEntryTextChanged;
+            entry.Focused += Entry_Focused;
             base.OnAttachedTo(entry);
         }
 
         protected override void OnDetachingFrom(MainEntry entry)
         {
             entry.TextChanged -= OnEntryTextChanged;
+            entry.Focused -= Entry_Focused;
             base.OnDetachingFrom(entry);
         }
 
@@ -46,6 +49,15 @@ namespace PhuLongCRM.Behaviors
                     list.Add(i, Mask[i]);
 
             _positions = list;
+        }
+
+        private void Entry_Focused(object sender, FocusEventArgs e)
+        {
+            var entry = sender as Entry;
+            if (string.IsNullOrWhiteSpace(entry.Text))
+            {
+                entry.Text = "-";
+            }
         }
 
         private void OnEntryTextChanged(object sender, TextChangedEventArgs args)

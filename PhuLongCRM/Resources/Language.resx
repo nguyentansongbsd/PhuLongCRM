@@ -1645,7 +1645,7 @@
     <value>Không quan tâm</value>
   </data>
 	<data name="thong_bao_that_bai" xml:space="preserve">
-    <value>Thất bại</value>
+    <value>Thất bại.</value>
   </data>
 	<data name="chon_tieu_de" xml:space="preserve">
     <value>Chọn tiêu đề</value>
