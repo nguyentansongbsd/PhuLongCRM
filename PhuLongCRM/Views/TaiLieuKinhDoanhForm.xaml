@@ -127,7 +127,7 @@
                                         </BindableLayout.ItemTemplate>
                                     </StackLayout>
                                     <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
-                                    <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreThongTinUnit_Clicked" IsVisible="{Binding ShowMoreThongTinUnit}" Margin="10,5" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
+                                    <Button Text="{x:Static lang:Language.xem_them}" Clicked="ShowMoreThongTinUnit_Clicked" IsVisible="{Binding ShowMoreThongTinUnit}" Margin="10,5" Padding="10,5" BorderWidth="1" BorderColor="#1399D5" TextColor="#1399D5" CornerRadius="10" BackgroundColor="White" HeightRequest="40" HorizontalOptions="Center"/>
                                 </StackLayout>
                             </telerikPrimitives:RadExpander.Content>
                         </telerikPrimitives:RadExpander>

@@ -238,7 +238,7 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("dong", resourceCulture);
             }
         }
-     
+        
         internal static string khong_cap_nhat_duoc_thong_tin_imei {
             get {
                 return ResourceManager.GetString("khong_cap_nhat_duoc_thong_tin_imei", resourceCulture);
@@ -3953,24 +3953,6 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Ngày được chọn không được nhỏ hơn ngày in phiếu tính giá. Vui lòng kiểm tra lại thông tin..
-        /// </summary>
-        internal static string ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_thong_tin {
-            get {
-                return ResourceManager.GetString("ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_th" +
-                        "ong_tin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ngày được chọn không được thuộc tương lai. Vui lòng kiểm tra lại thông tin..
-        /// </summary>
-        internal static string ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin {
-            get {
-                return ResourceManager.GetString("ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
-            }
-        }
         internal static string chon_phuong_thuc_thanh_toan {
             get {
                 return ResourceManager.GetString("chon_phuong_thuc_thanh_toan", resourceCulture);
@@ -6413,15 +6395,6 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Vui lòng chọn ngày..
-        /// </summary>
-        internal static string vui_long_chon_ngay {
-            get {
-                return ResourceManager.GetString("vui_long_chon_ngay", resourceCulture);
-            }
-        }
-        
         internal static string vui_long_nhap_email {
             get {
                 return ResourceManager.GetString("vui_long_nhap_email", resourceCulture);
@@ -6506,24 +6479,6 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Vui lòng chọn quận huyện..
-        /// </summary>
-        internal static string vui_long_chon_quan_huyen {
-            get {
-                return ResourceManager.GetString("vui_long_chon_quan_huyen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vui lòng chọn quốc gia..
-        /// </summary>
-        internal static string vui_long_chon_quoc_gia {
-            get {
-                return ResourceManager.GetString("vui_long_chon_quoc_gia", resourceCulture);
-            }
-        }
-        
         internal static string vui_long_nhap_ten {
             get {
                 return ResourceManager.GetString("vui_long_nhap_ten", resourceCulture);
@@ -6569,15 +6524,6 @@ namespace PhuLongCRM.Resources {
         internal static string phi_lai_xuat_so_tien {
             get {
                 return ResourceManager.GetString("phi_lai_xuat_so_tien", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vui lòng chọn tỉnh thành..
-        /// </summary>
-        internal static string vui_long_chon_tinh_thanh {
-            get {
-                return ResourceManager.GetString("vui_long_chon_tinh_thanh", resourceCulture);
             }
         }
         
@@ -6899,9 +6845,28 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("ban_co_muon_xoa_lich_thanh_toan_nay_khong", resourceCulture);
             }
         }
+        
         internal static string ban_co_muon_huy_bang_tinh_gia_nay_khong {
             get {
                 return ResourceManager.GetString("ban_co_muon_huy_bang_tinh_gia_nay_khong", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_chon_quoc_gia {
+            get {
+                return ResourceManager.GetString("vui_long_chon_quoc_gia", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_chon_tinh_thanh {
+            get {
+                return ResourceManager.GetString("vui_long_chon_tinh_thanh", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_chon_quan_huyen {
+            get {
+                return ResourceManager.GetString("vui_long_chon_quan_huyen", resourceCulture);
             }
         }
         

@@ -790,7 +790,7 @@
                         <controls:FormLabelRequired Text="{x:Static lang:Language.chon_ngay}" VerticalOptions="Center"/>
                         <controls:DatePickerBoderControl Date="{Binding DateSign}" Placeholder="{x:Static lang:Language.chon_ngay}" ShowTime="False"/>
 
-                        <Button Text="{x:Static lang:Language.xac_nhan}" Clicked="Confirm_SignQuotation" CornerRadius="5" TextColor="White" HorizontalOptions="End" HeightRequest="40" FontAttributes="Bold"  BorderColor="{x:StaticResource NavigationPrimary}" BorderWidth="1" BackgroundColor="{x:StaticResource NavigationPrimary}"/>
+                        <Button Text="{x:Static lang:Language.xac_nhan}" Clicked="Confirm_SignQuotation" Padding="10,5" CornerRadius="5" TextColor="White" HorizontalOptions="End" HeightRequest="40" FontAttributes="Bold"  BorderColor="{x:StaticResource NavigationPrimary}" BorderWidth="1" BackgroundColor="{x:StaticResource NavigationPrimary}"/>
                     </StackLayout>
                 </controls:CenterPopup.Body>
             </controls:CenterPopup>
