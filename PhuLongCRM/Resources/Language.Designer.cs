@@ -2491,7 +2491,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đã xác nhận in..
+        ///   Looks up a localized string similar to Đã xác nhận BTG..
         /// </summary>
         internal static string da_xac_nhan_in {
             get {
@@ -3477,6 +3477,24 @@ namespace PhuLongCRM.Resources {
         internal static string du_an {
             get {
                 return ResourceManager.GetString("du_an", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dự án chưa được công bố, bạn không thể thực hiện giữ chỗ..
+        /// </summary>
+        internal static string du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho {
+            get {
+                return ResourceManager.GetString("du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dự Án.
+        /// </summary>
+        internal static string du_an_title {
+            get {
+                return ResourceManager.GetString("du_an_title", resourceCulture);
             }
         }
         
@@ -10313,7 +10331,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xác nhận in.
+        ///   Looks up a localized string similar to Xác nhận BTG.
         /// </summary>
         internal static string xac_nhan_in {
             get {
@@ -10322,7 +10340,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xác nhận in thành công..
+        ///   Looks up a localized string similar to Xác nhận BTG thành công..
         /// </summary>
         internal static string xac_nhan_in_thanh_cong {
             get {
@@ -10331,7 +10349,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xác nhận in thất bại..
+        ///   Looks up a localized string similar to Xác nhận BTG thất bại..
         /// </summary>
         internal static string xac_nhan_in_that_bai {
             get {

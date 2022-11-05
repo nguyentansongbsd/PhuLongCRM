@@ -107,6 +107,11 @@ namespace PhuLongCRM.Views
         }
         private void GiuCho_Clicked(object sender, EventArgs e)
         {
+            if (viewModel.Project.statuscode != "861450002") // 861450002 == publish
+            {
+                ToastMessageHelper.ShortMessage(Language.du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho);
+                return;
+            }
             LoadingHelper.Show();
             QueueForm queue = new QueueForm(viewModel.ProjectId, false);
             queue.OnCompleted = async (IsSuccess) =>

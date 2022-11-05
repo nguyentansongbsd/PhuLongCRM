@@ -3602,5 +3602,11 @@
   </data>
 	<data name="ban_co_muon_nhap_ten_cong_ty" xml:space="preserve">
     <value>Do you want to enter name of company?</value>
+	</data>
+  <data name="du_an_title" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho" xml:space="preserve">
+    <value>Project is unpublish, you can't make queue.</value>
   </data>
 </root>

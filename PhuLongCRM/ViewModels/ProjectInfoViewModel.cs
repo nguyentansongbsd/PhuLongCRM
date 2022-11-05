@@ -166,7 +166,13 @@ namespace PhuLongCRM.ViewModels
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ProjectInfoModel>>("bsd_projects", FetchXml);
             if (result == null || result.value.Any() == false) return;
-            Project = result.value.FirstOrDefault();
+            var data = result.value.FirstOrDefault();
+            if (data.bsd_projectslogo == null)
+            {
+                data.bsd_projectslogo = data.bsd_name;
+            }
+            Project = data;
+            
             this.StatusCode = ProjectStatusCodeData.GetProjectStatusCodeById(Project.statuscode);
             //await LoadAllCollection();
         }
