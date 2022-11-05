@@ -157,7 +157,7 @@
                                 <controls:MainEntry x:Name="topic" Placeholder="{x:Static lang:Language.nhap_tieu_de_cua_giu_cho}" Text="{Binding QueueFormModel.name}" FontSize="15" />
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.khach_hang}" Margin="0,10,0,0"/>
-                                <controls:LookUpMultipleTabs x:Name="Lookup_KhachHang" Placeholder="{x:Static lang:Language.chon_khach_hang}" ShowAccount="True" ShowContact="True" ShowLead="False" LoadNewLead="True" ShowAddButton="True" SelectedItem="{Binding Customer}" CenterModal="{x:Reference centerModal}" Root="{x:Reference this}"/>
+                                <controls:LookUpMultipleTabs x:Name="Lookup_KhachHang" Placeholder="{x:Static lang:Language.chon_khach_hang}" ShowAccount="True" ShowContact="True" ShowLead="False" LoadNewLead="True" ShowAddButton="False" SelectedItem="{Binding Customer}" CenterModal="{x:Reference centerModal}" Root="{x:Reference this}"/>
                                 <!--<Grid>
                                     <controls:MainEntry Text="{Binding QueueFormModel.customer_name}" Placeholder="Chọn khách hàng" FontSize="15"/>
                                     <StackLayout>

@@ -49,7 +49,7 @@ namespace PhuLongCRM.Controls
 
         public static readonly BindableProperty AddressProperty = BindableProperty.Create(nameof(Address), typeof(string), typeof(LookUpAddress), null, BindingMode.TwoWay);
         public string Address { get => (string)GetValue(AddressProperty); set { SetValue(AddressProperty, value); } }
-        private KeyboardView stackLayoutMain { get; set; }
+        private StackLayout stackLayoutMain { get; set; }
         private Grid gridFooter { get; set; }
 
         public static readonly BindableProperty AddressCopyProperty = BindableProperty.Create(nameof(AddressCopy), typeof(AddressModel), typeof(LookUpAddress), null, BindingMode.TwoWay, propertyChanged: AddressCopyChang);
@@ -128,7 +128,7 @@ namespace PhuLongCRM.Controls
         }
         private void setLookUp()
         {
-            stackLayoutMain = new KeyboardView();
+            stackLayoutMain = new StackLayout();
             stackLayoutMain.Padding = 10;
 
             FormLabelRequired lbCountry = new FormLabelRequired();
@@ -190,7 +190,20 @@ namespace PhuLongCRM.Controls
             lineaddress.Placeholder = Language.nhap_so_nha_duong_phuong;
             lineaddress.SetBinding(MainEntry.TextProperty, "LineAddress");
             stackLayoutMain.Children.Add(lineaddress);
+            lineaddress.Focused += Lineaddress_Focused;
+            lineaddress.Unfocused += Lineaddress_Unfocused;
         }
+
+        private void Lineaddress_Unfocused(object sender, FocusEventArgs e)
+        {
+            CenterModal.SetVertical(true);
+        }
+
+        private void Lineaddress_Focused(object sender, FocusEventArgs e)
+        {
+            CenterModal.SetVertical(false);
+        }
+
         private async void LookUpProvince_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
             District = null;

@@ -18,6 +18,7 @@ namespace PhuLongCRM.Views
     {
         public FollowUpListFormViewModel viewModel;
         public Action<bool> OnCompleted;
+        public decimal Forfeiture_recommend { get; set; }
         public FollowUpListForm(Guid fulid)
         {
             InitializeComponent();
@@ -53,7 +54,7 @@ namespace PhuLongCRM.Views
                     viewModel.Group = FollowUpGroup.GetFollowUpGroupById(viewModel.FULDetail.bsd_group.ToString());
 
                 if (!string.IsNullOrWhiteSpace(viewModel.FULDetail.bsd_takeoutmoney.ToString()) && viewModel.FULDetail.bsd_takeoutmoney != 0)
-                    viewModel.TakeOutMoney = FollowUpListTakeOutMoney.GetFollowUpListTakeOutMoneyById(viewModel.FULDetail.bsd_takeoutmoney.ToString());
+                    viewModel.TakeOutMoney = FollowUpListTakeOutMoney.GetFollowUpListTakeOutMoneyById(viewModel.FULDetail.bsd_takeoutmoney.ToString());  
             }
 
             if (viewModel.FULDetail != null && viewModel.FULDetail.bsd_followuplistid != Guid.Empty)
@@ -219,12 +220,13 @@ namespace PhuLongCRM.Views
             if (viewModel.TakeOutMoney.Id == "100000000") //refund
             {
                 lb_so_tien.Text = Language.hoan_tien;
+                viewModel.Refund = 0;
             }
             else if (viewModel.TakeOutMoney.Id == "100000001")
             {
                 lb_so_tien.Text = Language.tien_phat_thanh_ly;
+                viewModel.Refund = Forfeiture_recommend;
             }
-            viewModel.Refund = 0;
             entry_so_tien_Unfocused(null, null);
         }
 

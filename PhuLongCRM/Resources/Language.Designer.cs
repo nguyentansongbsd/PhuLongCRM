@@ -232,6 +232,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bạn có muốn nhập tên công ty?.
+        /// </summary>
+        internal static string ban_co_muon_nhap_ten_cong_ty {
+            get {
+                return ResourceManager.GetString("ban_co_muon_nhap_ten_cong_ty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bạn có muốn xóa khuyến mãi không ?.
         /// </summary>
         internal static string ban_co_muon_xoa_khuyen_mai_khong {
@@ -3022,6 +3031,42 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Diện tích 100 - 120 m².
+        /// </summary>
+        internal static string dien_tich_100_120_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_100_120_m2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diện tích 30 - 60 m².
+        /// </summary>
+        internal static string dien_tich_30_60_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_30_60_m2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diện tích 60 - 80 m².
+        /// </summary>
+        internal static string dien_tich_60_80_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_60_80_m2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diện tích 80 - 100 m².
+        /// </summary>
+        internal static string dien_tich_80_100_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_80_100_m2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Diện tích sử dụng (m²).
         /// </summary>
         internal static string dien_tich_su_dung {
@@ -3036,6 +3081,15 @@ namespace PhuLongCRM.Resources {
         internal static string dien_tich_thuc_te {
             get {
                 return ResourceManager.GetString("dien_tich_thuc_te", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diện tích trên 120 m².
+        /// </summary>
+        internal static string dien_tich_tren_120_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_tren_120_m2", resourceCulture);
             }
         }
         
@@ -6866,6 +6920,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nhu Cầu Về Diện Tích Căn Hộ.
+        /// </summary>
+        internal static string nhu_cau_ve_dien_tich_can_ho {
+            get {
+                return ResourceManager.GetString("nhu_cau_ve_dien_tich_can_ho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nơi cấp.
         /// </summary>
         internal static string noi_cap {
@@ -9031,6 +9094,159 @@ namespace PhuLongCRM.Resources {
         internal static string tien_phat_thanh_ly {
             get {
                 return ResourceManager.GetString("tien_phat_thanh_ly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Bãi đậu xe.
+        /// </summary>
+        internal static string tieu_chi_bai_dau_xe {
+            get {
+                return ResourceManager.GetString("tieu_chi_bai_dau_xe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu Chí Chọn Mua.
+        /// </summary>
+        internal static string tieu_chi_chon_mua {
+            get {
+                return ResourceManager.GetString("tieu_chi_chon_mua", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Diện tích căn hộ.
+        /// </summary>
+        internal static string tieu_chi_dien_tich_can_ho {
+            get {
+                return ResourceManager.GetString("tieu_chi_dien_tich_can_ho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Gần bệnh viện.
+        /// </summary>
+        internal static string tieu_chi_gan_benh_vien {
+            get {
+                return ResourceManager.GetString("tieu_chi_gan_benh_vien", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Gần chợ - siêu thị.
+        /// </summary>
+        internal static string tieu_chi_gan_cho_sieu_thi {
+            get {
+                return ResourceManager.GetString("tieu_chi_gan_cho_sieu_thi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Gần trường học.
+        /// </summary>
+        internal static string tieu_chi_gan_truong_hoc {
+            get {
+                return ResourceManager.GetString("tieu_chi_gan_truong_hoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Giá căn hộ.
+        /// </summary>
+        internal static string tieu_chi_gia_can_ho {
+            get {
+                return ResourceManager.GetString("tieu_chi_gia_can_ho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Hệ thống an ninh.
+        /// </summary>
+        internal static string tieu_chi_he_thong_an_ninh {
+            get {
+                return ResourceManager.GetString("tieu_chi_he_thong_an_ninh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Hệ thống cứu hỏa.
+        /// </summary>
+        internal static string tieu_chi_he_thong_cuu_hoa {
+            get {
+                return ResourceManager.GetString("tieu_chi_he_thong_cuu_hoa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Hướng căn hộ.
+        /// </summary>
+        internal static string tieu_chi_huong_can_ho {
+            get {
+                return ResourceManager.GetString("tieu_chi_huong_can_ho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Môi trường sống.
+        /// </summary>
+        internal static string tieu_chi_moi_truong_song {
+            get {
+                return ResourceManager.GetString("tieu_chi_moi_truong_song", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Nhà đầu tư uy tín.
+        /// </summary>
+        internal static string tieu_chi_nha_dau_tu_uy_tin {
+            get {
+                return ResourceManager.GetString("tieu_chi_nha_dau_tu_uy_tin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Nhiều tiện ích.
+        /// </summary>
+        internal static string tieu_chi_nhieu_tien_ich {
+            get {
+                return ResourceManager.GetString("tieu_chi_nhieu_tien_ich", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Phương thức thanh toán.
+        /// </summary>
+        internal static string tieu_chi_phuong_thuc_thanh_toan {
+            get {
+                return ResourceManager.GetString("tieu_chi_phuong_thuc_thanh_toan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Tầng đẹp / Căn hộ đẹp.
+        /// </summary>
+        internal static string tieu_chi_tang_dep_can_ho_dep {
+            get {
+                return ResourceManager.GetString("tieu_chi_tang_dep_can_ho_dep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Thiết kế nội thất căn hộ.
+        /// </summary>
+        internal static string tieu_chi_thiet_ke_noi_that_can_ho {
+            get {
+                return ResourceManager.GetString("tieu_chi_thiet_ke_noi_that_can_ho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí - Vị trí.
+        /// </summary>
+        internal static string tieu_chi_vi_tri {
+            get {
+                return ResourceManager.GetString("tieu_chi_vi_tri", resourceCulture);
             }
         }
         

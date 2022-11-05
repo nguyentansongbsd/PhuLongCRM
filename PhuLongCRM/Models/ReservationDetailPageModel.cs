@@ -399,5 +399,9 @@ namespace PhuLongCRM.Models
             }
         }
         public Guid salesorder_id { get; set; } // id contract
+        public string contract_statuscode { get; set; }
+        public decimal paymentscheme_optionforfeiture { get; set; }
+        public decimal paymentscheme_daforfeiture { get; set; }
+        public decimal paymentscheme_spforfeiture { get; set; }
     }
 }

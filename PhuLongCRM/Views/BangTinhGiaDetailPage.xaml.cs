@@ -282,6 +282,25 @@ namespace PhuLongCRM.Views
                 {
                     if (OnCompleted == true)
                     {
+                        if (viewModel.Reservation.statuscode == 3 || viewModel.Reservation.statuscode == 861450000)
+                        {
+                            newPage.Forfeiture_recommend = viewModel.Reservation.paymentscheme_optionforfeiture;
+                        }
+                        else if (viewModel.Reservation.contract_statuscode == "100000001"
+                        || viewModel.Reservation.contract_statuscode == "100000007"
+                        || viewModel.Reservation.contract_statuscode == "100000000"
+                        || viewModel.Reservation.contract_statuscode == "100000008")
+                        {
+                            newPage.Forfeiture_recommend = viewModel.Reservation.paymentscheme_daforfeiture;
+                        }
+                        else if (viewModel.Reservation.contract_statuscode == "100000010"
+                        || viewModel.Reservation.contract_statuscode == "100000009"
+                        || viewModel.Reservation.contract_statuscode == "100000002"
+                        || viewModel.Reservation.contract_statuscode == "100000003"
+                        || viewModel.Reservation.contract_statuscode == "100000005")
+                        {
+                            newPage.Forfeiture_recommend = viewModel.Reservation.paymentscheme_spforfeiture;
+                        }
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
