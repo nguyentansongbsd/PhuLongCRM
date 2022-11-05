@@ -66,5 +66,13 @@ namespace PhuLongCRM.Controls
             await this.MainContent.ScaleTo(0, 130);
             this.IsVisible = false;
         }
+        // chỉnh sửa task 962
+        public void SetVertical(bool isCenter)
+        {
+            if (isCenter)
+                MainContent.VerticalOptions = LayoutOptions.Center;
+            else
+                MainContent.VerticalOptions = LayoutOptions.Start;
+        }
     }
 }

@@ -3492,7 +3492,7 @@
 	<data name="ngay_cap_ho_chieu_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
     <value>Passport date grant can't be in the future.</value>
   </data>
-	<data name="ten_cong_ty_dang_bi_trong_ban_co_muon_dien_thong_tin_khong" xml:space="preserve">
+	<data name="ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty" xml:space="preserve">
     <value>Name of company is empty. Do you want to enter name of company?</value>
   </data>
 	<data name="dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty" xml:space="preserve">
@@ -3531,6 +3531,78 @@
   <data name="ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
     <value>The selected date can't be in the future. Please check again.</value>
   </data>
+	<data name="nhu_cau_ve_dien_tich_can_ho" xml:space="preserve">
+    <value>Need For Apartment Area</value>
+  </data>
+	<data name="dien_tich_30_60_m2" xml:space="preserve">
+    <value>Area of 30 - 60 spm</value>
+  </data>
+	<data name="dien_tich_60_80_m2" xml:space="preserve">
+    <value>Area of 60 - 80 spm</value>
+  </data>
+	<data name="dien_tich_80_100_m2" xml:space="preserve">
+    <value>Area of 80 - 100 spm</value>
+  </data>
+	<data name="dien_tich_100_120_m2" xml:space="preserve">
+    <value>Area of 100 - 120 spm</value>
+  </data>
+	<data name="dien_tich_tren_120_m2" xml:space="preserve">
+    <value>More than 120 spm</value>
+  </data>
+	<data name="tieu_chi_vi_tri" xml:space="preserve">
+    <value>Criteria - Location</value>
+  </data>
+	<data name="tieu_chi_phuong_thuc_thanh_toan" xml:space="preserve">
+    <value>Criteria - Payment method</value>
+  </data>
+	<data name="tieu_chi_gia_can_ho" xml:space="preserve">
+    <value>Criteria - Apartment price</value>
+  </data>
+	<data name="tieu_chi_nha_dau_tu_uy_tin" xml:space="preserve">
+    <value>Criteria - Prestigious investors</value>
+  </data>
+	<data name="tieu_chi_moi_truong_song" xml:space="preserve">
+    <value>Criteria - Habitat</value>
+  </data>
+	<data name="tieu_chi_bai_dau_xe" xml:space="preserve">
+    <value>Criteria - Parking</value>
+  </data>
+	<data name="tieu_chi_he_thong_an_ninh" xml:space="preserve">
+    <value>Criteria - Security system</value>
+  </data>
+	<data name="tieu_chi_huong_can_ho" xml:space="preserve">
+    <value>Criteria - Direction of apartment</value>
+  </data>
+	<data name="tieu_chi_he_thong_cuu_hoa" xml:space="preserve">
+    <value>Criteria - Fire system</value>
+  </data>
+	<data name="tieu_chi_nhieu_tien_ich" xml:space="preserve">
+    <value>Criteria - Many utilities</value>
+  </data>
+	<data name="tieu_chi_gan_cho_sieu_thi" xml:space="preserve">
+    <value>Criteria - Near market - supermarket</value>
+  </data>
+	<data name="tieu_chi_gan_truong_hoc" xml:space="preserve">
+    <value>Criteria - Near school</value>
+  </data>
+	<data name="tieu_chi_gan_benh_vien" xml:space="preserve">
+    <value>Criteria - Near hospital</value>
+  </data>
+	<data name="tieu_chi_dien_tich_can_ho" xml:space="preserve">
+    <value>Criteria - Apartment area</value>
+  </data>
+	<data name="tieu_chi_thiet_ke_noi_that_can_ho" xml:space="preserve">
+    <value>Criteria - Interior design apartment</value>
+  </data>
+	<data name="tieu_chi_tang_dep_can_ho_dep" xml:space="preserve">
+    <value>Criteria - Nice floor / apartment</value>
+  </data>
+	<data name="tieu_chi_chon_mua" xml:space="preserve">
+    <value>Criteria Buy</value>
+  </data>
+	<data name="ban_co_muon_nhap_ten_cong_ty" xml:space="preserve">
+    <value>Do you want to enter name of company?</value>
+	</data>
   <data name="du_an_title" xml:space="preserve">
     <value>Project</value>
   </data>

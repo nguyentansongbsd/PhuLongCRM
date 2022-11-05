@@ -72,7 +72,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Renderers\KeyboardViewRenderer.cs" />
     <Compile Include="Services\TooltipEffect.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />

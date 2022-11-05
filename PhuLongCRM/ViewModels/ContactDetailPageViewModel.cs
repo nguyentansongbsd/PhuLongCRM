@@ -141,6 +141,32 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_postalcode' />
                                     <attribute name='bsd_qrcode' />
                                     <attribute name='bsd_customercode' />
+                                    <attribute name='bsd_quantam_nhapho' />
+                                    <attribute name='bsd_quantam_khuthuongmai' />
+                                    <attribute name='bsd_quantam_datnen' />
+                                    <attribute name='bsd_quantam_canho' />
+                                    <attribute name='bsd_quantam_bietthu' />
+                                    <attribute name='bsd_tieuchi_vitri' />
+                                    <attribute name='bsd_tieuchi_thietkenoithatcanho' />
+                                    <attribute name='bsd_tieuchi_tangdepcanhodep' />
+                                    <attribute name='bsd_tieuchi_phuongthucthanhtoan' />
+                                    <attribute name='bsd_tieuchi_nhieutienich' />
+                                    <attribute name='bsd_tieuchi_nhadautuuytin' />
+                                    <attribute name='bsd_tieuchi_moitruongsong' />
+                                    <attribute name='bsd_tieuchi_huongcanho' />
+                                    <attribute name='bsd_tieuchi_hethongcuuhoa' />
+                                    <attribute name='bsd_tieuchi_hethonganninh' />
+                                    <attribute name='bsd_tieuchi_giacanho' />
+                                    <attribute name='bsd_tieuchi_gantruonghoc' />
+                                    <attribute name='bsd_tieuchi_ganchosieuthi' />
+                                    <attribute name='bsd_tieuchi_ganbenhvien' />
+                                    <attribute name='bsd_tieuchi_dientichcanho' />
+                                    <attribute name='bsd_tieuchi_baidauxe' />
+                                    <attribute name='bsd_dientich_lonhon120m2' />
+                                    <attribute name='bsd_dientich_80100m2' />
+                                    <attribute name='bsd_dientich_6080m2' />
+                                    <attribute name='bsd_dientich_3060m2' />
+                                    <attribute name='bsd_dientich_100120m2' />
                                     <attribute name='bsd_employee' alias='employee_id'/>
                                     <order attribute='createdon' descending='true' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>

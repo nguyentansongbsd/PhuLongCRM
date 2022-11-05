@@ -3531,6 +3531,78 @@
 	<data name="vui_long_chon_quan_huyen" xml:space="preserve">
     <value>Vui lòng chọn quận huyện.</value>
   </data>
+	<data name="nhu_cau_ve_dien_tich_can_ho" xml:space="preserve">
+    <value>Nhu Cầu Về Diện Tích Căn Hộ</value>
+  </data>
+	<data name="dien_tich_30_60_m2" xml:space="preserve">
+    <value>Diện tích 30 - 60 m²</value>
+  </data>
+	<data name="dien_tich_60_80_m2" xml:space="preserve">
+    <value>Diện tích 60 - 80 m²</value>
+  </data>
+	<data name="dien_tich_80_100_m2" xml:space="preserve">
+    <value>Diện tích 80 - 100 m²</value>
+  </data>
+	<data name="dien_tich_100_120_m2" xml:space="preserve">
+    <value>Diện tích 100 - 120 m²</value>
+  </data>
+	<data name="dien_tich_tren_120_m2" xml:space="preserve">
+    <value>Diện tích trên 120 m²</value>
+  </data>
+	<data name="tieu_chi_vi_tri" xml:space="preserve">
+    <value>Tiêu chí - Vị trí</value>
+  </data>
+	<data name="tieu_chi_phuong_thuc_thanh_toan" xml:space="preserve">
+    <value>Tiêu chí - Phương thức thanh toán</value>
+  </data>
+	<data name="tieu_chi_gia_can_ho" xml:space="preserve">
+    <value>Tiêu chí - Giá căn hộ</value>
+  </data>
+	<data name="tieu_chi_nha_dau_tu_uy_tin" xml:space="preserve">
+    <value>Tiêu chí - Nhà đầu tư uy tín</value>
+  </data>
+	<data name="tieu_chi_moi_truong_song" xml:space="preserve">
+    <value>Tiêu chí - Môi trường sống</value>
+  </data>
+	<data name="tieu_chi_bai_dau_xe" xml:space="preserve">
+    <value>Tiêu chí - Bãi đậu xe</value>
+  </data>
+	<data name="tieu_chi_he_thong_an_ninh" xml:space="preserve">
+    <value>Tiêu chí - Hệ thống an ninh</value>
+  </data>
+	<data name="tieu_chi_huong_can_ho" xml:space="preserve">
+    <value>Tiêu chí - Hướng căn hộ</value>
+  </data>
+	<data name="tieu_chi_he_thong_cuu_hoa" xml:space="preserve">
+    <value>Tiêu chí - Hệ thống cứu hỏa</value>
+  </data>
+	<data name="tieu_chi_nhieu_tien_ich" xml:space="preserve">
+    <value>Tiêu chí - Nhiều tiện ích</value>
+  </data>
+	<data name="tieu_chi_gan_cho_sieu_thi" xml:space="preserve">
+    <value>Tiêu chí - Gần chợ - siêu thị</value>
+  </data>
+	<data name="tieu_chi_gan_truong_hoc" xml:space="preserve">
+    <value>Tiêu chí - Gần trường học</value>
+  </data>
+	<data name="tieu_chi_gan_benh_vien" xml:space="preserve">
+    <value>Tiêu chí - Gần bệnh viện</value>
+  </data>
+	<data name="tieu_chi_dien_tich_can_ho" xml:space="preserve">
+    <value>Tiêu chí - Diện tích căn hộ</value>
+  </data>
+	<data name="tieu_chi_thiet_ke_noi_that_can_ho" xml:space="preserve">
+    <value>Tiêu chí - Thiết kế nội thất căn hộ</value>
+  </data>
+	<data name="tieu_chi_tang_dep_can_ho_dep" xml:space="preserve">
+    <value>Tiêu chí - Tầng đẹp / Căn hộ đẹp</value>
+  </data>
+	<data name="tieu_chi_chon_mua" xml:space="preserve">
+    <value>Tiêu Chí Chọn Mua</value>
+  </data>
+	<data name="ban_co_muon_nhap_ten_cong_ty" xml:space="preserve">
+    <value>Bạn có muốn nhập tên công ty?</value>
+	</data>
   <data name="du_an_title" xml:space="preserve">
     <value>Dự Án</value>
   </data>

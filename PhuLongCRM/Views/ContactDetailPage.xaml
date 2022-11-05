@@ -175,7 +175,7 @@
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
-                            <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
                                         <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_cmnd_ho_chieu}"/>
@@ -238,6 +238,120 @@
                                             <controls:FormLabelValue Text="{Binding singleContact.bsd_placeofissuepassport}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                         </Grid>
                                     </Grid>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+                            <!--nhu cau-->
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent" IsVisible="false">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.nhu_cau_ve_dien_tich_can_ho}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.dien_tich_30_60_m2}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_dientich_3060m2}" CheckedChanged="TieuChiChonMua_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.dien_tich_60_80_m2}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_dientich_6080m2}" CheckedChanged="TieuChiChonMua_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.dien_tich_80_100_m2}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_dientich_80100m2}" CheckedChanged="TieuChiChonMua_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.dien_tich_100_120_m2}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_dientich_100120m2}" CheckedChanged="TieuChiChonMua_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.dien_tich_tren_120_m2}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_dientich_lonhon120m2}" CheckedChanged="TieuChiChonMua_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid BackgroundColor="White">
+                                            <Button x:Name="btn_nhaucaudientich" IsVisible="false" Text="{x:Static lang:Language.luu}" BackgroundColor="White" VerticalOptions="Center" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" TextTransform="None" Margin="10,5" FontSize="15" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+                            <!--tieu chi chon mua-->
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent" IsVisible="false">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.tieu_chi_chon_mua}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_vi_tri}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_vitri}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_phuong_thuc_thanh_toan}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_phuongthucthanhtoan}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_gia_can_ho}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_giacanho}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_nha_dau_tu_uy_tin}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_nhadautuuytin}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_moi_truong_song}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_moitruongsong}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_bai_dau_xe}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_baidauxe}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_he_thong_an_ninh}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_hethonganninh}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_huong_can_ho}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_huongcanho}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_he_thong_cuu_hoa}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_hethongcuuhoa}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_nhieu_tien_ich}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_nhieutienich}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_gan_cho_sieu_thi}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_ganchosieuthi}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_gan_truong_hoc}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_gantruonghoc}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_gan_benh_vien}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_ganbenhvien}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_dien_tich_can_ho}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_dientichcanho}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_thiet_ke_noi_that_can_ho}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_thietkenoithatcanho}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.tieu_chi_tang_dep_can_ho_dep}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_tangdepcanhodep}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid BackgroundColor="White">
+                                            <Button x:Name="btn_tieuchichonmua" IsVisible="false" Text="{x:Static lang:Language.luu}" BackgroundColor="White" VerticalOptions="Center" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" TextTransform="None" Margin="10,5" FontSize="15" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5"/>
+                                        </Grid>
+                                    </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
                         </StackLayout>

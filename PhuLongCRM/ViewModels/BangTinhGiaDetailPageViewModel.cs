@@ -204,6 +204,9 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='bsd_paymentscheme' from='bsd_paymentschemeid' to='bsd_paymentscheme' link-type='outer' alias='apo'>
                                         <attribute name='bsd_name' alias='paymentscheme_name'/>
                                         <attribute name='bsd_paymentschemeid' alias='paymentscheme_id'/>
+                                        <attribute name='bsd_optionforfeiture' alias='paymentscheme_optionforfeiture'/>
+                                        <attribute name='bsd_daforfeiture' alias='paymentscheme_daforfeiture'/>
+                                        <attribute name='bsd_spforfeiture' alias='paymentscheme_spforfeiture'/>
                                     </link-entity>
                                     <link-entity name='bsd_discounttype' from='bsd_discounttypeid' to='bsd_discountlist' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='discountlist_name' />
@@ -230,6 +233,7 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <link-entity name='salesorder' from='quoteid' to='quoteid' link-type='outer'>
                                         <attribute name='salesorderid' alias='salesorder_id'/>
+                                        <attribute name='statuscode' alias='contract_statuscode'/>
                                     </link-entity>
                                     <filter type='and'>
 	                                    <condition attribute='quoteid' operator='eq' uitype='quote' value='" + ReservationId + @"' />
@@ -251,6 +255,7 @@ namespace PhuLongCRM.ViewModels
                 Reservation.collaborator_id = data.collaborator_id;
                 Reservation.collaborator_name = data.collaborator_name;
                 Reservation.salesorder_id = data.salesorder_id;
+                Reservation.contract_statuscode = data.contract_statuscode;
                 if (data.customerreferral_account_id != Guid.Empty)
                 {
                     this.CustomerReferral = new OptionSet() { Val = data.customerreferral_account_id.ToString(), Label = data.customerreferral_account_name, Title = "2" };

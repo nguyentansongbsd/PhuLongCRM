@@ -41,6 +41,8 @@ namespace PhuLongCRM.Views
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
                 SetButtonFloatingButton();
+                btn_nhaucaudientich.IsVisible = false;
+                btn_tieuchichonmua.IsVisible = false;
                 FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
                 if(viewModel.singleContact.employee_id == UserLogged.Id)
                     OnCompleted?.Invoke(1);// thanh cong
@@ -540,6 +542,15 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.tao_qr_code_that_bai);
             }
+        }
+
+        private void NhuCauDienTich_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            btn_nhaucaudientich.IsVisible = true;
+        }
+        private void TieuChiChonMua_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            btn_tieuchichonmua.IsVisible = true;
         }
     }
 }

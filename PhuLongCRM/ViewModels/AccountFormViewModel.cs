@@ -310,9 +310,16 @@ namespace PhuLongCRM.ViewModels
             //}
             data["bsd_businesstype"] = this.BusinessType.Val;
             data["bsd_operationscope"] = this.OperationScope?.Val;
-            if (singleAccount.bsd_localization != null)
+            if (Localization == null)
             {
-                data["bsd_localization"] = int.Parse(singleAccount.bsd_localization);
+                data["bsd_localization"] = 100000000;
+            }
+            else
+            {
+                if (singleAccount.bsd_localization != null)
+                {
+                    data["bsd_localization"] = int.Parse(singleAccount.bsd_localization);
+                }
             }
             data["emailaddress1"] = singleAccount.emailaddress1;
             data["bsd_email2"] = singleAccount.bsd_email2;
@@ -359,6 +366,17 @@ namespace PhuLongCRM.ViewModels
                 if (!string.IsNullOrWhiteSpace(Address2.address_en))
                     data["bsd_diachithuongtru"] = Address2.address_en; //bsd_diachithuongtru ad2 en
             }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
+                    data["bsd_permanenthousenumberstreetwardvn"] = Address1.lineaddress; //bsd_permanenthousenumberstreetwardvn l2
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress_en))
+                    data["bsd_permanenthousenumberstreetward"] = Address1.lineaddress_en;
+                if (!string.IsNullOrWhiteSpace(Address1.address))
+                    data["bsd_permanentaddress1"] = Address1.address; //bsd_permanentaddress1 ad2
+                if (!string.IsNullOrWhiteSpace(Address1.address_en))
+                    data["bsd_diachithuongtru"] = Address1.address_en; //bsd_diachithuongtru ad2 en
+            }
 
             if (singleAccount._primarycontactid_value == null)
             {
@@ -397,7 +415,7 @@ namespace PhuLongCRM.ViewModels
 
             if (Address2 == null || Address2.country_id == Guid.Empty)
             {
-                await DeletLookup("bsd_PermanentNation", singleAccount.accountid);
+                data["bsd_PermanentNation@odata.bind"] = "/bsd_countries(" + Address1.country_id + ")"; /////Lookup Field _bsd_permanentnation_value
             }
             else
             {
@@ -406,7 +424,7 @@ namespace PhuLongCRM.ViewModels
             }
             if (Address2 == null || Address2.province_id == Guid.Empty)
             {
-                await DeletLookup("bsd_PermanentProvince", singleAccount.accountid);
+                data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + Address1.province_id + ")";
             }
             else
             {
@@ -414,7 +432,7 @@ namespace PhuLongCRM.ViewModels
             }
             if (Address2 == null || Address2.district_id == Guid.Empty)
             {
-                await DeletLookup("bsd_PermanentDistrict", singleAccount.accountid);
+                data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Address1.district_id + ")";
             }
             else
             {
