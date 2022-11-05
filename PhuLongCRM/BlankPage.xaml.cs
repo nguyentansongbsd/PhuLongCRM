@@ -29,7 +29,8 @@ namespace PhuLongCRM
         public List<OptionSet> DiscountLists { get; set; }
         public bool IsLocked { get; set; }
 
-        public string Num { get; set; } = "+84-";
+        private string _num;
+        public string Num { get=>_num; set { _num = value;OnPropertyChanged(nameof(Num)); } } 
 
         public BlankPage()
         {
@@ -82,6 +83,11 @@ namespace PhuLongCRM
         void Button_Clicked(System.Object sender, System.EventArgs e)
         {
             //firebaseClient.Child("test").Child("directsale").PostAsync(new UnitStatus { id = Guid.NewGuid(), status ="12"}) ;
+        }
+
+        void Button_Clicked_1(System.Object sender, System.EventArgs e)
+        {
+            
         }
     }
     public class test

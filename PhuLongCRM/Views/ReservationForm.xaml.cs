@@ -1112,6 +1112,11 @@ namespace PhuLongCRM.Views
                             else
                             {
                                 ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
+                                await viewModel.DeleteQuote();
+                                // set lại id = null khi thất bại để chạy vào create
+                                viewModel.quotedetailid = Guid.Empty;
+                                viewModel.QuoteId = Guid.Empty;
+                                viewModel.Quote.quoteid = Guid.Empty;
                                 LoadingHelper.Hide();
                             }
                         }
@@ -1125,7 +1130,6 @@ namespace PhuLongCRM.Views
                             viewModel.Quote.quoteid = Guid.Empty;
                             LoadingHelper.Hide();
                         }
-
                     }
                     else
                     {
