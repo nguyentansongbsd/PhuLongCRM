@@ -228,6 +228,8 @@ namespace PhuLongCRM.ViewModels
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>
+                                <value>100000000</value>
+                                <value>861450001</value>
                               </condition>
                               <filter type='and'>
                                  <condition attribute='statuscode' operator='in'>
@@ -279,10 +281,8 @@ namespace PhuLongCRM.ViewModels
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
-                                            <value>100000000</value>
                                             <value>100000001</value>
                                             <value>100000006</value>
-                                            <value>861450001</value>
                                             <value>861450002</value>
                                             <value>4</value>                
                                             <value>3</value>

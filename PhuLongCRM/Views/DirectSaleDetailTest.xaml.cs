@@ -87,13 +87,14 @@ namespace PhuLongCRM.Views
 
         public void SetRealTimeData()
         {
-            bool test = false;
+            bool temp = false;
+            //int _currentNumQuese = 0;
             var condition = viewModel.firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
                 .Subscribe(async (dbevent) =>
                 {
                     try
                     {
-                        if (dbevent.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && dbevent.Object != null && test == true)
+                        if (dbevent.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && dbevent.Object != null && temp == true)
                         {
                             try
                             {
@@ -105,6 +106,7 @@ namespace PhuLongCRM.Views
                                     {
                                         viewModel._currentUnit = new ResponseRealtime() { id = _unit.productid.ToString(), status = _unit.statuscode.ToString() };
                                         _unit.statuscode = int.Parse(item.status);
+                                        //_currentNumQuese = _unit.NumQueses;
                                         _unit.NumQueses++;
                                         viewModel.SetNumStatus(item.status, x.bsd_floorid);
                                         viewModel.ChangeStatusUnitPopup(item);
@@ -116,7 +118,7 @@ namespace PhuLongCRM.Views
                                 ToastMessageHelper.LongMessage(ex.Message);
                             }
                         }
-                        test = true;
+                        temp = true;
                     }
                     catch (Exception ex)
                     {

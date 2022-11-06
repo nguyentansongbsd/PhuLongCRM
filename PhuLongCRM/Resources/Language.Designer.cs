@@ -8648,7 +8648,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thất bại.
+        ///   Looks up a localized string similar to Thất bại..
         /// </summary>
         internal static string thong_bao_that_bai {
             get {
