@@ -661,5 +661,80 @@ namespace PhuLongCRM.ViewModels
                 list_campaign_lookup.Add(x);
             }
         }
+
+        public async Task<bool> CheckIsValidPhone(string phoneNum)
+        {
+            string conditionLead = string.Empty;
+            if (this.LeadId != Guid.Empty)
+            {
+                conditionLead = $"<condition attribute='leadid' operator='ne' value='{this.LeadId}'/>";
+            }
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                          <entity name='lead'>
+                            <attribute name='mobilephone' alias='Label'/>
+                            <order attribute='createdon' descending='true' />
+                            <filter type='and'>
+                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                <condition attribute='mobilephone' operator='like' value='%25{phoneNum}%25'/>
+                                {conditionLead}
+                            </filter>
+                          </entity>
+                        </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetch);
+            if (result == null || result.value.Count == 0)
+                return false;
+            else
+                return true;
+        }
+
+        public async Task<bool> CheckIsValidEmail(string email)
+        {
+            string conditionLead = string.Empty;
+            if (this.LeadId != Guid.Empty)
+            {
+                conditionLead = $"<condition attribute='leadid' operator='ne' value='{this.LeadId}'/>";
+            }
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                          <entity name='lead'>
+                            <attribute name='emailaddress1' alias='Label'/>
+                            <order attribute='createdon' descending='true' />
+                            <filter type='and'>
+                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                <condition attribute='emailaddress1' operator='eq' value='{email}' />
+                                {conditionLead}
+                            </filter>
+                          </entity>
+                        </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetch);
+            if (result == null || result.value.Count == 0)
+                return false;
+            else
+                return true;
+        }
+
+        public async Task<bool> CheckIsValidID(string identityCardNumberId)
+        {
+            string conditionLead = string.Empty;
+            if (this.LeadId != Guid.Empty)
+            {
+                conditionLead = $"<condition attribute='leadid' operator='ne' value='{this.LeadId}'/>";
+            }
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                          <entity name='lead'>
+                            <attribute name='bsd_identitycardnumberid' alias='Label'/>
+                            <order attribute='createdon' descending='true' />
+                            <filter type='and'>
+                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                <condition attribute='bsd_identitycardnumberid' operator='eq' value='{identityCardNumberId}' />
+                                {conditionLead}
+                            </filter>
+                          </entity>
+                        </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetch);
+            if (result == null || result.value.Count == 0)
+                return false;
+            else
+                return true;
+        }
     }
 }

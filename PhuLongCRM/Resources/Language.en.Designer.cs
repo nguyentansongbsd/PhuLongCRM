@@ -16,7 +16,7 @@ namespace PhuLongCRM.Resources {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Language_en {
+    internal class Language_en {
         
         private static System.Resources.ResourceManager resourceMan;
         
@@ -27,7 +27,7 @@ namespace PhuLongCRM.Resources {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static System.Resources.ResourceManager ResourceManager {
+        internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
                     System.Resources.ResourceManager temp = new System.Resources.ResourceManager("PhuLongCRM.Resources.Language.en", typeof(Language_en).Assembly);
@@ -38,7 +38,7 @@ namespace PhuLongCRM.Resources {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static System.Globalization.CultureInfo Culture {
+        internal static System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -6791,9 +6791,9 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        internal static string ten_cong_ty_dang_bi_trong_ban_co_muon_dien_thong_tin_khong {
+        internal static string ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty {
             get {
-                return ResourceManager.GetString("ten_cong_ty_dang_bi_trong_ban_co_muon_dien_thong_tin_khong", resourceCulture);
+                return ResourceManager.GetString("ten_cong_ty_dang_bi_trong_ban_co_muon_nhap_ten_cong_ty", resourceCulture);
             }
         }
         
@@ -6833,6 +6833,24 @@ namespace PhuLongCRM.Resources {
             }
         }
         
+        internal static string vui_long_chon_quoc_gia {
+            get {
+                return ResourceManager.GetString("vui_long_chon_quoc_gia", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_chon_tinh_thanh {
+            get {
+                return ResourceManager.GetString("vui_long_chon_tinh_thanh", resourceCulture);
+            }
+        }
+        
+        internal static string vui_long_chon_quan_huyen {
+            get {
+                return ResourceManager.GetString("vui_long_chon_quan_huyen", resourceCulture);
+            }
+        }
+        
         internal static string vui_long_chon_ngay {
             get {
                 return ResourceManager.GetString("vui_long_chon_ngay", resourceCulture);
@@ -6852,6 +6870,150 @@ namespace PhuLongCRM.Resources {
             }
         }
         
+        internal static string nhu_cau_ve_dien_tich_can_ho {
+            get {
+                return ResourceManager.GetString("nhu_cau_ve_dien_tich_can_ho", resourceCulture);
+            }
+        }
+        
+        internal static string dien_tich_30_60_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_30_60_m2", resourceCulture);
+            }
+        }
+        
+        internal static string dien_tich_60_80_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_60_80_m2", resourceCulture);
+            }
+        }
+        
+        internal static string dien_tich_80_100_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_80_100_m2", resourceCulture);
+            }
+        }
+        
+        internal static string dien_tich_100_120_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_100_120_m2", resourceCulture);
+            }
+        }
+        
+        internal static string dien_tich_tren_120_m2 {
+            get {
+                return ResourceManager.GetString("dien_tich_tren_120_m2", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_vi_tri {
+            get {
+                return ResourceManager.GetString("tieu_chi_vi_tri", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_phuong_thuc_thanh_toan {
+            get {
+                return ResourceManager.GetString("tieu_chi_phuong_thuc_thanh_toan", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_gia_can_ho {
+            get {
+                return ResourceManager.GetString("tieu_chi_gia_can_ho", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_nha_dau_tu_uy_tin {
+            get {
+                return ResourceManager.GetString("tieu_chi_nha_dau_tu_uy_tin", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_moi_truong_song {
+            get {
+                return ResourceManager.GetString("tieu_chi_moi_truong_song", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_bai_dau_xe {
+            get {
+                return ResourceManager.GetString("tieu_chi_bai_dau_xe", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_he_thong_an_ninh {
+            get {
+                return ResourceManager.GetString("tieu_chi_he_thong_an_ninh", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_huong_can_ho {
+            get {
+                return ResourceManager.GetString("tieu_chi_huong_can_ho", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_he_thong_cuu_hoa {
+            get {
+                return ResourceManager.GetString("tieu_chi_he_thong_cuu_hoa", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_nhieu_tien_ich {
+            get {
+                return ResourceManager.GetString("tieu_chi_nhieu_tien_ich", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_gan_cho_sieu_thi {
+            get {
+                return ResourceManager.GetString("tieu_chi_gan_cho_sieu_thi", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_gan_truong_hoc {
+            get {
+                return ResourceManager.GetString("tieu_chi_gan_truong_hoc", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_gan_benh_vien {
+            get {
+                return ResourceManager.GetString("tieu_chi_gan_benh_vien", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_dien_tich_can_ho {
+            get {
+                return ResourceManager.GetString("tieu_chi_dien_tich_can_ho", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_thiet_ke_noi_that_can_ho {
+            get {
+                return ResourceManager.GetString("tieu_chi_thiet_ke_noi_that_can_ho", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_tang_dep_can_ho_dep {
+            get {
+                return ResourceManager.GetString("tieu_chi_tang_dep_can_ho_dep", resourceCulture);
+            }
+        }
+        
+        internal static string tieu_chi_chon_mua {
+            get {
+                return ResourceManager.GetString("tieu_chi_chon_mua", resourceCulture);
+            }
+        }
+        
+        internal static string ban_co_muon_nhap_ten_cong_ty {
+            get {
+                return ResourceManager.GetString("ban_co_muon_nhap_ten_cong_ty", resourceCulture);
+            }
+        }
+        
         internal static string du_an_title {
             get {
                 return ResourceManager.GetString("du_an_title", resourceCulture);
@@ -6861,6 +7023,24 @@ namespace PhuLongCRM.Resources {
         internal static string du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho {
             get {
                 return ResourceManager.GetString("du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho", resourceCulture);
+            }
+        }
+        
+        internal static string thong_tin_id_da_ton_tai {
+            get {
+                return ResourceManager.GetString("thong_tin_id_da_ton_tai", resourceCulture);
+            }
+        }
+        
+        internal static string thong_tin_email_da_ton_tai {
+            get {
+                return ResourceManager.GetString("thong_tin_email_da_ton_tai", resourceCulture);
+            }
+        }
+        
+        internal static string thong_tin_so_dien_thoai_da_ton_tai {
+            get {
+                return ResourceManager.GetString("thong_tin_so_dien_thoai_da_ton_tai", resourceCulture);
             }
         }
     }

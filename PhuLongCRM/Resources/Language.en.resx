@@ -3283,7 +3283,7 @@
 		<value>Create Case</value>
 	</data>
 	<data name="phan_hoi_lien_quan_title" xml:space="preserve">
-		<value>Parent Case</value>
+		<value>Recent Case</value>
 	</data>
 	<data name="thong_tin_giu_cho_title" xml:space="preserve">
 		<value>Queue Information</value>
@@ -3608,5 +3608,14 @@
   </data>
   <data name="du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho" xml:space="preserve">
     <value>Project is unpublish, you can't make queue.</value>
+  </data>
+  <data name="thong_tin_id_da_ton_tai" xml:space="preserve">
+    <value>ID already exists.</value>
+  </data>
+  <data name="thong_tin_email_da_ton_tai" xml:space="preserve">
+    <value>Email already exists.</value>
+  </data>
+  <data name="thong_tin_so_dien_thoai_da_ton_tai" xml:space="preserve">
+    <value>Phone number already exists.</value>
   </data>
 </root>
