@@ -222,6 +222,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.so_giay_phep_kinh_doanh_da_tao_trong_du_lieu_doanh_nghiep);
                 return;
             }
+            if (viewModel.singleAccount.bsd_issuedon.HasValue && DateTime.Compare((DateTime)viewModel.singleAccount.bsd_issuedon, DateTime.Now) == 1)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_duoc_thuoc_tuong_lai);
+                return;
+            }
             if (viewModel.singleAccount.bsd_vatregistrationnumber != null)
             {
                 if (!await viewModel.Check_form_keydata(viewModel.singleAccount.bsd_vatregistrationnumber, null, viewModel.singleAccount.accountid.ToString()))
@@ -242,7 +247,7 @@ namespace PhuLongCRM.Views
             //    ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_tru_so_chinh);
             //    return;
             //}
-            if (viewModel.singleAccount.telephone1 != null)
+            if (viewModel.singleAccount.telephone1 != null && viewModel.singleAccount.telephone1.Contains("+84") && viewModel.singleAccount.telephone1.Length > 3)
             {
                 string phone = viewModel.singleAccount.telephone1;
                 phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
@@ -334,6 +339,14 @@ namespace PhuLongCRM.Views
             await viewModel.LoadContactForLookup(e.Item.ToString());
             Lookup_PrimaryContact.ResetItemSource();
             LoadingHelper.Hide();
+        }
+
+        private void datePickerNgayCap_Date_Selected(object sender, EventArgs e)
+        {
+            if (viewModel.singleAccount.bsd_issuedon.HasValue && DateTime.Compare((DateTime)viewModel.singleAccount.bsd_issuedon, DateTime.Now) == 1)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_duoc_thuoc_tuong_lai);
+            }
         }
     }
 }
