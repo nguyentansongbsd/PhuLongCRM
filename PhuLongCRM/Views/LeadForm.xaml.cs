@@ -222,7 +222,7 @@ namespace PhuLongCRM.Views
         //}
         #endregion
 
-        private void MainEntry_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        private async void MainEntry_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid)) return;
 
@@ -237,6 +237,12 @@ namespace PhuLongCRM.Views
             if (viewModel.TypeIdCard?.Val == "100000002" && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_identitycardnumberid, 8))// Passport
             {
                 ToastMessageHelper.ShortMessage(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
+            }
+
+            bool isValid = await viewModel.CheckIsValidID(viewModel.singleLead.bsd_identitycardnumberid);
+            if (isValid)
+            {
+                ToastMessageHelper.ShortMessage(Language.thong_tin_id_da_ton_tai);
             }
         }
 
@@ -274,7 +280,7 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private void mobilephone_text_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        private async void mobilephone_text_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
         {
             var num = sender as PhoneEntryControl;
             if (!string.IsNullOrWhiteSpace(num.Text))
@@ -285,6 +291,14 @@ namespace PhuLongCRM.Views
                 if (phone.Length != 10)
                 {
                     ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
+                else
+                {
+                    bool isValidPhoneNum = await viewModel.CheckIsValidPhone(phone);
+                    if (isValidPhoneNum)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.thong_tin_so_dien_thoai_da_ton_tai);
+                    }
                 }
             }
         }
@@ -455,13 +469,20 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private void emailaddress1_text_Unfocused(object sender, FocusEventArgs e)
+        private async void emailaddress1_text_Unfocused(object sender, FocusEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.emailaddress1)) return;
             if (!ValidEmailHelper.CheckValidEmail(viewModel.singleLead.emailaddress1))
             {
                 ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang_vui_long_thu_lai);
-                return;
+            }
+            else
+            {
+                bool isValiEmail = await viewModel.CheckIsValidEmail(viewModel.singleLead.emailaddress1);
+                if (isValiEmail)
+                {
+                    ToastMessageHelper.ShortMessage(Language.thong_tin_email_da_ton_tai);
+                }
             }
         }
 

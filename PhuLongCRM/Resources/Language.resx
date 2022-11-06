@@ -3609,4 +3609,13 @@
   <data name="du_an_chua_duoc_cong_bo_ban_khong_the_thuc_hien_giu_cho" xml:space="preserve">
     <value>Dự án chưa được công bố, bạn không thể thực hiện giữ chỗ.</value>
   </data>
+  <data name="thong_tin_id_da_ton_tai" xml:space="preserve">
+    <value>Thông tin ID đã tồn tại.</value>
+  </data>
+  <data name="thong_tin_email_da_ton_tai" xml:space="preserve">
+    <value>Thông tin Email đã tồn tại.</value>
+  </data>
+  <data name="thong_tin_so_dien_thoai_da_ton_tai" xml:space="preserve">
+    <value>Thông tin Số điện thoại đã tồn tại.</value>
+  </data>
 </root>

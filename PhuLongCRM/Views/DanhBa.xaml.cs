@@ -179,7 +179,7 @@ namespace PhuLongCRM.Views
 
                 if (!re.IsSuccess)
                 {
-                    ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                    ToastMessageHelper.ShortMessage(re.ErrorResponse.error.message);
                     LoadingHelper.Hide();
                     return;
                 }
