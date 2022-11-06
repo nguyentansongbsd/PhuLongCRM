@@ -52,7 +52,7 @@
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_giay_phep_kinh_doanh}" Text="{Binding singleAccount.bsd_registrationcode}" FontSize="15" IsEnabled="{Binding IsOfficial}" Margin="10,0" Unfocused="so_gpkd_Unfocused" Keyboard="Numeric" />
 
                     <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" FontSize="15" Margin="10,10,10,0"/>
-                    <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleAccount.bsd_issuedon}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False" Margin="10,0" />
+                    <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleAccount.bsd_issuedon}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False" Margin="10,0" Date_Selected="datePickerNgayCap_Date_Selected"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.noi_cap}" FontSize="15" Margin="10,10,10,0"/>
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_noi_cap}" Text="{Binding singleAccount.bsd_placeofissue}" FontSize="15" IsEnabled="{Binding IsOfficial}" Margin="10,0" />

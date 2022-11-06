@@ -83,6 +83,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='createdon' />
                         <attribute name='bsd_bookingtime' />
                         <attribute name='bsd_queueforproject' />
+                        <attribute name='bsd_queuingfeepaid' />
                         <order attribute='bsd_bookingtime' descending='true' />
                         <filter type='and'>                          
                             <filter type='or'>
