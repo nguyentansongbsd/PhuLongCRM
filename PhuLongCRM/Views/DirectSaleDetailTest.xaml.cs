@@ -89,7 +89,7 @@ namespace PhuLongCRM.Views
         {
             bool temp = false;
             //int _currentNumQuese = 0;
-            var condition = viewModel.firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
+            var condition = RealTimeHelper.firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
                 .Subscribe(async (dbevent) =>
                 {
                     try

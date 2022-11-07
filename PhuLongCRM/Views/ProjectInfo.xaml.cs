@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.Helper;
+﻿using Firebase.Database.Query;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Helpers;
 using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
@@ -44,7 +45,7 @@ namespace PhuLongCRM.Views
                 //{
                 //    viewModel.HandoverCoditionMinimum = HandoverCoditionMinimumData.GetHandoverCoditionMinimum(viewModel.Project.bsd_handoverconditionminimum.Value.ToString());
                 //}
-                
+
                 await Task.WhenAll(
                         viewModel.LoadAllCollection(),
                         viewModel.CheckEvent(),
@@ -55,7 +56,7 @@ namespace PhuLongCRM.Views
                         viewModel.CheckPhasesLaunch(),
                         viewModel.LoadThongKeDatCoc()
                     );
-
+                SetRealTime();
                 try
                 {
                     if (viewModel.Project.bsd_projectslogo == null)
@@ -83,6 +84,7 @@ namespace PhuLongCRM.Views
                 OnCompleted?.Invoke(false);
             }
         }
+
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -104,6 +106,33 @@ namespace PhuLongCRM.Views
                 NeedToRefreshNumQueue = false;
                 LoadingHelper.Hide();
             }
+        }
+
+        private void SetRealTime()
+        {
+            bool temp = false;
+            var collection = RealTimeHelper.firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
+                .Subscribe(async (dbevent) =>
+                {
+                    try
+                    {
+                        if (dbevent.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && dbevent.Object != null && temp == true)
+                        {
+                            var item = dbevent.Object as ResponseRealtime;
+                            var isUnitOfProject = await viewModel.CheckUnitOfProject(item.id);
+                            if (isUnitOfProject)
+                            {
+                                viewModel.SoGiuCho++;
+                                viewModel.ResetNumStatus(item.status);
+                            }
+                        }
+                        temp = true;
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                });
         }
         private void GiuCho_Clicked(object sender, EventArgs e)
         {

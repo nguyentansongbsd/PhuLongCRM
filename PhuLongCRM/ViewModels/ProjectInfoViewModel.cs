@@ -575,5 +575,80 @@ namespace PhuLongCRM.ViewModels
                 }
             }
         }
+
+        public async Task<bool> CheckUnitOfProject(string unitId)
+        {
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
+                              <entity name='bsd_project'>
+                                <attribute name='bsd_projectid' alias='Label'/>
+                                <filter type='and'>
+                                  <condition attribute='bsd_projectid' operator='eq' value='{this.ProjectId}' />
+                                </filter>
+                                <link-entity name='product' from='bsd_projectcode' to='bsd_projectid' link-type='inner' alias='ab'>
+                                  <filter type='and'>
+                                    <condition attribute='productid' operator='eq' value='{unitId}' />
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetch);
+            if (result != null && result.value.Any() == true)
+                return true;
+            else
+                return false;
+        }
+
+        public void ResetNumStatus(string UnitStatus)
+        {
+            try
+            {
+                switch (UnitStatus)
+                {
+                    case "1":
+                        this.ChuanBi++;
+                        break;
+                    case "100000000":
+                        this.SanSang++;
+                        break;
+                    case "100000007":
+                        this.Booking++;
+                        break;
+                    case "100000004":
+                        this.GiuCho++;
+                        break;
+                    case "100000006":
+                        this.DatCoc++;
+                        break;
+                    case "100000005":
+                        this.DongYChuyenCoc++;
+                        break;
+                    case "100000003":
+                        this.DaDuTienCoc++;
+                        break;
+                    case "100000010":
+                        this.Option++;
+                        break;
+                    case "100000001":
+                        this.ThanhToanDot1++;
+                        break;
+                    case "100000009":
+                        this.SignedDA++;
+                        break;
+                    case "100000008":
+                        this.Qualified++;
+                        break;
+                    case "100000002":
+                        this.DaBan++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
     }
 }
