@@ -17,8 +17,6 @@ namespace PhuLongCRM.ViewModels
 {
     public class DirectSaleDetailTestViewModel : BaseViewModel
     {
-        public FirebaseClient firebaseClient = new FirebaseClient(Config.OrgConfig.LinkFireBase_RealTimeData,
-                new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult(Config.OrgConfig.AuthToken) }); 
         private ObservableCollection<Block> _blocks;
         public ObservableCollection<Block> Blocks { get => _blocks; set { _blocks = value; OnPropertyChanged(nameof(Blocks)); } }
         private Block _block;
