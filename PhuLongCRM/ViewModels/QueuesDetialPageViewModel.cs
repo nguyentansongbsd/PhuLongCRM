@@ -103,6 +103,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='statecode' />
                                 <attribute name='bsd_expired' />
                                 <attribute name='bsd_queuingfeepaid' />
+                                <attribute name='bsd_queueforproject' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='opportunityid' operator='eq' value='{QueueId}'/>
@@ -164,7 +165,7 @@ namespace PhuLongCRM.ViewModels
                 NumPhone = data.PhoneContact;
             }
 
-            if (data.unit_name != null)
+            if (data.bsd_queueforproject == false)
             {
                 QueueProject = Language.khong;
             }
