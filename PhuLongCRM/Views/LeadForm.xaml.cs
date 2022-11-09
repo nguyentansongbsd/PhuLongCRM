@@ -55,7 +55,7 @@ namespace PhuLongCRM.Views
             {
                 datePickerNgayCap.ReSetTime();
                 customerCode.IsVisible = true;
-                lookUpLeadSource.IsEnabled = false;
+                //lookUpLeadSource.IsEnabled = false; // Task 973 Cho phep chinh sua nguon kh sai khi tao moi thanh cong
 
                 if (!string.IsNullOrWhiteSpace(viewModel.singleLead._campaignid_value))
                     viewModel.Campaign = new OptionSet { Val = viewModel.singleLead._campaignid_value, Label = viewModel.singleLead.campaignid_label };
