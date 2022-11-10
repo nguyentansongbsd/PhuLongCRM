@@ -26,16 +26,30 @@ namespace PhuLongCRM.Config
         //sharepoint
         public const string GraphApi = "https://graph.microsoft.com/v1.0/sites/";
         public const string GraphReSource = "https://graph.microsoft.com";
-        public const string SP_SiteId = "245fb505-41a2-4630-923b-b233fdd09865";
-        public const string SP_UnitID = "3c197b5b-a1b2-46a1-8d6c-7e45c2b53a13";
-        public const string SP_UnitTypeID = "f351dad2-e44a-474a-84f5-12835186f2b5";
-        public const string SP_ProjectID = "128241a3-19be-410e-afab-7cc233fba735";
-        public const string SP_ContactID = "166b0309-79b1-414b-9613-ce3529e89642";
 
-        public const string Graph_UnitTypeID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9LS2lHzSuRKR4T1EoNRhvK1";
-        public const string Graph_UnitID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9Jbexk8sqGhRo1sfkXCtToT";
-        public const string Graph_ProjectID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9KjQYISvhkOQa-rfMIz-6c1";
-        public const string Graph_ContactID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9IJA2sWsXlLQZYTzjUp6JZC";
+        // Sharepoint Site PhuLong
+        //public const string SP_SiteId = "245fb505-41a2-4630-923b-b233fdd09865";
+        //public const string SP_UnitID = "3c197b5b-a1b2-46a1-8d6c-7e45c2b53a13";
+        //public const string SP_UnitTypeID = "f351dad2-e44a-474a-84f5-12835186f2b5";
+        //public const string SP_ProjectID = "128241a3-19be-410e-afab-7cc233fba735";
+        //public const string SP_ContactID = "166b0309-79b1-414b-9613-ce3529e89642";
+
+        //public const string Graph_UnitTypeID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9LS2lHzSuRKR4T1EoNRhvK1";
+        //public const string Graph_UnitID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9Jbexk8sqGhRo1sfkXCtToT";
+        //public const string Graph_ProjectID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9KjQYISvhkOQa-rfMIz-6c1";
+        //public const string Graph_ContactID = "b!BbVfJKJBMEaSO7Iz_dCYZaTJYdWNCktOh_yG1we5P9IJA2sWsXlLQZYTzjUp6JZC";
+
+        // Sharepoint Site PhuLong-UAT
+        public const string SP_SiteId = "74f8fad8-13c1-428e-adde-229434c6a37f";
+        public const string SP_UnitID = "7dbce0b3-fa3e-4e3d-84c8-481f4db43368";
+        public const string SP_UnitTypeID = "7d92454f-b545-40c8-8730-19721320c089";
+        public const string SP_ProjectID = "bf77feea-e01d-4895-bf9b-f31eea66b9f4";
+        public const string SP_ContactID = "50d7610e-e9b8-4078-aefe-1ffc133244ee";
+
+        public const string Graph_UnitTypeID = "b!2Pr4dMETjkKt3iKUNMajf9S0toE_AwpNtuTnCMuoqsZPRZJ9RbXIQIcwGXITIMCJ";
+        public const string Graph_UnitID = "b!2Pr4dMETjkKt3iKUNMajf9S0toE_AwpNtuTnCMuoqsaz4Lx9Pvo9ToTISB9NtDNo";
+        public const string Graph_ProjectID = "b!2Pr4dMETjkKt3iKUNMajf9S0toE_AwpNtuTnCMuoqsbq_ne_HeCVSL-b8x7qZrn0";
+        public const string Graph_ContactID = "b!2Pr4dMETjkKt3iKUNMajf9S0toE_AwpNtuTnCMuoqsYOYddQuOl4QK7-H_wTMkTu";
 
         // Info Realtime
         public const string LinkFireBase_RealTimeData = "https://phulong-aff10-default-rtdb.firebaseio.com/";
