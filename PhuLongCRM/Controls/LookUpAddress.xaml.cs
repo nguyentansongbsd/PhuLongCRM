@@ -131,7 +131,7 @@ namespace PhuLongCRM.Controls
             stackLayoutMain = new StackLayout();
             stackLayoutMain.Padding = 10;
 
-            FormLabelRequired lbCountry = new FormLabelRequired();
+            FormLabel lbCountry = new FormLabel();
             lbCountry.Text = Language.quoc_gia;
             stackLayoutMain.Children.Add(lbCountry);
 
@@ -152,7 +152,7 @@ namespace PhuLongCRM.Controls
             };
             lookUpCountry.SelectedItemChange += LookUpCountry_SelectedItemChange;
 
-            FormLabelRequired lbProvince = new FormLabelRequired();
+            FormLabel lbProvince = new FormLabel();
             lbProvince.Text = Language.tinh_thanh;
             stackLayoutMain.Children.Add(lbProvince);
 
@@ -167,7 +167,7 @@ namespace PhuLongCRM.Controls
             stackLayoutMain.Children.Add(lookUpProvince);
             lookUpProvince.SelectedItemChange += LookUpProvince_SelectedItemChange;
 
-            FormLabelRequired lbDistrict = new FormLabelRequired();
+            FormLabel lbDistrict = new FormLabel();
             lbDistrict.Text = Language.quan_huyen;
             stackLayoutMain.Children.Add(lbDistrict);
 
@@ -446,21 +446,21 @@ namespace PhuLongCRM.Controls
         {
             List<string> _address = new List<string>();
             List<string> _address_en = new List<string>();
-            if(Country == null)
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_quoc_gia);
-                return;
-            }
-            if (Province == null)
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_tinh_thanh);
-                return;
-            }
-            if (District == null)
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_quan_huyen);
-                return;
-            }
+            //if(Country == null)
+            //{
+            //    ToastMessageHelper.ShortMessage(Language.vui_long_chon_quoc_gia);
+            //    return;
+            //}
+            //if (Province == null)
+            //{
+            //    ToastMessageHelper.ShortMessage(Language.vui_long_chon_tinh_thanh);
+            //    return;
+            //}
+            //if (District == null)
+            //{
+            //    ToastMessageHelper.ShortMessage(Language.vui_long_chon_quan_huyen);
+            //    return;
+            //}
             if (string.IsNullOrWhiteSpace(LineAddress))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_nha_duong_phuong);

@@ -238,87 +238,79 @@ namespace PhuLongCRM.ViewModels
             }
             var tmp2 = result2.value.FirstOrDefault();
 
-            if (tmp2.bsd_accountcountry_id != Guid.Empty)
-            {
-                singleLead.bsd_accountcountry_id = tmp2.bsd_accountcountry_id;
-                singleLead.bsd_accountcountry_name = tmp2.bsd_accountcountry_name;
-                singleLead.bsd_accountcountry_name_en = tmp2.bsd_accountcountry_name_en;
-                singleLead.bsd_accountdistrict_id = tmp2.bsd_accountdistrict_id;
-                singleLead.bsd_accountdistrict_name = tmp2.bsd_accountdistrict_name;
-                singleLead.bsd_accountdistrict_name_en = tmp2.bsd_accountdistrict_name_en;
-                singleLead.bsd_accountprovince_id = tmp2.bsd_accountprovince_id;
-                singleLead.bsd_accountprovince_name = tmp2.bsd_accountprovince_name;
-                singleLead.bsd_accountprovince_name_en = tmp2.bsd_accountprovince_name_en;
+            singleLead.bsd_accountcountry_id = tmp2.bsd_accountcountry_id;
+            singleLead.bsd_accountcountry_name = tmp2.bsd_accountcountry_name;
+            singleLead.bsd_accountcountry_name_en = tmp2.bsd_accountcountry_name_en;
+            singleLead.bsd_accountdistrict_id = tmp2.bsd_accountdistrict_id;
+            singleLead.bsd_accountdistrict_name = tmp2.bsd_accountdistrict_name;
+            singleLead.bsd_accountdistrict_name_en = tmp2.bsd_accountdistrict_name_en;
+            singleLead.bsd_accountprovince_id = tmp2.bsd_accountprovince_id;
+            singleLead.bsd_accountprovince_name = tmp2.bsd_accountprovince_name;
+            singleLead.bsd_accountprovince_name_en = tmp2.bsd_accountprovince_name_en;
 
-                Address3 = new AddressModel
-                {
-                    country_id = singleLead.bsd_accountcountry_id,
-                    country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountcountry_name_en : singleLead.bsd_accountcountry_name,
-                    country_name_en = singleLead.bsd_accountcountry_name_en,
-                    province_id = singleLead.bsd_accountprovince_id,
-                    province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountprovince_name_en : singleLead.bsd_accountprovince_name,
-                    province_name_en = singleLead.bsd_accountprovince_name_en,
-                    district_id = singleLead.bsd_accountdistrict_id,
-                    district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountdistrict_name_en : singleLead.bsd_accountdistrict_name,
-                    district_name_en = singleLead.bsd_accountdistrict_name_en,
-                    lineaddress = singleLead.bsd_account_housenumberstreetwardvn,
-                    address = singleLead.bsd_accountaddressvn
-                };
-            }
-            if (tmp2.bsd_permanentcountry_id != Guid.Empty)
+            Address3 = new AddressModel
             {
-                singleLead.bsd_permanentcountry_id = tmp2.bsd_permanentcountry_id;
-                singleLead.bsd_permanentcountry_name = tmp2.bsd_permanentcountry_name;
-                singleLead.bsd_permanentcountry_name_en = tmp2.bsd_permanentcountry_name_en;
-                singleLead.bsd_permanentdistrict_id = tmp2.bsd_permanentdistrict_id;
-                singleLead.bsd_permanentdistrict_name = tmp2.bsd_permanentdistrict_name;
-                singleLead.bsd_permanentdistrict_name_en = tmp2.bsd_permanentdistrict_name_en;
-                singleLead.bsd_permanentprovince_id = tmp2.bsd_permanentprovince_id;
-                singleLead.bsd_permanentprovince_name = tmp2.bsd_permanentprovince_name;
-                singleLead.bsd_permanentprovince_name_en = tmp2.bsd_permanentprovince_name_en;
+                country_id = singleLead.bsd_accountcountry_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountcountry_name_en : singleLead.bsd_accountcountry_name,
+                country_name_en = singleLead.bsd_accountcountry_name_en,
+                province_id = singleLead.bsd_accountprovince_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountprovince_name_en : singleLead.bsd_accountprovince_name,
+                province_name_en = singleLead.bsd_accountprovince_name_en,
+                district_id = singleLead.bsd_accountdistrict_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountdistrict_name_en : singleLead.bsd_accountdistrict_name,
+                district_name_en = singleLead.bsd_accountdistrict_name_en,
+                lineaddress = singleLead.bsd_account_housenumberstreetwardvn,
+                address = singleLead.bsd_accountaddressvn
+            };
+            singleLead.bsd_permanentcountry_id = tmp2.bsd_permanentcountry_id;
+            singleLead.bsd_permanentcountry_name = tmp2.bsd_permanentcountry_name;
+            singleLead.bsd_permanentcountry_name_en = tmp2.bsd_permanentcountry_name_en;
+            singleLead.bsd_permanentdistrict_id = tmp2.bsd_permanentdistrict_id;
+            singleLead.bsd_permanentdistrict_name = tmp2.bsd_permanentdistrict_name;
+            singleLead.bsd_permanentdistrict_name_en = tmp2.bsd_permanentdistrict_name_en;
+            singleLead.bsd_permanentprovince_id = tmp2.bsd_permanentprovince_id;
+            singleLead.bsd_permanentprovince_name = tmp2.bsd_permanentprovince_name;
+            singleLead.bsd_permanentprovince_name_en = tmp2.bsd_permanentprovince_name_en;
 
-                Address2 = new AddressModel
-                {
-                    country_id = singleLead.bsd_permanentcountry_id,
-                    country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentcountry_name_en : singleLead.bsd_permanentcountry_name,
-                    country_name_en = singleLead.bsd_permanentcountry_name_en,
-                    province_id = singleLead.bsd_permanentprovince_id,
-                    province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentprovince_name_en : singleLead.bsd_permanentprovince_name,
-                    province_name_en = singleLead.bsd_permanentprovince_name_en,
-                    district_id = singleLead.bsd_permanentdistrict_id,
-                    district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentdistrict_name_en : singleLead.bsd_permanentdistrict_name,
-                    district_name_en = singleLead.bsd_permanentdistrict_name_en,
-                    lineaddress = singleLead.bsd_permanentaddress,
-                    address = singleLead.bsd_permanentaddress1
-                };
-            }
-            if (tmp2.bsd_permanentcountry_id != Guid.Empty)
+            Address2 = new AddressModel
             {
-                singleLead.bsd_country_id = tmp2.bsd_country_id;
-                singleLead.bsd_country_name = tmp2.bsd_country_name;
-                singleLead.bsd_country_name_en = tmp2.bsd_country_name_en;
-                singleLead.bsd_district_id = tmp2.bsd_district_id;
-                singleLead.bsd_district_name = tmp2.bsd_district_name;
-                singleLead.bsd_district_name_en = tmp2.bsd_district_name_en;
-                singleLead.bsd_province_id = tmp2.bsd_province_id;
-                singleLead.bsd_province_name = tmp2.bsd_province_name;
-                singleLead.bsd_province_name_en = tmp2.bsd_province_name_en;
+                country_id = singleLead.bsd_permanentcountry_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentcountry_name_en : singleLead.bsd_permanentcountry_name,
+                country_name_en = singleLead.bsd_permanentcountry_name_en,
+                province_id = singleLead.bsd_permanentprovince_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentprovince_name_en : singleLead.bsd_permanentprovince_name,
+                province_name_en = singleLead.bsd_permanentprovince_name_en,
+                district_id = singleLead.bsd_permanentdistrict_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentdistrict_name_en : singleLead.bsd_permanentdistrict_name,
+                district_name_en = singleLead.bsd_permanentdistrict_name_en,
+                lineaddress = singleLead.bsd_permanentaddress,
+                address = singleLead.bsd_permanentaddress1
+            };
 
-                Address1 = new AddressModel
-                {
-                    country_id = singleLead.bsd_country_id,
-                    country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_country_name_en) && UserLogged.Language == "en" ? singleLead.bsd_country_name_en : singleLead.bsd_country_name,
-                    country_name_en = singleLead.bsd_country_name_en,
-                    province_id = singleLead.bsd_province_id,
-                    province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_province_name_en) && UserLogged.Language == "en" ? singleLead.bsd_province_name_en : singleLead.bsd_province_name,
-                    province_name_en = singleLead.bsd_province_name_en,
-                    district_id = singleLead.bsd_district_id,
-                    district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_district_name_en) && UserLogged.Language == "en" ? singleLead.bsd_district_name_en : singleLead.bsd_district_name,
-                    district_name_en = singleLead.bsd_district_name_en,
-                    lineaddress = singleLead.bsd_housenumberstreet,
-                    address = singleLead.bsd_contactaddress
-                };
-            }
+            singleLead.bsd_country_id = tmp2.bsd_country_id;
+            singleLead.bsd_country_name = tmp2.bsd_country_name;
+            singleLead.bsd_country_name_en = tmp2.bsd_country_name_en;
+            singleLead.bsd_district_id = tmp2.bsd_district_id;
+            singleLead.bsd_district_name = tmp2.bsd_district_name;
+            singleLead.bsd_district_name_en = tmp2.bsd_district_name_en;
+            singleLead.bsd_province_id = tmp2.bsd_province_id;
+            singleLead.bsd_province_name = tmp2.bsd_province_name;
+            singleLead.bsd_province_name_en = tmp2.bsd_province_name_en;
+
+            Address1 = new AddressModel
+            {
+                country_id = singleLead.bsd_country_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_country_name_en) && UserLogged.Language == "en" ? singleLead.bsd_country_name_en : singleLead.bsd_country_name,
+                country_name_en = singleLead.bsd_country_name_en,
+                province_id = singleLead.bsd_province_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_province_name_en) && UserLogged.Language == "en" ? singleLead.bsd_province_name_en : singleLead.bsd_province_name,
+                province_name_en = singleLead.bsd_province_name_en,
+                district_id = singleLead.bsd_district_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_district_name_en) && UserLogged.Language == "en" ? singleLead.bsd_district_name_en : singleLead.bsd_district_name,
+                district_name_en = singleLead.bsd_district_name_en,
+                lineaddress = singleLead.bsd_housenumberstreet,
+                address = singleLead.bsd_contactaddress
+            };
         }
 
         public async Task<bool> updateLead()

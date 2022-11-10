@@ -134,6 +134,24 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='contact' from='originatingleadid' to='leadid' link-type='outer'>
                                         <attribute name='contactid' alias='contact_id'/>
                                     </link-entity>
+                                <link-entity name='bsd_country' from='bsd_countryid' to='bsd_country' link-type='outer' alias='ad'>
+                                    <attribute name='bsd_countryid' alias='bsd_country_id' />
+                                </link-entity>
+                                <link-entity name='new_district' from='new_districtid' to='bsd_district' link-type='outer' alias='ae'>
+                                    <attribute name='new_districtid' alias='bsd_district_id' />
+                                </link-entity>
+                                <link-entity name='new_province' from='new_provinceid' to='bsd_province' link-type='outer' alias='af'>
+                                    <attribute name='new_provinceid' alias='bsd_province_id' />
+                                </link-entity>
+                                <link-entity name='bsd_country' from='bsd_countryid' to='bsd_permanentcountry' link-type='outer' alias='ag'>
+                                    <attribute name='bsd_countryid' alias='bsd_permanentcountry_id' />
+                                </link-entity>
+                                <link-entity name='new_district' from='new_districtid' to='bsd_permanentdistrict' link-type='outer' alias='ah'>
+                                    <attribute name='new_districtid' alias='bsd_permanentdistrict_id' />
+                                </link-entity>
+                                <link-entity name='new_province' from='new_provinceid' to='bsd_permanentprovince' link-type='outer' alias='ai'>
+                                    <attribute name='new_provinceid' alias='bsd_permanentprovince_id' />
+                                </link-entity>
                                     " + filterEmployee + @"
                                 </entity>
                             </fetch>";

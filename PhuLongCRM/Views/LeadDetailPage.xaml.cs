@@ -223,6 +223,22 @@ namespace PhuLongCRM.Views
         private async void LeadQualifyMethod()
         {
             LoadingHelper.Show();
+            if(viewModel.singleLead?.bsd_country_id == Guid.Empty 
+                || viewModel.singleLead?.bsd_district_id == Guid.Empty
+                || viewModel.singleLead?.bsd_province_id == Guid.Empty)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_dien_day_du_thong_tin_dia_chi_lien_lac);
+                LoadingHelper.Hide();
+                return;
+            }
+            if (viewModel.singleLead?.bsd_permanentcountry_id == Guid.Empty
+                || viewModel.singleLead?.bsd_permanentdistrict_id == Guid.Empty
+                || viewModel.singleLead?.bsd_permanentprovince_id == Guid.Empty)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_dien_day_du_thong_tin_dia_chi_thuong_tru);
+                LoadingHelper.Hide();
+                return;
+            }
             bool _isID = await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid);
             CrmApiResponse apiResponse = await viewModel.Qualify(viewModel.singleLead.leadid);
             if (apiResponse.IsSuccess == true)

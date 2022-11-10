@@ -1221,11 +1221,11 @@
 	<data name="sdt_kinh_doanh" xml:space="preserve">
     <value>Business phone</value>
   </data>
-	<data name="thong_tin_cmnd_ho_chieu" xml:space="preserve">
-    <value>Identity Card Number/ Passport Information</value>
+	<data name="thong_tin_id" xml:space="preserve">
+    <value>ID Information</value>
   </data>
 	<data name="hinh_chup_cmnd" xml:space="preserve">
-    <value>Photo Identity card number</value>
+    <value>Photo ID</value>
   </data>
 	<data name="so_cmnd" xml:space="preserve">
     <value>Identity card number (ID)</value>
@@ -1285,10 +1285,10 @@
     <value>Enter business phone</value>
   </data>
 	<data name="mat_truoc_cmnd" xml:space="preserve">
-    <value>Front of ID card</value>
+    <value>Front</value>
   </data>
 	<data name="mat_sau_cmnd" xml:space="preserve">
-    <value>Back of ID card</value>
+    <value>Back</value>
   </data>
 	<data name="nhap_so_cmnd" xml:space="preserve">
     <value>Enter identity card number</value>
@@ -1384,7 +1384,7 @@
     <value>Edit failed.</value>
   </data>
 	<data name="xem_anh_mat_truoc_cmnd" xml:space="preserve">
-    <value>View photo</value>
+    <value>View front</value>
   </data>
 	<data name="chup_anh" xml:space="preserve">
     <value>Take a photo</value>
@@ -1393,7 +1393,7 @@
     <value>Select photo from gallery</value>
   </data>
 	<data name="xem_anh_mat_sau_cmnd" xml:space="preserve">
-    <value>View photo</value>
+    <value>View back</value>
   </data>
 	<data name="bang_gia_goc_dmb" xml:space="preserve">
     <value>Price list (Phase launch)</value>
@@ -3617,5 +3617,11 @@
   </data>
   <data name="thong_tin_so_dien_thoai_da_ton_tai" xml:space="preserve">
     <value>Phone number already exists.</value>
+  </data>
+	<data name="vui_long_dien_day_du_thong_tin_dia_chi_lien_lac" xml:space="preserve">
+    <value>Please fill in the contact address.</value>
+  </data>
+	<data name="vui_long_dien_day_du_thong_tin_dia_chi_thuong_tru" xml:space="preserve">
+    <value>Please fill in the permanent address.</value>
   </data>
 </root>
