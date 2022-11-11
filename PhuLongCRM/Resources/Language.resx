@@ -1341,8 +1341,8 @@
 	<data name="vui_long_chon_ngay_sinh" xml:space="preserve">
     <value>Vui lòng chọn ngày sinh.</value>
   </data>
-	<data name="khach_hang_phai_tu_18_tuoi" xml:space="preserve">
-    <value>Khách hàng phải từ 18 tuổi.</value>
+	<data name="khach_hang_phai_tu_14_tuoi" xml:space="preserve">
+    <value>Khách hàng phải từ 14 tuổi.</value>
   </data>
 	<data name="email_sai_dinh_dang" xml:space="preserve">
     <value>Email sai định dạng.</value>
@@ -3623,5 +3623,23 @@
   </data>
 	<data name="vui_long_dien_day_du_thong_tin_dia_chi_thuong_tru" xml:space="preserve">
     <value>Vui lòng điền đầy đủ thông tin địa chỉ thường trú.</value>
+  </data>
+	<data name="nguoi_bao_ho" xml:space="preserve">
+    <value>Người bảo hộ</value>
+  </data>
+	<data name="chon_nguoi_bao_ho" xml:space="preserve">
+    <value>Chọn người bảo hộ</value>
+  </data>
+	<data name="vui_long_chon_nguoi_bao_ho" xml:space="preserve">
+    <value>Vui lòng chọn người bảo hộ.</value>
+  </data>
+	<data name="co_nguoi_bao_ho" xml:space="preserve">
+    <value>Có người bảo hộ</value>
+  </data>
+	<data name="chon_gia_tri" xml:space="preserve">
+    <value>Chọn giá trị</value>
+  </data>
+	<data name="khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai" xml:space="preserve">
+    <value>Khách hàng chưa đủ điều kiện làm người bảo hộ. Vui lòng kiểm tra lại.</value>
   </data>
 </root>

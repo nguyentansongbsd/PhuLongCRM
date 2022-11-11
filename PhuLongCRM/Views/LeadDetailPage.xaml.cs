@@ -253,7 +253,11 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 }
                 else
+                {
                     ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
+                    if (NeedToRefreshActivity.HasValue) NeedToRefreshActivity = true;
+                    OnAppearing();
+                }
                 LoadingHelper.Hide();
             }
             else

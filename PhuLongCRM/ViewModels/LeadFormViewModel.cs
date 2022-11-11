@@ -93,10 +93,24 @@ namespace PhuLongCRM.ViewModels
 
         private AddressModel _addressCopy;
         public AddressModel AddressCopy { get => _addressCopy; set { _addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
+
+        private ContactListModel _guardian;
+        public ContactListModel Guardian { get => _guardian; set { _guardian = value; OnPropertyChanged(nameof(Guardian)); } }
+
+        private List<ContactListModel> _guardians;
+        public List<ContactListModel> Guardians { get => _guardians; set { _guardians = value; OnPropertyChanged(nameof(Guardians)); } }
+
+        private OptionSet _hasGuardian;
+        public OptionSet HasGuardian { get => _hasGuardian; set { _hasGuardian = value; OnPropertyChanged(nameof(HasGuardian)); } }
+
+        private List<OptionSet> _hasGuardians;
+        public List<OptionSet> HasGuardians { get => _hasGuardians; set { _hasGuardians = value; OnPropertyChanged(nameof(HasGuardians)); } }
         public LeadFormViewModel()
         {
             singleLead = new LeadFormModel();
             this.Genders = new List<OptionSet>() { new OptionSet("1",Language.nam), new OptionSet("2", Language.nu), new OptionSet("100000000",Language.khac) };
+            this.HasGuardians = new List<OptionSet>() { new OptionSet("1", Language.co), new OptionSet("0", Language.khong) };
+            Guardians = new List<ContactListModel>();
         }
 
         public async Task LoadOneLead()
@@ -727,6 +741,28 @@ namespace PhuLongCRM.ViewModels
                 return false;
             else
                 return true;
+        }
+        public async Task LoadContactForLookup()
+        {
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='bsd_fullname' />
+                    <attribute name='birthdate' />
+                    <attribute name='contactid' />
+                    <order attribute='createdon' descending='true' />
+                    <filter type='and'>
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                        <condition attribute='statuscode' operator='in'>
+                            <value>100000000</value>
+                            <value>1</value>
+                        </condition>
+                    </filter>
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactListModel>>("contacts", fetch);
+            if (result == null)
+                return;
+            Guardians = result.value;
         }
     }
 }

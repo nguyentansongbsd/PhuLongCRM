@@ -174,6 +174,12 @@ namespace PhuLongCRM.Views
                 viewModel.LeadSources = LeadSourcesData.GetListSources();
                 LoadingHelper.Hide();
             };
+            lookUpGuardian.PreOpenAsync = async () =>
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadContactForLookup();
+                LoadingHelper.Hide();
+            };
         }
 
         #region chua dung toi
@@ -368,10 +374,29 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.singleLead.new_birthday != null && (DateTime.Now.Year - DateTime.Parse(viewModel.singleLead.new_birthday.ToString()).Year < 18))
+            if (viewModel.HasGuardian != null && viewModel.HasGuardian.Val == "1")
             {
-                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
-                return;
+                if (viewModel.Guardian == null || viewModel.Guardian.contactid == Guid.Empty)
+                {
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_bao_ho);
+                    return;
+                }    
+                else
+                {
+                    if (DateTime.Now.Year - DateTime.Parse(viewModel.Guardian.birthdate.ToString()).Year < 18)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
+                        return;
+                    }
+                }    
+            }
+            else
+            {
+                if (viewModel.singleLead.new_birthday != null && CalculateYear(viewModel.singleLead.new_birthday.Value) < 14)
+                {
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_14_tuoi);
+                    return;
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && viewModel.TypeIdCard == null)
@@ -495,6 +520,40 @@ namespace PhuLongCRM.Views
                     ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_duoc_thuoc_tuong_lai);
                 }
             }
+        }
+
+        private void lookUpHasGuardian_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if(viewModel.HasGuardian != null && viewModel.HasGuardian.Val == "1")
+            {
+                lbGuardian.IsVisible = true;
+                lookUpGuardian.IsVisible = true;
+            }   
+            else
+            {
+                lbGuardian.IsVisible = false;
+                lookUpGuardian.IsVisible = false;
+            }    
+        }
+
+        private void lookUpGuardian_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if(viewModel.Guardian != null && viewModel.Guardian.contactid != Guid.Empty)
+            {
+                if (DateTime.Now.Year - DateTime.Parse(viewModel.Guardian.birthdate.ToString()).Year < 18)
+                {
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
+                    return;
+                }
+            }    
+        }
+        private int CalculateYear(DateTime dateTime)
+        {
+            int age = 0;
+            age = DateTime.Now.Year - dateTime.Year;
+            if (DateTime.Now.DayOfYear < dateTime.DayOfYear)
+                age = age - 1;
+            return age;
         }
     }
 }

@@ -151,9 +151,9 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_ngay_sinh);
                 return;
             }
-            if (DateTime.Now.Year - DateTime.Parse(viewModel.singleContact.birthdate.ToString()).Year < 18)
+            if (CalculateYear(viewModel.singleContact.birthdate.Value) < 14)
             {
-                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
+                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_14_tuoi);
                 return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.emailaddress1))
@@ -605,6 +605,14 @@ namespace PhuLongCRM.Views
                     lb_ho_chieu.IsVisible = true;
                 }
             }
+        }
+        private int CalculateYear(DateTime dateTime)
+        {
+            int age = 0;
+            age = DateTime.Now.Year - dateTime.Year;
+            if (DateTime.Now.DayOfYear < dateTime.DayOfYear)
+                age = age - 1;
+            return age;
         }
     }
 }

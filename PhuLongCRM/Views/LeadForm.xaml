@@ -78,6 +78,12 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
                                 <controls:DatePickerBoderControl Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"  ShowTime="False"/>
 
+                                <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}"/>
+                                <controls:LookUp x:Name="lookUpHasGuardian" Placeholder="{x:Static lang:Language.chon_gia_tri}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding HasGuardian}" ItemsSource="{Binding HasGuardians}" SelectedItemChange="lookUpHasGuardian_SelectedItemChange"/>
+
+                                <controls:FormLabel x:Name="lbGuardian" Text="{x:Static lang:Language.nguoi_bao_ho}" IsVisible="false"/>
+                                <controls:LookUp x:Name="lookUpGuardian" Placeholder="{x:Static lang:Language.chon_nguoi_bao_ho}" BottomModal="{Reference LookUpModal}" NameDisplay="bsd_fullname" SelectedItem="{Binding Guardian}" ItemsSource="{Binding Guardians}" IsVisible="false" SelectedItemChange="lookUpGuardian_SelectedItemChange"/>
+
                                 <controls:FormLabel Text="{x:Static lang:Language.loai_the_id}"/>
                                 <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="{x:Static lang:Language.chon_loai_the_id}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}" SelectedItemChange="TypeIdCard_ItemChange"/>
 

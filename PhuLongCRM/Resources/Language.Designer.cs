@@ -1249,6 +1249,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chọn giá trị.
+        /// </summary>
+        internal static string chon_gia_tri {
+            get {
+                return ResourceManager.GetString("chon_gia_tri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chọn giới tính.
         /// </summary>
         internal static string chon_gioi_tinh {
@@ -1452,6 +1461,15 @@ namespace PhuLongCRM.Resources {
         internal static string chon_ngay_tao {
             get {
                 return ResourceManager.GetString("chon_ngay_tao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chọn người bảo hộ.
+        /// </summary>
+        internal static string chon_nguoi_bao_ho {
+            get {
+                return ResourceManager.GetString("chon_nguoi_bao_ho", resourceCulture);
             }
         }
         
@@ -1866,6 +1884,15 @@ namespace PhuLongCRM.Resources {
         internal static string co {
             get {
                 return ResourceManager.GetString("co", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Có người bảo hộ.
+        /// </summary>
+        internal static string co_nguoi_bao_ho {
+            get {
+                return ResourceManager.GetString("co_nguoi_bao_ho", resourceCulture);
             }
         }
         
@@ -4498,6 +4525,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Khách hàng chưa đủ điều kiện làm người bảo hộ. Vui lòng kiểm tra lại..
+        /// </summary>
+        internal static string khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai {
+            get {
+                return ResourceManager.GetString("khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Khách hàng đồng sở hữu không được trùng với người mua chính..
         /// </summary>
         internal static string khach_hang_coower_va_khach_hang_khong_duoc_trung {
@@ -4633,11 +4669,11 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Khách hàng phải từ 18 tuổi..
+        ///   Looks up a localized string similar to Khách hàng phải từ 14 tuổi..
         /// </summary>
-        internal static string khach_hang_phai_tu_18_tuoi {
+        internal static string khach_hang_phai_tu_14_tuoi {
             get {
-                return ResourceManager.GetString("khach_hang_phai_tu_18_tuoi", resourceCulture);
+                return ResourceManager.GetString("khach_hang_phai_tu_14_tuoi", resourceCulture);
             }
         }
         
@@ -6223,6 +6259,15 @@ namespace PhuLongCRM.Resources {
         internal static string nghien_cuu {
             get {
                 return ResourceManager.GetString("nghien_cuu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Người bảo hộ.
+        /// </summary>
+        internal static string nguoi_bao_ho {
+            get {
+                return ResourceManager.GetString("nguoi_bao_ho", resourceCulture);
             }
         }
         
@@ -9877,6 +9922,15 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_chon_ngay_tao {
             get {
                 return ResourceManager.GetString("vui_long_chon_ngay_tao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vui lòng chọn người bảo hộ..
+        /// </summary>
+        internal static string vui_long_chon_nguoi_bao_ho {
+            get {
+                return ResourceManager.GetString("vui_long_chon_nguoi_bao_ho", resourceCulture);
             }
         }
         
