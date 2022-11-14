@@ -347,5 +347,10 @@ namespace PhuLongCRM.Models
         }
         public Guid employee_id { get; set; }
         public Guid owner_id { get; set; }
+        public bool bsd_hasguardian { get; set; }
+        public string bsd_hasguardian_format { get { return BoolToStringData.GetStringByBool(bsd_hasguardian); } }
+        public Guid guardian_id { get; set; }
+        public string guardian_name { get; set; }
+        public DateTime? guardian_birthdate { get; set; }
     }
 }

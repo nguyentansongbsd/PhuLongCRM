@@ -560,5 +560,27 @@ namespace PhuLongCRM.Views
             lead.employee_id = viewModel.singleLead.employee_id;
             SetButtonFloatingButton(lead);
         }
+
+        private void Guardian_Tapped(object sender, EventArgs e)
+        {
+            if (viewModel.singleLead != null && viewModel.singleLead.guardian_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ContactDetailPage newPage = new ContactDetailPage(viewModel.singleLead.guardian_id);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == 1)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else if (OnCompleted == 3)
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
+            }
+        }
     }
 }

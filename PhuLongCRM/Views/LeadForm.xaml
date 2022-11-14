@@ -81,7 +81,7 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}"/>
                                 <controls:LookUp x:Name="lookUpHasGuardian" Placeholder="{x:Static lang:Language.chon_gia_tri}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding HasGuardian}" ItemsSource="{Binding HasGuardians}" SelectedItemChange="lookUpHasGuardian_SelectedItemChange"/>
 
-                                <controls:FormLabel x:Name="lbGuardian" Text="{x:Static lang:Language.nguoi_bao_ho}" IsVisible="false"/>
+                                <controls:FormLabelRequired x:Name="lbGuardian" Text="{x:Static lang:Language.nguoi_bao_ho}" IsVisible="false"/>
                                 <controls:LookUp x:Name="lookUpGuardian" Placeholder="{x:Static lang:Language.chon_nguoi_bao_ho}" BottomModal="{Reference LookUpModal}" NameDisplay="bsd_fullname" SelectedItem="{Binding Guardian}" ItemsSource="{Binding Guardians}" IsVisible="false" SelectedItemChange="lookUpGuardian_SelectedItemChange"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.loai_the_id}"/>
@@ -96,10 +96,10 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap}"/>
                                 <controls:MainEntry Text="{Binding singleLead.bsd_placeofissue}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_noi_cap}" Margin="0,0,0,5"/>
 
-                                <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_lien_lac}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_lien_lac}"/>
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference centerModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
 
-                                <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_thuong_tru}"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_thuong_tru}"/>
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference centerModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" />
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>

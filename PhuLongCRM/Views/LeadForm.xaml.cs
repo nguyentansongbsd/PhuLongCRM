@@ -109,6 +109,11 @@ namespace PhuLongCRM.Views
                     };
                     viewModel.SelectedCurrency = campaign;
                 }
+                if (viewModel.singleLead.bsd_hasguardian)
+                {
+                    viewModel.HasGuardian = new OptionSet("1", Language.co);
+                    lookUpHasGuardian_SelectedItemChange(null, null);
+                }
 
                 CheckSingleLead?.Invoke(true);
             }
@@ -431,16 +436,16 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.Address1 == null)
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
-                return;
-            }
-            if (viewModel.Address2 == null)
-            {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_thuong_tru);
-                return;
-            }
+            //if (viewModel.Address1 == null)
+            //{
+            //    ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_lien_lac);
+            //    return;
+            //}
+            //if (viewModel.Address2 == null)
+            //{
+            //    ToastMessageHelper.ShortMessage(Language.vui_long_chon_dia_chi_thuong_tru);
+            //    return;
+            //}
 
             LoadingHelper.Show();
 
@@ -540,7 +545,7 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.Guardian != null && viewModel.Guardian.contactid != Guid.Empty)
             {
-                if (DateTime.Now.Year - DateTime.Parse(viewModel.Guardian.birthdate.ToString()).Year < 18)
+                if (viewModel.Guardian.birthdate.HasValue && CalculateYear(viewModel.Guardian.birthdate.Value) < 18)
                 {
                     ToastMessageHelper.ShortMessage(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
                     return;

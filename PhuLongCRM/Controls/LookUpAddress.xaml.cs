@@ -181,7 +181,7 @@ namespace PhuLongCRM.Controls
             lookUpDistrict.NameDisplay = "Name";
             stackLayoutMain.Children.Add(lookUpDistrict);
 
-            FormLabelRequired lbLineAddress = new FormLabelRequired();
+            FormLabel lbLineAddress = new FormLabel();
             lbLineAddress.Text = Language.so_nha_duong_phuong;
             stackLayoutMain.Children.Add(lbLineAddress);
 
@@ -463,7 +463,7 @@ namespace PhuLongCRM.Controls
             //}
             if (string.IsNullOrWhiteSpace(LineAddress))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_nha_duong_phuong);
+                await CenterModal.Hide();
                 return;
             }
             else
