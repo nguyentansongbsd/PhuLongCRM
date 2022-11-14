@@ -119,6 +119,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_permanentaddress1' />
                                     <attribute name='bsd_contactaddress' />
                                     <attribute name='bsd_qrcode' />
+                                    <attribute name='bsd_hasguardian' />
                                     <attribute name='bsd_employee' alias='employee_id'/>
                                     <attribute name='ownerid' alias='owner_id'/>
                                     <order attribute='createdon' descending='true' />
@@ -151,6 +152,11 @@ namespace PhuLongCRM.ViewModels
                                 </link-entity>
                                 <link-entity name='new_province' from='new_provinceid' to='bsd_permanentprovince' link-type='outer' alias='ai'>
                                     <attribute name='new_provinceid' alias='bsd_permanentprovince_id' />
+                                </link-entity>
+                                <link-entity name='contact' from='contactid' to='bsd_guardian' link-type='outer'>
+                                    <attribute name='contactid' alias='guardian_id' />
+                                    <attribute name='bsd_fullname' alias='guardian_name' />
+                                    <attribute name='birthdate' alias='guardian_birthdate' />
                                 </link-entity>
                                     " + filterEmployee + @"
                                 </entity>

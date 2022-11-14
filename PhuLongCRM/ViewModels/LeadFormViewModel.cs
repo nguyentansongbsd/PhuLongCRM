@@ -159,6 +159,7 @@ namespace PhuLongCRM.ViewModels
                             <attribute name='bsd_housenumberstreet' />
                             <attribute name='bsd_contactaddress' />
                             <attribute name='fullname' />
+                            <attribute name='bsd_hasguardian' />
                             <order attribute='createdon' descending='true' />
                             <filter type='and'>
                                 <condition attribute='leadid' operator='eq' value='{LeadId}' />
@@ -169,6 +170,11 @@ namespace PhuLongCRM.ViewModels
                             <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' visible='false' link-type='outer' alias='a_533be24fba81e911a83b000d3a07be23'>
                                 <attribute name='bsd_name' alias='bsd_topic_label' />
                                 <attribute name='bsd_topicid' alias='_bsd_topic_value'/>
+                            </link-entity>
+                            <link-entity name='contact' from='contactid' to='bsd_guardian' link-type='outer'>
+                                <attribute name='contactid' alias='guardian_id' />
+                                <attribute name='bsd_fullname' alias='guardian_name' />
+                                <attribute name='birthdate' alias='guardian_birthdate' />
                             </link-entity>
                           </entity>
                         </fetch>";
@@ -187,8 +193,15 @@ namespace PhuLongCRM.ViewModels
                 tmp.bsd_dategrant = tmp.bsd_dategrant.Value.ToLocalTime();
             if (tmp.new_birthday.HasValue)
                 tmp.new_birthday = tmp.new_birthday.Value.ToLocalTime();
+            if (tmp.guardian_birthdate.HasValue)
+                tmp.guardian_birthdate = tmp.guardian_birthdate.Value.ToLocalTime();
             tmp.lastname = tmp.fullname;
-            this.singleLead = tmp;
+            this.singleLead = tmp;  
+
+            if(singleLead.guardian_id != Guid.Empty)
+            {
+                Guardian = new ContactListModel { contactid = singleLead.guardian_id,bsd_fullname=singleLead.guardian_name, birthdate = singleLead.guardian_birthdate};
+            }    
 
             string fetch2 = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                           <entity name='lead'>
@@ -390,7 +403,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_registrationcode"] = singleLead.bsd_registrationcode;
 
             data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone : null;
-            data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1)? singleLead.telephone1 : "+84";
+            data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1) ? singleLead.telephone1 : "+84";
 
             if (singleLead.new_birthday.HasValue)
             {
@@ -591,7 +604,7 @@ namespace PhuLongCRM.ViewModels
             {
                 data["bsd_District@odata.bind"] = "/new_districts(" + Address1.district_id + ")"; /////Lookup Field
             }
-            if (Address1 != null )
+            if (Address1 != null)
             {
                 if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
                 {
@@ -610,7 +623,23 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_housenumber"] = null;
                 data["bsd_contactaddress"] = null;
                 data["bsd_diachi"] = null;
-            }    
+            }
+            if (HasGuardian != null && HasGuardian.Val == "1")
+            {
+                data["bsd_hasguardian"] = true;
+            }
+            else
+            {
+                data["bsd_hasguardian"] = false;
+            }
+            if (Guardian != null)
+            {
+                data["bsd_guardian@odata.bind"] = "/contacts(" + Guardian.contactid + ")";
+            }
+            else
+            {
+                await DeletLookup("bsd_guardian", singleLead.leadid);
+            }
             return data;
         }
 

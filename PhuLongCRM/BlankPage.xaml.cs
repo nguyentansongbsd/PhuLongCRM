@@ -87,12 +87,37 @@ namespace PhuLongCRM
 
         void Button_Clicked_1(System.Object sender, System.EventArgs e)
         {
+            //var data = new {
             
+            //    action = "Reservation",
+            //    name = "queue",
+            //    value= "CC476D76-9461-ED11-9562-0022485939B9"
+            //};
+
+            List<test2> data = new List<test2>();
+
+            data.Add(new test2() { action = "Reservation", name = "opportunity", value = "CC476D76-9461-ED11-9562-0022485939B9" });
+            
+            var data1 = new
+            {
+                Command = "ReservationQueue",
+                Parameters = data
+            };
+
+
+            var content = JsonConvert.SerializeObject(data1);
         }
     }
     public class test
     {
         public string id { get; set; }
         public string status { get; set; }
+    }
+
+    public class test2
+    {
+        public string action { get; set; }
+        public string name { get; set; }
+        public string value { get; set; }
     }
 }

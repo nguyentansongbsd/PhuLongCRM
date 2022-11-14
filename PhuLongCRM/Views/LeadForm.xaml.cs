@@ -109,6 +109,11 @@ namespace PhuLongCRM.Views
                     };
                     viewModel.SelectedCurrency = campaign;
                 }
+                if (viewModel.singleLead.bsd_hasguardian)
+                {
+                    viewModel.HasGuardian = new OptionSet("1", Language.co);
+                    lookUpHasGuardian_SelectedItemChange(null, null);
+                }
 
                 CheckSingleLead?.Invoke(true);
             }
