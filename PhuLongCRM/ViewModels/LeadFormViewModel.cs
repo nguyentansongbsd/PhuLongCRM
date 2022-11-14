@@ -111,6 +111,7 @@ namespace PhuLongCRM.ViewModels
             this.Genders = new List<OptionSet>() { new OptionSet("1",Language.nam), new OptionSet("2", Language.nu), new OptionSet("100000000",Language.khac) };
             this.HasGuardians = new List<OptionSet>() { new OptionSet("1", Language.co), new OptionSet("0", Language.khong) };
             Guardians = new List<ContactListModel>();
+            HasGuardian = new OptionSet("0", Language.khong);
         }
 
         public async Task LoadOneLead()
