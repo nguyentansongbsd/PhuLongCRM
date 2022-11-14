@@ -58,10 +58,10 @@ namespace PhuLongCRM.Config
         //Dong bo danh ba
         //public const string Lead_Topic = "B564BDFC-50E2-EC11-BB3D-00224859CF8A"; //Khách hàng tiềm năng APP / Org Dev
         public const string Lead_Topic = "120A7D95-345B-ED11-9561-0022485939B9"; //Khách hàng tiềm năng APP / Org TMP
-        public const string PermanentCountry = "451F9FE7-A409-ED11-82E5-00224859C42D"; //VietNam
-        public const string PermanentProvice = "32AFD120-A509-ED11-82E5-00224859C3BD"; //Ho Chi Minh
-        public const string PermanentDistrict = "A7E59458-A509-ED11-82E5-00224859CD05"; // Quan 1
-        public const string PermanentHouseNumber = "Đa Kao";
-        public const string PermanentAddress = "Quận 1, Hồ Chí Minh, Việt Nam";
+        //public const string PermanentCountry = "451F9FE7-A409-ED11-82E5-00224859C42D"; //VietNam
+        //public const string PermanentProvice = "32AFD120-A509-ED11-82E5-00224859C3BD"; //Ho Chi Minh
+        //public const string PermanentDistrict = "A7E59458-A509-ED11-82E5-00224859CD05"; // Quan 1
+        //public const string PermanentHouseNumber = "Đa Kao";
+        //public const string PermanentAddress = "Quận 1, Hồ Chí Minh, Việt Nam";
     }
 }

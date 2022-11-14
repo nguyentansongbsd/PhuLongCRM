@@ -157,11 +157,11 @@ namespace PhuLongCRM.Views
             data["bsd_topic@odata.bind"] = $"/bsd_topics({Config.OrgConfig.Lead_Topic})";
             data["leadsourcecode"] = "10"; //Orther
             data["telephone1"] = "+84";
-            data["bsd_PermanentCountry@odata.bind"] = "/bsd_countries(" + Config.OrgConfig.PermanentCountry + ")";
-            data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + Config.OrgConfig.PermanentProvice + ")";
-            data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Config.OrgConfig.PermanentDistrict + ")";
-            data["bsd_permanenthousenumber"] = $"{Config.OrgConfig.PermanentHouseNumber}";
-            data["bsd_permanentaddress1"] = $"{Config.OrgConfig.PermanentAddress}";
+            //data["bsd_PermanentCountry@odata.bind"] = "/bsd_countries(" + Config.OrgConfig.PermanentCountry + ")";
+            //data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + Config.OrgConfig.PermanentProvice + ")";
+            //data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Config.OrgConfig.PermanentDistrict + ")";
+            //data["bsd_permanenthousenumber"] = $"{Config.OrgConfig.PermanentHouseNumber}";
+            //data["bsd_permanentaddress1"] = $"{Config.OrgConfig.PermanentAddress}";
 
             if (leadFormModel.mobilephone.StartsWith("+84"))
             {
