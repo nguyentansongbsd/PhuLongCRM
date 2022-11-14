@@ -19,6 +19,7 @@ namespace PhuLongCRM.ViewModels
                             <entity name='salesliterature'>
                                 <attribute name='name' />
                                 <attribute name='salesliteratureid' />
+                                <attribute name='literaturetypecode' />
                                 <attribute name='createdon' />
                             <order attribute='name' descending='true' />
                             <filter type='and'>

@@ -1221,11 +1221,11 @@
 	<data name="sdt_kinh_doanh" xml:space="preserve">
     <value>SĐT kinh doanh</value>
   </data>
-	<data name="thong_tin_cmnd_ho_chieu" xml:space="preserve">
-    <value>Thông Tin CMND/Hộ Chiếu</value>
+	<data name="thong_tin_id" xml:space="preserve">
+    <value>Thông Tin ID</value>
   </data>
 	<data name="hinh_chup_cmnd" xml:space="preserve">
-    <value>Hình chụp CMND</value>
+    <value>Hình chụp ID</value>
   </data>
 	<data name="so_cmnd" xml:space="preserve">
     <value>Số CMND</value>
@@ -1285,10 +1285,10 @@
     <value>Nhập số điện thoại kinh doanh</value>
   </data>
 	<data name="mat_truoc_cmnd" xml:space="preserve">
-    <value>Mặt trước CMND</value>
+    <value>Mặt trước</value>
   </data>
 	<data name="mat_sau_cmnd" xml:space="preserve">
-    <value>Mặt sau CMND</value>
+    <value>Mặt sau</value>
   </data>
 	<data name="nhap_so_cmnd" xml:space="preserve">
     <value>Nhập số CMND</value>
@@ -1341,8 +1341,8 @@
 	<data name="vui_long_chon_ngay_sinh" xml:space="preserve">
     <value>Vui lòng chọn ngày sinh.</value>
   </data>
-	<data name="khach_hang_phai_tu_18_tuoi" xml:space="preserve">
-    <value>Khách hàng phải từ 18 tuổi.</value>
+	<data name="khach_hang_phai_tu_14_tuoi" xml:space="preserve">
+    <value>Khách hàng phải từ 14 tuổi.</value>
   </data>
 	<data name="email_sai_dinh_dang" xml:space="preserve">
     <value>Email sai định dạng.</value>
@@ -1384,7 +1384,7 @@
     <value>Chỉnh sửa thất bại.</value>
   </data>
 	<data name="xem_anh_mat_truoc_cmnd" xml:space="preserve">
-    <value>Xem ảnh mặt trước CMND</value>
+    <value>Xem mặt trước</value>
   </data>
 	<data name="chup_anh" xml:space="preserve">
     <value>Chụp ảnh</value>
@@ -1393,7 +1393,7 @@
     <value>Chọn ảnh từ thư viện</value>
   </data>
 	<data name="xem_anh_mat_sau_cmnd" xml:space="preserve">
-    <value>Xem ảnh mặt sau CMND</value>
+    <value>Xem mặt sau</value>
   </data>
 	<data name="bang_gia_goc_dmb" xml:space="preserve">
     <value>Bảng giá gốc (ĐMB)</value>
@@ -3617,5 +3617,29 @@
   </data>
   <data name="thong_tin_so_dien_thoai_da_ton_tai" xml:space="preserve">
     <value>Thông tin Số điện thoại đã tồn tại.</value>
+  </data>
+	<data name="vui_long_dien_day_du_thong_tin_dia_chi_lien_lac" xml:space="preserve">
+    <value>Vui lòng điền đầy đủ thông tin địa chỉ liên lạc.</value>
+  </data>
+	<data name="vui_long_dien_day_du_thong_tin_dia_chi_thuong_tru" xml:space="preserve">
+    <value>Vui lòng điền đầy đủ thông tin địa chỉ thường trú.</value>
+  </data>
+	<data name="nguoi_bao_ho" xml:space="preserve">
+    <value>Người bảo hộ</value>
+  </data>
+	<data name="chon_nguoi_bao_ho" xml:space="preserve">
+    <value>Chọn người bảo hộ</value>
+  </data>
+	<data name="vui_long_chon_nguoi_bao_ho" xml:space="preserve">
+    <value>Vui lòng chọn người bảo hộ.</value>
+  </data>
+	<data name="co_nguoi_bao_ho" xml:space="preserve">
+    <value>Có người bảo hộ</value>
+  </data>
+	<data name="chon_gia_tri" xml:space="preserve">
+    <value>Chọn giá trị</value>
+  </data>
+	<data name="khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai" xml:space="preserve">
+    <value>Khách hàng chưa đủ điều kiện làm người bảo hộ. Vui lòng kiểm tra lại.</value>
   </data>
 </root>

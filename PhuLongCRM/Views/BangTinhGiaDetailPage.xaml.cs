@@ -465,7 +465,7 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void CompletedReservation(object sender, EventArgs e)
+        private async void CompletedReservation(object sender, EventArgs e) //note
         {
             LoadingHelper.Show();
             if (viewModel.Reservation.quoteid != Guid.Empty)
@@ -476,6 +476,9 @@ namespace PhuLongCRM.Views
                 {
                     NeedToRefresh = true;
                     OnAppearing();
+                    if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
+                    if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
+                    if (QueueList.NeedToRefresh.HasValue) QueueList.NeedToRefresh = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.phieu_dat_coc_da_duoc_ky);
                 }

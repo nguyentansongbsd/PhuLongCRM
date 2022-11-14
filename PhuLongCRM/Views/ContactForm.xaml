@@ -101,7 +101,7 @@
                     <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                         <telerikPrimitives:RadExpander.Header>
                             <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_cmnd_ho_chieu}"/>
+                                <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_id}"/>
                             </telerikPrimitives:ExpanderHeader>
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
