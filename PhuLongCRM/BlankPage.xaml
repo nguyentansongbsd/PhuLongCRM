@@ -32,7 +32,7 @@
                     </controls:MainEntry.Behaviors>
                 </controls:MainEntry>
                 <Button Clicked="Button_Clicked_1" Text="click"/>
-
+                
             </StackLayout>
 
 
