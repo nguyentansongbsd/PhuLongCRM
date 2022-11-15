@@ -1,17 +1,11 @@
-﻿using Firebase.Database;
-using Firebase.Database.Query;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
-using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -32,20 +26,19 @@ namespace PhuLongCRM.ViewModels
 
         private string FilterXml;
         private int Size = 3;
-        public ResponseRealtime _currentUnit { get; set; }
 
         public DirectSaleDetailTestViewModel()
         {
             Blocks = new ObservableCollection<Block>();
         }
 
-        public void SetNumStatus(string UnitStatusAffterChange,Guid floorId)
+        public void SetNumStatus(string UnitStatusNew, string UnitStatusOld,Guid floorId)
         {
             try
             {
                 var floor = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId);
 
-                switch (this._currentUnit.status)
+                switch (UnitStatusOld)
                 {
                     case "1":
                         this.Block.NumChuanBiInBlock--;
@@ -98,7 +91,7 @@ namespace PhuLongCRM.ViewModels
                     default:
                         break;
                 }
-                switch (UnitStatusAffterChange)
+                switch (UnitStatusNew)
                 {
                     case "1":
                         this.Block.NumChuanBiInBlock++;
@@ -161,9 +154,9 @@ namespace PhuLongCRM.ViewModels
 
         public void ChangeStatusUnitPopup(ResponseRealtime item)
         {
-            if (this.Unit != null && this.Unit.productid == Guid.Parse(item.id))
+            if (this.Unit != null && this.Unit.productid == Guid.Parse(item.UnitId))
             {
-                this.Unit.statuscode = int.Parse(item.status);
+                this.Unit.statuscode = int.Parse(item.StatusNew);
             }
         }
 
@@ -560,7 +553,12 @@ namespace PhuLongCRM.ViewModels
 
     public class ResponseRealtime
     {
-        public string id { get; set; }
-        public string status { get; set; }
+        public string ProjectId { get; set; }
+        public string BlockId { get; set; }
+        public string FloorId { get; set; }
+        public string UnitId { get; set; }
+        public string StatusNew { get; set; }
+        public string StatusOld { get; set; }
+
     }
 }

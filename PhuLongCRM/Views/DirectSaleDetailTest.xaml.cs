@@ -89,7 +89,7 @@ namespace PhuLongCRM.Views
         {
             bool temp = false;
             //int _currentNumQuese = 0;
-            var condition = RealTimeHelper.firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
+            var condition = RealTimeHelper.firebaseClient.Child("test").Child("DirectSaleNew").AsObservable<ResponseRealtime>()
                 .Subscribe(async (dbevent) =>
                 {
                     try
@@ -99,16 +99,14 @@ namespace PhuLongCRM.Views
                             try
                             {
                                 var item = dbevent.Object as ResponseRealtime;
-                                viewModel.Block.Floors.Where(x => x.Units.Count != 0).ToList().ForEach(x =>
+                                viewModel.Block.Floors.Where(x => x.bsd_floorid == Guid.Parse(item.FloorId)).ToList().ForEach(x =>
                                 {
-                                    var _unit = x.Units.SingleOrDefault(y => y.productid.ToString().ToLower() == item.id.ToLower());
+                                    var _unit = x.Units.SingleOrDefault(y => y.productid.ToString().ToLower() == item.UnitId.ToLower());
                                     if (_unit != null)
                                     {
-                                        viewModel._currentUnit = new ResponseRealtime() { id = _unit.productid.ToString(), status = _unit.statuscode.ToString() };
-                                        _unit.statuscode = int.Parse(item.status);
-                                        //_currentNumQuese = _unit.NumQueses;
+                                        _unit.statuscode = int.Parse(item.StatusNew);
                                         _unit.NumQueses++;
-                                        viewModel.SetNumStatus(item.status, x.bsd_floorid);
+                                        viewModel.SetNumStatus(item.StatusNew, item.StatusOld ,Guid.Parse(item.FloorId));
                                         viewModel.ChangeStatusUnitPopup(item);
                                     }
                                 });
