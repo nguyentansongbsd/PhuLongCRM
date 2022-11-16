@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Settings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace PhuLongCRM.ViewModels
     {
         public ObservableCollection<ProjectListModel> Projects { get; set; } = new ObservableCollection<ProjectListModel>();
         public ObservableCollection<OptionSet> PhasesLaunchs { get; set; } = new ObservableCollection<OptionSet>();
-        
+
         private List<OptionSetFilter> _viewOptions;
         public List<OptionSetFilter> ViewOptions { get => _viewOptions; set { _viewOptions = value;OnPropertyChanged(nameof(ViewOptions)); } }
 
@@ -113,22 +114,79 @@ namespace PhuLongCRM.ViewModels
         public async Task LoadPhasesLanch()
         {
             if (Project == null) return;
-            string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                        <entity name='bsd_phaseslaunch'>
-                        <attribute name='bsd_name' alias='Label' />
-                        <attribute name='bsd_phaseslaunchid' alias='Val' />
-                        <order attribute='createdon' descending='true' />
-                        <filter type='and'>
-                          <condition attribute='statecode' operator='eq' value='0' />
-                          <condition attribute='statuscode' operator='eq' value='100000000' />
-                          <condition attribute='bsd_projectid' operator='eq' uitype='bsd_project' value='" + Project.bsd_projectid + @"' />
-                        </filter>
-                      </entity>
-                    </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_phaseslaunchs", fetchXml);
-            if (result == null || result.value.Any() == false) return;
 
-            var data = result.value;
+            List<OptionSet> listTeam = new List<OptionSet>();
+            List<OptionSet> listMember = new List<OptionSet>();
+
+            string fetchCheckTeam = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
+                                      <entity name='systemuser'>
+                                        <filter type='and'>
+                                            <condition attribute='systemuserid' operator='eq' value='{UserLogged.ManagerId}'/>
+                                        </filter>
+                                        <link-entity name='teammembership' from='systemuserid' to='systemuserid' visible='false' intersect='true'>
+                                            <link-entity name='team' from='teamid' to='teamid' alias='bh'>
+                                                <filter type='or'>
+                                                    <condition attribute='name' operator='like' value='Team_CLKD'/>
+                                                    <condition attribute='name' operator='like' value='Team_DVKH'/>
+                                                    <condition attribute='name' operator='like' value='Team_KT'/>
+                                                    <condition attribute='name' operator='like' value='%Team[_]SALES%'/>
+                                                </filter>
+                                            </link-entity>
+                                        </link-entity>
+                                      </entity>
+                                    </fetch>";
+            var resultCheckTeam = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("systemusers", fetchCheckTeam);
+            if (resultCheckTeam != null || resultCheckTeam.value.Any() != false)
+            {
+                string fetchXmlTeam = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                            <entity name='bsd_phaseslaunch'>
+                                                <attribute name='bsd_name' alias='Label' />
+                                                <attribute name='bsd_phaseslaunchid' alias='Val' />
+                                                <order attribute='createdon' descending='true' />
+                                                    <filter type='and'>
+                                                        <condition attribute='statecode' operator='eq' value='0' />
+                                                        <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                        <condition attribute='bsd_projectid' operator='eq' uitype='bsd_project' value='{Project.bsd_projectid}' />
+                                                        <condition entityname='bteam' attribute='teamid' operator='null' />
+                                                    </filter>
+                                                <link-entity name='bsd_bsd_phaseslaunch_team' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' intersect='true' link-type='outer'>
+                                                    <link-entity name='team' from='teamid' to='teamid' link-type='outer' alias='bteam' />
+                                                </link-entity>
+                                          </entity>
+                                        </fetch>";
+                var resultTeam = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_phaseslaunchs", fetchXmlTeam);
+                if (resultTeam != null || resultTeam.value.Any() != false)
+                    listTeam = resultTeam.value;
+            }
+
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                    <entity name='bsd_phaseslaunch'>
+                                    <attribute name='bsd_name' alias='Label' />
+                                    <attribute name='bsd_phaseslaunchid' alias='Val' />
+                                    <order attribute='createdon' descending='true' />
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
+                                      <condition attribute='statuscode' operator='eq' value='100000000' />
+                                      <condition attribute='bsd_projectid' operator='eq' uitype='bsd_project' value='{Project.bsd_projectid}' />
+                                    </filter>
+                                    <link-entity name='bsd_bsd_phaseslaunch_team' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' intersect='true'>
+                                      <link-entity name='team' from='teamid' to='teamid' alias='team' intersect='true' >
+                                        <link-entity name='teammembership' from='teamid' to='teamid'>
+                                            <link-entity name='systemuser' from='systemuserid' to='systemuserid' alias='user' intersect='true'>
+                                                <filter type='and'>
+                                                    <condition attribute='systemuserid' operator='eq' value='{UserLogged.ManagerId}'/>
+                                                </filter>
+                                            </link-entity>
+                                        </link-entity>
+                                      </link-entity>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_phaseslaunchs", fetchXml);
+            if (result != null || result.value.Any() != false)
+                listMember = result.value;
+
+            var data = listMember.Union(listTeam).Distinct().ToList();
             foreach (var item in data)
             {
                 PhasesLaunchs.Add(item);
