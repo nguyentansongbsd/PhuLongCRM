@@ -5,6 +5,8 @@ using PhuLongCRM.iOS.Services;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using PhuLongCRM.Models;
+
 [assembly: ResolutionGroupName("CrossGeeks")]
 [assembly: ExportEffect(typeof(iOSTooltipEffect), nameof(TooltipEffect))]
 
@@ -40,11 +42,23 @@ namespace PhuLongCRM.iOS.Services
                 {
                     vc = vc.PresentedViewController;
                 }
-
+                if (ListToolTip.ToolTips != null && ListToolTip.ToolTips.Count != 0)
+                {
+                    foreach (var item in ListToolTip.ToolTips)
+                    {
+                        if (TooltipEffect.GetText(item) == text)
+                            TooltipEffect.SetHasTooltip(item, true);
+                        else
+                        {
+                            TooltipEffect.SetHasTooltip(item, true);
+                            TooltipEffect.SetHasTooltip(item, false);
+                            TooltipEffect.SetHasTooltip(item, true);
+                        }
+                    }
+                }
 
                 tooltip?.Show(control, vc.View, true);
             }
-
         }
 
         void OnDismiss(object sender, EventArgs e)

@@ -467,10 +467,11 @@ namespace PhuLongCRM.ViewModels
                     var videos = list.Where(x => x.type == "video").ToList();
                     var images = list.Where(x => x.type == "image").ToList();
                     var pdfs = list.Where(x => x.type == "pdf").ToList();
+                    var doxc = list.Where(x => x.type == "docx").ToList();
                     this.TotalMedia = videos.Count;
                     this.TotalPhoto = images.Count;
 
-                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs));
+                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(doxc));
                 }
             }
         }
