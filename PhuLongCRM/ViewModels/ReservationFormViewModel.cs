@@ -615,7 +615,7 @@ namespace PhuLongCRM.ViewModels
                 }
                 await Task.WhenAll(LoadDiscountChilds(), LoadDiscountChildsInternel(), LoadDiscountChildsExchange());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -891,7 +891,7 @@ namespace PhuLongCRM.ViewModels
                     data.AddRange(result.value);
                 }
             }
-            
+
             string fetchXml2 = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_discount'>
                                     <attribute name='bsd_discountid' alias='Val'/>
@@ -912,7 +912,7 @@ namespace PhuLongCRM.ViewModels
                                     </filter>
                                   </entity>
                                 </fetch>";
-            
+
             var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml2);
             if (result2 != null || result2.value.Any() == true)
             {
@@ -960,7 +960,7 @@ namespace PhuLongCRM.ViewModels
                     data.AddRange(result.value);
                 }
             }
-            
+
             string fetchXml2 = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_discount'>
                                     <attribute name='bsd_discountid' alias='Val'/>
@@ -987,7 +987,7 @@ namespace PhuLongCRM.ViewModels
                 data.AddRange(result2.value);
             }
             if (data.Count() < 0) return;
-            
+
             foreach (var item in data)
             {
                 item.IsEnableChecked = (this.IsHadLichThanhToan == true || item.IsExpired == true || item.IsNotApplied == true) ? false : true;
@@ -1061,7 +1061,7 @@ namespace PhuLongCRM.ViewModels
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
             var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml2);
-            if ((result == null || result.value.Any() == false)&&(result2 == null || result2.value.Any() == false)) return;
+            if ((result == null || result.value.Any() == false) && (result2 == null || result2.value.Any() == false)) return;
             List<DiscountChildOptionSet> data = new List<DiscountChildOptionSet>();
             data.AddRange(result.value);
             data.AddRange(result2.value);
@@ -1608,6 +1608,12 @@ namespace PhuLongCRM.ViewModels
             data["bsd_netusablearea"] = this.Quote.bsd_netusablearea;
             data["bsd_actualarea"] = this.Quote.bsd_actualarea;
 
+            //field luu Html. khong co nhung field nay se bi unsaved tren web
+            data["bsd_danhsachckc"] = HTMLDiscountChild(this.DiscountChilds, "myList", "display: inline; height: 200px;");
+            data["bsd_danhsachcknb"] = HTMLDiscountChild(this.DiscountChildsInternel, "myList1", "display: block; height: 200px;");
+            data["bsd_chietkhautheopttt"] = HTMLDiscountChild(this.DiscountChildsPaymentSchemes,"myList1", "height: 200px;");
+            data["bsd_danhsachckqd"] = HTMLDiscountChild(this.DiscountChildsExchanges, "myList1", "height: 200px;");
+
             data["bsd_projectid@odata.bind"] = $"/bsd_projects({this.Quote._bsd_projectcode_value})";
             data["bsd_taxcode@odata.bind"] = $"/bsd_taxcodes({this.TaxCode.bsd_taxcodeid})";
             data["bsd_unitno@odata.bind"] = $"/products({this.Quote.unit_id})";
@@ -1842,5 +1848,30 @@ namespace PhuLongCRM.ViewModels
             return result;
         }
 
+        private string HTMLDiscountChild(ObservableCollection<DiscountChildOptionSet> discount,string idDiv,string styleDisplay = null)
+        {
+            string html = string.Empty;
+            if (discount.Count > 0)
+            {
+                string _htmlChild = string.Empty;
+
+                foreach (var item in discount)
+                {
+                    string discountName = string.Empty;
+                    if (item.bsd_method == 100000001) // amount
+                    {
+                        discountName = item.IsExpired ? $"{ item.Label } - ₫{ string.Format("{0:#,##0.##}", item.bsd_amount).Replace(".", ",")} (expired/ hết hạn)" : $"{ item.Label } - ₫{ string.Format("{0:#,##0.##}", item.bsd_amount).Replace(".", ",")}";
+                    }
+                    else if(item.bsd_method == 100000000) //percent
+                    {
+                        discountName = item.IsExpired ? $"{ item.Label } - { string.Format("{0:#,##0}", item.bsd_percentage)}% (expired/ hết hạn)" : $"{ item.Label } - { string.Format("{0:#,##0}", item.bsd_percentage)}%";
+                    }
+                    _htmlChild += $"<div style=\"float: left; width: 100%; overflow-wrap: break-word;\"><input type=\"checkbox\" value=\"0\" id=\"{item.Val}\" class=\"chk-input\" style=\"float: left; width: 10%; margin-top: 2.5px;\"><div>{discountName}</div></div>";
+                }
+                html = $"<tr><td colspan=\"2\"><div id=\"{idDiv}\" style=\"{styleDisplay} overflow: auto;\">{_htmlChild}</div></td></tr>";
+            }
+
+            return html;
+        }
     }
 }

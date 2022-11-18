@@ -2,6 +2,7 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls2="clr-namespace:PhuLongCRM"
     xmlns:toolkit="http://xamarin.com/schemas/2020/toolkit"
     xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
     xmlns:behavior="clr-namespace:PhuLongCRM.Behaviors"
@@ -9,35 +10,10 @@
     x:Class="PhuLongCRM.BlankPage">
     <ContentPage.Content>
         <AbsoluteLayout>
-            <!--<StackLayout Margin="0,100,0,0">
-                <controls:LookUp x:Name="lookupChieuKhau" IsEnabled="False" Placeholder="test" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" />
-            </StackLayout>
-            
-            <controls:BottomModal x:Name="lookUpModal"/>-->
-            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,100,0,0">
-                <!--<Button Text="Push to firebase" Clicked="Button_Clicked" Margin="0,100,0,0"/>
-
-                <controls:MainEntry Keyboard="Numeric" Text="{Binding Num}"  Margin="0,300,0,0" HorizontalOptions="FillAndExpand" BackgroundColor="Yellow">
-                    <controls:MainEntry.Behaviors>
-                        <behavior:MaskedBehavior Mask="+84-XXXXXXXXXX" />
-                    </controls:MainEntry.Behaviors>
-                </controls:MainEntry>-->
-                <!--<telerikInput:RadMaskedInput x:Name="maskedInput"
-                             WatermarkText="Watermark" WatermarkTextColor="LightGray"
-                             Mask="+84-0000000000" DisplayedTextFontSize="14" DisplayedTextColor="#444444"
-                             MaskType="Text"/>-->
-                <controls:MainEntry Keyboard="Numeric" Text="{Binding Num}" HorizontalOptions="FillAndExpand" BackgroundColor="Yellow">
-                    <controls:MainEntry.Behaviors>
-                        <behavior:MaskedBehavior Mask="+84-XXXXXXXXXX" />
-                    </controls:MainEntry.Behaviors>
-                </controls:MainEntry>
-                <Button Clicked="Button_Clicked_1" Text="click"/>
+            <StackLayout x:Name="test" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,100,0,0">
+               <controls2:CustomWebView x:Name="webview" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
                 
             </StackLayout>
-
-
         </AbsoluteLayout>
-
-        <!--<WebView x:Name="webview" />-->
     </ContentPage.Content>
 </ContentPage>
