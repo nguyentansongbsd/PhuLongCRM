@@ -1855,18 +1855,18 @@ namespace PhuLongCRM.ViewModels
             {
                 string _htmlChild = string.Empty;
 
-                foreach (var item in discount)
+                for (int i = 0; i < discount.Count; i++)
                 {
                     string discountName = string.Empty;
-                    if (item.bsd_method == 100000001) // amount
+                    if (discount[i].bsd_method == 100000001) // amount
                     {
-                        discountName = item.IsExpired ? $"{ item.Label } - ₫{ string.Format("{0:#,##0.##}", item.bsd_amount).Replace(".", ",")} (expired/ hết hạn)" : $"{ item.Label } - ₫{ string.Format("{0:#,##0.##}", item.bsd_amount).Replace(".", ",")}";
+                        discountName = $"{ discount[i].Label } - ₫{ string.Format("{0:#,##0.##}", discount[i].bsd_amount).Replace(".", ",")}";
                     }
-                    else if(item.bsd_method == 100000000) //percent
+                    else if(discount[i].bsd_method == 100000000) //percent
                     {
-                        discountName = item.IsExpired ? $"{ item.Label } - { string.Format("{0:#,##0}", item.bsd_percentage)}% (expired/ hết hạn)" : $"{ item.Label } - { string.Format("{0:#,##0}", item.bsd_percentage)}%";
+                        discountName = $"{ discount[i].Label } - { string.Format("{0:#0.##,##}", discount[i].bsd_percentage).Replace(",", ".")}%";
                     }
-                    _htmlChild += $"<div style=\"float: left; width: 100%; overflow-wrap: break-word;\"><input type=\"checkbox\" value=\"0\" id=\"{item.Val}\" class=\"chk-input\" style=\"float: left; width: 10%; margin-top: 2.5px;\"><div>{discountName}</div></div>";
+                    _htmlChild += $"<div style=\"float: left; width: 100%; overflow-wrap: break-word;\"><input type=\"checkbox\" value=\"{i}\" id=\"{discount[i].Val}\" class=\"chk-input\" style=\"float: left; width: 10%; margin-top: 2.5px;\"><div>{discountName}</div></div>";
                 }
                 html = $"<tr><td colspan=\"2\"><div id=\"{idDiv}\" style=\"{styleDisplay} overflow: auto;\">{_htmlChild}</div></td></tr>";
             }

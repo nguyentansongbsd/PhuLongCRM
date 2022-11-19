@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <StackLayout x:Name="test" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,100,0,0">
-               <controls2:CustomWebView x:Name="webview" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+               <!--<controls2:CustomWebView x:Name="webview" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />-->
                 
             </StackLayout>
         </AbsoluteLayout>
