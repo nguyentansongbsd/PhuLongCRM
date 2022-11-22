@@ -10,26 +10,6 @@
              Title="{Binding Title}"
              BackgroundColor="White"
              x:Class="PhuLongCRM.Views.PhoneCallForm">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="IndicatorText" Value="&#xf105;"/>
-                <Setter Property="IndicatorLocation" Value="End"/>
-                <Setter Property="IndicatorFontSize" Value="18"/>
-                <Setter Property="IndicatorColor" Value="#000000"/>
-                <Setter Property="BackgroundColor" Value="#F3F3F3"/>
-                <Setter Property="BorderColor" Value="#666666"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Padding" Value="5"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-            </Style>
-            <converter:DateFormatConverter x:Key="DateFormatConverter" />
-            <converter:DecimalToAreaConverter x:Key="DecimalToAreaConverter" />
-            <converter:DecimalToPercentConverter x:Key="DecimalToPercentConverter" />
-            <converter:ObjToBoolConverter x:Key="ObjToBool" />
-            <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,60">

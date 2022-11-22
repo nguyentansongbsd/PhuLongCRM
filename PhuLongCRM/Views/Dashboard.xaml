@@ -10,11 +10,6 @@
              xmlns:views="clr-namespace:PhuLongCRM.Views"
              xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
              x:Class="PhuLongCRM.Views.Dashboard">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <convertes:CurrencyFormatConverter x:Key="CurrencyFormat"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="ScanQRCode_Clicked">
             <ToolbarItem.IconImageSource>

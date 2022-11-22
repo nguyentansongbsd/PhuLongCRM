@@ -57,17 +57,6 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="IndicatorText" Value="&#xf105;"/>
-                <Setter Property="IndicatorLocation" Value="End"/>
-                <Setter Property="IndicatorFontSize" Value="18"/>
-                <Setter Property="IndicatorColor" Value="#939393"/>
-                <Setter Property="BackgroundColor" Value="#F2F2F2"/>
-                <Setter Property="BorderColor" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Padding" Value="10,8"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-            </Style>
             <converters:NullToHideConverter x:Key="NullToHideConverter"/>
             <converters:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
             <converters:RegardingConverter x:Key="RegardingConverter"/>
@@ -147,7 +136,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.thong_tin_san_pham_title}" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                                        <Label Text="{x:Static lang:Language.thong_tin_san_pham_title}" Style="{StaticResource ExpanderHeadingText}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -190,7 +179,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.thong_tin_giu_cho_title}" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                                        <Label Text="{x:Static lang:Language.thong_tin_giu_cho_title}" Style="{StaticResource ExpanderHeadingText}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -280,7 +269,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.thong_tin_san_dai_ly}" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                                        <Label Text="{x:Static lang:Language.thong_tin_san_dai_ly}" Style="{StaticResource ExpanderHeadingText}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -326,7 +315,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.bang_tinh_gia_title}" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                                        <Label Text="{x:Static lang:Language.bang_tinh_gia_title}" Style="{StaticResource ExpanderHeadingText}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -364,7 +353,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.dat_coc_title}" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                                        <Label Text="{x:Static lang:Language.dat_coc_title}" Style="{StaticResource ExpanderHeadingText}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -402,7 +391,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Text="{x:Static lang:Language.hop_dong_title}" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                                        <Label Text="{x:Static lang:Language.hop_dong_title}" Style="{StaticResource ExpanderHeadingText}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
@@ -440,7 +429,7 @@
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label FontSize="15" FontAttributes="Bold" TextColor="#333333" Text="{x:Static lang:Language.cham_soc_khach_hang_title}"/>
+                                        <Label Text="{x:Static lang:Language.cham_soc_khach_hang_title}" Style="{StaticResource ExpanderHeadingText}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>

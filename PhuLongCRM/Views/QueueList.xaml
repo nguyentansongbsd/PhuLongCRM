@@ -10,7 +10,6 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:NullToHideConverter x:Key="NullToBool"/>
-            <converter:InformationLabelConverter x:Key="InformationLabelConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
