@@ -48,8 +48,6 @@
         </Style>
         <ResourceDictionary>
             <converter:NullToHideConverter x:Key="NullToBool"/>
-            <converter:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
-            <converter:PhanHoiStatusCodeConvert x:Key="StatucToColor"/>
             <converter:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>

@@ -56,7 +56,6 @@
         <ResourceDictionary>
             <converters:LeadQualityCodeConverter x:Key="LeadQualityCodeConverter"/>
             <converters:LeadQualityCodeColorConverter x:Key="LeadQualityCodeColorConverter"/>
-            <converters:StatusCodeConverter x:Key="StatusCodeConverter"/>
             <converters:NullToHideConverter x:Key="NullToHideConverter"/>
             <converters:PhoneConverter x:Key="PhoneConverter"/>
             <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter"/>
