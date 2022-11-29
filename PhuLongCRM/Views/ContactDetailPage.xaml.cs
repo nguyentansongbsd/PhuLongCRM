@@ -555,7 +555,6 @@ namespace PhuLongCRM.Views
         {
             btn_tieuchichonmua.IsVisible = true;
         }
-
         private void LoaiBDSQuanTam_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             btn_loaibdsquantam.IsVisible = true;

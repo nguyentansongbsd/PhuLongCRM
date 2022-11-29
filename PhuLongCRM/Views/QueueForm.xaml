@@ -11,24 +11,6 @@
              x:Name="this">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!--header-->
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="IndicatorText" Value="&#xf105;"/>
-                <Setter Property="IndicatorLocation" Value="End"/>
-                <Setter Property="IndicatorFontSize" Value="18"/>
-                <Setter Property="IndicatorColor" Value="#939393"/>
-                <Setter Property="BackgroundColor" Value="#F1F1F1"/>
-                <Setter Property="BorderColor" Value="#F1F1F1"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Padding" Value="17,8"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-            </Style>
-            <Style x:Key="ExpanderHeadingText" TargetType="Label">
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="VerticalTextAlignment" Value="Center" />
-                <Setter Property="TextColor" Value="#444444"/>
-            </Style>
             <converter:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
             <converter:DecimalFormatConverter x:Key="DecimalFormatConverter" />
             <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />

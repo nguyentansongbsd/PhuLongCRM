@@ -15,109 +15,40 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Firebase.Database.Query;
 using PhuLongCRM.ViewModels;
+using System.Globalization;
 
 namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
-        FirebaseClient firebaseClient = new FirebaseClient("https://phulongcrm-590ff-default-rtdb.asia-southeast1.firebasedatabase.app/",
-                new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult("6kEMlaIMDuxmqsmPDZR4BO3wshQvh7hJiTp8xaMr") }); //https://phulong-aff10-default-rtdb.firebaseio.com/ VhuPY1prumruPs8Vgxuj1P1NIIsqnvzZ8tycOuIK
-
-
-
-        public OptionSet DiscountList { get; set; }
-        public List<OptionSet> DiscountLists { get; set; }
-        public bool IsLocked { get; set; }
-
-        private string _num;
-        public string Num { get=>_num; set { _num = value;OnPropertyChanged(nameof(Num)); } } 
-
         public BlankPage()
         {
             InitializeComponent();
             this.BindingContext = this;
-
-            //Init();
+            Init();
         }
-
-        private async void Init()
+        public async void Init()
         {
-            try
-            {
-                var collection = firebaseClient
-                    .Child("test").Child("directsale")
-                    .AsObservable<ResponseRealtime>()
-                    .Subscribe(async (dbevent) =>
-                    {
-                        if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete && dbevent.Object != null )
-                        {
-                            
-                        }
-                    });
-
-            }
-            catch (Exception ex)
-            {}
-
-        }
-
-
-        private async void AbsoluteLayout_Tapped(object sender, MR.Gestures.TapEventArgs e)
-        {
-            string id = "08E25682-23E9-41EB-A1B7-6B166562F8AE";
-            GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
-            var client = BsdHttpClient.Instance();
-            string fileListUrl = $"https://diaocphulong.sharepoint.com/sites/PhuLong/_layouts/15/download.aspx?UniqueId={id}&Translate=false&tempauth={getTokenResponse.access_token}&ApiVersion=2.0";
-            var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var response = await client.SendAsync(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                var a = Convert.ToBase64String(response.Content.ReadAsByteArrayAsync().Result);
-                ToastMessageHelper.ShortMessage(a);
-            }
-
-        }
-
-        void Button_Clicked(System.Object sender, System.EventArgs e)
-        {
-            //firebaseClient.Child("test").Child("directsale").PostAsync(new UnitStatus { id = Guid.NewGuid(), status ="12"}) ;
-        }
-
-        void Button_Clicked_1(System.Object sender, System.EventArgs e)
-        {
-            //var data = new {
-            
-            //    action = "Reservation",
-            //    name = "queue",
-            //    value= "CC476D76-9461-ED11-9562-0022485939B9"
-            //};
-
-            List<test2> data = new List<test2>();
-
-            data.Add(new test2() { action = "Reservation", name = "opportunity", value = "CC476D76-9461-ED11-9562-0022485939B9" });
-            
-            var data1 = new
-            {
-                Command = "ReservationQueue",
-                Parameters = data
-            };
-
-
-            var content = JsonConvert.SerializeObject(data1);
+            //webview.Uri = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2Njg3NTgzNzEiLCJleHAiOiIxNjY4NzYxOTcxIiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJOR1ZrTUdNNVltSXRPVEkzTWkwME4yTmxMVGcwWkRrdE5UUXhNelUwWldJMFkyUTQiLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNjkifQ.Q2NRVjdPU1ordkdwTzM1d0tnOVdPUXlPTklLZTF0RlpwVXU1VEp2L0tYMD0&ApiVersion=2.0";
+            CultureInfo ci = new CultureInfo("en-us");
+            double a = 0.7500000000;
+            double e = 1.0000000000;
+            string b = string.Format("{0:#0.##,##}", a);
+            string c = string.Format("{0:#0.##,##}", e);
         }
     }
-    public class test
+    public class CustomWebView : WebView
     {
-        public string id { get; set; }
-        public string status { get; set; }
-    }
+        public static readonly BindableProperty UriProperty = BindableProperty.Create(propertyName: "Uri",
+                returnType: typeof(string),
+                declaringType: typeof(CustomWebView),
+                defaultValue: default(string));
 
-    public class test2
-    {
-        public string action { get; set; }
-        public string name { get; set; }
-        public string value { get; set; }
+        public string Uri
+        {
+            get { return (string)GetValue(UriProperty); }
+            set { SetValue(UriProperty, value); }
+        }
+
     }
 }

@@ -36,6 +36,8 @@ namespace PhuLongCRM.Models
                     return "video";
                 else if (name.Contains(".pdf"))
                     return "pdf";
+                else if (name.Contains(".docx"))
+                    return "docx";
                 else return null;
             }
         }

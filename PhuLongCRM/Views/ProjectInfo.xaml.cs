@@ -111,7 +111,7 @@ namespace PhuLongCRM.Views
         private void SetRealTime()
         {
             bool temp = false;
-            var collection = RealTimeHelper.firebaseClient.Child("test").Child("DirectSaleData").AsObservable<ResponseRealtime>()
+            var collection = RealTimeHelper.firebaseClient.Child("test").Child("DirectSaleNew").AsObservable<ResponseRealtime>()
                 .Subscribe(async (dbevent) =>
                 {
                     try
@@ -119,16 +119,15 @@ namespace PhuLongCRM.Views
                         if (dbevent.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && dbevent.Object != null && temp == true)
                         {
                             var item = dbevent.Object as ResponseRealtime;
-                            var isUnitOfProject = await viewModel.CheckUnitOfProject(item.id);
-                            if (isUnitOfProject)
+                            if (item.ProjectId == viewModel.ProjectId.ToString())
                             {
                                 viewModel.SoGiuCho++;
-                                viewModel.ResetNumStatus(item.status);
+                                viewModel.ResetNumStatus(item.StatusNew, item.StatusOld);
                             }
                         }
                         temp = true;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
 
                     }

@@ -10,10 +10,7 @@
              Title="{x:Static lang:Language.bang_tinh_gia_title}"
              x:Name="this">
     <ContentPage.Resources>
-        <converters:NullToHideConverter x:Key="NullToHideConverter" />
-        <converters:ReservationReservationFormConverter x:Key="ReservationFormConverter" />
         <converters:ReservationStatusCodeConverter x:Key="StatusCodeConverter"/>
-        <converters:ReservationStatusCodeConverterColor x:Key="ReservationStatusCodeConverterColor"/>
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
