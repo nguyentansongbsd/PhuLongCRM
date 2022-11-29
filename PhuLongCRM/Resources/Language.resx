@@ -3642,4 +3642,37 @@
 	<data name="khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai" xml:space="preserve">
     <value>Khách hàng chưa đủ điều kiện làm người bảo hộ. Vui lòng kiểm tra lại.</value>
   </data>
+	<data name="loai_bat_dong_san_quan_tam" xml:space="preserve">
+    <value>Loại Bất Động Sản Quan Tâm</value>
+  </data>
+	<data name="quan_tam_dat_nen" xml:space="preserve">
+    <value>Quan tâm - Đất nền</value>
+  </data>
+	<data name="quan_tam_can_ho" xml:space="preserve">
+    <value>Quan tâm - Căn hộ</value>
+  </data>
+	<data name="quan_tam_biet_thu" xml:space="preserve">
+    <value>Quan tâm - Biệt thự</value>
+  </data>
+	<data name="quan_tam_khu_thuong_mai" xml:space="preserve">
+    <value>Quan tâm - Khu thương mại</value>
+  </data>
+	<data name="quan_tam_nha_pho" xml:space="preserve">
+    <value>Quan tâm - Nhà phố</value>
+  </data>
+	<data name="them_tinh_thanh" xml:space="preserve">
+    <value>Thêm tỉnh thành</value>
+  </data>
+	<data name="nhu_cau_ve_dia_diem" xml:space="preserve">
+    <value>Nhu Cầu Về Địa Điểm</value>
+  </data>
+	<data name="them_du_an" xml:space="preserve">
+    <value>Thêm dự án</value>
+  </data>
+	<data name="nhu_cau_ve_du_an" xml:space="preserve">
+    <value>Nhu Cầu Về Dự Án</value>
+  </data>
+	<data name="them_du_lieu" xml:space="preserve">
+    <value>Thêm dữ liệu</value>
+  </data>
 </root>

@@ -3642,4 +3642,37 @@
 	<data name="khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai" xml:space="preserve">
     <value>Customer isn't condition to be a guardian. Please check again.</value>
   </data>
+	<data name="loai_bat_dong_san_quan_tam" xml:space="preserve">
+    <value>Type of Real Estate Interested</value>
+  </data>
+	<data name="quan_tam_dat_nen" xml:space="preserve">
+    <value>Interested - Ground background</value>
+  </data>
+	<data name="quan_tam_can_ho" xml:space="preserve">
+    <value>Interested - Apartments</value>
+  </data>
+	<data name="quan_tam_biet_thu" xml:space="preserve">
+    <value>Interested - Villa</value>
+  </data>
+	<data name="quan_tam_khu_thuong_mai" xml:space="preserve">
+    <value>Interested - Commercial area</value>
+  </data>
+	<data name="quan_tam_nha_pho" xml:space="preserve">
+    <value>Interested - Townhouse</value>
+  </data>
+	<data name="them_tinh_thanh" xml:space="preserve">
+    <value>Add province</value>
+  </data>
+	<data name="nhu_cau_ve_dia_diem" xml:space="preserve">
+    <value>Need For Places</value>
+  </data>
+	<data name="them_du_an" xml:space="preserve">
+    <value>Add project</value>
+  </data>
+	<data name="nhu_cau_ve_du_an" xml:space="preserve">
+    <value>Need For Project</value>
+  </data>
+	<data name="them_du_lieu" xml:space="preserve">
+    <value>Add data</value>
+  </data>
 </root>

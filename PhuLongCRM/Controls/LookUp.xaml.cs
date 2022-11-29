@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using Xamarin.Forms;
 
@@ -85,7 +86,6 @@ namespace PhuLongCRM.Controls
                     PreOpen = null;
                 }
             }
-
             if (this.ItemsSource == null || this.BottomModal == null) return;
 
             if (_lookUpView == null)
@@ -111,6 +111,7 @@ namespace PhuLongCRM.Controls
 
             BottomModal.Title = Placeholder;
             BottomModal.ModalContent = _lookUpView;
+
             await BottomModal.Show();
 
             if (FocusSearchBarOnTap)

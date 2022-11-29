@@ -43,6 +43,8 @@ namespace PhuLongCRM.Views
             if (viewModel.singleAccount.accountid != Guid.Empty)
             {
                 SetButtonFloatingButton();
+                await viewModel.LoadProvince();
+                await viewModel.LoadProject();
                 FromCustomer = new OptionSet { Val = viewModel.singleAccount.accountid.ToString(), Label = viewModel.singleAccount.bsd_name, Title = viewModel.CodeAccount };
                 if (viewModel.singleAccount.employee_id == UserLogged.Id)
                     OnCompleted?.Invoke(1);//thanh cong
@@ -602,6 +604,49 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.tao_qr_code_that_bai);
+            }
+        }
+        private async void btn_nhucaudiadiem_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateNhuCauDiaDiem();
+            if (result)
+            {
+                btn_nhucaudiadiem.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+
+        private void Province_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            btn_nhucaudiadiem.IsVisible = true;
+        }
+
+        private void Project_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            btn_nhucauduan.IsVisible = true;
+        }
+
+        private async void btn_nhucauduan_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateNhuCauDuAn();
+            if (result)
+            {
+                btn_nhucauduan.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
             }
         }
     }
