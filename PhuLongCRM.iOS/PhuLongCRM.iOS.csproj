@@ -99,6 +99,7 @@
     <Compile Include="Services\PreviewControllerDS.cs" />
     <Compile Include="Services\PDFSaveAndOpen.cs" />
     <Compile Include="Renderers\CustomWebViewRenderer.cs" />
+    <Compile Include="Services\DownloaderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
