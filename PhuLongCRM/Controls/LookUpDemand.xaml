@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhuLongCRM.Controls.LookUpDemand"
+                xmlns:lang="clr-namespace:PhuLongCRM.Resources">
+    <StackLayout x:Name="stacklayout" BackgroundColor="#eeeeee" Spacing="1">
+        <BindableLayout.EmptyViewTemplate>
+            <DataTemplate>
+                <Label Text="{x:Static lang:Language.them_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+            </DataTemplate>
+        </BindableLayout.EmptyViewTemplate>
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <Label Text="{Binding Label}" Grid.Column="0" FontSize="15" BackgroundColor="White" TextColor="#444444" VerticalOptions="Start" Padding="25,10"/>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </StackLayout>
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OpenLookUp_Tapped" />
+        </Grid.GestureRecognizers>
+    </Grid>
+</Grid>

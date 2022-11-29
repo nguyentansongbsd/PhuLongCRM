@@ -17,6 +17,7 @@ namespace PhuLongCRM.Controls
     public partial class LookUpMultiSelect : Grid
     {
         public event EventHandler<LookUpChangeEvent> SelectedItemChange;
+
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(LookUpMultiSelect), null, BindingMode.TwoWay);
         public string Placeholder { get => (string)GetValue(PlaceholderProperty); set => SetValue(PlaceholderProperty, value); }
 

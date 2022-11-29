@@ -12,6 +12,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Stormlion.PhotoBrowser;
 using System.Collections.Generic;
+using PhuLongCRM.Config;
+using System.Net;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -73,6 +75,16 @@ namespace PhuLongCRM.ViewModels
         public List<Photo> Photos { get; set; }
 
         public bool IsCurrentRecordOfUser { get; set; }
+
+        private List<OptionSet> _provinces;
+        public List<OptionSet> Provinces { get => _provinces; set { _provinces = value; OnPropertyChanged(nameof(Provinces)); } }
+
+        private List<OptionSet> ProvincesForDetele { get; set; } = new List<OptionSet>();
+        private List<OptionSet> ProjectsForDetele { get; set; } = new List<OptionSet>();
+
+        private List<OptionSet> _projects;
+        public List<OptionSet> Projects { get => _projects; set { _projects = value; OnPropertyChanged(nameof(Projects)); } }
+
 
         public ContactDetailPageViewModel()
         {
@@ -575,6 +587,197 @@ namespace PhuLongCRM.ViewModels
             else
                 return false;
         }
+        public async Task<CrmApiResponse> updateNhuCauDienTich()
+        {
+            string path = "/contacts(" + singleContact.contactid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_dientich_3060m2"] = singleContact.bsd_dientich_3060m2;
+            content["bsd_dientich_6080m2"] = singleContact.bsd_dientich_6080m2;
+            content["bsd_dientich_80100m2"] = singleContact.bsd_dientich_80100m2;
+            content["bsd_dientich_100120m2"] = singleContact.bsd_dientich_100120m2;
+            content["bsd_dientich_lonhon120m2"] = singleContact.bsd_dientich_lonhon120m2;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task<CrmApiResponse> updateTieuChiChonMua()
+        {
+            string path = "/contacts(" + singleContact.contactid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_tieuchi_vitri"] = singleContact.bsd_tieuchi_vitri;
+            content["bsd_tieuchi_phuongthucthanhtoan"] = singleContact.bsd_tieuchi_phuongthucthanhtoan;
+            content["bsd_tieuchi_giacanho"] = singleContact.bsd_tieuchi_giacanho;
+            content["bsd_tieuchi_nhadautuuytin"] = singleContact.bsd_tieuchi_nhadautuuytin;
+            content["bsd_tieuchi_moitruongsong"] = singleContact.bsd_tieuchi_moitruongsong;
+            content["bsd_tieuchi_baidauxe"] = singleContact.bsd_tieuchi_baidauxe;
+            content["bsd_tieuchi_hethonganninh"] = singleContact.bsd_tieuchi_hethonganninh;
+            content["bsd_tieuchi_huongcanho"] = singleContact.bsd_tieuchi_huongcanho;
+            content["bsd_tieuchi_hethongcuuhoa"] = singleContact.bsd_tieuchi_hethongcuuhoa;
+            content["bsd_tieuchi_nhieutienich"] = singleContact.bsd_tieuchi_nhieutienich;
+            content["bsd_tieuchi_ganchosieuthi"] = singleContact.bsd_tieuchi_ganchosieuthi;
+            content["bsd_tieuchi_gantruonghoc"] = singleContact.bsd_tieuchi_gantruonghoc;
+            content["bsd_tieuchi_ganbenhvien"] = singleContact.bsd_tieuchi_ganbenhvien;
+            content["bsd_tieuchi_dientichcanho"] = singleContact.bsd_tieuchi_dientichcanho;
+            content["bsd_tieuchi_thietkenoithatcanho"] = singleContact.bsd_tieuchi_thietkenoithatcanho;
+            content["bsd_tieuchi_tangdepcanhodep"] = singleContact.bsd_tieuchi_tangdepcanhodep;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task<CrmApiResponse> updateLoaiBDSQuanTam()
+        {
+            string path = "/contacts(" + singleContact.contactid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_quantam_datnen"] = singleContact.bsd_quantam_datnen;
+            content["bsd_quantam_canho"] = singleContact.bsd_quantam_canho;
+            content["bsd_quantam_bietthu"] = singleContact.bsd_quantam_bietthu;
+            content["bsd_quantam_khuthuongmai"] = singleContact.bsd_quantam_khuthuongmai;
+            content["bsd_quantam_nhapho"] = singleContact.bsd_quantam_nhapho;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task LoadProvince()
+        {
+            if (Provinces == null)
+                Provinces = new List<OptionSet>();
+            if (singleContact == null || singleContact.contactid == Guid.Empty) return;
+
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='new_province'>
+                                <attribute name='new_name' alias='Label' />   
+                                <attribute name='new_provinceid' alias='Val' />   
+                                <link-entity name='bsd_contact_new_province' from='new_provinceid' to='new_provinceid' intersect='true'>
+                                  <filter>
+                                    <condition attribute='contactid' operator='eq' value='{singleContact.contactid}' />
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("new_provinces", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                List<OptionSet> list = new List<OptionSet>();
+                foreach (var item in result.value)
+                {
+                    list.Add(item);
+                    ProvincesForDetele.Add(item);
+                }
+                Provinces = list;
+            }
+        }
+        public async Task<bool> updateNhuCauDiaDiem()
+        {
+            bool res = true;
+            if (Provinces != null && Provinces.Count > 0)
+            {
+                foreach (var item in Provinces)
+                {
+                    string path = $"/contacts({singleContact.contactid})/bsd_contact_new_province/$ref";
+                    IDictionary<string, object> content = new Dictionary<string, object>();
+                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
+                    CrmApiResponse result = await CrmHelper.PostData(path, content);
+                    if (!result.IsSuccess)
+                        res = false;
+                    ProvincesForDetele.Remove(item);
+                }
+                if (ProvincesForDetele.Count > 0)
+                {
+                    foreach (var item in ProvincesForDetele)
+                    {
+                        var res_delete = await Delete_NhuCau(item.Val, "bsd_contact_new_province");
+                        if (!res_delete)
+                            res = false;
+                    }
+                }
+            }
+            return res;
+        }
+        public async Task<Boolean> Delete_NhuCau(string id, string entity)
+        {
+            string Token = UserLogged.AccessToken;
+            var request = $"{OrgConfig.ApiUrl}/contacts({singleContact.contactid})/{entity}(" + id + ")/$ref";
+
+            using (HttpClientHandler ClientHandler = new HttpClientHandler())
+            using (HttpClient Client = new HttpClient(ClientHandler))
+            {
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                using (HttpRequestMessage RequestMessage = new HttpRequestMessage(new HttpMethod("DELETE"), request))
+                {
+                    using (HttpResponseMessage ResponseMessage = await Client.SendAsync(RequestMessage))
+                    {
+                        string result = await ResponseMessage.Content.ReadAsStringAsync();
+
+                        if (ResponseMessage.StatusCode == HttpStatusCode.NoContent)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        public async Task LoadProject()
+        {
+            if (Projects == null)
+                Projects = new List<OptionSet>();
+            if (singleContact == null || singleContact.contactid == Guid.Empty) return;
+
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                    <entity name='bsd_project'>
+                                    <attribute name='bsd_projectid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <link-entity name='bsd_contact_bsd_project' from='bsd_projectid' to='bsd_projectid' intersect='true'>
+                                      <filter>
+                                        <condition attribute='contactid' operator='eq' value='{singleContact.contactid}' />
+                                      </filter>
+                                    </link-entity>
+                                    </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                List<OptionSet> list = new List<OptionSet>();
+                foreach (var item in result.value)
+                {
+                    list.Add(item);
+                    ProjectsForDetele.Add(item);
+                }
+                Projects = list;
+            }
+        }
+        public async Task<bool> updateNhuCauDuAn()
+        {
+            bool res = true;
+            if (Projects != null && Projects.Count > 0)
+            {
+                foreach (var item in Projects)
+                {
+                    string path = $"/contacts({singleContact.contactid})/bsd_contact_bsd_project/$ref";
+                    IDictionary<string, object> content = new Dictionary<string, object>();
+                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/bsd_projects(" + item.Val + ")";
+                    CrmApiResponse result = await CrmHelper.PostData(path, content);
+                    if (!result.IsSuccess)
+                        res = false;
+                    ProjectsForDetele.Remove(item);
+                }
+                if (ProjectsForDetele.Count > 0)
+                {
+                    foreach (var item in ProjectsForDetele)
+                    {
+                        var res_delete = await Delete_NhuCau(item.Val, "bsd_contact_bsd_project");
+                        if (!res_delete)
+                            res = false;
+                    }
+                }
+            }
+            return res;
+        }
     }
 
     public class User
@@ -678,7 +881,4 @@ namespace PhuLongCRM.ViewModels
         public Medium medium { get; set; }
         public Small small { get; set; }
     }
-
-
-
 }

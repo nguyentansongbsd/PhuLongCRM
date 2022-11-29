@@ -235,7 +235,7 @@
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
                             <!--nhu cau-->
-                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent" IsVisible="false">
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
                                         <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.nhu_cau_ve_dien_tich_can_ho}"/>
@@ -264,13 +264,13 @@
                                             <CheckBox IsChecked="{Binding singleContact.bsd_dientich_lonhon120m2}" CheckedChanged="TieuChiChonMua_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
                                         </Grid>
                                         <Grid BackgroundColor="White">
-                                            <Button x:Name="btn_nhaucaudientich" IsVisible="false" Text="{x:Static lang:Language.luu}" BackgroundColor="White" VerticalOptions="Center" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" TextTransform="None" Margin="10,5" FontSize="15" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5"/>
+                                            <Button x:Name="btn_tieuchichonmua" Clicked="btn_tieuchichonmua_Clicked" Text="{x:Static lang:Language.luu}" TextColor="#1399D5" TextTransform="None" HeightRequest="35" BackgroundColor="White" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5" HorizontalOptions="Center" Margin="10,5"/>
                                         </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
                             <!--tieu chi chon mua-->
-                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent" IsVisible="false">
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
                                         <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.tieu_chi_chon_mua}"/>
@@ -343,7 +343,74 @@
                                             <CheckBox IsChecked="{Binding singleContact.bsd_tieuchi_tangdepcanhodep}" CheckedChanged="NhuCauDienTich_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
                                         </Grid>
                                         <Grid BackgroundColor="White">
-                                            <Button x:Name="btn_tieuchichonmua" IsVisible="false" Text="{x:Static lang:Language.luu}" BackgroundColor="White" VerticalOptions="Center" TextColor="#1399D5" HeightRequest="30" HorizontalOptions="Center" TextTransform="None" Margin="10,5" FontSize="15" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5"/>
+                                            <Button x:Name="btn_nhaucaudientich" Clicked="btn_nhaucaudientich_Clicked" Text="{x:Static lang:Language.luu}" TextColor="#1399D5" TextTransform="None" HeightRequest="35" BackgroundColor="White" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5" HorizontalOptions="Center" Margin="10,5"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+                            <!--loai bat dong san quan tam-->
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.loai_bat_dong_san_quan_tam}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.quan_tam_dat_nen}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_quantam_datnen}" CheckedChanged="LoaiBDSQuanTam_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.quan_tam_can_ho}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_quantam_canho}" CheckedChanged="LoaiBDSQuanTam_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.quan_tam_biet_thu}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_quantam_bietthu}" CheckedChanged="LoaiBDSQuanTam_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.quan_tam_khu_thuong_mai}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_quantam_khuthuongmai}" CheckedChanged="LoaiBDSQuanTam_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,Auto" BackgroundColor="White">
+                                            <controls:FormLabel Text="{x:Static lang:Language.quan_tam_nha_pho}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                            <CheckBox IsChecked="{Binding singleContact.bsd_quantam_nhapho}" CheckedChanged="LoaiBDSQuanTam_CheckedChanged" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,10,25,10"/>
+                                        </Grid>
+                                        <Grid BackgroundColor="White">
+                                            <Button x:Name="btn_loaibdsquantam" Clicked="LoaiBDSQuanTam_Clicked" Text="{x:Static lang:Language.luu}" TextColor="#1399D5" TextTransform="None" HeightRequest="35" BackgroundColor="White" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5" HorizontalOptions="Center" Margin="10,5"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+                            <!--nhu cau ve dia diem-->
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.nhu_cau_ve_dia_diem}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BackgroundColor="#eeeeee" Spacing="1">
+                                        <controls:LookUpDemand Placeholder="{x:Static lang:Language.them_tinh_thanh}" ShowProvince="True" CenterModal="{x:Reference CenterModal}" SelectedIds="{Binding Provinces}" SelectedItemChange="Province_SelectedItemChange"/>
+                                        <Grid BackgroundColor="White">
+                                            <Button x:Name="btn_nhucaudiadiem" IsVisible="false" Clicked="btn_nhucaudiadiem_Clicked" Text="{x:Static lang:Language.luu}" TextColor="#1399D5" TextTransform="None" HeightRequest="35" BackgroundColor="White" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5" HorizontalOptions="Center" Margin="10,5"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+                            <!--nhu cau ve du an-->
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.nhu_cau_ve_du_an}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BackgroundColor="#eeeeee" Spacing="1">
+                                        <controls:LookUpDemand Placeholder="{x:Static lang:Language.them_du_an}" ShowProvince="False" CenterModal="{x:Reference CenterModal}" SelectedIds="{Binding Projects}" SelectedItemChange="Project_SelectedItemChange"/>
+                                        <Grid BackgroundColor="White">
+                                            <Button x:Name="btn_nhucauduan" Clicked="btn_nhucauduan_Clicked" IsVisible="false" Text="{x:Static lang:Language.luu}" TextColor="#1399D5" TextTransform="None" HeightRequest="35" BackgroundColor="White" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5" HorizontalOptions="Center" Margin="10,5"/>
                                         </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
@@ -586,7 +653,9 @@
             </Grid>
 
             <views:ActivityPopupContentView x:Name="ActivityPopup" HidePopupActivity="ActivityPopup_HidePopupActivity"/>
-
+            
+            <controls:BottomModal x:Name="BottomModal"/>
+            <controls:CenterModal x:Name="CenterModal"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
