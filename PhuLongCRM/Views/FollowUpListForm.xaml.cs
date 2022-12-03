@@ -18,7 +18,7 @@ namespace PhuLongCRM.Views
     {
         public FollowUpListFormViewModel viewModel;
         public Action<bool> OnCompleted;
-        public decimal Forfeiture_recommend { get; set; }
+        public string Forfeiture_recommend { get; set; } = "0";
         public FollowUpListForm(Guid fulid)
         {
             InitializeComponent();
@@ -225,7 +225,10 @@ namespace PhuLongCRM.Views
             else if (viewModel.TakeOutMoney.Id == "100000001")
             {
                 lb_so_tien.Text = Language.tien_phat_thanh_ly;
-                viewModel.Refund = Forfeiture_recommend;
+                decimal output = 0;
+                if (!string.IsNullOrWhiteSpace(Forfeiture_recommend))
+                    Decimal.TryParse(Forfeiture_recommend, out output);
+                viewModel.Refund = output; // Forfeiture_recommend;
             }
             entry_so_tien_Unfocused(null, null);
         }

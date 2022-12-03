@@ -284,14 +284,14 @@ namespace PhuLongCRM.Views
                     {
                         if (viewModel.Reservation.statuscode == 3 || viewModel.Reservation.statuscode == 861450000)
                         {
-                            newPage.Forfeiture_recommend = viewModel.Reservation.paymentscheme_optionforfeiture;
+                            newPage.Forfeiture_recommend = DecaimalToString(viewModel.Reservation.paymentscheme_optionforfeiture);
                         }
                         else if (viewModel.Reservation.contract_statuscode == "100000001"
                         || viewModel.Reservation.contract_statuscode == "100000007"
                         || viewModel.Reservation.contract_statuscode == "100000000"
                         || viewModel.Reservation.contract_statuscode == "100000008")
                         {
-                            newPage.Forfeiture_recommend = viewModel.Reservation.paymentscheme_daforfeiture;
+                            newPage.Forfeiture_recommend = DecaimalToString(viewModel.Reservation.paymentscheme_daforfeiture);
                         }
                         else if (viewModel.Reservation.contract_statuscode == "100000010"
                         || viewModel.Reservation.contract_statuscode == "100000009"
@@ -299,7 +299,7 @@ namespace PhuLongCRM.Views
                         || viewModel.Reservation.contract_statuscode == "100000003"
                         || viewModel.Reservation.contract_statuscode == "100000005")
                         {
-                            newPage.Forfeiture_recommend = viewModel.Reservation.paymentscheme_spforfeiture;
+                            newPage.Forfeiture_recommend = DecaimalToString(viewModel.Reservation.paymentscheme_spforfeiture);
                         }
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
@@ -911,6 +911,18 @@ namespace PhuLongCRM.Views
                     TabChiTiet.IsVisible = false;
                     TabLich.IsVisible = true;
                 }
+            }
+        }
+        private string DecaimalToString(decimal total)
+        {
+            if (total > 0 && total.ToString().Length > 6)
+            {
+                var format = total.ToString();
+                return format.Split(',')[0];
+            }
+            else
+            {
+                return "0";
             }
         }
     }

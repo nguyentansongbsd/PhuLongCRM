@@ -430,6 +430,33 @@
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.tai_lieu}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <StackLayout BindableLayout.ItemsSource="{Binding WordFiles}" Spacing="1" BackgroundColor="#F1F1F1">
+                                        <BindableLayout.EmptyViewTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                            </DataTemplate>
+                                        </BindableLayout.EmptyViewTemplate>
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout BackgroundColor="White" Padding="25,8" Orientation="Horizontal">
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OpenWordFile_Tapped" CommandParameter="{Binding .}"/>
+                                                    </StackLayout.GestureRecognizers>
+                                                    <Label Text="&#xf1c1;" FontFamily="FontAwesomeSolid" FontSize="18" TextColor="Red" VerticalOptions="Start"/>
+                                                    <Label Text="{Binding PdfName}" FontSize="13" TextColor="#444444" VerticalOptions="Center"/>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
                         </StackLayout>
 
                         <StackLayout x:Name="stackGiuCho" IsVisible="false">
