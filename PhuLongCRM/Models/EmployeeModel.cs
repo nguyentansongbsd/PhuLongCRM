@@ -10,6 +10,7 @@ namespace PhuLongCRM.Models
         public string bsd_imeinumber { get; set; }
         public Guid contact_id { get; set; }
         public string contact_name { get; set; }
+        public string contact_phone { get; set; }
         public Guid manager_id { get; set; }
         public string manager_name { get; set; }
         public DateTime createdon { get; set; }

@@ -313,48 +313,22 @@ namespace PhuLongCRM.Views
             return $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={nameAvata}";
         }
 
-        private void OpenPdfFile_Clicked(object sender, EventArgs e)
+        private async void OpenPdfDocxFile_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            DependencyService.Get<IPdfService>().View(item.UrlPdfFile, item.PdfName);
-            LoadingHelper.Hide();
-        }
-
-        private async void OpenWordFile_Tapped(object sender, EventArgs e)
-        {
-            LoadingHelper.Show();
-            var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            var response = await viewModel.SaveAndShowWordFile(item.UrlPdfFile);
-            if (response != null)
+            if (item.SharePointType == SharePointType.Pdf)
             {
-                try
-                {
-                    if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() != PermissionStatus.Granted)
-                    {
-                        var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
-                        var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
-                    }
-                    if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
-                    {
-                        byte[] arr;
-                        LoadingHelper.Show();
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            response.CopyTo(memoryStream);
-                            arr = memoryStream.ToArray();
-                        }
-                        await DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(item.PdfName.Replace(".docx", ".pdf"), arr);
-                        LoadingHelper.Hide();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ToastMessageHelper.LongMessage(ex.ToString());
-                    LoadingHelper.Hide();
-                }
+                //await DependencyService.Get<IDocxService>().OpenDocxFile(item.UrlPdfFile,".pdf");
+                await DependencyService.Get<IPdfService>().View(item.UrlPdfFile, item.PdfName);
+                LoadingHelper.Hide();
             }
-            LoadingHelper.Hide();
+            else
+            {
+                await DependencyService.Get<IDocxService>().OpenDocxFile(item.UrlPdfFile,".docx");
+                LoadingHelper.Hide();
+            }
+
         }
     }
 }

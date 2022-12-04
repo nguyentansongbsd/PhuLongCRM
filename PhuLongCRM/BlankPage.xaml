@@ -12,7 +12,8 @@
         <AbsoluteLayout>
             <StackLayout x:Name="test" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,100,0,0">
                <!--<controls2:CustomWebView x:Name="webview" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />-->
-                
+                <Label Text="{Binding TimeRemaining}" FontSize="20"/>
+                <Button Text="CLick me" Clicked="Button_Clicked" BorderColor="Blue"/>
             </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>

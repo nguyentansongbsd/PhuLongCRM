@@ -165,7 +165,7 @@ namespace PhuLongCRM.Views
             }    
         }
 
-        private async void Flag_Tapped(object sender, EventArgs e)
+        private void Flag_Tapped(object sender, EventArgs e)
         {
             string code = (string)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (code == UserLogged.Language) return;
@@ -202,6 +202,16 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duong_de_trong);
                 return;
             }
+            if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours > 24)
+            {
+                UserLogged.CountLoginFailed = 0;
+            }
+            if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && UserLogged.CountLoginFailed > 5 && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24)
+            {
+                ToastMessageHelper.ShortMessage(Language.khong_the_dang_nhap_vi_qua_so_lan_cho_phep);
+                return;
+            }
+
             try
             {
                 LoadingHelper.Show();
@@ -220,6 +230,8 @@ namespace PhuLongCRM.Views
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
+                            UserLogged.CountLoginFailed++;
+                            UserLogged.DateLoginFailed = DateTime.Now.ToString();
                             return;
                         }
 
@@ -227,6 +239,8 @@ namespace PhuLongCRM.Views
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
+                            UserLogged.CountLoginFailed++;
+                            UserLogged.DateLoginFailed = DateTime.Now.ToString();
                             return;
                         }
 
@@ -254,6 +268,7 @@ namespace PhuLongCRM.Views
                         UserLogged.IsSaveInforUser = checkboxRememberAcc.IsChecked;
                         UserLogged.IsLogged = true;
                         UserLogged.IsLoginByUserCRM = false;
+                        UserLogged.CountLoginFailed = 0;
 
                         Application.Current.MainPage = new AppShell();
                         await Task.Delay(1);
@@ -263,6 +278,8 @@ namespace PhuLongCRM.Views
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
+                        UserLogged.CountLoginFailed++;
+                        UserLogged.DateLoginFailed = DateTime.Now.ToString();
                     }
                 }
             }

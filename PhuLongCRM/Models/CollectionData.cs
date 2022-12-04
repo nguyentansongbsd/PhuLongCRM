@@ -15,6 +15,20 @@ namespace PhuLongCRM.Models
         public int Index { get; set; }
         public string UrlPdfFile { get; set; }
         public string PdfName { get; set; }
+        public string IconFile { get {
+                if (SharePointType == SharePointType.Pdf)
+                {
+                    return "\uf1c1";
+                }
+                else if (SharePointType == SharePointType.Docx)
+                {
+                    return "\uf1c2";
+                }
+                else
+                {
+                    return null;
+                }
+            } }
 
         public CollectionData()
         { }
@@ -23,6 +37,7 @@ namespace PhuLongCRM.Models
     {
         Video,
         Image,
-        Pdf
+        Pdf,
+        Docx
     }
 }

@@ -15,6 +15,7 @@
     <None Remove="ZXing.Net.Mobile.Forms" />
     <None Remove="JWTDecoder.Xamarin" />
     <None Remove="FirebaseStorage.net" />
+    <None Remove="Xam.Plugins.DownloadManager" />
   </ItemGroup>
 
   <ItemGroup>

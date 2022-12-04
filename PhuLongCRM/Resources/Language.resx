@@ -2284,7 +2284,7 @@
     <value>Nhập xác nhận mật khẩu mới</value>
   </data>
 	<data name="mat_khau_khong_duoc_chua_ky_tu_khoan_trang" xml:space="preserve">
-    <value>Password không được chứa ký tự khoảng trắng.</value>
+    <value>Mật khẩu không được chứa ký tự khoảng trắng.</value>
   </data>
 	<data name="vui_long_nhap_mat_khau_cu" xml:space="preserve">
     <value>Vui lòng nhập mật khẩu cũ.</value>
@@ -2803,7 +2803,7 @@
     <value>OTP được gửi về số điện thoại</value>
   </data>
 	<data name="vui_long_nhap_otp_de_xac_nhan_tai_khoan" xml:space="preserve">
-    <value>Vui lòng nhập OTP để xác nhận tài khoản</value>
+    <value>Vui lòng nhập OTP để xác nhận tài khoản.</value>
   </data>
 	<data name="ban_chua_nhan_duoc_ma_gui_lai" xml:space="preserve">
     <value>Bạn chưa nhận được mã ? Gửi lại</value>
@@ -3674,5 +3674,29 @@
   </data>
 	<data name="them_du_lieu" xml:space="preserve">
     <value>Thêm dữ liệu</value>
+  </data>
+  <data name="quen_mat_khau_title">
+		<value>Quên Mật Khẩu</value>
+	</data>
+	<data name="mat_khau_moi_title" xml:space="preserve">
+    <value>Mật Khẩu Mới</value>
+  </data>
+  <data name="mat_khau_toi_da_15_ky_tu" xml:space="preserve">
+    <value>Mật khẩu tối đa 15 ký tự.</value>
+  </data>
+  <data name="so_dien_thoai_khong_dung_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Số điện thoại không đúng. Vui lòng kiểm tra lại thông tin.</value>
+  </data>
+  <data name="otp_se_het_han_sau" xml:space="preserve">
+    <value>OTP sẽ hết hạn sau</value>
+  </data>
+  <data name="giay" xml:space="preserve">
+    <value>giây</value>
+  </data>
+  <data name="otp_da_het_han" xml:space="preserve">
+    <value>OTP đã hết hạn</value>
+  </data>
+  <data name="khong_the_dang_nhap_vi_qua_so_lan_cho_phep" xml:space="preserve">
+    <value>Không thể đăng nhập. Vì quá số lần cho phép.</value>
   </data>
 </root>

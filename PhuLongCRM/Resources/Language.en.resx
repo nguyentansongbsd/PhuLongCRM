@@ -2803,7 +2803,7 @@
 		<value>OTP has been sent to</value>
 	</data>
 	<data name="vui_long_nhap_otp_de_xac_nhan_tai_khoan">
-		<value>Please enter the OTP to verify your account</value>
+		<value>Please enter the OTP to verify your account.</value>
 	</data>
 	<data name="ban_chua_nhan_duoc_ma_gui_lai">
 		<value>Didn't receive the code? Resend OTP</value>
@@ -3674,5 +3674,29 @@
   </data>
 	<data name="them_du_lieu" xml:space="preserve">
     <value>Add data</value>
+  </data>
+  <data name="quen_mat_khau_title">
+		<value>Forgot Password</value>
+	</data>
+	<data name="mat_khau_moi_title" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="mat_khau_toi_da_15_ky_tu" xml:space="preserve">
+    <value>Password up to 15 characters.</value>
+  </data>
+  <data name="so_dien_thoai_khong_dung_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>The phone number is incorrect. Please check the information again.</value>
+  </data>
+  <data name="otp_se_het_han_sau" xml:space="preserve">
+    <value>The OTP will expire after</value>
+  </data>
+  <data name="giay" xml:space="preserve">
+    <value>seccond</value>
+  </data>
+  <data name="otp_da_het_han" xml:space="preserve">
+    <value>OTP has expired</value>
+  </data>
+  <data name="khong_the_dang_nhap_vi_qua_so_lan_cho_phep" xml:space="preserve">
+    <value>Can not login. Because of the allowed number of times.</value>
   </data>
 </root>
