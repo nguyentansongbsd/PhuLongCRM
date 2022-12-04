@@ -37,6 +37,9 @@ namespace PhuLongCRM.ViewModels
                     <filter type='and'>
                       <condition attribute='bsd_name' operator='eq' value='{UserName}' />
                     </filter>
+                    <link-entity name='contact' from='contactid' to='bsd_contact' visible='false' link-type='outer' alias='a_d839fe53e057ec118f8f000d3ac949ac'>
+                      <attribute name='mobilephone' alias='contact_phone'/>
+                    </link-entity>
                   </entity>
                 </fetch>";
 

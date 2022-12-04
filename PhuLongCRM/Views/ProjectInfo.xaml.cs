@@ -311,12 +311,22 @@ namespace PhuLongCRM.Views
             return $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={nameAvata}";
         }
 
-        private void OpenPdfFile_Clicked(object sender, EventArgs e)
+        private async void OpenPdfDocxFile_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            DependencyService.Get<IPdfService>().View(item.UrlPdfFile, item.PdfName);
-            LoadingHelper.Hide();
+            if (item.SharePointType == SharePointType.Pdf)
+            {
+                //await DependencyService.Get<IDocxService>().OpenDocxFile(item.UrlPdfFile,".pdf");
+                await DependencyService.Get<IPdfService>().View(item.UrlPdfFile, item.PdfName);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                await DependencyService.Get<IDocxService>().OpenDocxFile(item.UrlPdfFile,".docx");
+                LoadingHelper.Hide();
+            }
+
         }
     }
 }

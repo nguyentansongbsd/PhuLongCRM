@@ -16,14 +16,19 @@ namespace PhuLongCRM.Views
         FirebaseClient firebaseClient = new FirebaseClient("https://smsappcrm-default-rtdb.asia-southeast1.firebasedatabase.app/",
             new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult("kLHIPuBhEIrL6s3J6NuHpQI13H7M0kHjBRLmGEPF") });
 
-        private List<OTPModel> OTPList { get; set; } 
+        private List<OTPModel> OTPList { get; set; }
         public Action<bool> OnCompeleted;
         private string Phone { get; set; }
+        private OTPModel OTP { get; set; }
         private string fireBaseDb = "PhuLongOTPDb";
+
+        private int _timeRemaing = 60;
+        public int TimeRemaining { get => _timeRemaing; set { _timeRemaing = value; OnPropertyChanged(nameof(TimeRemaining)); } }
 
         public ConformOTPPage(string phone)
         {
             InitializeComponent();
+            this.BindingContext = this;
             Phone = phone;
             Init();
         }
@@ -32,9 +37,30 @@ namespace PhuLongCRM.Views
         {
             bool SendSuccess = await SendOTP();
             if (SendSuccess)
+            {
                 OnCompeleted?.Invoke(true);
+                this.SetTimeRemaining();
+                //Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                //{
+                //    this.TimeRemaining--;
+                //    if (TimeRemaining == 0)
+                //    {
+                //        this.lblTimeRemaining.IsVisible = false;
+                //        this.lblOTPExpired.IsVisible = true;
+                //        SetLimitTime();
+                //    }
+                //    return Convert.ToBoolean(TimeRemaining);
+                //});
+            }
+
             else
                 OnCompeleted?.Invoke(false);
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            this.SetOTPCanceled(this.OTPList.SingleOrDefault(x => x.Id == OTP.Id));
+            return base.OnBackButtonPressed();
         }
 
         public async Task<bool> SendOTP()
@@ -42,29 +68,23 @@ namespace PhuLongCRM.Views
             try
             {
                 string otpCode = OTPCode();
-                OTPModel data = new OTPModel()
+                OTP = new OTPModel()
                 {
                     Id = Guid.NewGuid(),
                     Content = $"{otpCode} is your PhuLongCRM verification code.",
                     Phone = $"{Phone}",
                     OTPCode = otpCode,
                     IsSend = false,
-                    Date= DateTime.Now
+                    IsLimitTime = false,
+                    IsConfirm = false,
+                    IsCanceled = false,
+                    Date = DateTime.Now
                 };
 
-                var result = await firebaseClient.Child(fireBaseDb).PostAsync<OTPModel>(data);
+                var result = await firebaseClient.Child(fireBaseDb).PostAsync<OTPModel>(OTP);
                 if (result != null)
                 {
-                    OTPList = new List<OTPModel>();
-                    OTPList = (await firebaseClient.Child(fireBaseDb).OnceAsync<OTPModel>()).Select(item => new OTPModel()
-                    {
-                        key = item.Key,
-                        Id = item.Object.Id,
-                        Content = item.Object.Content,
-                        Phone = item.Object.Phone,
-                        OTPCode = item.Object.OTPCode,
-                        Date = item.Object.Date
-                    }).ToList();
+                    await this.LoadDataOTP();
                     return true;
                 }
                 else
@@ -73,11 +93,29 @@ namespace PhuLongCRM.Views
                     return false;
                 }
             }
-            catch(FirebaseException ex)
+            catch (FirebaseException ex)
             {
                 ToastMessageHelper.LongMessage(ex.Message);
                 return false;
             }
+        }
+
+        private async Task LoadDataOTP()
+        {
+            OTPList = new List<OTPModel>();
+            OTPList = (await firebaseClient.Child(fireBaseDb).OnceAsync<OTPModel>()).Select(item => new OTPModel()
+            {
+                key = item.Key,
+                Id = item.Object.Id,
+                Content = item.Object.Content,
+                Phone = item.Object.Phone,
+                OTPCode = item.Object.OTPCode,
+                IsSend = item.Object.IsSend,
+                IsLimitTime = item.Object.IsLimitTime,
+                IsConfirm = item.Object.IsConfirm,
+                IsCanceled = item.Object.IsCanceled,
+                Date = item.Object.Date
+            }).ToList();
         }
 
         private string OTPCode()
@@ -95,10 +133,11 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             string ConformCode = Code1.Text + Code2.Text + Code3.Text + Code4.Text;
             ConformCode = ConformCode.Replace(" ", "");
-            if (OTPList.Any(x=>x.OTPCode == ConformCode && x.Phone == Phone))
+            if (OTPList.Any(x => x.OTPCode == ConformCode && x.Phone == Phone && x.IsConfirm == false && x.IsLimitTime == false && x.IsCanceled == false))
             {
                 if (ForgotPassWordPage.NeedRefreshForm.HasValue) ForgotPassWordPage.NeedRefreshForm = true;
-                await DeleteRecordFirebase(); 
+                //await DeleteRecordFirebase();
+                SetOTPConfirm();
                 await Navigation.PopAsync();
                 LoadingHelper.Hide();
             }
@@ -106,13 +145,12 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.ma_xac_thuc_khong_dung);
-                mainEntry.Focus();
             }
         }
 
         private async Task DeleteRecordFirebase()
         {
-            var key = OTPList.OrderByDescending(x=>x.Date).FirstOrDefault(x => x.Phone == Phone).key;
+            var key = OTPList.OrderByDescending(x => x.Date).FirstOrDefault(x => x.Phone == Phone).key;
             await firebaseClient.Child(fireBaseDb).Child(key).DeleteAsync();
         }
 
@@ -134,6 +172,7 @@ namespace PhuLongCRM.Views
 
         private async void Cancel_Clicked(object sender, EventArgs e)
         {
+            this.SetOTPCanceled(this.OTPList.SingleOrDefault(x => x.Id == OTP.Id));
             await Navigation.PopAsync();
         }
 
@@ -142,6 +181,11 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             mainEntry.Text = "";
             await this.SendOTP();
+            this.CancelOldOTP();
+            this.TimeRemaining = 60;
+            this.lblTimeRemaining.IsVisible = true;
+            this.lblOTPExpired.IsVisible = false;
+            this.SetTimeRemaining();
             LoadingHelper.Hide();
         }
 
@@ -219,7 +263,48 @@ namespace PhuLongCRM.Views
             Grid grid = label.Parent as Grid;
             BoxView boxView = grid.Children[0] as BoxView;
             boxView.IsVisible = show;
+        }
 
+        private async void SetTimeRemaining()
+        {
+            do
+            {
+                await Task.Delay(1000);
+                this.TimeRemaining--;
+                if (this.TimeRemaining == 0)
+                {
+                    this.lblTimeRemaining.IsVisible = false;
+                    this.lblOTPExpired.IsVisible = true;
+                    this.SetLimitTime();
+                }
+            } while (this.TimeRemaining != 0);
+        }
+
+        private async void SetLimitTime()
+        {
+            OTPModel _otp = this.OTPList.SingleOrDefault(x => x.Id == OTP.Id);
+            await firebaseClient.Child("PhuLongOTPDb").Child(_otp.key).PutAsync(new OTPModel() { Id = _otp.Id, Content = _otp.Content, Phone = _otp.Phone, OTPCode = _otp.OTPCode, IsSend = _otp.IsSend, IsLimitTime = true, IsConfirm = _otp.IsConfirm, IsCanceled = _otp.IsCanceled, Date = _otp.Date });
+            _otp.IsLimitTime = true;
+        }
+
+        private async void SetOTPCanceled(OTPModel _otp)
+        {
+            await firebaseClient.Child("PhuLongOTPDb").Child(_otp.key).PutAsync(new OTPModel() { Id = _otp.Id, Content = _otp.Content, Phone = _otp.Phone, OTPCode = _otp.OTPCode, IsSend = _otp.IsSend, IsLimitTime = _otp.IsLimitTime, IsConfirm = _otp.IsConfirm, IsCanceled = true, Date = _otp.Date });
+            _otp.IsCanceled = true;
+        }
+
+        private async void SetOTPConfirm()
+        {
+            OTPModel _otp = this.OTPList.SingleOrDefault(x => x.Id == OTP.Id);
+            await firebaseClient.Child("PhuLongOTPDb").Child(_otp.key).PutAsync(new OTPModel() { Id = _otp.Id, Content = _otp.Content, Phone = _otp.Phone, OTPCode = _otp.OTPCode, IsSend = _otp.IsSend, IsLimitTime = _otp.IsLimitTime, IsConfirm = true, IsCanceled = _otp.IsCanceled, Date = _otp.Date });
+            _otp.IsConfirm = true;
+        }
+
+        private void CancelOldOTP()
+        {
+            this.OTPList.Where(x => x.Id != this.OTP.Id && x.Phone == this.OTP.Phone && x.IsConfirm == false && x.IsCanceled == false && x.IsLimitTime ==false).ToList().ForEach(item => {
+                this.SetOTPCanceled(item);
+            });
         }
     }
 }
