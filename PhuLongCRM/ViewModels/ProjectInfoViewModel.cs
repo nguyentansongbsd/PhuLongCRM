@@ -477,7 +477,7 @@ namespace PhuLongCRM.ViewModels
                     this.TotalPhoto = images.Count;
 
                     //await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs), GetWords(doxc));
-                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs)); //, GetDocxs(docx)
+                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs), GetDocxs(docx)); //
                 }
             }
         }
@@ -585,14 +585,16 @@ namespace PhuLongCRM.ViewModels
 
         private async Task GetDocxs(List<SharePointGraphModel> data)
         {
+            string name_folder = this.Project.bsd_name + "_" + ProjectId.ToString().Replace("-", "");
             foreach (var item in data)
             {
-                var result = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem");
-                if (result != null)
-                {
-                    string url = result.MicrosoftGraphDownloadUrl;
-                    this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Docx });
-                }
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ProjectID}/root:/{name_folder}/{item.name}:/content?format=pdf";
+                //var result = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem");
+                //if (result != null)
+                //{
+                //    string url = result.MicrosoftGraphDownloadUrl;
+                //    this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Docx });
+                //}
             }
         }
         private async Task GetWords(List<SharePointGraphModel> data)
@@ -601,7 +603,7 @@ namespace PhuLongCRM.ViewModels
             foreach (var item in data)
             {
                 string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ProjectID}/root:/{name_folder}/{item.name}:/content?format=pdf";
-                WordFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = fileListUrl, PdfName = item.name });
+                //WordFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = fileListUrl, PdfName = item.name });
             }
         }
         public async Task<Stream> SaveAndShowWordFile(string url)
