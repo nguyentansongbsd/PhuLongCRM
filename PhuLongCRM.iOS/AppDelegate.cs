@@ -4,7 +4,6 @@ using System.Linq;
 using FFImageLoading.Forms.Platform;
 using Foundation;
 using PhuLongCRM.IServices;
-using Plugin.DownloadManager;
 using UIKit;
 using Xamarin.Forms;
 
@@ -35,10 +34,6 @@ namespace PhuLongCRM.iOS
             DependencyService.Get<ILoadingService>().Initilize();
 
             return base.FinishedLaunching(app, options);
-        }
-        public override void HandleEventsForBackgroundUrl(UIApplication application, string sessionIdentifier, Action completionHandler)
-        {
-            CrossDownloadManager.BackgroundSessionCompletionHandler = completionHandler;
         }
     }
 }

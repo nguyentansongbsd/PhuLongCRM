@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using PhuLongCRM.iOS.Services;
 using PhuLongCRM.IServices;
+using PhuLongCRM.Views;
 using QuickLook;
 using UIKit;
 using Xamarin.Forms;
@@ -18,15 +19,29 @@ namespace PhuLongCRM.iOS.Services
 
         public void DownloadFile(string url, string folder)
         {
-            string pathToNewFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-            Directory.CreateDirectory(pathToNewFolder);
-
             try
             {
+                string fileName = Guid.NewGuid() + ".docx";
+
+                string pathToNewFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+                Directory.CreateDirectory(pathToNewFolder);
+
                 WebClient webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                string pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName(url));
+                pathToNewFile = Path.Combine(pathToNewFolder, fileName);
                 webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
+
+                UIViewController currentController = UIApplication.SharedApplication.KeyWindow.RootViewController;
+                while (currentController.PresentedViewController != null)
+                    currentController = currentController.PresentedViewController;
+                UIView currentView = currentController.View;
+
+                QLPreviewController qlPreview = new QLPreviewController();
+                QLPreviewItem item = new QLPreviewItemBundle(fileName, pathToNewFile);
+                qlPreview.DataSource = new PreviewControllerDS(item);
+
+                currentController.PresentViewController(qlPreview, true, null);
+
             }
             catch (Exception ex)
             {
@@ -45,25 +60,20 @@ namespace PhuLongCRM.iOS.Services
             {
                 if (OnFileDownloaded != null)
                     OnFileDownloaded.Invoke(this, new DownloadEventArgs(true));
+                try
+                {
+                    //NavigationPage navigationPage = new NavigationPage();
+                    //navigationPage.PushAsync(new ViewPDFFilePage("https://www.africau.edu/images/default/sample.pdf") { Title = "song" });
 
+                    //DependencyService.Get<IPdfService>().View(pathToNewFile, "sample");
+                    //await DependencyService.Get<IPdfService>().View("https://www.africau.edu/images/default/sample.pdf","song");
+                    //await AppShell.Current.Navigation.PushAsync(new ViewPDFFilePage("https://www.africau.edu/images/default/sample.pdf") { Title = "song" });
+                }
+                catch (Exception ex)
+                {
+
+                }
                 
-                //MemoryStream stream = new MemoryStream(data);
-                //FileStream fileStream = File.Open(pathToNewFile, FileMode.Create);
-                //stream.Position = 0;
-                //stream.CopyTo(fileStream);
-                //fileStream.Flush();
-                //fileStream.Close();
-
-                UIViewController currentController = UIApplication.SharedApplication.KeyWindow.RootViewController;
-                while (currentController.PresentedViewController != null)
-                    currentController = currentController.PresentedViewController;
-                UIView currentView = currentController.View;
-
-                QLPreviewController qlPreview = new QLPreviewController();
-                QLPreviewItem item = new QLPreviewItemBundle("sample.pdf", pathToNewFile);
-                qlPreview.DataSource = new PreviewControllerDS(item);
-
-                currentController.PresentViewController(qlPreview, true, null);
             }
         }
     }

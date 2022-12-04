@@ -16,7 +16,7 @@ namespace PhuLongCRM.ViewModels
     public class ProjectInfoViewModel : BaseViewModel
     {
         public ObservableCollection<CollectionData> Collections { get; set; } = new ObservableCollection<CollectionData>();
-        public ObservableCollection<CollectionData> PdfFiles { get; set; } = new ObservableCollection<CollectionData>();
+        public ObservableCollection<CollectionData> PdfDocxFiles { get; set; } = new ObservableCollection<CollectionData>();
 
         public List<Photo> Photos { get; set; }
         private bool _showCollections = false;
@@ -467,11 +467,11 @@ namespace PhuLongCRM.ViewModels
                     var videos = list.Where(x => x.type == "video").ToList();
                     var images = list.Where(x => x.type == "image").ToList();
                     var pdfs = list.Where(x => x.type == "pdf").ToList();
-                    var doxc = list.Where(x => x.type == "docx").ToList();
+                    var docx = list.Where(x => x.type == "docx").ToList();
                     this.TotalMedia = videos.Count;
                     this.TotalPhoto = images.Count;
 
-                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(doxc));
+                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs)); //, GetDocxs(docx)
                 }
             }
         }
@@ -572,7 +572,20 @@ namespace PhuLongCRM.ViewModels
                 if (result != null)
                 {
                     string url = result.MicrosoftGraphDownloadUrl;
-                    this.PdfFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name });
+                    this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name,SharePointType = SharePointType.Pdf });
+                }
+            }
+        }
+
+        private async Task GetDocxs(List<SharePointGraphModel> data)
+        {
+            foreach (var item in data)
+            {
+                var result = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem");
+                if (result != null)
+                {
+                    string url = result.MicrosoftGraphDownloadUrl;
+                    this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Docx });
                 }
             }
         }
