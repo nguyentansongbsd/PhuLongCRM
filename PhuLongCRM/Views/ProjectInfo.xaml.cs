@@ -7,8 +7,10 @@ using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using Stormlion.PhotoBrowser;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

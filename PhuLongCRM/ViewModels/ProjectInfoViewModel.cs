@@ -1,21 +1,26 @@
 ﻿using Newtonsoft.Json;
 using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
 using Stormlion.PhotoBrowser;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 namespace PhuLongCRM.ViewModels
 {
     public class ProjectInfoViewModel : BaseViewModel
     {
         public ObservableCollection<CollectionData> Collections { get; set; } = new ObservableCollection<CollectionData>();
+        //public ObservableCollection<CollectionData> PdfFiles { get; set; } = new ObservableCollection<CollectionData>();
+        //public ObservableCollection<CollectionData> WordFiles { get; set; } = new ObservableCollection<CollectionData>();
         public ObservableCollection<CollectionData> PdfDocxFiles { get; set; } = new ObservableCollection<CollectionData>();
 
         public List<Photo> Photos { get; set; }
@@ -471,6 +476,7 @@ namespace PhuLongCRM.ViewModels
                     this.TotalMedia = videos.Count;
                     this.TotalPhoto = images.Count;
 
+                    //await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs), GetWords(doxc));
                     await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs)); //, GetDocxs(docx)
                 }
             }
@@ -588,6 +594,27 @@ namespace PhuLongCRM.ViewModels
                     this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Docx });
                 }
             }
+        }
+        private async Task GetWords(List<SharePointGraphModel> data)
+        {
+            string name_folder = this.Project.bsd_name + "_" + ProjectId.ToString().Replace("-", "");
+            foreach (var item in data)
+            {
+                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ProjectID}/root:/{name_folder}/{item.name}:/content?format=pdf";
+                WordFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = fileListUrl, PdfName = item.name });
+            }
+        }
+        public async Task<Stream> SaveAndShowWordFile(string url)
+        {
+            GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
+            var client = BsdHttpClient.Instance();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await client.GetStreamAsync(url);
+            if (response != null)
+                return response;
+            else
+                return null;
         }
 
         public void ResetNumStatus(string UnitStatusNew,string UnitStatusOld)

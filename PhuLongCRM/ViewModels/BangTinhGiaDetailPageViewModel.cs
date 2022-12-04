@@ -247,6 +247,9 @@ namespace PhuLongCRM.ViewModels
                 var data = result2.value.SingleOrDefault();
                 Reservation.paymentscheme_id = data.paymentscheme_id;
                 Reservation.paymentscheme_name = data.paymentscheme_name;
+                Reservation.paymentscheme_optionforfeiture = data.paymentscheme_optionforfeiture;
+                Reservation.paymentscheme_daforfeiture = data.paymentscheme_daforfeiture;
+                Reservation.paymentscheme_spforfeiture = data.paymentscheme_spforfeiture;
                 Reservation.discountlist_name = data.discountlist_name;
                 Reservation.interneldiscount_id = data.interneldiscount_id;
                 Reservation.interneldiscount_name = data.interneldiscount_name;
