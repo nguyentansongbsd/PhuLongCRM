@@ -19,7 +19,7 @@ namespace PhuLongCRM.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Build.Tasks.StronglyTypedResourceBuilder", "15.1.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Language_en {
+    public class Language_en {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -33,7 +33,7 @@ namespace PhuLongCRM.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PhuLongCRM.Resources.Language.en", typeof(Language_en).Assembly);
@@ -48,7 +48,7 @@ namespace PhuLongCRM.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -5764,11 +5764,11 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please enter password..
+        ///   Looks up a localized string similar to Password cannot be empty. Please check again information..
         /// </summary>
-        internal static string mat_khau_khong_duong_de_trong {
+        internal static string mat_khau_khong_duong_de_trong_vui_long_kiem_tra_lai_thong_tin {
             get {
-                return ResourceManager.GetString("mat_khau_khong_duong_de_trong", resourceCulture);
+                return ResourceManager.GetString("mat_khau_khong_duong_de_trong_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
             }
         }
         
@@ -5796,6 +5796,15 @@ namespace PhuLongCRM.Resources {
         internal static string mat_khau_moi_title {
             get {
                 return ResourceManager.GetString("mat_khau_moi_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must be between 6 to 12 characters..
+        /// </summary>
+        internal static string mat_khau_phai_tu_6_den_15_ky_tu {
+            get {
+                return ResourceManager.GetString("mat_khau_phai_tu_6_den_15_ky_tu", resourceCulture);
             }
         }
         
@@ -8024,6 +8033,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User name cannot be empty. Please check again information..
+        /// </summary>
+        internal static string tai_khoan_khong_duoc_de_trong_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("tai_khoan_khong_duoc_de_trong_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account cannot login on this device..
         /// </summary>
         internal static string tai_khoan_khong_the_dang_nhap_tren_thiet_bi_nay {
@@ -8479,15 +8497,6 @@ namespace PhuLongCRM.Resources {
         internal static string ten_dang_nhap_khong_dung {
             get {
                 return ResourceManager.GetString("ten_dang_nhap_khong_dung", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please enter user name..
-        /// </summary>
-        internal static string ten_dang_nhap_khong_duoc_de_trong {
-            get {
-                return ResourceManager.GetString("ten_dang_nhap_khong_duoc_de_trong", resourceCulture);
             }
         }
         
