@@ -43,7 +43,7 @@
                     <controls:MainEntry Text="{Binding UserName}" IsEnabled="False" ShowClearButton="False"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.email}"/>
-                    <controls:MainEntry Text="{Binding ContactModel.emailaddress1}" Placeholder="{x:Static lang:Language.nhap_email}"/>
+                    <controls:MainEntry Text="{Binding ContactModel.emailaddress1}" Placeholder="{x:Static lang:Language.nhap_email}" Unfocused="Email_Unfocused"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}"/>
                     <controls:PhoneEntryControl Text="{Binding PhoneNumber}" Keyboard="Numeric" Unfocused="PhoneNum_Unfocused" FontSize="15" Placeholder="+84-033XXXXXXX"/>

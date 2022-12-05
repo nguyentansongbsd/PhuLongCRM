@@ -612,7 +612,7 @@ namespace PhuLongCRM.Views
             var result = await viewModel.updateNhuCauDiaDiem();
             if (result)
             {
-                btn_nhucaudiadiem.IsVisible = false;
+               // btn_nhucaudiadiem.IsVisible = false;
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
@@ -625,12 +625,12 @@ namespace PhuLongCRM.Views
 
         private void Province_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
-            btn_nhucaudiadiem.IsVisible = true;
+          //  btn_nhucaudiadiem.IsVisible = true;
         }
 
         private void Project_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
-            btn_nhucauduan.IsVisible = true;
+           // btn_nhucauduan.IsVisible = true;
         }
 
         private async void btn_nhucauduan_Clicked(object sender, EventArgs e)
@@ -639,7 +639,7 @@ namespace PhuLongCRM.Views
             var result = await viewModel.updateNhuCauDuAn();
             if (result)
             {
-                btn_nhucauduan.IsVisible = false;
+               // btn_nhucauduan.IsVisible = false;
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }

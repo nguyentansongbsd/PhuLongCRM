@@ -194,12 +194,12 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(UserName))
             {
-                ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_khong_duoc_de_trong);
+                ToastMessageHelper.ShortMessage(Language.tai_khoan_khong_duoc_de_trong_vui_long_kiem_tra_lai_thong_tin);
                 return;
             }
             if (string.IsNullOrWhiteSpace(Password))
             {
-                ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duong_de_trong);
+                ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duong_de_trong_vui_long_kiem_tra_lai_thong_tin);
                 return;
             }
             if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours > 24)

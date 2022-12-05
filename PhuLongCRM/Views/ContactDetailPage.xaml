@@ -235,7 +235,7 @@
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
                             <!--nhu cau-->
-                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
+                            <!--<telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
                                         <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.nhu_cau_ve_dien_tich_can_ho}"/>
@@ -269,7 +269,7 @@
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
-                            <!--tieu chi chon mua-->
+                            --><!--tieu chi chon mua--><!--
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
@@ -348,7 +348,7 @@
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
-                            <!--loai bat dong san quan tam-->
+                            --><!--loai bat dong san quan tam--><!--
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
@@ -383,7 +383,7 @@
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
-                            <!--nhu cau ve dia diem-->
+                            --><!--nhu cau ve dia diem--><!--
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
@@ -399,7 +399,7 @@
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
-                            <!--nhu cau ve du an-->
+                            --><!--nhu cau ve du an--><!--
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
@@ -414,7 +414,7 @@
                                         </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
-                            </telerikPrimitives:RadExpander>
+                            </telerikPrimitives:RadExpander>-->
                         </StackLayout>
                         <!--tab giao dich-->
                         <StackLayout x:Name="TabGiaoDich" IsVisible="false" Margin="0,10,0,0">
