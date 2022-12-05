@@ -121,7 +121,7 @@
     <value>Đăng nhập</value>
   </data>
 	<data name="ten_dang_nhap" xml:space="preserve">
-    <value>Tên đăng nhập</value>
+    <value>Tài khoản</value>
   </data>
 	<data name="mat_khau" xml:space="preserve">
     <value>Mật khẩu</value>
@@ -186,11 +186,11 @@
 	<data name="khong_tim_thay_thong_tin_vui_long_thu_lai" xml:space="preserve">
     <value>Không tìm thấy thông tin. Vui lòng thử lại.</value>
   </data>
-	<data name="ten_dang_nhap_khong_duoc_de_trong" xml:space="preserve">
-    <value>Tên đăng nhập không được để trống.</value>
+	<data name="tai_khoan_khong_duoc_de_trong_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Tài khoản không được để trống. Vui lòng kiểm tra lại thông tin.</value>
   </data>
-	<data name="mat_khau_khong_duong_de_trong" xml:space="preserve">
-    <value>Mật khẩu không được để trống.</value>
+	<data name="mat_khau_khong_duong_de_trong_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Mật khẩu không được để trống. Vui lòng kiểm tra lại thông tin.</value>
   </data>
 	<data name="ten_dang_nhap_khong_dung" xml:space="preserve">
     <value>Tên đăng nhập không đúng.</value>
@@ -3698,5 +3698,8 @@
   </data>
   <data name="khong_the_dang_nhap_vi_qua_so_lan_cho_phep" xml:space="preserve">
     <value>Không thể đăng nhập. Vì quá số lần cho phép.</value>
+  </data>
+	<data name="mat_khau_phai_tu_6_den_15_ky_tu" xml:space="preserve">
+    <value>Mật khẩu phải từ 6 đến 15 ký tự.</value>
   </data>
 </root>

@@ -112,9 +112,9 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.NewPassword.Length < 6)
+            if (viewModel.ConfirmNewPassword.Length > 15 || viewModel.ConfirmNewPassword.Length < 6)
             {
-                ToastMessageHelper.ShortMessage(Language.mat_khau_it_nhat_6_ky_tu);
+                ToastMessageHelper.ShortMessage(Language.mat_khau_phai_tu_6_den_15_ky_tu);
                 return;
             }
 
@@ -166,6 +166,15 @@ namespace PhuLongCRM.Views
 
         private async void SaveUserInfor_Clicked(object sender, EventArgs e)
         {
+            if (!string.IsNullOrWhiteSpace(viewModel.ContactModel.emailaddress1))
+            {
+                if (!ValidEmailHelper.CheckValidEmail(viewModel.ContactModel.emailaddress1))
+                {
+                    ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang);
+                    return;
+                }
+            }
+
             if (string.IsNullOrWhiteSpace(viewModel.PhoneNumber))
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);
@@ -309,6 +318,17 @@ namespace PhuLongCRM.Views
                     }
                 }
                 LoadingHelper.Hide();
+            }
+        }
+
+        private void Email_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(viewModel.ContactModel.emailaddress1))
+            {
+                if (!ValidEmailHelper.CheckValidEmail(viewModel.ContactModel.emailaddress1))
+                {
+                    ToastMessageHelper.ShortMessage(Language.email_sai_dinh_dang);
+                }
             }
         }
     }

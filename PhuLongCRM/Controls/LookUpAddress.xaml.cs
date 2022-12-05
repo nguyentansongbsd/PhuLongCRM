@@ -446,6 +446,8 @@ namespace PhuLongCRM.Controls
         {
             List<string> _address = new List<string>();
             List<string> _address_en = new List<string>();
+            SelectedItem = new AddressModel();
+            bool hasValue = false;
             //if(Country == null)
             //{
             //    ToastMessageHelper.ShortMessage(Language.vui_long_chon_quoc_gia);
@@ -463,17 +465,17 @@ namespace PhuLongCRM.Controls
             //}
             if (string.IsNullOrWhiteSpace(LineAddress))
             {
-                await CenterModal.Hide();
-                return;
+                SelectedItem.lineaddress = null;
+                SelectedItem.lineaddress_en = null;
             }
             else
             {
-                SelectedItem = new AddressModel();
                 SelectedItem.lineaddress = LineAddress;
                 SelectedItem.lineaddress_en = LineAddress;
                 _address.Add(SelectedItem.lineaddress);
                 if (!string.IsNullOrWhiteSpace(SelectedItem.lineaddress_en))
                     _address_en.Add(SelectedItem.lineaddress_en);
+                hasValue = true;
             }
 
             if (District != null && District.Id != Guid.Empty)
@@ -483,6 +485,7 @@ namespace PhuLongCRM.Controls
                 _address.Add(SelectedItem.district_name);
                 if (!string.IsNullOrWhiteSpace(District.Detail))
                     _address_en.Add(District.Detail);
+                hasValue = true;
             }
             else
             {
@@ -496,6 +499,7 @@ namespace PhuLongCRM.Controls
                 _address.Add(SelectedItem.province_name);
                 if (!string.IsNullOrWhiteSpace(Province.Detail))
                     _address_en.Add(Province.Detail);
+                hasValue = true;
             }
             else
             {
@@ -509,37 +513,46 @@ namespace PhuLongCRM.Controls
                 _address.Add(SelectedItem.country_name);
                 if (!string.IsNullOrWhiteSpace(Country.Detail))
                     _address_en.Add(Country.Detail);
+                hasValue = true;
             }
             else
             {
                 SelectedItem.country_name = null;
                 SelectedItem.country_id = Guid.Empty;
             }
-            Address = SelectedItem.address = string.Join(", ", _address);
-            SelectedItem.address_en = string.Join(", ", _address_en);
-            if (EnableCopyAddress == true)
+            if (hasValue)
             {
-                if (AddressCopy == null)
-                    root = true;
-                if (root)
+                Address = SelectedItem.address = string.Join(", ", _address);
+                SelectedItem.address_en = string.Join(", ", _address_en);
+
+                if (EnableCopyAddress == true)
                 {
-                    AddressCopy = new AddressModel
+                    if (AddressCopy == null)
+                        root = true;
+                    if (root)
                     {
-                        country_id = SelectedItem.country_id,
-                        country_name = SelectedItem.country_name,
-                        country_name_en = SelectedItem.country_name_en,
-                        province_id = SelectedItem.province_id,
-                        province_name = SelectedItem.province_name,
-                        province_name_en = SelectedItem.province_name_en,
-                        district_id = SelectedItem.district_id,
-                        district_name = SelectedItem.district_name,
-                        district_name_en = SelectedItem.district_name_en,
-                        address = SelectedItem.address,
-                        address_en = SelectedItem.address_en,
-                        lineaddress = SelectedItem.lineaddress,
-                        lineaddress_en = SelectedItem.lineaddress_en
-                    };
+                        AddressCopy = new AddressModel
+                        {
+                            country_id = SelectedItem.country_id,
+                            country_name = SelectedItem.country_name,
+                            country_name_en = SelectedItem.country_name_en,
+                            province_id = SelectedItem.province_id,
+                            province_name = SelectedItem.province_name,
+                            province_name_en = SelectedItem.province_name_en,
+                            district_id = SelectedItem.district_id,
+                            district_name = SelectedItem.district_name,
+                            district_name_en = SelectedItem.district_name_en,
+                            address = SelectedItem.address,
+                            address_en = SelectedItem.address_en,
+                            lineaddress = SelectedItem.lineaddress,
+                            lineaddress_en = SelectedItem.lineaddress_en
+                        };
+                    }
                 }
+            }
+            else
+            {
+                Clear_Clicked(null, null);
             }
             await CenterModal.Hide();
         }
