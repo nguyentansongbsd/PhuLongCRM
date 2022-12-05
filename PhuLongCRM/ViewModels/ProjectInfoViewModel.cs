@@ -19,8 +19,6 @@ namespace PhuLongCRM.ViewModels
     public class ProjectInfoViewModel : BaseViewModel
     {
         public ObservableCollection<CollectionData> Collections { get; set; } = new ObservableCollection<CollectionData>();
-        //public ObservableCollection<CollectionData> PdfFiles { get; set; } = new ObservableCollection<CollectionData>();
-        //public ObservableCollection<CollectionData> WordFiles { get; set; } = new ObservableCollection<CollectionData>();
         public ObservableCollection<CollectionData> PdfDocxFiles { get; set; } = new ObservableCollection<CollectionData>();
 
         public List<Photo> Photos { get; set; }
@@ -323,6 +321,7 @@ namespace PhuLongCRM.ViewModels
 
             SoGiuCho = result.value.FirstOrDefault().count;
         }
+
         public async Task LoadThongKeHopDong()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
@@ -343,6 +342,7 @@ namespace PhuLongCRM.ViewModels
 
             SoHopDong = result.value.FirstOrDefault().count;
         }
+
         public async Task LoadThongKeBangTinhGia()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
@@ -362,6 +362,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
             SoBangTinhGia = result.value.FirstOrDefault().count;
         }
+
         public async Task LoadThongKeDatCoc()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
@@ -388,6 +389,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
             SoDatCoc = result.value.FirstOrDefault().count;
         }
+
         public async Task LoadGiuCho()
         {
             IsLoadedGiuCho = true;
@@ -444,6 +446,7 @@ namespace PhuLongCRM.ViewModels
                 ListGiuCho.Add(item);
             }
         }
+
         public async Task LoadAllCollection()
         {
             if (ProjectId != null)
@@ -451,6 +454,7 @@ namespace PhuLongCRM.ViewModels
                 GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
                 var client = BsdHttpClient.Instance();
                 string name_folder = this.Project.bsd_name + "_" + ProjectId.ToString().Replace("-", "");
+
                 string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ProjectID}/root:/{name_folder}:/children?$select=name,eTag";
                 var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
@@ -476,11 +480,11 @@ namespace PhuLongCRM.ViewModels
                     this.TotalMedia = videos.Count;
                     this.TotalPhoto = images.Count;
 
-                    //await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs), GetWords(doxc));
-                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs), GetDocxs(docx)); //
+                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs), GetDocxs(docx));
                 }
             }
         }
+
         public async Task LoadDataEvent()
         {
             if (ProjectId == Guid.Empty) return;
@@ -512,6 +516,7 @@ namespace PhuLongCRM.ViewModels
                 Event.bsd_enddate = Event.bsd_enddate.Value.ToLocalTime();
             }
         }
+
         public async Task CheckPhasesLaunch()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -585,38 +590,15 @@ namespace PhuLongCRM.ViewModels
 
         private async Task GetDocxs(List<SharePointGraphModel> data)
         {
-            string name_folder = this.Project.bsd_name + "_" + ProjectId.ToString().Replace("-", "");
             foreach (var item in data)
             {
-                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ProjectID}/root:/{name_folder}/{item.name}:/content?format=pdf";
-                //var result = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem");
-                //if (result != null)
-                //{
-                //    string url = result.MicrosoftGraphDownloadUrl;
-                //    this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Docx });
-                //}
+                var result = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem");
+                if (result != null)
+                {
+                    string url = result.MicrosoftGraphDownloadUrl;
+                    this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Docx });
+                }
             }
-        }
-        private async Task GetWords(List<SharePointGraphModel> data)
-        {
-            string name_folder = this.Project.bsd_name + "_" + ProjectId.ToString().Replace("-", "");
-            foreach (var item in data)
-            {
-                string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ProjectID}/root:/{name_folder}/{item.name}:/content?format=pdf";
-                //WordFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = fileListUrl, PdfName = item.name });
-            }
-        }
-        public async Task<Stream> SaveAndShowWordFile(string url)
-        {
-            GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
-            var client = BsdHttpClient.Instance();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var response = await client.GetStreamAsync(url);
-            if (response != null)
-                return response;
-            else
-                return null;
         }
 
         public void ResetNumStatus(string UnitStatusNew,string UnitStatusOld)

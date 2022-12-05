@@ -24,7 +24,8 @@ namespace PhuLongCRM.Config
         public const string Scope = "offline_access https://phulongtmp.crm5.dynamics.com/.default";
 
         //sharepoint
-        public const string GraphApi = "https://graph.microsoft.com/v1.0/sites/";
+        public const string GraphApiSites = "https://graph.microsoft.com/v1.0/sites/";
+        public const string GraphApiDrive = "https://graph.microsoft.com/v1.0/drives/";
         public const string GraphReSource = "https://graph.microsoft.com";
 
         // Sharepoint Site PhuLong
