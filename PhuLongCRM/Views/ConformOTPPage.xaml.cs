@@ -277,7 +277,7 @@ namespace PhuLongCRM.Views
                     this.lblOTPExpired.IsVisible = true;
                     this.SetLimitTime();
                 }
-            } while (this.TimeRemaining != 0);
+            } while (this.TimeRemaining > 0);
         }
 
         private async void SetLimitTime()

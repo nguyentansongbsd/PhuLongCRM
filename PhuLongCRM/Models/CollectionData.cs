@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Xamarin.Forms;
 
@@ -15,20 +16,8 @@ namespace PhuLongCRM.Models
         public int Index { get; set; }
         public string UrlPdfFile { get; set; }
         public string PdfName { get; set; }
-        public string IconFile { get {
-                if (SharePointType == SharePointType.Pdf)
-                {
-                    return "\uf1c1";
-                }
-                else if (SharePointType == SharePointType.Docx)
-                {
-                    return "\uf1c2";
-                }
-                else
-                {
-                    return null;
-                }
-            } }
+        public string IconFile { get => SharePointType == SharePointType.Pdf ? "\uf1c1" : SharePointType == SharePointType.Docx ? "\uf1c2" : null; }
+        public Color ColorFile { get => SharePointType == SharePointType.Docx ? Color.FromHex("#1961BE") : SharePointType == SharePointType.Pdf ? Color.Red : Color.Black; }
 
         public CollectionData()
         { }

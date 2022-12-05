@@ -9,6 +9,7 @@ using Stormlion.PhotoBrowser;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -135,6 +136,7 @@ namespace PhuLongCRM.Views
                     }
                 });
         }
+
         private void GiuCho_Clicked(object sender, EventArgs e)
         {
             if (viewModel.Project.statuscode != "861450002") // 861450002 == publish
@@ -158,6 +160,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private async void ShowMoreListDatCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -165,6 +168,7 @@ namespace PhuLongCRM.Views
             await viewModel.LoadGiuCho();
             LoadingHelper.Hide();
         }
+
         private void ChuDauTu_Tapped(System.Object sender, System.EventArgs e)
         {
             LoadingHelper.Show();
@@ -184,6 +188,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -203,6 +208,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void ItemSlider_Tapped(object sender, EventArgs e)
         {
             var item = (CollectionData)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
@@ -236,16 +242,19 @@ namespace PhuLongCRM.Views
                 };
             }
         }
+
         private void ScollTo_Video_Tapped(object sender, EventArgs e)
         {
             var index = viewModel.Collections.IndexOf(viewModel.Collections.FirstOrDefault(x => x.SharePointType == SharePointType.Video));
             carouseView.ScrollTo(index, position: ScrollToPosition.End);
         }
+
         private void ScollTo_Image_Tapped(object sender, EventArgs e)
         {
             var index = viewModel.Collections.IndexOf(viewModel.Collections.FirstOrDefault(x => x.SharePointType == SharePointType.Image));
             carouseView.ScrollTo(index, position: ScrollToPosition.End);
         }
+
         private async void OpenEvent_Tapped(object sender, EventArgs e)
         {
             if (viewModel.Event == null)
@@ -254,10 +263,12 @@ namespace PhuLongCRM.Views
             }
             ContentEvent.IsVisible = true;
         }
+
         private void CloseContentEvent_Tapped(object sender, EventArgs e)
         {
             ContentEvent.IsVisible = false;
         }
+
         private async void TabControl_IndexTab(object sender, LookUpChangeEvent e)
         {
             if (e.Item != null)
@@ -288,6 +299,7 @@ namespace PhuLongCRM.Views
                 }
             }
         }
+
         private string StringAvata(string projectName)
         {
             if (projectName == null) return null;
@@ -317,18 +329,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item.SharePointType == SharePointType.Pdf)
-            {
-                //await DependencyService.Get<IDocxService>().OpenDocxFile(item.UrlPdfFile,".pdf");
-                await DependencyService.Get<IPdfService>().View(item.UrlPdfFile, item.PdfName);
-                LoadingHelper.Hide();
-            }
-            else
-            {
-                await DependencyService.Get<IDocxService>().OpenDocxFile(item.UrlPdfFile,".docx");
-                LoadingHelper.Hide();
-            }
-
+            await DependencyService.Get<IOpenFileService>().OpenFile(item.PdfName,null, item.UrlPdfFile);
         }
     }
 }

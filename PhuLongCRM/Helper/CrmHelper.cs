@@ -87,7 +87,7 @@ namespace PhuLongCRM.Helper
             try
             {
                 var client = BsdHttpClient.Instance();
-                string fileListUrl = $"{OrgConfig.GraphApi}{OrgConfig.SP_SiteId}/lists/{url}";
+                string fileListUrl = $"{OrgConfig.GraphApiSites}{OrgConfig.SP_SiteId}/lists/{url}";
                 var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", UserLogged.AccessTokenSharePoint);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

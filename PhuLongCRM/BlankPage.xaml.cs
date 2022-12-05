@@ -30,7 +30,6 @@ namespace PhuLongCRM
         private HttpClient _client;
         string url = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2Njk3OTg5NDciLCJleHAiOiIxNjY5ODAyNTQ3IiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJabVV6TURZMk5XUXROelF6TWkwMFltTTFMVGxtWlRrdFpHTXpaR05pTWpsa1pXVm0iLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNzAifQ.NWJnUUhFckx1RXZ2WElQRFdlY3dlSyt1bWE5UktqSjhTekVNY0VsZXU3OD0&ApiVersion=2.0";
 
-        IDownLoaderService download = DependencyService.Get<IDownLoaderService>();
 
         private int _timeRemaining = 60;
         public int TimeRemaining { get=>_timeRemaining; set { _timeRemaining = value;OnPropertyChanged(nameof(TimeRemaining)); } }
@@ -41,25 +40,12 @@ namespace PhuLongCRM
             InitializeComponent();
             this.BindingContext = this;
             _client = new HttpClient();
-            download.OnFileDownloaded += Download_OnFileDownloaded;
             Init();
-        }
-
-        private void Download_OnFileDownloaded(object sender, DownloadEventArgs e)
-        {
-            if (e.FileSaved)
-            {
-                //DependencyService.Get<IPdfService>().View("https://www.africau.edu/images/default/sample.pdf", "sample");
-                //DisplayAlert("download", "thanh cong", "ok");
-            }
-            else
-            {
-                //DisplayAlert("download", "Loi", "ok");
-            }
         }
 
         public async void Init()
         {
+            SetTimeRemaining();
             //webview.Uri = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2Njg3NTgzNzEiLCJleHAiOiIxNjY4NzYxOTcxIiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJOR1ZrTUdNNVltSXRPVEkzTWkwME4yTmxMVGcwWkRrdE5UUXhNelUwWldJMFkyUTQiLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNjkifQ.Q2NRVjdPU1ordkdwTzM1d0tnOVdPUXlPTklLZTF0RlpwVXU1VEp2L0tYMD0&ApiVersion=2.0";
             //CultureInfo ci = new CultureInfo("en-us");
             //double a = 0.7500000000;
@@ -74,15 +60,15 @@ namespace PhuLongCRM
                 //time.Elapsed += Time_Elapsed;
 
 
-                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                {
-                    this.TimeRemaining --;
-                    if (TimeRemaining == 0)
-                    {
-                        DisplayAlert("", "het gio", "ok");
-                    }
-                    return Convert.ToBoolean(TimeRemaining);
-                });
+                //Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                //{
+                //    this.TimeRemaining --;
+                //    if (TimeRemaining == 0)
+                //    {
+                //        DisplayAlert("", "het gio", "ok");
+                //    }
+                //    return Convert.ToBoolean(TimeRemaining);
+                //});
 
 
                 //Device.OpenUri(new Uri("ms-word:ofe|u|https://calibre-ebook.com/downloads/demos/demo.docx"));
@@ -110,9 +96,10 @@ namespace PhuLongCRM
 
         private async Task DownloadApkAsync()
         {
-            var downloadedFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+            var downloadedFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),"PhulongDownLoad456");
+            string _url = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2NzAyMTM4NTgiLCJleHAiOiIxNjcwMjE3NDU4IiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJaakEyTkRZMlltSXROek5rTWkwME56RTBMVGhtWXpNdFptRXdOR1ZpTVRSbU9XSXciLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNzIifQ.M2RJK3plaVRXY2hCWlk4ejJJMSttN2JzQld1NDc0amJqRnV3Y2g1N016Zz0&ApiVersion=2.0";
 
-            var success = await DownloadFileAsync("https://calibre-ebook.com/downloads/demos/demo.docx", downloadedFilePath);
+            var success = await DownloadFileAsync(_url, downloadedFilePath);
 
             if (success)
             {
@@ -130,6 +117,7 @@ namespace PhuLongCRM
             {
                 var client = new HttpClient();
 
+                
                 var downloadStream = await client.GetStreamAsync(fileUrl);
 
                 var fileStream = System.IO.File.Create(downloadedFilePath);
@@ -145,8 +133,24 @@ namespace PhuLongCRM
             }
         }
         public RadFixedDocument Document { get; set; }
+        private async void SetTimeRemaining()
+        {
+            do
+            {
+                await Task.Delay(1000);
+                this.TimeRemaining--;
+            } while (this.TimeRemaining > 0);
+        }
         async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
+            TimeRemaining = 60;
+            SetTimeRemaining();
+
+
+            //string _url = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2NzAyMTM4NTgiLCJleHAiOiIxNjcwMjE3NDU4IiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJaakEyTkRZMlltSXROek5rTWkwME56RTBMVGhtWXpNdFptRXdOR1ZpTVRSbU9XSXciLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNzIifQ.M2RJK3plaVRXY2hCWlk4ejJJMSttN2JzQld1NDc0amJqRnV3Y2g1N016Zz0&ApiVersion=2.0";
+            //HttpClient client = new HttpClient();
+            //var data = await client.GetByteArrayAsync(_url);
+
             //await DownloadApkAsync();
 
             //if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() != PermissionStatus.Granted)

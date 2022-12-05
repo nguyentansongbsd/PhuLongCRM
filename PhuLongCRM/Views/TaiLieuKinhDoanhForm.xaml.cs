@@ -57,7 +57,7 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Show();
                     var item = (SalesLiteratureItemListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
                     byte[] arr = Convert.FromBase64String(item.documentbody);
-                    await DependencyService.Get<IPDFSaveAndOpen>().SaveAndView(item.filename, arr);
+                    await DependencyService.Get<IOpenFileService>().OpenFile(item.filename, arr);
                     LoadingHelper.Hide();
                 }
             }
