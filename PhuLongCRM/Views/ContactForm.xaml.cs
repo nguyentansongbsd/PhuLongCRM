@@ -151,9 +151,9 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_ngay_sinh);
                 return;
             }
-            if (CalculateYear(viewModel.singleContact.birthdate.Value) < 14)
+            if (CalculateYear(viewModel.singleContact.birthdate.Value) < 18)
             {
-                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_14_tuoi);
+                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
                 return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.emailaddress1))

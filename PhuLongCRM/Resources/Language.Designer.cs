@@ -4678,11 +4678,11 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Khách hàng phải từ 14 tuổi..
+        ///   Looks up a localized string similar to Khách hàng phải từ 18 tuổi..
         /// </summary>
-        internal static string khach_hang_phai_tu_14_tuoi {
+        internal static string khach_hang_phai_tu_18_tuoi {
             get {
-                return ResourceManager.GetString("khach_hang_phai_tu_14_tuoi", resourceCulture);
+                return ResourceManager.GetString("khach_hang_phai_tu_18_tuoi", resourceCulture);
             }
         }
         
@@ -6042,6 +6042,15 @@ namespace PhuLongCRM.Resources {
         internal static string ngay_cap_khong_duoc_thuoc_tuong_lai {
             get {
                 return ResourceManager.GetString("ngay_cap_khong_duoc_thuoc_tuong_lai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày cấp không hợp lệ..
+        /// </summary>
+        internal static string ngay_cap_khong_hop_le {
+            get {
+                return ResourceManager.GetString("ngay_cap_khong_hop_le", resourceCulture);
             }
         }
         

@@ -388,7 +388,7 @@ namespace PhuLongCRM.Views
                 }    
                 else
                 {
-                    if (DateTime.Now.Year - DateTime.Parse(viewModel.Guardian.birthdate.ToString()).Year < 18)
+                    if (viewModel.Guardian.birthdate.HasValue && CalculateYear(viewModel.Guardian.birthdate.Value) < 18)
                     {
                         ToastMessageHelper.ShortMessage(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
                         return;
@@ -397,9 +397,9 @@ namespace PhuLongCRM.Views
             }
             else
             {
-                if (viewModel.singleLead.new_birthday != null && CalculateYear(viewModel.singleLead.new_birthday.Value) < 14)
+                if (viewModel.singleLead.new_birthday != null && CalculateYear(viewModel.singleLead.new_birthday.Value) < 18)
                 {
-                    ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_14_tuoi);
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
                     return;
                 }
             }
@@ -428,6 +428,11 @@ namespace PhuLongCRM.Views
             if (viewModel.singleLead.bsd_dategrant != null && DateTime.Compare((DateTime)viewModel.singleLead.bsd_dategrant, DateTime.Now) == 1)
             {
                 ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_duoc_thuoc_tuong_lai);
+                return;
+            }
+            if (viewModel.singleLead.bsd_dategrant != null && CalculateYear(viewModel.singleLead.new_birthday.Value, (DateTime)viewModel.singleLead.bsd_dategrant) < 14)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_hop_le);
                 return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 10))
@@ -523,6 +528,11 @@ namespace PhuLongCRM.Views
                 if (DateTime.Compare((DateTime)viewModel.singleLead.bsd_dategrant, DateTime.Now) == 1)
                 {
                     ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_duoc_thuoc_tuong_lai);
+                    return;
+                }
+                if (viewModel.singleLead.bsd_dategrant != null && CalculateYear(viewModel.singleLead.new_birthday.Value, (DateTime)viewModel.singleLead.bsd_dategrant) < 14)
+                {
+                    ToastMessageHelper.ShortMessage(Language.ngay_cap_khong_hop_le);
                 }
             }
         }
@@ -552,11 +562,15 @@ namespace PhuLongCRM.Views
                 }
             }    
         }
-        private int CalculateYear(DateTime dateTime)
+        private int CalculateYear(DateTime dateTime, DateTime? dateTime2 = null)
         {
             int age = 0;
-            age = DateTime.Now.Year - dateTime.Year;
-            if (DateTime.Now.DayOfYear < dateTime.DayOfYear)
+            if(dateTime2 == null)
+            {
+                dateTime2 = DateTime.Now;
+            }
+            age = dateTime2.Value.Year - dateTime.Year;
+            if (dateTime2.Value.DayOfYear < dateTime.DayOfYear)
                 age = age - 1;
             return age;
         }
