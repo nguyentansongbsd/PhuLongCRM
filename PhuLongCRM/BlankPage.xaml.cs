@@ -21,263 +21,45 @@ using ZXing.Aztec.Internal;
 using Telerik.Windows.Documents.Fixed.Model;
 using PhuLongCRM.IServices;
 using PhuLongCRM.Settings;
+using System.ComponentModel;
 
 namespace PhuLongCRM
 {
     public partial class BlankPage : ContentPage
     {
-        private int bufferSize = 4095;
-        private HttpClient _client;
-        string url = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2Njk3OTg5NDciLCJleHAiOiIxNjY5ODAyNTQ3IiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJabVV6TURZMk5XUXROelF6TWkwMFltTTFMVGxtWlRrdFpHTXpaR05pTWpsa1pXVm0iLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNzAifQ.NWJnUUhFckx1RXZ2WElQRFdlY3dlSyt1bWE5UktqSjhTekVNY0VsZXU3OD0&ApiVersion=2.0";
-
-
-        private int _timeRemaining = 60;
-        public int TimeRemaining { get=>_timeRemaining; set { _timeRemaining = value;OnPropertyChanged(nameof(TimeRemaining)); } }
-
-
         public BlankPage()
         {
             InitializeComponent();
             this.BindingContext = this;
-            _client = new HttpClient();
             Init();
         }
 
         public async void Init()
         {
-            SetTimeRemaining();
-            //webview.Uri = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2Njg3NTgzNzEiLCJleHAiOiIxNjY4NzYxOTcxIiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJOR1ZrTUdNNVltSXRPVEkzTWkwME4yTmxMVGcwWkRrdE5UUXhNelUwWldJMFkyUTQiLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNjkifQ.Q2NRVjdPU1ordkdwTzM1d0tnOVdPUXlPTklLZTF0RlpwVXU1VEp2L0tYMD0&ApiVersion=2.0";
-            //CultureInfo ci = new CultureInfo("en-us");
-            //double a = 0.7500000000;
-            //double e = 1.0000000000;
-            //string b = string.Format("{0:#0.##,##}", a);
-            //string c = string.Format("{0:#0.##,##}", e);
-
-            try
-            {
-                //var time = new System.Timers.Timer();
-                //time.Interval = 1000;
-                //time.Elapsed += Time_Elapsed;
-
-
-                //Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                //{
-                //    this.TimeRemaining --;
-                //    if (TimeRemaining == 0)
-                //    {
-                //        DisplayAlert("", "het gio", "ok");
-                //    }
-                //    return Convert.ToBoolean(TimeRemaining);
-                //});
-
-
-                //Device.OpenUri(new Uri("ms-word:ofe|u|https://calibre-ebook.com/downloads/demos/demo.docx"));
-
-                //string file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),"song");
-
-                //await DownloadApkAsync();
-
-
-
-            }
-            catch(Exception ex)
-            {
-
-            }
-            
-
-
-        }
-
-        private void Time_Elapsed(object sender, ElapsedEventArgs e)
-        {
             
         }
 
-        private async Task DownloadApkAsync()
+        async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
-            var downloadedFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),"PhulongDownLoad456");
-            string _url = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2NzAyMTM4NTgiLCJleHAiOiIxNjcwMjE3NDU4IiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJaakEyTkRZMlltSXROek5rTWkwME56RTBMVGhtWXpNdFptRXdOR1ZpTVRSbU9XSXciLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNzIifQ.M2RJK3plaVRXY2hCWlk4ejJJMSttN2JzQld1NDc0amJqRnV3Y2g1N016Zz0&ApiVersion=2.0";
-
-            var success = await DownloadFileAsync(_url, downloadedFilePath);
-
-            if (success)
+            string a = "5bf7d1ff-a776-ed11-81ac-0022485935f1";
+            ContentActionReservationModel data = new ContentActionReservationModel();
+            if (false)
             {
-                Console.WriteLine($"File downloaded to: {downloadedFilePath}");
+                data.Command = "Reservation";
             }
             else
             {
-                Console.WriteLine("Download failed");
+                Paramster paramster = new Paramster();
+                paramster.action = "Reservation";
+                paramster.name = "opportunity";
+                paramster.value = a;
+                object[] paramasters = new object[] { paramster };
+                data.Command = "ReservationQueue";
+                //data.Parameters = paramasters; //"[{\"action\":\"Reservation\",\"name\":\"opportunity\",\"value\":\"{a}\"}]";// JsonConvert.SerializeObject(paramster);
             }
+
+            string content = JsonConvert.SerializeObject(data);
+            System.Diagnostics.Debug.WriteLine(content);
         }
-
-        private async Task<bool> DownloadFileAsync(string fileUrl, string downloadedFilePath)
-        {
-            try
-            {
-                var client = new HttpClient();
-
-                
-                var downloadStream = await client.GetStreamAsync(fileUrl);
-
-                var fileStream = System.IO.File.Create(downloadedFilePath);
-
-                await downloadStream.CopyToAsync(fileStream);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //TODO handle exception
-                return false;
-            }
-        }
-        public RadFixedDocument Document { get; set; }
-        private async void SetTimeRemaining()
-        {
-            do
-            {
-                await Task.Delay(1000);
-                this.TimeRemaining--;
-            } while (this.TimeRemaining > 0);
-        }
-        async void Button_Clicked(System.Object sender, System.EventArgs e)
-        {
-            TimeRemaining = 60;
-            SetTimeRemaining();
-
-
-            //string _url = "https://diaocphulong.sharepoint.com/sites/PhuLong-UAT/_layouts/15/download.aspx?UniqueId=ce918e10-82f2-4995-9b98-e91e14fd1880&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvZGlhb2NwaHVsb25nLnNoYXJlcG9pbnQuY29tQDg3YmJkYjA4LTQ4YmEtNGRiZi05YzUzLTkyY2VhZTE2YzM1MyIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2NzAyMTM4NTgiLCJleHAiOiIxNjcwMjE3NDU4IiwiZW5kcG9pbnR1cmwiOiJkeDVPcHlmblhMNlR3T2hCbWd0OE0xbk9oOUM4dGNiQ0VIQ3l4OE5XSVY0PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQxIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJaakEyTkRZMlltSXROek5rTWkwME56RTBMVGhtWXpNdFptRXdOR1ZpTVRSbU9XSXciLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiTnpSbU9HWmhaRGd0TVROak1TMDBNamhsTFdGa1pHVXRNakk1TkRNMFl6WmhNemRtIiwiYXBwX2Rpc3BsYXluYW1lIjoiQXp1cmUgQXBwIENSTSBCU0QiLCJuYW1laWQiOiJhNzU0NGE1OC1iN2JiLTQ1NTMtOTU0OC1kNTZkMWNmYmVjNTVAODdiYmRiMDgtNDhiYS00ZGJmLTljNTMtOTJjZWFlMTZjMzUzIiwicm9sZXMiOiJhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIiwidHQiOiIxIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE0NC4xNzIifQ.M2RJK3plaVRXY2hCWlk4ejJJMSttN2JzQld1NDc0amJqRnV3Y2g1N016Zz0&ApiVersion=2.0";
-            //HttpClient client = new HttpClient();
-            //var data = await client.GetByteArrayAsync(_url);
-
-            //await DownloadApkAsync();
-
-            //if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() != PermissionStatus.Granted)
-            //{
-            //    var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
-            //    var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
-            //}
-            //if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
-            //{
-            //    download.DownloadFile(url, "PhuLongDownLoad"); //http://www.dada-data.net/uploads/image/hausmann_abcd.jpg // 
-            //}
-
-
-
-
-            //try
-            //{
-            //    var fileName = "sample.pdf";
-            //    var localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            //    var filePath = Path.Combine(localFolder, fileName);
-            //    using (Stream output = System.IO.File.OpenWrite(filePath))
-            //    {
-            //        new Telerik.Windows.Documents.Fixed.FormatProviders.Pdf.PdfFormatProvider().Export(this.Document, output);
-
-            //        await Application.Current.MainPage.DisplayAlert("Document is saved to local application data: ", filePath, "OK");
-            //    }
-
-
-            //    var downloadManager = CrossDownloadManager.Current;
-            //    var file = downloadManager.CreateDownloadFile(url);
-            //    downloadManager.Start(file);
-
-
-
-            //    if (file.Status == Plugin.DownloadManager.Abstractions.DownloadFileStatus.INITIALIZED)
-            //    {
-            //        //CrossDownloadManager.Current.PathNameForDownloadedFile = new System.Func<IDownloadFile, string>(file =>
-            //        //{
-
-            //        //    string fileName = (new NSUrl(file.Url, false)).LastPathComponent;
-            //        //    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), fileName);
-            //        //});
-            //    }
-            //    if (file.Status == DownloadFileStatus.COMPLETED)
-            //    {
-
-            //    }
-
-            //    //var response = await _client.GetAsync("https://calibre-ebook.com/downloads/demos/demo.docx", HttpCompletionOption.ResponseHeadersRead);
-
-            //    //if (!response.IsSuccessStatusCode)
-            //    //{
-            //    //    throw new Exception(string.Format("The request returned with HTTP status code {0}", response.StatusCode));
-            //    //}
-
-            //    //// Step 2 : Filename
-            //    //var fileName = response.Content.Headers?.ContentDisposition?.FileName ?? "tmp.zip";
-
-            //    //// Step 3 : Get total of data
-            //    //var totalData = response.Content.Headers.ContentLength.GetValueOrDefault(-1L);
-            //    ////var canSendProgress = totalData != -1L && progress != null;
-
-            //    //// Step 4 : Get total of data
-            //    //string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            //    //string libFolder = Path.Combine(docFolder, "..", "Library");
-            //    //var filePath = Path.Combine(libFolder, fileName);
-
-            //    //using (var fileStream = OpenStream(filePath))
-            //    //{
-            //    //    using (var stream = await response.Content.ReadAsStreamAsync())
-            //    //    {
-            //    //        var totalRead = 0L;
-            //    //        var buffer = new byte[bufferSize];
-            //    //        var isMoreDataToRead = true;
-
-            //    //        do
-            //    //        {
-            //    //            //token.ThrowIfCancellationRequested();
-
-            //    //            var read = await stream.ReadAsync(buffer, 0, buffer.Length);
-
-            //    //            if (read == 0)
-            //    //            {
-            //    //                isMoreDataToRead = false;
-            //    //            }
-            //    //            else
-            //    //            {
-            //    //                // Write data on disk.
-            //    //                await fileStream.WriteAsync(buffer, 0, read);
-
-            //    //                totalRead += read;
-
-            //    //                //if (canSendProgress)
-            //    //                //{
-            //    //                //    progress.Report((totalRead * 1d) / (totalData * 1d) * 100);
-            //    //                //}
-            //    //            }
-            //    //        } while (isMoreDataToRead);
-            //    //    }
-            //    //}
-            //}
-            //catch(Exception ex)
-            //{
-
-            //}
-
-            //await DownloadApkAsync();
-
-
-        }
-        private Stream OpenStream(string path)
-        {
-            return new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, bufferSize);
-        }
-    }
-    public class CustomWebView : WebView
-    {
-        public static readonly BindableProperty UriProperty = BindableProperty.Create(propertyName: "Uri",
-                returnType: typeof(string),
-                declaringType: typeof(CustomWebView),
-                defaultValue: default(string));
-
-        public string Uri
-        {
-            get { return (string)GetValue(UriProperty); }
-            set { SetValue(UriProperty, value); }
-        }
-
     }
 }

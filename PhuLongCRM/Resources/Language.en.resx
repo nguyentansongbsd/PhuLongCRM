@@ -3702,4 +3702,7 @@
 	<data name="mat_khau_phai_tu_6_den_15_ky_tu" xml:space="preserve">
     <value>Password must be between 6 to 12 characters.</value>
   </data>
+  <data name="vui_long_cai_dat_ung_dung_co_the_xem_cac_tap_tin_docx" xml:space="preserve">
+    <value>Please install an app that can view docx files.</value>
+  </data>
 </root>
