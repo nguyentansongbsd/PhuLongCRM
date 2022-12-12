@@ -12,6 +12,7 @@ namespace PhuLongCRM.Resources {
     using System;
     using System.Reflection;
     
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -2494,9 +2495,9 @@ namespace PhuLongCRM.Resources {
             }
         }
         
-        internal static string khach_hang_phai_tu_14_tuoi {
+        internal static string khach_hang_phai_tu_18_tuoi {
             get {
-                return ResourceManager.GetString("khach_hang_phai_tu_14_tuoi", resourceCulture);
+                return ResourceManager.GetString("khach_hang_phai_tu_18_tuoi", resourceCulture);
             }
         }
         
@@ -7208,6 +7209,12 @@ namespace PhuLongCRM.Resources {
         internal static string mat_khau_phai_tu_6_den_15_ky_tu {
             get {
                 return ResourceManager.GetString("mat_khau_phai_tu_6_den_15_ky_tu", resourceCulture);
+            }
+        }
+        
+        internal static string ngay_cap_khong_hop_le {
+            get {
+                return ResourceManager.GetString("ngay_cap_khong_hop_le", resourceCulture);
             }
         }
         
