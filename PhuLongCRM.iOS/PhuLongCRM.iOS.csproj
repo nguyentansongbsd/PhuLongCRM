@@ -95,7 +95,6 @@
     <Compile Include="Renderers\CustomChartRenderer.cs" />
     <Compile Include="Renderers\LightModeRenderer.cs" />
     <Compile Include="Services\PreviewControllerDS.cs" />
-    <Compile Include="Renderers\CustomWebViewRenderer.cs" />
     <Compile Include="Services\OpenFileService.cs" />
   </ItemGroup>
   <ItemGroup>

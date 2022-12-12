@@ -68,6 +68,7 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
+            //await viewModel.CreateReservationDraft();
             await viewModel.LoadUnitInfor();
             if (viewModel.UnitInfor != null)
             {
