@@ -15,6 +15,7 @@ namespace PhuLongCRM.ViewModels
         public bool Create_on_sort { get; set; } = true;
         public bool Rating_sort { get; set; } = true;
         public bool Status_sort { get; set; } = true;
+        public string FillterStatus { get; set; }
         public LeadsContentViewViewModel()
         {                   
             PreLoadData = new Command(() =>
@@ -32,16 +33,20 @@ namespace PhuLongCRM.ViewModels
                     filter_subject = $@"<condition entityname='Topic' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />";
                     filter_customercode = $@"<condition attribute='bsd_customercode' operator='like' value='%25{Keyword}%25' />";
                 }
-                else
+                //else
+                //{
+                //    filter_sts = $@"<condition attribute='statuscode' operator='in'>
+                //                    <value>3</value>
+                //                    <value>4</value>
+                //                    <value>5</value>
+                //                    <value>7</value>
+                //                    <value>6</value>
+                //                  </condition>";
+                //}
+                if(!string.IsNullOrWhiteSpace(FillterStatus))
                 {
-                    filter_sts = $@"<condition attribute='statuscode' operator='not-in'>
-                                    <value>3</value>
-                                    <value>4</value>
-                                    <value>5</value>
-                                    <value>7</value>
-                                    <value>6</value>
-                                  </condition>";
-                }
+                    filter_sts = FillterStatus;
+                }    
                 if (!string.IsNullOrWhiteSpace(KeySort))
                 {
                     if (KeySort == "1")
