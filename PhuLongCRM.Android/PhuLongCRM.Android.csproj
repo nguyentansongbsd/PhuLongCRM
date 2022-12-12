@@ -102,7 +102,6 @@
     <Compile Include="Services\ClearCookies.cs" />
     <Compile Include="Services\LoadingService.cs" />
     <Compile Include="Renderers\BorderEntryRenderer.cs" />
-    <Compile Include="Services\PDFSaveAndOpen.cs" />
     <Compile Include="Services\ToastMessage.cs" />
     <Compile Include="Services\NumImeiService.cs" />
     <Compile Include="Renderers\MainEditorRenderer.cs" />
@@ -114,10 +113,8 @@
     <Compile Include="Renderers\DatePickerBorderRenderer.cs" />
     <Compile Include="Renderers\TimePickerBorderRenderer.cs" />
     <Compile Include="Renderers\EntryNoneBorderRenderer.cs" />
-    <Compile Include="Services\PdfService.cs" />
-    <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\TooltipEffect.cs" />
-    <Compile Include="Services\DownloaderService.cs" />
+    <Compile Include="Services\OpenFileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

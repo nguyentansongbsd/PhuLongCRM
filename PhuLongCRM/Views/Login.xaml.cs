@@ -371,43 +371,5 @@ namespace PhuLongCRM.Views
             btnLogin.Text = Language.dang_nhap;
             btnLoginUserCRM.Text = Language.dang_nhap_voi_user_crm;
         }
-
-        private async void Button_Clicked_1(object sender, EventArgs e)
-        {
-            GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
-            var client = BsdHttpClient.Instance();
-            string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/b!2Pr4dMETjkKt3iKUNMajf9S0toE_AwpNtuTnCMuoqsbq_ne_HeCVSL-b8x7qZrn0/root:/FELIZ EN VISTA_0A4C9D3AC613ED11B83E002248595A31/Project proposal.docx:/content?format=pdf";
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var response = await client.GetStreamAsync(fileListUrl);
-            if (response != null)
-            {
-                try
-                {
-                    if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() != PermissionStatus.Granted)
-                    {
-                        var readPermision = await PermissionHelper.RequestPermission<Permissions.StorageRead>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
-                        var writePermision = await PermissionHelper.RequestPermission<Permissions.StorageWrite>("Thư Viện", "PhuLongCRM cần quyền truy cập vào thư viện", PermissionStatus.Granted);
-                    }
-                    if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted && await Permissions.CheckStatusAsync<Permissions.StorageWrite>() == PermissionStatus.Granted)
-                    {
-                        byte[] arr;
-                        LoadingHelper.Show();
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            response.CopyTo(memoryStream);
-                            arr = memoryStream.ToArray();
-                        }
-                        await DependencyService.Get<IPDFSaveAndOpen>().SaveAndView("test", arr);
-                        LoadingHelper.Hide();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ToastMessageHelper.LongMessage(ex.ToString());
-                    LoadingHelper.Hide();
-                }
-            }
-        }
     }
 }

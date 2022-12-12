@@ -422,7 +422,7 @@
                                                     <StackLayout.GestureRecognizers>
                                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OpenPdfDocxFile_Clicked" CommandParameter="{Binding .}"/>
                                                     </StackLayout.GestureRecognizers>
-                                                    <Label Text="{Binding IconFile}" FontFamily="FontAwesomeSolid" FontSize="18" TextColor="Red" VerticalOptions="Start"/>
+                                                    <Label Text="{Binding IconFile}" FontFamily="FontAwesomeSolid" FontSize="18" TextColor="{Binding ColorFile}" VerticalOptions="Start"/>
                                                     <Label Text="{Binding PdfName}" FontSize="13" TextColor="#444444" VerticalOptions="Center"/>
                                                 </StackLayout>
                                             </DataTemplate>

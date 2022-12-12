@@ -8963,7 +8963,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thông tin cá nhân.
+        ///   Looks up a localized string similar to Thông Tin Cá Nhân.
         /// </summary>
         internal static string thong_tin_ca_nhan {
             get {
