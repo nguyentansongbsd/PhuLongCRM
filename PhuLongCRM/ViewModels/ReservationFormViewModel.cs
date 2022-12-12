@@ -1873,5 +1873,33 @@ namespace PhuLongCRM.ViewModels
 
             return html;
         }
+
+
+        public async Task CreateReservationDraft()
+        {
+            ContentActionReservationModel data = new ContentActionReservationModel();
+            if (this.Queue == null)
+            {
+                data.Command = "Reservation";
+            }
+            else
+            {
+                Paramster paramster = new Paramster();
+                paramster.action = "Reservation";
+                paramster.name = "opportunity";
+                paramster.value = this.Queue.Val;
+                object[] arrparamasters = new object[] { paramster };
+                data.Command = "ReservationQueue";
+                data.Parameters = JsonConvert.SerializeObject(arrparamasters);
+            }
+            var result = await CrmHelper.PostData($"/products({this.ProductId})//Microsoft.Dynamics.CRM.bsd_Action_DirectSale", data);
+            if (result.IsSuccess == false) return;
+            var idQuote = result.Content.Split(',')[2].Split('\'')[1];
+        }
+
+
+
+
+
     }
 }

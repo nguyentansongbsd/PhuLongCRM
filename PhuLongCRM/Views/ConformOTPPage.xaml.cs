@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Firebase.Database;
 using Firebase.Database.Query;
@@ -39,18 +40,7 @@ namespace PhuLongCRM.Views
             if (SendSuccess)
             {
                 OnCompeleted?.Invoke(true);
-                this.SetTimeRemaining();
-                //Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                //{
-                //    this.TimeRemaining--;
-                //    if (TimeRemaining == 0)
-                //    {
-                //        this.lblTimeRemaining.IsVisible = false;
-                //        this.lblOTPExpired.IsVisible = true;
-                //        SetLimitTime();
-                //    }
-                //    return Convert.ToBoolean(TimeRemaining);
-                //});
+                this.SetTimeRemaining(new CancellationToken());
             }
 
             else
@@ -182,10 +172,16 @@ namespace PhuLongCRM.Views
             mainEntry.Text = "";
             await this.SendOTP();
             this.CancelOldOTP();
-            this.TimeRemaining = 60;
             this.lblTimeRemaining.IsVisible = true;
             this.lblOTPExpired.IsVisible = false;
-            this.SetTimeRemaining();
+            using(var cancellationtokenresource = new CancellationTokenSource())
+            {
+                if (this.TimeRemaining < 60 && TimeRemaining > 0)
+                {
+                    cancellationtokenresource.Cancel();
+                }
+                this.SetTimeRemaining(cancellationtokenresource.Token);
+            }
             LoadingHelper.Hide();
         }
 
@@ -265,11 +261,15 @@ namespace PhuLongCRM.Views
             boxView.IsVisible = show;
         }
 
-        private async void SetTimeRemaining()
+        private void SetTimeRemaining(CancellationToken cancellationToken)
         {
-            do
+            this.TimeRemaining = 60;
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                await Task.Delay(1000);
+                if (cancellationToken != null && cancellationToken.IsCancellationRequested)
+                {
+                    return false;
+                }
                 this.TimeRemaining--;
                 if (this.TimeRemaining == 0)
                 {
@@ -277,7 +277,8 @@ namespace PhuLongCRM.Views
                     this.lblOTPExpired.IsVisible = true;
                     this.SetLimitTime();
                 }
-            } while (this.TimeRemaining > 0);
+                return (Convert.ToBoolean(TimeRemaining));
+            });
         }
 
         private async void SetLimitTime()
