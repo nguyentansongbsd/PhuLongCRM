@@ -9,6 +9,7 @@
              xmlns:ffimageLoading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
              xmlns:views="clr-namespace:PhuLongCRM.Views"
+             xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
              ios:Page.UseSafeArea="true"
              x:Name="this">
     <ContentPage.Resources>
@@ -65,10 +66,13 @@
         <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,50">
                 <StackLayout>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseToolTips_Tapped"/>
+                    </StackLayout.GestureRecognizers>
                     <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Margin="10,20,10,0">
                         <Grid RowDefinitions="Auto,1,Auto" RowSpacing="0">
                             <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="10" Padding="20,10" Grid.Row="0">
-                                <Grid ColumnDefinitions="Auto,Auto,Auto,*" Grid.Row="0" Grid.ColumnSpan="2">
+                                <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto" Grid.Row="0" Grid.ColumnSpan="2">
                                     <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding singleLead.leadqualitycode,Converter={StaticResource LeadQualityCodeColorConverter}}" Grid.Column="0">
                                         <Label Text="{Binding singleLead.leadqualitycode,Converter={StaticResource LeadQualityCodeConverter}}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                     </telerikPrimitives:RadBorder>
@@ -77,6 +81,12 @@
                                         <Label Text="{Binding singleLead.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                     </telerikPrimitives:RadBorder>
                                     <Label Grid.Column="3" Text="{Binding singleLead.fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                                    <Label x:Name="lb_duplicate" Grid.Column="4" Text="&#xf071;" FontFamily="FontAwesomeSolid" FontSize="20" VerticalOptions="Center" TextColor="#FFA500"
+                                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#FFA500" 
+                                           effects:TooltipEffect.TextColor="Black"
+                                           effects:TooltipEffect.HasTooltip="True">
+                                    </Label>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
                                     <Label Text="{Binding Source={x:Static lang:Language.tieu_de},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444" />

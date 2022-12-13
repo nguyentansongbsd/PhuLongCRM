@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
@@ -358,7 +359,14 @@ namespace PhuLongCRM.Views
         private async Task LoadDataThongTin(string leadid)
         {
             if (leadid != null && viewModel.singleLead == null)
+            {
                 await viewModel.LoadOneLead(leadid);
+                await viewModel.LoadDuplicate();
+                if (!string.IsNullOrWhiteSpace(viewModel.Duplicate))
+                    TooltipEffect.SetText(lb_duplicate, viewModel.Duplicate);
+                else
+                    lb_duplicate.IsVisible = false;
+            }
         }
 
         #region TabPhongThuy
@@ -580,6 +588,14 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 };
+            }
+        }
+        private void CloseToolTips_Tapped(object sender, EventArgs e)
+        {
+            if (TooltipEffect.GetHasTooltip(lb_duplicate))
+            {
+                TooltipEffect.SetHasTooltip(lb_duplicate, false);
+                TooltipEffect.SetHasTooltip(lb_duplicate, true);
             }
         }
     }

@@ -59,6 +59,7 @@ namespace PhuLongCRM.ViewModels
 
         public bool IsFromQRCode { get; set; }
         public bool IsCurrentRecordOfUser { get; set; }
+        public string Duplicate { get; set; }
 
         public LeadDetailPageViewModel()
         {
@@ -419,6 +420,69 @@ namespace PhuLongCRM.ViewModels
                 }
             }
             ShowMoreCase = Cares.Count < (5 * PageCase) ? false : true;
+        }
+        public async Task LoadDuplicate()
+        {
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                          <entity name='lead'>
+                            <attribute name='mobilephone'/>
+                            <attribute name='emailaddress1'/>
+                            <attribute name='bsd_identitycardnumberid'/>
+                            <order attribute='createdon' descending='true' />
+                            <filter type='or'>
+                                <filter type='and'>
+                                    <condition attribute='mobilephone' operator='eq' value='{singleLead.mobilephone}' />
+                                    <condition attribute='leadid' operator='ne' value='{singleLead.leadid}'/>
+                                </filter>
+                                <filter type='and'>
+                                    <condition attribute='emailaddress1' operator='eq' value='{singleLead.emailaddress1}' />
+                                    <condition attribute='leadid' operator='ne' value='{singleLead.leadid}'/>
+                                </filter>
+                                <filter type='and'>
+                                    <condition attribute='bsd_identitycardnumberid' operator='eq' value='{singleLead.bsd_identitycardnumberid}' />
+                                    <condition attribute='leadid' operator='ne' value='{singleLead.leadid}'/>
+                                </filter>
+                            </filter>
+                          </entity>
+                        </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                List<string> duplicates = new List<string>();
+                var data = result.value.FirstOrDefault();
+                if (!string.IsNullOrWhiteSpace(data.mobilephone) && data.mobilephone == singleLead.mobilephone)
+                    duplicates.Add(Language.so_dien_thoai);
+                if (!string.IsNullOrWhiteSpace(data.emailaddress1) && data.emailaddress1 == singleLead.emailaddress1)
+                    duplicates.Add(Language.email);
+                if (!string.IsNullOrWhiteSpace(data.bsd_identitycardnumberid) && data.bsd_identitycardnumberid == singleLead.bsd_identitycardnumberid)
+                    duplicates.Add(Language.so_id);
+                Duplicate = string.Join(", ", duplicates);
+                if (UserLogged.Language == "en")
+                    Duplicate += " already exists.";
+                else
+                    Duplicate += " đã tồn tại.";
+            }
+            if(string.IsNullOrWhiteSpace(Duplicate))
+            {
+                string fetchcontact = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                        <entity name='contact'>
+                                            <attribute name='fullname' />
+                                            <filter type='or'>
+                                                <condition attribute='bsd_identitycard' operator='eq' value='{singleLead.bsd_identitycardnumberid}' />
+                                                <condition attribute='bsd_identitycardnumber' operator='eq' value='{singleLead.bsd_identitycardnumberid}' />
+                                                <condition attribute='bsd_passport' operator='eq' value='{singleLead.bsd_identitycardnumberid}' />
+                                            </filter>
+                                        </entity>
+                                    </fetch>";
+                var resultcontact = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contact", fetchcontact);
+                if (resultcontact != null && resultcontact.value.Count > 0)
+                {
+                    if (UserLogged.Language == "en")
+                        Duplicate = Language.so_id + " already exists.";
+                    else
+                        Duplicate = Language.so_id + " đã tồn tại.";
+                }
+            } 
         }
     }
 }
