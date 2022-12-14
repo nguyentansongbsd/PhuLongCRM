@@ -291,6 +291,26 @@ namespace PhuLongCRM.ViewModels
                 return true;
             }
         }
+        public async Task<bool> CheckGPKD(string bsd_registrationcode)
+        {
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='account'>
+                                <attribute name='fullname' alias='Label'/>
+                                    <filter type='and'>
+                                        <condition attribute='bsd_registrationcode' operator='eq' value='{bsd_registrationcode}' />
+                                    </filter>
+                              </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("accounts", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
         // Save qrcode
         public async Task<bool> SaveQRCode(string qrCode)
