@@ -3708,4 +3708,16 @@
   <data name="vui_long_cai_dat_ung_dung_co_the_xem_cac_tap_tin_docx" xml:space="preserve">
     <value>Vui lòng cài đặt ứng dụng có thể xem các tập tin docx.</value>
   </data>
+  <data name="hieu_luc" xml:space="preserve">
+    <value>Hiệu lực</value>
+  </data>
+  <data name="san_dai_ly" xml:space="preserve">
+    <value>Sàn/ Đại lý</value>
+  </data>
+  <data name="khach_hang_filter" xml:space="preserve">
+    <value>Khách Hàng</value>
+  </data>
+  <data name="nguoi_dai_dien_filter" xml:space="preserve">
+    <value>Người Đại Diện</value>
+  </data>
 </root>

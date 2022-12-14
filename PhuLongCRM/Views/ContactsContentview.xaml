@@ -6,7 +6,7 @@
              x:Class="PhuLongCRM.Views.ContactsContentview">
     <ContentView.Content>
         <AbsoluteLayout>
-            <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <Grid RowDefinitions="Auto,Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="0">
                     <controls:SearchBarFrame Margin="10,5,0,5" Grid.Column="0">
                         <controls:SearchBar Text="{Binding Keyword}" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
@@ -17,7 +17,39 @@
                         </Label.GestureRecognizers>
                     </Label>
                 </Grid>
-                <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" ItemTapped="listView_ItemTapped">
+                <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <StackLayout Spacing="10" Orientation="Horizontal" Padding="10,0,10,5">
+                        <telerikPrimitives:RadBorder x:Name="rb_khachHang" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
+                            <Label x:Name="lb_khachHang" TextColor="#444444" Margin="15,5">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="{x:Static lang:Language.khach_hang_filter}" FontSize="14"/>
+                                            <Span Text="  "/>
+                                            <Span Text="&#xf08d;" FontFamily="FontAwesomeSolid" FontSize="12"/>
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000000" />
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                        </telerikPrimitives:RadBorder>
+                        <telerikPrimitives:RadBorder x:Name="rb_nguoiDaiDien" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
+                            <Label x:Name="lb_nguoiDaiDien" Text="{x:Static lang:Language.nguoi_dai_dien_filter}" FontSize="14" TextColor="#444444" Margin="15,5"/>
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000003"/>
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                        </telerikPrimitives:RadBorder>
+                        <telerikPrimitives:RadBorder x:Name="rb_nguoiUyQuyen" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
+                            <Label x:Name="lb_nguoiUyQuyen" Text="{x:Static lang:Language.nguoi_uy_quyen}" FontSize="14" TextColor="#444444" Margin="15,5"/>
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000002"/>
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                        </telerikPrimitives:RadBorder>
+                    </StackLayout>
+                </ScrollView>
+                <controls:BsdListView x:Name="listView" Grid.Row="2" ItemsSource="{Binding Data}" ItemTapped="listView_ItemTapped">
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -50,24 +82,31 @@
                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Filter_Tapped"/>
                 </StackLayout.GestureRecognizers>
                 <telerikPrimitives:RadBorder BorderColor="Transparent" BorderThickness="0" CornerRadius="0,0,10,10">
-                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="0" BackgroundColor="#f1f1f1" RowSpacing="1">
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="0" BackgroundColor="#f1f1f1" RowSpacing="1">
 
                         <Label Grid.Row="0" Grid.Column="0" Text="&#xf007;" TextColor="Red" FontFamily="FontAwesomeSolid" BackgroundColor="White" Padding="20,8,3,8" FontSize="22" VerticalOptions="Center" />
-                        <Label x:Name="label_All" Grid.Row="0" Grid.Column="1" Text="{x:Static lang:Language.tat_ca}" TextColor="#1399D5" BackgroundColor="White" FontAttributes="Bold" FontSize="15" Padding="3,8,20,8" >
+                        <Label x:Name="label_All" Grid.Row="0" Grid.Column="1" Text="{x:Static lang:Language.hieu_luc}" TextColor="#1399D5" BackgroundColor="White" FontAttributes="Bold" FontSize="15" Padding="3,8,20,8" >
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="SelectFilter_Tapped" CommandParameter="0"/>
                             </Label.GestureRecognizers>
                         </Label>
 
-                        <Label Grid.Row="1" Grid.Column="0" Text="&#xf4fc;" TextColor="#2FCC71" FontFamily="FontAwesomeSolid" BackgroundColor="White" Padding="20,8,3,8" FontSize="22" VerticalOptions="Center" />
-                        <Label x:Name="label_official" Grid.Row="1" Grid.Column="1" Text="{x:Static lang:Language.chinh_thuc}" TextColor="#444444" BackgroundColor="White" FontSize="15" Padding="3,8,20,8" >
+                        <Label Grid.Row="1" Grid.Column="0" Text="&#xf235;" TextColor="#808080" FontFamily="FontAwesomeSolid" BackgroundColor="White" Padding="20,8,3,8" FontSize="22" VerticalOptions="Center" />
+                        <Label x:Name="label_inactive" Grid.Row="1" Grid.Column="1" Text="{x:Static lang:Language.vo_hieu_luc}" TextColor="#444444" BackgroundColor="White" FontSize="15" Padding="3,8,20,8" >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="SelectFilter_Tapped" CommandParameter="3"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="&#xf4fc;" TextColor="#2FCC71" FontFamily="FontAwesomeSolid" BackgroundColor="White" Padding="20,8,3,8" FontSize="22" VerticalOptions="Center" />
+                        <Label x:Name="label_official" Grid.Row="2" Grid.Column="1" Text="{x:Static lang:Language.chinh_thuc}" TextColor="#444444" BackgroundColor="White" FontSize="15" Padding="3,8,20,8" >
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="SelectFilter_Tapped" CommandParameter="1"/>
                             </Label.GestureRecognizers>
                         </Label>
                         
-                        <Label Grid.Row="2" Grid.Column="0" Text="&#xf4fd;" TextColor="#04A8F4" FontFamily="FontAwesomeSolid" FontSize="22" BackgroundColor="White" Padding="20,8,3,8"  VerticalOptions="Center" />
-                        <Label x:Name="label_potential" Grid.Row="2" Grid.Column="1" Text="{x:Static lang:Language.tiem_nang_sts}" TextColor="#444444" BackgroundColor="White" FontSize="15" Padding="3,8,20,8" >
+                        <Label Grid.Row="3" Grid.Column="0" Text="&#xf4fd;" TextColor="#04A8F4" FontFamily="FontAwesomeSolid" FontSize="22" BackgroundColor="White" Padding="20,8,3,8"  VerticalOptions="Center" />
+                        <Label x:Name="label_potential" Grid.Row="3" Grid.Column="1" Text="{x:Static lang:Language.tiem_nang_sts}" TextColor="#444444" BackgroundColor="White" FontSize="15" Padding="3,8,20,8" >
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="SelectFilter_Tapped" CommandParameter="2"/>
                             </Label.GestureRecognizers>

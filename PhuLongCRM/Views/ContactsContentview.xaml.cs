@@ -4,6 +4,7 @@ using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
+using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.Views
@@ -24,6 +25,12 @@ namespace PhuLongCRM.Views
             await viewModel.LoadData();
             if (viewModel.Data.Count > 0)
             {
+                rb_khachHang.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+                lb_khachHang.TextColor = Color.White;
+                rb_nguoiDaiDien.BackgroundColor = Color.White;
+                lb_nguoiDaiDien.TextColor = Color.FromHex("#444444");
+                rb_nguoiUyQuyen.BackgroundColor = Color.White;
+                lb_nguoiUyQuyen.TextColor = Color.FromHex("#444444");
                 OnCompleted?.Invoke(true);
             }
             else
@@ -76,38 +83,95 @@ namespace PhuLongCRM.Views
             var item = (TapGestureRecognizer)((Label)sender).GestureRecognizers[0];
             viewModel.KeyFilter = item.CommandParameter as string;
             // thay đổi icon
-            if(viewModel.KeyFilter == "1")
+            if (viewModel.KeyFilter == "1")
             {
                 label_official.FontAttributes = FontAttributes.Bold;
+                label_inactive.FontAttributes = FontAttributes.None;
                 label_potential.FontAttributes = FontAttributes.None;
                 label_All.FontAttributes = FontAttributes.None;
 
                 label_official.TextColor = Color.FromHex("1399D5");
                 label_potential.TextColor = Color.FromHex("444444");
                 label_All.TextColor = Color.FromHex("444444");
+                label_inactive.TextColor = Color.FromHex("444444");
             }
             else if (viewModel.KeyFilter == "2")
             {
                 label_potential.FontAttributes = FontAttributes.Bold;
+                label_inactive.FontAttributes = FontAttributes.None;
                 label_official.FontAttributes = FontAttributes.None;
                 label_All.FontAttributes = FontAttributes.None;
 
                 label_potential.TextColor = Color.FromHex("1399D5");
                 label_official.TextColor = Color.FromHex("444444");
                 label_All.TextColor = Color.FromHex("444444");
+                label_inactive.TextColor = Color.FromHex("444444");
             }
             else if (viewModel.KeyFilter == "0")
             {
                 label_All.FontAttributes = FontAttributes.Bold;
+                label_inactive.FontAttributes = FontAttributes.None;
                 label_potential.FontAttributes = FontAttributes.None;
                 label_official.FontAttributes = FontAttributes.None;
 
                 label_potential.TextColor = Color.FromHex("444444");
                 label_official.TextColor = Color.FromHex("444444");
+                label_inactive.TextColor = Color.FromHex("444444");
                 label_All.TextColor = Color.FromHex("1399D5");
+            }
+            else if (viewModel.KeyFilter == "3")
+            {
+                label_All.FontAttributes = FontAttributes.None;
+                label_inactive.FontAttributes = FontAttributes.Bold;
+                label_potential.FontAttributes = FontAttributes.None;
+                label_official.FontAttributes = FontAttributes.None;
+
+                label_potential.TextColor = Color.FromHex("444444");
+                label_official.TextColor = Color.FromHex("444444");
+                label_All.TextColor = Color.FromHex("444444");
+                label_inactive.TextColor = Color.FromHex("1399D5");
             }
             await viewModel.LoadOnRefreshCommandAsync();
             FilterView.IsVisible = false;
+            LoadingHelper.Hide();
+        }
+
+        private async void CustumerType_Tapped(object sender, EventArgs e)
+        {
+            string sts = ((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter as string;
+            LoadingHelper.Show();
+            if (sts == "100000000") // Khach hang
+            {
+                rb_khachHang.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+                lb_khachHang.TextColor = Color.White;
+                rb_nguoiDaiDien.BackgroundColor = Color.White;
+                lb_nguoiDaiDien.TextColor = Color.FromHex("#444444");
+                rb_nguoiUyQuyen.BackgroundColor = Color.White;
+                lb_nguoiUyQuyen.TextColor = Color.FromHex("#444444");
+                
+            }
+            else if (sts== "100000003") // Nguoi dai dien
+            {
+                rb_khachHang.BackgroundColor = Color.White;
+                lb_khachHang.TextColor = Color.FromHex("#444444");
+                rb_nguoiDaiDien.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+                lb_nguoiDaiDien.TextColor = Color.White;
+                rb_nguoiUyQuyen.BackgroundColor = Color.White;
+                lb_nguoiUyQuyen.TextColor = Color.FromHex("#444444");
+            }
+            else if (sts == "100000002")  // Nguoi uy quyen
+            {
+                rb_khachHang.BackgroundColor = Color.White;
+                lb_khachHang.TextColor = Color.FromHex("#444444");
+                rb_nguoiDaiDien.BackgroundColor = Color.White;
+                lb_nguoiDaiDien.TextColor = Color.FromHex("#444444");
+                rb_nguoiUyQuyen.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+                lb_nguoiUyQuyen.TextColor = Color.White;
+            }
+            viewModel.FillterStatus = $@"<condition attribute='bsd_type' operator='contain-values'>
+                                                <value>{sts}</value>
+                                              </condition>";
+            await viewModel.LoadOnRefreshCommandAsync();
             LoadingHelper.Hide();
         }
     }
