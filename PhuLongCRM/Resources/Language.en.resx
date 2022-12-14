@@ -3708,4 +3708,16 @@
   <data name="vui_long_cai_dat_ung_dung_co_the_xem_cac_tap_tin_docx" xml:space="preserve">
     <value>Please install an app that can view docx files.</value>
   </data>
+  <data name="hieu_luc" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="san_dai_ly" xml:space="preserve">
+    <value>Sale Agent Company</value>
+  </data>
+  <data name="khach_hang_filter" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="nguoi_dai_dien_filter" xml:space="preserve">
+    <value>Mandatory Primary</value>
+  </data>
 </root>

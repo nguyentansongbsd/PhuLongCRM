@@ -22,6 +22,13 @@ namespace PhuLongCRM.ViewModels
                         filter = "<condition attribute='statuscode' operator='eq' value='100000000' />";
                     else if (KeyFilter == "2")
                         filter = "<condition attribute='statuscode' operator='eq' value='1' />";
+                    else if (KeyFilter == "3")
+                        filter = @"<filter type='or'>
+                                      <condition attribute='statuscode' operator='in'>
+                                        <value>100000001</value>
+                                        <value>2</value>
+                                      </condition>
+                                    </filter>"; // Vo hieu luc
                     else
                         filter = string.Empty;
                 }
