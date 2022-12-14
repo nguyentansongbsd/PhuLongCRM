@@ -3714,4 +3714,16 @@
 	<data name="so_cmnd_so_cccd_so_ho_chieu_so_gpkd_da_duoc_su_dung" xml:space="preserve">
     <value>Số CMND/ Số CCCD/ Số hộ chiếu/ số GPKD đã được sử dụng.</value>
   </data>
+  <data name="hieu_luc" xml:space="preserve">
+    <value>Hiệu lực</value>
+  </data>
+  <data name="san_dai_ly" xml:space="preserve">
+    <value>Sàn/ Đại lý</value>
+  </data>
+  <data name="khach_hang_filter" xml:space="preserve">
+    <value>Khách Hàng</value>
+  </data>
+  <data name="nguoi_dai_dien_filter" xml:space="preserve">
+    <value>Người Đại Diện</value>
+  </data>
 </root>

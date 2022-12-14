@@ -10842,5 +10842,29 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("zip_code", resourceCulture);
             }
         }
+        
+        internal static string hieu_luc {
+            get {
+                return ResourceManager.GetString("hieu_luc", resourceCulture);
+            }
+        }
+        
+        internal static string san_dai_ly {
+            get {
+                return ResourceManager.GetString("san_dai_ly", resourceCulture);
+            }
+        }
+        
+        internal static string khach_hang_filter {
+            get {
+                return ResourceManager.GetString("khach_hang_filter", resourceCulture);
+            }
+        }
+        
+        internal static string nguoi_dai_dien_filter {
+            get {
+                return ResourceManager.GetString("nguoi_dai_dien_filter", resourceCulture);
+            }
+        }
     }
 }

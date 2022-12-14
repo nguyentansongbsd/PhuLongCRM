@@ -3714,4 +3714,16 @@
 	<data name="so_cmnd_so_cccd_so_ho_chieu_so_gpkd_da_duoc_su_dung" xml:space="preserve">
     <value>ID card numbers/ ID card numbers/ Passport numbers/ Registration code has been used.</value>
   </data>
+  <data name="hieu_luc" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="san_dai_ly" xml:space="preserve">
+    <value>Sale Agent Company</value>
+  </data>
+  <data name="khach_hang_filter" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="nguoi_dai_dien_filter" xml:space="preserve">
+    <value>Mandatory Primary</value>
+  </data>
 </root>
