@@ -53,7 +53,7 @@ namespace PhuLongCRM.Views
             if (viewModel.OldPassword != null && viewModel.OldPassword.Contains(" "))
             {
                 ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duoc_chua_ky_tu_khoan_trang);
-                viewModel.OldPassword = viewModel.OldPassword.Trim();
+                viewModel.OldPassword = viewModel.OldPassword.Trim(' ');
             }
         }
 
@@ -62,7 +62,7 @@ namespace PhuLongCRM.Views
             if (viewModel.NewPassword != null && viewModel.NewPassword.Contains(" "))
             {
                 ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duoc_chua_ky_tu_khoan_trang);
-                viewModel.NewPassword = viewModel.NewPassword.Trim();
+                viewModel.NewPassword = viewModel.NewPassword.Trim(' ');
             }
         }
 
@@ -71,7 +71,7 @@ namespace PhuLongCRM.Views
             if (viewModel.ConfirmNewPassword != null && viewModel.ConfirmNewPassword.Contains(" "))
             {
                 ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duoc_chua_ky_tu_khoan_trang);
-                viewModel.ConfirmNewPassword = viewModel.ConfirmNewPassword.Trim();
+                viewModel.ConfirmNewPassword = viewModel.ConfirmNewPassword.Trim(' ');
             }
         }
 

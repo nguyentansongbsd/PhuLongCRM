@@ -3708,6 +3708,12 @@
   <data name="vui_long_cai_dat_ung_dung_co_the_xem_cac_tap_tin_docx" xml:space="preserve">
     <value>Vui lòng cài đặt ứng dụng có thể xem các tập tin docx.</value>
   </data>
+	<data name="so_gpkd_da_duoc_su_dung" xml:space="preserve">
+    <value>Số GPKD đã được sử dụng.</value>
+  </data>
+	<data name="so_cmnd_so_cccd_so_ho_chieu_so_gpkd_da_duoc_su_dung" xml:space="preserve">
+    <value>Số CMND/ Số CCCD/ Số hộ chiếu/ số GPKD đã được sử dụng.</value>
+  </data>
   <data name="hieu_luc" xml:space="preserve">
     <value>Hiệu lực</value>
   </data>

@@ -3708,6 +3708,12 @@
   <data name="vui_long_cai_dat_ung_dung_co_the_xem_cac_tap_tin_docx" xml:space="preserve">
     <value>Please install an app that can view docx files.</value>
   </data>
+	<data name="so_gpkd_da_duoc_su_dung" xml:space="preserve">
+    <value>Registration code has been used.</value>
+  </data>
+	<data name="so_cmnd_so_cccd_so_ho_chieu_so_gpkd_da_duoc_su_dung" xml:space="preserve">
+    <value>ID card numbers/ ID card numbers/ Passport numbers/ Registration code has been used.</value>
+  </data>
   <data name="hieu_luc" xml:space="preserve">
     <value>Active</value>
   </data>

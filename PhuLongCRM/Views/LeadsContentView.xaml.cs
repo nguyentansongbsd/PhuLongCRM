@@ -22,6 +22,11 @@ namespace PhuLongCRM.Views
         }
         public async void Init()
         {
+            rb_moi.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+            lb_moi.TextColor = Color.White;
+            viewModel.FillterStatus = $@"<condition attribute='statuscode' operator='in'>
+                                            <value>1</value>
+                                          </condition>";
             await viewModel.LoadData();
             if (viewModel.Data.Count > 0)
             {
@@ -132,6 +137,56 @@ namespace PhuLongCRM.Views
             }
             await viewModel.LoadOnRefreshCommandAsync();
             SortView.IsVisible = false;
+            LoadingHelper.Hide();
+        }
+
+        private async void Moi_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            rb_moi.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+            lb_moi.TextColor =Color.White;
+            rb_dachuyendoi.BackgroundColor = Color.White;
+            lb_dachuyendoi.TextColor = Color.FromHex("#444444");
+            rb_khongchuyendoi.BackgroundColor = Color.White;
+            lb_khongchuyendoi.TextColor = Color.FromHex("#444444");
+            viewModel.FillterStatus = $@"<condition attribute='statuscode' operator='in'>
+                                            <value>1</value>
+                                          </condition>";
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
+        }
+        private async void DaChuyenDoi_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            rb_moi.BackgroundColor = Color.White;
+            lb_moi.TextColor = Color.FromHex("#444444");
+            rb_dachuyendoi.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+            lb_dachuyendoi.TextColor = Color.White;
+            rb_khongchuyendoi.BackgroundColor = Color.White;
+            lb_khongchuyendoi.TextColor = Color.FromHex("#444444");
+            viewModel.FillterStatus = $@"<condition attribute='statuscode' operator='in'>
+                                            <value>3</value>
+                                          </condition>";
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
+        }
+        private async void KhongChuyenDoi_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            rb_moi.BackgroundColor = Color.White;
+            lb_moi.TextColor = Color.FromHex("#444444");
+            rb_dachuyendoi.BackgroundColor = Color.White;
+            lb_dachuyendoi.TextColor = Color.FromHex("#444444");
+            rb_khongchuyendoi.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+            lb_khongchuyendoi.TextColor = Color.White;
+            viewModel.FillterStatus = $@"<condition attribute='statuscode' operator='in'>
+                                            <value>2</value>
+                                            <value>4</value>
+                                            <value>5</value>
+                                            <value>7</value>
+                                            <value>6</value>
+                                          </condition>";
+            await viewModel.LoadOnRefreshCommandAsync();
             LoadingHelper.Hide();
         }
     }

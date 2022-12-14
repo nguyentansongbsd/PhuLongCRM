@@ -1,4 +1,5 @@
 ﻿using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
@@ -186,23 +187,25 @@ namespace PhuLongCRM.Views
                     bool confirm = await DisplayAlert(Language.chuyen_doi_khach_hang, Language.dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty, Language.co, Language.huy);
                     if (confirm)
                     {
-                        LoadingHelper.Show();
-                        LeadForm leadForm = new LeadForm(viewModel.singleLead.leadid);
-                        leadForm.CheckSingleLead = async (IsSuccess) =>
-                        {
-                            if (IsSuccess)
-                            {
-                                await Navigation.PushAsync(leadForm);
-                                LoadingHelper.Hide();
-                                return;
-                            }
-                            else
-                            {
-                                LoadingHelper.Hide();
-                                ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
-                                return;
-                            }
-                        };
+                        //LoadingHelper.Show();
+                        //LeadForm leadForm = new LeadForm(viewModel.singleLead.leadid);
+                        //leadForm.CheckSingleLead = async (IsSuccess) =>
+                        //{
+                        //    if (IsSuccess)
+                        //    {
+                        //        await Navigation.PushAsync(leadForm);
+                        //        LoadingHelper.Hide();
+                        //        return;
+                        //    }
+                        //    else
+                        //    {
+                        //        LoadingHelper.Hide();
+                        //        ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                        //        return;
+                        //    }
+                        //};
+                        LoadingHelper.Hide();
+                        return;
                     }
                     else
                     {
@@ -240,10 +243,11 @@ namespace PhuLongCRM.Views
                 return;
             }
             bool _isID = await viewModel.CheckID(viewModel.singleLead.bsd_identitycardnumberid);
+            bool _isGPKD = await viewModel.CheckGPKD(viewModel.singleLead.bsd_registrationcode);
             CrmApiResponse apiResponse = await viewModel.Qualify(viewModel.singleLead.leadid);
             if (apiResponse.IsSuccess == true)
             {
-                if (_isID)
+                if (_isID && _isGPKD)
                 {
                     if (Dashboard.NeedToRefreshLeads.HasValue) Dashboard.NeedToRefreshLeads = true;
                     if (CustomerPage.NeedToRefreshAccount.HasValue) CustomerPage.NeedToRefreshAccount = true;
@@ -254,7 +258,21 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
+                    if (!_isID && !_isGPKD)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_so_gpkd_da_duoc_su_dung);
+                    }
+                    else
+                    {
+                        if(!_isID)
+                        {
+                            ToastMessageHelper.ShortMessage(Language.so_cmnd_so_cccd_so_ho_chieu_da_duoc_su_dung);
+                        }
+                        if (!_isGPKD)
+                        {
+                            ToastMessageHelper.ShortMessage(Language.so_gpkd_da_duoc_su_dung);
+                        }
+                    }
                     if (NeedToRefreshActivity.HasValue) NeedToRefreshActivity = true;
                     OnAppearing();
                 }
@@ -358,7 +376,14 @@ namespace PhuLongCRM.Views
         private async Task LoadDataThongTin(string leadid)
         {
             if (leadid != null && viewModel.singleLead == null)
+            {
                 await viewModel.LoadOneLead(leadid);
+                await viewModel.LoadDuplicate();
+                if (!string.IsNullOrWhiteSpace(viewModel.Duplicate))
+                    TooltipEffect.SetText(lb_duplicate, viewModel.Duplicate);
+                else
+                    lb_duplicate.IsVisible = false;
+            }
         }
 
         #region TabPhongThuy
@@ -580,6 +605,14 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 };
+            }
+        }
+        private void CloseToolTips_Tapped(object sender, EventArgs e)
+        {
+            if (TooltipEffect.GetHasTooltip(lb_duplicate))
+            {
+                TooltipEffect.SetHasTooltip(lb_duplicate, false);
+                TooltipEffect.SetHasTooltip(lb_duplicate, true);
             }
         }
     }
