@@ -11,6 +11,9 @@ namespace PhuLongCRM.ViewModels
     {
         public string Keyword { get; set; }
         public string KeyFilter { get; set; }
+        public string FillterStatus { get; set; } = @"<condition attribute='bsd_businesstype' operator='contain-values'>
+                                                        <value>100000000</value>
+                                                      </condition>";
         public AccountContentViewViewModel()
         {
             PreLoadData = new Command(() =>
@@ -65,6 +68,7 @@ namespace PhuLongCRM.ViewModels
                     <filter type='and'>
                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                         {filter}
+                        {FillterStatus}
                        </filter>
                   </entity>
                 </fetch>";

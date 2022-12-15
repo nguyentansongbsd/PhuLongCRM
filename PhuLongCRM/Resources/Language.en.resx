@@ -3372,8 +3372,8 @@
 	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
 		<value>Interest Charge Status</value>
 	</data>
-	<data name="so_gpkd_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
-		<value>Invalid registration code (registration code must be 10 characters long).</value>
+	<data name="so_gpkd_khong_hop_le_gom_13_ky_tu" xml:space="preserve">
+		<value>Invalid registration code (registration code must be 13 characters long).</value>
 	</data>
 	<data name="tien_dat_coc_ful" xml:space="preserve">
 		<value>Deposit fee</value>
@@ -3717,13 +3717,16 @@
   <data name="hieu_luc" xml:space="preserve">
     <value>Active</value>
   </data>
-  <data name="san_dai_ly" xml:space="preserve">
-    <value>Sale Agent Company</value>
+  <data name="san_dai_ly_filter" xml:space="preserve">
+    <value>Sale Agent</value>
   </data>
   <data name="khach_hang_filter" xml:space="preserve">
     <value>Customer</value>
   </data>
   <data name="nguoi_dai_dien_filter" xml:space="preserve">
     <value>Mandatory Primary</value>
+  </data>
+  <data name="chu_dau_tu_filter" xml:space="preserve">
+    <value>Developer</value>
   </data>
 </root>

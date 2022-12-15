@@ -437,7 +437,7 @@ namespace PhuLongCRM.Views
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode) && !StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 10))
             {
-                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
+                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_13_ky_tu);
                 return;
             }
 
@@ -497,9 +497,9 @@ namespace PhuLongCRM.Views
         private void so_gpkd_Unfocused(object sender, FocusEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode)) return;
-            if (!StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 10))
+            if (!StringFormatHelper.CheckValueID(viewModel.singleLead.bsd_registrationcode, 13))
             {
-                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
+                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_13_ky_tu);
                 return;
             }
         }

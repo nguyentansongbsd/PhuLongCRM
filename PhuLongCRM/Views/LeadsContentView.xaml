@@ -19,27 +19,37 @@
                         </Label.GestureRecognizers>
                     </Label>
                 </Grid>
-                <ScrollView Grid.Row="1">
-                    <Grid ColumnDefinitions="Auto,Auto,Auto" RowSpacing="10" Padding="10,0,10,5">
-                        <telerikPrimitives:RadBorder x:Name="rb_moi" Grid.Column="0" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
-                            <Label x:Name="lb_moi" Text="{x:Static lang:Language.new_sts}" FontSize="14" TextColor="#444444" Margin="15,5"/>
+                <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <StackLayout Orientation="Horizontal" Spacing="10" Padding="10,0,10,5">
+                        <telerikPrimitives:RadBorder x:Name="rb_moi" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_moi" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="{x:Static lang:Language.new_sts}" />
+                                            <Span Text="  "/>
+                                            <Span Text="&#xf08d;" FontFamily="FontAwesomeSolid" FontSize="10"/>
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
                             <telerikPrimitives:RadBorder.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Moi_Tapped"/>
                             </telerikPrimitives:RadBorder.GestureRecognizers>
                         </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="rb_dachuyendoi" Grid.Column="1" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
-                            <Label x:Name="lb_dachuyendoi" Text="{x:Static lang:Language.da_xac_nhan_sts}" FontSize="14" TextColor="#444444" Margin="15,5"/>
+                        <telerikPrimitives:RadBorder x:Name="rb_dachuyendoi" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_dachuyendoi" Text="{x:Static lang:Language.da_xac_nhan_sts}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand"/>
                             <telerikPrimitives:RadBorder.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DaChuyenDoi_Tapped"/>
                             </telerikPrimitives:RadBorder.GestureRecognizers>
                         </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="rb_khongchuyendoi" Grid.Column="2" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
-                            <Label x:Name="lb_khongchuyendoi" Text="{x:Static lang:Language.khong_chuyen_doi}" FontSize="14" TextColor="#444444" Margin="15,5"/>
+                        <telerikPrimitives:RadBorder x:Name="rb_khongchuyendoi" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_khongchuyendoi" Text="{x:Static lang:Language.khong_chuyen_doi}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand"/>
                             <telerikPrimitives:RadBorder.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="KhongChuyenDoi_Tapped"/>
                             </telerikPrimitives:RadBorder.GestureRecognizers>
                         </telerikPrimitives:RadBorder>
-                    </Grid>
+                    </StackLayout>
                 </ScrollView>
                 <controls:BsdListView x:Name="listView" Grid.Row="2" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped" BackgroundColor="#F3f3f3">
                     <controls:BsdListView.ItemTemplate>

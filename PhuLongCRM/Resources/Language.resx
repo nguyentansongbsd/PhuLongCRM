@@ -3372,8 +3372,8 @@
 	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
 		<value>Tình trạng phí lãi suất</value>
 	</data>
-	<data name="so_gpkd_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
-		<value>Số giấy phép kinh doanh không hợp lệ (Gồm 10 ký tự).</value>
+	<data name="so_gpkd_khong_hop_le_gom_13_ky_tu" xml:space="preserve">
+		<value>Số giấy phép kinh doanh không hợp lệ (Gồm 13 ký tự).</value>
 	</data>
 	<data name="tien_dat_coc_ful" xml:space="preserve">
 		<value>Tiền đặt cọc</value>
@@ -3717,13 +3717,16 @@
   <data name="hieu_luc" xml:space="preserve">
     <value>Hiệu lực</value>
   </data>
-  <data name="san_dai_ly" xml:space="preserve">
-    <value>Sàn/ Đại lý</value>
+  <data name="san_dai_ly_filter" xml:space="preserve">
+    <value>Sàn/ Đại Lý</value>
   </data>
   <data name="khach_hang_filter" xml:space="preserve">
     <value>Khách Hàng</value>
   </data>
   <data name="nguoi_dai_dien_filter" xml:space="preserve">
     <value>Người Đại Diện</value>
+  </data>
+  <data name="chu_dau_tu_filter" xml:space="preserve">
+    <value>Chủ Đầu Tư</value>
   </data>
 </root>

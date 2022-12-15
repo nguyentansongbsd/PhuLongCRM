@@ -3,6 +3,7 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
+using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,6 +25,12 @@ namespace PhuLongCRM.Views
             await viewModel.LoadData();
             if (viewModel.Data.Count > 0)
             {
+                rb_khachHang.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+                lb_khachHang.TextColor = Color.White;
+                rb_chuDauTu.BackgroundColor = Color.White;
+                lb_chuDauTu.TextColor = Color.FromHex("#444444");
+                rb_sanDaiLy.BackgroundColor = Color.White;
+                lb_sanDaiLy.TextColor = Color.FromHex("#444444");
                 OnCompleted?.Invoke(true);
             }
             else
@@ -129,6 +136,45 @@ namespace PhuLongCRM.Views
             }
             await viewModel.LoadOnRefreshCommandAsync();
             FilterView.IsVisible = false;
+            LoadingHelper.Hide();
+        }
+
+        private async void CustumerType_Tapped(object sender, EventArgs e)
+        {
+            string sts = ((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter as string;
+            LoadingHelper.Show();
+            if (sts == "100000000") // Khach hang
+            {
+                rb_khachHang.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+                lb_khachHang.TextColor = Color.White;
+                rb_chuDauTu.BackgroundColor = Color.White;
+                lb_chuDauTu.TextColor = Color.FromHex("#444444");
+                rb_sanDaiLy.BackgroundColor = Color.White;
+                lb_sanDaiLy.TextColor = Color.FromHex("#444444");
+
+            }
+            else if (sts == "100000003") // Chu dau tu
+            {
+                rb_khachHang.BackgroundColor = Color.White;
+                lb_khachHang.TextColor = Color.FromHex("#444444");
+                rb_chuDauTu.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+                lb_chuDauTu.TextColor = Color.White;
+                rb_sanDaiLy.BackgroundColor = Color.White;
+                lb_sanDaiLy.TextColor = Color.FromHex("#444444");
+            }
+            else if (sts == "100000002")  // San dai ly
+            {
+                rb_khachHang.BackgroundColor = Color.White;
+                lb_khachHang.TextColor = Color.FromHex("#444444");
+                rb_chuDauTu.BackgroundColor = Color.White;
+                lb_chuDauTu.TextColor = Color.FromHex("#444444");
+                rb_sanDaiLy.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+                lb_sanDaiLy.TextColor = Color.White;
+            }
+            viewModel.FillterStatus = $@"<condition attribute='bsd_businesstype' operator='contain-values'>
+                                                <value>{sts}</value>
+                                              </condition>";
+            await viewModel.LoadOnRefreshCommandAsync();
             LoadingHelper.Hide();
         }
     }
