@@ -179,6 +179,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_dientich_6080m2' />
                                     <attribute name='bsd_dientich_3060m2' />
                                     <attribute name='bsd_dientich_100120m2' />
+                                    <attribute name='bsd_haveprotector' />
                                     <attribute name='bsd_employee' alias='employee_id'/>
                                     <order attribute='createdon' descending='true' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
@@ -187,6 +188,10 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <link-entity name='lead' from='leadid' to='originatingleadid' link-type='outer'>
                                         <attribute name='leadid' alias='leadid_originated'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='contactid' to='bsd_protecter' link-type='outer'>
+                                        <attribute name='contactid' alias='protecter_id'/>
+                                        <attribute name='bsd_fullname' alias='protecter_name'/>
                                     </link-entity>
                                     <filter type='and'>
                                         <condition attribute='contactid' operator='eq' value='" + id + @"' />

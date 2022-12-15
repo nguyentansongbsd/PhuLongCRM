@@ -654,5 +654,26 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
             }
         }
+        private void Protecter_Tapped(object sender, EventArgs e)
+        {
+            if (viewModel.singleContact != null && viewModel.singleContact.protecter_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ContactDetailPage newPage = new ContactDetailPage(viewModel.singleContact.protecter_id);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == 1)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else if (OnCompleted == 3)
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
+            }
+        }
     }
 }

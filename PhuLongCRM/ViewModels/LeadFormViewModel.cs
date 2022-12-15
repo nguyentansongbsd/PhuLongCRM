@@ -781,12 +781,15 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='contactid' />
                     <order attribute='createdon' descending='true' />
                     <filter type='and'>
+                        <condition entityname='mandatorysecondary' attribute='bsd_contact' operator='null' />
+                        <condition attribute='parentcustomerid' operator='null' />
                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                         <condition attribute='statuscode' operator='in'>
                             <value>100000000</value>
                             <value>1</value>
                         </condition>
                     </filter>
+                    <link-entity name='bsd_mandatorysecondary' from='bsd_contact' to='contactid' link-type='outer' alias='mandatorysecondary' />
                   </entity>
                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactListModel>>("contacts", fetch);
