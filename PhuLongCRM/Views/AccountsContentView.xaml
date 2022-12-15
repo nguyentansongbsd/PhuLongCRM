@@ -7,7 +7,7 @@
              x:Class="PhuLongCRM.Views.AccountsContentView">
     <ContentView.Content>
         <AbsoluteLayout>
-            <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <Grid RowDefinitions="Auto,Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="0">
                     <controls:SearchBarFrame x:Name="searchBar" Margin="10,5,0,5">
                         <controls:SearchBar  Text="{Binding Keyword}" SearchButtonPressed="SearchBar_SearchButtonPressed" TextChanged="SearchBar_TextChanged"/>
@@ -18,8 +18,39 @@
                         </Label.GestureRecognizers>
                     </Label>
                 </Grid>
-                
-                <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped" BackgroundColor="#F3f3f3">
+                <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <StackLayout Spacing="10" Orientation="Horizontal" Padding="10,0,10,5" >
+                        <telerikPrimitives:RadBorder x:Name="rb_khachHang" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_khachHang" FontSize="14" TextColor="White" VerticalOptions="CenterAndExpand">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="{x:Static lang:Language.khach_hang_filter}"/>
+                                            <Span Text="  "/>
+                                            <Span Text="&#xf08d;" FontFamily="FontAwesomeSolid" FontSize="10"/>
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000000" />
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                        </telerikPrimitives:RadBorder>
+                        <telerikPrimitives:RadBorder x:Name="rb_chuDauTu" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_chuDauTu" Text="{x:Static lang:Language.chu_dau_tu_filter}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand"/>
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000003"/>
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                        </telerikPrimitives:RadBorder>
+                        <telerikPrimitives:RadBorder x:Name="rb_sanDaiLy" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_sanDaiLy" Text="{x:Static lang:Language.san_dai_ly_filter}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand"/>
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000002"/>
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                        </telerikPrimitives:RadBorder>
+                    </StackLayout>
+                </ScrollView>
+                <controls:BsdListView x:Name="listView" Grid.Row="2" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped" BackgroundColor="#F3f3f3">
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

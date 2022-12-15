@@ -187,7 +187,6 @@ namespace PhuLongCRM.Views
 
         private async void Completed_Clicked(object sender, EventArgs e)
         {
-            LoadingHelper.Show();
             string[] options = new string[] { Language.hoan_thanh, Language.huy };
             string asw = await App.Current.MainPage.DisplayActionSheet(Language.tuy_chon, Language.dong, null, options);
             if (asw == Language.hoan_thanh)
@@ -292,7 +291,6 @@ namespace PhuLongCRM.Views
                     }
                 }
             }
-            LoadingHelper.Hide();
         }
         private void PhoneCallTo_Tapped(object sender, EventArgs e)
         {

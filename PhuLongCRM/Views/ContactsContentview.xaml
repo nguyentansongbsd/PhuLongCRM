@@ -19,14 +19,14 @@
                 </Grid>
                 <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
                     <StackLayout Spacing="10" Orientation="Horizontal" Padding="10,0,10,5">
-                        <telerikPrimitives:RadBorder x:Name="rb_khachHang" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
-                            <Label x:Name="lb_khachHang" TextColor="#444444" Margin="15,5">
+                        <telerikPrimitives:RadBorder x:Name="rb_khachHang" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_khachHang" FontSize="14" TextColor="White" VerticalOptions="CenterAndExpand">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <FormattedString.Spans>
-                                            <Span Text="{x:Static lang:Language.khach_hang_filter}" FontSize="14"/>
+                                            <Span Text="{x:Static lang:Language.khach_hang_filter}" />
                                             <Span Text="  "/>
-                                            <Span Text="&#xf08d;" FontFamily="FontAwesomeSolid" FontSize="12"/>
+                                            <Span Text="&#xf08d;" FontFamily="FontAwesomeSolid" FontSize="10"/>
                                         </FormattedString.Spans>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -35,14 +35,14 @@
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000000" />
                             </telerikPrimitives:RadBorder.GestureRecognizers>
                         </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="rb_nguoiDaiDien" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
-                            <Label x:Name="lb_nguoiDaiDien" Text="{x:Static lang:Language.nguoi_dai_dien_filter}" FontSize="14" TextColor="#444444" Margin="15,5"/>
+                        <telerikPrimitives:RadBorder x:Name="rb_nguoiDaiDien" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_nguoiDaiDien" Text="{x:Static lang:Language.nguoi_dai_dien_filter}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand"/>
                             <telerikPrimitives:RadBorder.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000003"/>
                             </telerikPrimitives:RadBorder.GestureRecognizers>
                         </telerikPrimitives:RadBorder>
-                        <telerikPrimitives:RadBorder x:Name="rb_nguoiUyQuyen" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}">
-                            <Label x:Name="lb_nguoiUyQuyen" Text="{x:Static lang:Language.nguoi_uy_quyen}" FontSize="14" TextColor="#444444" Margin="15,5"/>
+                        <telerikPrimitives:RadBorder x:Name="rb_nguoiUyQuyen" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                            <Label x:Name="lb_nguoiUyQuyen" Text="{x:Static lang:Language.nguoi_uy_quyen}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand"/>
                             <telerikPrimitives:RadBorder.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000002"/>
                             </telerikPrimitives:RadBorder.GestureRecognizers>
