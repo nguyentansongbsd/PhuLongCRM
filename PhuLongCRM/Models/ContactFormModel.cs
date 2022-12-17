@@ -408,5 +408,6 @@ namespace PhuLongCRM.Models
         public string haveprotector_format { get { return BoolToStringData.GetStringByBool(bsd_haveprotector); } }
         public Guid protecter_id { get; set; }
         public string protecter_name { get; set; }
+        public DateTime? protecter_birthdate { get; set; }
     }
 }

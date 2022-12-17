@@ -59,6 +59,12 @@
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_sinh}" Margin="0,10,0,0"/>
                                 <controls:DatePickerBoderControl Date="{Binding singleContact.birthdate}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}" ShowTime="False"/>
 
+                                <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}"/>
+                                <controls:LookUp x:Name="lookUpHasGuardian" Placeholder="{x:Static lang:Language.chon_gia_tri}" BottomModal="{Reference BottomModal}" NameDisplay="Label" SelectedItem="{Binding HasGuardian}" ItemsSource="{Binding HasGuardians}" SelectedItemChange="lookUpHasGuardian_SelectedItemChange"/>
+
+                                <controls:FormLabelRequired x:Name="lbGuardian" Text="{x:Static lang:Language.nguoi_bao_ho}" IsVisible="false"/>
+                                <controls:LookUp x:Name="lookUpGuardian" Placeholder="{x:Static lang:Language.chon_nguoi_bao_ho}" BottomModal="{Reference BottomModal}" NameDisplay="bsd_fullname" SelectedItem="{Binding Guardian}" ItemsSource="{Binding Guardians}" IsVisible="false" SelectedItemChange="lookUpGuardian_SelectedItemChange"/>
+                                
                                 <controls:FormLabel Text="{x:Static lang:Language.email}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_email}" Text="{Binding singleContact.emailaddress1}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
