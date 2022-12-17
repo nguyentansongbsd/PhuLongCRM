@@ -3729,4 +3729,7 @@
   <data name="chu_dau_tu_filter" xml:space="preserve">
     <value>Developer</value>
   </data>
+  <data name="dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Handover conditions invalid. Please check the information again.</value>
+  </data>
 </root>

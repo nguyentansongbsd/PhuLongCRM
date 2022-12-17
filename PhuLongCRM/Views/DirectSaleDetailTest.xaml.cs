@@ -534,8 +534,10 @@ namespace PhuLongCRM.Views
             else if (btnQueue.IsVisible == true && btnQuote.IsVisible == true)
             {
                 gridBtn.IsVisible = true;
+                Grid.SetColumnSpan(btnQueue, 1);
                 Grid.SetColumn(btnQueue, 0);
                 Grid.SetColumn(btnQuote, 1);
+                
             }
             else if (btnQueue.IsVisible == true && btnQuote.IsVisible == false)
             {

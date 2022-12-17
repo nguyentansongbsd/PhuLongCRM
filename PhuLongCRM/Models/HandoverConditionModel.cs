@@ -63,6 +63,7 @@ namespace PhuLongCRM.Models
         }
         public bool hide_enddate { get { return _bsd_enddate.HasValue ? true : false; } }
         public string bsd_type { get; set; }
+        public decimal typeHandoverConditionMinimumId { get => !string.IsNullOrWhiteSpace(bsd_type) ? decimal.Parse(HandoverCoditionMinimumData.GetMapIdProject_Handover(bsd_type).Label) : 0; }
         public string type_format { get { return bsd_type != string.Empty ? HandoverCoditionMinimumData.GetHandoverCoditionMinimum(bsd_type)?.Label : null; } }
         public bool hide_byunittype { get { return _bsd_enddate.HasValue ? true : false; } }
         public int bsd_unittype { get; set; }

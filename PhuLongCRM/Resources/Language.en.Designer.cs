@@ -3154,6 +3154,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Handover conditions invalid. Please check the information again..
+        /// </summary>
+        internal static string dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Handover Condition is not suitable with Unit type. Please check again or choose another handover condition..
         /// </summary>
         internal static string dieu_kien_ban_giao_khong_phu_hop_voi_unit_type {

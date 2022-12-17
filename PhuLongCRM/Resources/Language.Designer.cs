@@ -3154,6 +3154,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Điều kiện bàn giao không hợp lệ. Vui lòng kiểm tra lại thông tin..
+        /// </summary>
+        internal static string dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Điều kiện bàn giao đã chọn không phù hợp với Loại sản phẩm đang thực hiện giao dịch. Vui lòng kiểm tra lại thông tin hoặc chọn điều kiện bàn giao khác..
         /// </summary>
         internal static string dieu_kien_ban_giao_khong_phu_hop_voi_unit_type {
