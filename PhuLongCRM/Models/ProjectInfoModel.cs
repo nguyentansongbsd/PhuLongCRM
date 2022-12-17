@@ -7,6 +7,7 @@ namespace PhuLongCRM.Models
 {
     public class ProjectInfoModel
     {
+        public Guid bsd_projectid { get; set; }
         public string bsd_projectcode { get; set; }
         public string bsd_name { get; set; } // tên dự án
 

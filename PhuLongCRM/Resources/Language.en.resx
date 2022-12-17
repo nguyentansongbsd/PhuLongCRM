@@ -3732,4 +3732,10 @@
   <data name="dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
     <value>Handover conditions invalid. Please check the information again.</value>
   </data>
+	<data name="vuot_qua_so_luong_giu_cho_tren_san_pham_co_the_thuc_hien_duoc_cho_du_an_trong_hom_nay" xml:space="preserve">
+    <value>Exceeding the number of queues per unit for a project today.</value>
+  </data>
+	<data name="vuot_qua_so_luong_giu_cho_tren_san_pham_co_the_thuc_hien_trong_hom_nay" xml:space="preserve">
+    <value>Exceeding the number of queues per unit today.</value>
+  </data>
 </root>

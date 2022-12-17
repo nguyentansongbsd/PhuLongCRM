@@ -3732,4 +3732,10 @@
   <data name="dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
     <value>Điều kiện bàn giao không hợp lệ. Vui lòng kiểm tra lại thông tin.</value>
   </data>
+	<data name="vuot_qua_so_luong_giu_cho_tren_san_pham_co_the_thuc_hien_duoc_cho_du_an_trong_hom_nay" xml:space="preserve">
+    <value>Vượt quá số lượng giữ chỗ trên sản phẩm có thể thực hiện được cho dự án trong hôm nay.</value>
+  </data>
+	<data name="vuot_qua_so_luong_giu_cho_tren_san_pham_co_the_thuc_hien_trong_hom_nay" xml:space="preserve">
+    <value>Vượt quá số lượng giữ chỗ trên sản phẩm có thể thực hiện trong hôm nay.</value>
+  </data>
 </root>
