@@ -20,18 +20,41 @@ namespace PhuLongCRM.Views
         private bool from;
         public QueueForm(Guid unitId, bool fromDirectSale) // Direct Sales (add)
         {
-            InitializeComponent();   
-            Init();
+            InitializeComponent();
+            this.BindingContext = viewModel = new QueueFormViewModel();
             viewModel.UnitId = unitId;
             from = fromDirectSale;
-            Create();
+            Init();
+            CheckLimit();
         }
 
         public void Init()
-        {          
-            this.BindingContext = viewModel = new QueueFormViewModel();
+        {   
             NeedToRefresh = false;
             SetPreOpen();            
+        }
+        public async void CheckLimit()
+        {
+            var result = await viewModel.CheckLimit();
+            if(result == 1)
+            {
+                OnCompleted?.Invoke(false);
+                ToastMessageHelper.ShortMessage(Language.vuot_qua_so_luong_giu_cho_tren_san_pham_co_the_thuc_hien_duoc_cho_du_an_trong_hom_nay);
+            }    
+            else if (result == 2)
+            {
+                OnCompleted?.Invoke(false);
+                ToastMessageHelper.ShortMessage(Language.vuot_qua_so_luong_giu_cho_tren_san_pham_co_the_thuc_hien_trong_hom_nay);
+            }
+            else if (result == 3)
+            {
+                OnCompleted?.Invoke(false);
+                ToastMessageHelper.ShortMessage(Language.khong_tim_thay_du_an);
+            }
+            else if (result == 0)
+            {
+                Create();
+            }
         }
 
         protected override void OnAppearing()
