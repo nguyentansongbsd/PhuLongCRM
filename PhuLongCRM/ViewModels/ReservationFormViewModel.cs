@@ -159,6 +159,7 @@ namespace PhuLongCRM.ViewModels
         public bool IsExpiredDiscount { get; set; }
         public bool IsExpiredInternel { get; set; }
         public bool IsExpiredExchange { get; set; }
+        public decimal Project_minimumtypehandovercondition { get; set; }
 
         public ReservationFormViewModel()
         {
@@ -260,6 +261,7 @@ namespace PhuLongCRM.ViewModels
                                         <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectcode' visible='false' link-type='outer' alias='a_9a5e44d019dbeb11bacb002248168cad'>
                                           <attribute name='bsd_name' alias='project_name'/>
                                           <attribute name='bsd_projectid' alias='project_id'/>
+                                          <attribute name='bsd_minimumtypehandovercondition' alias='project_minimumtypehandovercondition'/>
                                         </link-entity>
                                         <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' visible='false' link-type='outer' alias='a_645347ca19dbeb11bacb002248168cad'>
                                             <attribute name='bsd_name' alias='phaseslaunch_name'/>
@@ -381,6 +383,7 @@ namespace PhuLongCRM.ViewModels
             this.DiscountList = this.Quote.discountlist_id != Guid.Empty ? new OptionSet(this.Quote.discountlist_id.ToString(), this.Quote.discountlist_name) : null;
             this.PhasesLaunchId = this.Quote._bsd_phaseslaunchid_value;
             this.UnitType = this.Quote._bsd_unittype_value;
+            this.Project_minimumtypehandovercondition = this.Quote.project_minimumtypehandovercondition;
 
             this.TotalReservation = new TotalReservationModel();
             this.TotalReservation.ListedPrice = this.Quote.bsd_detailamount;
@@ -547,6 +550,7 @@ namespace PhuLongCRM.ViewModels
             this.Quote.bsd_managementfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_managementfee);
             this.UnitType = UnitInfor._bsd_unittype_value;
             this.PhasesLaunchId = this.UnitInfor._bsd_phaseslaunchid_value;
+            this.Project_minimumtypehandovercondition = this.UnitInfor.project_minimumtypehandovercondition;
         }
 
         public async Task LoadPhasesLaunch()

@@ -395,7 +395,7 @@ namespace PhuLongCRM.Views
                 return;
             }
             // Hiện thông báo khi chọn ĐKBG nhỏ hơn mức tối thiểu trong Dự án => task 1020
-            if (viewModel.HandoverCondition.typeHandoverConditionMinimumId > viewModel.UnitInfor.project_minimumtypehandovercondition)
+            if (viewModel.HandoverCondition.typeHandoverConditionMinimumId > viewModel.Project_minimumtypehandovercondition)
             {
                 ToastMessageHelper.ShortMessage(Language.dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin);
                 viewModel.HandoverCondition = null;
@@ -1104,6 +1104,11 @@ namespace PhuLongCRM.Views
                                 if (apiResponseQuoteProduct.IsSuccess == false)
                                 {
                                     ToastMessageHelper.LongMessage(apiResponseQuoteProduct.ErrorResponse.error.message);
+                                    await viewModel.DeleteQuote();
+                                    // set lại id = null khi thất bại để chạy vào create
+                                    viewModel.quotedetailid = Guid.Empty;
+                                    viewModel.QuoteId = Guid.Empty;
+                                    viewModel.Quote.quoteid = Guid.Empty;
                                     LoadingHelper.Hide();
                                     return;
                                 }
@@ -1143,6 +1148,11 @@ namespace PhuLongCRM.Views
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.LongMessage(responseQuoteProduct.ErrorResponse.error.message);
+                        await viewModel.DeleteQuote();
+                        // set lại id = null khi thất bại để chạy vào create
+                        viewModel.quotedetailid = Guid.Empty;
+                        viewModel.QuoteId = Guid.Empty;
+                        viewModel.Quote.quoteid = Guid.Empty;
                     }
                 }
                 else

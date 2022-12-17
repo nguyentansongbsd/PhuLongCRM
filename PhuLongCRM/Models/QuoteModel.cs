@@ -85,6 +85,7 @@ namespace PhuLongCRM.Models
 
         private string _project_name;
         public string project_name { get => _project_name; set { _project_name = value; OnPropertyChanged(nameof(project_name)); } }
+        public decimal project_minimumtypehandovercondition { get; set; }
 
         private string _phaseslaunch_name;
         public string phaseslaunch_name { get => _phaseslaunch_name; set { _phaseslaunch_name = value; OnPropertyChanged(nameof(phaseslaunch_name)); } }
