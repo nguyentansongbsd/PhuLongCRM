@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using Stormlion.PhotoBrowser;
 using System;
@@ -70,6 +71,19 @@ namespace PhuLongCRM.ViewModels
 
         private List<OptionSet> _typeIdCardss;
         public List<OptionSet> TypeIdCards { get => _typeIdCardss; set { _typeIdCardss = value; OnPropertyChanged(nameof(TypeIdCards)); } }
+
+        private ContactListModel _guardian;
+        public ContactListModel Guardian { get => _guardian; set { _guardian = value; OnPropertyChanged(nameof(Guardian)); } }
+
+        private List<ContactListModel> _guardians;
+        public List<ContactListModel> Guardians { get => _guardians; set { _guardians = value; OnPropertyChanged(nameof(Guardians)); } }
+
+        private OptionSet _hasGuardian;
+        public OptionSet HasGuardian { get => _hasGuardian; set { _hasGuardian = value; OnPropertyChanged(nameof(HasGuardian)); } }
+
+        private List<OptionSet> _hasGuardians;
+        public List<OptionSet> HasGuardians { get => _hasGuardians; set { _hasGuardians = value; OnPropertyChanged(nameof(HasGuardians)); } }
+
         public ContactFormViewModel()
         {
             singleContact = new ContactFormModel();
@@ -80,6 +94,9 @@ namespace PhuLongCRM.ViewModels
             LocalizationOptions = new ObservableCollection<OptionSet>();
 
             ContactTypes = ContactTypeData.ContactTypes();
+            HasGuardians = new List<OptionSet>() { new OptionSet("1", Language.co), new OptionSet("0", Language.khong) };
+            Guardians = new List<ContactListModel>();
+            HasGuardian = new OptionSet("0", Language.khong);
         }
 
         public async Task LoadOneContact(String id)
@@ -124,6 +141,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_placeofissueidentitycard' />
                                 <attribute name='bsd_typeofidcardlead' />
                                 <attribute name='bsd_customercode' />
+                                <attribute name='bsd_haveprotector' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
                                           <attribute name='bsd_name' alias='parentcustomerid_label' />
@@ -152,6 +170,11 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='new_name'  alias='bsd_permanentdistrict_label'/>
                                         <attribute name='bsd_nameen'  alias='bsd_permanentdistrict_en'/>
                                     </link-entity>
+                                    <link-entity name='contact' from='contactid' to='bsd_protecter' link-type='outer'>
+                                        <attribute name='contactid' alias='protecter_id'/>
+                                        <attribute name='bsd_fullname' alias='protecter_name'/>
+                                        <attribute name='birthdate' alias='protecter_birthdate' />
+                                    </link-entity>
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                      <condition attribute='contactid' operator='eq' value='" + id + @"' />
@@ -179,6 +202,10 @@ namespace PhuLongCRM.ViewModels
             if (!string.IsNullOrWhiteSpace(singleContact.bsd_typeofidcardlead))
             {
                 TypeIdCard = TypeIdCardData.GetTypeIdCardById(singleContact.bsd_typeofidcardlead);
+            }
+            if (singleContact.protecter_id != Guid.Empty)
+            {
+                Guardian = new ContactListModel { contactid = singleContact.protecter_id, bsd_fullname = singleContact.protecter_name, birthdate = singleContact.protecter_birthdate };
             }
 
             Address1 = new AddressModel
@@ -380,6 +407,22 @@ namespace PhuLongCRM.ViewModels
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
+            if (HasGuardian != null && HasGuardian.Val == "1")
+            {
+                data["bsd_haveprotector"] = true;
+            }
+            else
+            {
+                data["bsd_haveprotector"] = false;
+            }
+            if (Guardian != null)
+            {
+                data["bsd_protecter@odata.bind"] = "/contacts(" + Guardian.contactid + ")";
+            }
+            else
+            {
+                await DeletLookup("bsd_protecter", contact.contactid);
+            }
 
             return data;
         }
@@ -578,6 +621,31 @@ namespace PhuLongCRM.ViewModels
                     }
                 }
             }
+        }
+        public async Task LoadContactForLookup()
+        {
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='bsd_fullname' />
+                    <attribute name='birthdate' />
+                    <attribute name='contactid' />
+                    <order attribute='createdon' descending='true' />
+                    <filter type='and'>
+                        <condition entityname='mandatorysecondary' attribute='bsd_contact' operator='null' />
+                        <condition attribute='parentcustomerid' operator='null' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                        <condition attribute='statuscode' operator='in'>
+                            <value>100000000</value>
+                            <value>1</value>
+                        </condition>
+                    </filter>
+                    <link-entity name='bsd_mandatorysecondary' from='bsd_contact' to='contactid' link-type='outer' alias='mandatorysecondary' />
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactListModel>>("contacts", fetch);
+            if (result == null)
+                return;
+            Guardians = result.value;
         }
     }
 }

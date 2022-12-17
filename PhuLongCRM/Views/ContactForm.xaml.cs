@@ -78,6 +78,11 @@ namespace PhuLongCRM.Views
                 customerCode.IsVisible = true;
                 viewModel.CustomerStatusReason = CustomerStatusReasonData.GetCustomerStatusReasonById(viewModel.singleContact.statuscode);
                 TypeIdCard_ItemChange(null,null);
+                if (viewModel.singleContact.bsd_haveprotector)
+                {
+                    viewModel.HasGuardian = new OptionSet("1", Language.co);
+                    lookUpHasGuardian_SelectedItemChange(null, null);
+                }
                 OnCompleted?.Invoke(true);
             }
             else
@@ -151,10 +156,34 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_ngay_sinh);
                 return;
             }
-            if (CalculateYear(viewModel.singleContact.birthdate.Value) < 18)
+            //if (CalculateYear(viewModel.singleContact.birthdate.Value) < 18)
+            //{
+            //    ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
+            //    return;
+            //}
+            if (viewModel.HasGuardian != null && viewModel.HasGuardian.Val == "1")
             {
-                ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
-                return;
+                if (viewModel.Guardian == null || viewModel.Guardian.contactid == Guid.Empty)
+                {
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_bao_ho);
+                    return;
+                }
+                else
+                {
+                    if (viewModel.Guardian.birthdate.HasValue && CalculateYear(viewModel.Guardian.birthdate.Value) < 18)
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                if (viewModel.singleContact.birthdate != null && CalculateYear(viewModel.singleContact.birthdate.Value) < 18)
+                {
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_phai_tu_18_tuoi);
+                    return;
+                }
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.emailaddress1))
             {
@@ -353,6 +382,12 @@ namespace PhuLongCRM.Views
             lookUpLoaiTheID.PreOpenAsync = async () => {
                 LoadingHelper.Show();
                 viewModel.TypeIdCards = TypeIdCardData.TypeIdCards();
+                LoadingHelper.Hide();
+            };
+            lookUpGuardian.PreOpenAsync = async () =>
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadContactForLookup();
                 LoadingHelper.Hide();
             };
         }
@@ -603,6 +638,31 @@ namespace PhuLongCRM.Views
                     lb_cccd.IsVisible = false;
                     lb_cmnd.IsVisible = false;
                     lb_ho_chieu.IsVisible = true;
+                }
+            }
+        }
+        private void lookUpHasGuardian_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if (viewModel.HasGuardian != null && viewModel.HasGuardian.Val == "1")
+            {
+                lbGuardian.IsVisible = true;
+                lookUpGuardian.IsVisible = true;
+            }
+            else
+            {
+                lbGuardian.IsVisible = false;
+                lookUpGuardian.IsVisible = false;
+            }
+        }
+
+        private void lookUpGuardian_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            if (viewModel.Guardian != null && viewModel.Guardian.contactid != Guid.Empty)
+            {
+                if (viewModel.Guardian.birthdate.HasValue && CalculateYear(viewModel.Guardian.birthdate.Value) < 18)
+                {
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
+                    return;
                 }
             }
         }
