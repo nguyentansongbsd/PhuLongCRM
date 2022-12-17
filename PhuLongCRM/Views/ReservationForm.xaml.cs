@@ -394,6 +394,13 @@ namespace PhuLongCRM.Views
                 viewModel.HandoverCondition = null;
                 return;
             }
+            // Hiện thông báo khi chọn ĐKBG nhỏ hơn mức tối thiểu trong Dự án => task 1020
+            if (viewModel.HandoverCondition.typeHandoverConditionMinimumId > viewModel.UnitInfor.project_minimumtypehandovercondition)
+            {
+                ToastMessageHelper.ShortMessage(Language.dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin);
+                viewModel.HandoverCondition = null;
+                return;
+            }
         }
         #endregion
 

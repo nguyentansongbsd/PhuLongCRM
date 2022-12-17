@@ -499,6 +499,7 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectcode' visible='false' link-type='outer' alias='a_9a5e44d019dbeb11bacb002248168cad'>
                                       <attribute name='bsd_name' alias='project_name'/>
                                       <attribute name='bsd_projectid' alias='project_id'/>
+                                      <attribute name='bsd_minimumtypehandovercondition' alias='project_minimumtypehandovercondition'/>
                                     </link-entity>
                                     <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' visible='false' link-type='outer' alias='a_645347ca19dbeb11bacb002248168cad'>
                                         <attribute name='bsd_name' alias='phaseslaunch_name'/>
@@ -681,6 +682,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_priceperm2' />
                                     <attribute name='bsd_amount' />
                                     <attribute name='bsd_percent' />
+                                    <attribute name='bsd_type' />
                                     <attribute name='bsd_startdate' alias='startdate' />
                                     <attribute name='bsd_enddate' alias='enddate'/>
                                     <order attribute='bsd_name' descending='true' />

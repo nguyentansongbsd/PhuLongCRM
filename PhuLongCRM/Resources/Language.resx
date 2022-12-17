@@ -3729,4 +3729,7 @@
   <data name="chu_dau_tu_filter" xml:space="preserve">
     <value>Chủ Đầu Tư</value>
   </data>
+  <data name="dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Điều kiện bàn giao không hợp lệ. Vui lòng kiểm tra lại thông tin.</value>
+  </data>
 </root>
