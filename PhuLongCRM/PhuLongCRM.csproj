@@ -16,6 +16,7 @@
     <None Remove="JWTDecoder.Xamarin" />
     <None Remove="FirebaseStorage.net" />
     <None Remove="Xam.Plugins.DownloadManager" />
+    <None Remove="Xamarin.AppleSignIn" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,6 +74,9 @@
   <ItemGroup>
     <Reference Include="Plugin.FirebasePushNotification">
       <HintPath>C:\Users\phamx\Downloads\Microsoft.SkypeApp_kzf8qxf38zg5c!App\All\Plugin.FirebasePushNotification.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.AppleSignIn">
+      <HintPath>..\Xamarin.AppleSignIn.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

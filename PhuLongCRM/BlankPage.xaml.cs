@@ -61,5 +61,22 @@ namespace PhuLongCRM
             string content = JsonConvert.SerializeObject(data);
             System.Diagnostics.Debug.WriteLine(content);
         }
+
+        private async void SignIn_Event(object sender, EventArgs e)
+        {
+            try
+            {
+                var appleSignIn = Xamarin.Forms.DependencyService.Get<IAppleSignInService>();
+
+                var account = await appleSignIn.SignInAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
+
+            //labelText.Text = $"Signed in!\n  Name: {account.Name}\n  Email: {account.Email}\n  UserId: {account.UserId}";
+        }
     }
 }
