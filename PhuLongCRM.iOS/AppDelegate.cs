@@ -35,5 +35,13 @@ namespace PhuLongCRM.iOS
 
             return base.FinishedLaunching(app, options);
         }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            if (Xamarin.Forms.DependencyService.Get<IAppleSignInService>().Callback(url.AbsoluteString))
+                return true;
+
+            return base.OpenUrl(app, url, options);
+        }
     }
 }

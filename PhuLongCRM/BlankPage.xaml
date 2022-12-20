@@ -11,7 +11,8 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <StackLayout x:Name="test" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,100,0,0">
-                <Button Text="CLick me" Clicked="Button_Clicked" BorderColor="Blue"/>
+                <!--<Button Text="CLick me" Clicked="Button_Clicked" BorderColor="Blue"/>-->
+                <controls:AppleSignInButton SignIn="SignIn_Event" ButtonStyle="Black" />
             </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>
