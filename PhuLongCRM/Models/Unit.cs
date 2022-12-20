@@ -22,6 +22,7 @@ namespace PhuLongCRM.Models
         public bool has_event { get { return ( event_id != Guid.Empty && statuscode == 100000000 || event_id != Guid.Empty && statuscode == 100000004) ? true : false; } }
         public string queseid { get; set; }
         public string queses_statuscode { get; set; }
+        public Guid queue_employee_id { get; set; }
         public decimal bsd_constructionarea { get; set; }
         public string bsd_constructionarea_format { get => StringFormatHelper.FormatPercent(bsd_constructionarea); }
         public decimal bsd_netsaleablearea { get; set; }
@@ -37,9 +38,10 @@ namespace PhuLongCRM.Models
 
         private int _numQueses;
         public int NumQueses { get=>_numQueses; set { _numQueses = value; OnPropertyChanged(nameof(NumQueses)); } }
-
         public bool bsd_vippriority { get; set; }
-        
         public DateTime createdon { get; set; }
+
+        private int _numQueueEmployee;
+        public int NumQueueEmployee { get => _numQueueEmployee; set { _numQueueEmployee = value; OnPropertyChanged(nameof(NumQueueEmployee)); } }
     }
 }

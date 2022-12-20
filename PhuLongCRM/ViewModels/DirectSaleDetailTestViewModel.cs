@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -242,6 +243,15 @@ namespace PhuLongCRM.ViewModels
                                             </filter>
                                           </link-entity>
                                         </link-entity>" : "";
+            string isOwner = Filter.isOwner ? $@"<link-entity name='opportunity' from='bsd_units' to='productid' link-type='inner'>
+                                                    <filter type='and'>
+                                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                                        <condition attribute='statuscode' operator='in'>
+                                                            <value>100000000</value>
+                                                            <value>100000002</value>
+                                                        </condition>
+                                                    </filter>
+                                                </link-entity>" : "";
 
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='product'>
@@ -259,6 +269,7 @@ namespace PhuLongCRM.ViewModels
                                 </filter>
                                 <link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='ag' >
                                     <attribute name='statuscode' alias='queses_statuscode'/>
+                                    <attribute name='bsd_employee' alias='queue_employee_id'/>
                                 </link-entity>
                                         <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='asmn'>
                                           <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='atmn'>
@@ -270,6 +281,7 @@ namespace PhuLongCRM.ViewModels
                                           </link-entity>
                                         </link-entity>
                                 {isEvent}
+                                {isOwner}
                               </entity>
                             </fetch>";
 
@@ -286,6 +298,7 @@ namespace PhuLongCRM.ViewModels
             {
                 // dem unit co nhung trang thai giu cho la: queuing, waiting
                 item.NumQueses = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002")).ToList().Count();
+                item.NumQueueEmployee = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002") && x.queue_employee_id == UserLogged.Id).ToList().Count();
                 units.Add(item);
             }
         }
@@ -424,7 +437,7 @@ namespace PhuLongCRM.ViewModels
                                     <order attribute='bsd_constructionarea' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='productid' operator='eq' uitype='product' value='{unitId}' />
-                                    </filter>
+                                     </filter>
                                     <link-entity name='bsd_unittype' from='bsd_unittypeid' to='bsd_unittype' visible='false' link-type='outer' alias='a_493690ec6ce2e811a94e000d3a1bc2d1'>
                                       <attribute name='bsd_name'  alias='bsd_unittype_name'/>
                                     </link-entity>

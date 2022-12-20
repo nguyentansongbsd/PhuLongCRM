@@ -82,6 +82,9 @@ namespace PhuLongCRM.ViewModels
                 }
             }
         }
+        private bool _isOwner;
+        public bool isOwner { get => _isOwner; set { _isOwner = value; OnPropertyChanged(nameof(isOwner)); } }
+        
 
         public DirectSaleViewModel()
         {

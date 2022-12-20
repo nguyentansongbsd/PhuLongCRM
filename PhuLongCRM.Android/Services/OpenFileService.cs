@@ -84,7 +84,7 @@ namespace PhuLongCRM.Droid.Services
                 if (e.Message.Contains("No Activity found to handle Intent"))
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.ResourceManager.GetString("vui_long_cai_dat_ung_dung_co_the_xem_cac_tap_tin_docx", Language.Culture));
+                   // ToastMessageHelper.ShortMessage(Language.ResourceManager.GetString("vui_long_cai_dat_ung_dung_co_the_xem_cac_tap_tin_docx", Language.Culture));
                 }
             }
             LoadingHelper.Hide();

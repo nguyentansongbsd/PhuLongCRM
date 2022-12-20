@@ -123,7 +123,7 @@ namespace PhuLongCRM.Views
                 string views = (viewModel.SelectedViews != null && viewModel.SelectedViews.Count != 0) ? string.Join(",", viewModel.SelectedViews) : null;
                 string unitStatus = (viewModel.SelectedUnitStatus != null && viewModel.SelectedUnitStatus.Count != 0) ? string.Join(",", viewModel.SelectedUnitStatus) : null;
 
-                DirectSaleSearchModel filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent,viewModel.UnitCode, directions,views, unitStatus,viewModel.NetArea?.Id,viewModel.Price?.Id);
+                DirectSaleSearchModel filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent,viewModel.UnitCode, directions,views, unitStatus,viewModel.NetArea?.Id,viewModel.Price?.Id,viewModel.isOwner);
 
                 //DirectSaleDetail directSaleDetail = new DirectSaleDetail(filter);//,viewModel.Blocks
                 //directSaleDetail.OnCompleted = async (Success) =>

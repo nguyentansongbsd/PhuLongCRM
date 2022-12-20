@@ -600,6 +600,44 @@ namespace PhuLongCRM.Views
                 ListToolTip.ToolTips.Add(c);
             }
         }
+
+        private async void Owner_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            viewModel.Blocks = new ObservableCollection<Block>();
+            NeedToRefreshDirectSale = false;
+            if (viewModel.Filter.isOwner)
+            {
+                viewModel.Filter.isOwner = false;
+                menu_icon.Color = Color.Gray;
+            }
+            else
+            {
+                viewModel.Filter.isOwner = true;
+                menu_icon.Color = Color.White;
+            }
+            viewModel.CreateFilterXml();
+            await viewModel.LoadTotalDirectSale();
+
+            if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
+            {
+                NumberUnitInBlock(viewModel.Blocks[0]);
+                if (viewModel.Block.Floors.Count != 0)
+                {
+                    var floor = viewModel.Block.Floors[0];
+                    floor.iShow = true;
+                    await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                    AddToolTip();
+                    SetRealTimeData();
+                }
+            }
+            BindableLayout.SetItemsSource(stackBlocks, viewModel.Blocks);
+            var rd = stackBlocks.Children[0] as RadBorder;
+            var lb = rd.Content as Label;
+            VisualStateManager.GoToState(rd, "Selected");
+            VisualStateManager.GoToState(lb, "Selected");
+            LoadingHelper.Hide();
+        }
     }
     public class QueuesControl : BsdListView
     {
