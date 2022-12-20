@@ -14,5 +14,7 @@ namespace PhuLongCRM.Models
         public Guid manager_id { get; set; }
         public string manager_name { get; set; }
         public DateTime createdon { get; set; }
+        public decimal bsd_numberlogin { get; set; }
+        public DateTime bsd_logindate { get; set; }
     }
 }

@@ -202,15 +202,6 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duong_de_trong_vui_long_kiem_tra_lai_thong_tin);
                 return;
             }
-            if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours > 24)
-            {
-                UserLogged.CountLoginFailed = 0;
-            }
-            if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && UserLogged.CountLoginFailed > 5 && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24)
-            {
-                ToastMessageHelper.ShortMessage(Language.khong_the_dang_nhap_vi_qua_so_lan_cho_phep);
-                return;
-            }
 
             try
             {
@@ -226,21 +217,37 @@ namespace PhuLongCRM.Views
                     EmployeeModel employeeModel = await LoginUser();
                     if (employeeModel != null)
                     {
+                        // lưu để cập nhật và kiểm tra
+                        UserLogged.Id = employeeModel.bsd_employeeid;
+                        UserLogged.NumberLogin = int.Parse(DecaimalToString(employeeModel.bsd_numberlogin));
+                        UserLogged.DateLoginFailed = employeeModel.bsd_logindate.ToString();
+
+                        if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24.0 && UserLogged.NumberLogin >= 5)
+                        {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.khong_the_dang_nhap_vi_qua_so_lan_cho_phep);
+                                return;
+                        }
+                        else
+                        {
+                            if ((DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours > 24.0 && UserLogged.NumberLogin > 0)
+                                UserLogged.NumberLogin = 0;
+                        }
+
                         if (employeeModel.bsd_name != UserName)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
-                            UserLogged.CountLoginFailed++;
-                            UserLogged.DateLoginFailed = DateTime.Now.ToString();
                             return;
                         }
 
                         if (employeeModel.bsd_password != Password)
                         {
+                            UserLogged.NumberLogin++;
+                            UserLogged.DateLoginFailed = DateTime.Now.ToString();
+                            await UpdateNumberLogin();
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
-                            UserLogged.CountLoginFailed++;
-                            UserLogged.DateLoginFailed = DateTime.Now.ToString();
                             return;
                         }
 
@@ -257,7 +264,6 @@ namespace PhuLongCRM.Views
                         //    return;
                         //}
                         
-                        UserLogged.Id = employeeModel.bsd_employeeid;
                         UserLogged.User = employeeModel.bsd_name;
                         UserLogged.Avartar = employeeModel.bsd_avatar;
                         UserLogged.Password = employeeModel.bsd_password;
@@ -268,18 +274,18 @@ namespace PhuLongCRM.Views
                         UserLogged.IsSaveInforUser = checkboxRememberAcc.IsChecked;
                         UserLogged.IsLogged = true;
                         UserLogged.IsLoginByUserCRM = false;
-                        UserLogged.CountLoginFailed = 0;
 
                         Application.Current.MainPage = new AppShell();
-                        await Task.Delay(1);
+                        UserLogged.NumberLogin = 0;
+                        UserLogged.DateLoginFailed = DateTime.Now.ToString();
+                        await UpdateNumberLogin();
+                       // await Task.Delay(1);
                         LoadingHelper.Hide();
                     }
                     else
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
-                        UserLogged.CountLoginFailed++;
-                        UserLogged.DateLoginFailed = DateTime.Now.ToString();
                     }
                 }
             }
@@ -301,6 +307,8 @@ namespace PhuLongCRM.Views
                     <attribute name='bsd_imeinumber' />
                     <attribute name='bsd_manager' />
                     <attribute name='bsd_avatar' />
+                    <attribute name='bsd_numberlogin' />
+                    <attribute name='bsd_logindate' />
                     <order attribute='bsd_name' descending='false' />
                     <filter type='and'>
                       <condition attribute='bsd_name' operator='eq' value='{UserName}' />
@@ -370,6 +378,33 @@ namespace PhuLongCRM.Views
             lbfogotPassword.Text = Language.quen_mat_khau;
             btnLogin.Text = Language.dang_nhap;
             btnLoginUserCRM.Text = Language.dang_nhap_voi_user_crm;
+        }
+        public async Task UpdateNumberLogin()
+        {
+            string path = $"/bsd_employees({UserLogged.Id})";
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data["bsd_numberlogin"] = UserLogged.NumberLogin;
+            if(!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed))
+                data["bsd_logindate"] = DateTime.Parse(UserLogged.DateLoginFailed).ToUniversalTime();
+            CrmApiResponse crmApiResponse = await CrmHelper.PatchData(path, data);
+            if (!crmApiResponse.IsSuccess)
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                return;
+            }
+        }
+        private string DecaimalToString(decimal total)
+        {
+            if (total > 0 && total.ToString().Length > 6)
+            {
+                var format = total.ToString();
+                return format.Split(',')[0];
+            }
+            else
+            {
+                return "0";
+            }
         }
     }
 }
