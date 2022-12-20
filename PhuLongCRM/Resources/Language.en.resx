@@ -3738,4 +3738,7 @@
 	<data name="vuot_qua_so_luong_giu_cho_tren_san_pham_co_the_thuc_hien_trong_hom_nay" xml:space="preserve">
     <value>Exceeding the number of queues per unit today.</value>
   </data>
+	<data name="thuoc_nhan_vien" xml:space="preserve">
+    <value>Created by employee</value>
+  </data>
 </root>

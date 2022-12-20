@@ -30,6 +30,13 @@
             <converter:HidePriceOnDirectSaleConverter x:Key="HidePriceOnDirectSaleConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="Owner_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource x:Name="menu_icon" Glyph="&#xf007;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <AbsoluteLayout>
             <Grid RowDefinitions="Auto,Auto,*" RowSpacing="0" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
@@ -181,12 +188,25 @@
                                                                 <Label Grid.Column="1" Text="*" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" IsVisible="{Binding has_event}" HorizontalTextAlignment="Center"/>
                                                             </Grid>
                                                             <Label FontFamily="FontRobotoMedium" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center">
-                                                                <Label.Text>
+                                                                <!--<Label.Text>
                                                                     <MultiBinding StringFormat="{}{0}: {1}">
                                                                         <Binding Source="{x:Static lang:Language.danh_sach_giu_cho}" />
                                                                         <Binding Path="NumQueses" />
                                                                     </MultiBinding>
-                                                                </Label.Text>
+                                                                </Label.Text>-->
+                                                                <Label.FormattedText>
+                                                                    <FormattedString>
+                                                                        <FormattedString.Spans>
+                                                                            <Span Text="{x:Static lang:Language.danh_sach_giu_cho}" />
+                                                                            <Span Text=": "/>
+                                                                            <Span Text="{Binding NumQueses}"/>
+                                                                            <Span Text=" / "/>
+                                                                            <Span Text="&#xf007; " FontFamily="FontAwesomeSolid" FontSize="15"/>
+                                                                            <Span Text=": "/>
+                                                                            <Span Text="{Binding NumQueueEmployee}"/>
+                                                                        </FormattedString.Spans>
+                                                                    </FormattedString>
+                                                                </Label.FormattedText>
                                                             </Label>
                                                             <Label Text="{Binding price_format,StringFormat='{0} đ'}" IsVisible="{Binding _bsd_phaseslaunchid_value, Converter={StaticResource HidePriceOnDirectSaleConverter}}" TextColor="White" FontFamily="FontRobotoBold" FontSize="20" HorizontalTextAlignment="Center" />
                                                         </StackLayout>
