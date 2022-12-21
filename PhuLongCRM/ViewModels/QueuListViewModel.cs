@@ -129,7 +129,7 @@ namespace PhuLongCRM.ViewModels
             if (FiltersStatus != null && FiltersStatus.Count == 0)
             {
                 FiltersStatus.Add(new OptionSet("-1", Language.tat_ca));
-                var list = QueuesStatusCodeData.GetQueuesByIds("4,100000000,100000002,100000003,100000004,100000008");
+                var list = QueuesStatusCodeData.GetQueuesByIds("100000000,100000002,100000008,4,100000004,100000003");
                 foreach (var item in list)
                 {
                     FiltersStatus.Add(new OptionSet(item.Id, item.Name));

@@ -31,7 +31,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="Owner_Clicked">
+        <ToolbarItem Clicked="Owner_Clicked" x:Name="item">
             <ToolbarItem.IconImageSource>
                 <FontImageSource x:Name="menu_icon" Glyph="&#xf007;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
             </ToolbarItem.IconImageSource>

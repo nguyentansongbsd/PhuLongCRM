@@ -2176,7 +2176,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đã ký TTĐC/ VBTT.
+        ///   Looks up a localized string similar to Đã ký hợp đồng.
         /// </summary>
         internal static string contract_signed_contract_sts {
             get {

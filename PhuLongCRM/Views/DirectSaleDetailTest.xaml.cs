@@ -43,7 +43,6 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await viewModel.LoadTotalDirectSale();
-
             if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
             {
                 var rd = stackBlocks.Children[0] as RadBorder;
