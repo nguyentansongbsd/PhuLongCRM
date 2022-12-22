@@ -2950,6 +2950,24 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đi đến Dự án.
+        /// </summary>
+        internal static string di_den_du_an {
+            get {
+                return ResourceManager.GetString("di_den_du_an", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đi đến Giỏ hàng.
+        /// </summary>
+        internal static string di_den_gio_hang {
+            get {
+                return ResourceManager.GetString("di_den_gio_hang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đi đến Hợp đồng.
         /// </summary>
         internal static string di_den_hop_dong {
@@ -2973,6 +2991,15 @@ namespace PhuLongCRM.Resources {
         internal static string di_den_kh_doanh_nghiep {
             get {
                 return ResourceManager.GetString("di_den_kh_doanh_nghiep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đi đến Khách hàng.
+        /// </summary>
+        internal static string di_den_khach_hang {
+            get {
+                return ResourceManager.GetString("di_den_khach_hang", resourceCulture);
             }
         }
         

@@ -263,5 +263,24 @@ namespace PhuLongCRM.Views
                 ListToolTip.ToolTips.Add(c);
             }
         }
+
+        private async void GotoCustomer_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            await Navigation.PushAsync(new CustomerPage());
+            LoadingHelper.Hide();
+        }
+        private async void GotoProject_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            await Navigation.PushAsync(new ProjectList());
+            LoadingHelper.Hide();
+        }
+        private async void GotoDirectSale_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            await Navigation.PushAsync(new DirectSale());
+            LoadingHelper.Hide();
+        }
     }
 }

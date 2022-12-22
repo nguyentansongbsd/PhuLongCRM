@@ -97,6 +97,37 @@
                                     </telerikChart:RadCartesianChart.GestureRecognizers>-->
                                 </telerikChart:RadCartesianChart>
                         </controls:ExtendedFrame>
+
+                        <Grid ColumnDefinitions="*,*,*" Margin="15,5">
+                            <controls:ExtendedFrame Grid.Column="0" Padding="5">
+                                <Grid RowDefinitions="30,*">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GotoCustomer_Tapped"/>
+                                    </Grid.GestureRecognizers>
+                                    <Label Grid.Row="0" FontFamily="FontAwesomeSolid" FontSize="18" Text="&#xf0c0;" TextColor="#2196F3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    <Label Grid.Row="1" Text="{x:Static lang:Language.di_den_khach_hang}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </Grid>
+                            </controls:ExtendedFrame>
+                            <controls:ExtendedFrame Grid.Column="1" Padding="5">
+                                <Grid RowDefinitions="30,*">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GotoProject_Tapped"/>
+                                    </Grid.GestureRecognizers>
+                                    <Label Grid.Row="0" FontFamily="FontAwesomeSolid" FontSize="18" Text="&#xf64f;" TextColor="#2196F3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    <Label Grid.Row="1" Text="{x:Static lang:Language.di_den_du_an}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </Grid>
+                            </controls:ExtendedFrame>
+                            <controls:ExtendedFrame Grid.Column="2" Padding="5">
+                                <Grid RowDefinitions="30,*">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GotoDirectSale_Tapped"/>
+                                    </Grid.GestureRecognizers>
+                                    <Label Grid.Row="0" FontFamily="FontAwesomeSolid" FontSize="18" Text="&#xf07a;" TextColor="#2196F3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    <Label Grid.Row="1" Text="{x:Static lang:Language.di_den_gio_hang}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                </Grid>
+                            </controls:ExtendedFrame>
+                        </Grid>
+                        
                         <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
                             <Label.FormattedText>
                                 <FormattedString>

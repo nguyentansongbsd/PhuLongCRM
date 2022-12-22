@@ -3741,4 +3741,13 @@
 	<data name="thuoc_nhan_vien" xml:space="preserve">
     <value>Thuộc nhân viên</value>
   </data>
+	<data name="di_den_khach_hang" xml:space="preserve">
+		<value>Đi đến Khách hàng</value>
+	</data>
+	<data name="di_den_du_an" xml:space="preserve">
+		<value>Đi đến Dự án</value>
+	</data>
+	<data name="di_den_gio_hang" xml:space="preserve">
+		<value>Đi đến Giỏ hàng</value>
+	</data>
 </root>

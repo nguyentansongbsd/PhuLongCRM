@@ -3741,4 +3741,13 @@
 	<data name="thuoc_nhan_vien" xml:space="preserve">
     <value>Created by employee</value>
   </data>
+	<data name="di_den_khach_hang" xml:space="preserve">
+		<value>Go to Customer</value>
+	</data>
+	<data name="di_den_du_an" xml:space="preserve">
+		<value>Go to Project</value>
+	</data>
+	<data name="di_den_gio_hang" xml:space="preserve">
+		<value>Go to Direct Sale</value>
+	</data>
 </root>
