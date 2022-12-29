@@ -2799,10 +2799,10 @@
 	<data name="xac_nhan_ma_otp">
 		<value>Validate OTP</value>
 	</data>
-	<data name="otp_duoc_gui_ve_so_dien_thoai">
+	<data name="ma_otp_duoc_gui_ve_so_dien_thoai">
 		<value>OTP has been sent to</value>
 	</data>
-	<data name="vui_long_nhap_otp_de_xac_nhan_tai_khoan">
+	<data name="vui_long_nhap_ma_otp_de_xac_nhan_tai_khoan">
 		<value>Please enter the OTP to verify your account.</value>
 	</data>
 	<data name="ban_chua_nhan_duoc_ma_gui_lai">
@@ -3687,13 +3687,13 @@
   <data name="so_dien_thoai_khong_dung_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
     <value>The phone number is incorrect. Please check the information again.</value>
   </data>
-  <data name="otp_se_het_han_sau" xml:space="preserve">
+  <data name="ma_otp_se_het_han_sau" xml:space="preserve">
     <value>The OTP will expire after</value>
   </data>
   <data name="giay" xml:space="preserve">
     <value>seccond</value>
   </data>
-  <data name="otp_da_het_han" xml:space="preserve">
+  <data name="ma_otp_da_het_han" xml:space="preserve">
     <value>OTP has expired</value>
   </data>
   <data name="khong_the_dang_nhap_vi_qua_so_lan_cho_phep" xml:space="preserve">
@@ -3750,4 +3750,13 @@
 	<data name="di_den_gio_hang" xml:space="preserve">
 		<value>Go to Direct Sale</value>
 	</data>
+	<data name="tai_khoan_hoac_so_dien_thoai_da_nhap_khong_dung_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>User name or phone number is incorrect. Please check the information again.</value>
+  </data>
+	<data name="tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong" xml:space="preserve">
+    <value>Your account has been locked. Please contact the system management.</value>
+  </data>
+	<data name="phan_bo" xml:space="preserve">
+    <value>Allocation</value>
+  </data>
 </root>

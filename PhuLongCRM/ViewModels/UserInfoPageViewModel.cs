@@ -202,10 +202,14 @@ namespace PhuLongCRM.ViewModels
 
             if (AddressContact != null && !string.IsNullOrWhiteSpace(AddressContact.lineaddress))
             {
-                if(!string.IsNullOrWhiteSpace(AddressContact.address))
-                    data["bsd_contactaddress"] = AddressContact.address;
                 if (!string.IsNullOrWhiteSpace(AddressContact.lineaddress))
                     data["bsd_housenumberstreet"] = AddressContact.lineaddress;
+                if (!string.IsNullOrWhiteSpace(AddressContact.lineaddress_en))
+                    data["bsd_housenumber"] = AddressContact.lineaddress_en;
+                if (!string.IsNullOrWhiteSpace(AddressContact.address))
+                    data["bsd_contactaddress"] = AddressContact.address;
+                if (!string.IsNullOrWhiteSpace(AddressContact.address_en))
+                    data["bsd_diachi"] = AddressContact.address_en;
 
                 if (AddressContact.country_id != Guid.Empty)
                     data["bsd_country@odata.bind"] = "/bsd_countries(" + AddressContact.country_id + ")";

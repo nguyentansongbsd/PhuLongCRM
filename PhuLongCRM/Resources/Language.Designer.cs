@@ -439,11 +439,29 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Biểu đồ các giao dịch 4 tháng gần nhất. .
+        /// </summary>
+        internal static string bieu_do_giao_dich_4_thang_gan_nhat_ {
+            get {
+                return ResourceManager.GetString("bieu_do_giao_dich_4_thang_gan_nhat_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Biểu đồ hoa hồng 4 tháng gần nhất..
         /// </summary>
         internal static string bieu_do_hoa_hong_4_thang_gan_nhat {
             get {
                 return ResourceManager.GetString("bieu_do_hoa_hong_4_thang_gan_nhat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biểu đồ hoa hồng 4 tháng gần nhất. .
+        /// </summary>
+        internal static string bieu_do_hoa_hong_4_thang_gan_nhat_ {
+            get {
+                return ResourceManager.GetString("bieu_do_hoa_hong_4_thang_gan_nhat_", resourceCulture);
             }
         }
         
@@ -5704,6 +5722,33 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã OTP đã hết hạn.
+        /// </summary>
+        internal static string ma_otp_da_het_han {
+            get {
+                return ResourceManager.GetString("ma_otp_da_het_han", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã OTP được gửi về số điện thoại.
+        /// </summary>
+        internal static string ma_otp_duoc_gui_ve_so_dien_thoai {
+            get {
+                return ResourceManager.GetString("ma_otp_duoc_gui_ve_so_dien_thoai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã OTP sẽ hết hạn sau.
+        /// </summary>
+        internal static string ma_otp_se_het_han_sau {
+            get {
+                return ResourceManager.GetString("ma_otp_se_het_han_sau", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mã QR không đúng..
         /// </summary>
         internal static string ma_qr_khong_dung {
@@ -7190,38 +7235,20 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OTP đã hết hạn.
-        /// </summary>
-        internal static string otp_da_het_han {
-            get {
-                return ResourceManager.GetString("otp_da_het_han", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OTP được gửi về số điện thoại.
-        /// </summary>
-        internal static string otp_duoc_gui_ve_so_dien_thoai {
-            get {
-                return ResourceManager.GetString("otp_duoc_gui_ve_so_dien_thoai", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OTP sẽ hết hạn sau.
-        /// </summary>
-        internal static string otp_se_het_han_sau {
-            get {
-                return ResourceManager.GetString("otp_se_het_han_sau", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Phạm vi hoạt động.
         /// </summary>
         internal static string pham_vi_hoat_dong {
             get {
                 return ResourceManager.GetString("pham_vi_hoat_dong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phân bổ.
+        /// </summary>
+        internal static string phan_bo {
+            get {
+                return ResourceManager.GetString("phan_bo", resourceCulture);
             }
         }
         
@@ -8140,6 +8167,24 @@ namespace PhuLongCRM.Resources {
         internal static string tai_khoan {
             get {
                 return ResourceManager.GetString("tai_khoan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tài khoản đăng nhập đã bị khóa. Vui lòng liên hệ Quản trị hệ thống..
+        /// </summary>
+        internal static string tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong {
+            get {
+                return ResourceManager.GetString("tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tài khoản hoặc số điện thoại đã nhập không đúng. Vui lòng kiểm tra lại thông tin..
+        /// </summary>
+        internal static string tai_khoan_hoac_so_dien_thoai_da_nhap_khong_dung_vui_long_kiem_tra_lai_thong_tin {
+            get {
+                return ResourceManager.GetString("tai_khoan_hoac_so_dien_thoai_da_nhap_khong_dung_vui_long_kiem_tra_lai_thong_tin", resourceCulture);
             }
         }
         
@@ -10511,6 +10556,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vui lòng nhập mã OTP để xác nhận tài khoản..
+        /// </summary>
+        internal static string vui_long_nhap_ma_otp_de_xac_nhan_tai_khoan {
+            get {
+                return ResourceManager.GetString("vui_long_nhap_ma_otp_de_xac_nhan_tai_khoan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vui lòng nhập mật khẩu.
         /// </summary>
         internal static string vui_long_nhap_mat_khau {
@@ -10552,15 +10606,6 @@ namespace PhuLongCRM.Resources {
         internal static string vui_long_nhap_mo_ta_vn {
             get {
                 return ResourceManager.GetString("vui_long_nhap_mo_ta_vn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vui lòng nhập OTP để xác nhận tài khoản..
-        /// </summary>
-        internal static string vui_long_nhap_otp_de_xac_nhan_tai_khoan {
-            get {
-                return ResourceManager.GetString("vui_long_nhap_otp_de_xac_nhan_tai_khoan", resourceCulture);
             }
         }
         

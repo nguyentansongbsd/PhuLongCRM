@@ -120,20 +120,21 @@ namespace PhuLongCRM.Views
             }
             else if (viewModel.KeySort == "3")
             {
-                viewModel.Status_sort = !viewModel.Status_sort;
-                if (viewModel.Status_sort)
+                viewModel.Allocation_sort = !viewModel.Allocation_sort;
+                if (viewModel.Allocation_sort)
                 {
-                    icon_status.Text = "\uf15d";
-                    label_status.Text = Language.tinh_trang_a_z;
+                    icon_phanbo.IsChecked = true;
+                    label_status.TextColor = Color.FromHex("1399D5");
+                    label_rating.TextColor = Color.FromHex("444444");
+                    label_createon.TextColor = Color.FromHex("444444");
                 }
                 else
                 {
-                    icon_status.Text = "\uf882";
-                    label_status.Text = Language.tinh_trang_z_a;
+                    icon_phanbo.IsChecked = false;
+                    label_status.TextColor = Color.FromHex("444444");
+                    label_rating.TextColor = Color.FromHex("444444");
+                    label_createon.TextColor = Color.FromHex("444444");
                 }
-                label_status.TextColor = Color.FromHex("1399D5");
-                label_rating.TextColor = Color.FromHex("444444");
-                label_createon.TextColor = Color.FromHex("444444");
             }
             await viewModel.LoadOnRefreshCommandAsync();
             SortView.IsVisible = false;

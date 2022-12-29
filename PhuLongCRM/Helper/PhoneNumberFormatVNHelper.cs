@@ -12,7 +12,9 @@ namespace PhuLongCRM.Helper
         {
             if (string.IsNullOrWhiteSpace(phone))
                 return false;
-            string strRegex = "^0+[^1246]+\\d{8}";
+            if (phone.Contains("+84-"))
+                phone = phone.Replace("+84-", string.Empty);
+            string strRegex = "^0+[^0146]+\\d{8}";
             Regex re = new Regex(strRegex);
             if (re.IsMatch(phone))
                 return true;

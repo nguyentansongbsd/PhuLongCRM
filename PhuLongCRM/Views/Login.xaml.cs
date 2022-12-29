@@ -225,7 +225,7 @@ namespace PhuLongCRM.Views
                         if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24.0 && UserLogged.NumberLogin >= 5)
                         {
                                 LoadingHelper.Hide();
-                                ToastMessageHelper.ShortMessage(Language.khong_the_dang_nhap_vi_qua_so_lan_cho_phep);
+                                ToastMessageHelper.ShortMessage(Language.tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong);
                                 return;
                         }
                         else
@@ -399,7 +399,10 @@ namespace PhuLongCRM.Views
             if (total > 0 && total.ToString().Length > 6)
             {
                 var format = total.ToString();
-                return format.Split(',')[0];
+                if(format.Contains(','))
+                    return format.Split(',')[0];
+                else
+                    return format.Split('.')[0];
             }
             else
             {

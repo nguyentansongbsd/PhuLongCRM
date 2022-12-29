@@ -17,11 +17,11 @@
                         <Label Grid.Row="0" x:Name="lblTitle" FontSize="16" TextColor="Black" HorizontalTextAlignment="Center">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="{x:Static lang:Language.otp_duoc_gui_ve_so_dien_thoai}" />
+                                    <Span Text="{x:Static lang:Language.ma_otp_duoc_gui_ve_so_dien_thoai}" />
                                     <Span Text=" " />
-                                    <Span x:Name="LblPhone" FontFamily="SegoeBold" TextColor="DarkGreen"/>
+                                    <Span Text="{Binding Phone}" FontFamily="SegoeBold" TextColor="DarkGreen"/>
                                     <Span Text=". " />
-                                    <Span Text="{x:Static lang:Language.vui_long_nhap_otp_de_xac_nhan_tai_khoan}"/>
+                                    <Span Text="{x:Static lang:Language.vui_long_nhap_ma_otp_de_xac_nhan_tai_khoan}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -48,7 +48,7 @@
                             <Label x:Name="lblTimeRemaining" FontSize="15" HorizontalTextAlignment="Center" >
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="{x:Static lang:Language.otp_se_het_han_sau}" TextColor="#333333"/>
+                                        <Span Text="{x:Static lang:Language.ma_otp_se_het_han_sau}" TextColor="#333333"/>
                                         <Span Text=" " />
                                         <Span Text="{Binding TimeRemaining}" TextColor="Red" FontAttributes="Bold"/>
                                         <Span Text=" " />
@@ -56,7 +56,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <Label x:Name="lblOTPExpired" Text="{x:Static lang:Language.otp_da_het_han}" IsVisible="false" FontSize="15" TextColor="#333333" HorizontalTextAlignment="Center"/>
+                            <Label x:Name="lblOTPExpired" Text="{x:Static lang:Language.ma_otp_da_het_han}" IsVisible="false" FontSize="15" TextColor="#333333" HorizontalTextAlignment="Center"/>
                         </Grid>
 
                         <Grid Grid.Row="3" Margin="0,5,0,10" ColumnDefinitions="*,*" RowDefinitions="40">

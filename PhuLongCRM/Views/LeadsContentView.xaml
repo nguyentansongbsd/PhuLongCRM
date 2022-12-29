@@ -93,13 +93,13 @@
                             </Label.GestureRecognizers>
                         </Label>
                         <Label x:Name="icon_rating" Text="&#xf15d;" TextColor="#0DB302" FontFamily="FontAwesomeSolid" FontSize="22" Grid.Column="0" Grid.Row="2" VerticalOptions="Center" Margin="25,0"/>
-                      
-                        <Label x:Name="label_status" Text="{x:Static lang:Language.tinh_trang_a_z}" TextColor="#444444" BackgroundColor="White" FontSize="15" Grid.Column="0" Grid.ColumnSpan="2" Padding="60,10,0,10" Grid.Row="4">
+
+                        <Label x:Name="label_status" Text="{x:Static lang:Language.phan_bo}" TextColor="#444444" BackgroundColor="White" FontSize="15" Grid.Column="0" Grid.ColumnSpan="2" Padding="60,10,0,10" Grid.Row="4">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="SelectSort_Tapped" CommandParameter="3"/>
                             </Label.GestureRecognizers>
                         </Label>
-                        <Label x:Name="icon_status" Text="&#xf15d;" TextColor="#D42A16" FontFamily="FontAwesomeSolid" FontSize="22" Grid.Column="0" Grid.Row="4" VerticalOptions="Center" Margin="25,0"/>
+                        <telerikPrimitives:RadCheckBox x:Name="icon_phanbo" CheckedColor="{StaticResource NavigationPrimary}" Grid.Column="0" Grid.Row="4" VerticalOptions="Center" Margin="25,0"/>
                     </Grid>
                 </telerikPrimitives:RadBorder>
             </StackLayout>

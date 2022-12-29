@@ -19,8 +19,12 @@ namespace PhuLongCRM.Views
 
         private List<OTPModel> OTPList { get; set; }
         public Action<bool> OnCompeleted;
-        private string Phone { get; set; }
+
+        private string _phone;
+        public string Phone { get => _phone; set { _phone = value; OnPropertyChanged(nameof(Phone)); } }
+        
         private OTPModel OTP { get; set; }
+
         private string fireBaseDb = "PhuLongOTPDb";
 
         private int _timeRemaing = 60;

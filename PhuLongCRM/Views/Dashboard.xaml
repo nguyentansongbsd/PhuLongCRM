@@ -38,7 +38,7 @@
                         </Label>
                         <Grid x:Name="gridHoaHong" ColumnDefinitions="*,*" Margin="14,6">
                             <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center"
-                                                    effects:TooltipEffect.Position="Bottom" 
+                                                    effects:TooltipEffect.Position="BottomRight" 
                                            effects:TooltipEffect.BackgroundColor="#90000000" 
                                            effects:TooltipEffect.TextColor="White"
                                            effects:TooltipEffect.HasTooltip="True"
@@ -60,14 +60,10 @@
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
-                        <controls:ExtendedFrame x:Name="gridHoaHongChart" Margin="14,6" Padding="8">
-                            <telerikChart:RadCartesianChart HeightRequest="250" IsTabStop="True" 
-                                                            effects:TooltipEffect.Position="Bottom" 
-                                           effects:TooltipEffect.BackgroundColor="#90000000" 
-                                           effects:TooltipEffect.TextColor="White"
-                                           effects:TooltipEffect.HasTooltip="True"
-                                           effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_hoa_hong_4_thang_gan_nhat}">
-                                    <telerikChart:RadCartesianChart.ChartBehaviors>
+                        <controls:ExtendedFrame Margin="14,6" Padding="8">
+                            <Grid ColumnDefinitions="*,*" x:Name="gridHoaHongChart">
+                                <telerikChart:RadCartesianChart Grid.Column="0" Grid.ColumnSpan="2" HeightRequest="250">
+                                        <telerikChart:RadCartesianChart.ChartBehaviors>
                                         <telerikChart:ChartSelectionBehavior DataPointSelectionMode="None" SeriesSelectionMode="Single" />
                                     </telerikChart:RadCartesianChart.ChartBehaviors>
                                     <telerikChart:RadCartesianChart.HorizontalAxis>
@@ -96,6 +92,19 @@
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BieuDo_Hover_Tapped"/>
                                     </telerikChart:RadCartesianChart.GestureRecognizers>-->
                                 </telerikChart:RadCartesianChart>
+                                <Grid Grid.Column="0" IsTabStop="True"
+                                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_hoa_hong_4_thang_gan_nhat}"/>
+                                <Grid Grid.Column="1" IsTabStop="True"
+                                           effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_hoa_hong_4_thang_gan_nhat_}"/>
+                            </Grid>
                         </controls:ExtendedFrame>
 
                         <Grid ColumnDefinitions="*,*,*" Margin="15,5">
@@ -138,7 +147,7 @@
                         </Label>
                         <Grid x:Name="gridGiaoDich" ColumnDefinitions="*,*,*,*" Margin="14,6" ColumnSpacing="8">
                             <controls:ExtendedFrame Grid.Column="0" Padding="0"
-                                                    effects:TooltipEffect.Position="Bottom" 
+                                                    effects:TooltipEffect.Position="BottomRight" 
                                            effects:TooltipEffect.BackgroundColor="#90000000" 
                                            effects:TooltipEffect.TextColor="White"
                                            effects:TooltipEffect.HasTooltip="True"
@@ -149,7 +158,7 @@
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="0"
-                                                    effects:TooltipEffect.Position="Bottom" 
+                                                    effects:TooltipEffect.Position="BottomRight" 
                                            effects:TooltipEffect.BackgroundColor="#90000000" 
                                            effects:TooltipEffect.TextColor="White"
                                            effects:TooltipEffect.HasTooltip="True"
@@ -182,30 +191,39 @@
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
-                        <controls:ExtendedFrame x:Name="gridGiaoDichChart" Padding="8" Margin="14,6">
-                            <telerikChart:RadCartesianChart  HeightRequest="250" IsTabStop="True"
-                                                             effects:TooltipEffect.Position="Bottom" 
+                        <controls:ExtendedFrame Padding="8" Margin="14,6">
+                            <Grid x:Name="gridGiaoDichChart" ColumnDefinitions="*,*">
+                                <telerikChart:RadCartesianChart  HeightRequest="250" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <telerikChart:RadCartesianChart.HorizontalAxis>
+                                        <telerikChart:CategoricalAxis LineColor="#A9A9A9" MajorTickThickness="2" PlotMode="BetweenTicks" LabelFitMode="MultiLine" ShowLabels="True" MajorTickBackgroundColor="#A9A9A9" />
+                                    </telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:RadCartesianChart.VerticalAxis>
+                                        <telerikChart:NumericalAxis Minimum="0" Maximum="30" MajorStep="5" LineColor="#A9A9A9" />
+                                    </telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:RadCartesianChart.Grid>
+                                        <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
+                                    </telerikChart:RadCartesianChart.Grid>
+
+                                    <telerikChart:RadCartesianChart.Series>
+                                        <telerikChart:LineSeries Stroke="#2196F3" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQueue}" />
+                                        <telerikChart:LineSeries Stroke="#FA7803" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQuote}" />
+                                        <telerikChart:LineSeries Stroke="#0DB302" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthOptionEntry}" />
+                                        <telerikChart:LineSeries Stroke="#D42A16" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthUnit}" />
+                                    </telerikChart:RadCartesianChart.Series>
+                                </telerikChart:RadCartesianChart>
+                                <Grid Grid.Column="0" IsTabStop="True"
+                                           effects:TooltipEffect.Position="BottomRight" 
                                            effects:TooltipEffect.BackgroundColor="#90000000" 
                                            effects:TooltipEffect.TextColor="White"
                                            effects:TooltipEffect.HasTooltip="True"
-                                           effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_giao_dich_4_thang_gan_nhat}">
-                                <telerikChart:RadCartesianChart.HorizontalAxis>
-                                    <telerikChart:CategoricalAxis LineColor="#A9A9A9" MajorTickThickness="2" PlotMode="BetweenTicks" LabelFitMode="MultiLine" ShowLabels="True" MajorTickBackgroundColor="#A9A9A9" />
-                                </telerikChart:RadCartesianChart.HorizontalAxis>
-                                <telerikChart:RadCartesianChart.VerticalAxis>
-                                    <telerikChart:NumericalAxis Minimum="0" Maximum="30" MajorStep="5" LineColor="#A9A9A9" />
-                                </telerikChart:RadCartesianChart.VerticalAxis>
-                                <telerikChart:RadCartesianChart.Grid>
-                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="Y" MajorLineThickness="1"/>
-                                </telerikChart:RadCartesianChart.Grid>
-
-                                <telerikChart:RadCartesianChart.Series>
-                                    <telerikChart:LineSeries Stroke="#2196F3" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQueue}" />
-                                    <telerikChart:LineSeries Stroke="#FA7803" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthQuote}" />
-                                    <telerikChart:LineSeries Stroke="#0DB302" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthOptionEntry}" />
-                                    <telerikChart:LineSeries Stroke="#D42A16" StrokeThickness="2" ValueBinding="Value" CategoryBinding="Category" ItemsSource="{Binding DataMonthUnit}" />
-                                </telerikChart:RadCartesianChart.Series>
-                            </telerikChart:RadCartesianChart>
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_giao_dich_4_thang_gan_nhat}"/>
+                                <Grid Grid.Column="1" IsTabStop="True"
+                                           effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_giao_dich_4_thang_gan_nhat_}"/>
+                            </Grid>
                         </controls:ExtendedFrame>
 
                         <Label Text="{x:Static lang:Language.khach_hang_tiem_nang}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>

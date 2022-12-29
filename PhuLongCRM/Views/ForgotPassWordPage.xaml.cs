@@ -61,14 +61,14 @@ namespace PhuLongCRM.Views
 
             if (viewModel.Employee == null)
             {
-                ToastMessageHelper.ShortMessage(Language.user_name_khong_dung);
+                ToastMessageHelper.ShortMessage(Language.tai_khoan_hoac_so_dien_thoai_da_nhap_khong_dung_vui_long_kiem_tra_lai_thong_tin);
                 LoadingHelper.Hide();
                 return;
             }
 
             if (viewModel.Employee.contact_phone != viewModel.Phone.Replace("+","").Replace("-",""))
             {
-                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_dung_vui_long_kiem_tra_lai_thong_tin);
+                ToastMessageHelper.ShortMessage(Language.tai_khoan_hoac_so_dien_thoai_da_nhap_khong_dung_vui_long_kiem_tra_lai_thong_tin);
                 LoadingHelper.Hide();
                 return;
             }

@@ -23,6 +23,7 @@ namespace PhuLongCRM.Controls
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(AddressModel), typeof(LookUpAddress), null, BindingMode.TwoWay, propertyChanged: SelectedItemChang);
 
         public AddressModel SelectedItem { get => (AddressModel)GetValue(SelectedItemProperty); set { SetValue(SelectedItemProperty, value); } }
+        public bool RequiredAddress { get; set; } = false;
         public BottomModal BottomModal { get; set; }
         public CenterModal CenterModal { get; set; }
 
@@ -181,9 +182,18 @@ namespace PhuLongCRM.Controls
             lookUpDistrict.NameDisplay = "Name";
             stackLayoutMain.Children.Add(lookUpDistrict);
 
-            FormLabel lbLineAddress = new FormLabel();
-            lbLineAddress.Text = Language.so_nha_duong_phuong;
-            stackLayoutMain.Children.Add(lbLineAddress);
+            if (RequiredAddress)
+            {
+                FormLabelRequired lbLineAddress = new FormLabelRequired();
+                lbLineAddress.Text = Language.so_nha_duong_phuong;
+                stackLayoutMain.Children.Add(lbLineAddress);
+            }
+            else
+            {
+                FormLabel lbLineAddress = new FormLabel();
+                lbLineAddress.Text = Language.so_nha_duong_phuong;
+                stackLayoutMain.Children.Add(lbLineAddress);
+            }
 
             MainEntry lineaddress = new MainEntry();
             lineaddress.BindingContext = this;
@@ -444,6 +454,14 @@ namespace PhuLongCRM.Controls
         }
         private async void ConfirmAddress_Clicked(object sender, EventArgs e)
         {
+            if (RequiredAddress)
+            {
+                if(string.IsNullOrWhiteSpace(LineAddress))
+                {
+                    ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_nha_duong_phuong);
+                    return;
+                }
+            }
             List<string> _address = new List<string>();
             List<string> _address_en = new List<string>();
             SelectedItem = new AddressModel();
@@ -473,8 +491,7 @@ namespace PhuLongCRM.Controls
                 SelectedItem.lineaddress = LineAddress;
                 SelectedItem.lineaddress_en = LineAddress;
                 _address.Add(SelectedItem.lineaddress);
-                if (!string.IsNullOrWhiteSpace(SelectedItem.lineaddress_en))
-                    _address_en.Add(SelectedItem.lineaddress_en);
+                _address_en.Add(SelectedItem.lineaddress_en);
                 hasValue = true;
             }
 

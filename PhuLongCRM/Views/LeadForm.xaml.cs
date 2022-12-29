@@ -303,6 +303,10 @@ namespace PhuLongCRM.Views
                 {
                     ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 }
+                else if (!PhoneNumberFormatVNHelper.CheckValidate(phone))
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                }
                 else
                 {
                     bool isValidPhoneNum = await viewModel.CheckIsValidPhone(phone);
@@ -325,6 +329,10 @@ namespace PhuLongCRM.Views
                 if (phone.Length != 10)
                 {
                     ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
+                else if (!PhoneNumberFormatVNHelper.CheckValidate(phone) && phone.Length == 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 }
             }
         }
@@ -352,6 +360,21 @@ namespace PhuLongCRM.Views
             if (!string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone) && viewModel.singleLead.mobilephone.Length != 14)
             {
                 ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.mobilephone) && !PhoneNumberFormatVNHelper.CheckValidate(viewModel.singleLead.mobilephone))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                return;
+            }
+            if (!string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1) && viewModel.singleLead.telephone1.Length != 14 && viewModel.singleLead.telephone1.Length > 4)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
+            else if (!string.IsNullOrWhiteSpace(viewModel.singleLead.telephone1) && !PhoneNumberFormatVNHelper.CheckValidate(viewModel.singleLead.telephone1) && viewModel.singleLead.telephone1.Length == 14)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 return;
             }
 

@@ -11,7 +11,8 @@ namespace PhuLongCRM.IServices
         Left,
         Right,
         BottomRight,
-        BottomLeft
+        BottomLeft,
+        BottomCenter
     }
     public static class TooltipEffect
     {

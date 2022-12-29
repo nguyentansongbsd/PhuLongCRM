@@ -2799,11 +2799,11 @@
 	<data name="xac_nhan_ma_otp">
 		<value>Xác nhận mã OTP</value>
 	</data>
-	<data name="otp_duoc_gui_ve_so_dien_thoai" xml:space="preserve">
-    <value>OTP được gửi về số điện thoại</value>
+	<data name="ma_otp_duoc_gui_ve_so_dien_thoai" xml:space="preserve">
+    <value>Mã OTP được gửi về số điện thoại</value>
   </data>
-	<data name="vui_long_nhap_otp_de_xac_nhan_tai_khoan" xml:space="preserve">
-    <value>Vui lòng nhập OTP để xác nhận tài khoản.</value>
+	<data name="vui_long_nhap_ma_otp_de_xac_nhan_tai_khoan" xml:space="preserve">
+    <value>Vui lòng nhập mã OTP để xác nhận tài khoản.</value>
   </data>
 	<data name="ban_chua_nhan_duoc_ma_gui_lai" xml:space="preserve">
     <value>Bạn chưa nhận được mã ? Gửi lại</value>
@@ -3687,14 +3687,14 @@
   <data name="so_dien_thoai_khong_dung_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
     <value>Số điện thoại không đúng. Vui lòng kiểm tra lại thông tin.</value>
   </data>
-  <data name="otp_se_het_han_sau" xml:space="preserve">
-    <value>OTP sẽ hết hạn sau</value>
+  <data name="ma_otp_se_het_han_sau" xml:space="preserve">
+    <value>Mã OTP sẽ hết hạn sau</value>
   </data>
   <data name="giay" xml:space="preserve">
     <value>giây</value>
   </data>
-  <data name="otp_da_het_han" xml:space="preserve">
-    <value>OTP đã hết hạn</value>
+  <data name="ma_otp_da_het_han" xml:space="preserve">
+    <value>Mã OTP đã hết hạn</value>
   </data>
   <data name="khong_the_dang_nhap_vi_qua_so_lan_cho_phep" xml:space="preserve">
     <value>Không thể đăng nhập. Vì quá số lần cho phép.</value>
@@ -3750,4 +3750,19 @@
 	<data name="di_den_gio_hang" xml:space="preserve">
 		<value>Đi đến Giỏ hàng</value>
 	</data>
+	<data name="bieu_do_hoa_hong_4_thang_gan_nhat_" xml:space="preserve">
+    <value>Biểu đồ hoa hồng 4 tháng gần nhất. </value>
+  </data>
+	<data name="bieu_do_giao_dich_4_thang_gan_nhat_" xml:space="preserve">
+    <value>Biểu đồ các giao dịch 4 tháng gần nhất. </value>
+  </data>
+	<data name="tai_khoan_hoac_so_dien_thoai_da_nhap_khong_dung_vui_long_kiem_tra_lai_thong_tin" xml:space="preserve">
+    <value>Tài khoản hoặc số điện thoại đã nhập không đúng. Vui lòng kiểm tra lại thông tin.</value>
+  </data>
+	<data name="tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong" xml:space="preserve">
+    <value>Tài khoản đăng nhập đã bị khóa. Vui lòng liên hệ Quản trị hệ thống.</value>
+  </data>
+	<data name="phan_bo" xml:space="preserve">
+    <value>Phân bổ</value>
+  </data>
 </root>
