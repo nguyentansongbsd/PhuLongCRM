@@ -61,10 +61,10 @@
                     <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_ma_so_thue}" Text="{Binding singleAccount.bsd_vatregistrationnumber}" FontSize="15" IsEnabled="{Binding IsOfficial}" Margin="10,0" />
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_lien_lac}" Margin="10,10,10,0"/>
-                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" Margin="10,0" />
+                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" Margin="10,0" RequiredAddress="True"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.dia_chi_tru_so_chinh}" Margin="10,10,10,0"/>
-                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_tru_so_chinh}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" Margin="10,0" />
+                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_tru_so_chinh}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" Margin="10,0" RequiredAddress="True"/>
                     <!--<controls:MainEntry Text="{Binding singleAccount.bsd_permanentaddress1}" Placeholder="Chọn địa chỉ trụ sở chính" FontSize="15"/>-->
 
                     <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">

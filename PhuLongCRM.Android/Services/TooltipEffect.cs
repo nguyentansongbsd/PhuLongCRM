@@ -39,27 +39,31 @@ namespace PhuLongCRM.Droid.Services
                 switch (position)
                 {
                     case TooltipPosition.Top:
-                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(80, ' '), ToolTip.PositionAbove);
+                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(160, ' '), ToolTip.PositionAbove);
                         builder.SetAlign(ToolTip.AlignLeft);
                         break;
                     case TooltipPosition.Left:
-                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(80, ' '), ToolTip.PositionLeftTo);
+                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(160, ' '), ToolTip.PositionLeftTo);
                         builder.SetAlign(ToolTip.AlignLeft);
                         break;
                     case TooltipPosition.Right:
-                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(80, ' '), ToolTip.PositionRightTo);
+                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(160, ' '), ToolTip.PositionRightTo);
                         builder.SetAlign(ToolTip.AlignLeft);
                         break;
                     case TooltipPosition.BottomRight:
-                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(80, ' '), ToolTip.PositionBelow);
+                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(160, ' '), ToolTip.PositionBelow);
                         builder.SetAlign(ToolTip.AlignRight);
                         break;
                     case TooltipPosition.BottomLeft:
-                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(80, ' '), ToolTip.PositionBelow);
+                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(160, ' '), ToolTip.PositionBelow);
                         builder.SetAlign(ToolTip.AlignLeft);
                         break;
+                    case TooltipPosition.BottomCenter:
+                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(160, ' '), ToolTip.PositionBelow);
+                        builder.SetAlign(ToolTip.AlignCenter);
+                        break;
                     default:
-                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(80, ' '), ToolTip.PositionBelow);
+                        builder = new ToolTip.Builder(control.Context, control, parentContent as ViewGroup, text.PadRight(160, ' '), ToolTip.PositionBelow);
                         builder.SetAlign(ToolTip.AlignLeft);
                         break;
                 }

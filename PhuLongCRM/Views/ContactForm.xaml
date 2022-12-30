@@ -79,10 +79,10 @@
                                 <!--<controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_dien_thoai_kinh_doanh}" Text="{Binding singleContact.telephone1}" FontSize="15" Keyboard="Numeric" IsEnabled="{Binding IsOfficial}"/>-->
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_lien_lac}" Margin="0,10,0,0"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" RequiredAddress="True"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_thuong_tru}" Margin="0,10,0,0"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" RequiredAddress="True"/>
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
                     </telerikPrimitives:RadExpander>

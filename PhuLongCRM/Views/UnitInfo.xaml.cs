@@ -20,6 +20,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshQueue = null;
         public static bool? NeedToRefreshQuotation = null;
         public static bool? NeedToRefreshReservation = null;
+        public static bool? NeedToRefresh = null;
         private UnitInfoViewModel viewModel;
 
         public UnitInfo(Guid id)
@@ -29,6 +30,7 @@ namespace PhuLongCRM.Views
             NeedToRefreshQueue = false;
             NeedToRefreshQuotation = false;
             NeedToRefreshReservation = false;
+            NeedToRefresh = false;
             viewModel.UnitId = id;
             Init();
         }
@@ -107,6 +109,48 @@ namespace PhuLongCRM.Views
                 viewModel.list_danhsachdatcoc.Clear();
                 await viewModel.LoadDanhSachDatCoc();
                 NeedToRefreshReservation = false;
+                LoadingHelper.Hide();
+            }
+            if (NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadUnit();
+                await viewModel.CheckShowBtnBangTinhGia();
+                if (viewModel.UnitInfo != null)
+                {
+                    viewModel.StatusCode = StatusCodeUnit.GetStatusCodeById(viewModel.UnitInfo.statuscode.ToString());
+                    if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_direction))
+                    {
+                        viewModel.Direction = DirectionData.GetDiretionById(viewModel.UnitInfo.bsd_direction);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(viewModel.UnitInfo.bsd_viewphulong))
+                    {
+                        viewModel.View = ViewData.GetViewByIds(viewModel.UnitInfo.bsd_viewphulong);
+                    }
+
+                    if (viewModel.UnitInfo.statuscode == 1 || viewModel.UnitInfo.statuscode == 100000000 || viewModel.UnitInfo.statuscode == 100000004 || viewModel.UnitInfo.statuscode == 100000007)
+                    {
+                        btnGiuCho.IsVisible = viewModel.UnitInfo.bsd_vippriority ? false : true;
+                        if (viewModel.UnitInfo.statuscode != 1 && viewModel.IsShowBtnBangTinhGia == true)
+                        {
+                            viewModel.IsShowBtnBangTinhGia = true;
+                        }
+                        else
+                        {
+                            viewModel.IsShowBtnBangTinhGia = false;
+                        }
+                    }
+                    else
+                    {
+                        btnGiuCho.IsVisible = false;
+                        viewModel.IsShowBtnBangTinhGia = false;
+                    }
+
+                    SetButton();
+                    gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
+                }
+                NeedToRefresh = false;
                 LoadingHelper.Hide();
             }
             //await CrossMediaManager.Current.Stop();

@@ -31,10 +31,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="Owner_Clicked">
-            <ToolbarItem.IconImageSource>
+        <ToolbarItem x:Name="menu_item" Clicked="Owner_Clicked" IconImageSource="https://img.icons8.com/fluency-systems-regular/96/000000/user.png">
+            <!--<ToolbarItem.IconImageSource>
                 <FontImageSource x:Name="menu_icon" Glyph="&#xf007;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
-            </ToolbarItem.IconImageSource>
+            </ToolbarItem.IconImageSource>-->
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

@@ -67,7 +67,7 @@
                     <controls:LookUp NameDisplay="Label" BottomModal="{Reference LookUpModal}" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi}"/>
-                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi}" BottomModal="{Reference LookUpModal}" SelectedItem="{Binding AddressContact}" CenterModal="{Reference CenterModal}"/>
+                    <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi}" BottomModal="{Reference LookUpModal}" SelectedItem="{Binding AddressContact}" CenterModal="{Reference CenterModal}" RequiredAddress="True"/>
 
                 </StackLayout>
             </ScrollView>

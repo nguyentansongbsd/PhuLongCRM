@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ToolbarItem = Xamarin.Forms.ToolbarItem;
 
 namespace PhuLongCRM.Views
 {
@@ -43,7 +44,6 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             await viewModel.LoadTotalDirectSale();
-
             if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
             {
                 var rd = stackBlocks.Children[0] as RadBorder;
@@ -606,16 +606,6 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             viewModel.Blocks = new ObservableCollection<Block>();
             NeedToRefreshDirectSale = false;
-            if (viewModel.Filter.isOwner)
-            {
-                viewModel.Filter.isOwner = false;
-                menu_icon.Color = Color.Gray;
-            }
-            else
-            {
-                viewModel.Filter.isOwner = true;
-                menu_icon.Color = Color.White;
-            }
             viewModel.CreateFilterXml();
             await viewModel.LoadTotalDirectSale();
 
@@ -636,6 +626,16 @@ namespace PhuLongCRM.Views
             var lb = rd.Content as Label;
             VisualStateManager.GoToState(rd, "Selected");
             VisualStateManager.GoToState(lb, "Selected");
+            if (viewModel.Filter.isOwner)
+            {
+                viewModel.Filter.isOwner = false;
+                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/user.png";
+            }
+            else
+            {
+                viewModel.Filter.isOwner = true;
+                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/check-male.png";
+            }
             LoadingHelper.Hide();
         }
     }

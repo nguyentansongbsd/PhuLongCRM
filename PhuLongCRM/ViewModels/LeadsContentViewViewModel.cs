@@ -14,7 +14,7 @@ namespace PhuLongCRM.ViewModels
         public string KeySort { get; set; }
         public bool Create_on_sort { get; set; } = true;
         public bool Rating_sort { get; set; } = true;
-        public bool Status_sort { get; set; } = true;
+        public bool Allocation_sort { get; set; } = false;
         public string FillterStatus { get; set; }
         public LeadsContentViewViewModel()
         {                   
@@ -65,10 +65,10 @@ namespace PhuLongCRM.ViewModels
                     }
                     else if (KeySort == "3")
                     {
-                        if (Status_sort)
-                            sort = $"<order attribute='statuscode' descending='true' />";
+                        if (Allocation_sort)
+                            sort = $"<order attribute='bsd_allocation' descending='true' />";
                         else
-                            sort = $"<order attribute='statuscode' descending='false' />";
+                            sort = $"<order attribute='bsd_allocation' descending='false' />";
                     }
                     else
                         sort = "<order attribute='createdon' descending='true' />";

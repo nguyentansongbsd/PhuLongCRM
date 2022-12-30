@@ -63,6 +63,7 @@ namespace PhuLongCRM.Views
                 viewModel.ListDiscountInternel.Clear();
                 viewModel.ListDiscountExchange.Clear();
                 viewModel.InstallmentList.Clear();
+                viewModel.ListSpecialDiscount.Clear();
                 viewModel.ShowInstallmentList = false;
                 viewModel.NumberInstallment = 0;
                 
@@ -535,6 +536,8 @@ namespace PhuLongCRM.Views
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
+                    if (UnitInfo.NeedToRefresh.HasValue) UnitInfo.NeedToRefresh = true;
+                    if (DirectSaleDetailTest.NeedToRefreshDirectSale.HasValue) DirectSaleDetailTest.NeedToRefreshDirectSale = true;
                     if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
                     //this.Title = Language.dat_coc_title;
                     //InitContract(true);
