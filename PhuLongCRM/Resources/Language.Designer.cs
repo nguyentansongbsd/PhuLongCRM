@@ -10745,6 +10745,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vượt quá số lượng giữ chỗ có thể thực hiện được cho 1 sản phẩm..
+        /// </summary>
+        internal static string vuot_qua_so_luong_giu_cho_co_the_thuc_hien_duoc_cho_1_san_pham {
+            get {
+                return ResourceManager.GetString("vuot_qua_so_luong_giu_cho_co_the_thuc_hien_duoc_cho_1_san_pham", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vượt quá số lượng giữ chỗ trên sản phẩm có thể thực hiện được cho dự án trong hôm nay..
         /// </summary>
         internal static string vuot_qua_so_luong_giu_cho_tren_san_pham_co_the_thuc_hien_duoc_cho_du_an_trong_hom_nay {

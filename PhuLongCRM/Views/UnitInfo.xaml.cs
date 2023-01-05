@@ -209,17 +209,32 @@ namespace PhuLongCRM.Views
         private void GiuCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            QueueForm queue = new QueueForm(viewModel.UnitId, true);
-            queue.OnCompleted = async (IsSuccess) => {
+            QueueUnitModel queueUnit = new QueueUnitModel
+            {
+                unit_id = Guid.Parse(viewModel.UnitInfo.productid),
+                unit_name = viewModel.UnitInfo.name,
+                project_id = viewModel.UnitInfo.bsd_project_id,
+                project_name = viewModel.UnitInfo.bsd_project_name,
+                phaseslaunch_id = viewModel.UnitInfo.bsd_phaseslaunch_id,
+                phaseslaunch_name = viewModel.UnitInfo.bsd_phaseslaunch_name,
+                bsd_queuesperunit = viewModel.UnitInfo.project_queuesperunit,
+                bsd_unitspersalesman = viewModel.UnitInfo.project_unitspersalesman,
+                bsd_queueunitdaysaleman = viewModel.UnitInfo.project_queueunitdaysaleman,
+                bsd_bookingfee = viewModel.UnitInfo.project_bookingfee,
+                bsd_queuingfee = viewModel.UnitInfo.bsd_queuingfee,
+            };
+            QueueForm2 queue = new QueueForm2(queueUnit);
+            queue.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
-                    await Navigation.PushAsync(queue);
+                    await Shell.Current.Navigation.PushAsync(queue);
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                   // ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
+                    // hiện câu thông báo bên queue form
                 }
             };
         }

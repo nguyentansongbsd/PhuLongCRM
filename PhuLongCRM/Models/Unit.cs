@@ -34,7 +34,13 @@ namespace PhuLongCRM.Models
         public string bsd_viewphulong_format { get => ViewData.GetViewByIds(bsd_viewphulong); }
         public Guid _bsd_employee_value { get; set; }
         public Guid _bsd_projectcode_value { get; set; }
+        public string project_name { get; set; }
+        public int project_queuesperunit { get; set; }
+        public int project_unitspersalesman { get; set; }
+        public int project_queueunitdaysaleman { get; set; }
+        public decimal project_bookingfee { get; set; }
         public Guid _bsd_phaseslaunchid_value { get; set; }
+        public string phaseslaunch_name { get; set; }
 
         private int _numQueses;
         public int NumQueses { get=>_numQueses; set { _numQueses = value; OnPropertyChanged(nameof(NumQueses)); } }
@@ -43,5 +49,6 @@ namespace PhuLongCRM.Models
 
         private int _numQueueEmployee;
         public int NumQueueEmployee { get => _numQueueEmployee; set { _numQueueEmployee = value; OnPropertyChanged(nameof(NumQueueEmployee)); } }
+        public decimal bsd_queuingfee { get; set; }
     }
 }

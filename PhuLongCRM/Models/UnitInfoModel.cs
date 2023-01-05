@@ -82,5 +82,9 @@ namespace PhuLongCRM.Models
         public string bsd_handovercondition_format { get => StringFormatHelper.FormatPercent(bsd_handovercondition); }
         public Guid event_id { get; set; }
         public bool is_event { get { if (event_id != Guid.Empty) return true; else return false; } }
+        public int project_queuesperunit { get; set; }
+        public int project_unitspersalesman { get; set; }
+        public int project_queueunitdaysaleman { get; set; }
+        public decimal project_bookingfee { get; set; }
     }
 }
