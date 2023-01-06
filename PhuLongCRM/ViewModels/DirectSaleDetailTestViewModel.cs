@@ -434,6 +434,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_blocknumber' alias='blockid'/>
                                     <attribute name='bsd_phaseslaunchid' alias='_bsd_phaseslaunchid_value' />
                                     <attribute name='bsd_vippriority' />
+                                    <attribute name='bsd_queuingfee' />
                                     <order attribute='bsd_constructionarea' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='productid' operator='eq' uitype='product' value='{unitId}' />
@@ -442,6 +443,7 @@ namespace PhuLongCRM.ViewModels
                                       <attribute name='bsd_name'  alias='bsd_unittype_name'/>
                                     </link-entity>
                                     <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
+                                        <attribute name='bsd_name' alias='phaseslaunch_name' />
                                       <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
                                         <attribute name='bsd_eventid' alias='event_id' />
                                         <filter type='and'>
@@ -449,6 +451,13 @@ namespace PhuLongCRM.ViewModels
                                             <condition attribute='bsd_eventid' operator='not-null' />
                                         </filter>
                                       </link-entity>
+                                    </link-entity>
+                                    <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectcode' visible='false' link-type='outer' alias='a_a77d98e66ce2e811a94e000d3a1bc2d1'>
+                                        <attribute name='bsd_name' alias='project_name' />
+                                        <attribute name='bsd_queuesperunit' alias='project_queuesperunit' />
+                                        <attribute name='bsd_unitspersalesman' alias='project_unitspersalesman' />
+                                        <attribute name='bsd_queueunitdaysaleman' alias='project_queueunitdaysaleman'/>
+                                        <attribute name='bsd_bookingfee' alias='project_bookingfee' />
                                     </link-entity>
                                   </entity>
                                 </fetch>";

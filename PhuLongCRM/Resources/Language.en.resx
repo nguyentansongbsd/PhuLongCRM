@@ -3759,4 +3759,7 @@
 	<data name="phan_bo" xml:space="preserve">
     <value>Allocation</value>
   </data>
+	<data name="vuot_qua_so_luong_giu_cho_co_the_thuc_hien_duoc_cho_1_san_pham" xml:space="preserve">
+    <value>Exceeding the number of queues for a unit.</value>
+  </data>
 </root>

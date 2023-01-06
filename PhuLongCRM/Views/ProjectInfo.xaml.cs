@@ -145,18 +145,27 @@ namespace PhuLongCRM.Views
                 return;
             }
             LoadingHelper.Show();
-            QueueForm queue = new QueueForm(viewModel.ProjectId, false);
+            QueueUnitModel queueUnit = new QueueUnitModel
+            {
+                project_id = viewModel.Project.bsd_projectid,
+                project_name = viewModel.Project.bsd_name,
+                bsd_queuesperunit = viewModel.Project.bsd_queuesperunit,
+                bsd_unitspersalesman = viewModel.Project.bsd_unitspersalesman,
+                bsd_queueunitdaysaleman = viewModel.Project.bsd_queueunitdaysaleman,
+                bsd_bookingfee = viewModel.Project.bsd_bookingfee.HasValue ? viewModel.Project.bsd_bookingfee.Value : 0,
+            };
+            QueueForm2 queue = new QueueForm2(queueUnit, true);
             queue.OnCompleted = async (IsSuccess) =>
             {
                 if (IsSuccess)
                 {
-                    await Navigation.PushAsync(queue);
+                    await Shell.Current.Navigation.PushAsync(queue);
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_san_pham);
+                    // hiện câu thông báo bên queue form
                 }
             };
         }

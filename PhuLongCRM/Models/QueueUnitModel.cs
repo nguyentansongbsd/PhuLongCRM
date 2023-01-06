@@ -1,29 +1,22 @@
-﻿using System;
+﻿using PhuLongCRM.ViewModels;
+using System;
 namespace PhuLongCRM.Models
 {
-    public class QueueUnitModel
+    public class QueueUnitModel : BaseViewModel
     {
-        public bool bsd_status { get; set; }
-        public Guid opportunityproductid { get; set; }
-        public string bsd_pricelist { get; set; }
-        public string bsd_booking { get; set; }
-        public string bsd_project { get; set; }
-        public string bsd_block { get; set; }
-        public string bsd_units { get; set; }
-        public string bsd_phaseslaunch { get; set; }
-        public string bsd_floor { get; set; }
-        public string uomid { get; set; }
-        public bool isproductoverridden { get; set; }
-        public string productid { get; set; }
-        public bool ispriceoverridden { get; set; }
-        public decimal priceperunit { get; set; }
-        public decimal volumediscountamount { get; set; }
-        public decimal quantity { get; set; }
-        public decimal baseamount { get; set; }
-        public decimal manualdiscountamount { get; set; }
-        public decimal tax { get; set; }
-        public decimal extendedamount { get; set; }
-        public string transactioncurrencyid { get; set; }
-        public string createdby { get; set; }
+        public Guid unit_id { get; set; }
+        public string unit_name { get; set; }
+        public Guid project_id { get; set; }
+        public string project_name { get; set; }
+        public Guid phaseslaunch_id { get; set; }
+        public string phaseslaunch_name { get; set; }
+        public int bsd_queuesperunit { get; set; }
+        public int bsd_unitspersalesman { get; set; }
+        public int bsd_queueunitdaysaleman { get; set; }
+        public decimal bsd_queuingfee { get; set; }
+        public decimal bsd_bookingfee { get; set; }
+
+        private string _bsd_queuingfee_format;
+        public string bsd_queuingfee_format { get => _bsd_queuingfee_format; set { _bsd_queuingfee_format = value; OnPropertyChanged(nameof(bsd_queuingfee_format)); } }
     }
 }
