@@ -71,6 +71,7 @@
             <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />
             <converter:NullToHideConverter x:Key="nullToHideConverter"/>
             <converter:Base64ToImageSourceConverter x:Key="Base64ToImagesource"/>
+            <converter:CollectionItemWidthConverter x:Key="CollectionItemWidthConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -401,6 +402,31 @@
                                             <Label Grid.Column="1" Text="{Binding Project.bsd_bookingfee_format,StringFormat='{0} đ'}" TextColor="#333333" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="15" Padding="0,10,25,10"/>
                                         </Grid>
                                     </StackLayout>
+                                </telerikPrimitives:RadExpander.Content>
+                            </telerikPrimitives:RadExpander>
+                            <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
+                                <telerikPrimitives:RadExpander.Header>
+                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.tai_lieu}"/>
+                                    </telerikPrimitives:ExpanderHeader>
+                                </telerikPrimitives:RadExpander.Header>
+                                <telerikPrimitives:RadExpander.Content>
+                                    <FlexLayout x:Name="flexCollection" Wrap="Wrap" JustifyContent="Start" AlignItems="Start" >
+                                        <!--BindableLayout.ItemsSource="{Binding Collections}"-->
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <telerikPrimitives:RadBorder CornerRadius="10"  WidthRequest = "{Binding Source={Reference flexCollection},Path=Padding, Converter={StaticResource CollectionItemWidthConverter}}">
+                                                    <telerikPrimitives:RadBorder.GestureRecognizers>
+                                                        <!--<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnitItem_Tapped" CommandParameter="{Binding productid}"/>-->
+                                                    </telerikPrimitives:RadBorder.GestureRecognizers>
+                                                    <Grid BackgroundColor="White" RowDefinitions="Auto,Atuo">
+                                                        <ffimageloading:CachedImage Grid.Row="0" Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>
+                                                        <Label Text="{Binding FileName}" Grid.Row="1"/>
+                                                    </Grid>
+                                                </telerikPrimitives:RadBorder>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </FlexLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">

@@ -4057,6 +4057,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gửi mã OTP đến email.
+        /// </summary>
+        internal static string gui_ma_otp_den_email {
+            get {
+                return ResourceManager.GetString("gui_ma_otp_den_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gửi tài liệu tiếp thị.
         /// </summary>
         internal static string gui_tai_lieu_tiep_thi {

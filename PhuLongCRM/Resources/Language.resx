@@ -3768,4 +3768,7 @@
 	<data name="vuot_qua_so_luong_giu_cho_co_the_thuc_hien_duoc_cho_1_san_pham" xml:space="preserve">
     <value>Vượt quá số lượng giữ chỗ có thể thực hiện được cho 1 sản phẩm.</value>
   </data>
+	<data name="gui_ma_otp_den_email" xml:space="preserve">
+    <value>Gửi mã OTP đến email</value>
+  </data>
 </root>

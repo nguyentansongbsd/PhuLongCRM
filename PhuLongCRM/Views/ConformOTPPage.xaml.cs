@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 using Firebase.Database;
@@ -22,7 +24,13 @@ namespace PhuLongCRM.Views
 
         private string _phone;
         public string Phone { get => _phone; set { _phone = value; OnPropertyChanged(nameof(Phone)); } }
-        
+
+        private string _email;
+        public string Email { get => _email; set { _email = value; OnPropertyChanged(nameof(Email)); } }
+
+        private string _sendTo;
+        public string SendTo { get => _sendTo; set { _sendTo = value; OnPropertyChanged(nameof(SendTo)); } }
+        private bool SenToEmail { get; set; }
         private OTPModel OTP { get; set; }
 
         private string fireBaseDb = "PhuLongOTPDb";
@@ -30,11 +38,18 @@ namespace PhuLongCRM.Views
         private int _timeRemaing = 60;
         public int TimeRemaining { get => _timeRemaing; set { _timeRemaing = value; OnPropertyChanged(nameof(TimeRemaining)); } }
 
-        public ConformOTPPage(string phone)
+        public ConformOTPPage(string phone, string email = null, bool sentoemail = false)
         {
             InitializeComponent();
             this.BindingContext = this;
             Phone = phone;
+            Email = email;
+            SenToEmail = sentoemail;
+            if (sentoemail)
+                SendTo = email;
+            else
+                SendTo = phone;
+
             Init();
         }
 
@@ -79,6 +94,8 @@ namespace PhuLongCRM.Views
                 if (result != null)
                 {
                     await this.LoadDataOTP();
+                    if (SenToEmail)
+                        await SenEmail();
                     return true;
                 }
                 else
@@ -178,7 +195,7 @@ namespace PhuLongCRM.Views
             this.CancelOldOTP();
             this.lblTimeRemaining.IsVisible = true;
             this.lblOTPExpired.IsVisible = false;
-            using(var cancellationtokenresource = new CancellationTokenSource())
+            using (var cancellationtokenresource = new CancellationTokenSource())
             {
                 if (this.TimeRemaining < 60 && TimeRemaining > 0)
                 {
@@ -307,9 +324,54 @@ namespace PhuLongCRM.Views
 
         private void CancelOldOTP()
         {
-            this.OTPList.Where(x => x.Id != this.OTP.Id && x.Phone == this.OTP.Phone && x.IsConfirm == false && x.IsCanceled == false && x.IsLimitTime ==false).ToList().ForEach(item => {
+            this.OTPList.Where(x => x.Id != this.OTP.Id && x.Phone == this.OTP.Phone && x.IsConfirm == false && x.IsCanceled == false && x.IsLimitTime == false).ToList().ForEach(item =>
+            {
                 this.SetOTPCanceled(item);
             });
+        }
+
+        private async Task SenEmail()
+        {
+            SmtpClient client = new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential()
+                {
+                    UserName = "phupx@bsdinsight.com",
+                    Password = "kgakcewdhsqgxsfm"
+                }
+            };
+            MailAddress from = new MailAddress("phupx@bsdinsight.com", "BSD Insight");
+            MailAddress to = new MailAddress(Email, Phone); //songnt@bsdinsight.com
+            string contentEmail = $"Mã OTP : {OTP.OTPCode} được gửi từ BSD Insight" +
+                $"\n Nếu bạn không phải là người gửi yêu cầu này, vui lòng bỏ qua.";
+            MailMessage mail = new MailMessage()
+            {
+                From = from,
+                Subject = $"Mã OTP : {OTP.OTPCode}",
+                Body = contentEmail
+            };
+            mail.To.Add(to);
+            client.SendCompleted += Client_SendCompleted;
+            await client.SendMailAsync(mail);
+        }
+
+        private void Client_SendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai + e.Error.Message);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
         }
     }
 }

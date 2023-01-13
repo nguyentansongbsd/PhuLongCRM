@@ -55,9 +55,9 @@ namespace PhuLongCRM.Views
                         viewModel.LoadThongKe(),
                         viewModel.LoadThongKeGiuCho(),
                         viewModel.LoadThongKeHopDong(),
-                        viewModel.LoadThongKeBangTinhGia(),
-                        viewModel.CheckPhasesLaunch(),
-                        viewModel.LoadThongKeDatCoc()
+                        viewModel.LoadThongKeSoLuong(),
+                        viewModel.CheckPhasesLaunch()
+                       // viewModel.LoadThongKeDatCoc()
                     );
                 SetRealTime();
                 try
@@ -79,7 +79,6 @@ namespace PhuLongCRM.Views
                 {
 
                 }
-
                 OnCompleted?.Invoke(true);
             }
             else
