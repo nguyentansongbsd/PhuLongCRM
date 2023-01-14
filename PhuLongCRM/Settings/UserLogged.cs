@@ -115,5 +115,10 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(NumberLogin), 0);
             set => AppSettings.AddOrUpdateValue(nameof(NumberLogin), value);
         }
+        public static int LoginLimit
+        {
+            get => AppSettings.GetValueOrDefault(nameof(LoginLimit), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(LoginLimit), value);
+        }
     }
 }

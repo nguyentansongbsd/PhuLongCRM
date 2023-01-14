@@ -221,8 +221,9 @@ namespace PhuLongCRM.Views
                         UserLogged.Id = employeeModel.bsd_employeeid;
                         UserLogged.NumberLogin = int.Parse(DecaimalToString(employeeModel.bsd_numberlogin));
                         UserLogged.DateLoginFailed = employeeModel.bsd_logindate.ToString();
+                        UserLogged.LoginLimit = employeeModel.bsd_loginlimit;
 
-                        if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24.0 && UserLogged.NumberLogin >= 5)
+                        if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24.0 && UserLogged.NumberLogin >= UserLogged.LoginLimit)
                         {
                                 LoadingHelper.Hide();
                                 ToastMessageHelper.ShortMessage(Language.tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong);
@@ -308,6 +309,7 @@ namespace PhuLongCRM.Views
                     <attribute name='bsd_manager' />
                     <attribute name='bsd_avatar' />
                     <attribute name='bsd_numberlogin' />
+                    <attribute name='bsd_loginlimit' />
                     <attribute name='bsd_logindate' />
                     <order attribute='bsd_name' descending='false' />
                     <filter type='and'>

@@ -49,7 +49,8 @@ namespace PhuLongCRM.Views
                  viewModel.LoadOptionEntryFourMonths(),
                  viewModel.LoadUnitFourMonths(),
                  viewModel.LoadLeads(),
-                 viewModel.LoadCommissionTransactions()
+                 viewModel.LoadCommissionTransactions(),
+                 viewModel.LoadActivityCount()
                 );
 
             MessagingCenter.Subscribe<ScanQRPage, string>(this, "CallBack", async (sender, e) =>

@@ -27,6 +27,11 @@ namespace PhuLongCRM.ViewModels
         public OptionSet _filterQueueForProject;
         public OptionSet FilterQueueForProject { get => _filterQueueForProject; set { _filterQueueForProject = value; OnPropertyChanged(nameof(FilterQueueForProject)); } }
         public string Keyword { get; set; }
+        public ObservableCollection<OptionSet> RapCans { get; set; } = new ObservableCollection<OptionSet>();
+
+        public OptionSet _rapCan;
+        public OptionSet RapCan { get => _rapCan; set { _rapCan = value; OnPropertyChanged(nameof(RapCan)); } }
+
         public QueuListViewModel()
         {
             PreLoadData = new Command(() =>
@@ -34,6 +39,7 @@ namespace PhuLongCRM.ViewModels
                 string project = null;
                 string status = null;
                 string queueforproject = null;
+                string rapcan = null;
                 if (FilterStatus != null && FilterStatus.Count > 0)
                 {
                     if (string.IsNullOrWhiteSpace(FilterStatus.Where(x => x == "-1").FirstOrDefault()))
@@ -70,6 +76,17 @@ namespace PhuLongCRM.ViewModels
                 {
                     queueforproject = null;
                 }
+                if(RapCan != null && RapCan.Val != "-1")
+                {
+                    if (RapCan.Val != "1")
+                        rapcan = "<condition attribute='bsd_units' operator='null' />";
+                    else if (RapCan.Val != "0")
+                        rapcan = "<condition attribute='bsd_units' operator='not-null' />";
+                }   
+                else
+                {
+                    rapcan = null;
+                }    
 
                 EntityName = "opportunities";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -106,6 +123,7 @@ namespace PhuLongCRM.ViewModels
                           {status}
                           {project}
                           {queueforproject}
+                          {rapcan}
                         </filter>
                         <link-entity name='contact' from='contactid' to='customerid' visible='false' link-type='outer'>
                            <attribute name='fullname'  alias='contact_name'/>
@@ -171,6 +189,15 @@ namespace PhuLongCRM.ViewModels
                 FiltersQueueForProject.Add(new OptionSet("-1", Language.tat_ca));
                 FiltersQueueForProject.Add(new OptionSet("1", Language.co));
                 FiltersQueueForProject.Add(new OptionSet("0", Language.khong));
+            }
+        }
+        public void LoadRapCan()
+        {
+            if (RapCans != null && RapCans.Count == 0)
+            {
+                RapCans.Add(new OptionSet("-1", Language.tat_ca));
+                RapCans.Add(new OptionSet("1", Language.co));
+                RapCans.Add(new OptionSet("0", Language.khong));
             }
         }
     }

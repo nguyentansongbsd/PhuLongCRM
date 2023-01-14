@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using PhuLongCRM.Resources;
 using System.Linq;
 using Stormlion.PhotoBrowser;
+using Xamarin.Essentials;
 
 namespace PhuLongCRM.Views
 {
@@ -69,7 +70,9 @@ namespace PhuLongCRM.Views
                     btnGiuCho.IsVisible = false;
                     viewModel.IsShowBtnBangTinhGia = false;
                 }
-
+                var width = ((DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density) - 35) / 2;
+                var tmpHeight = width * 2 / 3;
+                collection.HeightRequest = (tmpHeight + 15) * ((viewModel.Collections.Count + 2) / 3);
                 SetButton();
                 gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
                 OnCompleted?.Invoke(true);

@@ -88,6 +88,15 @@ namespace PhuLongCRM.ViewModels
             IsRefreshing = false;
         });
 
+        private int _numTask;
+        public int NumTask { get => _numTask; set { _numTask = value; OnPropertyChanged(nameof(NumTask)); } }
+
+        private int _numPhoneCall;
+        public int NumPhoneCall { get => _numPhoneCall; set { _numPhoneCall = value; OnPropertyChanged(nameof(NumPhoneCall)); } }
+
+        private int _numMeet;
+        public int NumMeet { get => _numMeet; set { _numMeet = value; OnPropertyChanged(nameof(NumMeet)); } }
+
         public DashboardViewModel()
         {
             dateBefor = DateTime.Now;
@@ -629,6 +638,54 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
+        public async Task LoadActivityCount()
+        {
+            string fetchXml_phone = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='phonecall'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_phone = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("phonecalls", fetchXml_phone);
+            if (result_phone != null || result_phone.value.Count != 0)
+                NumPhoneCall = result_phone.value.FirstOrDefault().count;
+
+            string fetchXml_task = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='task'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_task = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("tasks", fetchXml_task);
+            if (result_task != null || result_task.value.Count != 0)
+                NumTask = result_task.value.FirstOrDefault().count;
+
+            string fetchXml_meet = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='appointment'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='in'>
+                                            <value>0</value>
+                                            <value>3</value>
+                                        </condition>
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_meet = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("appointments", fetchXml_meet);
+            if (result_meet != null || result_meet.value.Count != 0)
+                NumMeet = result_task.value.FirstOrDefault().count;
+        }
+
         public async Task RefreshDashboard()
         {
             this.Activities.Clear();
@@ -654,7 +711,8 @@ namespace PhuLongCRM.ViewModels
                  this.LoadOptionEntryFourMonths(),
                  this.LoadUnitFourMonths(),
                  this.LoadLeads(),
-                 this.LoadCommissionTransactions()
+                 this.LoadCommissionTransactions(),
+                 LoadActivityCount()
                 );
         }
     }

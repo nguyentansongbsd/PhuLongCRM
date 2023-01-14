@@ -17,5 +17,6 @@ namespace PhuLongCRM.Models
         public decimal bsd_numberlogin { get; set; }
         public DateTime bsd_logindate { get; set; }
         public string contact_email { get; set; }
+        public int bsd_loginlimit { get; set; }
     }
 }

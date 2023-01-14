@@ -59,6 +59,9 @@ namespace PhuLongCRM.Views
                         viewModel.CheckPhasesLaunch()
                        // viewModel.LoadThongKeDatCoc()
                     );
+                var width = ((DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density) - 35) / 2;
+                var tmpHeight = width * 2 / 3;
+                collection.HeightRequest = (tmpHeight + 15 ) * ((viewModel.Collections.Count+2)/3);
                 SetRealTime();
                 try
                 {

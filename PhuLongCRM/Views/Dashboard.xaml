@@ -260,16 +260,40 @@
                                 </Grid>
                             </Grid>
                         </controls:ExtendedFrame>
-
                         <Grid Padding="14,14,14,8" ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="{x:Static lang:Language.cong_viec_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
+                            <Label Grid.Column="0" Text="{x:Static lang:Language.hoat_dong_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
                             <Label Grid.Column="1" Text="{Binding Source={x:Static lang:Language.xem_them},StringFormat='{0} >>'}" FontSize="15" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ShowMore_Tapped"/>
                                 </Label.GestureRecognizers>
                             </Label>
                         </Grid>
-                           
+                        <Grid ColumnDefinitions="*,*,*">
+                            <Grid HorizontalOptions="Center" Grid.Column="0">
+                                <controls:ExtendedFrame Padding="17,5" Margin="10" VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="10" BackgroundColor="#0F646B">
+                                    <Label Text="{x:Static lang:Language.cong_viec}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                </controls:ExtendedFrame>
+                                <telerikPrimitives:RadBorder VerticalOptions="End" HorizontalOptions="End" CornerRadius="15" BackgroundColor="Red">
+                                    <Label Text="{Binding NumTask}" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="6,3"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+                            <Grid HorizontalOptions="Center" Grid.Column="1">
+                                <controls:ExtendedFrame Padding="17,5" Margin="10" VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="10" BackgroundColor="#0F646B">
+                                    <Label Text="{x:Static lang:Language.cuoc_hop}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                </controls:ExtendedFrame>
+                                <telerikPrimitives:RadBorder VerticalOptions="End" HorizontalOptions="End" CornerRadius="15" BackgroundColor="Red">
+                                    <Label Text="{Binding NumMeet}" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="6,3"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+                            <Grid HorizontalOptions="Center" Grid.Column="2">
+                                <controls:ExtendedFrame Padding="17,5" Margin="10" VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="10" BackgroundColor="#0F646B">
+                                    <Label Text="{x:Static lang:Language.cuoc_goi}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                </controls:ExtendedFrame>
+                                <telerikPrimitives:RadBorder VerticalOptions="End" HorizontalOptions="End" CornerRadius="15" BackgroundColor="Red">
+                                    <Label Text="{Binding NumPhoneCall}" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="6,3"/>
+                                </telerikPrimitives:RadBorder>
+                            </Grid>
+                        </Grid>
                         <StackLayout x:Name="stTaskList" BindableLayout.ItemsSource="{Binding Activities}" Padding="14" Spacing="8">
                             <BindableLayout.EmptyView>
                                 <Label Text="{x:Static lang:Language.hom_nay_khong_co_cong_vec}" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>

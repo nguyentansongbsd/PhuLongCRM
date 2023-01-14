@@ -407,26 +407,31 @@
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">
                                 <telerikPrimitives:RadExpander.Header>
                                     <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.tai_lieu}"/>
+                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.hinh_anh_va_video}"/>
                                     </telerikPrimitives:ExpanderHeader>
                                 </telerikPrimitives:RadExpander.Header>
                                 <telerikPrimitives:RadExpander.Content>
-                                    <FlexLayout x:Name="flexCollection" Wrap="Wrap" JustifyContent="Start" AlignItems="Start" >
-                                        <!--BindableLayout.ItemsSource="{Binding Collections}"-->
-                                        <BindableLayout.ItemTemplate>
+                                    <CollectionView x:Name="collection" ItemsSource="{Binding Collections}">
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" Span="3" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
                                             <DataTemplate>
-                                                <telerikPrimitives:RadBorder CornerRadius="10"  WidthRequest = "{Binding Source={Reference flexCollection},Path=Padding, Converter={StaticResource CollectionItemWidthConverter}}">
-                                                    <telerikPrimitives:RadBorder.GestureRecognizers>
-                                                        <!--<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UnitItem_Tapped" CommandParameter="{Binding productid}"/>-->
-                                                    </telerikPrimitives:RadBorder.GestureRecognizers>
-                                                    <Grid BackgroundColor="White" RowDefinitions="Auto,Atuo">
-                                                        <ffimageloading:CachedImage Grid.Row="0" Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>
-                                                        <Label Text="{Binding FileName}" Grid.Row="1"/>
+                                                <Grid Padding="5,10,5,5" HeightRequest="{Binding Source={Reference collection}, Converter={StaticResource CollectionItemWidthConverter}}">
+                                                    <controls:ExtendedFrame Padding="0" CornerRadius="10">
+                                                    <Grid RowDefinitions="*,Auto">
+                                                        <Image Grid.Row="0" Source="{Binding ImageSource}" Aspect="AspectFill"/>
+                                                        <Label Grid.Row="1" FontSize="14" Text="{Binding FileName}" Margin="5,0,5,10" LineBreakMode="MiddleTruncation"/>
                                                     </Grid>
-                                                </telerikPrimitives:RadBorder>
+                                                </controls:ExtendedFrame>
+                                                </Grid>
+                                                <!--<Grid BackgroundColor="White" RowDefinitions="Auto,Atuo">
+                                                    <ffimageloading:CachedImage Grid.Row="0" Source="{Binding ImageSource}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>
+                                                    <Label Text="{Binding FileName}" Grid.Row="1"/>
+                                                </Grid>-->
                                             </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </FlexLayout>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
                             <telerikPrimitives:RadExpander IsExpanded="False" BorderColor="Transparent">

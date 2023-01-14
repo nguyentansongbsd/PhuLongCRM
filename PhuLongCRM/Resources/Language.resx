@@ -3771,4 +3771,28 @@
 	<data name="gui_ma_otp_den_email" xml:space="preserve">
     <value>Gửi mã OTP đến email</value>
   </data>
+	<data name="da_chuyen" xml:space="preserve">
+    <value>Đã chuyển</value>
+  </data>
+	<data name="khong_chuyen" xml:space="preserve">
+    <value>Không chuyển</value>
+  </data>
+	<data name="hinh_anh_va_video" xml:space="preserve">
+    <value>Hình Ảnh Và Video</value>
+  </data>
+	<data name="tinh_nang_title" xml:space="preserve">
+    <value>Tính Năng</value>
+  </data>
+	<data name="danh_gia_title" xml:space="preserve">
+    <value>Đánh Giá</value>
+  </data>
+	<data name="thiet_lap_title" xml:space="preserve">
+    <value>Thiết Lập</value>
+  </data>
+	<data name="rap_can" xml:space="preserve">
+    <value>Ráp căn</value>
+  </data>
+	<data name="hoat_dong_hom_nay" xml:space="preserve">
+    <value>HOẠT ĐỘNG HÔM NAY</value>
+  </data>
 </root>
