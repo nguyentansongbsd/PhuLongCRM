@@ -41,9 +41,7 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new DashboardViewModel();
 
             await Task.WhenAll(
-                 viewModel.LoadTasks(),
-                 viewModel.LoadMettings(),
-                 viewModel.LoadPhoneCalls(),
+                 viewModel.Load3Activity(),
                  viewModel.LoadQueueFourMonths(),
                  viewModel.LoadQuoteFourMonths(),
                  viewModel.LoadOptionEntryFourMonths(),
@@ -167,11 +165,7 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 viewModel.Activities.Clear();
-                await Task.WhenAll(
-                    viewModel.LoadMettings(),
-                    viewModel.LoadTasks(),
-                    viewModel.LoadPhoneCalls()
-                    );
+                await viewModel.Load3Activity();
 
                 NeedToRefreshPhoneCall = false;
                 NeedToRefreshTask = false;

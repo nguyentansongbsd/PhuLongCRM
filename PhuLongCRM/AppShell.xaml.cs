@@ -124,7 +124,26 @@ namespace PhuLongCRM
         {
             if (UserLogged.IsLoginByUserCRM)
                 DependencyService.Get<IClearCookies>().ClearAllCookies(); ;
+            await UpdateStateLogin(false);
             await Shell.Current.GoToAsync("//LoginPage");
+        }
+        public async Task UpdateStateLogin(bool isLogin)
+        {
+            string path = $"/bsd_employees({UserLogged.Id})";
+
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            if (isLogin)
+                data["bsd_statelogin"] = "Login";
+            else
+                data["bsd_statelogin"] = "Logout";
+
+            CrmApiResponse crmApiResponse = await CrmHelper.PatchData(path, data);
+            if (!crmApiResponse.IsSuccess)
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                return;
+            }
         }
     }
 }

@@ -3795,4 +3795,25 @@
 	<data name="hoat_dong_hom_nay" xml:space="preserve">
     <value>HOẠT ĐỘNG HÔM NAY</value>
   </data>
+	<data name="nhu_cau_va_tieu_chi_title" xml:space="preserve">
+    <value>Nhu Cầu Và Tiêu Chí</value>
+  </data>
+	<data name="cong_viec_menu" xml:space="preserve">
+    <value>Công Việc</value>
+  </data>
+	<data name="duoc_nhan" xml:space="preserve">
+    <value>Được nhận</value>
+  </data>
+	<data name="ngon_ngu" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+	<data name="tien_te" xml:space="preserve">
+    <value>Tiền tệ</value>
+  </data>
+	<data name="canh_bao" xml:space="preserve">
+    <value>Cảnh báo</value>
+  </data>
+	<data name="phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai" xml:space="preserve">
+    <value>Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.</value>
+  </data>
 </root>

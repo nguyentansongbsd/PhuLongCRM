@@ -424,9 +424,9 @@ namespace PhuLongCRM.ViewModels
             
         }
 
-        public async Task LoadTasks()
+        public async Task LoadTasks(int activityCount)
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='{activityCount}' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='task'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -480,7 +480,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadMettings()
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='3' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='appointment'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -570,9 +570,9 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task LoadPhoneCalls()
+        public async Task LoadPhoneCalls(int activityCount)
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='{activityCount}' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='phonecall'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -685,6 +685,19 @@ namespace PhuLongCRM.ViewModels
             if (result_meet != null || result_meet.value.Count != 0)
                 NumMeet = result_task.value.FirstOrDefault().count;
         }
+        public async Task Load3Activity()
+        {
+            await LoadMettings();
+            if(Activities.Count <3)
+            {
+                await LoadPhoneCalls(3 - Activities.Count);
+                if (Activities.Count < 3)
+                {
+                    await LoadTasks(3 - Activities.Count);
+                }
+            }    
+                
+        }
 
         public async Task RefreshDashboard()
         {
@@ -703,9 +716,7 @@ namespace PhuLongCRM.ViewModels
             this.numKHKhongChuyenDoi = 0;
 
             await Task.WhenAll(
-                 this.LoadTasks(),
-                 this.LoadMettings(),
-                 this.LoadPhoneCalls(),
+                 this.Load3Activity(),
                  this.LoadQueueFourMonths(),
                  this.LoadQuoteFourMonths(),
                  this.LoadOptionEntryFourMonths(),
@@ -713,7 +724,7 @@ namespace PhuLongCRM.ViewModels
                  this.LoadLeads(),
                  this.LoadCommissionTransactions(),
                  LoadActivityCount()
-                );
+                ); ;
         }
     }
     public class CountChartModel

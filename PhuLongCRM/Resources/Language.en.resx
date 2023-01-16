@@ -3789,4 +3789,25 @@
 	<data name="hoat_dong_hom_nay" xml:space="preserve">
     <value>TODAY'S ACTIVITY</value>
   </data>
+<data name="nhu_cau_va_tieu_chi_title" xml:space="preserve">
+    <value>Requirements</value>
+  </data>
+	<data name="cong_viec_menu" xml:space="preserve">
+    <value>Work</value>
+  </data>
+	<data name="duoc_nhan" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+	<data name="ngon_ngu" xml:space="preserve">
+    <value>Language</value>
+  </data>
+	<data name="tien_te" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+	<data name="canh_bao" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+	<data name="phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai" xml:space="preserve">
+    <value>Login session has expired. Please log in again.</value>
+  </data>
 </root>

@@ -10,6 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using PhuLongCRM.Resources;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -60,6 +63,11 @@ namespace PhuLongCRM.ViewModels
         public bool IsFromQRCode { get; set; }
         public bool IsCurrentRecordOfUser { get; set; }
         public string Duplicate { get; set; }
+
+        private List<OptionSet> _provinces;
+        public List<OptionSet> Provinces { get => _provinces; set { _provinces = value; OnPropertyChanged(nameof(Provinces)); } }
+
+        private List<OptionSet> ProvincesForDetele { get; set; } = new List<OptionSet>();
 
         public LeadDetailPageViewModel()
         {
@@ -123,6 +131,32 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_hasguardian' />
                                     <attribute name='bsd_employee' alias='employee_id'/>
                                     <attribute name='ownerid' alias='owner_id'/>
+                                    <attribute name='bsd_quantam_nhapho' />
+                                    <attribute name='bsd_quantam_khuthuongmai' />
+                                    <attribute name='bsd_quantam_datnen' />
+                                    <attribute name='bsd_quantam_canho' />
+                                    <attribute name='bsd_quantam_bietthu' />
+                                    <attribute name='bsd_tieuchi_vitri' />
+                                    <attribute name='bsd_tieuchi_thietkenoithatcanho' />
+                                    <attribute name='bsd_tieuchi_tangcanhodep' />
+                                    <attribute name='bsd_tieuchi_phuongthucthanhtoan' />
+                                    <attribute name='bsd_tieuchi_nhieutienich' />
+                                    <attribute name='bsd_tieuchi_nhadautuuytin' />
+                                    <attribute name='bsd_tieuchi_moitruongsong' />
+                                    <attribute name='bsd_tieuchi_huongcanho' />
+                                    <attribute name='bsd_tieuchi_hethongcuuhoa' />
+                                    <attribute name='bsd_tieuchi_hethonganninh' />
+                                    <attribute name='bsd_tieuchi_giacanho' />
+                                    <attribute name='bsd_tieuchi_gantruonghoc' />
+                                    <attribute name='bsd_tieuchi_ganchosieuthi' />
+                                    <attribute name='bsd_tieuchi_ganbenhvien' />
+                                    <attribute name='bsd_tieuchi_dientichcanho' />
+                                    <attribute name='bsd_tieuchi_baidauxe' />
+                                    <attribute name='bsd_dientich_lonhon120m2' />
+                                    <attribute name='bsd_dientich_80100m2' />
+                                    <attribute name='bsd_dientich_6080m2' />
+                                    <attribute name='bsd_dientich_3060m2' />
+                                    <attribute name='bsd_dientich_100120m2' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                         <condition attribute='leadid' operator='eq' value='{" + leadid + @"}' />
@@ -451,7 +485,10 @@ namespace PhuLongCRM.ViewModels
                             <order attribute='createdon' descending='true' />
                             <filter type='or'>
                                 <filter type='and'>
-                                    <condition attribute='mobilephone' operator='eq' value='{singleLead.mobilephone}' />
+                                    <filter type='or'>
+                                        <condition attribute='mobilephone' operator='eq' value='{singleLead.mobilephone}' />
+                                        <condition attribute='mobilephone' operator='eq' value='{singleLead.mobilephone_format}' />
+                                    </filter>
                                     <condition attribute='leadid' operator='ne' value='{singleLead.leadid}'/>
                                 </filter>
                                 <filter type='and'>
@@ -494,7 +531,7 @@ namespace PhuLongCRM.ViewModels
                                             </filter>
                                         </entity>
                                     </fetch>";
-                var resultcontact = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contact", fetchcontact);
+                var resultcontact = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetchcontact);
                 if (resultcontact != null && resultcontact.value.Count > 0)
                 {
                     if (UserLogged.Language == "en")
@@ -504,5 +541,196 @@ namespace PhuLongCRM.ViewModels
                 }
             } 
         }
+        public async Task<CrmApiResponse> updateNhuCauDienTich()
+        {
+            string path = "/leads(" + singleLead.leadid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_dientich_3060m2"] = singleLead.bsd_dientich_3060m2;
+            content["bsd_dientich_6080m2"] = singleLead.bsd_dientich_6080m2;
+            content["bsd_dientich_80100m2"] = singleLead.bsd_dientich_80100m2;
+            content["bsd_dientich_100120m2"] = singleLead.bsd_dientich_100120m2;
+            content["bsd_dientich_lonhon120m2"] = singleLead.bsd_dientich_lonhon120m2;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task<CrmApiResponse> updateTieuChiChonMua()
+        {
+            string path = "/leads(" + singleLead.leadid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_tieuchi_vitri"] = singleLead.bsd_tieuchi_vitri;
+            content["bsd_tieuchi_phuongthucthanhtoan"] = singleLead.bsd_tieuchi_phuongthucthanhtoan;
+            content["bsd_tieuchi_giacanho"] = singleLead.bsd_tieuchi_giacanho;
+            content["bsd_tieuchi_nhadautuuytin"] = singleLead.bsd_tieuchi_nhadautuuytin;
+            content["bsd_tieuchi_moitruongsong"] = singleLead.bsd_tieuchi_moitruongsong;
+            content["bsd_tieuchi_baidauxe"] = singleLead.bsd_tieuchi_baidauxe;
+            content["bsd_tieuchi_hethonganninh"] = singleLead.bsd_tieuchi_hethonganninh;
+            content["bsd_tieuchi_huongcanho"] = singleLead.bsd_tieuchi_huongcanho;
+            content["bsd_tieuchi_hethongcuuhoa"] = singleLead.bsd_tieuchi_hethongcuuhoa;
+            content["bsd_tieuchi_nhieutienich"] = singleLead.bsd_tieuchi_nhieutienich;
+            content["bsd_tieuchi_ganchosieuthi"] = singleLead.bsd_tieuchi_ganchosieuthi;
+            content["bsd_tieuchi_gantruonghoc"] = singleLead.bsd_tieuchi_gantruonghoc;
+            content["bsd_tieuchi_ganbenhvien"] = singleLead.bsd_tieuchi_ganbenhvien;
+            content["bsd_tieuchi_dientichcanho"] = singleLead.bsd_tieuchi_dientichcanho;
+            content["bsd_tieuchi_thietkenoithatcanho"] = singleLead.bsd_tieuchi_thietkenoithatcanho;
+            content["bsd_tieuchi_tangcanhodep"] = singleLead.bsd_tieuchi_tangcanhodep;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task<CrmApiResponse> updateLoaiBDSQuanTam()
+        {
+            string path = "/leads(" + singleLead.leadid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_quantam_datnen"] = singleLead.bsd_quantam_datnen;
+            content["bsd_quantam_canho"] = singleLead.bsd_quantam_canho;
+            content["bsd_quantam_bietthu"] = singleLead.bsd_quantam_bietthu;
+            content["bsd_quantam_khuthuongmai"] = singleLead.bsd_quantam_khuthuongmai;
+            content["bsd_quantam_nhapho"] = singleLead.bsd_quantam_nhapho;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task LoadProvince()
+        {
+            if (Provinces == null)
+                Provinces = new List<OptionSet>();
+            if (singleLead == null || singleLead.leadid == Guid.Empty) return;
+
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='new_province'>
+                                <attribute name='new_name' alias='Label' />   
+                                <attribute name='new_provinceid' alias='Val' />   
+                                <link-entity name='bsd_lead_new_province' from='new_provinceid' to='new_provinceid' intersect='true'>
+                                  <filter>
+                                    <condition attribute='leadid' operator='eq' value='{singleLead.leadid}' />
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("new_provinces", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                List<OptionSet> list = new List<OptionSet>();
+                foreach (var item in result.value)
+                {
+                    list.Add(item);
+                    ProvincesForDetele.Add(item);
+                }
+                Provinces = list;
+            }
+        }
+        public async Task<bool> updateNhuCauDiaDiem()
+        {
+            bool res = true;
+            if (Provinces != null && Provinces.Count > 0)
+            {
+                foreach (var item in Provinces)
+                {
+                    string path = $"/leads({singleLead.leadid})/bsd_lead_new_province/$ref";
+                    IDictionary<string, object> content = new Dictionary<string, object>();
+                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
+                    CrmApiResponse result = await CrmHelper.PostData(path, content);
+                    if (!result.IsSuccess)
+                        res = false;
+                    ProvincesForDetele.Remove(item);
+                }
+                if (ProvincesForDetele.Count > 0)
+                {
+                    foreach (var item in ProvincesForDetele)
+                    {
+                        var res_delete = await Delete_NhuCau(item.Val, "bsd_lead_new_province");
+                        if (!res_delete)
+                            res = false;
+                    }
+                }
+            }
+            return res;
+        }
+        public async Task<Boolean> Delete_NhuCau(string id, string entity)
+        {
+            string Token = UserLogged.AccessToken;
+            var request = $"{OrgConfig.ApiUrl}/leads({singleLead.leadid})/{entity}(" + id + ")/$ref";
+
+            using (HttpClientHandler ClientHandler = new HttpClientHandler())
+            using (HttpClient Client = new HttpClient(ClientHandler))
+            {
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                using (HttpRequestMessage RequestMessage = new HttpRequestMessage(new HttpMethod("DELETE"), request))
+                {
+                    using (HttpResponseMessage ResponseMessage = await Client.SendAsync(RequestMessage))
+                    {
+                        string result = await ResponseMessage.Content.ReadAsStringAsync();
+
+                        if (ResponseMessage.StatusCode == HttpStatusCode.NoContent)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        //public async Task LoadProject()
+        //{
+        //    if (Projects == null)
+        //        Projects = new List<OptionSet>();
+        //    if (singleLead == null || singleLead.contactid == Guid.Empty) return;
+
+        //    string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+        //                            <entity name='bsd_project'>
+        //                            <attribute name='bsd_projectid' alias='Val'/>
+        //                            <attribute name='bsd_name' alias='Label'/>
+        //                            <link-entity name='bsd_contact_bsd_project' from='bsd_projectid' to='bsd_projectid' intersect='true'>
+        //                              <filter>
+        //                                <condition attribute='contactid' operator='eq' value='{singleContact.contactid}' />
+        //                              </filter>
+        //                            </link-entity>
+        //                            </entity>
+        //                        </fetch>";
+
+        //    var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetch);
+        //    if (result != null && result.value.Count > 0)
+        //    {
+        //        List<OptionSet> list = new List<OptionSet>();
+        //        foreach (var item in result.value)
+        //        {
+        //            list.Add(item);
+        //            ProjectsForDetele.Add(item);
+        //        }
+        //        Projects = list;
+        //    }
+        //}
+        //public async Task<bool> updateNhuCauDuAn()
+        //{
+        //    bool res = true;
+        //    if (Projects != null && Projects.Count > 0)
+        //    {
+        //        foreach (var item in Projects)
+        //        {
+        //            string path = $"/contacts({singleContact.contactid})/bsd_contact_bsd_project/$ref";
+        //            IDictionary<string, object> content = new Dictionary<string, object>();
+        //            content["@odata.id"] = $"{OrgConfig.ApiUrl}/bsd_projects(" + item.Val + ")";
+        //            CrmApiResponse result = await CrmHelper.PostData(path, content);
+        //            if (!result.IsSuccess)
+        //                res = false;
+        //            ProjectsForDetele.Remove(item);
+        //        }
+        //        if (ProjectsForDetele.Count > 0)
+        //        {
+        //            foreach (var item in ProjectsForDetele)
+        //            {
+        //                var res_delete = await Delete_NhuCau(item.Val, "bsd_contact_bsd_project");
+        //                if (!res_delete)
+        //                    res = false;
+        //            }
+        //        }
+        //    }
+        //    return res;
+        //}
     }
 }

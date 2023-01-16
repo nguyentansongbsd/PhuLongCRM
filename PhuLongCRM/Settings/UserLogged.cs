@@ -120,5 +120,10 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(LoginLimit), 0);
             set => AppSettings.AddOrUpdateValue(nameof(LoginLimit), value);
         }
+        public static int TimeOut
+        {
+            get => AppSettings.GetValueOrDefault(nameof(TimeOut), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(TimeOut), value);
+        }
     }
 }

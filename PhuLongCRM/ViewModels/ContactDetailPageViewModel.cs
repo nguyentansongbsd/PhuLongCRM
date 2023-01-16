@@ -84,7 +84,7 @@ namespace PhuLongCRM.ViewModels
 
         private List<OptionSet> _projects;
         public List<OptionSet> Projects { get => _projects; set { _projects = value; OnPropertyChanged(nameof(Projects)); } }
-
+        public byte[] AvatarArr { get; set; }
 
         public ContactDetailPageViewModel()
         {
@@ -180,6 +180,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_dientich_3060m2' />
                                     <attribute name='bsd_dientich_100120m2' />
                                     <attribute name='bsd_haveprotector' />
+                                    <attribute name='entityimage' />
                                     <attribute name='bsd_employee' alias='employee_id'/>
                                     <order attribute='createdon' descending='true' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
@@ -203,6 +204,14 @@ namespace PhuLongCRM.ViewModels
             var tmp = result.value.FirstOrDefault();
             this.singleContact = tmp;
             this.IsCurrentRecordOfUser = (singleContact.owner_id == UserLogged.Id || singleContact.employee_id == UserLogged.Id) ? true : false;
+            if (string.IsNullOrWhiteSpace(singleContact.entityimage))
+            {
+                singleContact.avatar = singleContact.bsd_fullname;
+            }
+            else
+            {
+                singleContact.avatar = singleContact.entityimage;
+            }
             await GetImageCMND();
         }
 
@@ -782,6 +791,24 @@ namespace PhuLongCRM.ViewModels
                 }
             }
             return res;
+        }
+        public async Task<bool> ChangeAvatar()
+        {
+            string path = "/contacts(" + singleContact.contactid + ")";
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data["entityimage"] = AvatarArr;
+
+            var content = data as object;
+            CrmApiResponse apiResponse = await CrmHelper.PatchData(path, content);
+            if (apiResponse.IsSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 

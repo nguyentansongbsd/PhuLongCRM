@@ -4,6 +4,8 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Stormlion.PhotoBrowser;
 using System;
 using System.Collections.Generic;
@@ -43,9 +45,9 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadProvince();
                 await viewModel.LoadProject();
                 SetButtonFloatingButton();
-                //btn_nhaucaudientich.IsVisible = false;
-                //btn_tieuchichonmua.IsVisible = false;
-                //btn_loaibdsquantam.IsVisible = false;
+                btn_nhaucaudientich.IsVisible = false;
+                btn_tieuchichonmua.IsVisible = false;
+                btn_loaibdsquantam.IsVisible = false;
                 FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
                 if(viewModel.singleContact.employee_id == UserLogged.Id)
                     OnCompleted?.Invoke(1);// thanh cong
@@ -107,6 +109,7 @@ namespace PhuLongCRM.Views
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.nhu_cau_va_tieu_chi_title, "FontAwesomeSolid", "\uf073", null, NhuCauVaTieuChi));
 
                     if (viewModel.singleContact.statuscode != "100000000")
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
@@ -121,6 +124,13 @@ namespace PhuLongCRM.Views
                     floatingButtonGroup.IsVisible = false;
                 }
             }
+        }
+
+        private void NhuCauVaTieuChi(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            TieuChi_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
         }
 
         private async void NewMeet(object sender, EventArgs e)
@@ -673,6 +683,91 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                     }
                 };
+            }
+        }
+        private async void ChangeAvatar_Tapped(object sender, EventArgs e)
+        {
+            string[] options = new string[] { Language.thu_vien, Language.chup_hinh };
+            string asw = await DisplayActionSheet(Language.tuy_chon, Language.huy, null, options);
+            if (asw == Language.thu_vien)
+            {
+                await CrossMedia.Current.Initialize();
+                PermissionStatus photostatus = await PermissionHelper.RequestPhotosPermission();
+                if (photostatus == PermissionStatus.Granted)
+                {
+                    try
+                    {
+                        LoadingHelper.Show();
+                        var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions() { PhotoSize = PhotoSize.MaxWidthHeight, MaxWidthHeight = 600 });
+                        if (file != null)
+                        {
+                            viewModel.AvatarArr = System.IO.File.ReadAllBytes(file.Path);
+                            string imgBase64 = Convert.ToBase64String(viewModel.AvatarArr);
+                            var Avatar = imgBase64;
+                            if (Avatar != viewModel.singleContact.entityimage)
+                            {
+                                bool isSuccess = await viewModel.ChangeAvatar();
+                                if (isSuccess)
+                                {
+                                    viewModel.singleContact.avatar = Avatar;
+                                    ToastMessageHelper.ShortMessage(Language.doi_hinh_dai_dien_thanh_cong);
+                                    LoadingHelper.Hide();
+                                }
+                                else
+                                {
+                                    LoadingHelper.Hide();
+                                    ToastMessageHelper.ShortMessage(Language.doi_hinh_dai_dien_that_bai);
+                                }
+                            }
+                            LoadingHelper.Hide();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ToastMessageHelper.LongMessage(ex.Message);
+                        LoadingHelper.Hide();
+                    }
+                }
+                LoadingHelper.Hide();
+            }
+            else if (asw == Language.chup_hinh)
+            {
+                await CrossMedia.Current.Initialize();
+                PermissionStatus camerastatus = await PermissionHelper.RequestCameraPermission();
+                if (camerastatus == PermissionStatus.Granted)
+                {
+                    LoadingHelper.Show();
+                    string fileName = $"{Guid.NewGuid()}.jpg";
+                    var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                    {
+                        Name = fileName,
+                        SaveToAlbum = false,
+                        PhotoSize = PhotoSize.MaxWidthHeight,
+                        MaxWidthHeight = 600
+                    });
+                    if (file != null)
+                    {
+                        viewModel.AvatarArr = System.IO.File.ReadAllBytes(file.Path);
+                        var Avatar = Convert.ToBase64String(viewModel.AvatarArr);
+                        if (Avatar != viewModel.singleContact.entityimage)
+                        {
+                            bool isSuccess = await viewModel.ChangeAvatar();
+                            if (isSuccess)
+                            {
+                                viewModel.singleContact.avatar = Avatar;
+                                if (AppShell.NeedToRefeshUserInfo.HasValue) AppShell.NeedToRefeshUserInfo = true;
+                                ToastMessageHelper.ShortMessage(Language.doi_hinh_dai_dien_thanh_cong);
+                                LoadingHelper.Hide();
+                            }
+                            else
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.doi_hinh_dai_dien_that_bai);
+                            }
+                        }
+                    }
+                }
+                LoadingHelper.Hide();
             }
         }
     }
