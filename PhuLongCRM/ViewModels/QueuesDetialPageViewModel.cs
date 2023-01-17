@@ -548,5 +548,44 @@ namespace PhuLongCRM.ViewModels
                 list_thongtincase.Add(x);
             }
         }
+        public async Task<bool> CreateTaskMatchUnit()
+        {
+            IDictionary<string, object> data = new Dictionary<string, object>();
+            data["subject"] = $"Ráp căn của Giữ chỗ {Queue.bsd_queuenumber}";
+            data["description"] = "NV.KD gửi yêu cầu đề nghị ráp căn của khách hàng.";
+            data["scheduledstart"] = DateTime.Now.ToUniversalTime();
+            data["scheduledend"] = DateTime.Now.AddDays(1).ToUniversalTime();
+
+            if (Customer.Title == CodeAccount)
+            {
+                data["bsd_customer_Task_account@odata.bind"] = $"/accounts({Customer.Val})";
+            }
+            else if(Customer.Title == CodeContact)
+            {
+                data["bsd_customer_Task_contact@odata.bind"] = $"/contacts({Customer.Val})";
+            }
+
+            data["regardingobjectid_opportunity_task@odata.bind"] = "/opportunities(" + Queue.opportunityid + ")";
+
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
+            {
+                data["bsd_employee_Task@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
+            }
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
+            {
+                data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
+            }
+            string path = "/tasks";
+            CrmApiResponse result = await CrmHelper.PostData(path, data);
+
+            if (result.IsSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

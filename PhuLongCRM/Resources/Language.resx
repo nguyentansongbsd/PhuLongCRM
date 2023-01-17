@@ -3768,4 +3768,55 @@
 	<data name="vuot_qua_so_luong_giu_cho_co_the_thuc_hien_duoc_cho_1_san_pham" xml:space="preserve">
     <value>Vượt quá số lượng giữ chỗ có thể thực hiện được cho 1 sản phẩm.</value>
   </data>
+	<data name="gui_ma_otp_den_email" xml:space="preserve">
+    <value>Gửi mã OTP đến email</value>
+  </data>
+	<data name="da_chuyen" xml:space="preserve">
+    <value>Đã chuyển</value>
+  </data>
+	<data name="khong_chuyen" xml:space="preserve">
+    <value>Không chuyển</value>
+  </data>
+	<data name="hinh_anh_va_video" xml:space="preserve">
+    <value>Hình Ảnh Và Video</value>
+  </data>
+	<data name="tinh_nang_title" xml:space="preserve">
+    <value>Tính Năng</value>
+  </data>
+	<data name="danh_gia_title" xml:space="preserve">
+    <value>Đánh Giá</value>
+  </data>
+	<data name="thiet_lap_title" xml:space="preserve">
+    <value>Thiết Lập</value>
+  </data>
+	<data name="rap_can" xml:space="preserve">
+    <value>Ráp căn</value>
+  </data>
+	<data name="hoat_dong_hom_nay" xml:space="preserve">
+    <value>HOẠT ĐỘNG HÔM NAY</value>
+  </data>
+	<data name="nhu_cau_va_tieu_chi_title" xml:space="preserve">
+    <value>Nhu Cầu Và Tiêu Chí</value>
+  </data>
+	<data name="cong_viec_menu" xml:space="preserve">
+    <value>Công Việc</value>
+  </data>
+	<data name="duoc_nhan" xml:space="preserve">
+    <value>Được nhận</value>
+  </data>
+	<data name="ngon_ngu" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+	<data name="tien_te" xml:space="preserve">
+    <value>Tiền tệ</value>
+  </data>
+	<data name="canh_bao" xml:space="preserve">
+    <value>Cảnh báo</value>
+  </data>
+	<data name="phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai" xml:space="preserve">
+    <value>Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.</value>
+  </data>
+	<data name="lien_he" xml:space="preserve">
+    <value>Liên hệ</value>
+  </data>
 </root>

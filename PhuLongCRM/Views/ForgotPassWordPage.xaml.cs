@@ -55,6 +55,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 return;
             }
+            if(viewModel.SendToEmail && string.IsNullOrWhiteSpace(viewModel.Email))
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_email);
+                return;
+            }
 
             LoadingHelper.Show();
             await viewModel.CheckUserName();
@@ -73,21 +78,49 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (viewModel.Employee.contact_email != viewModel.Email)
+            {
+                ToastMessageHelper.ShortMessage(Language.tai_khoan_hoac_so_dien_thoai_da_nhap_khong_dung_vui_long_kiem_tra_lai_thong_tin);
+                LoadingHelper.Hide();
+                return;
+            }
+
             try
             {
-                ConformOTPPage conformOTP = new ConformOTPPage(viewModel.Phone);
-                conformOTP.OnCompeleted = async (isSuccess) => {
-                    if (isSuccess)
+                if (viewModel.SendToEmail)
+                {
+                    ConformOTPPage conformOTP = new ConformOTPPage(viewModel.Phone,viewModel.Email,viewModel.SendToEmail);
+                    conformOTP.OnCompeleted = async (isSuccess) =>
                     {
-                        await Navigation.PushAsync(conformOTP);
-                        LoadingHelper.Hide();
-                    }
-                    else
+                        if (isSuccess)
+                        {
+                            await Navigation.PushAsync(conformOTP);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.loi_ket_noi_dern_server);
+                        }
+                    };
+                }
+                else
+                {
+                    ConformOTPPage conformOTP = new ConformOTPPage(viewModel.Phone);
+                    conformOTP.OnCompeleted = async (isSuccess) =>
                     {
-                        LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage(Language.loi_ket_noi_dern_server);
-                    }
-                };
+                        if (isSuccess)
+                        {
+                            await Navigation.PushAsync(conformOTP);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.loi_ket_noi_dern_server);
+                        }
+                    };
+                }
             }
             catch(FirebaseException ex)
             {
@@ -185,6 +218,5 @@ namespace PhuLongCRM.Views
                 viewModel.ConfirmPassword = viewModel.ConfirmPassword.Trim();
             }
         }
-
     }
 }

@@ -41,15 +41,16 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new DashboardViewModel();
 
             await Task.WhenAll(
-                 viewModel.LoadTasks(),
-                 viewModel.LoadMettings(),
-                 viewModel.LoadPhoneCalls(),
+                 viewModel.Load3Activity(),
                  viewModel.LoadQueueFourMonths(),
                  viewModel.LoadQuoteFourMonths(),
                  viewModel.LoadOptionEntryFourMonths(),
                  viewModel.LoadUnitFourMonths(),
                  viewModel.LoadLeads(),
-                 viewModel.LoadCommissionTransactions()
+                 viewModel.LoadCommissionTransactions(),
+                 viewModel.LoadActivityCount(),
+                 viewModel.LoadPromotion(),
+                 viewModel.LoadNews()
                 );
 
             MessagingCenter.Subscribe<ScanQRPage, string>(this, "CallBack", async (sender, e) =>
@@ -166,11 +167,7 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 viewModel.Activities.Clear();
-                await Task.WhenAll(
-                    viewModel.LoadMettings(),
-                    viewModel.LoadTasks(),
-                    viewModel.LoadPhoneCalls()
-                    );
+                await viewModel.Load3Activity();
 
                 NeedToRefreshPhoneCall = false;
                 NeedToRefreshTask = false;
@@ -281,6 +278,25 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             await Navigation.PushAsync(new DirectSale());
             LoadingHelper.Hide();
+        }
+
+        private void TabNewsControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    promotion.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    promotion.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    promotion.IsVisible = true;
+                }
+            }
         }
     }
 }

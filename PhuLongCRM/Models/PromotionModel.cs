@@ -56,5 +56,6 @@ namespace PhuLongCRM.Models
                     return false;
             }
         }
+        public string project_name { get; set; }
     }
 }

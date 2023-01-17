@@ -1429,7 +1429,7 @@
     <value>Contract number</value>
   </data>
 	<data name="loai_hop_dong" xml:space="preserve">
-    <value>Contract type descripton</value>
+    <value>Contract type description</value>
   </data>
 	<data name="mo_ta_loai_hd" xml:space="preserve">
     <value>Contract type description</value>
@@ -1981,7 +1981,7 @@
     <value>Number of months paid M.F</value>
   </data>
 	<data name="don_gia_phi_quan_ly_thang_m2" xml:space="preserve">
-    <value>Management amount (month/spm)</value>
+    <value>Management amount (month/sqm)</value>
   </data>
 	<data name="tien_giu_cho" xml:space="preserve">
     <value>Queuing amount</value>
@@ -2431,7 +2431,7 @@
     <value>Foreigner SPA</value>
   </data>
 	<data name="contract_handover_sts" xml:space="preserve">
-    <value>Quanlify - Units handover</value>
+    <value>Qualify - Units handover</value>
   </data>
 	<data name="contract_invoiced_sts" xml:space="preserve">
     <value>Invoiced</value>
@@ -3535,19 +3535,19 @@
     <value>Need For Apartment Area</value>
   </data>
 	<data name="dien_tich_30_60_m2" xml:space="preserve">
-    <value>Area of 30 - 60 spm</value>
+    <value>Area of 30 - 60 sqm</value>
   </data>
 	<data name="dien_tich_60_80_m2" xml:space="preserve">
-    <value>Area of 60 - 80 spm</value>
+    <value>Area of 60 - 80 sqm</value>
   </data>
 	<data name="dien_tich_80_100_m2" xml:space="preserve">
-    <value>Area of 80 - 100 spm</value>
+    <value>Area of 80 - 100 sqm</value>
   </data>
 	<data name="dien_tich_100_120_m2" xml:space="preserve">
-    <value>Area of 100 - 120 spm</value>
+    <value>Area of 100 - 120 sqm</value>
   </data>
 	<data name="dien_tich_tren_120_m2" xml:space="preserve">
-    <value>More than 120 spm</value>
+    <value>More than 120 sqm</value>
   </data>
 	<data name="tieu_chi_vi_tri" xml:space="preserve">
     <value>Criteria - Location</value>
@@ -3761,5 +3761,56 @@
   </data>
 	<data name="vuot_qua_so_luong_giu_cho_co_the_thuc_hien_duoc_cho_1_san_pham" xml:space="preserve">
     <value>Exceeding the number of queues for a unit.</value>
+  </data>
+	<data name="gui_ma_otp_den_email" xml:space="preserve">
+    <value>Send OTP to email</value>
+  </data>
+	<data name="da_chuyen" xml:space="preserve">
+    <value>Qualified</value>
+  </data>
+	<data name="khong_chuyen" xml:space="preserve">
+    <value>Disqualify</value>
+  </data>
+	<data name="hinh_anh_va_video" xml:space="preserve">
+    <value>Image And Video</value>
+  </data>
+	<data name="tinh_nang_title" xml:space="preserve">
+    <value>Feature</value>
+  </data>
+	<data name="danh_gia_title" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+	<data name="thiet_lap_title" xml:space="preserve">
+    <value>Setup</value>
+  </data>
+	<data name="rap_can" xml:space="preserve">
+    <value>Match unit</value>
+  </data>
+	<data name="hoat_dong_hom_nay" xml:space="preserve">
+    <value>TODAY'S ACTIVITY</value>
+  </data>
+<data name="nhu_cau_va_tieu_chi_title" xml:space="preserve">
+    <value>Requirements</value>
+  </data>
+	<data name="cong_viec_menu" xml:space="preserve">
+    <value>Work</value>
+  </data>
+	<data name="duoc_nhan" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+	<data name="ngon_ngu" xml:space="preserve">
+    <value>Language</value>
+  </data>
+	<data name="tien_te" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+	<data name="canh_bao" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+	<data name="phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai" xml:space="preserve">
+    <value>Login session has expired. Please log in again.</value>
+  </data>
+<data name="lien_he" xml:space="preserve">
+    <value>Contact</value>
   </data>
 </root>

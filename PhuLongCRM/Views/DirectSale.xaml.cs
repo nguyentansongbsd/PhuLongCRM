@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -123,7 +124,15 @@ namespace PhuLongCRM.Views
                 string views = (viewModel.SelectedViews != null && viewModel.SelectedViews.Count != 0) ? string.Join(",", viewModel.SelectedViews) : null;
                 string unitStatus = (viewModel.SelectedUnitStatus != null && viewModel.SelectedUnitStatus.Count != 0) ? string.Join(",", viewModel.SelectedUnitStatus) : null;
 
-                DirectSaleSearchModel filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent,viewModel.UnitCode, directions,views, unitStatus,viewModel.NetArea?.Id,viewModel.Price?.Id,viewModel.isOwner);
+                DirectSaleSearchModel filter = null;
+                if (viewModel.isOwner)
+                {
+                    filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent, viewModel.UnitCode, directions, views, unitStatus, viewModel.NetArea?.Id, viewModel.Price?.Id, viewModel.isOwner, UserLogged.Id.ToString());
+                }
+                else
+                {
+                    filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent, viewModel.UnitCode, directions, views, unitStatus, viewModel.NetArea?.Id, viewModel.Price?.Id, viewModel.isOwner);
+                }
 
                 //DirectSaleDetail directSaleDetail = new DirectSaleDetail(filter);//,viewModel.Blocks
                 //directSaleDetail.OnCompleted = async (Success) =>

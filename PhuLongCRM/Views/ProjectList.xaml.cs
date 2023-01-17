@@ -11,11 +11,13 @@ namespace PhuLongCRM.Views
     public partial class ProjectList : ContentPage
     {
         public ProjectListViewModel viewModel;
+        public static bool? NeedToRefresh = null;
         public ProjectList()
         {
             LoadingHelper.Show();
             InitializeComponent();
             this.BindingContext = viewModel = new ProjectListViewModel();
+            NeedToRefresh = false;
             Init();
         }
 
@@ -23,6 +25,17 @@ namespace PhuLongCRM.Views
         {
             await viewModel.LoadData();
             LoadingHelper.Hide();
+        }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadOnRefreshCommandAsync();
+                NeedToRefresh = false;
+                LoadingHelper.Hide();
+            }
         }
 
         private async void SearchBar_SearchButtonPressed(System.Object sender, System.EventArgs e)

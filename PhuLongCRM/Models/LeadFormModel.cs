@@ -199,7 +199,7 @@ namespace PhuLongCRM.Models
         public bool bsd_tieuchi_thietkenoithatcanho { get { return _bsd_tieuchi_thietkenoithatcanho; } set { _bsd_tieuchi_thietkenoithatcanho = value; OnPropertyChanged(nameof(bsd_tieuchi_thietkenoithatcanho)); } }
 
         private bool _bsd_tieuchi_tangcanhodep;
-        public bool bsd_tieuchi_tangcanhodep { get { return _bsd_tieuchi_tangcanhodep; } set { _bsd_tieuchi_tangcanhodep = value; OnPropertyChanged(nameof(bsd_tieuchi_tangcanhodep)); } }
+        public bool bsd_tieuchi_tangcanhodep { get { return _bsd_tieuchi_tangcanhodep; } set { _bsd_tieuchi_tangcanhodep = value; OnPropertyChanged(nameof(bsd_tieuchi_tangcanhodep)); } }        
 
         private bool _bsd_dientich_3060m2;
         public bool bsd_dientich_3060m2 { get { return _bsd_dientich_3060m2; } set { _bsd_dientich_3060m2 = value; OnPropertyChanged(nameof(bsd_dientich_3060m2)); } }

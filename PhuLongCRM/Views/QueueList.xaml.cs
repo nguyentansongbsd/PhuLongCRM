@@ -30,6 +30,7 @@ namespace PhuLongCRM.Views
                   );
             viewModel.LoadQueueForProject();
             viewModel.LoadStatus();
+            viewModel.LoadRapCan();
             LoadingHelper.Hide();
         }
         protected override async void OnAppearing()
@@ -92,6 +93,13 @@ namespace PhuLongCRM.Views
         }
 
         private async void FiltersQueueForProject_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            LoadingHelper.Show();
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
+        }
+
+        private async void FiltersRapCan_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
             LoadingHelper.Show();
             await viewModel.LoadOnRefreshCommandAsync();

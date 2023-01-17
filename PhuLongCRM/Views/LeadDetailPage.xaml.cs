@@ -38,7 +38,9 @@ namespace PhuLongCRM.Views
         {
             await LoadDataThongTin(Id.ToString());
             SetButtonFloatingButton(viewModel.singleLead);
-
+            btn_nhaucaudientich.IsVisible = false;
+            btn_tieuchichonmua.IsVisible = false;
+            btn_loaibdsquantam.IsVisible = false;
             if (viewModel.singleLead.leadid != Guid.Empty)
             {
                 FromCustomer = new OptionSet { Val = viewModel.singleLead.leadid.ToString(), Label = viewModel.singleLead.lastname, Title = viewModel.CodeLead };
@@ -109,6 +111,7 @@ namespace PhuLongCRM.Views
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.nhu_cau_va_tieu_chi_title, "FontAwesomeSolid", "\uf073", null, NhuCauVaTieuChi));
                     if (lead.leadqualitycode == 3)
                     {
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.khong_chuyen_doi, "FontAwesomeSolid", "\uf05e", null, LeadDisQualify));
@@ -124,6 +127,12 @@ namespace PhuLongCRM.Views
             }
             else
                 floatingButtonGroup.IsVisible = false;
+        }
+        private void NhuCauVaTieuChi(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            TieuChi_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
         }
         private async void Update(object sender, EventArgs e)
         {
@@ -379,6 +388,7 @@ namespace PhuLongCRM.Views
             {
                 await viewModel.LoadOneLead(leadid);
                 await viewModel.LoadDuplicate();
+                await viewModel.LoadProvince();
                 if (!string.IsNullOrWhiteSpace(viewModel.Duplicate))
                     TooltipEffect.SetText(lb_duplicate, viewModel.Duplicate);
                 else
@@ -615,5 +625,112 @@ namespace PhuLongCRM.Views
                 TooltipEffect.SetHasTooltip(lb_duplicate, true);
             }
         }
+
+
+        private void NhuCauDienTich_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+             btn_nhaucaudientich.IsVisible = true;
+        }
+        private void TieuChiChonMua_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+             btn_tieuchichonmua.IsVisible = true;
+        }
+        private void LoaiBDSQuanTam_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+             btn_loaibdsquantam.IsVisible = true;
+        }
+
+        private async void LoaiBDSQuanTam_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateLoaiBDSQuanTam();
+            if (result.IsSuccess)
+            {
+                btn_loaibdsquantam.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+        private async void btn_nhaucaudientich_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateNhuCauDienTich();
+            if (result.IsSuccess)
+            {
+                 btn_nhaucaudientich.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+
+        private async void btn_tieuchichonmua_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateTieuChiChonMua();
+            if (result.IsSuccess)
+            {
+                btn_tieuchichonmua.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+
+        private async void btn_nhucaudiadiem_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateNhuCauDiaDiem();
+            if (result)
+            {
+                 btn_nhucaudiadiem.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+        private void Province_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+             btn_nhucaudiadiem.IsVisible = true;
+        }
+
+        //private void Project_SelectedItemChange(object sender, LookUpChangeEvent e)
+        //{
+        //      btn_nhucauduan.IsVisible = true;
+        //}
+
+        //private async void btn_nhucauduan_Clicked(object sender, EventArgs e)
+        //{
+        //    LoadingHelper.Show();
+        //    var result = await viewModel.updateNhuCauDuAn();
+        //    if (result)
+        //    {
+        //         btn_nhucauduan.IsVisible = false;
+        //        ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+        //        LoadingHelper.Hide();
+        //    }
+        //    else
+        //    {
+        //        LoadingHelper.Hide();
+        //        ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+        //    }
+        //}
     }
 }

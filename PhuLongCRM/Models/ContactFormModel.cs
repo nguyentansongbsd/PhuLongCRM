@@ -409,5 +409,9 @@ namespace PhuLongCRM.Models
         public Guid protecter_id { get; set; }
         public string protecter_name { get; set; }
         public DateTime? protecter_birthdate { get; set; }
+
+        private string _avatar;
+        public string avatar { get { return _avatar; } set { _avatar = value; OnPropertyChanged(nameof(avatar)); } }
+        public string entityimage { get; set; }
     }
 }

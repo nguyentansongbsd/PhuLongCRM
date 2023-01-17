@@ -115,5 +115,20 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(NumberLogin), 0);
             set => AppSettings.AddOrUpdateValue(nameof(NumberLogin), value);
         }
+        public static int LoginLimit
+        {
+            get => AppSettings.GetValueOrDefault(nameof(LoginLimit), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(LoginLimit), value);
+        }
+        public static int TimeOut
+        {
+            get => AppSettings.GetValueOrDefault(nameof(TimeOut), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(TimeOut), value);
+        }
+        public static string Currency
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Currency), "vi"); //en
+            set => AppSettings.AddOrUpdateValue(nameof(Currency), value);
+        }
     }
 }

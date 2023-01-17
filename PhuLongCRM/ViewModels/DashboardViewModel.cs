@@ -81,12 +81,27 @@ namespace PhuLongCRM.ViewModels
         private string _totalPaidCommission;
         public string TotalPaidCommission { get => _totalPaidCommission; set { _totalPaidCommission = value; OnPropertyChanged(nameof(TotalPaidCommission)); } }
 
+        private List<PromotionModel> _promotions;
+        public List<PromotionModel> Promotions { get => _promotions; set { _promotions = value; OnPropertyChanged(nameof(Promotions)); } }
+
+        private List<NewsModel> _news;
+        public List<NewsModel> News { get => _news; set { _news = value; OnPropertyChanged(nameof(News)); } }
+
         public ICommand RefreshCommand => new Command(async () =>
         {
             IsRefreshing = true;
             await RefreshDashboard();
             IsRefreshing = false;
         });
+
+        private int _numTask;
+        public int NumTask { get => _numTask; set { _numTask = value; OnPropertyChanged(nameof(NumTask)); } }
+
+        private int _numPhoneCall;
+        public int NumPhoneCall { get => _numPhoneCall; set { _numPhoneCall = value; OnPropertyChanged(nameof(NumPhoneCall)); } }
+
+        private int _numMeet;
+        public int NumMeet { get => _numMeet; set { _numMeet = value; OnPropertyChanged(nameof(NumMeet)); } }
 
         public DashboardViewModel()
         {
@@ -415,9 +430,9 @@ namespace PhuLongCRM.ViewModels
             
         }
 
-        public async Task LoadTasks()
+        public async Task LoadTasks(int activityCount)
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='{activityCount}' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='task'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -471,7 +486,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadMettings()
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='3' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='appointment'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -561,9 +576,9 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task LoadPhoneCalls()
+        public async Task LoadPhoneCalls(int activityCount)
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='{activityCount}' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='phonecall'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -629,6 +644,109 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
+        public async Task LoadActivityCount()
+        {
+            string fetchXml_phone = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='phonecall'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_phone = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("phonecalls", fetchXml_phone);
+            if (result_phone != null || result_phone.value.Count != 0)
+                NumPhoneCall = result_phone.value.FirstOrDefault().count;
+
+            string fetchXml_task = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='task'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_task = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("tasks", fetchXml_task);
+            if (result_task != null || result_task.value.Count != 0)
+                NumTask = result_task.value.FirstOrDefault().count;
+
+            string fetchXml_meet = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='appointment'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='in'>
+                                            <value>0</value>
+                                            <value>3</value>
+                                        </condition>
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_meet = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("appointments", fetchXml_meet);
+            if (result_meet != null || result_meet.value.Count != 0)
+                NumMeet = result_meet.value.FirstOrDefault().count;
+        }
+        public async Task Load3Activity()
+        {
+            await LoadMettings();
+            if(Activities.Count <3)
+            {
+                await LoadPhoneCalls(3 - Activities.Count);
+                if (Activities.Count < 3)
+                {
+                    await LoadTasks(3 - Activities.Count);
+                }
+            }    
+                
+        }
+
+        public async Task LoadPromotion()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                        <entity name='bsd_promotion'>
+                                            <attribute name='bsd_name' />
+                                            <attribute name='bsd_startdate' />
+                                            <attribute name='bsd_enddate' />
+                                            <attribute name='bsd_promotionid' />
+                                            <order attribute='createdon' descending='true' />
+                                            <filter type='and'>
+                                                <condition attribute='statuscode' operator='eq' value='1' />
+                                            </filter>
+                                            <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner'>
+                                                <attribute name='bsd_name' alias='project_name'/>
+                                            </link-entity>
+                                        </entity>
+                                    </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PromotionModel>>("bsd_promotions", fetchXml);
+            if (result != null || result.value.Count > 0)
+            {
+                Promotions = result.value;
+            }    
+        }
+        public async Task LoadNews()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_news'>
+                                    <attribute name='bsd_newsid' />
+                                    <attribute name='bsd_name' />
+                                    <attribute name='createdon' />
+                                    <attribute name='bsd_url' />
+                                    <attribute name='bsd_image' />
+                                    <order attribute='bsd_name' descending='false' />
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<NewsModel>>("bsd_newses", fetchXml);
+            if (result != null || result.value.Count > 0)
+            {
+                News = result.value;
+            }
+        }
+
         public async Task RefreshDashboard()
         {
             this.Activities.Clear();
@@ -646,16 +764,17 @@ namespace PhuLongCRM.ViewModels
             this.numKHKhongChuyenDoi = 0;
 
             await Task.WhenAll(
-                 this.LoadTasks(),
-                 this.LoadMettings(),
-                 this.LoadPhoneCalls(),
+                 this.Load3Activity(),
                  this.LoadQueueFourMonths(),
                  this.LoadQuoteFourMonths(),
                  this.LoadOptionEntryFourMonths(),
                  this.LoadUnitFourMonths(),
                  this.LoadLeads(),
-                 this.LoadCommissionTransactions()
-                );
+                 this.LoadCommissionTransactions(),
+                 LoadActivityCount(),
+                 LoadPromotion(),
+                 LoadNews()
+                ); ;
         }
     }
     public class CountChartModel

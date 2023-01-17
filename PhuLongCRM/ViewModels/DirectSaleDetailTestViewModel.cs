@@ -183,18 +183,35 @@ namespace PhuLongCRM.ViewModels
                 block.bsd_name = model.name;
                 block.TotalUnitInBlock = int.Parse(model.sumQty);
                 var arrStatus = model.stringQty.Split(',');
-                block.NumChuanBiInBlock = int.Parse(arrStatus[0]);
-                block.NumSanSangInBlock = int.Parse(arrStatus[1]);
-                block.NumBookingInBlock = int.Parse(arrStatus[2]);
-                block.NumGiuChoInBlock = int.Parse(arrStatus[3]);
-                block.NumDatCocInBlock = int.Parse(arrStatus[4]);
-                block.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
-                block.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
-                block.NumOptionInBlock = int.Parse(arrStatus[7]);
-                block.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
-                block.NumSignedDAInBlock = int.Parse(arrStatus[9]);
-                block.NumQualifiedInBlock = int.Parse(arrStatus[10]);
-                block.NumDaBanInBlock = int.Parse(arrStatus[11]);
+                int i = 0;
+                foreach(var item in arrStatus)
+                {
+                    if(i==0) block.NumChuanBiInBlock = int.Parse(item);
+                    else if (i == 1) block.NumSanSangInBlock = int.Parse(arrStatus[1]);
+                    else if (i == 2) block.NumBookingInBlock = int.Parse(arrStatus[2]);
+                    else if (i == 3) block.NumGiuChoInBlock = int.Parse(arrStatus[3]);
+                    else if (i == 4) block.NumDatCocInBlock = int.Parse(arrStatus[4]);
+                    else if (i == 5) block.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
+                    else if (i == 6) block.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
+                    else if (i == 7) block.NumOptionInBlock = int.Parse(arrStatus[7]);
+                    else if (i == 8) block.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
+                    else if (i == 9) block.NumSignedDAInBlock = int.Parse(arrStatus[9]);
+                    else if (i == 10) block.NumQualifiedInBlock = int.Parse(arrStatus[10]);
+                    else if (i == 11) block.NumDaBanInBlock = int.Parse(arrStatus[11]);
+                    i++;
+                }    
+                //block.NumChuanBiInBlock = int.Parse(arrStatus[0]);
+                //block.NumSanSangInBlock = int.Parse(arrStatus[1]);
+                //block.NumBookingInBlock = int.Parse(arrStatus[2]);
+                //block.NumGiuChoInBlock = int.Parse(arrStatus[3]);
+                //block.NumDatCocInBlock = int.Parse(arrStatus[4]);
+                //block.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
+                //block.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
+                //block.NumOptionInBlock = int.Parse(arrStatus[7]);
+                //block.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
+                //block.NumSignedDAInBlock = int.Parse(arrStatus[9]);
+                //block.NumQualifiedInBlock = int.Parse(arrStatus[10]);
+                //block.NumDaBanInBlock = int.Parse(arrStatus[11]);
                 block.page = -1;
                 Blocks.Add(block);
             }
@@ -215,18 +232,35 @@ namespace PhuLongCRM.ViewModels
                     floor.bsd_floorid = Guid.Parse(item.ID);
                     floor.bsd_name = item.name;
                     var arrStatusInFloor = item.stringQty.Split(',');
-                    floor.NumChuanBiInFloor = int.Parse(arrStatusInFloor[0]);
-                    floor.NumSanSangInFloor = int.Parse(arrStatusInFloor[1]);
-                    floor.NumBookingInFloor = int.Parse(arrStatusInFloor[2]);
-                    floor.NumGiuChoInFloor = int.Parse(arrStatusInFloor[3]);
-                    floor.NumDatCocInFloor = int.Parse(arrStatusInFloor[4]);
-                    floor.NumDongYChuyenCoInFloor = int.Parse(arrStatusInFloor[5]);
-                    floor.NumDaDuTienCocInFloor = int.Parse(arrStatusInFloor[6]);
-                    floor.NumOptionInFloor = int.Parse(arrStatusInFloor[7]);
-                    floor.NumThanhToanDot1InFloor = int.Parse(arrStatusInFloor[8]);
-                    floor.NumSignedDAInFloor = int.Parse(arrStatusInFloor[9]);
-                    floor.NumQualifiedInFloor = int.Parse(arrStatusInFloor[10]);
-                    floor.NumDaBanInFloor = int.Parse(arrStatusInFloor[11]);
+                    int i = 0;
+                    foreach (var item2 in arrStatusInFloor)
+                    {
+                        if (i == 0) floor.NumChuanBiInFloor = int.Parse(item2);
+                        else if (i == 1) floor.NumSanSangInFloor = int.Parse(item2);
+                        else if (i == 2) floor.NumBookingInFloor = int.Parse(item2);
+                        else if (i == 3) floor.NumGiuChoInFloor = int.Parse(item2);
+                        else if (i == 4) floor.NumDatCocInFloor = int.Parse(item2);
+                        else if (i == 5) floor.NumDongYChuyenCoInFloor = int.Parse(item2);
+                        else if (i == 6) floor.NumDaDuTienCocInFloor = int.Parse(item2);
+                        else if (i == 7) floor.NumOptionInFloor = int.Parse(item2);
+                        else if (i == 8) floor.NumThanhToanDot1InFloor = int.Parse(item2);
+                        else if (i == 9) floor.NumSignedDAInFloor = int.Parse(item2);
+                        else if (i == 10) floor.NumQualifiedInFloor = int.Parse(item2);
+                        else if (i == 11) floor.NumDaBanInFloor = int.Parse(item2);
+                        i++;
+                    }
+                    //floor.NumChuanBiInFloor = int.Parse(arrStatusInFloor[0]);
+                    //floor.NumSanSangInFloor = int.Parse(arrStatusInFloor[1]);
+                    //floor.NumBookingInFloor = int.Parse(arrStatusInFloor[2]);
+                    //floor.NumGiuChoInFloor = int.Parse(arrStatusInFloor[3]);
+                    //floor.NumDatCocInFloor = int.Parse(arrStatusInFloor[4]);
+                    //floor.NumDongYChuyenCoInFloor = int.Parse(arrStatusInFloor[5]);
+                    //floor.NumDaDuTienCocInFloor = int.Parse(arrStatusInFloor[6]);
+                    //floor.NumOptionInFloor = int.Parse(arrStatusInFloor[7]);
+                    //floor.NumThanhToanDot1InFloor = int.Parse(arrStatusInFloor[8]);
+                    //floor.NumSignedDAInFloor = int.Parse(arrStatusInFloor[9]);
+                    //floor.NumQualifiedInFloor = int.Parse(arrStatusInFloor[10]);
+                    //floor.NumDaBanInFloor = int.Parse(arrStatusInFloor[11]);
                     floor.TotalUnitInFloor = int.Parse(item.sumQty);
                     Block.Floors.Add(floor);
                 }
@@ -243,15 +277,46 @@ namespace PhuLongCRM.ViewModels
                                             </filter>
                                           </link-entity>
                                         </link-entity>" : "";
-            string isOwner = Filter.isOwner ? $@"<link-entity name='opportunity' from='bsd_units' to='productid' link-type='inner'>
+            string isOwner = Filter.isOwner ? $@"<filter type='or'>
                                                     <filter type='and'>
-                                                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                                        <condition attribute='statuscode' operator='in'>
+                                                        <condition entityname='giucho' attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                                        <condition entityname='giucho' attribute='statuscode' operator='in'>
                                                             <value>100000000</value>
                                                             <value>100000002</value>
                                                         </condition>
                                                     </filter>
-                                                </link-entity>" : "";
+
+                                                    <filter type='and'>
+                                                        <condition entityname='btg' attribute='statuscode' operator='in'>
+                                                            <value>861450002</value>
+                                                            <value>861450000</value>
+                                                            <value>100000006</value>
+                                                            <value>3</value>
+                                                            <value>100000007</value>
+                                                            <value>100000000</value>
+                                                            <value>4</value>
+                                                        </condition>
+                                                        <condition entityname='btg' attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                                    </filter>
+
+                                                    <filter type='and'>
+                                                        <condition entityname='hopdong' attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                                        <condition entityname='hopdong' attribute='statuscode' operator='in'>
+                                                            <value>100000001</value>
+                                                            <value>100000009</value>
+                                                            <value>100000003</value>
+                                                            <value>100001</value>
+                                                            <value>100000004</value>
+                                                            <value>100000011</value>
+                                                            <value>100000012</value>
+                                                            <value>100000007</value>
+                                                            <value>100000005</value>
+                                                            <value>100000002</value>
+                                                            <value>100000008</value>
+                                                            <value>100000010</value>
+                                                        </condition>
+                                                    </filter>
+	                                            </filter>" : "";
 
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='product'>
@@ -266,6 +331,7 @@ namespace PhuLongCRM.ViewModels
                                     <condition attribute='bsd_projectcode' operator='eq' uitype='bsd_project' value='{Filter.Project}'/>
                                     <condition attribute='bsd_floor' operator='eq' uitype='bsd_floor' value='{floorId}' />
                                     {FilterXml}
+                                    {isOwner}
                                 </filter>
                                 <link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='ag' >
                                     <attribute name='statuscode' alias='queses_statuscode'/>
@@ -281,7 +347,9 @@ namespace PhuLongCRM.ViewModels
                                           </link-entity>
                                         </link-entity>
                                 {isEvent}
-                                {isOwner}
+                                <link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='giucho' />
+                                <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='outer' alias='hopdong' />
+                                <link-entity name='quote' from='bsd_unitno' to='productid' link-type='outer' alias='btg' />
                               </entity>
                             </fetch>";
 

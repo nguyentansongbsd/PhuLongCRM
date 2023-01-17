@@ -55,6 +55,8 @@ namespace PhuLongCRM.ViewModels
         /// </summary>
         public async Task<int> CheckLimit()
         {
+            if (queueProject)
+                return 0;
             if (QueueUnit != null && QueueUnit.project_id != Guid.Empty)
             {
                 string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' aggregate='true'>
@@ -76,10 +78,13 @@ namespace PhuLongCRM.ViewModels
                     return queueperunit;
                 }
                 var data = result.value;
-                if (data.Count >= QueueUnit.bsd_unitspersalesman)
-                    // quá giới hạn số unit có thể giữ chỗ 
-                    return 1;
                 var unit = data.Where(x => x.group == QueueUnit.unit_id.ToString()).FirstOrDefault();
+                if (data.Count >= QueueUnit.bsd_unitspersalesman)
+                {     // quá giới hạn số unit có thể giữ chỗ 
+                    if(unit == null)
+                        return 1;
+                }
+               // var unit = data.Where(x => x.group == QueueUnit.unit_id.ToString()).FirstOrDefault();
                 if (unit != null)
                 {
                     if (unit.count >= QueueUnit.bsd_queueunitdaysaleman)

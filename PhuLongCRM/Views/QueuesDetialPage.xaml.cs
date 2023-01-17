@@ -107,6 +107,12 @@ namespace PhuLongCRM.Views
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
                 }
+                if (viewModel.Queue.statuscode == 100000000 && viewModel.Queue.bsd_queueforproject == true
+                    && viewModel.Queue.bsd_queuingfee == viewModel.Queue.bsd_queuingfeepaid
+                    && viewModel.Queue.bsd_queuingexpired < DateTime.Now)
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.rap_can, "FontAwesomeSolid", "\uf56e", null, MatchUnit));
+                }
 
                 viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();
                 if (viewModel.QueueProject == Language.co)
@@ -127,6 +133,31 @@ namespace PhuLongCRM.Views
                     floatingButtonGroup.IsVisible = false;
             }
         }
+
+        private async void MatchUnit(object sender, EventArgs e)
+        {
+            bool isSuccess = await viewModel.CreateTaskMatchUnit();
+            if (isSuccess)
+            {
+                if (Dashboard.NeedToRefreshTask.HasValue) Dashboard.NeedToRefreshTask = true;
+                if (ActivityList.NeedToRefreshTask.HasValue) ActivityList.NeedToRefreshTask = true;
+                if (LichLamViecTheoThang.NeedToRefresh.HasValue) LichLamViecTheoThang.NeedToRefresh = true;
+                if (LichLamViecTheoTuan.NeedToRefresh.HasValue) LichLamViecTheoTuan.NeedToRefresh = true;
+                if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
+                if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
+                if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
+                if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+                if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
+                ToastMessageHelper.ShortMessage(Language.tao_cong_viec_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+            }
+        }
+
         private void GoToProject_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();

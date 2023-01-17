@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Essentials;
@@ -36,11 +37,16 @@ namespace PhuLongCRM.Views
 
         public string ImeiNum { get; set; }
 
+        public static bool? LoginSession = null;
+
+        private UserModel _admin;
+        public UserModel Admin { get => _admin; set { _admin = value; OnPropertyChanged(nameof(Admin)); } }
+
         public Login()
         {
             InitializeComponent();
             this.BindingContext = this;
-
+            LoginSession = false;
             VerApp = Config.OrgConfig.VerApp;
             if (UserLogged.IsLogged && UserLogged.IsSaveInforUser)
             {
@@ -74,9 +80,13 @@ namespace PhuLongCRM.Views
             return true;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
+            if(LoginSession == true)
+            {
+              await DisplayAlert(Language.canh_bao, Language.phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai, "OK");
+            }    
         }
 
         private void IsRemember_Tapped(object sender, EventArgs e)
@@ -221,8 +231,9 @@ namespace PhuLongCRM.Views
                         UserLogged.Id = employeeModel.bsd_employeeid;
                         UserLogged.NumberLogin = int.Parse(DecaimalToString(employeeModel.bsd_numberlogin));
                         UserLogged.DateLoginFailed = employeeModel.bsd_logindate.ToString();
+                        UserLogged.LoginLimit = employeeModel.bsd_loginlimit;
 
-                        if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24.0 && UserLogged.NumberLogin >= 5)
+                        if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24.0 && UserLogged.NumberLogin >= UserLogged.LoginLimit)
                         {
                                 LoadingHelper.Hide();
                                 ToastMessageHelper.ShortMessage(Language.tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong);
@@ -271,6 +282,7 @@ namespace PhuLongCRM.Views
                         UserLogged.ContactName = employeeModel.contact_name;
                         UserLogged.ManagerId = employeeModel.manager_id;
                         UserLogged.ManagerName = employeeModel.manager_name;
+                        UserLogged.TimeOut = employeeModel.bsd_timeoutminute;
                         UserLogged.IsSaveInforUser = checkboxRememberAcc.IsChecked;
                         UserLogged.IsLogged = true;
                         UserLogged.IsLoginByUserCRM = false;
@@ -278,8 +290,8 @@ namespace PhuLongCRM.Views
                         Application.Current.MainPage = new AppShell();
                         UserLogged.NumberLogin = 0;
                         UserLogged.DateLoginFailed = DateTime.Now.ToString();
-                        await UpdateNumberLogin();
-                       // await Task.Delay(1);
+                        await UpdateNumberLogin(true);
+                        TimeOutLogin();
                         LoadingHelper.Hide();
                     }
                     else
@@ -308,7 +320,10 @@ namespace PhuLongCRM.Views
                     <attribute name='bsd_manager' />
                     <attribute name='bsd_avatar' />
                     <attribute name='bsd_numberlogin' />
+                    <attribute name='bsd_loginlimit' />
                     <attribute name='bsd_logindate' />
+                    <attribute name='bsd_timeoutminute' />
+                    <attribute name='bsd_statelogin' />
                     <order attribute='bsd_name' descending='false' />
                     <filter type='and'>
                       <condition attribute='bsd_name' operator='eq' value='{UserName}' />
@@ -379,13 +394,34 @@ namespace PhuLongCRM.Views
             btnLogin.Text = Language.dang_nhap;
             btnLoginUserCRM.Text = Language.dang_nhap_voi_user_crm;
         }
-        public async Task UpdateNumberLogin()
+        //ghi nhận số lần login khi thành công hoặc thất bại, nếu login thành công cập nhâtj state login
+        public async Task UpdateNumberLogin(bool isLogin = false)
         {
             string path = $"/bsd_employees({UserLogged.Id})";
             Dictionary<string, object> data = new Dictionary<string, object>();
             data["bsd_numberlogin"] = UserLogged.NumberLogin;
-            if(!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed))
+            if (isLogin)
+                data["bsd_statelogin"] = "Login";
+            if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed))
                 data["bsd_logindate"] = DateTime.Parse(UserLogged.DateLoginFailed).ToUniversalTime();
+            CrmApiResponse crmApiResponse = await CrmHelper.PatchData(path, data);
+            if (!crmApiResponse.IsSuccess)
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                return;
+            }
+        }
+        public async Task UpdateStateLogin(bool isLogin)
+        {
+            string path = $"/bsd_employees({UserLogged.Id})";
+
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            if(isLogin)
+                data["bsd_statelogin"] = "Login";
+            else
+                data["bsd_statelogin"] = "Logout";
+
             CrmApiResponse crmApiResponse = await CrmHelper.PatchData(path, data);
             if (!crmApiResponse.IsSuccess)
             {
@@ -407,6 +443,64 @@ namespace PhuLongCRM.Views
             else
             {
                 return "0";
+            }
+        }
+        private void TimeOutLogin()
+        {
+            Thread t = new Thread(async () =>
+            {
+                int time = UserLogged.TimeOut * 60000;
+                await Task.Delay(time);
+                if (UserLogged.IsLoginByUserCRM)
+                    DependencyService.Get<IClearCookies>().ClearAllCookies();
+                await UpdateStateLogin(false);
+                await Shell.Current.GoToAsync("//LoginPage");
+            });
+            t.Start();
+        }
+
+        private async void LienHe_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            if (string.IsNullOrWhiteSpace(UserLogged.AccessToken))
+            {
+                var response = await LoginHelper.Login();
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                    UserLogged.AccessToken = tokenData.access_token;
+                }
+            }
+            if(Admin == null)
+            {
+                await LoadAdmin();
+            }    
+            if(Admin != null)
+            {
+                Admin_CenterPopup.ShowCenterPopup();
+            }    
+        }
+        public async Task LoadAdmin()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                    <entity name='systemuser'>
+                                        <attribute name='fullname' />
+                                        <attribute name='systemuserid' />
+                                        <attribute name='mobilephone' />
+                                        <attribute name='internalemailaddress' />
+                                        <order attribute='fullname' descending='false' />
+                                        <filter type='and'>
+                                            <condition attribute='internalemailaddress' operator='eq' value='crmAdmin@phulong.com' />
+                                        </filter>
+                                    </entity>
+                                </fetch>";
+            //< condition attribute = 'fullname' operator= 'eq' value = '# CRM Admin' />
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<UserModel>>("systemusers", fetchXml);
+            if (result != null || result.value.Count > 0)
+            {
+                Admin = result.value.FirstOrDefault();
             }
         }
     }

@@ -18,6 +18,7 @@ namespace PhuLongCRM.Models
         public string PdfName { get; set; }
         public string IconFile { get => SharePointType == SharePointType.Pdf ? "\uf1c1" : SharePointType == SharePointType.Docx ? "\uf1c2" : null; }
         public Color ColorFile { get => SharePointType == SharePointType.Docx ? Color.FromHex("#1961BE") : SharePointType == SharePointType.Pdf ? Color.Red : Color.Black; }
+        public string FileName { get; set; }
 
         public CollectionData()
         { }

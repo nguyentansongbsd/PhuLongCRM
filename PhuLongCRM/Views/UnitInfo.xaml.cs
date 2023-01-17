@@ -10,6 +10,8 @@ using System.Collections.ObjectModel;
 using PhuLongCRM.Resources;
 using System.Linq;
 using Stormlion.PhotoBrowser;
+using Xamarin.Essentials;
+using PhuLongCRM.IServices;
 
 namespace PhuLongCRM.Views
 {
@@ -69,7 +71,9 @@ namespace PhuLongCRM.Views
                     btnGiuCho.IsVisible = false;
                     viewModel.IsShowBtnBangTinhGia = false;
                 }
-
+                var width = ((DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density) - 35) / 2;
+                var tmpHeight = width * 2 / 3;
+                collection.HeightRequest = (tmpHeight + 15) * ((viewModel.Collections.Count + 2) / 3);
                 SetButton();
                 gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
                 OnCompleted?.Invoke(true);
@@ -416,11 +420,17 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không lấy được video");
+                        ToastMessageHelper.ShortMessage(Language.khong_tai_duoc_video);
                     }
                 };
             }
             LoadingHelper.Hide();
+        }
+        private async void OpenPdfDocxFile_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            await DependencyService.Get<IOpenFileService>().OpenFile(item.PdfName, null, item.UrlPdfFile);
         }
     }
 }

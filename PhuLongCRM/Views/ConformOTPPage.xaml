@@ -19,7 +19,7 @@
                                 <FormattedString>
                                     <Span Text="{x:Static lang:Language.ma_otp_duoc_gui_ve_so_dien_thoai}" />
                                     <Span Text=" " />
-                                    <Span Text="{Binding Phone}" FontFamily="SegoeBold" TextColor="DarkGreen"/>
+                                    <Span Text="{Binding SendTo}" FontFamily="SegoeBold" TextColor="DarkGreen"/>
                                     <Span Text=". " />
                                     <Span Text="{x:Static lang:Language.vui_long_nhap_ma_otp_de_xac_nhan_tai_khoan}"/>
                                 </FormattedString>

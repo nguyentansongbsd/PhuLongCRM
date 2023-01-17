@@ -19,8 +19,15 @@ namespace PhuLongCRM.ViewModels
                 string filter = string.Empty;
                 if (!string.IsNullOrWhiteSpace(KeyFilter))
                 {
-                    if (KeyFilter == "0")
+                    if (KeyFilter == "-1")
                         filter = null;
+                    else if (KeyFilter == "0")
+                        filter = @"<filter type='or'>
+                                  <condition attribute='statuscode' operator='in'>
+                                    <value>1</value>
+                                    <value>100000000</value>
+                                  </condition>
+                                </filter>";
                     else if (KeyFilter == "1")
                         filter = "<condition attribute='statuscode' operator='eq' value='100000000' />";
                     else if (KeyFilter == "2")

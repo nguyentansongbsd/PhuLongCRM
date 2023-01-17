@@ -55,10 +55,13 @@ namespace PhuLongCRM.Views
                         viewModel.LoadThongKe(),
                         viewModel.LoadThongKeGiuCho(),
                         viewModel.LoadThongKeHopDong(),
-                        viewModel.LoadThongKeBangTinhGia(),
-                        viewModel.CheckPhasesLaunch(),
-                        viewModel.LoadThongKeDatCoc()
+                        viewModel.LoadThongKeSoLuong(),
+                        viewModel.CheckPhasesLaunch()
+                       // viewModel.LoadThongKeDatCoc()
                     );
+                var width = ((DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density) - 35) / 2;
+                var tmpHeight = width * 2 / 3;
+                collection.HeightRequest = (tmpHeight + 15 ) * ((viewModel.Collections.Count+2)/3);
                 SetRealTime();
                 try
                 {
@@ -79,7 +82,6 @@ namespace PhuLongCRM.Views
                 {
 
                 }
-
                 OnCompleted?.Invoke(true);
             }
             else

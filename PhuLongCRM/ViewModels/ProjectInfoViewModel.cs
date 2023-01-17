@@ -556,7 +556,7 @@ namespace PhuLongCRM.ViewModels
                 if (result != null)
                 {
                     string url = result.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
-                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
+                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia, FileName = item.name});
                 }
             }
         }
@@ -570,7 +570,7 @@ namespace PhuLongCRM.ViewModels
                 {
                     string url = result.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
                     this.Photos.Add(new Photo { URL = url });
-                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
+                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia, FileName = item.name });
                 }
             }
         }
@@ -693,6 +693,40 @@ namespace PhuLongCRM.ViewModels
 
             }
 
+        }
+        public async Task LoadThongKeSoLuong()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                              <entity name='quote'>
+                                <attribute name='statuscode' groupby='true' alias='group'/>
+                                <attribute name='name' aggregate='count' alias='count'/>
+                                <filter type='and'>
+                                  <condition attribute='statuscode' operator='in'>
+                                    <value>100000000</value>
+                                    <value>861450001</value>
+                                    <value>861450002</value>
+                                    <value>100000006</value>
+                                    <value>3</value>
+                                    <value>861450000</value>
+<value>100000007</value>
+                                  </condition>
+                                </filter>
+                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectid' link-type='inner' alias='ae'>
+                                  <filter type='and'>
+                                    <condition attribute='bsd_projectid' operator='eq' value='{ProjectId}'/>
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("quotes", fetchXml);
+            if (result == null || result.value.Any() == false) return;
+            foreach(var item in result.value)
+            {
+                if (item.group == "100000007")
+                    SoBangTinhGia = item.count;
+                else
+                    SoDatCoc += item.count;
+            }
         }
     }
 }
