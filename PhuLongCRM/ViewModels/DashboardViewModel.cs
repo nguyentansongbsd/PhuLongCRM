@@ -81,6 +81,12 @@ namespace PhuLongCRM.ViewModels
         private string _totalPaidCommission;
         public string TotalPaidCommission { get => _totalPaidCommission; set { _totalPaidCommission = value; OnPropertyChanged(nameof(TotalPaidCommission)); } }
 
+        private List<PromotionModel> _promotions;
+        public List<PromotionModel> Promotions { get => _promotions; set { _promotions = value; OnPropertyChanged(nameof(Promotions)); } }
+
+        private List<NewsModel> _news;
+        public List<NewsModel> News { get => _news; set { _news = value; OnPropertyChanged(nameof(News)); } }
+
         public ICommand RefreshCommand => new Command(async () =>
         {
             IsRefreshing = true;
@@ -683,7 +689,7 @@ namespace PhuLongCRM.ViewModels
                                 </fetch>";
             var result_meet = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("appointments", fetchXml_meet);
             if (result_meet != null || result_meet.value.Count != 0)
-                NumMeet = result_task.value.FirstOrDefault().count;
+                NumMeet = result_meet.value.FirstOrDefault().count;
         }
         public async Task Load3Activity()
         {
@@ -697,6 +703,48 @@ namespace PhuLongCRM.ViewModels
                 }
             }    
                 
+        }
+
+        public async Task LoadPromotion()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                        <entity name='bsd_promotion'>
+                                            <attribute name='bsd_name' />
+                                            <attribute name='bsd_startdate' />
+                                            <attribute name='bsd_enddate' />
+                                            <attribute name='bsd_promotionid' />
+                                            <order attribute='createdon' descending='true' />
+                                            <filter type='and'>
+                                                <condition attribute='statuscode' operator='eq' value='1' />
+                                            </filter>
+                                            <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner'>
+                                                <attribute name='bsd_name' alias='project_name'/>
+                                            </link-entity>
+                                        </entity>
+                                    </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PromotionModel>>("bsd_promotions", fetchXml);
+            if (result != null || result.value.Count > 0)
+            {
+                Promotions = result.value;
+            }    
+        }
+        public async Task LoadNews()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_news'>
+                                    <attribute name='bsd_newsid' />
+                                    <attribute name='bsd_name' />
+                                    <attribute name='createdon' />
+                                    <attribute name='bsd_url' />
+                                    <attribute name='bsd_image' />
+                                    <order attribute='bsd_name' descending='false' />
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<NewsModel>>("bsd_newses", fetchXml);
+            if (result != null || result.value.Count > 0)
+            {
+                News = result.value;
+            }
         }
 
         public async Task RefreshDashboard()
@@ -723,7 +771,9 @@ namespace PhuLongCRM.ViewModels
                  this.LoadUnitFourMonths(),
                  this.LoadLeads(),
                  this.LoadCommissionTransactions(),
-                 LoadActivityCount()
+                 LoadActivityCount(),
+                 LoadPromotion(),
+                 LoadNews()
                 ); ;
         }
     }

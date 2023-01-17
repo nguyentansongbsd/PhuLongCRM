@@ -3816,4 +3816,7 @@
 	<data name="phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai" xml:space="preserve">
     <value>Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.</value>
   </data>
+	<data name="lien_he" xml:space="preserve">
+    <value>Liên hệ</value>
+  </data>
 </root>

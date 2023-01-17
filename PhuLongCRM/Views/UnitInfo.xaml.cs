@@ -11,6 +11,7 @@ using PhuLongCRM.Resources;
 using System.Linq;
 using Stormlion.PhotoBrowser;
 using Xamarin.Essentials;
+using PhuLongCRM.IServices;
 
 namespace PhuLongCRM.Views
 {
@@ -419,11 +420,17 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage("Không lấy được video");
+                        ToastMessageHelper.ShortMessage(Language.khong_tai_duoc_video);
                     }
                 };
             }
             LoadingHelper.Hide();
+        }
+        private async void OpenPdfDocxFile_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var item = (CollectionData)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            await DependencyService.Get<IOpenFileService>().OpenFile(item.PdfName, null, item.UrlPdfFile);
         }
     }
 }

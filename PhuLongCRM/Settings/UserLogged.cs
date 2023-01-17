@@ -125,5 +125,10 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(TimeOut), 0);
             set => AppSettings.AddOrUpdateValue(nameof(TimeOut), value);
         }
+        public static string Currency
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Currency), "vi"); //en
+            set => AppSettings.AddOrUpdateValue(nameof(Currency), value);
+        }
     }
 }

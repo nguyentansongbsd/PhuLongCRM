@@ -182,7 +182,7 @@ namespace PhuLongCRM.Views
             else
                 created = await viewModel.createQueueDraft(false, viewModel.QueueUnit.unit_id);
 
-            if (created != string.Empty)
+            if (string.IsNullOrWhiteSpace(created))
             {
                 if (ProjectInfo.NeedToRefreshQueue.HasValue) ProjectInfo.NeedToRefreshQueue = true;
                 if (ProjectInfo.NeedToRefreshNumQueue.HasValue) ProjectInfo.NeedToRefreshNumQueue = true;

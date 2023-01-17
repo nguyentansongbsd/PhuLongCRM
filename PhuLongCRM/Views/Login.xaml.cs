@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Essentials;
@@ -36,11 +37,16 @@ namespace PhuLongCRM.Views
 
         public string ImeiNum { get; set; }
 
+        public static bool? LoginSession = null;
+
+        private UserModel _admin;
+        public UserModel Admin { get => _admin; set { _admin = value; OnPropertyChanged(nameof(Admin)); } }
+
         public Login()
         {
             InitializeComponent();
             this.BindingContext = this;
-
+            LoginSession = false;
             VerApp = Config.OrgConfig.VerApp;
             if (UserLogged.IsLogged && UserLogged.IsSaveInforUser)
             {
@@ -74,9 +80,13 @@ namespace PhuLongCRM.Views
             return true;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
+            if(LoginSession == true)
+            {
+              await DisplayAlert(Language.canh_bao, Language.phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai, "OK");
+            }    
         }
 
         private void IsRemember_Tapped(object sender, EventArgs e)
@@ -282,7 +292,6 @@ namespace PhuLongCRM.Views
                         UserLogged.DateLoginFailed = DateTime.Now.ToString();
                         await UpdateNumberLogin(true);
                         TimeOutLogin();
-                        await DisplayAlert(Language.canh_bao, Language.phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai, "OK");
                         LoadingHelper.Hide();
                     }
                     else
@@ -313,8 +322,8 @@ namespace PhuLongCRM.Views
                     <attribute name='bsd_numberlogin' />
                     <attribute name='bsd_loginlimit' />
                     <attribute name='bsd_logindate' />
-    <attribute name='bsd_timeoutminute' />
-    <attribute name='bsd_statelogin' />
+                    <attribute name='bsd_timeoutminute' />
+                    <attribute name='bsd_statelogin' />
                     <order attribute='bsd_name' descending='false' />
                     <filter type='and'>
                       <condition attribute='bsd_name' operator='eq' value='{UserName}' />
@@ -436,19 +445,63 @@ namespace PhuLongCRM.Views
                 return "0";
             }
         }
-        private async void TimeOutLogin()
+        private void TimeOutLogin()
         {
-            int time = UserLogged.TimeOut * 60000;
-            Task.Delay(time);
-            await Logout();
+            Thread t = new Thread(async () =>
+            {
+                int time = UserLogged.TimeOut * 60000;
+                await Task.Delay(time);
+                if (UserLogged.IsLoginByUserCRM)
+                    DependencyService.Get<IClearCookies>().ClearAllCookies();
+                await UpdateStateLogin(false);
+                await Shell.Current.GoToAsync("//LoginPage");
+            });
+            t.Start();
         }
-        private async Task Logout()
+
+        private async void LienHe_Tapped(object sender, EventArgs e)
         {
-            await DisplayAlert(Language.canh_bao, Language.phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai, "OK");
-            if (UserLogged.IsLoginByUserCRM)
-                DependencyService.Get<IClearCookies>().ClearAllCookies();
-            await UpdateStateLogin(false);
-            await Shell.Current.GoToAsync("//LoginPage");
+            LoadingHelper.Show();
+            if (string.IsNullOrWhiteSpace(UserLogged.AccessToken))
+            {
+                var response = await LoginHelper.Login();
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+                    UserLogged.AccessToken = tokenData.access_token;
+                }
+            }
+            if(Admin == null)
+            {
+                await LoadAdmin();
+            }    
+            if(Admin != null)
+            {
+                Admin_CenterPopup.ShowCenterPopup();
+            }    
+        }
+        public async Task LoadAdmin()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                    <entity name='systemuser'>
+                                        <attribute name='fullname' />
+                                        <attribute name='systemuserid' />
+                                        <attribute name='mobilephone' />
+                                        <attribute name='internalemailaddress' />
+                                        <order attribute='fullname' descending='false' />
+                                        <filter type='and'>
+                                            <condition attribute='internalemailaddress' operator='eq' value='crmAdmin@phulong.com' />
+                                        </filter>
+                                    </entity>
+                                </fetch>";
+            //< condition attribute = 'fullname' operator= 'eq' value = '# CRM Admin' />
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<UserModel>>("systemusers", fetchXml);
+            if (result != null || result.value.Count > 0)
+            {
+                Admin = result.value.FirstOrDefault();
+            }
         }
     }
 }

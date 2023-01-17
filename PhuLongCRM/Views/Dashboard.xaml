@@ -8,7 +8,7 @@
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:convertes ="clr-namespace:PhuLongCRM.Converters" 
              xmlns:views="clr-namespace:PhuLongCRM.Views"
-             xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
+             xmlns:effects="clr-namespace:PhuLongCRM.IServices" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="PhuLongCRM.Views.Dashboard">
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="ScanQRCode_Clicked">
@@ -28,8 +28,8 @@
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseToolTips_Tapped"/>
                         </StackLayout.GestureRecognizers>
-                        <StackLayout BackgroundColor="White" HeightRequest="250">
-                            <Grid Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Grid BackgroundColor="White" HeightRequest="250" RowDefinitions="Auto,*">
+                            <Grid Grid.Row="0" Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                 <Label Grid.Column="0" VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
@@ -40,9 +40,44 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
-                                <controls:TabNewsControl ListTab="khach_hang_title,du_an_title,gio_hang" Grid.Column="1" VerticalOptions="Center"/>
+                                <controls:TabNewsControl ListTab="tat_ca,du_an_title,khuyen_mai" Grid.Column="1" VerticalOptions="Center" IndexTab="TabNewsControl_IndexTab"/>
                             </Grid>
-                        </StackLayout>
+                            <Grid Grid.Row="1" BackgroundColor="White">
+                                <CarouselView x:Name="news" ItemsSource="{Binding News}">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate >
+                                            <ffimageloading:CachedImage Source="{Binding image}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <StackLayout x:Name="promotion" BindableLayout.ItemsSource="{Binding Promotions}" IsVisible="false">
+                                    <BindableLayout.EmptyViewTemplate>
+                                        <DataTemplate>
+                                            <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                        </DataTemplate>
+                                    </BindableLayout.EmptyViewTemplate>
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid BackgroundColor="#eeeeee" Padding="0,1,0,0">
+                                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Padding="15" BackgroundColor="White">
+                                                    <Label Text="{Binding bsd_name}" FontSize="14" TextColor="#444444" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="0" FontAttributes="Bold"/>
+                                                    <Label FontSize="14" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Grid.Row="0">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding bsd_startdate,StringFormat='{0:MM/yyyy}'}"/>
+                                                                <Span Text=" - "/>
+                                                                <Span Text="{Binding bsd_enddate,StringFormat=' {0:MM/yyyy}'}"/>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                    <Label Text="{Binding project_name}" FontSize="14" TextColor="Gray" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                                                </Grid>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
                         <Grid ColumnDefinitions="*,*,*" Margin="15,5">
                             <Grid RowDefinitions="50,*" Grid.Column="0">
                                 <Grid.GestureRecognizers>

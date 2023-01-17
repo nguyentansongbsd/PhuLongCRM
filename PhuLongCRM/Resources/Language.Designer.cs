@@ -5533,6 +5533,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Liên hệ.
+        /// </summary>
+        internal static string lien_he {
+            get {
+                return ResourceManager.GetString("lien_he", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lĩnh vực.
         /// </summary>
         internal static string linh_vuc {

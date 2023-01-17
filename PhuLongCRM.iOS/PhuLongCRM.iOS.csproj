@@ -53,7 +53,8 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>Apple Development: Song Nguyen (HSWY559C8W)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignEntitlements></CodesignEntitlements>
+    <CodesignEntitlements>
+    </CodesignEntitlements>
     <MtouchLink>None</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
     <CodesignProvision>PhuLong Dev Profile</CodesignProvision>

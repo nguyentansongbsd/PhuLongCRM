@@ -30,8 +30,10 @@ namespace PhuLongCRM.Views
             base.OnAppearing();
             if (NeedToRefreshReservationList ==true)
             {
+                LoadingHelper.Show();
                 await viewModel.LoadOnRefreshCommandAsync();
                 NeedToRefreshReservationList = false;
+                LoadingHelper.Hide();
             }
         }
 

@@ -48,7 +48,9 @@ namespace PhuLongCRM.Views
                  viewModel.LoadUnitFourMonths(),
                  viewModel.LoadLeads(),
                  viewModel.LoadCommissionTransactions(),
-                 viewModel.LoadActivityCount()
+                 viewModel.LoadActivityCount(),
+                 viewModel.LoadPromotion(),
+                 viewModel.LoadNews()
                 );
 
             MessagingCenter.Subscribe<ScanQRPage, string>(this, "CallBack", async (sender, e) =>
@@ -276,6 +278,25 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             await Navigation.PushAsync(new DirectSale());
             LoadingHelper.Hide();
+        }
+
+        private void TabNewsControl_IndexTab(object sender, LookUpChangeEvent e)
+        {
+            if (e.Item != null)
+            {
+                if ((int)e.Item == 0)
+                {
+                    promotion.IsVisible = false;
+                }
+                else if ((int)e.Item == 1)
+                {
+                    promotion.IsVisible = false;
+                }
+                else if ((int)e.Item == 2)
+                {
+                    promotion.IsVisible = true;
+                }
+            }
         }
     }
 }

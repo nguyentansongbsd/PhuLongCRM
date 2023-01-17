@@ -418,6 +418,9 @@
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Padding="5,10,5,5" HeightRequest="{Binding Source={Reference collection}, Converter={StaticResource CollectionItemWidthConverter}}">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ItemSlider_Tapped" CommandParameter="{Binding .}"/>
+                                                    </Grid.GestureRecognizers>
                                                     <controls:ExtendedFrame Padding="0" CornerRadius="10">
                                                     <Grid RowDefinitions="*,Auto">
                                                         <Image Grid.Row="0" Source="{Binding ImageSource}" Aspect="AspectFill"/>

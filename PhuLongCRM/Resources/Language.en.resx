@@ -3810,4 +3810,7 @@
 	<data name="phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai" xml:space="preserve">
     <value>Login session has expired. Please log in again.</value>
   </data>
+<data name="lien_he" xml:space="preserve">
+    <value>Contact</value>
+  </data>
 </root>

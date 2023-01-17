@@ -37,6 +37,14 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new DirectSaleDetailTestViewModel();
             NeedToRefreshDirectSale = false;
             viewModel.Filter = filter;
+            if (viewModel.Filter.isOwner)
+            {
+                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/check-male.png";
+            }
+            else
+            {
+                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/user.png";
+            }
             viewModel.CreateFilterXml();
             Init();
         }
@@ -632,6 +640,18 @@ namespace PhuLongCRM.Views
         private async void Owner_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
+            if (viewModel.Filter.isOwner)
+            {
+                viewModel.Filter.Employee = null;
+                viewModel.Filter.isOwner = false;
+                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/user.png";
+            }
+            else
+            {
+                viewModel.Filter.Employee = UserLogged.Id.ToString();
+                viewModel.Filter.isOwner = true;
+                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/check-male.png";
+            }    
             viewModel.Blocks = new ObservableCollection<Block>();
             NeedToRefreshDirectSale = false;
             viewModel.CreateFilterXml();
@@ -654,16 +674,6 @@ namespace PhuLongCRM.Views
             var lb = rd.Content as Label;
             VisualStateManager.GoToState(rd, "Selected");
             VisualStateManager.GoToState(lb, "Selected");
-            if (viewModel.Filter.isOwner)
-            {
-                viewModel.Filter.isOwner = false;
-                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/user.png";
-            }
-            else
-            {
-                viewModel.Filter.isOwner = true;
-                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/check-male.png";
-            }
             LoadingHelper.Hide();
         }
     }
