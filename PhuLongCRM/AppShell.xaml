@@ -167,11 +167,11 @@
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf2c1;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.danh_gia_title}" ContentTemplate="{DataTemplate views:LichLamViec}">
+        <!--<ShellContent Title="{x:Static lang:Language.danh_gia_title}" ContentTemplate="{DataTemplate views:LichLamViec}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf164;" Size="18"/>
             </ShellContent.Icon>
-        </ShellContent>
+        </ShellContent>-->
         <ShellContent Title="{x:Static lang:Language.thiet_lap_title}" ContentTemplate="{DataTemplate views:SetupPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf013;" Size="18"/>

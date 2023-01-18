@@ -62,7 +62,7 @@
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ForgotPassword_Tapped"/>
                             </Label.GestureRecognizers>
                         </Label>
-                        <Label Text="{x:Static lang:Language.lien_he}" TextColor="#444444" FontSize="15" HorizontalTextAlignment="Center" FontAttributes="Bold">
+                        <Label Text="{x:Static lang:Language.lien_he}" TextColor="#444444" FontSize="15" HorizontalTextAlignment="Center" FontAttributes="Bold" IsVisible="false">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="LienHe_Tapped"/>
                             </Label.GestureRecognizers>

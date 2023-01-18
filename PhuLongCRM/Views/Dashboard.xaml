@@ -28,7 +28,7 @@
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseToolTips_Tapped"/>
                         </StackLayout.GestureRecognizers>
-                        <Grid BackgroundColor="White" HeightRequest="250" RowDefinitions="Auto,*">
+                        <Grid BackgroundColor="White" HeightRequest="250" RowDefinitions="Auto,*" IsVisible="false">
                             <Grid Grid.Row="0" Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                 <Label Grid.Column="0" VerticalOptions="Center">
                                     <Label.FormattedText>
@@ -78,7 +78,7 @@
                                 </StackLayout>
                             </Grid>
                         </Grid>
-                        <Grid ColumnDefinitions="*,*,*" Margin="15,5">
+                        <Grid ColumnDefinitions="*,*,*" Margin="15,10">
                             <Grid RowDefinitions="50,*" Grid.Column="0">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GotoCustomer_Tapped"/>

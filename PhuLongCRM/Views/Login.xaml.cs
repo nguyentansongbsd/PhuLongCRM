@@ -41,6 +41,7 @@ namespace PhuLongCRM.Views
 
         private UserModel _admin;
         public UserModel Admin { get => _admin; set { _admin = value; OnPropertyChanged(nameof(Admin)); } }
+        private bool isTimeOut {get;set;}
 
         public Login()
         {
@@ -282,7 +283,8 @@ namespace PhuLongCRM.Views
                         UserLogged.ContactName = employeeModel.contact_name;
                         UserLogged.ManagerId = employeeModel.manager_id;
                         UserLogged.ManagerName = employeeModel.manager_name;
-                        UserLogged.TimeOut = employeeModel.bsd_timeoutminute;
+                        UserLogged.TimeOut = employeeModel.bsd_timeoutminute.HasValue ? employeeModel.bsd_timeoutminute.Value : 0;
+                        isTimeOut = employeeModel.bsd_timeoutminute.HasValue ? true : false;
                         UserLogged.IsSaveInforUser = checkboxRememberAcc.IsChecked;
                         UserLogged.IsLogged = true;
                         UserLogged.IsLoginByUserCRM = false;
@@ -447,16 +449,19 @@ namespace PhuLongCRM.Views
         }
         private void TimeOutLogin()
         {
-            Thread t = new Thread(async () =>
+            if (isTimeOut)
             {
-                int time = UserLogged.TimeOut * 60000;
-                await Task.Delay(time);
-                if (UserLogged.IsLoginByUserCRM)
-                    DependencyService.Get<IClearCookies>().ClearAllCookies();
-                await UpdateStateLogin(false);
-                await Shell.Current.GoToAsync("//LoginPage");
-            });
-            t.Start();
+                Thread t = new Thread(async () =>
+                {
+                    int time = UserLogged.TimeOut * 60000;
+                    await Task.Delay(time);
+                    if (UserLogged.IsLoginByUserCRM)
+                        DependencyService.Get<IClearCookies>().ClearAllCookies();
+                    await UpdateStateLogin(false);
+                    await Shell.Current.GoToAsync("//LoginPage");
+                });
+                t.Start();
+            }
         }
 
         private async void LienHe_Tapped(object sender, EventArgs e)
