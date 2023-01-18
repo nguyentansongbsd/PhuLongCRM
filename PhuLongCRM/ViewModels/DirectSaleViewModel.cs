@@ -92,6 +92,17 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadProject()
         {
+            string fetch = "";
+            var teamid = await LoadTeamID();
+            if (teamid == null && teamid.Count > 0)
+            {
+                foreach(var item in teamid)
+                {
+                  fetch +=  $@"<condition entityname='share' attribute='principalid' operator='eq' value='{item.Name}'/>";
+                }
+                fetch += $@"<condition entityname='share' attribute='principalid' operator='eq' value='{UserLogged.Id}'/>";
+            }
+
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='bsd_project'>
                                     <attribute name='bsd_projectid'/>
@@ -100,18 +111,44 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='createdon' />
                                     <order attribute='bsd_name' descending='false' />
                                     <filter type='and'>
-                                      <condition attribute='statuscode' operator='eq' value='861450002' />
+                                        <condition attribute='statuscode' operator='eq' value='861450002' />
+                                            <filter type='or'>
+                                                {fetch}
+                                            </filter>
                                     </filter>
+                                    <link-entity name='principalobjectaccess' to='bsd_projectid' from='objectid' link-type='inner' alias='share'/>
                                   </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ProjectListModel>>("bsd_projects", fetchXml);
             if (result == null || result.value.Any() == false) return;
 
-             var data = result.value;
+             var data = result.value.Distinct().ToList();
+             
             foreach (var item in data)
             {
                 Projects.Add(item);
             }
+        }
+
+        public async Task<List<LookUp>> LoadTeamID()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
+                                <entity name='systemuser'>
+                                    <attribute name='systemuserid' alias='Id'/>
+                                    <filter type='and'>
+                                        <condition attribute='systemuserid' operator='eq' value='{UserLogged.ManagerId}'/>
+                                    </filter>
+                                    <link-entity name='teammembership' from='systemuserid' to='systemuserid' visible='false' intersect='true'>
+                                        <link-entity name='team' from='teamid' to='teamid' alias='af'>
+                                            <attribute name='teamid' alias='Name'/>
+                                        </link-entity>
+                                    </link-entity>
+                                </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("systemusers", fetchXml);
+            if (result == null || result.value.Any() == false) return null;
+
+            return result.value;
         }
 
         public async Task LoadPhasesLanch()

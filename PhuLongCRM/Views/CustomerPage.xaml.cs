@@ -39,7 +39,7 @@ namespace PhuLongCRM.Views
 
         protected override async void OnAppearing()
         {
-            base.OnAppearing();
+            base.OnAppearing(); 
             if (LeadsContentView != null && NeedToRefreshLead == true)
             {
                 LoadingHelper.Show();

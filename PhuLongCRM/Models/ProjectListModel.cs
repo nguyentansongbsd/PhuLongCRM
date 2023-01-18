@@ -33,5 +33,16 @@ namespace PhuLongCRM.Models
                     return bsd_projectslogo;
                 }
             } }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is ProjectListModel)) return false;
+            var model = (ProjectListModel)obj;
+            return this.bsd_projectid == model.bsd_projectid;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.bsd_projectid.GetHashCode();
+        }
     }
 }
