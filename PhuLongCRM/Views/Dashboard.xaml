@@ -28,7 +28,7 @@
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseToolTips_Tapped"/>
                         </StackLayout.GestureRecognizers>
-                        <Grid BackgroundColor="White" HeightRequest="250" RowDefinitions="Auto,*" IsVisible="false">
+                        <Grid BackgroundColor="White" HeightRequest="250" RowDefinitions="Auto,*" IsVisible="true">
                             <Grid Grid.Row="0" Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                 <Label Grid.Column="0" VerticalOptions="Center">
                                     <Label.FormattedText>
@@ -43,10 +43,11 @@
                                 <controls:TabNewsControl ListTab="tat_ca,du_an_title,khuyen_mai" Grid.Column="1" VerticalOptions="Center" IndexTab="TabNewsControl_IndexTab"/>
                             </Grid>
                             <Grid Grid.Row="1" BackgroundColor="White">
-                                <CarouselView x:Name="news" ItemsSource="{Binding News}">
+                                <CarouselView x:Name="news" ItemsSource="{Binding News}" Scrolled="news_Scrolled">
                                     <CarouselView.ItemTemplate>
                                         <DataTemplate >
-                                            <ffimageloading:CachedImage Source="{Binding image}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>
+                                            <Image Source="{Binding bsd_url}" Aspect="AspectFill"/>
+                                            <!--<ffimageloading:CachedImage Source="{Binding bsd_url}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>-->
                                         </DataTemplate>
                                     </CarouselView.ItemTemplate>
                                 </CarouselView>
@@ -86,7 +87,7 @@
                                 <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="25" BackgroundColor="#0F646B" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center">
                                     <Label FontFamily="FontAwesomeSolid" FontSize="18" Text="&#xf0c0;" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
                                 </telerikPrimitives:RadBorder>
-                                <Label Grid.Row="1" Text="{x:Static lang:Language.khach_hang_title}" FontSize="15" TextColor="#0F646B" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                                <Label Grid.Row="1" x:Name="lb_khachhang" Text="{x:Static lang:Language.khach_hang_title}" FontSize="15" TextColor="#0F646B" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
                             </Grid>
                             <Grid RowDefinitions="50,*" Grid.Column="1">
                                 <Grid.GestureRecognizers>
@@ -95,7 +96,7 @@
                                 <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="25" BackgroundColor="#0F646B" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center">
                                     <Label FontFamily="FontAwesomeSolid" FontSize="18" Text="&#xf64f;" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
                                 </telerikPrimitives:RadBorder>
-                                <Label Grid.Row="1" Text="{x:Static lang:Language.du_an_title}" FontSize="15" TextColor="#0F646B" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                                <Label Grid.Row="1" x:Name="lb_duan" Text="{x:Static lang:Language.du_an_title}" FontSize="15" TextColor="#0F646B" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
                             </Grid>
                             <Grid RowDefinitions="50,*" Grid.Column="2">
                                 <Grid.GestureRecognizers>
@@ -104,11 +105,11 @@
                                 <telerikPrimitives:RadBorder Grid.Column="0" CornerRadius="25" BackgroundColor="#0F646B" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center">
                                     <Label FontFamily="FontAwesomeSolid" FontSize="18" Text="&#xf07a;" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
                                 </telerikPrimitives:RadBorder>
-                                <Label Grid.Row="1" Text="{x:Static lang:Language.gio_hang}" FontSize="15" TextColor="#0F646B" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                                <Label Grid.Row="1" x:Name="lb_giohang" Text="{x:Static lang:Language.gio_hang}" FontSize="15" TextColor="#0F646B" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
                             </Grid>
                         </Grid>
 
-                        <Label Text="{x:Static lang:Language.khach_hang_tiem_nang}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>
+                        <Label x:Name="lb_khachhangtiemnang" Text="{x:Static lang:Language.khach_hang_tiem_nang}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8"/>
                         <controls:ExtendedFrame Padding="0" Margin="14,6">
                             <Grid ColumnDefinitions="*,*" RowDefinitions="60,60,60" Padding="8">
                                 <telerikChart:RadPieChart Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" IsTabStop="True">
@@ -128,29 +129,25 @@
 
                                 <Grid Grid.Column="1" Grid.Row="0" VerticalOptions="Center" ColumnDefinitions="30,*">
                                     <Label Text="{Binding numKHMoi}" Grid.Column="0" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#2C95F6" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.khach_hang_moi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
+                                    <Label x:Name="lb_khachhangmoi" Text="{x:Static lang:Language.khach_hang_moi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="1" VerticalOptions="Center" ColumnDefinitions="30,*">
                                     <Label Text="{Binding numKHDaChuyenDoi}" Grid.Column="0" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#F6E22D" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.da_chuyen_doi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
+                                    <Label x:Name="lb_dachuyendoi" Text="{x:Static lang:Language.da_chuyen_doi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="2" VerticalOptions="Center" ColumnDefinitions="30,*">
                                     <Label Text="{Binding numKHKhongChuyenDoi}" Grid.Column="0" WidthRequest="30" HeightRequest="30" FontSize="15" TextColor="White" BackgroundColor="#932CF6" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.khong_chuyen_doi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
+                                    <Label x:Name="lb_khongchuyendoi" Text="{x:Static lang:Language.khong_chuyen_doi}" Grid.Column="1" FontSize="15" TextColor="#333333" VerticalTextAlignment="Center"/>
                                 </Grid>
                             </Grid>
                         </controls:ExtendedFrame>
 
-                        <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding Source={x:Static lang:Language.giao_dich},StringFormat='{0} -'}"/>
-                                    <Span Text="{Binding dateBefor,StringFormat=' {0:MM/yyyy}'}"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                        <Grid ColumnDefinitions="Auto,Auto">
+                            <Label x:Name="lb_giaodich" Text="{x:Static lang:Language.giao_dich}" Grid.Column="0" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,0,8"/>
+                            <Label Text="{Binding dateBefor,StringFormat='- {0:MM/yyyy}'}" Grid.Column="1" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="0,14,0,8"/>
+                        </Grid>
                         <Grid x:Name="gridGiaoDich" ColumnDefinitions="*,*,*,*" Margin="14,6" ColumnSpacing="8">
                             <controls:ExtendedFrame Grid.Column="0" Padding="0"
                                                     effects:TooltipEffect.Position="BottomRight" 
@@ -160,7 +157,7 @@
                                            effects:TooltipEffect.Text="{x:Static lang:Language.so_giu_cho_da_tao_trong_thang_nay}">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numQueue}" FontSize="18" FontAttributes="Bold" TextColor="#2196F3" HorizontalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.giu_cho}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_giucho" Text="{x:Static lang:Language.giu_cho}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="0"
@@ -171,7 +168,7 @@
                                            effects:TooltipEffect.Text="{x:Static lang:Language.so_dat_coc_da_tao_trong_thang_nay}">
                                 <StackLayout Margin="6,18" VerticalOptions="Center">
                                     <Label Text="{Binding numQuote}" FontSize="18" FontAttributes="Bold" TextColor="#FA7803" HorizontalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.dat_coc_dashboard}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_dat_coc_dashboard" Text="{x:Static lang:Language.dat_coc_dashboard}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="2" Padding="0"
@@ -182,7 +179,7 @@
                                            effects:TooltipEffect.Text="{x:Static lang:Language.so_hop_dong_da_tao_trong_thang_nay}">
                                 <StackLayout Margin="2,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numOptionEntry}" FontSize="18" FontAttributes="Bold" TextColor="#0DB302" HorizontalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.hop_dong}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_hop_dong" Text="{x:Static lang:Language.hop_dong}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="3" Padding="0"
@@ -193,7 +190,7 @@
                                            effects:TooltipEffect.Text="{x:Static lang:Language.so_san_pham_da_ban_trong_thang_nay}">
                                 <StackLayout Margin="6,18" VerticalOptions="Center" >
                                     <Label Text="{Binding numUnit}" FontSize="18" FontAttributes="Bold" TextColor="#D42A16" HorizontalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.da_ban}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_da_ban"  Text="{x:Static lang:Language.da_ban}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
@@ -231,14 +228,10 @@
                                            effects:TooltipEffect.Text="{x:Static lang:Language.bieu_do_giao_dich_4_thang_gan_nhat_}"/>
                             </Grid>
                         </controls:ExtendedFrame>
-                        <Label FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,14,8">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding Source={x:Static lang:Language.hoa_hong},StringFormat='{0} -'}"/>
-                                    <Span Text="{Binding dateBefor,StringFormat=' {0:MM/yyyy}'}"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                        <Grid ColumnDefinitions="Auto,Auto">
+                            <Label x:Name="lb_hoa_hong" Text="{x:Static lang:Language.hoa_hong}" Grid.Column="0" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="14,14,0,8"/>
+                            <Label Text="{Binding dateBefor,StringFormat='- {0:MM/yyyy}'}" Grid.Column="1" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold" Padding="0,14,0,8"/>
+                        </Grid>
                         <Grid x:Name="gridHoaHong" ColumnDefinitions="*,*" Margin="14,6">
                             <controls:ExtendedFrame Grid.Column="0" Padding="4,16" VerticalOptions="Center"
                                                     effects:TooltipEffect.Position="BottomRight" 
@@ -248,7 +241,7 @@
                                            effects:TooltipEffect.Text="{x:Static lang:Language.tong_tien_co_the_nhan_trong_thang_nay}">
                                 <StackLayout Spacing="12">
                                     <Label Text="{Binding TotalCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#D42A16" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.duoc_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_duoc_nhan" Text="{x:Static lang:Language.duoc_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                             <controls:ExtendedFrame Grid.Column="1" Padding="4,16" VerticalOptions="Center"
@@ -259,7 +252,7 @@
                                            effects:TooltipEffect.Text="{x:Static lang:Language.tong_tien_da_nhan_trong_thang_nay}">
                                 <StackLayout Spacing="12">
                                     <Label Text="{Binding TotalPaidCommission,StringFormat='{0} đ'}" FontSize="18" TextColor="#2196F3" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                    <Label Text="{x:Static lang:Language.da_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_da_nhan" Text="{x:Static lang:Language.da_nhan}" FontSize="15" TextColor="#B3B3B3" HorizontalTextAlignment="Center"/>
                                 </StackLayout>
                             </controls:ExtendedFrame>
                         </Grid>
@@ -310,7 +303,7 @@
                             </Grid>
                         </controls:ExtendedFrame>
                         <StackLayout Margin="15,5" HorizontalOptions="Center" Orientation="Horizontal" Spacing="10">
-                            <Label>
+                            <Label x:Name="lb_duocnhan">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <FormattedString.Spans>
@@ -320,7 +313,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <Label>
+                            <Label x:Name="lb_danhan">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <FormattedString.Spans>
@@ -332,7 +325,7 @@
                             </Label>
                         </StackLayout>
                         <Grid Padding="14,14,14,8" ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="{x:Static lang:Language.hoat_dong_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
+                            <Label x:Name="lb_hoat_dong_hom_nay" Grid.Column="0" Text="{x:Static lang:Language.hoat_dong_hom_nay}" FontSize="16" TextColor="{StaticResource NavigationPrimary}" FontAttributes="Bold"/>
                             <Label Grid.Column="1" Text="&#xf0ca;" FontFamily="FontAwesomeSolid" FontSize="15" TextColor="{StaticResource NavigationPrimary}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ShowMore_Tapped"/>
@@ -342,7 +335,7 @@
                         <Grid ColumnDefinitions="*,*,*">
                             <Grid HorizontalOptions="Center" Grid.Column="0">
                                 <controls:ExtendedFrame Padding="17,5" Margin="10" VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="10" BackgroundColor="#0F646B">
-                                    <Label Text="{x:Static lang:Language.cong_viec}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_cong_viec" Text="{x:Static lang:Language.cong_viec}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                                 </controls:ExtendedFrame>
                                 <telerikPrimitives:RadBorder VerticalOptions="End" HorizontalOptions="End" CornerRadius="15" BackgroundColor="Red">
                                     <Label Text="{Binding NumTask}" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="6,3"/>
@@ -350,7 +343,7 @@
                             </Grid>
                             <Grid HorizontalOptions="Center" Grid.Column="1">
                                 <controls:ExtendedFrame Padding="17,5" Margin="10" VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="10" BackgroundColor="#0F646B">
-                                    <Label Text="{x:Static lang:Language.cuoc_hop}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_cuoc_hop" Text="{x:Static lang:Language.cuoc_hop}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                                 </controls:ExtendedFrame>
                                 <telerikPrimitives:RadBorder VerticalOptions="End" HorizontalOptions="End" CornerRadius="15" BackgroundColor="Red">
                                     <Label Text="{Binding NumMeet}" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="6,3"/>
@@ -358,7 +351,7 @@
                             </Grid>
                             <Grid HorizontalOptions="Center" Grid.Column="2">
                                 <controls:ExtendedFrame Padding="17,5" Margin="10" VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="10" BackgroundColor="#0F646B">
-                                    <Label Text="{x:Static lang:Language.cuoc_goi}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    <Label x:Name="lb_cuoc_goi" Text="{x:Static lang:Language.cuoc_goi}" FontSize="14" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                                 </controls:ExtendedFrame>
                                 <telerikPrimitives:RadBorder VerticalOptions="End" HorizontalOptions="End" CornerRadius="15" BackgroundColor="Red">
                                     <Label Text="{Binding NumPhoneCall}" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="6,3"/>

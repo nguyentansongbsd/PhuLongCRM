@@ -19,9 +19,16 @@ namespace PhuLongCRM.Views
             InitializeComponent(); 
             BindingContext = viewModel = new ContractListViewModel();
             NeedToRefresh = false;
+            this.PropertyChanged += ContractList_PropertyChanged;
             LoadingHelper.Show();
             Init();
         }
+
+        private void ContractList_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ChangLanguege();
+        }
+
         public async void Init()
         {
             await Task.WhenAll(viewModel.LoadData(),viewModel.LoadProject());
@@ -33,7 +40,6 @@ namespace PhuLongCRM.Views
             base.OnAppearing();
             if (NeedToRefresh == true)
             {
-                ChangLanguege();
                 LoadingHelper.Show();
                 await viewModel.LoadOnRefreshCommandAsync();
                 NeedToRefresh = false;
@@ -95,8 +101,9 @@ namespace PhuLongCRM.Views
         {
             FiltersProject.Placeholder = Language.du_an;
             FiltersStatus.Placeholder = Language.tinh_trang;
-            search.Placeholder = Language.tim_kiem;
             this.Title = Language.hop_dong_title;
+            viewModel.FiltersStatus.Clear();
+            viewModel.LoadStatus();
         }    
     }
 }

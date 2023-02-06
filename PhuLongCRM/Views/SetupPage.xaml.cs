@@ -52,6 +52,7 @@ namespace PhuLongCRM.Views
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             }
             Refresh();
+            RefreshLanguage();
         }
 
         private void Currency_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,6 +109,12 @@ namespace PhuLongCRM.Views
             if (FollowUpListPage.NeedToRefresh.HasValue) FollowUpListPage.NeedToRefresh = true;
 
             //lich lam viec
+        }
+        private void RefreshLanguage()
+        {
+            this.Title = Language.thiet_lap_title;
+            ngonngu.Text = Language.ngon_ngu;
+            tiente.Text = Language.tien_te;
         }
     }
 }

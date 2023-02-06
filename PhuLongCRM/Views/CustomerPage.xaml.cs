@@ -44,6 +44,7 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 await LeadsContentView.viewModel.LoadOnRefreshCommandAsync();
+                RefreshLanguage();
                 NeedToRefreshLead = false;
                 LoadingHelper.Hide();
             }
@@ -52,6 +53,7 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 await ContactsContentview.viewModel.LoadOnRefreshCommandAsync();
+                RefreshLanguage();
                 NeedToRefreshContact = false;
                 LoadingHelper.Hide();
             }
@@ -60,6 +62,7 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 await AccountsContentView.viewModel.LoadOnRefreshCommandAsync();
+                RefreshLanguage();
                 NeedToRefreshAccount = false;
                 LoadingHelper.Hide();
             }
@@ -144,6 +147,10 @@ namespace PhuLongCRM.Views
                     }
                 }
             }  
+        }
+        private void RefreshLanguage()
+        {
+            this.Title = Language.khach_hang_title;
         }
     }
 }

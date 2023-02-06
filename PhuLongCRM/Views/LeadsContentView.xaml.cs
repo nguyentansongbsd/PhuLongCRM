@@ -17,9 +17,16 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = viewModel = new LeadsContentViewViewModel();
+            PropertyChanged += LeadsContentView_PropertyChanged;
             LoadingHelper.Show();
             Init();
         }
+
+        private void LeadsContentView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            RefreshLanguege();
+        }
+
         public async void Init()
         {
             rb_moi.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
@@ -189,6 +196,33 @@ namespace PhuLongCRM.Views
                                           </condition>";
             await viewModel.LoadOnRefreshCommandAsync();
             LoadingHelper.Hide();
+        }
+        private void RefreshLanguege()
+        {
+            var format = new FormattedString();
+            format.Spans.Add(new Span { Text = "\uf08d ", FontFamily = "FontAwesomeSolid", FontSize = 10 });
+            format.Spans.Add(new Span { Text = Language.new_sts });
+            lb_moi.FormattedText = format;
+            lb_dachuyendoi.Text = Language.da_chuyen;
+            lb_khongchuyendoi.Text = Language.khong_chuyen;
+
+            if (viewModel.Create_on_sort)
+            {
+                label_createon.Text = Language.ngay_tao_a_z;
+            }
+            else
+            {
+                label_createon.Text = Language.ngay_tao_z_a;
+            }
+            if (viewModel.Rating_sort)
+            {
+                label_rating.Text = Language.danh_gia_a_z;
+            }
+            else
+            {
+                label_rating.Text = Language.danh_gia_z_a;
+            }
+            label_status.Text = Language.phan_bo;
         }
     }
 }

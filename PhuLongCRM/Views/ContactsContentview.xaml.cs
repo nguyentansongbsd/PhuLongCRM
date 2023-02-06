@@ -17,7 +17,13 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = viewModel = new ContactsContentviewViewmodel();
+            PropertyChanged += ContactsContentview_PropertyChanged;
             Init();
+        }
+
+        private void ContactsContentview_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            RefreshLanguege();
         }
 
         public async void Init()
@@ -173,6 +179,20 @@ namespace PhuLongCRM.Views
                                               </condition>";
             await viewModel.LoadOnRefreshCommandAsync();
             LoadingHelper.Hide();
+        }
+        private void RefreshLanguege()
+        {
+            var format = new FormattedString();
+            format.Spans.Add(new Span { Text = "\uf08d ", FontFamily = "FontAwesomeSolid", FontSize = 10 });
+            format.Spans.Add(new Span { Text = Language.khach_hang_filter });
+            lb_khachHang.FormattedText = format;
+            lb_nguoiDaiDien.Text = Language.nguoi_dai_dien_filter;
+            lb_nguoiUyQuyen.Text = Language.nguoi_uy_quyen;
+
+            label_All.Text = Language.hieu_luc;
+            label_inactive.Text = Language.vo_hieu_luc;
+            label_official.Text = Language.chinh_thuc;
+            label_potential.Text = Language.tiem_nang_sts;
         }
     }
 }

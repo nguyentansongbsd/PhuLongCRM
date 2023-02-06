@@ -21,8 +21,14 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             InitializeComponent();
             this.BindingContext = viewModel = new DirectSaleViewModel();
+            PropertyChanged += DirectSale_PropertyChanged;
             Init();
             LoadingHelper.Hide();
+        }
+
+        private void DirectSale_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ChangLanguege();
         }
 
         public async void Init()
@@ -213,6 +219,30 @@ namespace PhuLongCRM.Views
             viewModel.SelectedUnitStatus = null;
             viewModel.NetArea = null;
             viewModel.Price = null;
+        }
+        private void ChangLanguege()
+        {
+            this.Title = Language.gio_hang;
+            lb_duan.Text = Language.du_an;
+            entry_duan.Placeholder = Language.chon_du_an;
+            lb_dotmoban.Text = Language.dot_mo_ban;
+            lookupPhasesLaunch.Placeholder = Language.chon_dot_mo_ban;
+            lb_sukien.Text = Language.su_kien;
+            lb_masanpham.Text = Language.ma_san_pham;
+            entry_masanpham.Placeholder = Language.ma_san_pham;
+            lb_huong.Text = Language.huong;
+            lookupMultipleDirection.Placeholder = Language.chon_huong;
+            lb_huongnhin.Text = Language.huong_nhin;
+            lookupMultipleViews.Placeholder = Language.chon_huong_nhin;
+            lb_tinhtrangsanpham.Text = Language.tinh_trang_san_pham;
+            lookupMultipleUnitStatus.Placeholder = Language.chon_tinh_trang_san_pham;
+            lb_dientichsudung.Text = Language.dien_tich_su_dung;
+            lookupNetArea.Placeholder = Language.chon_dien_tich_su_dung;
+            lb_giaban.Text = Language.gia_ban_vnd;
+            lookupPrice.Placeholder = Language.chon_gia_ban;
+            lb_thuocnhanvien.Text = Language.thuoc_nhan_vien;
+            btn_thongtinduan.Text = Language.thong_tin_du_an;
+            btn_timkiem.Text = Language.tim_kiem;
         }
     }
 }

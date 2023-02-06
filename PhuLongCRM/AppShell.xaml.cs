@@ -39,6 +39,14 @@ namespace PhuLongCRM
             NeedToRefeshUserInfo = false;
             VerApp = Config.OrgConfig.VerApp;
             this.BindingContext = this;
+            PropertyChanged += AppShell_PropertyChanged;
+        }
+
+        private void AppShell_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            LoadingHelper.Show();
+            RefreshLanguage();
+            LoadingHelper.Hide();
         }
 
         public AppShell(bool isLoginByUserCrm)
@@ -144,6 +152,28 @@ namespace PhuLongCRM
                 ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
                 return;
             }
+        }
+        public void RefreshLanguage()
+        {
+            trangchu.Title = Language.trang_chu_title;
+            congviec.Title = Language.cong_viec_menu;
+            khachhang.Title = Language.khach_hang_title;
+            duan.Title = Language.du_an_title;
+            giohang.Title = Language.gio_hang;
+            giaodich.Title = Language.giao_dich_title;
+            giucho.Title = Language.giu_cho_title;
+            bangtinhgia.Title = Language.bang_tinh_gia_title;
+            datcoc.Title = Language.dat_coc_title;
+            hopdong.Title = Language.hop_dong_title;
+            chamsockhachhang.Title = Language.cham_soc_khach_hang_title;
+            hoatdong.Title = Language.hoat_dong;
+            phanhoi.Title = Language.phan_hoi_title;
+            danhsachtheodoi.Title = Language.danh_sach_theo_doi_title;
+            tinhnang.Title = Language.tinh_nang_title;
+            lichlamviec.Title = Language.lich_lam_viec;
+            dongbodanhba.Title = Language.dong_bo_danh_ba;
+            thietlap.Title = Language.thiet_lap_title;
+            dangxuat.Text = Language.dang_xuat;
         }
     }
 }

@@ -19,7 +19,13 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = viewModel = new DanhBaViewModel();
+            this.PropertyChanged += DanhBa_PropertyChanged;
             Init();
+        }
+
+        private void DanhBa_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.danh_ba;
         }
 
         public async void Init()
