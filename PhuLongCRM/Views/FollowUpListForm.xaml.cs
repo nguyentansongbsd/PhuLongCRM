@@ -24,7 +24,13 @@ namespace PhuLongCRM.Views
             InitializeComponent();
             this.BindingContext = viewModel = new FollowUpListFormViewModel();
             this.Title = Language.cap_nhat_thong_tin_title;
+            this.PropertyChanged += FollowUpListForm_PropertyChanged;
             Init(fulid);
+        }
+
+        private void FollowUpListForm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.cap_nhat_thong_tin_title;
         }
 
         public FollowUpListForm(FollowUpModel ful)

@@ -22,7 +22,17 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             BindingContext = viewModel = new ReservationListViewModel();
             NeedToRefreshReservationList = false;
+            this.PropertyChanged += ReservationList_PropertyChanged;
             Init();
+        }
+
+        private void ReservationList_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.bang_tinh_gia_title;
+            FiltersProject.Placeholder = Language.du_an;
+            FiltersStatus.Placeholder = Language.tinh_trang;
+            viewModel.FiltersStatus.Clear();
+            viewModel.LoadStatus();
         }
 
         protected async override void OnAppearing()

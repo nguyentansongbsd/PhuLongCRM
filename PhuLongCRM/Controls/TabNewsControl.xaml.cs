@@ -37,11 +37,19 @@ namespace PhuLongCRM.Controls
         ResourceManager resourceManager = new ResourceManager("PhuLongCRM.Resources.Language", typeof(Resources.Language).Assembly);
 
         private List<string> ListTabName {get;set;}
+        private int indextab { get; set; }
 
         public TabNewsControl()
         {
             InitializeComponent();
+            PropertyChanged += TabNewsControl_PropertyChanged;
         }
+
+        private void TabNewsControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            RefreshLanguage();
+        }
+
         private void SetUpTab()
         {
             if (!string.IsNullOrWhiteSpace(ListTab))
@@ -123,8 +131,9 @@ namespace PhuLongCRM.Controls
                             format.Spans.Add(new Span { Text = ListTabName[int.Parse(children.ClassId)] });
                             children.FormattedText = format;
                             children.FontAttributes = FontAttributes.Bold;
+                            indextab = i;
                             EventHandler<LookUpChangeEvent> eventHandler = IndexTab;
-                            eventHandler?.Invoke((object)this, new LookUpChangeEvent { Item = i });
+                            eventHandler?.Invoke((object)this, new LookUpChangeEvent { Item = int.Parse(children.ClassId) });
                         }
                         else
                         {
@@ -144,6 +153,34 @@ namespace PhuLongCRM.Controls
                 return value;
             else
                 return key;
+        }
+        private void RefreshLanguage()
+        {
+            if (ListTabName != null)
+            {
+                for (int i = 0; i < this.Children.Count; i++)
+                {
+                    var children = this.Children[i] as Label;
+                    if (children != null)
+                    {
+                        if (i == indextab)
+                        {
+                            var format = new FormattedString();
+                            format.Spans.Add(new Span { Text = "\uf058 ", FontFamily = "FontAwesomeRegular" });
+                            format.Spans.Add(new Span { Text = ListTabName[int.Parse(children.ClassId)] });
+                            children.FormattedText = format;
+                            children.FontAttributes = FontAttributes.Bold;
+                        }
+                        else
+                        {
+                            var format = new FormattedString();
+                            format.Spans.Add(new Span { Text = ListTabName[int.Parse(children.ClassId)] });
+                            children.FormattedText = format;
+                            children.FontAttributes = FontAttributes.None;
+                        }
+                    }
+                }
+            }
         }
     }
 }

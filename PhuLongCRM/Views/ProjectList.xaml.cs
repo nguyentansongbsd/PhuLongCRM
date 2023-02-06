@@ -17,8 +17,14 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             InitializeComponent();
             this.BindingContext = viewModel = new ProjectListViewModel();
+            PropertyChanged += ProjectList_PropertyChanged;
             NeedToRefresh = false;
             Init();
+        }
+
+        private void ProjectList_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.du_an_title;
         }
 
         public async void Init()

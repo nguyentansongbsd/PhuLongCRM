@@ -91,78 +91,78 @@
         </StackLayout>-->
     </Shell.FlyoutHeader>
 
-    <ShellContent Title="{x:Static lang:Language.trang_chu_title}" ContentTemplate="{DataTemplate views:Dashboard}">
+    <ShellContent x:Name="trangchu" Title="{x:Static lang:Language.trang_chu_title}" ContentTemplate="{DataTemplate views:Dashboard}">
         <ShellContent.Icon>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf015;" Size="18"/>
         </ShellContent.Icon>
     </ShellContent>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" >
-        <ShellContent Title="{x:Static lang:Language.cong_viec_menu}" ContentTemplate="{DataTemplate views:CustomerPage}" IsEnabled="False"/>
-        <ShellContent Title="{x:Static lang:Language.khach_hang_title}" ContentTemplate="{DataTemplate views:CustomerPage}">
+        <ShellContent x:Name="congviec" Title="{x:Static lang:Language.cong_viec_menu}" ContentTemplate="{DataTemplate views:CustomerPage}" IsEnabled="False"/>
+        <ShellContent x:Name="khachhang" Title="{x:Static lang:Language.khach_hang_title}" ContentTemplate="{DataTemplate views:CustomerPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf0c0;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.du_an_title}" ContentTemplate="{DataTemplate views:ProjectList}">
+        <ShellContent x:Name="duan" Title="{x:Static lang:Language.du_an_title}" ContentTemplate="{DataTemplate views:ProjectList}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf64f;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.gio_hang}" ContentTemplate="{DataTemplate views:DirectSale}">
+        <ShellContent x:Name="giohang" Title="{x:Static lang:Language.gio_hang}" ContentTemplate="{DataTemplate views:DirectSale}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf07a;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="{x:Static lang:Language.giao_dich_title}" IsEnabled="False" ContentTemplate="{DataTemplate views:QueueList}"/>
-        <ShellContent Title="{x:Static lang:Language.giu_cho_title}" ContentTemplate="{DataTemplate views:QueueList}">
+        <ShellContent x:Name="giaodich" Title="{x:Static lang:Language.giao_dich_title}" IsEnabled="False" ContentTemplate="{DataTemplate views:QueueList}"/>
+        <ShellContent x:Name="giucho" Title="{x:Static lang:Language.giu_cho_title}" ContentTemplate="{DataTemplate views:QueueList}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf02d;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.bang_tinh_gia_title}" ContentTemplate="{DataTemplate views:ReservationList}" >
+        <ShellContent x:Name="bangtinhgia" Title="{x:Static lang:Language.bang_tinh_gia_title}" ContentTemplate="{DataTemplate views:ReservationList}" >
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf46d;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.dat_coc_title}" ContentTemplate="{DataTemplate views:DatCocList}" >
+        <ShellContent x:Name="datcoc" Title="{x:Static lang:Language.dat_coc_title}" ContentTemplate="{DataTemplate views:DatCocList}" >
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf46d;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.hop_dong_title}" ContentTemplate="{DataTemplate views:ContractList}">
+        <ShellContent x:Name="hopdong" Title="{x:Static lang:Language.hop_dong_title}" ContentTemplate="{DataTemplate views:ContractList}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf15b;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="{x:Static lang:Language.cham_soc_khach_hang_title}" ContentTemplate="{DataTemplate views:ActivityList}" IsEnabled="False"/>
-        <ShellContent Title="{x:Static lang:Language.hoat_dong}" Route="HoatDong" ContentTemplate="{DataTemplate views:ActivityList}">
+        <ShellContent x:Name="chamsockhachhang" Title="{x:Static lang:Language.cham_soc_khach_hang_title}" ContentTemplate="{DataTemplate views:ActivityList}" IsEnabled="False"/>
+        <ShellContent x:Name="hoatdong" Title="{x:Static lang:Language.hoat_dong}" Route="HoatDong" ContentTemplate="{DataTemplate views:ActivityList}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf0ae;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.phan_hoi_title}" ContentTemplate="{DataTemplate views:ListPhanHoi}">
+        <ShellContent x:Name="phanhoi" Title="{x:Static lang:Language.phan_hoi_title}" ContentTemplate="{DataTemplate views:ListPhanHoi}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf086;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.danh_sach_theo_doi_title}" ContentTemplate="{DataTemplate views:FollowUpListPage}">
+        <ShellContent x:Name="danhsachtheodoi" Title="{x:Static lang:Language.danh_sach_theo_doi_title}" ContentTemplate="{DataTemplate views:FollowUpListPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf0ca;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="{x:Static lang:Language.tinh_nang_title}" IsEnabled="False" ContentTemplate="{DataTemplate views:LichLamViec}"/>
-        <ShellContent Title="{x:Static lang:Language.lich_lam_viec}" ContentTemplate="{DataTemplate views:LichLamViec}">
+        <ShellContent x:Name="tinhnang" Title="{x:Static lang:Language.tinh_nang_title}" IsEnabled="False" ContentTemplate="{DataTemplate views:LichLamViec}"/>
+        <ShellContent x:Name="lichlamviec" Title="{x:Static lang:Language.lich_lam_viec}" ContentTemplate="{DataTemplate views:LichLamViec}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf073;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="{x:Static lang:Language.dong_bo_danh_ba}" ContentTemplate="{DataTemplate views:DanhBa}">
+        <ShellContent x:Name="dongbodanhba" Title="{x:Static lang:Language.dong_bo_danh_ba}" ContentTemplate="{DataTemplate views:DanhBa}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf2c1;" Size="18"/>
             </ShellContent.Icon>
@@ -172,14 +172,14 @@
                 <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf164;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>-->
-        <ShellContent Title="{x:Static lang:Language.thiet_lap_title}" ContentTemplate="{DataTemplate views:SetupPage}">
+        <ShellContent x:Name="thietlap" Title="{x:Static lang:Language.thiet_lap_title}" ContentTemplate="{DataTemplate views:SetupPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf013;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>
 
-    <MenuItem Text="{x:Static lang:Language.dang_xuat}" Clicked="Logout_Clicked">
+    <MenuItem x:Name="dangxuat" Text="{x:Static lang:Language.dang_xuat}" Clicked="Logout_Clicked">
         <MenuItem.IconImageSource>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf2f5;" Size="18"/>
         </MenuItem.IconImageSource>

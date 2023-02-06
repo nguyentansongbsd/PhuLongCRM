@@ -459,6 +459,7 @@ namespace PhuLongCRM.Views
                         DependencyService.Get<IClearCookies>().ClearAllCookies();
                     await UpdateStateLogin(false);
                     await Shell.Current.GoToAsync("//LoginPage");
+                    TimeOut_Popup.IsVisible = true;
                 });
                 t.Start();
             }
@@ -483,7 +484,7 @@ namespace PhuLongCRM.Views
             }    
             if(Admin != null)
             {
-                Admin_CenterPopup.ShowCenterPopup();
+                //Admin_CenterPopup.ShowCenterPopup();
             }    
         }
         public async Task LoadAdmin()
@@ -507,6 +508,11 @@ namespace PhuLongCRM.Views
             {
                 Admin = result.value.FirstOrDefault();
             }
+        }
+
+        private void CloseTimeOut_Clicked(object sender, EventArgs e)
+        {
+            TimeOut_Popup.IsVisible = false;
         }
     }
 }

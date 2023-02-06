@@ -72,7 +72,7 @@
             </ScrollView>
             <Label Text="{Binding VerApp}" FontSize="15" TextColor="#444444" HorizontalOptions="End" Margin="0,0,20,20" AbsoluteLayout.LayoutBounds="0,1,1,40" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional"/>
 
-            <controls:CenterPopup x:Name="Admin_CenterPopup" Title="{x:Static lang:Language.lien_he}" BackgroundColor="#f1f1f1">
+            <!--<controls:CenterPopup x:Name="Admin_CenterPopup" Title="{x:Static lang:Language.lien_he}" BackgroundColor="#f1f1f1">
                 <controls:CenterPopup.Body>
                     <StackLayout Padding="10,0">
                         <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="20" BorderColor="White" BackgroundColor="White" Padding="10" Margin="0,20,0,0">
@@ -80,7 +80,17 @@
                         </telerikPrimitives:RadBorder>
                     </StackLayout>
                 </controls:CenterPopup.Body>
-            </controls:CenterPopup>
+            </controls:CenterPopup>-->
+            
+            <Grid x:Name="TimeOut_Popup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000" IsVisible="false" Padding="50">
+                <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="15" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" Padding="20">
+                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="15">
+                        <Label Grid.Row="0" Text="&#xf06a;" TextColor="Red" FontSize="35" FontFamily="FontAwesomeSolid" HorizontalOptions="Center" />
+                        <Label Grid.Row="1" Text="{x:Static lang:Language.phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai}" TextColor="#444444" FontSize="14"/>
+                        <Button Clicked="CloseTimeOut_Clicked" Grid.Row="2" Text="{x:Static lang:Language.dong}" BackgroundColor="#2196F3" TextColor="White" HeightRequest="40" CornerRadius="10" FontSize="15"/>
+                    </Grid>
+                </telerikPrimitives:RadBorder>
+            </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

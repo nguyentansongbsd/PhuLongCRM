@@ -20,8 +20,25 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             NeedToRefresh = false;
             BindingContext = viewModel = new QueuListViewModel();
+            this.PropertyChanged += QueueList_PropertyChanged;
             Init();
         }
+
+        private void QueueList_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.giu_cho_btn;
+            FiltersProject.Placeholder = Language.du_an;
+            FiltersStatus.Placeholder = Language.tinh_trang;
+            FiltersQueueForProject.Placeholder = Language.thien_chi;
+            FiltersRapCan.Placeholder = Language.rap_can;
+            viewModel.FiltersQueueForProject.Clear();
+            viewModel.FiltersStatus.Clear();
+            viewModel.RapCans.Clear();
+            viewModel.LoadQueueForProject();
+            viewModel.LoadStatus();
+            viewModel.LoadRapCan();
+        }
+
         public async void Init()
         {
             await Task.WhenAll(
