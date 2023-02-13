@@ -196,6 +196,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bạn có muốn đánh dấu tất cả thông báo là đã đọc không?.
+        /// </summary>
+        internal static string ban_co_muon_danh_dau_tat_ca_thong_bao_la_da_doc_khong {
+            get {
+                return ResourceManager.GetString("ban_co_muon_danh_dau_tat_ca_thong_bao_la_da_doc_khong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bạn có muốn hủy bảng tính giá này không?.
         /// </summary>
         internal static string ban_co_muon_huy_bang_tinh_gia_nay_khong {
@@ -9157,6 +9166,15 @@ namespace PhuLongCRM.Resources {
         internal static string thong_bao_that_bai {
             get {
                 return ResourceManager.GetString("thong_bao_that_bai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông Báo.
+        /// </summary>
+        internal static string thong_bao_title {
+            get {
+                return ResourceManager.GetString("thong_bao_title", resourceCulture);
             }
         }
         

@@ -115,9 +115,15 @@ namespace PhuLongCRM.Views
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
 
                     if (viewModel.singleContact.statuscode == "2")
+                    {
                         floatingButtonGroup.IsVisible = false;
+                        changeAvt.IsVisible = false;
+                    }
                     else
+                    {
                         floatingButtonGroup.IsVisible = true;
+                        changeAvt.IsVisible = true;
+                    }
                 }
                 else
                 {
@@ -559,15 +565,15 @@ namespace PhuLongCRM.Views
 
         private void NhuCauDienTich_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-           // btn_nhaucaudientich.IsVisible = true;
+            btn_nhaucaudientich.IsVisible = true;
         }
         private void TieuChiChonMua_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-           // btn_tieuchichonmua.IsVisible = true;
+            btn_tieuchichonmua.IsVisible = true;
         }
         private void LoaiBDSQuanTam_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-           // btn_loaibdsquantam.IsVisible = true;
+            btn_loaibdsquantam.IsVisible = true;
         }
 
         private async void LoaiBDSQuanTam_Clicked(object sender, EventArgs e)
@@ -576,7 +582,7 @@ namespace PhuLongCRM.Views
             var result = await viewModel.updateLoaiBDSQuanTam();
             if (result.IsSuccess)
             {
-                //btn_loaibdsquantam.IsVisible = false;
+                btn_loaibdsquantam.IsVisible = false;
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
@@ -593,7 +599,7 @@ namespace PhuLongCRM.Views
             var result = await viewModel.updateNhuCauDienTich();
             if (result.IsSuccess)
             {
-               // btn_nhaucaudientich.IsVisible = false;
+                btn_nhaucaudientich.IsVisible = false;
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
@@ -610,7 +616,7 @@ namespace PhuLongCRM.Views
             var result = await viewModel.updateTieuChiChonMua();
             if (result.IsSuccess)
             {
-                //btn_tieuchichonmua.IsVisible = false;
+                btn_tieuchichonmua.IsVisible = false;
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
@@ -627,7 +633,7 @@ namespace PhuLongCRM.Views
             var result = await viewModel.updateNhuCauDiaDiem();
             if (result)
             {
-               // btn_nhucaudiadiem.IsVisible = false;
+                btn_nhucaudiadiem.IsVisible = false;
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
@@ -640,12 +646,12 @@ namespace PhuLongCRM.Views
 
         private void Province_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
-           // btn_nhucaudiadiem.IsVisible = true;
+            btn_nhucaudiadiem.IsVisible = true;
         }
 
         private void Project_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
-          //  btn_nhucauduan.IsVisible = true;
+            btn_nhucauduan.IsVisible = true;
         }
 
         private async void btn_nhucauduan_Clicked(object sender, EventArgs e)
@@ -654,7 +660,7 @@ namespace PhuLongCRM.Views
             var result = await viewModel.updateNhuCauDuAn();
             if (result)
             {
-               // btn_nhucauduan.IsVisible = false;
+                btn_nhucauduan.IsVisible = false;
                 ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
@@ -677,7 +683,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else if (OnCompleted == 3)
+                    else
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

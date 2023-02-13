@@ -161,7 +161,7 @@ namespace PhuLongCRM.Views
             {
                 if (IsSuccess)
                 {
-                    await Shell.Current.Navigation.PushAsync(queue);
+                    await Navigation.PushAsync(queue);
                     LoadingHelper.Hide();
                 }
                 else

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Firebase.Database;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
@@ -14,6 +16,7 @@ namespace PhuLongCRM.ViewModels
 {
     public class DashboardViewModel : BaseViewModel
     {
+        FirebaseClient firebase = new Firebase.Database.FirebaseClient("https://phulonguat-default-rtdb.firebaseio.com/");
         public ObservableCollection<ActivitiModel> Activities { get; set; } = new ObservableCollection<ActivitiModel>();
 
         public ObservableCollection<ChartModel> DataMonthQueue { get; set; } = new ObservableCollection<ChartModel>();
@@ -81,8 +84,8 @@ namespace PhuLongCRM.ViewModels
         private string _totalPaidCommission;
         public string TotalPaidCommission { get => _totalPaidCommission; set { _totalPaidCommission = value; OnPropertyChanged(nameof(TotalPaidCommission)); } }
 
-        private List<PromotionModel> _promotions;
-        public List<PromotionModel> Promotions { get => _promotions; set { _promotions = value; OnPropertyChanged(nameof(Promotions)); } }
+        private List<NewsModel> _promotions;
+        public List<NewsModel> Promotions { get => _promotions; set { _promotions = value; OnPropertyChanged(nameof(Promotions)); } }
 
         private List<NewsModel> _news;
         public List<NewsModel> News { get => _news; set { _news = value; OnPropertyChanged(nameof(News)); } }
@@ -102,6 +105,9 @@ namespace PhuLongCRM.ViewModels
 
         private int _numMeet;
         public int NumMeet { get => _numMeet; set { _numMeet = value; OnPropertyChanged(nameof(NumMeet)); } }
+
+        private int _numNotification;
+        public int NumNotification { get => _numNotification; set { _numNotification = value; OnPropertyChanged(nameof(NumNotification)); } }
 
         public DashboardViewModel()
         {
@@ -427,7 +433,7 @@ namespace PhuLongCRM.ViewModels
             LeadsChart.Add(new ChartModel() { Category = Language.khach_hang_moi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHMoi });
             LeadsChart.Add(new ChartModel() { Category = Language.da_chuyen_doi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHDaChuyenDoi });
             LeadsChart.Add(new ChartModel() { Category = Language.khong_chuyen_doi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHKhongChuyenDoi });
-            
+
         }
 
         public async Task LoadTasks(int activityCount)
@@ -694,39 +700,15 @@ namespace PhuLongCRM.ViewModels
         public async Task Load3Activity()
         {
             await LoadMettings();
-            if(Activities.Count <3)
+            if (Activities.Count < 3)
             {
                 await LoadPhoneCalls(3 - Activities.Count);
                 if (Activities.Count < 3)
                 {
                     await LoadTasks(3 - Activities.Count);
                 }
-            }    
-                
-        }
+            }
 
-        public async Task LoadPromotion()
-        {
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                        <entity name='bsd_promotion'>
-                                            <attribute name='bsd_name' />
-                                            <attribute name='bsd_startdate' />
-                                            <attribute name='bsd_enddate' />
-                                            <attribute name='bsd_promotionid' />
-                                            <order attribute='createdon' descending='true' />
-                                            <filter type='and'>
-                                                <condition attribute='statuscode' operator='eq' value='1' />
-                                            </filter>
-                                            <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='inner'>
-                                                <attribute name='bsd_name' alias='project_name'/>
-                                            </link-entity>
-                                        </entity>
-                                    </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PromotionModel>>("bsd_promotions", fetchXml);
-            if (result != null || result.value.Count > 0)
-            {
-                Promotions = result.value;
-            }    
         }
         public async Task LoadNews()
         {
@@ -736,14 +718,46 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_name' />
                                     <attribute name='createdon' />
                                     <attribute name='bsd_url' />
-                                    <attribute name='bsd_image' />
+                                    <attribute name='bsd_priority' />
+                                    <attribute name='bsd_type' />
+                                    <attribute name='bsd_thumnail' />
                                     <order attribute='bsd_name' descending='false' />
+                                    <link-entity name='bsd_promotion' from='bsd_promotionid' to='bsd_promotion' link-type='outer' alias='ac'>
+                                        <attribute name='bsd_name' alias='promotion_name'/>
+                                        <attribute name='bsd_startdate' alias='promotion_startdate'/>
+                                        <attribute name='bsd_enddate' alias='promotion_enddate'/>
+                                        <attribute name='bsd_promotionid' alias='promotion_id'/>
+                                            <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer'>
+                                                <attribute name='bsd_name' alias='promotion_project_name'/>
+                                            </link-entity>
+                                    </link-entity>
+                                    <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='ab'>
+                                        <attribute name='bsd_projectid' alias='project_id'/>
+                                        <attribute name='bsd_name' alias='project_name'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<NewsModel>>("bsd_newses", fetchXml);
             if (result != null || result.value.Count > 0)
             {
-                News = result.value;
+                List<NewsModel> news = new List<NewsModel>();
+                List<NewsModel> promotions = new List<NewsModel>();
+                foreach (var item in result.value)
+                {
+                    if (item.bsd_type == "0")
+                    {
+                        news.Add(item);
+                    }
+                    else if (item.bsd_type == "1")
+                    {
+                        promotions.Add(item);
+                    }
+                }
+                news = news.OrderBy(x => x.bsd_priority).ToList();
+                promotions = promotions.OrderBy(x => x.bsd_priority).ToList();
+
+                News = news;
+                Promotions = promotions;
             }
         }
 
@@ -772,9 +786,41 @@ namespace PhuLongCRM.ViewModels
                  this.LoadLeads(),
                  this.LoadCommissionTransactions(),
                  LoadActivityCount(),
-                 LoadPromotion(),
                  LoadNews()
                 ); ;
+        }
+        public async Task CountNumNotification()
+        {
+            var collection = firebase
+            .Child("Notifications")
+            .AsObservable<NotificaModel>()
+            .Subscribe(async (dbevent) =>
+            {
+                if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete)
+                {
+                    if (dbevent.Object.IsRead == false)
+                    {
+                        NumNotification++;
+                    }
+                }
+            });
+        }
+        public async Task TimeOutLogin()
+        {
+            if (UserLogged.TimeOut > 0)
+            {
+                Thread t = new Thread(async () =>
+            {
+                int time = UserLogged.TimeOut * 60000;
+                await Task.Delay(time);
+                UserLogged.IsTimeOut = true;
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await Shell.Current.GoToAsync("//LoginPage");
+                });
+            });
+                t.Start();
+            }
         }
     }
     public class CountChartModel

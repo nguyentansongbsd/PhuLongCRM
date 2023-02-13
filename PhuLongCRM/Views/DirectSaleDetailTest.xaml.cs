@@ -39,11 +39,11 @@ namespace PhuLongCRM.Views
             viewModel.Filter = filter;
             if (viewModel.Filter.isOwner)
             {
-                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/check-male.png";
+                menu_item.Text = "\uf4fc";
             }
             else
             {
-                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/user.png";
+                menu_item.Text = "\uf007";
             }
             viewModel.CreateFilterXml();
             Init();
@@ -51,14 +51,15 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
-            await viewModel.LoadTotalDirectSale();
+           // await viewModel.LoadTotalDirectSale();
+            await viewModel.LoadTotalDirectSale2();
             if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
             {
                 var rd = stackBlocks.Children[0] as RadBorder;
                 var lb = rd.Content as Label;
                 VisualStateManager.GoToState(rd, "Selected");
                 VisualStateManager.GoToState(lb, "Selected");
-                NumberUnitInBlock(viewModel.Blocks[0]);
+                viewModel.Block = viewModel.Blocks[0];
                 if (viewModel.Block.Floors.Count != 0)
                 {
                     var floor = viewModel.Block.Floors[0];
@@ -134,10 +135,9 @@ namespace PhuLongCRM.Views
                 });
         }
 
-        public async void Block_Tapped(object sender, EventArgs e)
+        public void Block_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            await Task.Delay(1);
             var blockChoosed = sender as RadBorder;
             if (blockChoosed != null)
             {
@@ -159,18 +159,9 @@ namespace PhuLongCRM.Views
                     }
                 }
                 var item = (Block)(blockChoosed.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-                NumberUnitInBlock(item);
+                viewModel.Block = item;
             }
             LoadingHelper.Hide();
-        }
-
-        public async void NumberUnitInBlock(Block block)
-        {
-            if (block != null && block != viewModel.Block)
-            {
-                viewModel.Block = block;
-                await viewModel.LoadFloor();
-            }
         }
 
         private async void ItemFloor_Tapped(object sender, EventArgs e)
@@ -211,14 +202,6 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             await viewModel.LoadUnitById(unitId);
             LoadingHelper.Hide();
-        }
-
-        private async void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        {
-            if (e == null) return;
-            var index = e.ItemIndex;
-            if (index + 1 == viewModel.Block.Floors.Count)
-                await viewModel.LoadFloor();
         }
 
         private async void ScrollView_Scrolled(System.Object sender, Xamarin.Forms.ScrolledEventArgs e)
@@ -637,29 +620,29 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void Owner_Clicked(object sender, EventArgs e)
+        private async void Owner_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             if (viewModel.Filter.isOwner)
             {
                 viewModel.Filter.Employee = null;
                 viewModel.Filter.isOwner = false;
-                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/user.png";
+                menu_item.Text = "\uf007";
             }
             else
             {
                 viewModel.Filter.Employee = UserLogged.Id.ToString();
                 viewModel.Filter.isOwner = true;
-                menu_item.IconImageSource = "https://img.icons8.com/fluency-systems-regular/96/000000/check-male.png";
-            }    
+                menu_item.Text = "\uf4fc";
+            }
             viewModel.Blocks = new ObservableCollection<Block>();
             NeedToRefreshDirectSale = false;
             viewModel.CreateFilterXml();
-            await viewModel.LoadTotalDirectSale();
+            await viewModel.LoadTotalDirectSale2();
 
             if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
             {
-                NumberUnitInBlock(viewModel.Blocks[0]);
+                viewModel.Block = viewModel.Blocks[0];
                 if (viewModel.Block.Floors.Count != 0)
                 {
                     var floor = viewModel.Block.Floors[0];

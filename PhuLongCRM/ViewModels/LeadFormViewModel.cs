@@ -402,7 +402,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_placeofissue"] = singleLead.bsd_placeofissue;
             data["bsd_registrationcode"] = singleLead.bsd_registrationcode;
 
-            data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone : null;
+            data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone.Replace("+","").Replace("-","") : null;
             data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1) ? singleLead.telephone1 : "+84";
 
             if (singleLead.new_birthday.HasValue)

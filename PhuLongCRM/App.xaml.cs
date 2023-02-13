@@ -22,6 +22,14 @@ namespace PhuLongCRM
             MainPage = new AppShell();
             Shell.Current.Navigation.PushAsync(new Login(), false);
             //  MainPage = new BlankPage();
+            if (UserLogged.Language == "vi")
+            {
+                DependencyService.Register<IDatetimeService, DatetimeService>();
+            }
+            else
+            {
+                DependencyService.Register<IDatetimeService, DatetimeENService>();
+            }
         }
 
         protected override async void OnStart()

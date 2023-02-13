@@ -18,7 +18,14 @@ namespace PhuLongCRM.Views
         private ContractDetailPageViewModel viewModel;
         public ContractDetailPage(Guid id)
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+
+            }
             ContractId = id;
             BindingContext = viewModel = new ContractDetailPageViewModel();
             Init();

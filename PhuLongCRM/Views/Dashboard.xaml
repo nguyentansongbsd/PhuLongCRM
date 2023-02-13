@@ -6,20 +6,38 @@
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
-             xmlns:convertes ="clr-namespace:PhuLongCRM.Converters" 
+             xmlns:converters ="clr-namespace:PhuLongCRM.Converters" 
              xmlns:views="clr-namespace:PhuLongCRM.Views"
-             xmlns:effects="clr-namespace:PhuLongCRM.IServices" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="PhuLongCRM.Views.Dashboard">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="ScanQRCode_Clicked">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource
-                    FontFamily="FontAwesomeSolid"
-                    Glyph="&#xf029;"
-                    Size="20" />
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
+    <Shell.TitleView>
+        <StackLayout Margin="10" Orientation="Horizontal" Spacing="0">
+            <Label Text="{x:Static lang:Language.trang_chu}" FontAttributes="Bold" TextColor="White" FontSize="20" VerticalTextAlignment="Center"/>
+            <Grid HorizontalOptions="EndAndExpand" VerticalOptions="Center" Padding="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="13">
+                <Label Text="&#xf029;" FontFamily="FontAwesomeSolid" FontSize="20" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Padding="2" TextColor="White" Grid.Column="0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ScanQRCode_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Grid Grid.Column="1">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToNotificationPage_Tapped"/>
+                    </Grid.GestureRecognizers>
+                    <Label Text="&#xf0f3;" FontFamily="FontAwesomeSolid" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" Margin="0,0,7,0"/>
+                    <telerikPrimitives:RadBorder VerticalOptions="Start" HorizontalOptions="EndAndExpand" CornerRadius="15" BackgroundColor="Red" Padding="1" MinimumHeightRequest="15" MinimumWidthRequest="15" IsVisible="{Binding NumNotification,Converter={x:StaticResource ZeroToHideConverter}}">
+                        <Label Text="{Binding NumNotification}" FontSize="9" TextColor="White" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+                    </telerikPrimitives:RadBorder>
+                </Grid>
+            </Grid>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ZeroToHideConverter x:Key="ZeroToHideConverter"/>
+            <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSource"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <RefreshView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
@@ -40,14 +58,18 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
-                                <controls:TabNewsControl ListTab="tat_ca,du_an_title,khuyen_mai" Grid.Column="1" VerticalOptions="Center" IndexTab="TabNewsControl_IndexTab"/>
+                                <controls:TabNewsControl ListTab="du_an_title,khuyen_mai" Grid.Column="1" VerticalOptions="Center" IndexTab="TabNewsControl_IndexTab"/>
                             </Grid>
                             <Grid Grid.Row="1" BackgroundColor="White">
-                                <CarouselView x:Name="news" ItemsSource="{Binding News}" Scrolled="news_Scrolled">
+                                <CarouselView x:Name="news" ItemsSource="{Binding News}">
                                     <CarouselView.ItemTemplate>
                                         <DataTemplate >
-                                            <Image Source="{Binding bsd_url}" Aspect="AspectFill"/>
-                                            <!--<ffimageloading:CachedImage Source="{Binding bsd_url}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500"/>-->
+                                            <!--<Image Source="{Binding bsd_thumnail,Converter={StaticResource Base64ToImageSource}}" Aspect="AspectFill"/>-->
+                                            <ffimageloading:CachedImage Source="{Binding bsd_thumnail,Converter={StaticResource Base64ToImageSource}}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500">
+                                                <ffimageloading:CachedImage.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="News_Tapped" CommandParameter="{Binding .}"/>
+                                                </ffimageloading:CachedImage.GestureRecognizers>
+                                            </ffimageloading:CachedImage>
                                         </DataTemplate>
                                     </CarouselView.ItemTemplate>
                                 </CarouselView>
@@ -61,17 +83,20 @@
                                         <DataTemplate>
                                             <Grid BackgroundColor="#eeeeee" Padding="0,1,0,0">
                                                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Padding="15" BackgroundColor="White">
-                                                    <Label Text="{Binding bsd_name}" FontSize="14" TextColor="#444444" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="0" FontAttributes="Bold"/>
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Promotion_Tapped" CommandParameter="{Binding .}"/>
+                                                    </Grid.GestureRecognizers>
+                                                    <Label Text="{Binding promotion_name}" FontSize="14" TextColor="#444444" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="0" FontAttributes="Bold"/>
                                                     <Label FontSize="14" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Grid.Row="0">
                                                         <Label.FormattedText>
                                                             <FormattedString>
-                                                                <Span Text="{Binding bsd_startdate,StringFormat='{0:MM/yyyy}'}"/>
+                                                                <Span Text="{Binding promotion_startdate,StringFormat='{0:MM/yyyy}'}"/>
                                                                 <Span Text=" - "/>
-                                                                <Span Text="{Binding bsd_enddate,StringFormat=' {0:MM/yyyy}'}"/>
+                                                                <Span Text="{Binding promotion_enddate,StringFormat=' {0:MM/yyyy}'}"/>
                                                             </FormattedString>
                                                         </Label.FormattedText>
                                                     </Label>
-                                                    <Label Text="{Binding project_name}" FontSize="14" TextColor="Gray" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                                                    <Label Text="{Binding promotion_project_name}" FontSize="14" TextColor="Gray" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
                                                 </Grid>
                                             </Grid>
                                         </DataTemplate>
@@ -79,7 +104,7 @@
                                 </StackLayout>
                             </Grid>
                         </Grid>
-                        <Grid ColumnDefinitions="*,*,*" Margin="15,10">
+                        <Grid ColumnDefinitions="*,*,*" Margin="15,20">
                             <Grid RowDefinitions="50,*" Grid.Column="0">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GotoCustomer_Tapped"/>
