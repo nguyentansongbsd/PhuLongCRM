@@ -28,7 +28,7 @@
                         </Grid>
                         <BoxView HeightRequest="0.5" BackgroundColor="Gray" Margin="20,0"/>
                         <Grid ColumnDefinitions="Auto,Auto,*" Padding="0,10">
-                            <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="#89d928" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
+                            <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="YellowGreen" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
                                 <Label Text="&#xf51e;" FontFamily="FontAwesomeSolid" FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"/>
                             </telerikPrimitives:RadBorder>
                             <Label x:Name="tiente" Grid.Column="1" Text="{x:Static lang:Language.tien_te}" FontSize="16" TextColor="#444444" VerticalOptions="Center"/>
@@ -38,6 +38,14 @@
                                     <x:String>Việt Nam</x:String>
                                 </Picker.Items>
                             </Picker>
+                        </Grid>
+                        <BoxView HeightRequest="0.5" BackgroundColor="Gray" Margin="20,0"/>
+                        <Grid ColumnDefinitions="Auto,Auto,*" Padding="0,10">
+                            <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="SeaGreen" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
+                                <Label Text="&#xf0f3;" FontFamily="FontAwesomeSolid" FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"/>
+                            </telerikPrimitives:RadBorder>
+                            <Label x:Name="thongbao" Grid.Column="1" Text="{x:Static lang:Language.thong_bao}" FontSize="16" TextColor="#444444" VerticalOptions="Center"/>
+                            <Switch x:Name="noti" Toggled="noti_Toggled" Grid.Column="2" VerticalOptions="End"/>
                         </Grid>
                     </StackLayout>
                 </telerikPrimitives:RadBorder>

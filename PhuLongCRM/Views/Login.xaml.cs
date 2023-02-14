@@ -84,9 +84,12 @@ namespace PhuLongCRM.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if(LoginSession == true)
+            if(UserLogged.IsTimeOut == true)
             {
-              await DisplayAlert(Language.canh_bao, Language.phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai, "OK");
+                if (UserLogged.IsLoginByUserCRM)
+                    DependencyService.Get<IClearCookies>().ClearAllCookies();
+                await UpdateStateLogin(false);
+                TimeOut_Popup.IsVisible = true;
             }    
         }
 
@@ -293,7 +296,6 @@ namespace PhuLongCRM.Views
                         UserLogged.NumberLogin = 0;
                         UserLogged.DateLoginFailed = DateTime.Now.ToString();
                         await UpdateNumberLogin(true);
-                        TimeOutLogin();
                         LoadingHelper.Hide();
                     }
                     else
@@ -447,23 +449,6 @@ namespace PhuLongCRM.Views
                 return "0";
             }
         }
-        private void TimeOutLogin()
-        {
-            if (isTimeOut)
-            {
-                Thread t = new Thread(async () =>
-                {
-                    int time = UserLogged.TimeOut * 60000;
-                    await Task.Delay(time);
-                    if (UserLogged.IsLoginByUserCRM)
-                        DependencyService.Get<IClearCookies>().ClearAllCookies();
-                    await UpdateStateLogin(false);
-                    await Shell.Current.GoToAsync("//LoginPage");
-                    TimeOut_Popup.IsVisible = true;
-                });
-                t.Start();
-            }
-        }
 
         private async void LienHe_Tapped(object sender, EventArgs e)
         {
@@ -512,6 +497,7 @@ namespace PhuLongCRM.Views
 
         private void CloseTimeOut_Clicked(object sender, EventArgs e)
         {
+            UserLogged.IsTimeOut = false;
             TimeOut_Popup.IsVisible = false;
         }
     }

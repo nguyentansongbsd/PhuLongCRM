@@ -109,7 +109,7 @@ namespace PhuLongCRM.Views
                 }
                 if (viewModel.Queue.statuscode == 100000000 && viewModel.Queue.bsd_queueforproject == true
                     && viewModel.Queue.bsd_queuingfee == viewModel.Queue.bsd_queuingfeepaid
-                    && viewModel.Queue.bsd_queuingexpired < DateTime.Now)
+                    && viewModel.Queue.bsd_queuingexpired > DateTime.Now)
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.rap_can, "FontAwesomeSolid", "\uf56e", null, MatchUnit));
                 }

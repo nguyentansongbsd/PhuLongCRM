@@ -132,16 +132,19 @@ namespace PhuLongCRM.Controls
         }
         private void RefreshLanguage()
         {
-            var tabs = ListTab.Split(',').ToList();
-            if (tabs != null && tabs.Count > 0)
+            if (ListTab != null)
             {
-                for (int i = 0; i < this.Children.Count - 1; i++) //-1 do có boxview ở cuối
+                var tabs = ListTab.Split(',').ToList();
+                if (tabs != null && tabs.Count > 0)
                 {
-                    var item = Children[i] as RadBorder;
-                    if(item != null)
+                    for (int i = 0; i < this.Children.Count - 1; i++) //-1 do có boxview ở cuối
                     {
-                        var lb = item.Content as Label;
-                        lb.Text = GetStringByKey(tabs[i]);
+                        var item = Children[i] as RadBorder;
+                        if (item != null)
+                        {
+                            var lb = item.Content as Label;
+                            lb.Text = GetStringByKey(tabs[i]);
+                        }
                     }
                 }
             }

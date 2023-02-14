@@ -29,6 +29,7 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
+            viewModel.KeyFilter = "0";
             await viewModel.LoadData();
             if (viewModel.Data.Count > 0)
             {

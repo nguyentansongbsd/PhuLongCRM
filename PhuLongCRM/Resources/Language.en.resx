@@ -3810,7 +3810,16 @@
 	<data name="phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai" xml:space="preserve">
     <value>Login session has expired. Please log in again.</value>
   </data>
-<data name="lien_he" xml:space="preserve">
+	<data name="lien_he" xml:space="preserve">
     <value>Contact</value>
+  </data>
+	<data name="thong_bao_title" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+	<data name="ban_co_muon_danh_dau_tat_ca_thong_bao_la_da_doc_khong" xml:space="preserve">
+    <value>Do you want to mark all notifications as read?</value>
+  </data>
+	<data name="thong_bao" xml:space="preserve">
+    <value>Notification</value>
   </data>
 </root>

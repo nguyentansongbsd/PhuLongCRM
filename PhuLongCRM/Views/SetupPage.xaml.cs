@@ -28,6 +28,11 @@ namespace PhuLongCRM.Views
                 currency.SelectedItem = "English";
             else
                 currency.SelectedItem = "Việt Nam";
+
+            if (UserLogged.Notification == true)
+                noti.IsToggled = true;
+            else
+                noti.IsToggled = false;
         }
 
         private void Language_SelectedIndexChanged(object sender, EventArgs e)
@@ -115,6 +120,15 @@ namespace PhuLongCRM.Views
             this.Title = Language.thiet_lap_title;
             ngonngu.Text = Language.ngon_ngu;
             tiente.Text = Language.tien_te;
+            thongbao.Text = Language.thong_bao;
+        }
+
+        private void noti_Toggled(object sender, ToggledEventArgs e)
+        {
+            if (noti.IsToggled == true)
+                UserLogged.Notification = true;
+            else
+                UserLogged.Notification = false;
         }
     }
 }

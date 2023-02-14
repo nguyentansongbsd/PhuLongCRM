@@ -1,12 +1,15 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
+using FFImageLoading.Forms;
 using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -22,8 +25,8 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshTask = null;
         public static bool? NeedToRefreshQueue = null;
         public static bool? NeedToRefreshLeads = null;
+        public static bool? NeedToRefreshNoti = null;
         public DashboardViewModel viewModel;
-        private bool isAll;
 
         public Dashboard()
         {
@@ -34,6 +37,7 @@ namespace PhuLongCRM.Views
             NeedToRefreshTask = false;
             NeedToRefreshQueue = false;
             NeedToRefreshLeads = false;
+            NeedToRefreshNoti = false;
             PropertyChanged += Dashboard_PropertyChanged;
             Init();
         }
@@ -46,7 +50,6 @@ namespace PhuLongCRM.Views
         public async void Init()
         {
             this.BindingContext = viewModel = new DashboardViewModel();
-            isAll = true;
             await Task.WhenAll(
                  viewModel.Load3Activity(),
                  viewModel.LoadQueueFourMonths(),
@@ -56,8 +59,8 @@ namespace PhuLongCRM.Views
                  viewModel.LoadLeads(),
                  viewModel.LoadCommissionTransactions(),
                  viewModel.LoadActivityCount(),
-                 viewModel.LoadPromotion(),
-                 viewModel.LoadNews()
+                 viewModel.LoadNews(),
+                 viewModel.CountNumNotification()
                 );
 
             MessagingCenter.Subscribe<ScanQRPage, string>(this, "CallBack", async (sender, e) =>
@@ -145,6 +148,7 @@ namespace PhuLongCRM.Views
 
             });
             AddToolTip();
+            await viewModel.TimeOutLogin();
             LoadingHelper.Hide();
         }
 
@@ -181,6 +185,14 @@ namespace PhuLongCRM.Views
                 NeedToRefreshMeet = false;
                 LoadingHelper.Hide();
             }
+            if (NeedToRefreshNoti == true)
+            {
+                LoadingHelper.Show();
+                viewModel.NumNotification = 0;
+                await viewModel.CountNumNotification();
+                NeedToRefreshNoti = false;
+                LoadingHelper.Hide();
+            }
         }
 
         private async void ShowMore_Tapped(object sender, EventArgs e)
@@ -199,18 +211,6 @@ namespace PhuLongCRM.Views
                 ActivityPopup.ShowActivityPopup(item.activityid, item.activitytypecode);
             }
             LoadingHelper.Hide();
-        }
-
-        private async void ScanQRCode_Clicked(object sender, EventArgs e)
-        {
-            PermissionStatus camerastatus = await PermissionHelper.RequestCameraPermission();
-            if (camerastatus == PermissionStatus.Granted)
-            {
-                LoadingHelper.Show();
-                ScanQRPage scanQR = new ScanQRPage();
-                await Navigation.PushAsync(scanQR);
-                LoadingHelper.Hide();
-            }
         }
 
         private void CloseToolTips_Tapped(object sender, EventArgs e)
@@ -291,33 +291,16 @@ namespace PhuLongCRM.Views
         {
             if (e.Item != null)
             {
-                if ((int)e.Item == 0)
-                {
-                    if (viewModel.News != null && viewModel.News.Count > 0)
-                    {
-                        news.IsVisible = true;
-                        promotion.IsVisible = false;
-                        news.ScrollTo(0, position: ScrollToPosition.Start);
-                        isAll = true;
-                    }
-                    else if (viewModel.Promotions != null && viewModel.Promotions.Count > 0)
-                    {
-                        promotion.IsVisible = true;
-                        news.IsVisible = false;
-                    }
-                }
-                else if ((int)e.Item == 1)
+               if ((int)e.Item == 0)
                 {
                     promotion.IsVisible = false;
                     news.IsVisible = true;
                     news.ScrollTo(0, position: ScrollToPosition.Start);
-                    isAll = false;
                 }
-                else if ((int)e.Item == 2)
+                else if ((int)e.Item == 1)
                 {
                     promotion.IsVisible = true;
                     news.IsVisible = false;
-                    isAll = false;
                 }
             }
         }
@@ -355,10 +338,74 @@ namespace PhuLongCRM.Views
 
         private void news_Scrolled(object sender, ItemsViewScrolledEventArgs e)
         {
-            if(e != null && viewModel.News != null && e.LastVisibleItemIndex == viewModel.News.Count-1 && isAll)
+            if(e != null && viewModel.News != null && e.LastVisibleItemIndex == viewModel.News.Count-1)
             {
                 promotion.IsVisible = true;
                 news.IsVisible = false;
+            }
+        }
+
+        private async void ScanQRCode_Tapped(object sender, EventArgs e)
+        {
+            PermissionStatus camerastatus = await PermissionHelper.RequestCameraPermission();
+            if (camerastatus == PermissionStatus.Granted)
+            {
+                LoadingHelper.Show();
+                ScanQRPage scanQR = new ScanQRPage();
+                await Navigation.PushAsync(scanQR);
+                LoadingHelper.Hide();
+            }
+        }
+        private async void GoToNotificationPage_Tapped(object sender, EventArgs e)
+        {
+             await Navigation.PushAsync(new NotificationPage());
+        }
+
+        private void News_Tapped(object sender, EventArgs e)
+        {
+            var tap = sender as CachedImage;
+            var item = (NewsModel)(tap.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item != null && item.project_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ProjectInfo project = new ProjectInfo(item.project_id);
+                project.OnCompleted = async (isSuccess) =>
+                {
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(project);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
+            }
+        }
+
+        private void Promotion_Tapped(object sender, EventArgs e)
+        {
+            var tap = sender as Grid;
+            var item = (NewsModel)(tap.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item != null && item.promotion_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ProjectInfo project = new ProjectInfo(item.project_id);
+                project.OnCompleted = async (isSuccess) =>
+                {
+                    if (isSuccess)
+                    {
+                        await Navigation.PushAsync(project);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
             }
         }
     }
