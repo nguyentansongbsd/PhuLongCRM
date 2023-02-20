@@ -66,5 +66,9 @@ namespace PhuLongCRM.ViewModels
                 ContractId = data.ContractId
             });
         }
+        public async Task DeleteNotification(string key)
+        {
+            await firebase.Child("Notifications").Child(key).DeleteAsync();
+        }
     }
 }

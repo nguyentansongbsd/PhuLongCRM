@@ -4,7 +4,8 @@
              x:Class="PhuLongCRM.Views.DirectSaleDetailTest"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources" 
              xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
-             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" xmlns:controls="clr-namespace:PhuLongCRM.Controls" xmlns:converter="clr-namespace:PhuLongCRM.Converters"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" 
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls" xmlns:converter="clr-namespace:PhuLongCRM.Converters"
              >
     <!--Title="{x:Static lang:Language.gio_hang}"-->
     <Shell.TitleView>

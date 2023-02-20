@@ -140,5 +140,16 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(IsTimeOut), false);
             set => AppSettings.AddOrUpdateValue(nameof(IsTimeOut), value);
         }
+        public static Guid AgentID
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AgentID), Guid.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(AgentID), value);
+        }
+
+        public static string AgentName
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AgentName), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(AgentName), value);
+        }
     }
 }

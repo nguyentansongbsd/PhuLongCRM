@@ -79,9 +79,17 @@ namespace PhuLongCRM.ViewModels
                 if(RapCan != null && RapCan.Val != "-1")
                 {
                     if (RapCan.Val != "1")
-                        rapcan = "<condition attribute='bsd_units' operator='null' />";
+                        rapcan = @"<condition attribute='bsd_units' operator='null' />
+                                    <condition attribute='statuscode' operator='in'>
+                                        <value>100000000</value>
+                                        <value>100000002</value>
+                                    </condition>";
                     else if (RapCan.Val != "0")
-                        rapcan = "<condition attribute='bsd_units' operator='not-null' />";
+                        rapcan = @"<condition attribute='bsd_units' operator='not-null' />        
+                                    <condition attribute='statuscode' operator='in'>
+                                        <value>100000000</value>
+                                        <value>100000002</value>
+                                    </condition>"; ;
                 }   
                 else
                 {
