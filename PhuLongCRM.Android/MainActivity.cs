@@ -11,6 +11,7 @@ using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Android.Content;
 using PhuLongCRM.Droid.Services;
+using Plugin.FirebasePushNotification;
 
 namespace PhuLongCRM.Droid
 {
@@ -32,6 +33,7 @@ namespace PhuLongCRM.Droid
 
             LoadApplication(new App());
             DependencyService.Get<ILoadingService>().Initilize();
+            FirebasePushNotificationManager.ProcessIntent(this, Intent);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "784823764930",
+    "firebase_url": "https://phulonguat-default-rtdb.firebaseio.com",
+    "project_id": "phulonguat",
+    "storage_bucket": "phulonguat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784823764930:android:a664ff9deafe2c0efe785b",
+        "android_client_info": {
+          "package_name": "PhuLong.CRM"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784823764930-1958a510m2i7839b1r00d21q3a25fjl4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ9a7I2OGKuQS7-8957jSKpnu8o8NBhxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784823764930-1958a510m2i7839b1r00d21q3a25fjl4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
