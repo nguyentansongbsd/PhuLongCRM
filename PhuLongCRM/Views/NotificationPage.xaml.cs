@@ -46,17 +46,52 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
             }
         }
-
-        private async void ListView_ItemTapped(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
+        private async void ReadNoti(NotificaModel item)
         {
-            var item = e.Item as NotificaModel;
-            if(item != null)
+            try
             {
-                if (item.NotificationType == NotificationType.Project 
-                    || item.NotificationType == NotificationType.PhaseLaunch 
+                LoadingHelper.Show();
+                if (item.IsRead == true) return;
+                await viewModel.UpdateStatus(item.Key, item);
+                if (Dashboard.NeedToRefreshNoti.HasValue) Dashboard.NeedToRefreshNoti = true;
+                viewModel.Notifications.Clear();
+                await viewModel.LoadData();
+            }
+            catch (Exception ex)
+            { }
+        }
+
+        private async void DeleteNotification_Invoked(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadingHelper.Show();
+                var tap = sender as SwipeItemView;
+                var item = (NotificaModel)tap.CommandParameter;
+                if (item != null)
+                {
+                    await viewModel.DeleteNotification(item.Key);
+                    if (Dashboard.NeedToRefreshNoti.HasValue) Dashboard.NeedToRefreshNoti = true;
+                    viewModel.Notifications.Clear();
+                    await viewModel.LoadData();
+                }
+                LoadingHelper.Hide();
+            }
+            catch(Exception ex)
+            { }
+        }
+
+        private void Notification_Tapped(object sender, EventArgs e)
+        {
+            var tap = sender as Grid;
+            var item = (NotificaModel)(tap.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+            if (item != null)
+            {
+                if (item.NotificationType == NotificationType.Project
+                    || item.NotificationType == NotificationType.PhaseLaunch
                     || item.NotificationType == NotificationType.Event)
                 {
-                    if(item.ProjectId != Guid.Empty)
+                    if (item.ProjectId != Guid.Empty)
                     {
                         LoadingHelper.Show();
                         ProjectInfo project = new ProjectInfo(item.ProjectId);
@@ -74,14 +109,14 @@ namespace PhuLongCRM.Views
                                 ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                             }
                         };
-                    }    
+                    }
                 }
-                else if (item.NotificationType == NotificationType.QueueCancel 
-                    || item.NotificationType == NotificationType.QueueSuccess 
+                else if (item.NotificationType == NotificationType.QueueCancel
+                    || item.NotificationType == NotificationType.QueueSuccess
                     || item.NotificationType == NotificationType.QueueRefunded
                     || item.NotificationType == NotificationType.MatchUnit)
                 {
-                    if(item.QueueId != Guid.Empty)
+                    if (item.QueueId != Guid.Empty)
                     {
                         LoadingHelper.Show();
                         QueuesDetialPage queuesDetialPage = new QueuesDetialPage(item.QueueId);
@@ -98,8 +133,8 @@ namespace PhuLongCRM.Views
                                 ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                             }
                         };
-                    }    
-                }   
+                    }
+                }
                 else if (item.NotificationType == NotificationType.Quote
                     || item.NotificationType == NotificationType.SpecialDiscount)
                 {
@@ -134,7 +169,7 @@ namespace PhuLongCRM.Views
                         {
                             if (OnCompleted == true)
                             {
-                                await Navigation.PushAsync(newPage); 
+                                await Navigation.PushAsync(newPage);
                                 ReadNoti(item);
                                 LoadingHelper.Hide();
                             }
@@ -169,15 +204,7 @@ namespace PhuLongCRM.Views
                         };
                     }
                 }
-            }    
-        }
-        private async void ReadNoti(NotificaModel item)
-        {
-            if (item.IsRead == true) return;
-            await viewModel.UpdateStatus(item.Key, item);
-            if (Dashboard.NeedToRefreshNoti.HasValue) Dashboard.NeedToRefreshNoti = true;
-            viewModel.Notifications.Clear();
-            await viewModel.LoadData();
+            }
         }
     }
 }

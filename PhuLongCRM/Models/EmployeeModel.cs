@@ -19,5 +19,7 @@ namespace PhuLongCRM.Models
         public string contact_email { get; set; }
         public int bsd_loginlimit { get; set; }
         public int? bsd_timeoutminute { get; set; }
+        public Guid agent_id { get; set; }
+        public string agent_name { get; set; }
     }
 }

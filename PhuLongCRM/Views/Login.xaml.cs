@@ -267,18 +267,19 @@ namespace PhuLongCRM.Views
                         }
 
                         ImeiNum = await DependencyService.Get<INumImeiService>().GetImei();
+                        string imeiADmin = await LoadImeiAdmin();
 
                         if (string.IsNullOrWhiteSpace(employeeModel.bsd_imeinumber))
                         {
                             await UpdateImei(employeeModel.bsd_employeeid.ToString()) ;
                         }
-                        //else if (employeeModel.bsd_imeinumber != ImeiNum)
-                        //{
-                        //    LoadingHelper.Hide();
-                            //ToastMessageHelper.ShortMessage(Language.tai_khoan_khong_the_dang_nhap_tren_thiet_bi_nay);
-                        //    return;
-                        //}
-                        
+                        else if (employeeModel.bsd_imeinumber != ImeiNum && employeeModel.bsd_imeinumber != imeiADmin)
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.tai_khoan_khong_the_dang_nhap_tren_thiet_bi_nay);
+                            return;
+                        }
+
                         UserLogged.User = employeeModel.bsd_name;
                         UserLogged.Avartar = employeeModel.bsd_avatar;
                         UserLogged.Password = employeeModel.bsd_password;
@@ -286,6 +287,8 @@ namespace PhuLongCRM.Views
                         UserLogged.ContactName = employeeModel.contact_name;
                         UserLogged.ManagerId = employeeModel.manager_id;
                         UserLogged.ManagerName = employeeModel.manager_name;
+                        UserLogged.AgentID = employeeModel.agent_id;
+                        UserLogged.AgentName = employeeModel.agent_name;
                         UserLogged.TimeOut = employeeModel.bsd_timeoutminute.HasValue ? employeeModel.bsd_timeoutminute.Value : 0;
                         isTimeOut = employeeModel.bsd_timeoutminute.HasValue ? true : false;
                         UserLogged.IsSaveInforUser = checkboxRememberAcc.IsChecked;
@@ -339,6 +342,10 @@ namespace PhuLongCRM.Views
                     <link-entity name='contact' from='contactid' to='bsd_contact' visible='false' link-type='outer' alias='a_5b790f4631f4eb1194ef000d3a801090'>
                       <attribute name='contactid' alias='contact_id'/>
                       <attribute name='bsd_fullname' alias='contact_name'/>
+                    </link-entity>
+                    <link-entity name='account' from='accountid' to='bsd_agents' link-type='outer' alias='aa'>
+                        <attribute name='bsd_name' alias='agent_name'/>
+                        <attribute name='accountid' alias='agent_id'/>
                     </link-entity>
                   </entity>
                 </fetch>";
@@ -397,6 +404,11 @@ namespace PhuLongCRM.Views
             lbfogotPassword.Text = Language.quen_mat_khau;
             btnLogin.Text = Language.dang_nhap;
             btnLoginUserCRM.Text = Language.dang_nhap_voi_user_crm;
+            Admin_CenterPopup.Title = Language.lien_he;
+            admin_name.Text = Language.ho_ten;
+            admin_sdt.Text = Language.so_dien_thoai;
+            admin_email.Text = Language.email;
+            lb_lienhe.Text = Language.lien_he;
         }
         //ghi nhận số lần login khi thành công hoặc thất bại, nếu login thành công cập nhâtj state login
         public async Task UpdateNumberLogin(bool isLogin = false)
@@ -469,30 +481,50 @@ namespace PhuLongCRM.Views
             }    
             if(Admin != null)
             {
-                //Admin_CenterPopup.ShowCenterPopup();
-            }    
+                Admin_CenterPopup.ShowCenterPopup();
+            }
+            LoadingHelper.Hide();
         }
         public async Task LoadAdmin()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                    <entity name='systemuser'>
-                                        <attribute name='fullname' />
-                                        <attribute name='systemuserid' />
-                                        <attribute name='mobilephone' />
-                                        <attribute name='internalemailaddress' />
-                                        <order attribute='fullname' descending='false' />
-                                        <filter type='and'>
-                                            <condition attribute='internalemailaddress' operator='eq' value='crmAdmin@phulong.com' />
-                                        </filter>
-                                    </entity>
+                                  <entity name='bsd_configureapplications'>
+                                    <attribute name='bsd_configureapplicationsid' alias='systemuserid'/>
+                                    <attribute name='bsd_phone' alias='mobilephone'/>
+                                    <attribute name='bsd_fullname' alias='fullname'/>
+                                    <attribute name='bsd_email' alias='internalemailaddress'/>
+                                    <filter type='and'>
+                                        <condition attribute='bsd_default' operator='eq' value='1' />
+                                    </filter>
+                                  </entity>
                                 </fetch>";
             //< condition attribute = 'fullname' operator= 'eq' value = '# CRM Admin' />
 
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<UserModel>>("systemusers", fetchXml);
-            if (result != null || result.value.Count > 0)
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<UserModel>>("bsd_configureapplicationses", fetchXml);
+            if (result != null && result.value.Count > 0)
             {
                 Admin = result.value.FirstOrDefault();
             }
+        }
+        public async Task<string> LoadImeiAdmin()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_configureapplications'>
+                                    <attribute name='bsd_phone' alias='Name'/>
+                                    <filter type='and'>
+                                        <condition attribute='bsd_default' operator='eq' value='1' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            //< condition attribute = 'fullname' operator= 'eq' value = '# CRM Admin' />
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LookUp>>("bsd_configureapplicationses", fetchXml);
+            if (result != null && result.value.Count > 0)
+            {
+                return result.value.FirstOrDefault().Name;
+            }
+            else
+                return null;
         }
 
         private void CloseTimeOut_Clicked(object sender, EventArgs e)
