@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>902194715487-2ln6l0imlbdhur5gc5gg7cnjogq2i008.apps.googleusercontent.com</string>
+	<string>784823764930-q0jj3peaoa492q3vn0gfi0kevp1mf0nb.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.902194715487-2ln6l0imlbdhur5gc5gg7cnjogq2i008</string>
+	<string>com.googleusercontent.apps.784823764930-q0jj3peaoa492q3vn0gfi0kevp1mf0nb</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCUSmqG7OrPl7urAQopbTW2oMf0hkjUpjI</string>
+	<string>AIzaSyD4NVTnu2tYECY1xlstyjxeWiDGzTGoZp0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>902194715487</string>
+	<string>784823764930</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.bsdsolutions.phulongcrm</string>
 	<key>PROJECT_ID</key>
-	<string>phulongcrm-590ff</string>
+	<string>phulonguat</string>
 	<key>STORAGE_BUCKET</key>
-	<string>phulongcrm-590ff.appspot.com</string>
+	<string>phulonguat.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:902194715487:ios:f81071a993d3e8d44374ea</string>
+	<string>1:784823764930:ios:7933add58a36b71bfe785b</string>
+	<key>DATABASE_URL</key>
+	<string>https://phulonguat-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
