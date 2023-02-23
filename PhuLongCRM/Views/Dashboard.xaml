@@ -25,7 +25,7 @@
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToNotificationPage_Tapped"/>
                     </Grid.GestureRecognizers>
                     <Label Text="&#xf0f3;" FontFamily="FontAwesomeSolid" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" Margin="0,0,7,0"/>
-                    <telerikPrimitives:RadBorder VerticalOptions="Start" HorizontalOptions="EndAndExpand" CornerRadius="15" BackgroundColor="Red" Padding="1" MinimumHeightRequest="15" MinimumWidthRequest="15" IsVisible="{Binding NumNotification,Converter={x:StaticResource ZeroToHideConverter}}">
+                    <telerikPrimitives:RadBorder VerticalOptions="Start" HorizontalOptions="EndAndExpand" CornerRadius="15" BackgroundColor="Red" Padding="1" HeightRequest="15" WidthRequest="15" IsVisible="{Binding NumNotification,Converter={x:StaticResource ZeroToHideConverter}}">
                         <Label Text="{Binding NumNotification}" FontSize="9" TextColor="White" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
                     </telerikPrimitives:RadBorder>
                 </Grid>
@@ -46,8 +46,8 @@
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseToolTips_Tapped"/>
                         </StackLayout.GestureRecognizers>
-                        <Grid BackgroundColor="White" HeightRequest="250" RowDefinitions="Auto,*" IsVisible="true">
-                            <Grid Grid.Row="0" Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Grid BackgroundColor="White" RowDefinitions="Auto,*" IsVisible="true">
+                            <Grid Grid.Row="0" Padding="15,15,15,5" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                 <Label Grid.Column="0" VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
@@ -413,7 +413,7 @@
                                                 <Label Text="{Binding Source={x:Static lang:Language.thoi_gian}}" FontSize="15" TextColor="#333333"/>
                                                 <Label FontSize="15" TextColor="#333333">
                                                     <Label.Text>
-                                                        <MultiBinding StringFormat=': {0:HH:mm} - {1:HH:mm}'>
+                                                        <MultiBinding StringFormat=': {0:HH:mm - dd/MM}/{1:HH:mm - dd/MM}'>
                                                             <Binding Path="scheduledstart" />
                                                             <Binding Path="scheduledend" />
                                                         </MultiBinding>

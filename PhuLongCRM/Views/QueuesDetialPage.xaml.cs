@@ -649,5 +649,39 @@ namespace PhuLongCRM.Views
                 }
             }    
         }
+
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            viewModel.IsRefreshing = true;
+            await viewModel.LoadQueue();
+            SetButtons();
+            if (viewModel.BangTinhGiaList != null && viewModel.BangTinhGiaList.Count > 0)
+            {
+                viewModel.PageBangTinhGia = 0;
+                viewModel.BangTinhGiaList.Clear();
+                await viewModel.LoadDanhSachBangTinhGia();
+            }
+            if (viewModel.DatCocList != null && viewModel.DatCocList.Count > 0)
+            {
+                viewModel.PageDatCoc = 0;
+                viewModel.DatCocList.Clear();
+                await viewModel.LoadDanhSachDatCoc();
+            }
+            if (viewModel.HopDongList != null && viewModel.HopDongList.Count > 0)
+            {
+                viewModel.PageHopDong = 0;
+                viewModel.HopDongList.Clear();
+                await viewModel.LoadDanhSachHopDong();
+            }
+            if (viewModel.list_thongtincase != null && viewModel.list_thongtincase.Count > 0)
+            {
+                viewModel.PageCase = 0;
+                viewModel.list_thongtincase.Clear();
+                await viewModel.LoadCaseForQueue();
+            }
+            viewModel.IsRefreshing = false;
+            LoadingHelper.Hide();
+        }
     }
 }

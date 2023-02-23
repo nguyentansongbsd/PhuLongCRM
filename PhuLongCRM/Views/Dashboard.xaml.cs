@@ -27,6 +27,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshLeads = null;
         public static bool? NeedToRefreshNoti = null;
         public DashboardViewModel viewModel;
+        private int currentSlide { get; set; } = 0;
 
         public Dashboard()
         {
@@ -40,6 +41,7 @@ namespace PhuLongCRM.Views
             NeedToRefreshNoti = false;
             PropertyChanged += Dashboard_PropertyChanged;
             Init();
+            news.HeightRequest = Application.Current.MainPage.Width * 3/5;
         }
 
         private void Dashboard_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -59,7 +61,7 @@ namespace PhuLongCRM.Views
                  viewModel.LoadLeads(),
                  viewModel.LoadCommissionTransactions(),
                  viewModel.LoadActivityCount(),
-                 viewModel.LoadNews(),
+                 AutoPlaySide(),
                  viewModel.CountNumNotification()
                 );
 
@@ -168,6 +170,9 @@ namespace PhuLongCRM.Views
             if (NeedToRefreshLeads == true)
             {
                 LoadingHelper.Show();
+                viewModel.numKHMoi = 0;
+                viewModel.numKHDaChuyenDoi = 0;
+                viewModel.numKHKhongChuyenDoi = 0;
                 viewModel.LeadsChart.Clear();
                 await viewModel.LoadLeads();
                 NeedToRefreshLeads = false;
@@ -407,6 +412,23 @@ namespace PhuLongCRM.Views
                     }
                 };
             }
+        }
+        private async Task AutoPlaySide()
+        {
+            await viewModel.LoadNews();
+            if(viewModel.News != null && viewModel.News.Count > 0)
+            {
+                Device.StartTimer(TimeSpan.FromSeconds(4), () =>
+                {
+                    currentSlide++;
+                    if (currentSlide == viewModel.News.Count)
+                    {
+                        currentSlide = 0;
+                    }
+                    news.Position = currentSlide;
+                    return true;
+                });
+            }    
         }
     }
 }

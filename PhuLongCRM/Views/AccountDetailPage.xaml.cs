@@ -649,5 +649,53 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
             }
         }
+
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            viewModel.IsRefreshing = true;
+            LoadingHelper.Show();
+            await viewModel.LoadOneAccount(viewModel.singleAccount.accountid.ToString());
+
+            viewModel.singleAccount.bsd_address = await SetAddress();
+
+            if (viewModel.singleAccount?.bsd_businesstype != null)
+            {
+                viewModel.GetTypeById(viewModel.singleAccount.bsd_businesstype);
+            }
+            if (viewModel.singleAccount?.bsd_localization != null)
+            {
+                viewModel.Localization = AccountLocalization.GetLocalizationById(viewModel.singleAccount.bsd_localization);
+            }
+            SetButtonFloatingButton();
+            if (viewModel.list_thongtinqueing.Count > 0 ||
+                viewModel.list_thongtinquotation.Count > 0 || 
+                viewModel.list_thongtincontract.Count > 0 ||
+                viewModel.Cares.Count > 0)
+            {
+                viewModel.PageQuotation = 0;
+                viewModel.PageQueueing = 0;
+                viewModel.PageContract = 0;
+                viewModel.PageCase = 0;
+                viewModel.list_thongtinqueing.Clear();
+                viewModel.list_thongtinquotation.Clear();
+                viewModel.list_thongtincontract.Clear();
+                viewModel.Cares.Clear();
+                await Task.WhenAll(
+                    viewModel.LoadDSQueueingAccount(AccountId),
+                    viewModel.LoadDSQuotationAccount(AccountId),
+                    viewModel.LoadDSContractAccount(AccountId),
+                    viewModel.LoadCase()
+                    );
+            }
+            if (viewModel.list_MandatorySecondary.Count > 0)
+            {
+                viewModel.PageMandatory = 0;
+                viewModel.list_MandatorySecondary.Clear();
+                await viewModel.Load_List_Mandatory_Secondary(AccountId.ToString());
+                SetHeightListView();
+            }
+            viewModel.IsRefreshing = false;
+            LoadingHelper.Hide();
+        }
     }
 }

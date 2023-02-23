@@ -510,7 +510,7 @@ namespace PhuLongCRM.Views
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='bsd_configureapplications'>
-                                    <attribute name='bsd_phone' alias='Name'/>
+                                    <attribute name='bsd_imeinumbersystem' alias='Name'/>
                                     <filter type='and'>
                                         <condition attribute='bsd_default' operator='eq' value='1' />
                                     </filter>

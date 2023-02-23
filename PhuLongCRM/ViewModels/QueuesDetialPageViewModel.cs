@@ -72,6 +72,9 @@ namespace PhuLongCRM.ViewModels
 
         public string CodeContact = LookUpMultipleTabs.CodeContac;
 
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
+
         public QueuesDetialPageViewModel()
         {
             list_thongtincase = new ObservableCollection<HoatDongListModel>();

@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
+using Plugin.FirebasePushNotification;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -126,9 +127,15 @@ namespace PhuLongCRM.Views
         private void noti_Toggled(object sender, ToggledEventArgs e)
         {
             if (noti.IsToggled == true)
+            {
                 UserLogged.Notification = true;
+                CrossFirebasePushNotification.Current.Subscribe("all");
+            }
             else
+            {
                 UserLogged.Notification = false;
+                CrossFirebasePushNotification.Current.Unsubscribe("all");
+            }
         }
     }
 }

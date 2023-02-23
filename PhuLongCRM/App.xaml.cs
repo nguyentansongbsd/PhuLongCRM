@@ -31,19 +31,27 @@ namespace PhuLongCRM
             {
                 DependencyService.Register<IDatetimeService, DatetimeENService>();
             }
-            CrossFirebasePushNotification.Current.Subscribe("all");
-            CrossFirebasePushNotification.Current.OnNotificationOpened += Current_OnNotificationOpened;
-            CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
+            if (UserLogged.Notification == true)
+            {
+                CrossFirebasePushNotification.Current.Subscribe("all");
+                //CrossFirebasePushNotification.Current.OnNotificationOpened += Current_OnNotificationOpened;
+                CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
+            }
+            else
+            {
+                CrossFirebasePushNotification.Current.Unsubscribe("all");
+            }    
         }
 
-        private void Current_OnNotificationOpened(object source, FirebasePushNotificationResponseEventArgs e)
-        {
-           App.Current.MainPage.DisplayAlert("Notification", $"Data: {e.Data["type"]}", "OK");
-        }
+        // chưa dùng tới
+        //private void Current_OnNotificationOpened(object source, FirebasePushNotificationResponseEventArgs e)
+        //{
+        //   App.Current.MainPage.DisplayAlert("Notification", $"Data: {e.Data["type"]}", "OK");
+        //}
 
         private void Current_OnTokenRefresh(object source, FirebasePushNotificationTokenEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
+           // System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
         }
 
         protected override async void OnStart()

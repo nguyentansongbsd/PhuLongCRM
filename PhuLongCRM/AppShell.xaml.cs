@@ -29,6 +29,9 @@ namespace PhuLongCRM
         private string _verApp;
         public string VerApp { get => _verApp; set { _verApp = value; OnPropertyChanged(nameof(VerApp)); } }
 
+        private string _agent;
+        public string Agent { get => _agent; set { _agent = value; OnPropertyChanged(nameof(Agent)); } }
+
         private UserCRMInfoPage userCRMInfo;
 
         public AppShell()
@@ -39,6 +42,7 @@ namespace PhuLongCRM
             Avartar = UserLogged.Avartar;
             NeedToRefeshUserInfo = false;
             VerApp = Config.OrgConfig.VerApp;
+            Agent = String.IsNullOrEmpty(UserLogged.AgentName) ? "Phú Long" : UserLogged.AgentName;
             this.BindingContext = this;
             PropertyChanged += AppShell_PropertyChanged;
         }
@@ -128,14 +132,6 @@ namespace PhuLongCRM
             this.FlyoutIsPresented = false;
             //LoadingHelper.Hide();
         }
-
-        private async void Logout_Clicked(System.Object sender, System.EventArgs e)
-        {
-            if (UserLogged.IsLoginByUserCRM)
-                DependencyService.Get<IClearCookies>().ClearAllCookies(); ;
-            await UpdateStateLogin(false);
-            await Shell.Current.GoToAsync("//LoginPage");
-        }
         public async Task UpdateStateLogin(bool isLogin)
         {
             string path = $"/bsd_employees({UserLogged.Id})";
@@ -174,7 +170,15 @@ namespace PhuLongCRM
             lichlamviec.Title = Language.lich_lam_viec;
             dongbodanhba.Title = Language.dong_bo_danh_ba;
             thietlap.Title = Language.thiet_lap_title;
-            dangxuat.Text = Language.dang_xuat;
+            //dangxuat.Text = Language.dang_xuat;
+        }
+
+        private async void Logout_Tapped(object sender, EventArgs e)
+        {
+            if (UserLogged.IsLoginByUserCRM)
+                DependencyService.Get<IClearCookies>().ClearAllCookies(); ;
+            await UpdateStateLogin(false);
+            await Shell.Current.GoToAsync("//LoginPage");
         }
     }
 }

@@ -7,13 +7,24 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
-    public class NotificationPageViewModel
+    public class NotificationPageViewModel : BaseViewModel
     {
         FirebaseClient firebase = new Firebase.Database.FirebaseClient("https://phulonguat-default-rtdb.firebaseio.com/");
         public ObservableCollection<NotificaModel> Notifications { get; set; } = new ObservableCollection<NotificaModel>();
+
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
+        public ICommand RefreshCommand => new Command(async () =>
+        {
+            IsRefreshing = true;
+            await RefreshDashboard();
+            IsRefreshing = false;
+        });
         public NotificationPageViewModel()
         {
         }
@@ -69,6 +80,13 @@ namespace PhuLongCRM.ViewModels
         public async Task DeleteNotification(string key)
         {
             await firebase.Child("Notifications").Child(key).DeleteAsync();
+        }
+        public async Task RefreshDashboard()
+        {
+            Notifications.Clear();
+            await Task.WhenAll(
+                LoadData()
+                );
         }
     }
 }

@@ -86,6 +86,9 @@ namespace PhuLongCRM.ViewModels
         public List<OptionSet> Projects { get => _projects; set { _projects = value; OnPropertyChanged(nameof(Projects)); } }
         public byte[] AvatarArr { get; set; }
 
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
+
         public ContactDetailPageViewModel()
         {
             singleContact = new ContactFormModel();

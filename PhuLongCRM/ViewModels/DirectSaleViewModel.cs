@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -84,8 +86,15 @@ namespace PhuLongCRM.ViewModels
         }
         private bool _isOwner;
         public bool isOwner { get => _isOwner; set { _isOwner = value; OnPropertyChanged(nameof(isOwner)); } }
-        
 
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
+        public ICommand RefreshCommand => new Command(async () =>
+        {
+            IsRefreshing = true;
+            await RefreshDashboard();
+            IsRefreshing = false;
+        });
         public DirectSaleViewModel()
         {
         }
@@ -258,6 +267,29 @@ namespace PhuLongCRM.ViewModels
             if (block_result == null || block_result.value.Count == 0) return;
 
             this.Blocks = block_result.value;
+        }
+        public async Task RefreshDashboard()
+        {
+            if(Projects != null && Projects.Count > 0)
+            {
+                Projects.Clear();
+                await LoadProject();
+            }
+            if (PhasesLaunchs != null && PhasesLaunchs.Count > 0)
+            {
+                PhasesLaunchs.Clear();
+                await LoadPhasesLanch();
+            }
+
+            Project = null;
+            PhasesLaunch = null;
+            IsEvent = false;
+            UnitCode = null;
+            SelectedDirections = null;
+            SelectedViews = null;
+            SelectedUnitStatus = null;
+            NetArea = null;
+            Price = null;
         }
     }
 }

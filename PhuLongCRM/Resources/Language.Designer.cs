@@ -1780,7 +1780,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chưa có contact, không thể chỉnh sửa thông tin..
+        ///   Looks up a localized string similar to Chưa có thông tin liên hệ, không thể chỉnh sửa..
         /// </summary>
         internal static string chua_co_contact_khong_the_chinh_sua_thong_tin {
             get {
@@ -2649,6 +2649,15 @@ namespace PhuLongCRM.Resources {
         internal static string dai_ly {
             get {
                 return ResourceManager.GetString("dai_ly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đại lý.
+        /// </summary>
+        internal static string dai_ly_appshell {
+            get {
+                return ResourceManager.GetString("dai_ly_appshell", resourceCulture);
             }
         }
         
@@ -10061,7 +10070,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TRỂ HẠN TT.
+        ///   Looks up a localized string similar to TRỄ HẠN TT.
         /// </summary>
         internal static string tre_han_tt {
             get {
