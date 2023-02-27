@@ -3724,7 +3724,7 @@
     <value>Khách Hàng</value>
   </data>
   <data name="nguoi_dai_dien_filter" xml:space="preserve">
-    <value>Người Đại Diện</value>
+    <value>Đại Diện</value>
   </data>
   <data name="chu_dau_tu_filter" xml:space="preserve">
     <value>Chủ Đầu Tư</value>
@@ -3830,5 +3830,11 @@
   </data>
 	<data name="dai_ly_appshell" xml:space="preserve">
     <value>Đại lý</value>
+  </data>
+	<data name="uy_quyen_filter" xml:space="preserve">
+    <value>Ủy Quyền</value>
+  </data>
+	<data name="tai_khoan_khong_co_hieu_luc" xml:space="preserve">
+    <value>Tài khoản không có hiệu lực.</value>
   </data>
 </root>

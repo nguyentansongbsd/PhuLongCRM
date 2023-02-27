@@ -51,7 +51,7 @@ namespace PhuLongCRM
 
         private void Current_OnTokenRefresh(object source, FirebasePushNotificationTokenEventArgs e)
         {
-           // System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
+            System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
         }
 
         protected override async void OnStart()

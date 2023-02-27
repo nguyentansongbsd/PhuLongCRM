@@ -21,5 +21,6 @@ namespace PhuLongCRM.Models
         public int? bsd_timeoutminute { get; set; }
         public Guid agent_id { get; set; }
         public string agent_name { get; set; }
+        public string statuscode { get; set; }
     }
 }

@@ -440,7 +440,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else if (IsSuccess == 3)
+                    else if (IsSuccess == 3 || IsSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
@@ -465,7 +465,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else if(IsSuccess == 3)
+                    else if(IsSuccess == 3 || IsSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
@@ -609,7 +609,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else if (OnCompleted == 3)
+                    else if (OnCompleted == 3 || OnCompleted == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

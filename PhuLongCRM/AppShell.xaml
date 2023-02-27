@@ -200,11 +200,10 @@
         <Grid ColumnDefinitions="*,Auto">
             <Label Text="{Binding VerApp}" TextColor="#135a92" FontSize="15" Padding="20,16,10,16" LineBreakMode="TailTruncation" VerticalOptions="Center" Grid.Column="0"/>
             <telerikPrimitives:RadBorder CornerRadius="20" BackgroundColor="#57AFE2" HeightRequest="35" WidthRequest="35" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,0,20,0">
-                <Label Text="&#xf2f5;" FontFamily="FontAwesomeSolid" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Logout_Tapped"/>
-                    </Label.GestureRecognizers>
-                </Label>
+                <telerikPrimitives:RadBorder.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Logout_Tapped"/>
+                </telerikPrimitives:RadBorder.GestureRecognizers>
+                <Label Text="&#xf2f5;" FontFamily="FontAwesomeSolid" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
             </telerikPrimitives:RadBorder>
         </Grid>
     </Shell.FlyoutFooter>

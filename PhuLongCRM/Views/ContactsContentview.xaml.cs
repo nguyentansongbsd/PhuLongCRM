@@ -30,14 +30,14 @@ namespace PhuLongCRM.Views
         {
             viewModel.KeyFilter = "0";
             await viewModel.LoadData();
+            rb_khachHang.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
+            lb_khachHang.TextColor = Color.White;
+            rb_nguoiDaiDien.BackgroundColor = Color.White;
+            lb_nguoiDaiDien.TextColor = Color.FromHex("#444444");
+            rb_nguoiUyQuyen.BackgroundColor = Color.White;
+            lb_nguoiUyQuyen.TextColor = Color.FromHex("#444444");
             if (viewModel.Data.Count > 0)
             {
-                rb_khachHang.BackgroundColor = (Color)App.Current.Resources["NavigationPrimary"];
-                lb_khachHang.TextColor = Color.White;
-                rb_nguoiDaiDien.BackgroundColor = Color.White;
-                lb_nguoiDaiDien.TextColor = Color.FromHex("#444444");
-                rb_nguoiUyQuyen.BackgroundColor = Color.White;
-                lb_nguoiUyQuyen.TextColor = Color.FromHex("#444444");
                 OnCompleted?.Invoke(true);
             }
             else
@@ -58,7 +58,7 @@ namespace PhuLongCRM.Views
                     await Navigation.PushAsync(newPage);
                     LoadingHelper.Hide();
                 }
-                else if(OnCompleted == 3)
+                else if(OnCompleted == 3 || OnCompleted == 2)
                 {
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -188,7 +188,7 @@ namespace PhuLongCRM.Views
             format.Spans.Add(new Span { Text = Language.khach_hang_filter });
             lb_khachHang.FormattedText = format;
             lb_nguoiDaiDien.Text = Language.nguoi_dai_dien_filter;
-            lb_nguoiUyQuyen.Text = Language.nguoi_uy_quyen;
+            lb_nguoiUyQuyen.Text = Language.uy_quyen_filter;
 
             label_All.Text = Language.hieu_luc;
             label_inactive.Text = Language.vo_hieu_luc;

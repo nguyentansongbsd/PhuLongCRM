@@ -20,7 +20,7 @@
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ScanQRCode_Tapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" IsVisible="false">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoToNotificationPage_Tapped"/>
                     </Grid.GestureRecognizers>
@@ -46,7 +46,7 @@
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseToolTips_Tapped"/>
                         </StackLayout.GestureRecognizers>
-                        <Grid BackgroundColor="White" RowDefinitions="Auto,*" IsVisible="true">
+                        <Grid x:Name="hot" BackgroundColor="White" RowDefinitions="Auto,*" IsVisible="true">
                             <Grid Grid.Row="0" Padding="15,15,15,5" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                 <Label Grid.Column="0" VerticalOptions="Center">
                                     <Label.FormattedText>

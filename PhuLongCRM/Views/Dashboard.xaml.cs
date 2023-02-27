@@ -41,7 +41,7 @@ namespace PhuLongCRM.Views
             NeedToRefreshNoti = false;
             PropertyChanged += Dashboard_PropertyChanged;
             Init();
-            news.HeightRequest = Application.Current.MainPage.Width * 3/5;
+            hot.HeightRequest = Application.Current.MainPage.Width * 4/6;
         }
 
         private void Dashboard_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

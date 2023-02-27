@@ -192,7 +192,7 @@ namespace PhuLongCRM.Views
                     await Navigation.PushAsync(accountDetailPage);
                     LoadingHelper.Hide();
                 }
-                else if (IsSuccess == 3)
+                else if (IsSuccess == 3 || IsSuccess == 2)
                 {
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

@@ -231,6 +231,12 @@ namespace PhuLongCRM.Views
                     EmployeeModel employeeModel = await LoginUser();
                     if (employeeModel != null)
                     {
+                        if (employeeModel.statuscode != "1")
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.tai_khoan_khong_co_hieu_luc);
+                            return;
+                        }
                         // lưu để cập nhật và kiểm tra
                         UserLogged.Id = employeeModel.bsd_employeeid;
                         UserLogged.NumberLogin = int.Parse(DecaimalToString(employeeModel.bsd_numberlogin));
@@ -321,6 +327,7 @@ namespace PhuLongCRM.Views
                   <entity name='bsd_employee'>
                     <attribute name='bsd_employeeid' />
                     <attribute name='bsd_name' />
+                    <attribute name='statuscode' />
                     <attribute name='createdon' />
                     <attribute name='bsd_password' />
                     <attribute name='bsd_imeinumber' />

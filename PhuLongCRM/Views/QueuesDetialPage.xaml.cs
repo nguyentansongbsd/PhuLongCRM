@@ -211,7 +211,7 @@ namespace PhuLongCRM.Views
                     await Navigation.PushAsync(accountDetail);
                     LoadingHelper.Hide();
                 }
-                else if(IsSuccess == 3)
+                else if(IsSuccess == 3 || IsSuccess == 2)
                 {
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -231,7 +231,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newpage);
                         LoadingHelper.Hide();
                     }
-                    else if(IsSuccess == 3)
+                    else if(IsSuccess == 3 || IsSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -252,7 +252,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newpage);
                         LoadingHelper.Hide();
                     }
-                    else if(IsSuccess == 3)
+                    else if(IsSuccess == 3 || IsSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -427,7 +427,7 @@ namespace PhuLongCRM.Views
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else if(OnCompleted == 3)
+                        else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -444,7 +444,7 @@ namespace PhuLongCRM.Views
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else if(OnCompleted == 3)
+                        else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

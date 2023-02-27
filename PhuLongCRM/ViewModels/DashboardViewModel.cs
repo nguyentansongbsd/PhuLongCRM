@@ -821,6 +821,7 @@ namespace PhuLongCRM.ViewModels
                 UserLogged.IsTimeOut = true;
                 Device.BeginInvokeOnMainThread(async () =>
                 {
+                    await App.Current.MainPage.Navigation.PopToRootAsync();
                     await Shell.Current.GoToAsync("//LoginPage");
                 });
             });

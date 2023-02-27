@@ -3825,4 +3825,10 @@
 	<data name="dai_ly_appshell" xml:space="preserve">
     <value>Agent</value>
   </data>
+	<data name="uy_quyen_filter" xml:space="preserve">
+    <value>Mandatory Secondary</value>
+  </data>
+	<data name="tai_khoan_khong_co_hieu_luc" xml:space="preserve">
+    <value>Account is inactive.</value>
+  </data>
 </root>
