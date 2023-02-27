@@ -217,7 +217,7 @@
     <value>Không chỉnh sửa được thông tin Imei.</value>
   </data>
 	<data name="chua_co_contact_khong_the_chinh_sua_thong_tin" xml:space="preserve">
-    <value>Chưa có contact, không thể chỉnh sửa thông tin.</value>
+    <value>Chưa có thông tin liên hệ, không thể chỉnh sửa.</value>
   </data>
 	<data name="nhan_de_chinh_sua" xml:space="preserve">
     <value>Nhấn để chỉnh sửa</value>
@@ -3355,7 +3355,7 @@
 		<value>PHẠT CHẬM TT</value>
 	</data>
 	<data name="tre_han_tt" xml:space="preserve">
-		<value>TRỂ HẠN TT</value>
+		<value>TRỄ HẠN TT</value>
 	</data>
 	<data name="phi_lai_xuat_so_tien" xml:space="preserve">
 		<value>Phí lãi suất (Số tiền)</value>
@@ -3724,7 +3724,7 @@
     <value>Khách Hàng</value>
   </data>
   <data name="nguoi_dai_dien_filter" xml:space="preserve">
-    <value>Người Đại Diện</value>
+    <value>Đại Diện</value>
   </data>
   <data name="chu_dau_tu_filter" xml:space="preserve">
     <value>Chủ Đầu Tư</value>
@@ -3827,5 +3827,14 @@
   </data>
 	<data name="thong_bao" xml:space="preserve">
     <value>Thông báo</value>
+  </data>
+	<data name="dai_ly_appshell" xml:space="preserve">
+    <value>Đại lý</value>
+  </data>
+	<data name="uy_quyen_filter" xml:space="preserve">
+    <value>Ủy Quyền</value>
+  </data>
+	<data name="tai_khoan_khong_co_hieu_luc" xml:space="preserve">
+    <value>Tài khoản không có hiệu lực.</value>
   </data>
 </root>

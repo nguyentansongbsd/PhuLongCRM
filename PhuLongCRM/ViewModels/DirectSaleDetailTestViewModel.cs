@@ -197,22 +197,27 @@ namespace PhuLongCRM.ViewModels
                             {isEvent}
                               </entity>
                             </fetch>";
-
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Unit>>("products", fetchXml);
-            if (result == null || result.value.Any() == false) return;
-
-            List<Unit> unitsResult = result.value.GroupBy(x => new
+            try
             {
-                productid = x.productid
-            }).Select(y => y.First()).ToList();
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Unit>>("products", fetchXml);
+                if (result == null || result.value.Any() == false) return;
 
-            var units = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units;
-            foreach (var item in unitsResult)
+                List<Unit> unitsResult = result.value.GroupBy(x => new
+                {
+                    productid = x.productid
+                }).Select(y => y.First()).ToList();
+
+                var units = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units;
+                foreach (var item in unitsResult)
+                {
+                    // dem unit co nhung trang thai giu cho la: queuing, waiting
+                    item.NumQueses = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002")).ToList().Count();
+                    item.NumQueueEmployee = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002") && x.queue_employee_id == UserLogged.Id).ToList().Count();
+                    units.Add(item);
+                }
+            }catch(Exception ex)
             {
-                // dem unit co nhung trang thai giu cho la: queuing, waiting
-                item.NumQueses = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002")).ToList().Count();
-                item.NumQueueEmployee = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002") && x.queue_employee_id == UserLogged.Id).ToList().Count();
-                units.Add(item);
+
             }
         }
 
@@ -471,75 +476,16 @@ namespace PhuLongCRM.ViewModels
 
         public async Task UpdateTotalDirectSale(Floor floor)
         {
-            string json = JsonConvert.SerializeObject(Filter);
-            var input = new
+            try
             {
-                input = json
-            };
-            string body = JsonConvert.SerializeObject(input);
-            CrmApiResponse result = await CrmHelper.PostData("/bsd_Action_DirectSale_GetTotalQty", body);
-            if (result.IsSuccess == false && result.Content == null) return;
-
-            string content = result.Content;
-            ResponseAction responseActions = JsonConvert.DeserializeObject<ResponseAction>(content);
-            var newData = JsonConvert.DeserializeObject<List<DirectSaleModel>>(responseActions.output);
-
-            var data = newData.SingleOrDefault(x => x.ID == Block.bsd_blockid.ToString());
-            if (data != null)
-            {
-                Block.TotalUnitInBlock = int.Parse(data.sumQty);
-                var arrStatus = data.stringQty.Split(',');
-                Block.NumChuanBiInBlock = int.Parse(arrStatus[0]);
-                Block.NumSanSangInBlock = int.Parse(arrStatus[1]);
-                Block.NumBookingInBlock = int.Parse(arrStatus[2]);
-                Block.NumGiuChoInBlock = int.Parse(arrStatus[3]);
-                Block.NumDatCocInBlock = int.Parse(arrStatus[4]);
-                Block.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
-                Block.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
-                Block.NumOptionInBlock = int.Parse(arrStatus[7]);
-                Block.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
-                Block.NumSignedDAInBlock = int.Parse(arrStatus[9]);
-                Block.NumQualifiedInBlock = int.Parse(arrStatus[10]);
-                Block.NumDaBanInBlock = int.Parse(arrStatus[11]);
-
-                if (data.listFloor != null)
-                {
-                    var newFloor = data.listFloor.SingleOrDefault(x => x.ID == Unit.floorid.ToString());
-                    //Block.Floors.SingleOrDefault(x => x.bsd_floorid == Unit.floorid);
-                    if (newFloor != null)
-                    {
-                        if (floor != null)
-                        {
-                            var arrStatusInFloor = newFloor.stringQty.Split(',');
-                            floor.NumChuanBiInFloor = int.Parse(arrStatusInFloor[0]);
-                            floor.NumSanSangInFloor = int.Parse(arrStatusInFloor[1]);
-                            floor.NumBookingInFloor = int.Parse(arrStatusInFloor[2]);
-                            floor.NumGiuChoInFloor = int.Parse(arrStatusInFloor[3]);
-                            floor.NumDatCocInFloor = int.Parse(arrStatusInFloor[4]);
-                            floor.NumDongYChuyenCoInFloor = int.Parse(arrStatusInFloor[5]);
-                            floor.NumDaDuTienCocInFloor = int.Parse(arrStatusInFloor[6]);
-                            floor.NumOptionInFloor = int.Parse(arrStatusInFloor[7]);
-                            floor.NumThanhToanDot1InFloor = int.Parse(arrStatusInFloor[8]);
-                            floor.NumSignedDAInFloor = int.Parse(arrStatusInFloor[9]);
-                            floor.NumQualifiedInFloor = int.Parse(arrStatusInFloor[10]);
-                            floor.NumDaBanInFloor = int.Parse(arrStatusInFloor[11]);
-                            floor.TotalUnitInFloor = int.Parse(newFloor.sumQty);
-                        }
-                    }
-                }
-            }
-        }
-
-        public async Task LoadTotalDirectSale2()
-        {
-            CreateFilterXml();
-            string linkentityOwner = Filter.isOwner ? $@"<link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='giucho' />
+                CreateFilterXml();
+                string linkentityOwner = Filter.isOwner ? $@"<link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='giucho' />
                                                         <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='outer' alias='hopdong' />
                                                         <link-entity name='quote' from='bsd_unitno' to='productid' link-type='outer' alias='btg' />" : "";
 
-            string groupbyOwner = Filter.isOwner ? $@"<attribute name='name' groupby='true' alias='group_unit_id'/>" : "";
+                string groupbyOwner = Filter.isOwner ? $@"<attribute name='name' groupby='true' alias='group_unit_id'/>" : "";
 
-            string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
+                string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
                                                                                     <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
                                                                                         <filter type='and'>
                                                                                             <condition attribute='statuscode' operator='eq' value='100000000' />
@@ -549,7 +495,7 @@ namespace PhuLongCRM.ViewModels
                                                                                     </link-entity>
                                                                                 </link-entity>" : "";
 
-            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                     <entity name='product'>
                                         <attribute name='statuscode' groupby='true' alias='group_sts'/>
                                         <attribute name='productid' aggregate='count' alias='count'/>
@@ -569,64 +515,168 @@ namespace PhuLongCRM.ViewModels
                                         {isEvent}
                                     </entity>
                                 </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DirectSaleFetchModel>>("products", fetchXml);
-            if (result == null || result.value.Any() == false) return;
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DirectSaleFetchModel>>("products", fetchXml);
+                if (result == null || result.value.Any() == false) return;
 
-            var data = result.value;
+                var data = result.value;
 
-            if(Filter.isOwner)
-            {
-                foreach(var item in data)
+                if (Filter.isOwner)
                 {
-                    item.count = 1;
-                }    
-            }    
-
-            var blocks = from item in data group item by item.group_block_name into g orderby g.Key select g ;
-            foreach (var block in blocks)
-            {
-                Block b = new Block();
-                b.bsd_blockid = Guid.Parse(block.FirstOrDefault().group_block_id);
-                b.bsd_name = "Block " + block.Key;
-                b.TotalUnitInBlock = block.Sum(u => u.count);
-
-                b.NumChuanBiInBlock = (from item in block group item by item.group_sts into g where g.Key == "1" select g.Sum(u=>u.count)).FirstOrDefault();
-                b.NumSanSangInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumBookingInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumGiuChoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumDatCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumDongYChuyenCoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumDaDuTienCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumOptionInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumThanhToanDot1InBlock = (from item in block group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumSignedDAInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumQualifiedInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
-                b.NumDaBanInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
-
-                var floors = from item in block group item by item.group_floor_name into g orderby g.Key select g;
-                foreach(var floor in floors)
-                {
-                    Floor f = new Floor();
-                    f.bsd_floorid = Guid.Parse(floor.FirstOrDefault().group_floor_id);
-                    f.bsd_name = floor.Key;
-                    f.TotalUnitInFloor = floor.Sum(u => u.count);
-
-                    f.NumChuanBiInFloor = (from item in floor group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumSanSangInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumBookingInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumGiuChoInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumDatCocInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumDongYChuyenCoInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumDaDuTienCocInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumOptionInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumThanhToanDot1InFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumSignedDAInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumQualifiedInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
-                    f.NumDaBanInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
-                    b.Floors.Add(f);
+                    foreach (var item in data)
+                    {
+                        item.count = 1;
+                    }
                 }
-                Blocks.Add(b);
-            }    
+
+                var blocks = from item in data group item by item.group_block_name into g orderby g.Key select g;
+                if (blocks != null && blocks.ToList().Count > 0)
+                {
+                    var block = blocks.SingleOrDefault(x => x.Key == Block.bsd_name.Replace("Block ", ""));
+
+                    if (block != null)
+                    {
+                        Block.NumChuanBiInBlock = (from item in block group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumSanSangInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumBookingInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumGiuChoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumDatCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumDongYChuyenCoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumDaDuTienCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumOptionInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumThanhToanDot1InBlock = (from item in block group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumSignedDAInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumQualifiedInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumDaBanInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
+
+                        var floors = from item in block group item by item.group_floor_name into g orderby g.Key select g;
+                        var f = floors.SingleOrDefault(x => x.Key == floor.bsd_name);
+                        if (f != null)
+                        {
+                            floor.NumChuanBiInFloor = (from item in f group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumSanSangInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumBookingInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumGiuChoInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumDatCocInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumDongYChuyenCoInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumDaDuTienCocInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumOptionInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumThanhToanDot1InFloor = (from item in f group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumSignedDAInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumQualifiedInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumDaBanInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        public async Task LoadTotalDirectSale2()
+        {
+            try
+            {
+                CreateFilterXml();
+                string linkentityOwner = Filter.isOwner ? $@"<link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='giucho' />
+                                                        <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='outer' alias='hopdong' />
+                                                        <link-entity name='quote' from='bsd_unitno' to='productid' link-type='outer' alias='btg' />" : "";
+
+                string groupbyOwner = Filter.isOwner ? $@"<attribute name='name' groupby='true' alias='group_unit_id'/>" : "";
+
+                string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
+                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
+                                                                                        <filter type='and'>
+                                                                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
+                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                                                                        </filter>
+                                                                                    </link-entity>
+                                                                                </link-entity>" : "";
+
+                string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                    <entity name='product'>
+                                        <attribute name='statuscode' groupby='true' alias='group_sts'/>
+                                        <attribute name='productid' aggregate='count' alias='count'/>
+                                        <attribute name='bsd_blocknumber' groupby='true' alias='group_block_id'/>
+                                        <attribute name='bsd_floor' groupby='true' alias='group_floor_id'/>
+                                        {groupbyOwner}
+                                        <filter type='and'>
+                                            {FilterXml}
+                                        </filter>
+	                                    <link-entity name='bsd_block' from='bsd_blockid' to='bsd_blocknumber' link-type='inner' alias='aa'>
+                                            <attribute name='bsd_name' groupby='true' alias='group_block_name'/>
+                                        </link-entity>
+                                        <link-entity name='bsd_floor' from='bsd_floorid' to='bsd_floor' link-type='inner' alias='ab'>
+                                            <attribute name='bsd_floor' groupby='true' alias='group_floor_name'/>
+                                        </link-entity>
+                                        {linkentityOwner}
+                                        {isEvent}
+                                    </entity>
+                                </fetch>";
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DirectSaleFetchModel>>("products", fetchXml);
+                if (result == null || result.value.Any() == false) return;
+
+                var data = result.value;
+
+                if (Filter.isOwner)
+                {
+                    foreach (var item in data)
+                    {
+                        item.count = 1;
+                    }
+                }
+
+                var blocks = from item in data group item by item.group_block_name into g orderby g.Key select g;
+                foreach (var block in blocks)
+                {
+                    Block b = new Block();
+                    b.bsd_blockid = Guid.Parse(block.FirstOrDefault().group_block_id);
+                    b.bsd_name = "Block " + block.Key;
+                    b.TotalUnitInBlock = block.Sum(u => u.count);
+
+                    b.NumChuanBiInBlock = (from item in block group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumSanSangInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumBookingInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumGiuChoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumDatCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumDongYChuyenCoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumDaDuTienCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumOptionInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumThanhToanDot1InBlock = (from item in block group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumSignedDAInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumQualifiedInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumDaBanInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
+
+                    var floors = from item in block group item by item.group_floor_name into g orderby g.Key select g;
+                    foreach (var floor in floors)
+                    {
+                        Floor f = new Floor();
+                        f.bsd_floorid = Guid.Parse(floor.FirstOrDefault().group_floor_id);
+                        f.bsd_name = floor.Key;
+                        f.TotalUnitInFloor = floor.Sum(u => u.count);
+
+                        f.NumChuanBiInFloor = (from item in floor group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumSanSangInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumBookingInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumGiuChoInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumDatCocInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumDongYChuyenCoInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumDaDuTienCocInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumOptionInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumThanhToanDot1InFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumSignedDAInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumQualifiedInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumDaBanInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
+                        b.Floors.Add(f);
+                    }
+                    Blocks.Add(b);
+                }
+            }catch(Exception ex)
+            {
+
+            }
         }
     }
     public class DirectSaleFetchModel

@@ -26,6 +26,7 @@ namespace PhuLongCRM.ViewModels
                 string filter_subject = string.Empty;
                 string filter_customercode = string.Empty;
                 string sort = string.Empty;
+                string filter_allocation = string.Empty;
                 if (!string.IsNullOrWhiteSpace(Keyword))
                 {
                     filter_name = $@"<condition attribute='lastname' operator='like' value='%25{Keyword}%25' />";
@@ -66,9 +67,9 @@ namespace PhuLongCRM.ViewModels
                     else if (KeySort == "3")
                     {
                         if (Allocation_sort)
-                            sort = $"<order attribute='bsd_allocation' descending='true' />";
+                            filter_allocation = $"<condition attribute='bsd_allocation' operator='eq' value='1' />";
                         else
-                            sort = $"<order attribute='bsd_allocation' descending='false' />";
+                            filter_allocation = $"<condition attribute='bsd_allocation' operator='eq' value='0' />";
                     }
                     else
                         sort = "<order attribute='createdon' descending='true' />";
@@ -92,6 +93,7 @@ namespace PhuLongCRM.ViewModels
                         {sort}
                         <filter type='and'>
                             {filter_sts}
+                            {filter_allocation}
                              <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                              <filter type='or'>
                                  '" + filter_name + @"'

@@ -83,6 +83,8 @@ namespace PhuLongCRM.ViewModels
         private List<OptionSet> _projects;
         public List<OptionSet> Projects { get => _projects; set { _projects = value; OnPropertyChanged(nameof(Projects)); } }
 
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
         public AccountDetailPageViewModel()
         {
             BusinessTypeOptions = new ObservableCollection<OptionSet>();

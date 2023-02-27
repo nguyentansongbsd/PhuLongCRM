@@ -585,18 +585,24 @@ namespace PhuLongCRM.Views
 
         private async void PopupUnit_Close(object sender, EventArgs e)
         {
-            if (RefreshDirectSale == true)
+            try
             {
-                if (viewModel.Block != null && viewModel.Block.Floors != null && viewModel.Block.Floors.Count != 0)
+                if (RefreshDirectSale == true)
                 {
-                    LoadingHelper.Show();
-                    var floor = viewModel.Block.Floors.SingleOrDefault(x => x.bsd_floorid == viewModel.Unit.floorid);
-                    floor.Units.Clear();
-                    await viewModel.LoadUnitByFloor(floor.bsd_floorid);
-                    await viewModel.UpdateTotalDirectSale(floor);
-                    LoadingHelper.Hide();
+                    if (viewModel.Block != null && viewModel.Block.Floors != null && viewModel.Block.Floors.Count != 0)
+                    {
+                        LoadingHelper.Show();
+                        var floor = viewModel.Block.Floors.SingleOrDefault(x => x.bsd_floorid == viewModel.Unit.floorid);
+                        floor.Units.Clear();
+                        await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                        await viewModel.UpdateTotalDirectSale(floor);
+                        LoadingHelper.Hide();
+                    }
+                    RefreshDirectSale = false;
                 }
-                RefreshDirectSale = false;
+            }catch(Exception ex)
+            {
+
             }
         }
 
@@ -623,41 +629,59 @@ namespace PhuLongCRM.Views
         private async void Owner_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            if (viewModel.Filter.isOwner)
+            try
             {
-                viewModel.Filter.Employee = null;
-                viewModel.Filter.isOwner = false;
-                menu_item.Text = "\uf007";
-            }
-            else
-            {
-                viewModel.Filter.Employee = UserLogged.Id.ToString();
-                viewModel.Filter.isOwner = true;
-                menu_item.Text = "\uf4fc";
-            }
-            viewModel.Blocks = new ObservableCollection<Block>();
-            NeedToRefreshDirectSale = false;
-            viewModel.CreateFilterXml();
-            await viewModel.LoadTotalDirectSale2();
-
-            if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
-            {
-                viewModel.Block = viewModel.Blocks[0];
-                if (viewModel.Block.Floors.Count != 0)
+                if (viewModel.Filter.isOwner)
                 {
-                    var floor = viewModel.Block.Floors[0];
-                    floor.iShow = true;
-                    await viewModel.LoadUnitByFloor(floor.bsd_floorid);
-                    AddToolTip();
-                    SetRealTimeData();
+                    viewModel.Filter.Employee = null;
+                    viewModel.Filter.isOwner = false;
+                    menu_item.Text = "\uf007";
                 }
+                else
+                {
+                    viewModel.Filter.Employee = UserLogged.Id.ToString();
+                    viewModel.Filter.isOwner = true;
+                    menu_item.Text = "\uf4fc";
+                }
+                viewModel.Blocks = new ObservableCollection<Block>();
+                NeedToRefreshDirectSale = false;
+                viewModel.CreateFilterXml();
+                await viewModel.LoadTotalDirectSale2();
+
+                if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
+                {
+                    viewModel.Block = viewModel.Blocks[0];
+                    if (viewModel.Block.Floors.Count != 0)
+                    {
+                        var floor = viewModel.Block.Floors[0];
+                        floor.iShow = true;
+                        await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                        AddToolTip();
+                        SetRealTimeData();
+                    }
+                    BindableLayout.SetItemsSource(stackBlocks, viewModel.Blocks);
+                    var rd = stackBlocks.Children[0] as RadBorder;
+                    var lb = rd.Content as Label;
+                    VisualStateManager.GoToState(rd, "Selected");
+                    VisualStateManager.GoToState(lb, "Selected");
+                    gridStatus.IsVisible = true;
+                    line_blue.IsVisible = true;
+                    lb_khong_co_du_lieu.IsVisible = false;
+                }
+                else
+                {
+                    BindableLayout.SetItemsSource(stackBlocks, viewModel.Blocks);
+                    viewModel.Block = new Block();
+                    gridStatus.IsVisible = false;
+                    line_blue.IsVisible = false;
+                    lb_khong_co_du_lieu.IsVisible = true;
+                }    
+                LoadingHelper.Hide();
             }
-            BindableLayout.SetItemsSource(stackBlocks, viewModel.Blocks);
-            var rd = stackBlocks.Children[0] as RadBorder;
-            var lb = rd.Content as Label;
-            VisualStateManager.GoToState(rd, "Selected");
-            VisualStateManager.GoToState(lb, "Selected");
-            LoadingHelper.Hide();
+            catch(Exception ex)
+            {
+
+            }
         }
     }
     public class QueuesControl : BsdListView

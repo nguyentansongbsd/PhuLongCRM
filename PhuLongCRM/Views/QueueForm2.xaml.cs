@@ -189,6 +189,7 @@ namespace PhuLongCRM.Views
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                 if (DirectSaleDetailTest.NeedToRefreshDirectSale.HasValue) DirectSaleDetailTest.NeedToRefreshDirectSale = true;
                 if (UnitInfo.NeedToRefreshQueue.HasValue) UnitInfo.NeedToRefreshQueue = true;
+                if (UnitInfo.NeedToRefresh.HasValue) UnitInfo.NeedToRefresh = true;
                 if (Dashboard.NeedToRefreshQueue.HasValue) Dashboard.NeedToRefreshQueue = true;
                 if (QueueList.NeedToRefresh.HasValue) QueueList.NeedToRefresh = true;
                 await Navigation.PopAsync();

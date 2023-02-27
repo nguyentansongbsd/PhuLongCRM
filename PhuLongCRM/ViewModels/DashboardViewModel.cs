@@ -776,6 +776,7 @@ namespace PhuLongCRM.ViewModels
             this.numKHMoi = 0;
             this.numKHDaChuyenDoi = 0;
             this.numKHKhongChuyenDoi = 0;
+            this.NumNotification = 0;
 
             await Task.WhenAll(
                  this.Load3Activity(),
@@ -786,24 +787,28 @@ namespace PhuLongCRM.ViewModels
                  this.LoadLeads(),
                  this.LoadCommissionTransactions(),
                  LoadActivityCount(),
-                 LoadNews()
+                 LoadNews(),
+                 CountNumNotification()
                 ); ;
         }
         public async Task CountNumNotification()
         {
-            var collection = firebase
-            .Child("Notifications")
-            .AsObservable<NotificaModel>()
-            .Subscribe(async (dbevent) =>
+            if (UserLogged.Notification == true)
             {
-                if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete)
+                var collection = firebase
+                .Child("Notifications")
+                .AsObservable<NotificaModel>()
+                .Subscribe(async (dbevent) =>
                 {
-                    if (dbevent.Object.IsRead == false)
+                    if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete)
                     {
-                        NumNotification++;
+                        if (dbevent.Object.IsRead == false)
+                        {
+                            NumNotification++;
+                        }
                     }
-                }
-            });
+                });
+            }
         }
         public async Task TimeOutLogin()
         {
@@ -816,6 +821,7 @@ namespace PhuLongCRM.ViewModels
                 UserLogged.IsTimeOut = true;
                 Device.BeginInvokeOnMainThread(async () =>
                 {
+                    await App.Current.MainPage.Navigation.PopToRootAsync();
                     await Shell.Current.GoToAsync("//LoginPage");
                 });
             });

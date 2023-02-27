@@ -8,7 +8,8 @@
        xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
        xmlns:ffimageTranformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
        xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-       xmlns:blankpage ="clr-namespace:PhuLongCRM"
+       xmlns:blankpage ="clr-namespace:PhuLongCRM" 
+       xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
        ios:Page.UseSafeArea="true"
        Shell.BackgroundColor="{StaticResource NavigationPrimary}"
        Shell.TabBarIsVisible="False"
@@ -17,7 +18,8 @@
        FlyoutBackgroundColor="{AppThemeBinding Light=#e8f5fe,Dark=#e8f5fe}"
        FlyoutBackdrop="#C0808080"
        ForegroundColor="White"
-       Title="PhuLongCRM" x:Class="PhuLongCRM.AppShell">
+       Title="PhuLongCRM" 
+       x:Class="PhuLongCRM.AppShell">
 
     <Shell.Resources>
         <ResourceDictionary>
@@ -36,10 +38,12 @@
     </Shell.MenuItemTemplate>
     <Shell.ItemTemplate>
         <DataTemplate>
-            <StackLayout Orientation="Horizontal" Padding="15,7" Spacing="15" >
-                <Image Source="{Binding Icon}" Margin="15,0,0,0" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="{Binding Icon, Converter={StaticResource NullToHideConverter}}"/>
-                <Label Text="{Binding Title}" TextColor="#135a92" FontSize="15" VerticalTextAlignment="Center" FontAttributes="{Binding Icon, Converter={StaticResource MenuItemGroupConverter}}"/>
-            </StackLayout>
+            <telerikPrimitives:RadBorder Style="{StaticResource CustomAppShellStyle}">
+                <StackLayout Orientation="Horizontal" Padding="15,7" Spacing="15">
+                    <Image Source="{Binding Icon}" Margin="20,0,0,0" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="{Binding Icon, Converter={StaticResource NullToHideConverter}}"/>
+                    <Label Text="{Binding Title}" TextColor="#135a92" FontSize="15" VerticalTextAlignment="Center" FontAttributes="{Binding Icon, Converter={StaticResource MenuItemGroupConverter}}"/>
+                </StackLayout>
+            </telerikPrimitives:RadBorder>
         </DataTemplate>
     </Shell.ItemTemplate>
     <Shell.FlyoutHeader>
@@ -69,6 +73,12 @@
                 </Label>
                 <Label Text="{Binding UserName}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontSize="14" TextColor="White" VerticalOptions="Start"/>
             </Grid>
+            <Grid VerticalOptions="Start" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,*">
+                <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="LightGreen" Grid.Column="0" Grid.Row="0">
+                    <Label Text="{x:Static lang:Language.dai_ly_appshell}" FontSize="14" TextColor="White" Margin="6,3"/>
+                </telerikPrimitives:RadBorder>
+                <Label Text="{Binding Agent}" Grid.Column="1" Grid.Row="0" FontSize="14" TextColor="#444444" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+            </Grid>
         </Grid>
         <!--<StackLayout BackgroundColor="White" HeightRequest="120">
             <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="0" HorizontalOptions="Start" Margin="18,34,18,18">
@@ -90,13 +100,12 @@
             <BoxView HeightRequest="1" BackgroundColor="LightGray"/>
         </StackLayout>-->
     </Shell.FlyoutHeader>
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="main">
-        <ShellContent x:Name="trangchu" Title="{x:Static lang:Language.trang_chu_title}" ContentTemplate="{DataTemplate views:Dashboard}">
-            <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf015;" Size="18"/>
-            </ShellContent.Icon>
-        </ShellContent>
-
+    <ShellContent x:Name="trangchu" Title="{x:Static lang:Language.trang_chu_title}" ContentTemplate="{DataTemplate views:Dashboard}">
+        <ShellContent.Icon>
+            <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf015;" Size="18"/>
+        </ShellContent.Icon>
+    </ShellContent>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" >
         <ShellContent x:Name="congviec" Title="{x:Static lang:Language.cong_viec_menu}" ContentTemplate="{DataTemplate views:CustomerPage}" IsEnabled="False"/>
         <ShellContent x:Name="khachhang" Title="{x:Static lang:Language.khach_hang_title}" ContentTemplate="{DataTemplate views:CustomerPage}">
             <ShellContent.Icon>
@@ -105,7 +114,7 @@
         </ShellContent>
         <ShellContent x:Name="duan" Title="{x:Static lang:Language.du_an_title}" ContentTemplate="{DataTemplate views:ProjectList}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf64f;" Size="18"/>
+                <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf1ad;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
         <ShellContent x:Name="giohang" Title="{x:Static lang:Language.gio_hang}" ContentTemplate="{DataTemplate views:DirectSale}">
@@ -113,34 +122,36 @@
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf07a;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        
+    </FlyoutItem>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent x:Name="giaodich" Title="{x:Static lang:Language.giao_dich_title}" IsEnabled="False" ContentTemplate="{DataTemplate views:QueueList}"/>
-        <ShellContent x:Name="giucho" Title="{x:Static lang:Language.giu_cho_title}" ContentTemplate="{DataTemplate views:QueueList}">
-            <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf02d;" Size="18"/>
-            </ShellContent.Icon>
+        <ShellContent x:Name="giucho" Title="{x:Static lang:Language.giu_cho_title}" ContentTemplate="{DataTemplate views:QueueList}" Icon="icons_bookmark.png">
+            <!--<ShellContent.Icon>
+                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xe0bb;" Size="18"/>
+            </ShellContent.Icon>-->
         </ShellContent>
-        <ShellContent x:Name="bangtinhgia" Title="{x:Static lang:Language.bang_tinh_gia_title}" ContentTemplate="{DataTemplate views:ReservationList}" >
-            <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf46d;" Size="18"/>
-            </ShellContent.Icon>
+        <ShellContent x:Name="bangtinhgia" Title="{x:Static lang:Language.bang_tinh_gia_title}" ContentTemplate="{DataTemplate views:ReservationList}" Icon="icons_currency.png" >
+            <!--<ShellContent.Icon>
+                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf4b9;" Size="18"/>
+            </ShellContent.Icon>-->
         </ShellContent>
         <ShellContent x:Name="datcoc" Title="{x:Static lang:Language.dat_coc_title}" ContentTemplate="{DataTemplate views:DatCocList}" >
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf46d;" Size="18"/>
+                <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf044;" Size="16"/>
             </ShellContent.Icon>
         </ShellContent>
         <ShellContent x:Name="hopdong" Title="{x:Static lang:Language.hop_dong_title}" ContentTemplate="{DataTemplate views:ContractList}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf15b;" Size="18"/>
+                <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf15c;" Size="20"/>
             </ShellContent.Icon>
         </ShellContent>
-        
+    </FlyoutItem>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent x:Name="chamsockhachhang" Title="{x:Static lang:Language.cham_soc_khach_hang_title}" ContentTemplate="{DataTemplate views:ActivityList}" IsEnabled="False"/>
-        <ShellContent x:Name="hoatdong" Title="{x:Static lang:Language.hoat_dong}" Route="HoatDong" ContentTemplate="{DataTemplate views:ActivityList}">
-            <ShellContent.Icon>
+        <ShellContent x:Name="hoatdong" Title="{x:Static lang:Language.hoat_dong}" Route="HoatDong" ContentTemplate="{DataTemplate views:ActivityList}" Icon="icons_goal.png">
+            <!--<ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf0ae;" Size="18"/>
-            </ShellContent.Icon>
+            </ShellContent.Icon>-->
         </ShellContent>
         <ShellContent x:Name="phanhoi" Title="{x:Static lang:Language.phan_hoi_title}" ContentTemplate="{DataTemplate views:ListPhanHoi}">
             <ShellContent.Icon>
@@ -152,16 +163,17 @@
                 <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf0ca;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
-        
+    </FlyoutItem>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent x:Name="tinhnang" Title="{x:Static lang:Language.tinh_nang_title}" IsEnabled="False" ContentTemplate="{DataTemplate views:LichLamViec}"/>
         <ShellContent x:Name="lichlamviec" Title="{x:Static lang:Language.lich_lam_viec}" ContentTemplate="{DataTemplate views:LichLamViec}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf073;" Size="18"/>
+                <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf133;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
         <ShellContent x:Name="dongbodanhba" Title="{x:Static lang:Language.dong_bo_danh_ba}" ContentTemplate="{DataTemplate views:DanhBa}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf2c1;" Size="18"/>
+                <FontImageSource FontFamily="FontAwesomeRegular" Color="#135a92" Glyph="&#xf2b9;" Size="18"/>
             </ShellContent.Icon>
         </ShellContent>
         <!--<ShellContent Title="{x:Static lang:Language.danh_gia_title}" ContentTemplate="{DataTemplate views:LichLamViec}">
@@ -176,15 +188,23 @@
         </ShellContent>
     </FlyoutItem>
 
-    <MenuItem x:Name="dangxuat" Text="{x:Static lang:Language.dang_xuat}" Clicked="Logout_Clicked">
+    <!--<MenuItem x:Name="dangxuat" Text="{x:Static lang:Language.dang_xuat}" Clicked="Logout_Clicked">
         <MenuItem.IconImageSource>
             <FontImageSource FontFamily="FontAwesomeSolid" Color="#135a92" Glyph="&#xf2f5;" Size="18"/>
         </MenuItem.IconImageSource>
-    </MenuItem>
+    </MenuItem>-->
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:Login}" />
     </TabBar>
     <Shell.FlyoutFooter>
-        <Label Text="{Binding VerApp}" TextColor="#135a92" FontSize="15" Padding="20,16,10,16"/>
+        <Grid ColumnDefinitions="*,Auto">
+            <Label Text="{Binding VerApp}" TextColor="#135a92" FontSize="15" Padding="20,16,10,16" LineBreakMode="TailTruncation" VerticalOptions="Center" Grid.Column="0"/>
+            <telerikPrimitives:RadBorder CornerRadius="20" BackgroundColor="#57AFE2" HeightRequest="35" WidthRequest="35" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Margin="0,0,20,0">
+                <telerikPrimitives:RadBorder.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Logout_Tapped"/>
+                </telerikPrimitives:RadBorder.GestureRecognizers>
+                <Label Text="&#xf2f5;" FontFamily="FontAwesomeSolid" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+            </telerikPrimitives:RadBorder>
+        </Grid>
     </Shell.FlyoutFooter>
 </Shell>

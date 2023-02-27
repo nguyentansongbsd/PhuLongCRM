@@ -440,7 +440,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else if (IsSuccess == 3)
+                    else if (IsSuccess == 3 || IsSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
@@ -465,7 +465,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else if(IsSuccess == 3)
+                    else if(IsSuccess == 3 || IsSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
@@ -609,7 +609,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else if (OnCompleted == 3)
+                    else if (OnCompleted == 3 || OnCompleted == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -709,6 +709,33 @@ namespace PhuLongCRM.Views
         private void Province_SelectedItemChange(object sender, LookUpChangeEvent e)
         {
              btn_nhucaudiadiem.IsVisible = true;
+        }
+
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            viewModel.IsRefreshing = true;
+            LoadingHelper.Show();
+            await viewModel.LoadOneLead(Id.ToString());
+            await viewModel.LoadDuplicate();
+            await viewModel.LoadProvince();
+            if (!string.IsNullOrWhiteSpace(viewModel.Duplicate))
+                TooltipEffect.SetText(lb_duplicate, viewModel.Duplicate);
+            else
+                lb_duplicate.IsVisible = false;
+
+            SetButtonFloatingButton(viewModel.singleLead);
+            btn_nhaucaudientich.IsVisible = false;
+            btn_tieuchichonmua.IsVisible = false;
+            btn_loaibdsquantam.IsVisible = false;
+
+            if (viewModel.Cares != null)
+            {
+                viewModel.Cares.Clear();
+                await viewModel.LoadCase();
+            }
+            LoadDataPhongThuy();
+            viewModel.IsRefreshing = false;
+            LoadingHelper.Hide();
         }
 
         //private void Project_SelectedItemChange(object sender, LookUpChangeEvent e)

@@ -13,6 +13,7 @@ using PhuLongCRM.Resources;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net;
+using System.Windows.Input;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -68,6 +69,9 @@ namespace PhuLongCRM.ViewModels
         public List<OptionSet> Provinces { get => _provinces; set { _provinces = value; OnPropertyChanged(nameof(Provinces)); } }
 
         private List<OptionSet> ProvincesForDetele { get; set; } = new List<OptionSet>();
+
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }       
 
         public LeadDetailPageViewModel()
         {

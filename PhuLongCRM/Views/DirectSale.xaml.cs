@@ -211,7 +211,7 @@ namespace PhuLongCRM.Views
         private void Clear_Clicked(object sender, EventArgs e)
         {
             viewModel.Project = null;
-           viewModel.PhasesLaunch = null;
+            viewModel.PhasesLaunch = null;
             viewModel.IsEvent = false;
             viewModel.UnitCode = null;
             viewModel.SelectedDirections = null;

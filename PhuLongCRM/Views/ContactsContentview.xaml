@@ -41,7 +41,7 @@
                             </telerikPrimitives:RadBorder.GestureRecognizers>
                         </telerikPrimitives:RadBorder>
                     <telerikPrimitives:RadBorder x:Name="rb_nguoiUyQuyen" Grid.Column="2" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
-                        <Label x:Name="lb_nguoiUyQuyen" Text="{x:Static lang:Language.nguoi_uy_quyen}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="lb_nguoiUyQuyen" Text="{x:Static lang:Language.uy_quyen_filter}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center"/>
                             <telerikPrimitives:RadBorder.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CustumerType_Tapped" CommandParameter="100000002"/>
                             </telerikPrimitives:RadBorder.GestureRecognizers>

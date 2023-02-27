@@ -217,7 +217,7 @@
     <value>Unable to edit information Imei</value>
   </data>
 	<data name="chua_co_contact_khong_the_chinh_sua_thong_tin" xml:space="preserve">
-    <value>No contact, can't edit info.</value>
+    <value>No contact information available, can't edit info.</value>
   </data>
 	<data name="nhan_de_chinh_sua" xml:space="preserve">
     <value>Click to edit</value>
@@ -3821,5 +3821,14 @@
   </data>
 	<data name="thong_bao" xml:space="preserve">
     <value>Notification</value>
+  </data>
+	<data name="dai_ly_appshell" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+	<data name="uy_quyen_filter" xml:space="preserve">
+    <value>Mandatory Secondary</value>
+  </data>
+	<data name="tai_khoan_khong_co_hieu_luc" xml:space="preserve">
+    <value>Account is inactive.</value>
   </data>
 </root>

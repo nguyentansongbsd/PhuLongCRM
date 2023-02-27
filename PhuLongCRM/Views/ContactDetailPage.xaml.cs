@@ -469,7 +469,7 @@ namespace PhuLongCRM.Views
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else if(OnCompleted == 3)
+                    else if(OnCompleted == 3 || OnCompleted == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -775,6 +775,54 @@ namespace PhuLongCRM.Views
                 }
                 LoadingHelper.Hide();
             }
+        }
+
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            viewModel.IsRefreshing = true;
+                await viewModel.loadOneContact(viewModel.singleContact.contactid.ToString());
+                if (viewModel.singleContact?.gendercode != null)
+                {
+                    viewModel.singleGender = ContactGender.GetGenderById(viewModel.singleContact.gendercode);
+                }
+                if (viewModel.singleContact?.bsd_localization != null)
+                {
+                    viewModel.SingleLocalization = AccountLocalization.GetLocalizationById(viewModel.singleContact.bsd_localization);
+                }
+                else
+                {
+                    viewModel.SingleLocalization = null;
+                }
+            
+            if (viewModel.list_danhsachdatcho != null && viewModel.list_danhsachdatcho.Count > 0)
+            {
+                viewModel.list_danhsachdatcho.Clear();
+                viewModel.PageDanhSachDatCho = 1;
+                await viewModel.LoadQueuesForContactForm(viewModel.singleContact.contactid.ToString());
+            }
+            if (viewModel.list_danhsachdatcoc != null && viewModel.list_danhsachdatcoc.Count > 0)
+            {
+                viewModel.list_danhsachdatcoc.Clear();
+                viewModel.PageDanhSachDatCoc = 1;
+                await viewModel.LoadReservationForContactForm(viewModel.singleContact.contactid.ToString());
+            }
+            if (viewModel.list_danhsachhopdong != null && viewModel.list_danhsachhopdong.Count > 0)
+            {
+                viewModel.list_danhsachhopdong.Clear();
+                viewModel.PageDanhSachHopDong = 1;
+                await viewModel.LoadOptoinEntryForContactForm(viewModel.singleContact.contactid.ToString());
+            }
+            if (viewModel.Cares != null && viewModel.Cares.Count > 0)
+            {
+                viewModel.Cares.Clear();
+                viewModel.PageCase = 1;
+                await viewModel.LoadCase();
+            }
+            viewModel.IsRefreshing = false;
+            viewModel.PhongThuy = null;
+            LoadDataPhongThuy();
+            LoadingHelper.Hide();
         }
     }
 }
