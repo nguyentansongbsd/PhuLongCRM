@@ -57,5 +57,6 @@ namespace PhuLongCRM.Models
 
         private bool _iShow;
         public bool iShow { get => _iShow; set { _iShow = value; OnPropertyChanged(nameof(iShow)); } }
+        public int floor_number { get; set; }
     }
 }

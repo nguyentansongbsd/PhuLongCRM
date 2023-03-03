@@ -481,7 +481,9 @@ namespace PhuLongCRM.ViewModels
         }
         public async Task LoadDuplicate()
         {
-            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            if (singleLead != null && singleLead.statuscode != "3")
+            {
+                string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                           <entity name='lead'>
                             <attribute name='mobilephone'/>
                             <attribute name='emailaddress1'/>
@@ -506,26 +508,26 @@ namespace PhuLongCRM.ViewModels
                             </filter>
                           </entity>
                         </fetch>";
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
-            if (result != null && result.value.Count > 0)
-            {
-                List<string> duplicates = new List<string>();
-                var data = result.value.FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(data.mobilephone) && data.mobilephone == singleLead.mobilephone)
-                    duplicates.Add(Language.so_dien_thoai);
-                if (!string.IsNullOrWhiteSpace(data.emailaddress1) && data.emailaddress1 == singleLead.emailaddress1)
-                    duplicates.Add(Language.email);
-                if (!string.IsNullOrWhiteSpace(data.bsd_identitycardnumberid) && data.bsd_identitycardnumberid == singleLead.bsd_identitycardnumberid)
-                    duplicates.Add(Language.so_id);
-                Duplicate = string.Join(", ", duplicates);
-                if (UserLogged.Language == "en")
-                    Duplicate += " already exists.";
-                else
-                    Duplicate += " đã tồn tại.";
-            }
-            if(string.IsNullOrWhiteSpace(Duplicate))
-            {
-                string fetchcontact = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<LeadFormModel>>("leads", fetch);
+                if (result != null && result.value.Count > 0)
+                {
+                    List<string> duplicates = new List<string>();
+                    var data = result.value.FirstOrDefault();
+                    if (!string.IsNullOrWhiteSpace(data.mobilephone) && data.mobilephone == singleLead.mobilephone)
+                        duplicates.Add(Language.so_dien_thoai);
+                    if (!string.IsNullOrWhiteSpace(data.emailaddress1) && data.emailaddress1 == singleLead.emailaddress1)
+                        duplicates.Add(Language.email);
+                    if (!string.IsNullOrWhiteSpace(data.bsd_identitycardnumberid) && data.bsd_identitycardnumberid == singleLead.bsd_identitycardnumberid)
+                        duplicates.Add(Language.so_id);
+                    Duplicate = string.Join(", ", duplicates);
+                    if (UserLogged.Language == "en")
+                        Duplicate += " already exists.";
+                    else
+                        Duplicate += " đã tồn tại.";
+                }
+                if (string.IsNullOrWhiteSpace(Duplicate))
+                {
+                    string fetchcontact = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                         <entity name='contact'>
                                             <attribute name='fullname' />
                                             <filter type='or'>
@@ -535,15 +537,16 @@ namespace PhuLongCRM.ViewModels
                                             </filter>
                                         </entity>
                                     </fetch>";
-                var resultcontact = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetchcontact);
-                if (resultcontact != null && resultcontact.value.Count > 0)
-                {
-                    if (UserLogged.Language == "en")
-                        Duplicate = Language.so_id + " already exists.";
-                    else
-                        Duplicate = Language.so_id + " đã tồn tại.";
+                    var resultcontact = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetchcontact);
+                    if (resultcontact != null && resultcontact.value.Count > 0)
+                    {
+                        if (UserLogged.Language == "en")
+                            Duplicate = Language.so_id + " already exists.";
+                        else
+                            Duplicate = Language.so_id + " đã tồn tại.";
+                    }
                 }
-            } 
+            }
         }
         public async Task<CrmApiResponse> updateNhuCauDienTich()
         {

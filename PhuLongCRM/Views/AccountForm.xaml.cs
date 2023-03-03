@@ -212,9 +212,9 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_giay_phep_kinh_doanh);
                 return;
             }
-            if (!StringFormatHelper.CheckValueID(viewModel.singleAccount.bsd_registrationcode, 13))
+            if (!StringFormatHelper.CheckValueID(viewModel.singleAccount.bsd_registrationcode, 10))
             {
-                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_13_ky_tu);
+                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
                 return;
             }
             if (!await viewModel.Check_form_keydata(null, viewModel.singleAccount.bsd_registrationcode, viewModel.singleAccount.accountid.ToString()))
@@ -326,9 +326,9 @@ namespace PhuLongCRM.Views
 
         private void so_gpkd_Unfocused(object sender, FocusEventArgs e)
         {
-            if (!StringFormatHelper.CheckValueID(viewModel.singleAccount.bsd_registrationcode, 13))
+            if (!StringFormatHelper.CheckValueID(viewModel.singleAccount.bsd_registrationcode, 10))
             {
-                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_13_ky_tu);
+                ToastMessageHelper.ShortMessage(Language.so_gpkd_khong_hop_le_gom_10_ky_tu);
                 return;
             }
         }

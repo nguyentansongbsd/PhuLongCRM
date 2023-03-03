@@ -3372,8 +3372,8 @@
 	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
 		<value>Tình trạng phí lãi suất</value>
 	</data>
-	<data name="so_gpkd_khong_hop_le_gom_13_ky_tu" xml:space="preserve">
-		<value>Số giấy phép kinh doanh không hợp lệ (Gồm 13 ký tự).</value>
+	<data name="so_gpkd_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
+		<value>Số giấy phép kinh doanh không hợp lệ (Gồm 10 ký tự).</value>
 	</data>
 	<data name="tien_dat_coc_ful" xml:space="preserve">
 		<value>Tiền đặt cọc</value>
@@ -3836,5 +3836,14 @@
   </data>
 	<data name="tai_khoan_khong_co_hieu_luc" xml:space="preserve">
     <value>Tài khoản không có hiệu lực.</value>
+  </data>
+	<data name="khach_hang_da_co_nguoi_bao_ho_khong_the_chuyen_doi" xml:space="preserve">
+    <value>Khách hàng đã có người bảo hộ. Không thể chuyển đổi.</value>
+  </data>
+	<data name="chuyen_doi_tu" xml:space="preserve">
+    <value>Chuyển đổi từ</value>
+  </data>
+	<data name="giay_phep_kinh_doanh_bi_thieu_chi_chuyen_doi_khach_hang_ca_nhan" xml:space="preserve">
+    <value>Giấy phép kinh doanh bị thiếu. Chỉ chuyển đổi khách hàng cá nhân.</value>
   </data>
 </root>

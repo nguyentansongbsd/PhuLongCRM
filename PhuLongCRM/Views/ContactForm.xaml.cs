@@ -141,6 +141,12 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (!PhoneNumberFormatVNHelper.CheckValidate(phone))
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                return;
+            }
+
             if (viewModel.singleGender == null || viewModel.singleGender.Val == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_gioi_tinh);
@@ -532,6 +538,10 @@ namespace PhuLongCRM.Views
                 if (phone.Length != 10)
                 {
                     ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
+                if (!PhoneNumberFormatVNHelper.CheckValidate(phone))
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 }
             }
         }

@@ -1897,6 +1897,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chuyển đổi từ.
+        /// </summary>
+        internal static string chuyen_doi_tu {
+            get {
+                return ResourceManager.GetString("chuyen_doi_tu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chuyển liên hệ thành khách hàng tiềm năng?.
         /// </summary>
         internal static string chuyen_lien_he_thanh_khach_hang_tiem_nang {
@@ -3976,6 +3985,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Giấy phép kinh doanh bị thiếu. Chỉ chuyển đổi khách hàng cá nhân..
+        /// </summary>
+        internal static string giay_phep_kinh_doanh_bi_thieu_chi_chuyen_doi_khach_hang_ca_nhan {
+            get {
+                return ResourceManager.GetString("giay_phep_kinh_doanh_bi_thieu_chi_chuyen_doi_khach_hang_ca_nhan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giỏ Hàng.
         /// </summary>
         internal static string gio_hang {
@@ -4710,6 +4728,15 @@ namespace PhuLongCRM.Resources {
         internal static string khach_hang_cu_da_mua_gioi_thieu {
             get {
                 return ResourceManager.GetString("khach_hang_cu_da_mua_gioi_thieu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khách hàng đã có người bảo hộ. Không thể chuyển đổi..
+        /// </summary>
+        internal static string khach_hang_da_co_nguoi_bao_ho_khong_the_chuyen_doi {
+            get {
+                return ResourceManager.GetString("khach_hang_da_co_nguoi_bao_ho_khong_the_chuyen_doi", resourceCulture);
             }
         }
         
@@ -8099,11 +8126,11 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Số giấy phép kinh doanh không hợp lệ (Gồm 13 ký tự)..
+        ///   Looks up a localized string similar to Số giấy phép kinh doanh không hợp lệ (Gồm 10 ký tự)..
         /// </summary>
-        internal static string so_gpkd_khong_hop_le_gom_13_ky_tu {
+        internal static string so_gpkd_khong_hop_le_gom_10_ky_tu {
             get {
-                return ResourceManager.GetString("so_gpkd_khong_hop_le_gom_13_ky_tu", resourceCulture);
+                return ResourceManager.GetString("so_gpkd_khong_hop_le_gom_10_ky_tu", resourceCulture);
             }
         }
         

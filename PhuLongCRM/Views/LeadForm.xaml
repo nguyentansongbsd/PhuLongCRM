@@ -61,8 +61,11 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.gioi_tinh}"/>
                                 <controls:LookUp x:Name="lookUpGioiTinh" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
 
+                                <!--<controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"  ShowTime="False"/>-->
+
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
-                                <controls:DatePickerBoderControl Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"  ShowTime="False"/>
+                                <controls:DatePickerBorder Date="{Binding singleLead.new_birthday}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}"/>
                                 <controls:LookUp x:Name="lookUpHasGuardian" Placeholder="{x:Static lang:Language.chon_gia_tri}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding HasGuardian}" ItemsSource="{Binding HasGuardians}" SelectedItemChange="lookUpHasGuardian_SelectedItemChange"/>

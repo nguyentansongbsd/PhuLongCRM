@@ -721,6 +721,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_priority' />
                                     <attribute name='bsd_type' />
                                     <attribute name='bsd_thumnail' />
+                                    <attribute name='bsd_image' />
                                     <order attribute='bsd_name' descending='false' />
                                     <link-entity name='bsd_promotion' from='bsd_promotionid' to='bsd_promotion' link-type='outer' alias='ac'>
                                         <attribute name='bsd_name' alias='promotion_name'/>
@@ -747,6 +748,7 @@ namespace PhuLongCRM.ViewModels
                     if (item.bsd_type == "0")
                     {
                         news.Add(item);
+                        await GetImages(item);
                     }
                     else if (item.bsd_type == "1")
                     {
@@ -826,6 +828,26 @@ namespace PhuLongCRM.ViewModels
                 });
             });
                 t.Start();
+            }
+        }
+        private async Task GetImages(NewsModel data)
+        {
+            var result = await LoadFiles<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ProjectID}/items/{data.bsd_image}/driveItem/thumbnails");
+            if (result != null)
+            {
+                data.image = result.value.SingleOrDefault().large.url;
+            }
+        }
+        private async static Task<T> LoadFiles<T>(string url) where T : class
+        {
+            var result = await CrmHelper.RetrieveImagesSharePoint<T>(url);
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                return null;
             }
         }
     }
