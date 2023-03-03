@@ -67,7 +67,6 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>Apple Distribution: BUSINESS SOFTWARE DEVELOPMENT SOLUTIONS COMPANY LIMITED (F9S643CM8L)</CodesignKey>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignProvision>PhuLong Production Profile</CodesignProvision>
     <MtouchLink>SdkOnly</MtouchLink>
   </PropertyGroup>
