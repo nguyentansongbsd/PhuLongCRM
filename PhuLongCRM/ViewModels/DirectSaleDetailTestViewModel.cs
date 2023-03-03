@@ -610,6 +610,7 @@ namespace PhuLongCRM.ViewModels
                                         </link-entity>
                                         <link-entity name='bsd_floor' from='bsd_floorid' to='bsd_floor' link-type='inner' alias='ab'>
                                             <attribute name='bsd_floor' groupby='true' alias='group_floor_name'/>
+<attribute name='bsd_floornumber' groupby='true' alias='group_floor_number'/>
                                         </link-entity>
                                         {linkentityOwner}
                                         {isEvent}
@@ -656,6 +657,7 @@ namespace PhuLongCRM.ViewModels
                         f.bsd_floorid = Guid.Parse(floor.FirstOrDefault().group_floor_id);
                         f.bsd_name = floor.Key;
                         f.TotalUnitInFloor = floor.Sum(u => u.count);
+                        f.floor_number = int.Parse(floor.FirstOrDefault().group_floor_number);
 
                         f.NumChuanBiInFloor = (from item in floor group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
                         f.NumSanSangInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
@@ -671,6 +673,15 @@ namespace PhuLongCRM.ViewModels
                         f.NumDaBanInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
                         b.Floors.Add(f);
                     }
+                    if(b.Floors != null && b.Floors.Count > 0)
+                    {
+                        var f = b.Floors.OrderBy(x => x.floor_number).ToList();
+                        b.Floors.Clear();
+                        foreach (var item in f)
+                        {
+                            b.Floors.Add(item);
+                        }
+                    }    
                     Blocks.Add(b);
                 }
             }catch(Exception ex)
@@ -686,6 +697,7 @@ namespace PhuLongCRM.ViewModels
         public string group_block_name { get; set; }
         public string group_floor_id { get; set; }
         public string group_floor_name { get; set; }
+        public string group_floor_number { get; set; }
         public int count { get; set; }
         public string group_unit_id { get; set; }
     }

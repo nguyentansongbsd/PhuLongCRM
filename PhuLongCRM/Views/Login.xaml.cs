@@ -313,12 +313,18 @@ namespace PhuLongCRM.Views
                         ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
                     }
                 }
+                else
+                {
+                    ToastMessageHelper.ShortMessage(Language.loi_ket_noi_dern_server);
+                    LoadingHelper.Hide();
+                }    
             }
             catch (Exception ex)
             {
                 LoadingHelper.Hide();
                 await DisplayAlert(Language.thong_bao, $"{Language.loi_ket_noi_dern_server} \n" + ex.Message, Language.dong);
             }
+            LoadingHelper.Hide();
         }
 
         public async Task<EmployeeModel> LoginUser()

@@ -155,64 +155,88 @@ namespace PhuLongCRM.Views
         private async void LeadQualify(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            if(!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode))
+            if (viewModel.singleLead != null && viewModel.singleLead.bsd_hasguardian == false)
             {
-                if (string.IsNullOrWhiteSpace(viewModel.singleLead.companyname))
+                if (!string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_registrationcode))
                 {
-                    string[] options = new string[] { Language.cap_nhat, Language.chuyen_doi_khach_hang }; //, Language.khach_hang_ca_nhan_option
-                    string asw = await DisplayActionSheet(Language.ban_co_muon_nhap_ten_cong_ty, Language.huy, null, options);
-                    if (asw == Language.cap_nhat)
+                    if (string.IsNullOrWhiteSpace(viewModel.singleLead.companyname))
                     {
-                        LoadingHelper.Show();
-                        LeadForm leadForm = new LeadForm(viewModel.singleLead.leadid);
-                        leadForm.CheckSingleLead = async (IsSuccess) =>
+                        string[] options = new string[] { Language.cap_nhat, Language.chuyen_doi_khach_hang }; //, Language.khach_hang_ca_nhan_option
+                        string asw = await DisplayActionSheet(Language.ban_co_muon_nhap_ten_cong_ty, Language.huy, null, options);
+                        if (asw == Language.cap_nhat)
                         {
-                            if (IsSuccess)
+                            LoadingHelper.Show();
+                            LeadForm leadForm = new LeadForm(viewModel.singleLead.leadid);
+                            leadForm.CheckSingleLead = async (IsSuccess) =>
                             {
-                                await Navigation.PushAsync(leadForm);
-                                LoadingHelper.Hide();
-                                return;
-                            }
-                            else
-                            {
-                                LoadingHelper.Hide();
-                                ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
-                                return;
-                            }
-                        };
+                                if (IsSuccess)
+                                {
+                                    await Navigation.PushAsync(leadForm);
+                                    LoadingHelper.Hide();
+                                    return;
+                                }
+                                else
+                                {
+                                    LoadingHelper.Hide();
+                                    ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                                    return;
+                                }
+                            };
+                        }
+                        else if (asw == Language.chuyen_doi_khach_hang)
+                        {
+                            LeadQualifyMethod();
+                            return;
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            return;
+                        }
                     }
-                    else if (asw == Language.chuyen_doi_khach_hang)
+                    else if (!string.IsNullOrWhiteSpace(viewModel.singleLead.companyname) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountaddressvn))
+                    {
+                        bool confirm = await DisplayAlert(Language.chuyen_doi_khach_hang, Language.dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty, Language.co, Language.huy);
+                        if (confirm)
+                        {
+                            //LoadingHelper.Show();
+                            //LeadForm leadForm = new LeadForm(viewModel.singleLead.leadid);
+                            //leadForm.CheckSingleLead = async (IsSuccess) =>
+                            //{
+                            //    if (IsSuccess)
+                            //    {
+                            //        await Navigation.PushAsync(leadForm);
+                            //        LoadingHelper.Hide();
+                            //        return;
+                            //    }
+                            //    else
+                            //    {
+                            //        LoadingHelper.Hide();
+                            //        ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                            //        return;
+                            //    }
+                            //};
+                            LoadingHelper.Hide();
+                            return;
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            return;
+                        }
+                    }
+                    else if (!string.IsNullOrWhiteSpace(viewModel.singleLead.companyname) && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountaddressvn))
                     {
                         LeadQualifyMethod();
                         return;
                     }
-                    else
-                    {
-                        LoadingHelper.Hide();
-                        return;
-                    }    
-                } else if (!string.IsNullOrWhiteSpace(viewModel.singleLead.companyname) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountaddressvn))
+                }
+                else
                 {
-                    bool confirm = await DisplayAlert(Language.chuyen_doi_khach_hang, Language.dia_chi_cong_ty_dang_bi_trong_vui_long_nhap_dia_chi_cong_ty, Language.co, Language.huy);
+                    bool confirm = await DisplayAlert(Language.chuyen_doi_khach_hang, Language.giay_phep_kinh_doanh_bi_thieu_chi_chuyen_doi_khach_hang_ca_nhan, Language.co, Language.huy);
                     if (confirm)
                     {
-                        //LoadingHelper.Show();
-                        //LeadForm leadForm = new LeadForm(viewModel.singleLead.leadid);
-                        //leadForm.CheckSingleLead = async (IsSuccess) =>
-                        //{
-                        //    if (IsSuccess)
-                        //    {
-                        //        await Navigation.PushAsync(leadForm);
-                        //        LoadingHelper.Hide();
-                        //        return;
-                        //    }
-                        //    else
-                        //    {
-                        //        LoadingHelper.Hide();
-                        //        ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
-                        //        return;
-                        //    }
-                        //};
+                        LeadQualifyMethod();
                         LoadingHelper.Hide();
                         return;
                     }
@@ -221,16 +245,13 @@ namespace PhuLongCRM.Views
                         LoadingHelper.Hide();
                         return;
                     }
-                } else if (!string.IsNullOrWhiteSpace(viewModel.singleLead.companyname) && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountaddressvn))
-                {
-                    LeadQualifyMethod();
-                    return;
-                }    
+                }
             }
             else
             {
-                LeadQualifyMethod();
+                ToastMessageHelper.ShortMessage(Language.khach_hang_da_co_nguoi_bao_ho_khong_the_chuyen_doi);
             }
+            LoadingHelper.Hide();
         }
         private async void LeadQualifyMethod()
         {

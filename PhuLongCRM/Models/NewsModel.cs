@@ -21,5 +21,8 @@ namespace PhuLongCRM.Models
         public Guid project_id { get; set; }
         public string project_name { get; set; } // tên dự án
         public int bsd_priority { get; set; }
+
+        private string _image;
+        public string image { get { return _image; } set { _image = value; OnPropertyChanged(nameof(image)); } }
     }
 }

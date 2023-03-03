@@ -3372,8 +3372,8 @@
 	<data name="tinh_trang_phi_lai_xuat" xml:space="preserve">
 		<value>Interest Charge Status</value>
 	</data>
-	<data name="so_gpkd_khong_hop_le_gom_13_ky_tu" xml:space="preserve">
-		<value>Invalid registration code (registration code must be 13 characters long).</value>
+	<data name="so_gpkd_khong_hop_le_gom_10_ky_tu" xml:space="preserve">
+		<value>Invalid registration code (registration code must be 10 characters long).</value>
 	</data>
 	<data name="tien_dat_coc_ful" xml:space="preserve">
 		<value>Deposit fee</value>
@@ -3830,5 +3830,14 @@
   </data>
 	<data name="tai_khoan_khong_co_hieu_luc" xml:space="preserve">
     <value>Account is inactive.</value>
+  </data>
+	<data name="khach_hang_da_co_nguoi_bao_ho_khong_the_chuyen_doi" xml:space="preserve">
+    <value>The customer already has a guardian. Qualification is not possible.</value>
+  </data>
+	<data name="chuyen_doi_tu" xml:space="preserve">
+    <value>Originating lead</value>
+  </data>
+	<data name="giay_phep_kinh_doanh_bi_thieu_chi_chuyen_doi_khach_hang_ca_nhan" xml:space="preserve">
+    <value>Registration code is missing. Only qualify to contact.</value>
   </data>
 </root>

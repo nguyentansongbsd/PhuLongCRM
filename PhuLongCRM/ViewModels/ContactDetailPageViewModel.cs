@@ -192,6 +192,7 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <link-entity name='lead' from='leadid' to='originatingleadid' link-type='outer'>
                                         <attribute name='leadid' alias='leadid_originated'/>
+                                        <attribute name='fullname' alias='leadname_originated'/>
                                     </link-entity>
                                     <link-entity name='contact' from='contactid' to='bsd_protecter' link-type='outer'>
                                         <attribute name='contactid' alias='protecter_id'/>

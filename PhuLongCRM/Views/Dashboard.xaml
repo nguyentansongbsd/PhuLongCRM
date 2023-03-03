@@ -65,7 +65,7 @@
                                     <CarouselView.ItemTemplate>
                                         <DataTemplate >
                                             <!--<Image Source="{Binding bsd_thumnail,Converter={StaticResource Base64ToImageSource}}" Aspect="AspectFill"/>-->
-                                            <ffimageloading:CachedImage Source="{Binding bsd_thumnail,Converter={StaticResource Base64ToImageSource}}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500">
+                                            <ffimageloading:CachedImage Source="{Binding image}" Aspect="AspectFill" LoadingPlaceholder="image_placeholder.jpg" DownsampleWidth="500">
                                                 <ffimageloading:CachedImage.GestureRecognizers>
                                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="News_Tapped" CommandParameter="{Binding .}"/>
                                                 </ffimageloading:CachedImage.GestureRecognizers>
