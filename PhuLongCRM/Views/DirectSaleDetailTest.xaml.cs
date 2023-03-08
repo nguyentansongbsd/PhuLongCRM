@@ -542,7 +542,7 @@ namespace PhuLongCRM.Views
                 btnQueue.IsVisible = false;
                 viewModel.IsShowBtnBangTinhGia = false;
             }
-            gridBtn.IsVisible = !viewModel.Unit.bsd_vippriority;
+           
             btnQuote.IsVisible = viewModel.IsShowBtnBangTinhGia;
 
             //set button
@@ -554,6 +554,7 @@ namespace PhuLongCRM.Views
             {
                 gridBtn.IsVisible = true;
                 Grid.SetColumnSpan(btnQueue, 1);
+                Grid.SetColumnSpan(btnQuote, 1);
                 Grid.SetColumn(btnQueue, 0);
                 Grid.SetColumn(btnQuote, 1);
                 
@@ -581,6 +582,7 @@ namespace PhuLongCRM.Views
                 Grid.SetColumn(labelName, 1);
                 Grid.SetColumnSpan(labelName, 3);
             }
+            gridBtn.IsVisible = viewModel.Unit.bsd_vippriority ? false : true;
         }
 
         private async void PopupUnit_Close(object sender, EventArgs e)

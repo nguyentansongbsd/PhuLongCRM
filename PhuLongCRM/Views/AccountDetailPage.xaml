@@ -484,11 +484,11 @@
                             <StackLayout Spacing="1" Background="#f1f1f1">
                                 <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                     <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.ngay_bat_dau_hieu_luc},StringFormat='{0}: '}" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
-                                    <Label Grid.Column="1" Text="{Binding MandatorySecondary.bsd_effectivedateto,StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" Padding="0,10,25,10" HorizontalOptions="End"/>
+                                    <Label Grid.Column="1" Text="{Binding MandatorySecondary.bsd_effectivedatefrom, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" Padding="0,10,25,10" HorizontalOptions="End"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                     <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.ngay_het_hieu_luc},StringFormat='{0}: '}" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
-                                    <Label Grid.Column="1" Text="{Binding MandatorySecondary.bsd_effectivedatefrom,StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" Padding="0,10,25,10" HorizontalOptions="End"/>
+                                    <Label Grid.Column="1" Text="{Binding MandatorySecondary.bsd_effectivedateto,StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" Padding="0,10,25,10" HorizontalOptions="End"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                     <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.chuc_vu_vn},StringFormat='{0}: '}" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>

@@ -730,6 +730,7 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='bsd_promotionid' alias='promotion_id'/>
                                             <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer'>
                                                 <attribute name='bsd_name' alias='promotion_project_name'/>
+                                                <attribute name='bsd_projectid' alias='promotion_project_id'/>
                                             </link-entity>
                                     </link-entity>
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='ab'>

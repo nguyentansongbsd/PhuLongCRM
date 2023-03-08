@@ -473,7 +473,7 @@
                     </Grid>
                 </StackLayout>
             </ScrollView>
-            <Grid x:Name="gridButton" RowDefinitions="Auto" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White" Padding="10,5">
+            <Grid x:Name="gridbtn" RowDefinitions="Auto" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional" BackgroundColor="White" Padding="10,5" IsVisible="{Binding IsShowBtn}">
                 <Button x:Name="btnGiuCho" Text="{x:Static lang:Language.giu_cho_btn}" Clicked="GiuCho_Clicked" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10" />
                 <Button x:Name="btnBangTinhGia" Text="{x:Static lang:Language.bang_tinh_gia_btn}" Clicked="BangTinhGia_Clicked" IsVisible="{Binding IsShowBtnBangTinhGia}" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="40" BackgroundColor="{StaticResource NavigationPrimary}" CornerRadius="10"/>
             </Grid>
