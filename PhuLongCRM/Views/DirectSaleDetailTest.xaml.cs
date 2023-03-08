@@ -39,11 +39,14 @@ namespace PhuLongCRM.Views
             viewModel.Filter = filter;
             if (viewModel.Filter.isOwner)
             {
-                menu_item.Text = "\uf4fc";
+                menu_item.IconImageSource = new FontImageSource() { Glyph = "\uf4fc", FontFamily = "FontAwesomeSolid",Size = 18,Color= Color.White };
+
+                //menu_item.Text = "\uf4fc";
             }
             else
             {
-                menu_item.Text = "\uf007";
+                menu_item.IconImageSource = new FontImageSource() { Glyph = "\uf007", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
+                //menu_item.Text = "\uf007";
             }
             viewModel.CreateFilterXml();
             Init();
@@ -635,13 +638,15 @@ namespace PhuLongCRM.Views
                 {
                     viewModel.Filter.Employee = null;
                     viewModel.Filter.isOwner = false;
-                    menu_item.Text = "\uf007";
+                    //menu_item.Text = "\uf007";
+                    menu_item.IconImageSource = new FontImageSource() { Glyph = "\uf007", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
                 }
                 else
                 {
                     viewModel.Filter.Employee = UserLogged.Id.ToString();
                     viewModel.Filter.isOwner = true;
-                    menu_item.Text = "\uf4fc";
+                    //menu_item.Text = "\uf4fc";
+                    menu_item.IconImageSource = new FontImageSource() { Glyph = "\uf4fc", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
                 }
                 viewModel.Blocks = new ObservableCollection<Block>();
                 NeedToRefreshDirectSale = false;
