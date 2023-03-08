@@ -346,7 +346,7 @@ namespace PhuLongCRM.Views
         #endregion
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10);
+            string phone = string.IsNullOrWhiteSpace(viewModel.singleAccount.telephone1) ? viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10) : null;
             if (phone != string.Empty)
             {
                 var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
@@ -368,7 +368,7 @@ namespace PhuLongCRM.Views
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10);
+            string phone = string.IsNullOrWhiteSpace(viewModel.singleAccount.telephone1) ? viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10) : null;
             if (phone != string.Empty)
             {
                 await Launcher.OpenAsync($"tel:{phone}");
