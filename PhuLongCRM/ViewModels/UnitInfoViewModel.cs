@@ -60,6 +60,9 @@ namespace PhuLongCRM.ViewModels
         private bool _isShowBtnBangTinhGia;
         public bool IsShowBtnBangTinhGia { get => _isShowBtnBangTinhGia; set { _isShowBtnBangTinhGia = value; OnPropertyChanged(nameof(IsShowBtnBangTinhGia)); } }
 
+        private bool _isShowBtn;
+        public bool IsShowBtn { get => _isShowBtn; set { _isShowBtn = value; OnPropertyChanged(nameof(IsShowBtn)); } }
+
         private bool _showMoreBangTinhGia;
         public bool ShowMoreBangTinhGia { get => _showMoreBangTinhGia; set { _showMoreBangTinhGia = value; OnPropertyChanged(nameof(ShowMoreBangTinhGia)); } }
 

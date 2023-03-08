@@ -169,13 +169,25 @@ namespace PhuLongCRM.ViewModels
 
             string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
                                                                                     <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
+                                                                                        <attribute name='bsd_eventid' alias='event_id'/>
                                                                                         <filter type='and'>
                                                                                             <condition attribute='statuscode' operator='eq' value='100000000' />
                                                                                             <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
                                                                                             <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
                                                                                         </filter>
                                                                                     </link-entity>
-                                                                                </link-entity>" : "";
+                                                                                </link-entity>" 
+                                                                                : $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='as'>
+                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='at'>
+                                                                                        <attribute name='bsd_eventid' alias='event_id'/>
+                                                                                        <filter type='and'>
+                                                                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
+                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                                                                        </filter>
+                                                                                    </link-entity>
+                                                                                </link-entity>";
+
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='product'>
                                 <attribute name='productid' />

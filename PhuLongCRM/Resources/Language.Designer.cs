@@ -1897,7 +1897,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chuyển đổi từ.
+        ///   Looks up a localized string similar to Khách hàng mới.
         /// </summary>
         internal static string chuyen_doi_tu {
             get {
@@ -6457,6 +6457,15 @@ namespace PhuLongCRM.Resources {
         internal static string ngay_sinh {
             get {
                 return ResourceManager.GetString("ngay_sinh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày sinh không được thuộc tương lai..
+        /// </summary>
+        internal static string ngay_sinh_khong_duoc_thuoc_tuong_lai {
+            get {
+                return ResourceManager.GetString("ngay_sinh_khong_duoc_thuoc_tuong_lai", resourceCulture);
             }
         }
         

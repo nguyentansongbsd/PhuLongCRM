@@ -75,7 +75,7 @@ namespace PhuLongCRM.Views
                 var tmpHeight = width * 2 / 3;
                 collection.HeightRequest = (tmpHeight + 15) * ((viewModel.Collections.Count + 2) / 3);
                 SetButton();
-                gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
+                viewModel.IsShowBtn = viewModel.UnitInfo.bsd_vippriority ? false : true;
                 OnCompleted?.Invoke(true);
             }
             else
@@ -152,7 +152,6 @@ namespace PhuLongCRM.Views
                     }
 
                     SetButton();
-                    gridButton.IsVisible = !viewModel.UnitInfo.bsd_vippriority;
                 }
                 NeedToRefresh = false;
                 LoadingHelper.Hide();
@@ -162,15 +161,15 @@ namespace PhuLongCRM.Views
 
         public void SetButton()
         {
-            gridButton = new Grid();
+            gridbtn = new Grid();
             if (btnGiuCho.IsVisible == false && viewModel.IsShowBtnBangTinhGia == false)
             {
-                gridButton.IsVisible = false;
+                gridbtn.IsVisible = false;
             }
-            gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+            gridbtn.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
             if (btnGiuCho.IsVisible == true && viewModel.IsShowBtnBangTinhGia == true)
             {
-                gridButton.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
+                gridbtn.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star), });
                 Grid.SetColumn(btnGiuCho, 0);
                 Grid.SetColumn(btnBangTinhGia, 1);
             }
@@ -184,6 +183,8 @@ namespace PhuLongCRM.Views
                 Grid.SetColumn(btnBangTinhGia, 0);
                 Grid.SetColumn(btnGiuCho, 0);
             }
+            gridbtn.IsVisible = viewModel.UnitInfo.bsd_vippriority ? false : true;
+            viewModel.IsShowBtn = viewModel.UnitInfo.bsd_vippriority ? false : true;
         }
 
         private async void ShowMoreDanhSachDatCho_Clicked(object sender, EventArgs e)

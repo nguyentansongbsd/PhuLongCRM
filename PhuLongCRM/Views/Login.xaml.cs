@@ -382,7 +382,7 @@ namespace PhuLongCRM.Views
             if (!crmApiResponse.IsSuccess)
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.khong_cap_nhat_duoc_thong_tin_imei);
+             //   ToastMessageHelper.ShortMessage(Language.khong_cap_nhat_duoc_thong_tin_imei);
                 return;
             }
         }

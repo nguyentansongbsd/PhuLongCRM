@@ -415,7 +415,7 @@ namespace PhuLongCRM.ViewModels
 
             if (Address2 == null || Address2.country_id == Guid.Empty)
             {
-                data["bsd_PermanentNation@odata.bind"] = "/bsd_countries(" + Address1.country_id + ")"; /////Lookup Field _bsd_permanentnation_value
+                await DeletLookup("bsd_PermanentNation", singleAccount.accountid); /////Lookup Field _bsd_permanentnation_value
             }
             else
             {
@@ -424,7 +424,7 @@ namespace PhuLongCRM.ViewModels
             }
             if (Address2 == null || Address2.province_id == Guid.Empty)
             {
-                data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + Address1.province_id + ")";
+                await DeletLookup("bsd_PermanentProvince", singleAccount.accountid);
             }
             else
             {
@@ -432,7 +432,7 @@ namespace PhuLongCRM.ViewModels
             }
             if (Address2 == null || Address2.district_id == Guid.Empty)
             {
-                data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Address1.district_id + ")";
+                await DeletLookup("bsd_PermanentDistrict", singleAccount.accountid);
             }
             else
             {

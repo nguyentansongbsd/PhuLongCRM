@@ -3835,9 +3835,12 @@
     <value>The customer already has a guardian. Qualification is not possible.</value>
   </data>
 	<data name="chuyen_doi_tu" xml:space="preserve">
-    <value>Originating lead</value>
+    <value>Lead</value>
   </data>
 	<data name="giay_phep_kinh_doanh_bi_thieu_chi_chuyen_doi_khach_hang_ca_nhan" xml:space="preserve">
     <value>Registration code is missing. Only qualify to contact.</value>
+  </data>
+	<data name="ngay_sinh_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
+    <value>Birth date can't be in the future.</value>
   </data>
 </root>

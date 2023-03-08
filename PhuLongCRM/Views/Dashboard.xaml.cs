@@ -392,25 +392,32 @@ namespace PhuLongCRM.Views
 
         private void Promotion_Tapped(object sender, EventArgs e)
         {
-            var tap = sender as Grid;
-            var item = (NewsModel)(tap.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item != null && item.promotion_id != Guid.Empty)
+            try
             {
-                LoadingHelper.Show();
-                ProjectInfo project = new ProjectInfo(item.project_id);
-                project.OnCompleted = async (isSuccess) =>
+                var tap = sender as Grid;
+                var item = (NewsModel)(tap.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
+                if (item != null && item.promotion_id != Guid.Empty && item.promotion_project_id != Guid.Empty)
                 {
-                    if (isSuccess)
+                    LoadingHelper.Show();
+                    ProjectInfo project = new ProjectInfo(item.promotion_project_id);
+                    project.OnCompleted = async (isSuccess) =>
                     {
-                        await Navigation.PushAsync(project);
-                        LoadingHelper.Hide();
-                    }
-                    else
-                    {
-                        LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
-                    }
-                };
+                        if (isSuccess)
+                        {
+                            await Navigation.PushAsync(project);
+                            LoadingHelper.Hide();
+                        }
+                        else
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
+                }
+            }
+            catch(Exception ex)
+            {
+
             }
         }
         private async Task AutoPlaySide()

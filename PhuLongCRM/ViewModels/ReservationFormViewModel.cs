@@ -349,7 +349,7 @@ namespace PhuLongCRM.ViewModels
             this.Quote.bsd_actualarea_format = StringFormatHelper.FormatPercent(Quote.bsd_actualarea);
             this.Quote.bsd_bookingfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_bookingfee);
             this.Quote.bsd_depositfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_depositfee);
-            this.Quote.bsd_managementfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_managementfee);
+            this.Quote.bsd_managementfee_format = StringFormatHelper.FormatCurrency(Math.Truncate(Quote.bsd_managementfee));
 
             this.Buyer = this.Quote.contact_id != Guid.Empty ? new OptionSet(this.Quote.contact_id.ToString(), this.Quote.contact_name) { Title = "2" } : new OptionSet(this.Quote.account_id.ToString(), this.Quote.account_name) { Title = "3" };
             this.Queue = this.Quote.queue_id != Guid.Empty ? new OptionSet(this.Quote.queue_id.ToString(), this.Quote.queue_name) : null;
@@ -551,7 +551,7 @@ namespace PhuLongCRM.ViewModels
             this.Quote.bsd_unitstatus = UnitInfor.statuscode;
             this.Quote.pricelist_apply_id = Guid.Parse(PriceListApply.Val);
             this.Quote.bsd_managementfee = this.UnitInfor.bsd_managementamountmonth * this.UnitInfor.bsd_netsaleablearea * this.UnitInfor.bsd_numberofmonthspaidmf * (decimal)1.1;
-            this.Quote.bsd_managementfee_format = StringFormatHelper.FormatCurrency(Quote.bsd_managementfee);
+            this.Quote.bsd_managementfee_format = StringFormatHelper.FormatCurrency(Math.Truncate(Quote.bsd_managementfee));
             this.UnitType = UnitInfor._bsd_unittype_value;
             this.PhasesLaunchId = this.UnitInfor._bsd_phaseslaunchid_value;
             this.Project_minimumtypehandovercondition = this.UnitInfor.project_minimumtypehandovercondition;

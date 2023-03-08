@@ -137,6 +137,14 @@
                                                 <controls:FormLabel Text="{x:Static lang:Language.ma_khach_hang}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                                 <controls:FormLabelValue Text="{Binding singleContact.bsd_customercode}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                             </Grid>
+                                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                                <controls:FormLabel Text="{x:Static lang:Language.chuyen_doi_tu}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
+                                                <controls:FormLabelValue Text="{Binding singleContact.leadname_originated}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#2196F3" Padding="0,10,25,10" HorizontalTextAlignment="End">
+                                                    <controls:FormLabelValue.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OriginatingLead_Tapped" />
+                                                    </controls:FormLabelValue.GestureRecognizers>
+                                                </controls:FormLabelValue>
+                                            </Grid>
                                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                                 <controls:FormLabel Text="{x:Static lang:Language.gioi_tinh}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                                 <controls:FormLabelValue Text="{Binding singleGender.Label}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
@@ -148,14 +156,6 @@
                                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
                                                 <controls:FormLabelValue Text="{Binding singleContact.birthdate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
-                                            </Grid>
-                                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                                <controls:FormLabel Text="{x:Static lang:Language.chuyen_doi_tu}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                                <controls:FormLabelValue Text="{Binding singleContact.leadname_originated}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="#2196F3" Padding="0,10,25,10" HorizontalTextAlignment="End">
-                                                    <controls:FormLabelValue.GestureRecognizers>
-                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OriginatingLead_Tapped" />
-                                                    </controls:FormLabelValue.GestureRecognizers>
-                                                </controls:FormLabelValue>
                                             </Grid>
                                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                                 <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>

@@ -235,5 +235,13 @@
       <Name>PhuLongCRM</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\icons_currency.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icons_goal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icons_bookmark.png" />
+  </ItemGroup>
 </Project>

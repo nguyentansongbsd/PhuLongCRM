@@ -17,6 +17,7 @@ namespace PhuLongCRM.Models
         public DateTime promotion_startdate { get; set; }
         public DateTime promotion_enddate { get; set; }
         public string promotion_project_name { get; set; }
+        public Guid promotion_project_id { get; set; }
         public string bsd_type { get; set; }
         public Guid project_id { get; set; }
         public string project_name { get; set; } // tên dự án

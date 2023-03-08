@@ -3841,9 +3841,12 @@
     <value>Khách hàng đã có người bảo hộ. Không thể chuyển đổi.</value>
   </data>
 	<data name="chuyen_doi_tu" xml:space="preserve">
-    <value>Chuyển đổi từ</value>
+    <value>Khách hàng mới</value>
   </data>
 	<data name="giay_phep_kinh_doanh_bi_thieu_chi_chuyen_doi_khach_hang_ca_nhan" xml:space="preserve">
     <value>Giấy phép kinh doanh bị thiếu. Chỉ chuyển đổi khách hàng cá nhân.</value>
+  </data>
+	<data name="ngay_sinh_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
+    <value>Ngày sinh không được thuộc tương lai.</value>
   </data>
 </root>
