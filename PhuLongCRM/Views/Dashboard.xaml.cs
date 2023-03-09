@@ -396,23 +396,22 @@ namespace PhuLongCRM.Views
             {
                 var tap = sender as Grid;
                 var item = (NewsModel)(tap.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-                if (item != null && item.promotion_id != Guid.Empty && item.promotion_project_id != Guid.Empty)
+                if (item != null && item.promotion_id != Guid.Empty)
                 {
                     LoadingHelper.Show();
-                    ProjectInfo project = new ProjectInfo(item.promotion_project_id);
-                    project.OnCompleted = async (isSuccess) =>
-                    {
-                        if (isSuccess)
-                        {
-                            await Navigation.PushAsync(project);
-                            LoadingHelper.Hide();
-                        }
-                        else
-                        {
-                            LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
-                        }
+                    PromotionModel promotion = new PromotionModel
+                    {   
+                        bsd_name = item.promotion_name,
+                        bsd_values = item.promotion_values,
+                        bsd_startdate = item.promotion_startdate.ToLocalTime(),
+                        bsd_enddate = item.promotion_enddate.ToLocalTime(),
+                        bsd_description = item.promotion_description,
+                        project_name = item.promotion_project_name,
+                        phaseslaunch_name = item.promotion_phaseslaunch_name
                     };
+                    viewModel.PromotionItem = promotion;
+                    KhuyenMai_CenterPopup.ShowCenterPopup();
+                    LoadingHelper.Hide();
                 }
             }
             catch(Exception ex)

@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.ViewModels;
+﻿using PhuLongCRM.Helper;
+using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,5 +26,13 @@ namespace PhuLongCRM.Models
 
         private string _image;
         public string image { get { return _image; } set { _image = value; OnPropertyChanged(nameof(image)); } }
+
+        private decimal _promotion_values;
+        public decimal promotion_values { get => _promotion_values; set { _promotion_values = value; OnPropertyChanged(nameof(promotion_values)); } }
+        public string bsd_values_format { get => StringFormatHelper.FormatCurrency(promotion_values); }
+
+        private string _promotion_description;
+        public string promotion_description { get => _promotion_description; set { _promotion_description = value; OnPropertyChanged(nameof(promotion_description)); } }
+        public string promotion_phaseslaunch_name { get; set; }
     }
 }

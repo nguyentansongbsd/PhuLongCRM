@@ -109,6 +109,9 @@ namespace PhuLongCRM.ViewModels
         private int _numNotification;
         public int NumNotification { get => _numNotification; set { _numNotification = value; OnPropertyChanged(nameof(NumNotification)); } }
 
+        private PromotionModel _promotionItem;
+        public PromotionModel PromotionItem { get => _promotionItem; set { _promotionItem = value; OnPropertyChanged(nameof(PromotionItem)); } }
+
         public DashboardViewModel()
         {
             dateBefor = DateTime.Now;
@@ -728,9 +731,14 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='bsd_startdate' alias='promotion_startdate'/>
                                         <attribute name='bsd_enddate' alias='promotion_enddate'/>
                                         <attribute name='bsd_promotionid' alias='promotion_id'/>
+                                        <attribute name='bsd_values' alias='promotion_values'/>                                 
+                                        <attribute name='bsd_description' alias='promotion_description'/>
                                             <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer'>
                                                 <attribute name='bsd_name' alias='promotion_project_name'/>
                                                 <attribute name='bsd_projectid' alias='promotion_project_id'/>
+                                            </link-entity>
+                                            <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaselaunch' link-type='outer' alias='aa'>
+                                                <attribute name='bsd_name' alias='promotion_phaseslaunch_name'/>
                                             </link-entity>
                                     </link-entity>
                                     <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='ab'>
@@ -790,8 +798,8 @@ namespace PhuLongCRM.ViewModels
                  this.LoadLeads(),
                  this.LoadCommissionTransactions(),
                  LoadActivityCount(),
-                 LoadNews(),
-                 CountNumNotification()
+                 LoadNews()
+                 //CountNumNotification()
                 ); ;
         }
         public async Task CountNumNotification()
