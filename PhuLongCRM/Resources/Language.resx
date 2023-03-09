@@ -3849,4 +3849,13 @@
 	<data name="ngay_sinh_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
     <value>Ngày sinh không được thuộc tương lai.</value>
   </data>
+	<data name="khach_hang_doanh_nghiep_se_khong_duoc_chuyen_doi_vui_long_dien_day_du_cac_thong_tin_sau_ten_cong_ty_gpkd_dia_chi" xml:space="preserve">
+    <value>Khách hàng doanh nghiệp sẽ không được chuyển đổi. Vui lòng điền đầy đủ các thông tin sau : Tên công ty, Giấy phép kinh doanh, Địa chỉ.</value>
+  </data>
+	<data name="cap_nhat_btn" xml:space="preserve">
+    <value>Cập nhật</value>
+  </data>
+	<data name="chuyen_doi_btn" xml:space="preserve">
+    <value>Chuyển đổi</value>
+  </data>
 </root>

@@ -44,11 +44,6 @@ namespace PhuLongCRM.ViewModels
         public QueueFormViewModel2()
         {
             Queue = new QueueFormModel();
-            if(UserLogged.AgentID != Guid.Empty)
-            {
-                LookUp agent = new LookUp { Id = UserLogged.AgentID, Name = UserLogged.AgentName };
-                DailyOption = agent;
-            }    
         }
         /// <summary>
         /// kiểm tra giới hạn giữ chỗ

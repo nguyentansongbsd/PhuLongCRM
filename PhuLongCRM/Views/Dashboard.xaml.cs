@@ -61,8 +61,8 @@ namespace PhuLongCRM.Views
                  viewModel.LoadLeads(),
                  viewModel.LoadCommissionTransactions(),
                  viewModel.LoadActivityCount(),
-                 AutoPlaySide(),
-                 viewModel.CountNumNotification()
+                 AutoPlaySide()
+                 //viewModel.CountNumNotification()
                 );
 
             MessagingCenter.Subscribe<ScanQRPage, string>(this, "CallBack", async (sender, e) =>

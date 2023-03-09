@@ -64,7 +64,7 @@
                                 <controls:LookUp x:Name="lookUpDaiLy" Grid.Column="1" Grid.Row="3" Placeholder="{x:Static lang:Language.chon_dai_ly}" ItemsSource="{Binding DaiLyOptions}" SelectedItem="{Binding DailyOption}" NameDisplay="Name" BottomModal="{x:Reference LookUpModal}" SelectedItemChange="lookUpDaiLy_SelectedItemChange" IsEnabled="False"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.nhan_vien_dai_ly_san}" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_nhan_vien_dao_ly}" Text="{Binding Queue.bsd_nameofstaffagent}" FontSize="15" IsEnabled="False" />
+                                <controls:MainEntry x:Name="nhanVienDaiLy" Placeholder="{x:Static lang:Language.nhap_nhan_vien_dao_ly}" Text="{Binding Queue.bsd_nameofstaffagent}" FontSize="15" IsEnabled="False" />
 
                                 <controls:FormLabel Text="{x:Static lang:Language.cong_tac_vien}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:LookUp x:Name="lookUpCollaborator" Grid.Column="1" Grid.Row="3" Placeholder="{x:Static lang:Language.chon_cong_tac_vien}" ItemsSource="{Binding ListCollaborator}" SelectedItem="{Binding Collaborator}" NameDisplay="Name" BottomModal="{x:Reference LookUpModal}" SelectedItemChange="lookUpCollaborator_SelectedItemChange" IsEnabled="False"/>

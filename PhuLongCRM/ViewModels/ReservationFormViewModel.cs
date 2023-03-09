@@ -171,10 +171,6 @@ namespace PhuLongCRM.ViewModels
             SalesAgents = new List<OptionSet>();
             PaymentSchemes = new List<PaymentSchemeModel>();
             HandoverConditions = new List<HandoverConditionModel>();
-            if (UserLogged.AgentID != Guid.Empty)
-            {
-                SalesAgent = new OptionSet { Val = UserLogged.AgentID.ToString(), Label = UserLogged.AgentName };
-            }
         }
 
         public async Task CheckTaoLichThanhToan()

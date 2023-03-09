@@ -47,7 +47,7 @@
         </DataTemplate>
     </Shell.ItemTemplate>
     <Shell.FlyoutHeader>
-        <Grid RowDefinitions="2*,*" HeightRequest="100" ColumnDefinitions="3*,7*">
+        <Grid RowDefinitions="2*,*" ColumnDefinitions="3*,7*">
             <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="1,0">
@@ -65,19 +65,19 @@
                 <ffimageloading:CachedImage Source="{Binding Avartar,Converter={StaticResource Base64ToImageSource}}" LoadingPlaceholder="user.png" HeightRequest="75" WidthRequest="75" DownsampleWidth="500"/>
             </controls:ExtendedFrame>
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,Auto" Grid.Column="1" Grid.Row="0" VerticalOptions="End" RowSpacing="0">
-                <Label Text="{Binding ContactName}" Grid.Row="0" Grid.Column="0" TextColor="White" FontSize="16" FontAttributes="Bold" VerticalOptions="End"/>
+                <Label Text="{Binding ContactName}" Grid.Row="0" Grid.Column="0" TextColor="White" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Start" />
                 <Label Text="&#xf044;" FontFamily="FontAwesomeRegular" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="16" VerticalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UserInfor_Tapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Text="{Binding UserName}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontSize="14" TextColor="White" VerticalOptions="Start"/>
+                <Label Text="{Binding UserName}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontSize="14" TextColor="White" VerticalOptions="Start" HorizontalOptions="Start"/>
             </Grid>
             <Grid VerticalOptions="Start" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,*">
-                <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="LightGreen" Grid.Column="0" Grid.Row="0">
+                <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="LightGreen" Grid.Column="0" Grid.Row="0" VerticalOptions="Start">
                     <Label Text="{x:Static lang:Language.dai_ly_appshell}" FontSize="14" TextColor="White" Margin="6,3"/>
                 </telerikPrimitives:RadBorder>
-                <Label Text="{Binding Agent}" Grid.Column="1" Grid.Row="0" FontSize="14" TextColor="#444444" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                <Label Text="{Binding Agent}" Grid.Column="1" Grid.Row="0" FontSize="14" TextColor="#444444" VerticalOptions="Center"/>
             </Grid>
         </Grid>
         <!--<StackLayout BackgroundColor="White" HeightRequest="120">
