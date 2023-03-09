@@ -3843,4 +3843,13 @@
 	<data name="ngay_sinh_khong_duoc_thuoc_tuong_lai" xml:space="preserve">
     <value>Birth date can't be in the future.</value>
   </data>
+	<data name="khach_hang_doanh_nghiep_se_khong_duoc_chuyen_doi_vui_long_dien_day_du_cac_thong_tin_sau_ten_cong_ty_gpkd_dia_chi" xml:space="preserve">
+    <value>Account are not qualify. Please provide the following information: Account name, Registration code, Company address.</value>
+  </data>
+	<data name="cap_nhat_btn" xml:space="preserve">
+    <value>Update</value>
+  </data>
+	<data name="chuyen_doi_btn" xml:space="preserve">
+    <value>Qualify</value>
+  </data>
 </root>

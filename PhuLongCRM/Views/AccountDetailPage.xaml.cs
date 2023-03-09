@@ -368,24 +368,37 @@ namespace PhuLongCRM.Views
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10);
-            if (phone != string.Empty)
+            try
             {
-                await Launcher.OpenAsync($"tel:{phone}");
-                // khong can check validate
-                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                //if (checkVadate == true)
-                //{
-                //    await Launcher.OpenAsync($"tel:{phone}");
-                //}
-                //else
-                //{
-                //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                //}
-            }
-            else
+                if (!string.IsNullOrWhiteSpace(viewModel.singleAccount.telephone1) && viewModel.singleAccount.telephone1.Length >= 12)
+                {
+                    string phone = viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10);
+                    if (phone != string.Empty)
+                    {
+                        await Launcher.OpenAsync($"tel:{phone}");
+                        // khong can check validate
+                        //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
+                        //if (checkVadate == true)
+                        //{
+                        //    await Launcher.OpenAsync($"tel:{phone}");
+                        //}
+                        //else
+                        //{
+                        //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                        //}
+                    }
+                    else
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+                    }
+                }
+                else
+                {
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+                }    
+            }catch(Exception ex)
             {
-                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+
             }
         }
 

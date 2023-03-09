@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PhuLongCRM.Resources;
 using Xamarin.Forms.Internals;
+using PhuLongCRM.Settings;
 
 namespace PhuLongCRM.Views
 {
@@ -28,6 +29,12 @@ namespace PhuLongCRM.Views
             centerModalPromotions.Body.BindingContext = viewModel;
             centerModalCoOwner.Body.BindingContext = viewModel;
             viewModel.QuoteId = quoteId;
+
+            if (UserLogged.AgentID != Guid.Empty)
+            {
+               viewModel.SalesAgent = new OptionSet { Val = UserLogged.AgentID.ToString(), Label = UserLogged.AgentName };
+                entryNhanVienDaiLy.IsEnabled = true;
+            }
             InitUpdate();
         }
 

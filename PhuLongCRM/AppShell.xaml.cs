@@ -38,7 +38,7 @@ namespace PhuLongCRM
         {
             InitializeComponent();
             UserName = UserLogged.User;
-            ContactName = string.IsNullOrWhiteSpace(UserLogged.ContactName) ? UserLogged.User : UserLogged.ContactName;
+            ContactName = string.IsNullOrWhiteSpace(UserLogged.ContactName) ? UserLogged.User.TrimStart() : UserLogged.ContactName.TrimStart(); ;
             Avartar = UserLogged.Avartar;
             NeedToRefeshUserInfo = false;
             VerApp = Config.OrgConfig.VerApp;
@@ -63,7 +63,7 @@ namespace PhuLongCRM
         private async void Init()
         {
             VerApp = Config.OrgConfig.VerApp;
-            this.ContactName = UserLogged.ContactName;
+            this.ContactName = UserLogged.ContactName.TrimStart(); ;
             this.UserName = UserLogged.UserCRM;
             this.Avartar = $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={UserLogged.UserCRM}";
             this.BindingContext = this;
@@ -79,7 +79,7 @@ namespace PhuLongCRM
                 {
                     Avartar = UserLogged.Avartar;
                 }
-                ContactName = UserLogged.ContactName;
+                ContactName = UserLogged.ContactName.TrimStart(); ;
                 NeedToRefeshUserInfo = false;
                 LoadingHelper.Hide();
             }

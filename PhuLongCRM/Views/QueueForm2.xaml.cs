@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,13 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = viewModel = new QueueFormViewModel2();
+
+            if (UserLogged.AgentID != Guid.Empty)
+            {
+                LookUp agent = new LookUp { Id = UserLogged.AgentID, Name = UserLogged.AgentName };
+                viewModel.DailyOption = agent;
+                nhanVienDaiLy.IsEnabled = true;
+            }
             viewModel.queueProject = fromProject;
             viewModel.QueueUnit = queueUnit;
             Init();

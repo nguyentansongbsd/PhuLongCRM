@@ -592,6 +592,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cập nhật.
+        /// </summary>
+        internal static string cap_nhat_btn {
+            get {
+                return ResourceManager.GetString("cap_nhat_btn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chỉnh Sửa Công Việc.
         /// </summary>
         internal static string cap_nhat_cong_viec_title {
@@ -1884,6 +1893,15 @@ namespace PhuLongCRM.Resources {
         internal static string chuyen_coc {
             get {
                 return ResourceManager.GetString("chuyen_coc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chuyển đổi.
+        /// </summary>
+        internal static string chuyen_doi_btn {
+            get {
+                return ResourceManager.GetString("chuyen_doi_btn", resourceCulture);
             }
         }
         
@@ -4773,6 +4791,16 @@ namespace PhuLongCRM.Resources {
         internal static string khach_hang_doanh_nghiep_option {
             get {
                 return ResourceManager.GetString("khach_hang_doanh_nghiep_option", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khách hàng doanh nghiệp sẽ không được chuyển đổi. Vui lòng điền đầy đủ các thông tin sau : Tên công ty, Giấy phép kinh doanh, Địa chỉ..
+        /// </summary>
+        internal static string khach_hang_doanh_nghiep_se_khong_duoc_chuyen_doi_vui_long_dien_day_du_cac_thong_tin_sau_ten_cong_ty_gpkd_dia_chi {
+            get {
+                return ResourceManager.GetString("khach_hang_doanh_nghiep_se_khong_duoc_chuyen_doi_vui_long_dien_day_du_cac_thong_t" +
+                        "in_sau_ten_cong_ty_gpkd_dia_chi", resourceCulture);
             }
         }
         
