@@ -6,18 +6,24 @@
              xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" 
              xmlns:controls="clr-namespace:PhuLongCRM.Controls" xmlns:converter="clr-namespace:PhuLongCRM.Converters"
-             >
-    <!--Title="{x:Static lang:Language.gio_hang}"-->
-    <Shell.TitleView>
+             Title="{x:Static lang:Language.gio_hang}">
+    <!--<Shell.TitleView>
         <StackLayout Margin="10" Orientation="Horizontal" Spacing="0">
             <Label Text="{x:Static lang:Language.gio_hang}" FontAttributes="Bold" TextColor="White" FontSize="20" VerticalTextAlignment="Center"/>
-            <Label x:Name="menu_item" Text="&#xf007;" FontFamily="FontAwesomeSolid" FontSize="20" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Padding="2" TextColor="White" Grid.Column="0">
+            <Label x:Name="menu_item" Text="&#xf007;" FontFamily="FontAwesomeSolid" FontSize="20" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Padding="{OnPlatform Android='2',iOS='2,2,50,2'}" TextColor="White" Grid.Column="0">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Owner_Tapped"/>
                 </Label.GestureRecognizers>
             </Label>
         </StackLayout>
-    </Shell.TitleView>
+    </Shell.TitleView>-->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="menu_item" Clicked="Owner_Tapped">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xf007;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label" x:Key="statusCodeUnit">
