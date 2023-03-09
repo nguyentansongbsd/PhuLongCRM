@@ -11,10 +11,11 @@
              xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="PhuLongCRM.Views.Dashboard">
-    <Shell.TitleView>
-        <StackLayout Margin="10" Orientation="Horizontal" Spacing="0">
+    <!--<Shell.TitleView>
+        <StackLayout Margin="10" Orientation="Horizontal" Spacing="0" BackgroundColor="Yellow" >
             <Label Text="{x:Static lang:Language.trang_chu}" FontAttributes="Bold" TextColor="White" FontSize="20" VerticalTextAlignment="Center"/>
-            <Grid HorizontalOptions="EndAndExpand" VerticalOptions="Center" Padding="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="13">
+            
+            <Grid HorizontalOptions="EndAndExpand" VerticalOptions="Center" Padding="{OnPlatform Android='2',iOS='2,2,100,2'}" ColumnDefinitions="Auto,Auto" ColumnSpacing="13" BackgroundColor="Red">
                 <Label Text="&#xf029;" FontFamily="FontAwesomeSolid" FontSize="20" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Padding="2" TextColor="White" Grid.Column="0">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ScanQRCode_Tapped"/>
@@ -31,7 +32,14 @@
                 </Grid>
             </Grid>
         </StackLayout>
-    </Shell.TitleView>
+    </Shell.TitleView>-->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ScanQRCode_Tapped" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xf029;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ZeroToHideConverter x:Key="ZeroToHideConverter"/>
