@@ -47,7 +47,7 @@
 	<key>NSContactsUsageDescription</key>
 	<string>PhuLongCRM cần quyền truy cập vào danh bạ để lấy số điện thoại</string>
 	<key>CFBundleVersion</key>
-	<string>74</string>
+	<string>75</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

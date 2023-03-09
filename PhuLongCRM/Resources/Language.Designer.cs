@@ -7494,5 +7494,24 @@ namespace PhuLongCRM.Resources {
                 return ResourceManager.GetString("ngay_sinh_khong_duoc_thuoc_tuong_lai", resourceCulture);
             }
         }
+        
+        internal static string khach_hang_doanh_nghiep_se_khong_duoc_chuyen_doi_vui_long_dien_day_du_cac_thong_tin_sau_ten_cong_ty_gpkd_dia_chi {
+            get {
+                return ResourceManager.GetString("khach_hang_doanh_nghiep_se_khong_duoc_chuyen_doi_vui_long_dien_day_du_cac_thong_t" +
+                        "in_sau_ten_cong_ty_gpkd_dia_chi", resourceCulture);
+            }
+        }
+        
+        internal static string cap_nhat_btn {
+            get {
+                return ResourceManager.GetString("cap_nhat_btn", resourceCulture);
+            }
+        }
+        
+        internal static string chuyen_doi_btn {
+            get {
+                return ResourceManager.GetString("chuyen_doi_btn", resourceCulture);
+            }
+        }
     }
 }
