@@ -42,16 +42,10 @@
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="1" Text="{Binding singleAccount.bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center"/>
                                     </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1" Grid.Column="0">
-                                        <Label Text="{Binding Source={x:Static lang:Language.loai_khach_hang},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                        <Label Text="{Binding Localization.Label}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
-                                    </Grid>
+                                    
                                     <ffimageloading:CachedImage x:Name="imgQrCode" Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" Source="{Binding singleAccount.bsd_imageqrcode,Converter={StaticResource Base64ToImageSourceConverter}}" IsVisible="{Binding singleAccount.bsd_imageqrcode,Converter={StaticResource NullToHideConverter}}" HeightRequest="70" WidthRequest="70" VerticalOptions="Start" HorizontalOptions="EndAndExpand"/>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="2" Grid.Column="0">
-                                        <Label Text="{Binding Source={x:Static lang:Language.nhom},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
-                                        <Label Text="{Binding BusinessTypes}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="3" Grid.Column="0">
+                                    
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="1" Grid.Column="0">
                                         <Label Text="{Binding Source={x:Static lang:Language.dai_dien},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                         <Label Text="{Binding PrimaryContact.bsd_fullname}" Grid.Column="1" FontSize="15" TextColor="{StaticResource NavigationPrimary}">
                                             <Label.GestureRecognizers>
@@ -59,13 +53,21 @@
                                             </Label.GestureRecognizers>
                                         </Label>
                                     </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                                         <controls:FormLabel Text="{Binding Source={x:Static lang:Language.giay_phep_kinh_doanh},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                         <controls:FormLabelValue Text="{Binding singleAccount.bsd_registrationcode}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                     </Grid>
-                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
                                         <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dien_thoai},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
                                         <controls:FormLabelValue Text="{Binding singleAccount.telephone1_format}" Grid.Column="1" FontSize="15" TextColor="#444444" />
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="4" Grid.Column="0">
+                                        <Label Text="{Binding Source={x:Static lang:Language.loai_khach_hang},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                        <Label Text="{Binding Localization.Label}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto,*" Grid.Row="5" Grid.Column="0">
+                                        <Label Text="{Binding Source={x:Static lang:Language.nhom},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444"/>
+                                        <Label Text="{Binding BusinessTypes}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                     </Grid>
                                 </Grid>
                                 <BoxView HeightRequest="1" BackgroundColor="#939393" Grid.Row="1"/>
@@ -84,7 +86,7 @@
                                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="GoiDien_Tapped"/>
                                             </StackLayout.GestureRecognizers>
                                             <Label Text="&#xf879; " FontSize="15" FontFamily="FontAwesomeSolid" TextColor="#939393" VerticalTextAlignment="Center"/>
-                                            <Label Text="{x:Static lang:Language.nhan_tin}" FontSize="15" TextColor="#939393" VerticalTextAlignment="Center"/>
+                                            <Label Text="{x:Static lang:Language.goi_dien}" FontSize="15" TextColor="#939393" VerticalTextAlignment="Center"/>
                                         </StackLayout>
                                     </Grid>
                                 </StackLayout>

@@ -407,7 +407,7 @@ namespace PhuLongCRM.ViewModels
 
             if (singleLead.new_birthday.HasValue)
             {
-                data["new_birthday"] = singleLead.new_birthday.Value.ToUniversalTime();
+                data["new_birthday"] = singleLead.new_birthday.Value.ToLocalTime();
             }
             else
             {
@@ -416,7 +416,7 @@ namespace PhuLongCRM.ViewModels
 
             if (singleLead.bsd_dategrant.HasValue)
             {
-                data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToUniversalTime();
+                data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToLocalTime();
             }
             else
             {

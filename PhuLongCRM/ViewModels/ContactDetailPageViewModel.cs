@@ -363,7 +363,7 @@ namespace PhuLongCRM.ViewModels
                                                <value>100000009</value>
                                                <value>6</value>
                                            </condition>
-                                           <condition attribute='bsd_quotationsigneddate' operator='not-null' />
+                                           <condition attribute='bsd_quotationsigneddate' operator='null' />
                                        </filter>
                                      </filter>
                                 </filter>

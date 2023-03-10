@@ -188,6 +188,8 @@ namespace PhuLongCRM.ViewModels
                 employee_id = tmp.contact_employee_id
             };
             this.IsCurrentRecordOfUser = (singleAccount.owner_id == UserLogged.Id || singleAccount.employee_id == UserLogged.Id) ? true : false;
+            if (singleAccount.bsd_issuedon.HasValue)
+                singleAccount.bsd_issuedon = singleAccount.bsd_issuedon.Value.ToLocalTime();
         }
 
         public void GetTypeById(string loai)

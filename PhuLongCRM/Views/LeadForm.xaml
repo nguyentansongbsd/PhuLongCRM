@@ -108,11 +108,11 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.so_gpkd}"/>
                                 <controls:MainEntry x:Name="so_gpkd" Text="{Binding singleLead.bsd_registrationcode}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_gpkd}" Margin="0,0,0,5" Unfocused="so_gpkd_Unfocused"/>
 
-                                <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.trang_web}" FontSize="15" />
-                                <controls:MainEntry x:Name="websiteurl_text" Text="{Binding singleLead.websiteurl}" Placeholder="{x:Static lang:Language.nhap_website_cong_ty}" FontSize="15"/>
-
                                 <controls:FormLabel VerticalOptions="Center" HorizontalOptions="Start" Text="{x:Static lang:Language.dia_chi_cong_ty}" FontSize="15" />
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_cong_ty}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address3}" CenterModal="{Reference centerModal3}"/>
+
+                                <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.trang_web}" FontSize="15" />
+                                <controls:MainEntry x:Name="websiteurl_text" Text="{Binding singleLead.websiteurl}" Placeholder="{x:Static lang:Language.nhap_website_cong_ty}" FontSize="15"/>
 
                                 <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.mo_ta}" FontSize="15"/>
                                 <controls:MainEditor x:Name="description_text" Text="{Binding singleLead.description}" Placeholder="{x:Static lang:Language.nhap_mo_ta}" FontSize="15" HeightRequest="100"/>

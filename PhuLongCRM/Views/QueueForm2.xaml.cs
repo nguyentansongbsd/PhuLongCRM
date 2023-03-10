@@ -105,8 +105,9 @@ namespace PhuLongCRM.Views
                 }
                 topic.Text = viewModel.QueueUnit.project_name + " - " + DateTime.Now.ToString("dd/MM/yyyy");
                 viewModel.QueueUnit.bsd_queuingfee_format = StringFormatHelper.FormatCurrency(viewModel.QueueUnit.bsd_bookingfee);
+                if (viewModel.Queue != null) viewModel.Queue.bsd_queuingfee = viewModel.QueueUnit.bsd_bookingfee;
                 OnCompleted?.Invoke(true);
-            }
+            } 
             else
             {
                 if (viewModel.QueueUnit.unit_id == Guid.Empty)
@@ -118,13 +119,20 @@ namespace PhuLongCRM.Views
                 if (viewModel.QueueUnit.phaseslaunch_id == Guid.Empty) // giữ chỗ sản phẩm có đợt mở bán, tiền giữ chỗ = 0
                 {
                     if (viewModel.QueueUnit.bsd_queuingfee > 0)
+                    {
                         viewModel.QueueUnit.bsd_queuingfee_format = StringFormatHelper.FormatCurrency(viewModel.QueueUnit.bsd_queuingfee);
+                        if (viewModel.Queue != null) viewModel.Queue.bsd_queuingfee = viewModel.QueueUnit.bsd_queuingfee;
+                    }
                     else if (viewModel.QueueUnit.bsd_bookingfee > 0)
+                    {
                         viewModel.QueueUnit.bsd_queuingfee_format = StringFormatHelper.FormatCurrency(viewModel.QueueUnit.bsd_bookingfee);
+                        if (viewModel.Queue != null) viewModel.Queue.bsd_queuingfee = viewModel.QueueUnit.bsd_bookingfee;
+                    }
                 }
                 else
                 {
                     viewModel.QueueUnit.bsd_queuingfee_format = StringFormatHelper.FormatCurrency(0);
+                    if (viewModel.Queue != null) viewModel.Queue.bsd_queuingfee = 0;
                 }
                 OnCompleted?.Invoke(true);
             }
