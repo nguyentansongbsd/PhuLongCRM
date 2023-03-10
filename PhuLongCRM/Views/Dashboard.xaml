@@ -81,35 +81,37 @@
                                         </DataTemplate>
                                     </CarouselView.ItemTemplate>
                                 </CarouselView>
-                                <StackLayout x:Name="promotion" BindableLayout.ItemsSource="{Binding Promotions}" IsVisible="false">
-                                    <BindableLayout.EmptyViewTemplate>
-                                        <DataTemplate>
-                                            <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
-                                        </DataTemplate>
-                                    </BindableLayout.EmptyViewTemplate>
-                                    <BindableLayout.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid BackgroundColor="#eeeeee" Padding="0,1,0,0">
-                                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Padding="15" BackgroundColor="White">
-                                                    <Grid.GestureRecognizers>
-                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Promotion_Tapped" CommandParameter="{Binding .}"/>
-                                                    </Grid.GestureRecognizers>
-                                                    <Label Text="{Binding promotion_name}" FontSize="14" TextColor="#444444" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="0" FontAttributes="Bold"/>
-                                                    <Label FontSize="14" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Grid.Row="0">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="{Binding promotion_startdate,StringFormat='{0:MM/yyyy}'}"/>
-                                                                <Span Text=" - "/>
-                                                                <Span Text="{Binding promotion_enddate,StringFormat=' {0:MM/yyyy}'}"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                    <Label Text="{Binding promotion_project_name}" FontSize="14" TextColor="Gray" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                                <ScrollView x:Name="promotion" IsVisible="false">
+                                    <StackLayout BindableLayout.ItemsSource="{Binding Promotions}" IsVisible="true">
+                                        <BindableLayout.EmptyViewTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
+                                            </DataTemplate>
+                                        </BindableLayout.EmptyViewTemplate>
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid BackgroundColor="#eeeeee" Padding="0,1,0,0">
+                                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Padding="15" BackgroundColor="White">
+                                                        <Grid.GestureRecognizers>
+                                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Promotion_Tapped" CommandParameter="{Binding .}"/>
+                                                        </Grid.GestureRecognizers>
+                                                        <Label Text="{Binding promotion_name}" FontSize="14" TextColor="#444444" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="0" FontAttributes="Bold"/>
+                                                        <Label FontSize="14" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Grid.Row="0">
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span Text="{Binding promotion_startdate,StringFormat='{0:MM/yyyy}'}"/>
+                                                                    <Span Text=" - "/>
+                                                                    <Span Text="{Binding promotion_enddate,StringFormat=' {0:MM/yyyy}'}"/>
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+                                                        </Label>
+                                                        <Label Text="{Binding promotion_project_name}" FontSize="14" TextColor="Gray" VerticalOptions="Center" LineBreakMode="TailTruncation" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                                                    </Grid>
                                                 </Grid>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </BindableLayout.ItemTemplate>
-                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </ScrollView>
                             </Grid>
                         </Grid>
                         <Grid ColumnDefinitions="*,*,*" Margin="15,20">

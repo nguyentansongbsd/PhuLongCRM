@@ -221,6 +221,8 @@ namespace PhuLongCRM.ViewModels
                 IsOfficial = false;
             else
                 IsOfficial = true;
+            if (singleAccount.bsd_issuedon.HasValue)
+                singleAccount.bsd_issuedon = singleAccount.bsd_issuedon.Value.ToLocalTime();
 
             Address1 = new AddressModel
             {
@@ -327,7 +329,7 @@ namespace PhuLongCRM.ViewModels
             data["fax"] = singleAccount.fax;
             data["telephone1"] = !string.IsNullOrWhiteSpace(singleAccount.telephone1) && singleAccount.telephone1.Contains("-") ? singleAccount.telephone1.Replace("+", "").Replace("-", "") : singleAccount.telephone1;
             data["bsd_registrationcode"] = singleAccount.bsd_registrationcode;
-            data["bsd_issuedon"] = singleAccount.bsd_issuedon.HasValue ? (DateTime.Parse(singleAccount.bsd_issuedon.ToString()).ToLocalTime()).ToString("yyyy-MM-dd\"T\"HH:mm:ss\"Z\"") : null;
+            data["bsd_issuedon"] = singleAccount.bsd_issuedon.HasValue ? (DateTime.Parse(singleAccount.bsd_issuedon.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null; /*(DateTime.Parse(singleAccount.bsd_issuedon.ToString()).ToLocalTime()).ToString("yyyy-MM-dd\"T\"HH:mm:ss\"Z\"") : null;*/
             data["bsd_placeofissue"] = singleAccount.bsd_placeofissue;
             data["statuscode"] = this.CustomerStatusReason?.Val;
             data["bsd_vatregistrationnumber"] = singleAccount.bsd_vatregistrationnumber;

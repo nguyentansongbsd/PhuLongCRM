@@ -167,20 +167,27 @@ namespace PhuLongCRM.Views
                         && !string.IsNullOrWhiteSpace(viewModel.singleLead.companyname)
                         && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_accountaddressvn))
                         {
-                            LeadQualifyMethod();
+                            LoadingHelper.Show();
+                            await LeadQualifyMethod();
+                            LoadingHelper.Hide();
+
                         }
                         else
                         {
                             bool asw = await DisplayAlert(Language.chuyen_doi_khach_hang, Language.khach_hang_doanh_nghiep_se_khong_duoc_chuyen_doi_vui_long_dien_day_du_cac_thong_tin_sau_ten_cong_ty_gpkd_dia_chi, Language.chuyen_doi_btn, Language.cap_nhat_btn);
                             if (asw == true)
                             {
-                                LeadQualifyMethod();
+                                LoadingHelper.Show();
+                                await LeadQualifyMethod();
+                                LoadingHelper.Hide();
                             }
                         }
                     }   
                     else
                     {
-                        LeadQualifyMethod();
+                        LoadingHelper.Show();
+                        await LeadQualifyMethod();
+                        LoadingHelper.Hide();
                     }    
                 }   
                 else
@@ -194,7 +201,7 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Hide();
         }
-        private async void LeadQualifyMethod()
+        private async Task LeadQualifyMethod()
         {
             LoadingHelper.Show();
             if (string.IsNullOrWhiteSpace(viewModel.singleLead?.bsd_contactaddress))
