@@ -46,6 +46,7 @@ namespace PhuLongCRM.Views
 
         private void Language_SelectedIndexChanged(object sender, EventArgs e)
         {
+        //edit o day
             var item = language.SelectedItem as string;
             if(item == "English")
             {
