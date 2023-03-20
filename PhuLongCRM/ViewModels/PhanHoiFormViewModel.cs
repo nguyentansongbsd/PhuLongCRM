@@ -60,6 +60,7 @@ namespace PhuLongCRM.ViewModels
         public OptionSet DoiTuong { get => _doiTuong; set { _doiTuong = value; OnPropertyChanged(nameof(DoiTuong)); } }
 
         public Guid IncidentId { get; set; }
+        public bool fromFeedback { get; set; }
 
         public PhanHoiFormViewModel()
         {

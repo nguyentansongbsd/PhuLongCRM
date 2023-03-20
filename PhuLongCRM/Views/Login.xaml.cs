@@ -37,8 +37,6 @@ namespace PhuLongCRM.Views
 
         public string ImeiNum { get; set; }
 
-        public static bool? LoginSession = null;
-
         private UserModel _admin;
         public UserModel Admin { get => _admin; set { _admin = value; OnPropertyChanged(nameof(Admin)); } }
         private bool isTimeOut {get;set;}
@@ -47,7 +45,6 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = this;
-            LoginSession = false;
             VerApp = Config.OrgConfig.VerApp;
             if (UserLogged.IsLogged && UserLogged.IsSaveInforUser)
             {
@@ -62,6 +59,7 @@ namespace PhuLongCRM.Views
                 checkboxRememberAcc.IsChecked = false;
             }
 
+            TimeOut_Popup.IsVisible = false;
             if (UserLogged.Language == "vi")
             {
                 flagVN.BorderColor = Color.FromHex("#2196F3");

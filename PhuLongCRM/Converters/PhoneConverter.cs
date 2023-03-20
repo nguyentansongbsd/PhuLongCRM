@@ -12,7 +12,7 @@ namespace PhuLongCRM.Converters
             string phone = value.ToString();
             if (phone.StartsWith("84"))
             {
-                return "+84-" + phone.Replace("84", "");
+                return "+84-" + phone.Substring(2);
             }
             else
             {

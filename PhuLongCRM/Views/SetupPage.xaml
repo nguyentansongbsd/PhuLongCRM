@@ -4,7 +4,7 @@
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
-             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input" xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              ios:Page.UseSafeArea="true"
              Title="{x:Static lang:Language.thiet_lap_title}"
              BackgroundColor="#f1f1f1"
@@ -26,19 +26,6 @@
                                 </Picker.Items>
                             </Picker>
                         </Grid>
-                        <BoxView HeightRequest="0.5" BackgroundColor="Gray" Margin="20,0"/>
-                        <Grid ColumnDefinitions="Auto,Auto,*" Padding="0,10">
-                            <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="YellowGreen" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
-                                <Label Text="&#xf51e;" FontFamily="FontAwesomeSolid" FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"/>
-                            </telerikPrimitives:RadBorder>
-                            <Label x:Name="tiente" Grid.Column="1" Text="{x:Static lang:Language.tien_te}" FontSize="16" TextColor="#444444" VerticalOptions="Center"/>
-                            <Picker x:Name="currency" SelectedIndexChanged="Currency_SelectedIndexChanged" Title="{x:Static lang:Language.tien_te}" Grid.Column="2" VerticalOptions="End" FontSize="16" HorizontalTextAlignment="End" BackgroundColor="White">
-                                <Picker.Items>
-                                    <x:String>English</x:String>
-                                    <x:String>Việt Nam</x:String>
-                                </Picker.Items>
-                            </Picker>
-                        </Grid>
                         <BoxView HeightRequest="0.5" BackgroundColor="Gray" Margin="20,0" IsVisible="false"/>
                         <Grid ColumnDefinitions="Auto,Auto,*" Padding="0,10" IsVisible="false">
                             <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="SeaGreen" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
@@ -46,6 +33,32 @@
                             </telerikPrimitives:RadBorder>
                             <Label x:Name="thongbao" Grid.Column="1" Text="{x:Static lang:Language.thong_bao}" FontSize="16" TextColor="#444444" VerticalOptions="Center"/>
                             <Switch x:Name="noti" Toggled="noti_Toggled" Grid.Column="2" VerticalOptions="End"/>
+                        </Grid>
+                        <BoxView HeightRequest="0.5" BackgroundColor="Gray" Margin="20,0"/>
+                        <Grid ColumnDefinitions="Auto,Auto,*" RowDefinitions="Auto,*" Padding="0,10">
+                            <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="YellowGreen" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
+                                <Label Text="&#xf51e;" FontFamily="FontAwesomeSolid" FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"/>
+                            </telerikPrimitives:RadBorder>
+                            <Label x:Name="tiente" Grid.Column="1" Text="{x:Static lang:Language.tien_te}" FontSize="16" TextColor="#444444" VerticalOptions="Center"/>
+                            <Picker x:Name="currency" SelectedIndexChanged="Currency_SelectedIndexChanged" Title="{x:Static lang:Language.tien_te}" Grid.Column="2" VerticalOptions="End" FontSize="16" HorizontalTextAlignment="End" BackgroundColor="White">
+                                <Picker.Items>
+                                    <x:String>English (United States)</x:String>
+                                    <x:String>Vietnamese (VietNam)</x:String>
+                                </Picker.Items>
+                            </Picker>
+                            <telerikPrimitives:RadBorder Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" BorderThickness="1" CornerRadius="20" BorderColor="Gray" BackgroundColor="White" Padding="20" Margin="0,10,0,0">
+                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                                    <controls:FormLabel x:Name="lb_number" Text="{x:Static lang:Language.so}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label x:Name="text_number" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
+                                    </telerikPrimitives:RadBorder>
+
+                                    <controls:FormLabel x:Name="lb_curency" Text="{x:Static lang:Language.tien_te}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="1"/>
+                                    <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                        <Label x:Name="text_curency" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
+                                    </telerikPrimitives:RadBorder>
+                                </Grid>
+                            </telerikPrimitives:RadBorder>
                         </Grid>
                     </StackLayout>
                 </telerikPrimitives:RadBorder>

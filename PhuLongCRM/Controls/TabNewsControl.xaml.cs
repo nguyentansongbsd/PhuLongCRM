@@ -158,6 +158,15 @@ namespace PhuLongCRM.Controls
         {
             if (ListTabName != null)
             {
+                var list = ListTab.Split(',').ToList();
+                if (list != null && list.Count > 0)
+                {
+                    ListTabName.Clear();
+                    foreach (var item in list)
+                    {
+                        ListTabName.Add(GetStringByKey(item));
+                    }
+                }
                 for (int i = 0; i < this.Children.Count; i++)
                 {
                     var children = this.Children[i] as Label;

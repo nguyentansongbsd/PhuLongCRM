@@ -192,7 +192,7 @@ namespace PhuLongCRM.Views
                 }   
                 else
                 {
-                    ToastMessageHelper.ShortMessage(Language.khach_hang_da_co_nguoi_bao_ho_khong_the_chuyen_doi);
+                   await LeadQualifyMethod();
                 }    
             }
             catch(Exception ex)
@@ -204,11 +204,14 @@ namespace PhuLongCRM.Views
         private async Task LeadQualifyMethod()
         {
             LoadingHelper.Show();
-            if (string.IsNullOrWhiteSpace(viewModel.singleLead?.bsd_contactaddress))
+            if (viewModel.singleLead != null && viewModel.singleLead.bsd_hasguardian == false)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_dien_day_du_thong_tin_dia_chi_lien_lac);
-                LoadingHelper.Hide();
-                return;
+                if (string.IsNullOrWhiteSpace(viewModel.singleLead?.bsd_contactaddress))
+                {
+                    ToastMessageHelper.ShortMessage(Language.vui_long_dien_day_du_thong_tin_dia_chi_lien_lac);
+                    LoadingHelper.Hide();
+                    return;
+                }
             }
             //}
             //if (viewModel.singleLead?.bsd_permanentcountry_id == Guid.Empty

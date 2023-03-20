@@ -22,5 +22,6 @@ namespace PhuLongCRM.Models
         public Guid agent_id { get; set; }
         public string agent_name { get; set; }
         public string statuscode { get; set; }
+        public int bsd_apprating { get; set; }
     }
 }

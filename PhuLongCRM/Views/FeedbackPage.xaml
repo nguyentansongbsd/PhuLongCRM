@@ -6,13 +6,51 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              ios:Page.UseSafeArea="true"
+             BackgroundColor="#f1f1f1"
              Title="{x:Static lang:Language.danh_gia_title}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="20" BorderColor="White" BackgroundColor="White" Padding="15" Margin="0,20,0,0">
+                    <StackLayout>
+                        <Grid ColumnDefinitions="Auto,Auto,*" RowDefinitions="*,Auto" Padding="5,10" HorizontalOptions="Start">
+                            <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="#97C91C" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
+                                <Label Text="&#xf164;" FontFamily="FontAwesomeRegular" FontSize="17" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"/>
+                            </telerikPrimitives:RadBorder>
+                            <Label x:Name="danhgia" Grid.Column="1" Text="{x:Static lang:Language.danh_gia}" FontSize="16" TextColor="#444444" VerticalOptions="Center"/>
+                            <controls:RatingControl Grid.Column="2" x:Name="ratingbar" StarChanged="RatingControl_StarChanged" HorizontalOptions="End"/>
+
+                            <Button x:Name="btn_sendfeedback" Text="{x:Static lang:Language.gui_danh_gia}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Clicked="SendFeedback_Clicked" IsVisible="false" BackgroundColor="#2196F3" TextColor="White" CornerRadius="10" HeightRequest="35" Padding="10,5" FontSize="15" TextTransform="None" Margin="0,5"/>
+                        </Grid>
+                        <BoxView HeightRequest="1" BackgroundColor="Gray" Margin="20,0"/>
+                        <Grid ColumnDefinitions="Auto,Auto,*" Padding="5,10" RowSpacing="10">
+                            <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="#D9708E" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
+                                <Label Text="&#xf1d8;" FontFamily="FontAwesomeRegular" FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"/>
+                            </telerikPrimitives:RadBorder>
+                            <Label x:Name="yeucau" Grid.Column="1" Text="{x:Static lang:Language.yeu_cau}" FontSize="16" TextColor="#444444" VerticalOptions="Center"/>
+                            <Label Text="&#xf054;" FontFamily="FontAwesomeSolid" Grid.Column="2" FontSize="14" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="#444444">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Request_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                        <BoxView HeightRequest="1" BackgroundColor="Gray" Margin="20,0"/>
+                        <Grid ColumnDefinitions="Auto,Auto,*" Padding="5,10" RowSpacing="10">
+                            <telerikPrimitives:RadBorder Grid.Column="0" VerticalOptions="Center" BackgroundColor="#B677D2" BorderThickness="1" CornerRadius="12" Padding="2" HeightRequest="30" WidthRequest="30">
+                                <Label Text="&#xf086;" FontFamily="FontAwesomeRegular" FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"/>
+                            </telerikPrimitives:RadBorder>
+                            <Label x:Name="phanhoi" Grid.Column="1" Text="{x:Static lang:Language.phan_hoi}" FontSize="16" TextColor="#444444" VerticalOptions="Center"/>
+                            <Label Text="&#xf054;" FontFamily="FontAwesomeSolid" Grid.Column="2" FontSize="14" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="#444444">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Feedback_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </StackLayout>
+                </telerikPrimitives:RadBorder>
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

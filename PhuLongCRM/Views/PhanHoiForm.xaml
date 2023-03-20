@@ -26,7 +26,7 @@
                     <controls:FormLabel Text="{x:Static lang:Language.nguon}" Margin="0,10,0,0"/>
                     <controls:LookUp x:Name="lookupCaseOrigin" Placeholder="{x:Static lang:Language.chon_nguon}" BottomModal="{Reference lookupModal}" NameDisplay="Label" SelectedItem="{Binding CaseOrigin}" ItemsSource="{Binding CaseOrigins}"/>
 
-                    <controls:FormLabelRequired Text="{x:Static lang:Language.khach_hang}" Margin="0,10,0,0"/>
+                    <controls:FormLabelRequired x:Name="lb_multiTabsCustomer" Text="{x:Static lang:Language.khach_hang}" Margin="0,10,0,0"/>
                     <controls:LookUpMultipleTabs x:Name="multiTabsCustomer" Placeholder="{x:Static lang:Language.chon_khach_hang}" CenterModal="{Reference centerModal}" SelectedItem="{Binding Customer}" ShowAccount="True" ShowContact="True" SelectedItemChange="CustomerItem_Changed"/>
 
                     <controls:FormLabel Text="{x:Static lang:Language.du_an}" Margin="0,10,0,0"/>
