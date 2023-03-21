@@ -15,7 +15,7 @@ namespace PhuLongCRM.Controls
             Init();
         }
 
-        public async void Init()
+        public void Init()
         {
             entryPhone.SetBinding(MainEntry.TextProperty, new Binding("PhoneNum") { Source = this });
         }

@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -12,18 +13,38 @@ namespace PhuLongCRM.Views
     public partial class ContractList : ContentPage
     {
         public ContractListViewModel viewModel;
+        public static bool? NeedToRefresh = null;
         public ContractList()
         {
             InitializeComponent(); 
             BindingContext = viewModel = new ContractListViewModel();
+            NeedToRefresh = false;
+            this.PropertyChanged += ContractList_PropertyChanged;
             LoadingHelper.Show();
             Init();
         }
+
+        private void ContractList_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ChangLanguege();
+        }
+
         public async void Init()
         {
             await Task.WhenAll(viewModel.LoadData(),viewModel.LoadProject());
             viewModel.LoadStatus();
             LoadingHelper.Hide();
+        }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadOnRefreshCommandAsync();
+                NeedToRefresh = false;
+                LoadingHelper.Hide();
+            }
         }
 
         private async void SearchBar_SearchButtonPressed(System.Object sender, System.EventArgs e)
@@ -76,5 +97,13 @@ namespace PhuLongCRM.Views
             await viewModel.LoadOnRefreshCommandAsync();
             LoadingHelper.Hide();
         }
+        private void ChangLanguege()
+        {
+            FiltersProject.Placeholder = Language.du_an;
+            FiltersStatus.Placeholder = Language.tinh_trang;
+            this.Title = Language.hop_dong_title;
+            viewModel.FiltersStatus.Clear();
+            viewModel.LoadStatus();
+        }    
     }
 }

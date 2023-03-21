@@ -15,8 +15,8 @@ namespace PhuLongCRM.ViewModels
 {
     public class UnitInfoViewModel : BaseViewModel
     {
-        private List<CollectionData> _collections;
-        public List<CollectionData> Collections { get => _collections; set { _collections = value; OnPropertyChanged(nameof(Collections)); } }
+        public ObservableCollection<CollectionData> Collections { get; set; } = new ObservableCollection<CollectionData>();
+        public ObservableCollection<CollectionData> PdfDocxFiles { get; set; } = new ObservableCollection<CollectionData>();
 
         public List<Photo> Photos;
 
@@ -30,9 +30,7 @@ namespace PhuLongCRM.ViewModels
         public bool ShowCollections { get => _showCollections; set { _showCollections = value; OnPropertyChanged(nameof(ShowCollections)); } }
         public Guid UnitId { get; set; }
 
-        private ObservableCollection<ReservationListModel> _bangTinhGiaList;
-        public ObservableCollection<ReservationListModel> BangTinhGiaList { get => _bangTinhGiaList; set { _bangTinhGiaList = value; OnPropertyChanged(nameof(BangTinhGiaList)); } }
-
+        public ObservableCollection<ReservationListModel> BangTinhGiaList { get; set; } = new ObservableCollection<ReservationListModel>();
         public ObservableCollection<QueuesModel> _list_danhsachdatcho;
         public ObservableCollection<QueuesModel> list_danhsachdatcho { get => _list_danhsachdatcho; set { _list_danhsachdatcho = value; OnPropertyChanged(nameof(list_danhsachdatcho)); } }
         public ObservableCollection<ReservationListModel> list_danhsachdatcoc { get; set; } = new ObservableCollection<ReservationListModel>();
@@ -62,6 +60,9 @@ namespace PhuLongCRM.ViewModels
         private bool _isShowBtnBangTinhGia;
         public bool IsShowBtnBangTinhGia { get => _isShowBtnBangTinhGia; set { _isShowBtnBangTinhGia = value; OnPropertyChanged(nameof(IsShowBtnBangTinhGia)); } }
 
+        private bool _isShowBtn;
+        public bool IsShowBtn { get => _isShowBtn; set { _isShowBtn = value; OnPropertyChanged(nameof(IsShowBtn)); } }
+
         private bool _showMoreBangTinhGia;
         public bool ShowMoreBangTinhGia { get => _showMoreBangTinhGia; set { _showMoreBangTinhGia = value; OnPropertyChanged(nameof(ShowMoreBangTinhGia)); } }
 
@@ -81,7 +82,6 @@ namespace PhuLongCRM.ViewModels
         {
             list_danhsachdatcho = new ObservableCollection<QueuesModel>();
             Photos = new List<Photo>();
-            Collections = new List<CollectionData>();
         }
 
         public async Task LoadUnit()
@@ -118,6 +118,11 @@ namespace PhuLongCRM.ViewModels
                 </filter>
                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectcode' visible='false' link-type='outer' alias='a_a77d98e66ce2e811a94e000d3a1bc2d1'>
                   <attribute name='bsd_name' alias='bsd_project_name' />
+                  <attribute name='bsd_projectid' alias='bsd_project_id' />
+                  <attribute name='bsd_queuesperunit' alias='project_queuesperunit' />
+                  <attribute name='bsd_unitspersalesman' alias='project_unitspersalesman' />
+                  <attribute name='bsd_queueunitdaysaleman' alias='project_queueunitdaysaleman'/>
+                  <attribute name='bsd_bookingfee' alias='project_bookingfee' />
                 </link-entity>
                 <link-entity name='bsd_floor' from='bsd_floorid' to='bsd_floor' visible='false' link-type='outer' alias='a_4d73a1e06ce2e811a94e000d3a1bc2d1'>
                   <attribute name='bsd_name' alias='bsd_floor_name' />
@@ -130,6 +135,7 @@ namespace PhuLongCRM.ViewModels
                   <attribute name='bsd_unittypeid' alias='bsd_unittype_value'/>
                 </link-entity>
                 <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
+                  <attribute name='bsd_name' alias='bsd_phaseslaunch_name' />
                   <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
                     <attribute name='bsd_eventid' alias='event_id' />
                     <filter type='and'>
@@ -159,6 +165,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='opportunityid' />
                         <attribute name='bsd_queuenumber' />
                         <attribute name='bsd_queueforproject' />
+                        <attribute name='bsd_queuingfeepaid' />
                         <order attribute='statecode' descending='false' />
                         <order attribute='statuscode' descending='true' />
                         <filter type='and'>
@@ -181,7 +188,11 @@ namespace PhuLongCRM.ViewModels
                     </fetch>";
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<QueuesModel>>("opportunities", fetch);
-            if (result == null || result.value.Count == 0) return;
+            if (result == null || result.value.Count == 0)
+            {
+                ShowMoreDanhSachDatCho = false;
+                return;
+            }
 
             IsLoaded = true;
             var data = result.value;
@@ -189,6 +200,14 @@ namespace PhuLongCRM.ViewModels
 
             foreach (var item in data)
             {
+                if (!string.IsNullOrWhiteSpace(item.contact_name))
+                {
+                    item.customer_name = item.contact_name;
+                }
+                else if (!string.IsNullOrWhiteSpace(item.account_name))
+                {
+                    item.customer_name = item.account_name;
+                }
                 list_danhsachdatcho.Add(item);
             }
             List<QueuesModel> list_sort = new List<QueuesModel>();
@@ -217,6 +236,8 @@ namespace PhuLongCRM.ViewModels
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>
+                                <value>100000000</value>
+                                <value>861450001</value>
                               </condition>
                               <filter type='and'>
                                  <condition attribute='statuscode' operator='in'>
@@ -268,10 +289,8 @@ namespace PhuLongCRM.ViewModels
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                     <filter type='or'>
                                        <condition attribute='statuscode' operator='in'>
-                                            <value>100000000</value>
                                             <value>100000001</value>
                                             <value>100000006</value>
-                                            <value>861450001</value>
                                             <value>861450002</value>
                                             <value>4</value>                
                                             <value>3</value>
@@ -446,6 +465,8 @@ namespace PhuLongCRM.ViewModels
                     List<SharePointGraphModel> list = result.value;
                     var videos = list.Where(x => x.type == "video").ToList();
                     var images = list.Where(x => x.type == "image").ToList();
+                    var pdfs = list.Where(x => x.type == "pdf").ToList();
+                    var docx = list.Where(x => x.type == "docx").ToList();
                     this.TotalMedia += videos.Count;
                     this.TotalPhoto += images.Count;
 
@@ -455,7 +476,7 @@ namespace PhuLongCRM.ViewModels
                         if (urlVideo != null)
                         {
                             string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
-                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia, FileName = item.name });
                         }
                     }
                     foreach (var item in images)
@@ -465,7 +486,25 @@ namespace PhuLongCRM.ViewModels
                         {
                             string url = urlVideo.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
                             this.Photos.Add(new Photo { URL = url });
-                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
+                            Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia, FileName = item.name });
+                        }
+                    }
+                    foreach (var item in pdfs)
+                    {
+                        var resultpdf = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_UnitID}/items/{item.id}/driveItem");
+                        if (resultpdf != null)
+                        {
+                            string url = resultpdf.MicrosoftGraphDownloadUrl;
+                            this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Pdf });
+                        }
+                    }
+                    foreach (var item in docx)
+                    {
+                        var resultdocx = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_UnitID}/items/{item.id}/driveItem");
+                        if (resultdocx != null)
+                        {
+                            string url = resultdocx.MicrosoftGraphDownloadUrl;
+                            this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Docx });
                         }
                     }
                 }
@@ -506,6 +545,18 @@ namespace PhuLongCRM.ViewModels
             {
                 Event.bsd_startdate = data.bsd_startdate.Value.ToLocalTime();
                 Event.bsd_enddate = data.bsd_enddate.Value.ToLocalTime();
+            }
+        }
+        private async static Task<T> LoadFiles<T>(string url) where T : class
+        {
+            var result = await CrmHelper.RetrieveImagesSharePoint<T>(url);
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                return null;
             }
         }
     }

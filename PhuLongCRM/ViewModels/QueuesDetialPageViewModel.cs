@@ -72,6 +72,9 @@ namespace PhuLongCRM.ViewModels
 
         public string CodeContact = LookUpMultipleTabs.CodeContac;
 
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
+
         public QueuesDetialPageViewModel()
         {
             list_thongtincase = new ObservableCollection<HoatDongListModel>();
@@ -103,6 +106,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='statecode' />
                                 <attribute name='bsd_expired' />
                                 <attribute name='bsd_queuingfeepaid' />
+                                <attribute name='bsd_queueforproject' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='opportunityid' operator='eq' value='{QueueId}'/>
@@ -164,7 +168,7 @@ namespace PhuLongCRM.ViewModels
                 NumPhone = data.PhoneContact;
             }
 
-            if (data.unit_name != null)
+            if (data.bsd_queueforproject == false)
             {
                 QueueProject = Language.khong;
             }
@@ -226,6 +230,8 @@ namespace PhuLongCRM.ViewModels
                             <filter type='or'>
                               <condition attribute='statuscode' operator='in'>
                                 <value>100000007</value>
+                                <value>100000000</value>
+                                <value>861450001</value>
                               </condition>
                               <filter type='and'>
                                  <condition attribute='statuscode' operator='in'>
@@ -277,10 +283,8 @@ namespace PhuLongCRM.ViewModels
                             <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                              <filter type='or'>
                                <condition attribute='statuscode' operator='in'>
-                                   <value>100000000</value>
                                    <value>100000001</value>
                                    <value>100000006</value>
-                                   <value>861450001</value>
                                    <value>861450002</value>
                                    <value>4</value>                
                                    <value>3</value>
@@ -545,6 +549,45 @@ namespace PhuLongCRM.ViewModels
             foreach (var x in data)
             {
                 list_thongtincase.Add(x);
+            }
+        }
+        public async Task<bool> CreateTaskMatchUnit()
+        {
+            IDictionary<string, object> data = new Dictionary<string, object>();
+            data["subject"] = $"Ráp căn của Giữ chỗ {Queue.bsd_queuenumber}";
+            data["description"] = "NV.KD gửi yêu cầu đề nghị ráp căn của khách hàng.";
+            data["scheduledstart"] = DateTime.Now.ToUniversalTime();
+            data["scheduledend"] = DateTime.Now.AddDays(1).ToUniversalTime();
+
+            if (Customer.Title == CodeAccount)
+            {
+                data["bsd_customer_Task_account@odata.bind"] = $"/accounts({Customer.Val})";
+            }
+            else if(Customer.Title == CodeContact)
+            {
+                data["bsd_customer_Task_contact@odata.bind"] = $"/contacts({Customer.Val})";
+            }
+
+            data["regardingobjectid_opportunity_task@odata.bind"] = "/opportunities(" + Queue.opportunityid + ")";
+
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.Id != Guid.Empty)
+            {
+                data["bsd_employee_Task@odata.bind"] = "/bsd_employees(" + UserLogged.Id + ")";
+            }
+            if (UserLogged.IsLoginByUserCRM == false && UserLogged.ManagerId != Guid.Empty)
+            {
+                data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
+            }
+            string path = "/tasks";
+            CrmApiResponse result = await CrmHelper.PostData(path, data);
+
+            if (result.IsSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

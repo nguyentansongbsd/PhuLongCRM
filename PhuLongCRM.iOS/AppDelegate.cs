@@ -4,6 +4,7 @@ using System.Linq;
 using FFImageLoading.Forms.Platform;
 using Foundation;
 using PhuLongCRM.IServices;
+using Plugin.FirebasePushNotification;
 using UIKit;
 using Xamarin.Forms;
 
@@ -33,7 +34,44 @@ namespace PhuLongCRM.iOS
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             DependencyService.Get<ILoadingService>().Initilize();
 
+            FirebasePushNotificationManager.Initialize(options, true);
+
             return base.FinishedLaunching(app, options);
+        }
+        public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        {
+            FirebasePushNotificationManager.DidRegisterRemoteNotifications(deviceToken);
+        }
+
+        public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
+        {
+            FirebasePushNotificationManager.RemoteNotificationRegistrationFailed(error);
+
+        }
+
+        // To receive notifications in foreground on iOS 9 and below.
+        // To receive notifications in background in any iOS version
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            // If you are receiving a notification message while your app is in the background,
+            // this callback will not be fired 'till the user taps on the notification launching the application.
+
+            // If you disable method swizzling, you'll need to call this method. 
+            // This lets FCM track message delivery and analytics, which is performed
+            // automatically with method swizzling enabled.
+            FirebasePushNotificationManager.DidReceiveMessage(userInfo);
+            // Do your magic to handle the notification data
+            System.Console.WriteLine(userInfo);
+
+            completionHandler(UIBackgroundFetchResult.NewData);
+        }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            if (Xamarin.Forms.DependencyService.Get<IAppleSignInService>().Callback(url.AbsoluteString))
+                return true;
+
+            return base.OpenUrl(app, url, options);
         }
     }
 }

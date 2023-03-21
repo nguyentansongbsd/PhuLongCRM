@@ -1,22 +1,25 @@
 ﻿using Newtonsoft.Json;
 using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
 using Stormlion.PhotoBrowser;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 namespace PhuLongCRM.ViewModels
 {
     public class ProjectInfoViewModel : BaseViewModel
     {
         public ObservableCollection<CollectionData> Collections { get; set; } = new ObservableCollection<CollectionData>();
-        public ObservableCollection<CollectionData> PdfFiles { get; set; } = new ObservableCollection<CollectionData>();
+        public ObservableCollection<CollectionData> PdfDocxFiles { get; set; } = new ObservableCollection<CollectionData>();
 
         public List<Photo> Photos { get; set; }
         private bool _showCollections = false;
@@ -166,7 +169,13 @@ namespace PhuLongCRM.ViewModels
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ProjectInfoModel>>("bsd_projects", FetchXml);
             if (result == null || result.value.Any() == false) return;
-            Project = result.value.FirstOrDefault();
+            var data = result.value.FirstOrDefault();
+            if (data.bsd_projectslogo == null)
+            {
+                data.bsd_projectslogo = data.bsd_name;
+            }
+            Project = data;
+            
             this.StatusCode = ProjectStatusCodeData.GetProjectStatusCodeById(Project.statuscode);
             //await LoadAllCollection();
         }
@@ -219,7 +228,6 @@ namespace PhuLongCRM.ViewModels
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("products", fetchXml);
             if (result == null || result.value.Any() == false)
             {
-                IsShowBtnGiuCho = true;
                 unitChartModels = new List<ChartModel>()
                 {
                     new ChartModel {Category ="Giữ chỗ",Value=1},
@@ -242,7 +250,6 @@ namespace PhuLongCRM.ViewModels
             }
             else
             {
-                IsShowBtnGiuCho = false;
                 var data = result.value;
                 foreach (var item in data)
                 {
@@ -314,6 +321,7 @@ namespace PhuLongCRM.ViewModels
 
             SoGiuCho = result.value.FirstOrDefault().count;
         }
+
         public async Task LoadThongKeHopDong()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
@@ -334,6 +342,7 @@ namespace PhuLongCRM.ViewModels
 
             SoHopDong = result.value.FirstOrDefault().count;
         }
+
         public async Task LoadThongKeBangTinhGia()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
@@ -353,6 +362,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
             SoBangTinhGia = result.value.FirstOrDefault().count;
         }
+
         public async Task LoadThongKeDatCoc()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
@@ -379,6 +389,7 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
             SoDatCoc = result.value.FirstOrDefault().count;
         }
+
         public async Task LoadGiuCho()
         {
             IsLoadedGiuCho = true;
@@ -392,6 +403,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='opportunityid' />
                                 <attribute name='bsd_queuenumber' />
                                 <attribute name='bsd_queueforproject' />
+                                <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='bsd_bookingtime' descending='false' />
                                 <filter type='and'>
                                     <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
@@ -420,19 +432,29 @@ namespace PhuLongCRM.ViewModels
             if (result == null || result.value.Any() == false) return;
 
             List<QueuesModel> data = result.value;
-            ShowMoreBtnGiuCho = data.Count < 10 ? false : true;
+            ShowMoreBtnGiuCho = data.Count < 5 ? false : true;
             foreach (var item in data)
             {
+                if (!string.IsNullOrWhiteSpace(item.contact_name))
+                {
+                    item.customer_name = item.contact_name;
+                }
+                else if (!string.IsNullOrWhiteSpace(item.account_name))
+                {
+                    item.customer_name = item.account_name;
+                }
                 ListGiuCho.Add(item);
             }
         }
+
         public async Task LoadAllCollection()
         {
             if (ProjectId != null)
             {
                 GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();
                 var client = BsdHttpClient.Instance();
-                string name_folder = ProjectName + "_" + ProjectId.ToString().Replace("-", "");
+                string name_folder = this.Project.bsd_name + "_" + ProjectId.ToString().Replace("-", "");
+
                 string fileListUrl = $"https://graph.microsoft.com/v1.0/drives/{Config.OrgConfig.Graph_ProjectID}/root:/{name_folder}:/children?$select=name,eTag";
                 var request = new HttpRequestMessage(HttpMethod.Get, fileListUrl);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", getTokenResponse.access_token);
@@ -454,13 +476,15 @@ namespace PhuLongCRM.ViewModels
                     var videos = list.Where(x => x.type == "video").ToList();
                     var images = list.Where(x => x.type == "image").ToList();
                     var pdfs = list.Where(x => x.type == "pdf").ToList();
+                    var docx = list.Where(x => x.type == "docx").ToList();
                     this.TotalMedia = videos.Count;
                     this.TotalPhoto = images.Count;
 
-                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs));
+                    await Task.WhenAll(GetVideos(videos), GetImages(images), GetPdfs(pdfs), GetDocxs(docx));
                 }
             }
         }
+
         public async Task LoadDataEvent()
         {
             if (ProjectId == Guid.Empty) return;
@@ -492,6 +516,7 @@ namespace PhuLongCRM.ViewModels
                 Event.bsd_enddate = Event.bsd_enddate.Value.ToLocalTime();
             }
         }
+
         public async Task CheckPhasesLaunch()
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -531,7 +556,7 @@ namespace PhuLongCRM.ViewModels
                 if (result != null)
                 {
                     string url = result.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
-                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia });
+                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = item.id, ImageSource = url, SharePointType = SharePointType.Video, Index = TotalMedia, FileName = item.name});
                 }
             }
         }
@@ -545,7 +570,7 @@ namespace PhuLongCRM.ViewModels
                 {
                     string url = result.value.SingleOrDefault().large.url;// retri se lay duoc thumbnails gom 3 kich thuoc : large,medium,small
                     this.Photos.Add(new Photo { URL = url });
-                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia });
+                    this.Collections.Add(new CollectionData { Id = item.id, MediaSourceId = null, ImageSource = url, SharePointType = SharePointType.Image, Index = TotalMedia, FileName = item.name });
                 }
             }
         }
@@ -558,8 +583,149 @@ namespace PhuLongCRM.ViewModels
                 if (result != null)
                 {
                     string url = result.MicrosoftGraphDownloadUrl;
-                    this.PdfFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name });
+                    this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name,SharePointType = SharePointType.Pdf });
                 }
+            }
+        }
+
+        private async Task GetDocxs(List<SharePointGraphModel> data)
+        {
+            foreach (var item in data)
+            {
+                var result = await LoadFiles<GrapDownLoadUrlModel>($"{Config.OrgConfig.SP_ProjectID}/items/{item.id}/driveItem");
+                if (result != null)
+                {
+                    string url = result.MicrosoftGraphDownloadUrl;
+                    this.PdfDocxFiles.Add(new CollectionData { Id = item.id, UrlPdfFile = url, PdfName = item.name, SharePointType = SharePointType.Docx });
+                }
+            }
+        }
+
+        public void ResetNumStatus(string UnitStatusNew,string UnitStatusOld)
+        {
+            try
+            {
+                switch (UnitStatusOld)
+                {
+                    case "1":
+                        this.ChuanBi--;
+                        break;
+                    case "100000000":
+                        this.SanSang--;
+                        break;
+                    case "100000007":
+                        this.Booking--;
+                        break;
+                    case "100000004":
+                        this.GiuCho--;
+                        break;
+                    case "100000006":
+                        this.DatCoc--;
+                        break;
+                    case "100000005":
+                        this.DongYChuyenCoc--;
+                        break;
+                    case "100000003":
+                        this.DaDuTienCoc--;
+                        break;
+                    case "100000010":
+                        this.Option--;
+                        break;
+                    case "100000001":
+                        this.ThanhToanDot1--;
+                        break;
+                    case "100000009":
+                        this.SignedDA--;
+                        break;
+                    case "100000008":
+                        this.Qualified--;
+                        break;
+                    case "100000002":
+                        this.DaBan--;
+                        break;
+                    default:
+                        break;
+                }
+                switch (UnitStatusNew)
+                {
+                    case "1":
+                        this.ChuanBi++;
+                        break;
+                    case "100000000":
+                        this.SanSang++;
+                        break;
+                    case "100000007":
+                        this.Booking++;
+                        break;
+                    case "100000004":
+                        this.GiuCho++;
+                        break;
+                    case "100000006":
+                        this.DatCoc++;
+                        break;
+                    case "100000005":
+                        this.DongYChuyenCoc++;
+                        break;
+                    case "100000003":
+                        this.DaDuTienCoc++;
+                        break;
+                    case "100000010":
+                        this.Option++;
+                        break;
+                    case "100000001":
+                        this.ThanhToanDot1++;
+                        break;
+                    case "100000009":
+                        this.SignedDA++;
+                        break;
+                    case "100000008":
+                        this.Qualified++;
+                        break;
+                    case "100000002":
+                        this.DaBan++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+        public async Task LoadThongKeSoLuong()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                              <entity name='quote'>
+                                <attribute name='statuscode' groupby='true' alias='group'/>
+                                <attribute name='name' aggregate='count' alias='count'/>
+                                <filter type='and'>
+                                  <condition attribute='statuscode' operator='in'>
+                                    <value>100000000</value>
+                                    <value>861450001</value>
+                                    <value>861450002</value>
+                                    <value>100000006</value>
+                                    <value>3</value>
+                                    <value>861450000</value>
+<value>100000007</value>
+                                  </condition>
+                                </filter>
+                                <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectid' link-type='inner' alias='ae'>
+                                  <filter type='and'>
+                                    <condition attribute='bsd_projectid' operator='eq' value='{ProjectId}'/>
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("quotes", fetchXml);
+            if (result == null || result.value.Any() == false) return;
+            foreach(var item in result.value)
+            {
+                if (item.group == "100000007")
+                    SoBangTinhGia = item.count;
+                else
+                    SoDatCoc += item.count;
             }
         }
     }

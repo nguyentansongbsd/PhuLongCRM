@@ -9,6 +9,9 @@ namespace PhuLongCRM.ViewModels
     {
         public string Keyword { get; set; }
         public string KeyFilter { get; set; }
+        public string FillterStatus { get; set; } = @"<condition attribute='bsd_type' operator='contain-values'>
+                                                        <value>100000000</value>
+                                                      </condition>";
         public ContactsContentviewViewmodel()
         {
             PreLoadData = new Command(() =>
@@ -16,12 +19,27 @@ namespace PhuLongCRM.ViewModels
                 string filter = string.Empty;
                 if (!string.IsNullOrWhiteSpace(KeyFilter))
                 {
-                    if (KeyFilter == "0")
+                    if (KeyFilter == "-1")
                         filter = null;
+                    else if (KeyFilter == "0")
+                        filter = @"<filter type='or'>
+                                  <condition attribute='statuscode' operator='in'>
+                                    <value>1</value>
+                                    <value>100000000</value>
+                                  </condition>
+                                </filter>";
                     else if (KeyFilter == "1")
                         filter = "<condition attribute='statuscode' operator='eq' value='100000000' />";
                     else if (KeyFilter == "2")
                         filter = "<condition attribute='statuscode' operator='eq' value='1' />";
+                    else if (KeyFilter == "3")
+                        filter = @"<filter type='or'>
+                                  <condition attribute='statuscode' operator='in'>
+                                    <value>2</value>
+                                    <value>100000001</value>
+                                    <value>100000002</value>
+                                  </condition>
+                                </filter>"; // Vo hieu luc
                     else
                         filter = string.Empty;
                 }
@@ -40,7 +58,7 @@ namespace PhuLongCRM.ViewModels
                     <order attribute='createdon' descending='true' />
                     <filter type='or'>
                         <condition attribute='bsd_fullname' operator='like' value='%25{Keyword}%25' />
-                        <condition attribute='bsd_identitycardnumber' operator='like' value='%25{Keyword}%25' />
+                        <condition attribute='bsd_identitycard' operator='like' value='%25{Keyword}%25' />
                         <condition attribute='mobilephone' operator='like' value='%25{Keyword}%25' />
                         <condition attribute='emailaddress1' operator='like' value='%25{Keyword}%25' />
                         <condition attribute='bsd_customercode' operator='like' value='%25{Keyword}%25' />
@@ -48,6 +66,7 @@ namespace PhuLongCRM.ViewModels
                     <filter type='and'>
                       <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                       {filter}
+                      {FillterStatus}
                     </filter>
                   </entity>
                 </fetch>";

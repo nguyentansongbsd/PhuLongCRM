@@ -6,17 +6,9 @@
              xmlns:converters="clr-namespace:PhuLongCRM.Converters"
              xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
              x:Class="PhuLongCRM.Views.LeadsContentView">
-    <ContentView.Resources>
-        <ResourceDictionary>
-            <converters:LeadQualityCodeConverter x:Key="LeadQualityCodeConverter"/>
-            <converters:LeadQualityCodeColorConverter x:Key="LeadQualityCodeColorConverter"/>
-            <converters:StatusCodeConverter x:Key="StatusCodeConverter"/>
-            <converters:PhoneConverter x:Key="PhoneConverter"/>
-        </ResourceDictionary>
-    </ContentView.Resources>
     <ContentView.Content>
         <AbsoluteLayout>
-            <Grid RowDefinitions="Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <Grid RowDefinitions="Auto,Auto,*" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="0">
                     <controls:SearchBarFrame x:Name="searchBar" Grid.Column="0" Margin="10,5">
                         <controls:SearchBar  Text="{Binding Keyword}" SearchButtonPressed="Search_Pressed" TextChanged="Search_TextChanged"/>
@@ -27,7 +19,37 @@
                         </Label.GestureRecognizers>
                     </Label>
                 </Grid>
-                <controls:BsdListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped" BackgroundColor="#F3f3f3">
+                <Grid Grid.Row="1" Padding="10,0,10,5" ColumnDefinitions="*,*,*">
+                    <telerikPrimitives:RadBorder x:Name="rb_moi" Grid.Column="0" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                        <Label x:Name="lb_moi" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                        <Span Text="&#xf08d;" FontFamily="FontAwesomeSolid" FontSize="10"/>
+                                        <Span Text="  "/>
+                                        <Span Text="{x:Static lang:Language.new_sts}" />
+                                    </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Moi_Tapped"/>
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                        </telerikPrimitives:RadBorder>
+                    <telerikPrimitives:RadBorder x:Name="rb_dachuyendoi" Grid.Column="1" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                        <Label x:Name="lb_dachuyendoi" Text="{x:Static lang:Language.da_chuyen}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center"/>
+                            <telerikPrimitives:RadBorder.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DaChuyenDoi_Tapped"/>
+                            </telerikPrimitives:RadBorder.GestureRecognizers>
+                        </telerikPrimitives:RadBorder>
+                    <telerikPrimitives:RadBorder x:Name="rb_khongchuyendoi" Grid.Column="2" CornerRadius="10" BorderColor="{StaticResource NavigationPrimary}" Padding="15,5">
+                        <Label x:Name="lb_khongchuyendoi" Text="{x:Static lang:Language.khong_chuyen}" FontSize="14" TextColor="#444444" VerticalOptions="CenterAndExpand" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center"/>
+                        <telerikPrimitives:RadBorder.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="KhongChuyenDoi_Tapped"/>
+                        </telerikPrimitives:RadBorder.GestureRecognizers>
+                    </telerikPrimitives:RadBorder>
+                </Grid>
+                <controls:BsdListView x:Name="listView" Grid.Row="2" ItemsSource="{Binding Data}" HasUnevenRows="True" ItemTapped="listView_ItemTapped" BackgroundColor="#F3f3f3">
                     <controls:BsdListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -42,9 +64,8 @@
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="3" Text="{Binding fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
                                     </Grid>
-                                    <controls:FieldListViewItem Title="{x:Static lang:Language.ma_khach_hang}" Text="{Binding bsd_customercode}"/>
-                                    <controls:FieldListViewItem Title="{x:Static lang:Language.tieu_de}" Text="{Binding subject}"/>
                                     <controls:FieldListViewItem Title="{x:Static lang:Language.so_dien_thoai}" Text="{Binding mobilephone_format}"/>
+                                    <controls:FieldListViewItem Title="{x:Static lang:Language.email}" Text="{Binding emailaddress1}"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
@@ -70,13 +91,13 @@
                             </Label.GestureRecognizers>
                         </Label>
                         <Label x:Name="icon_rating" Text="&#xf15d;" TextColor="#0DB302" FontFamily="FontAwesomeSolid" FontSize="22" Grid.Column="0" Grid.Row="2" VerticalOptions="Center" Margin="25,0"/>
-                      
-                        <Label x:Name="label_status" Text="{x:Static lang:Language.tinh_trang_a_z}" TextColor="#444444" BackgroundColor="White" FontSize="15" Grid.Column="0" Grid.ColumnSpan="2" Padding="60,10,0,10" Grid.Row="4">
+
+                        <Label x:Name="label_status" Text="{x:Static lang:Language.phan_bo}" TextColor="#444444" BackgroundColor="White" FontSize="15" Grid.Column="0" Grid.ColumnSpan="2" Padding="60,10,0,10" Grid.Row="4">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="SelectSort_Tapped" CommandParameter="3"/>
                             </Label.GestureRecognizers>
                         </Label>
-                        <Label x:Name="icon_status" Text="&#xf15d;" TextColor="#D42A16" FontFamily="FontAwesomeSolid" FontSize="22" Grid.Column="0" Grid.Row="4" VerticalOptions="Center" Margin="25,0"/>
+                        <telerikPrimitives:RadCheckBox x:Name="icon_phanbo" CheckedColor="{StaticResource NavigationPrimary}" Grid.Column="0" Grid.Row="4" VerticalOptions="Center" Margin="25,0"/>
                     </Grid>
                 </telerikPrimitives:RadBorder>
             </StackLayout>

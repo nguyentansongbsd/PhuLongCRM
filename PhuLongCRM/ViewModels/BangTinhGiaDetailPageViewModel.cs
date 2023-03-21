@@ -58,6 +58,9 @@ namespace PhuLongCRM.ViewModels
         private DiscountModel _discount;
         public DiscountModel Discount { get => _discount; set { _discount = value; OnPropertyChanged(nameof(Discount)); } }
 
+        private DateTime? _dateSign;
+        public DateTime? DateSign { get=>_dateSign; set { _dateSign = value;OnPropertyChanged(nameof(DateSign)); } }
+
         private bool _isRefreshing;
         public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
 
@@ -201,6 +204,9 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='bsd_paymentscheme' from='bsd_paymentschemeid' to='bsd_paymentscheme' link-type='outer' alias='apo'>
                                         <attribute name='bsd_name' alias='paymentscheme_name'/>
                                         <attribute name='bsd_paymentschemeid' alias='paymentscheme_id'/>
+                                        <attribute name='bsd_optionforfeiture' alias='paymentscheme_optionforfeiture'/>
+                                        <attribute name='bsd_daforfeiture' alias='paymentscheme_daforfeiture'/>
+                                        <attribute name='bsd_spforfeiture' alias='paymentscheme_spforfeiture'/>
                                     </link-entity>
                                     <link-entity name='bsd_discounttype' from='bsd_discounttypeid' to='bsd_discountlist' link-type='outer' alias='ae'>
                                         <attribute name='bsd_name' alias='discountlist_name' />
@@ -227,6 +233,7 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <link-entity name='salesorder' from='quoteid' to='quoteid' link-type='outer'>
                                         <attribute name='salesorderid' alias='salesorder_id'/>
+                                        <attribute name='statuscode' alias='contract_statuscode'/>
                                     </link-entity>
                                     <filter type='and'>
 	                                    <condition attribute='quoteid' operator='eq' uitype='quote' value='" + ReservationId + @"' />
@@ -240,6 +247,9 @@ namespace PhuLongCRM.ViewModels
                 var data = result2.value.SingleOrDefault();
                 Reservation.paymentscheme_id = data.paymentscheme_id;
                 Reservation.paymentscheme_name = data.paymentscheme_name;
+                Reservation.paymentscheme_optionforfeiture = data.paymentscheme_optionforfeiture;
+                Reservation.paymentscheme_daforfeiture = data.paymentscheme_daforfeiture;
+                Reservation.paymentscheme_spforfeiture = data.paymentscheme_spforfeiture;
                 Reservation.discountlist_name = data.discountlist_name;
                 Reservation.interneldiscount_id = data.interneldiscount_id;
                 Reservation.interneldiscount_name = data.interneldiscount_name;
@@ -248,6 +258,7 @@ namespace PhuLongCRM.ViewModels
                 Reservation.collaborator_id = data.collaborator_id;
                 Reservation.collaborator_name = data.collaborator_name;
                 Reservation.salesorder_id = data.salesorder_id;
+                Reservation.contract_statuscode = data.contract_statuscode;
                 if (data.customerreferral_account_id != Guid.Empty)
                 {
                     this.CustomerReferral = new OptionSet() { Val = data.customerreferral_account_id.ToString(), Label = data.customerreferral_account_name, Title = "2" };
@@ -603,7 +614,7 @@ namespace PhuLongCRM.ViewModels
         {
             var model = new
             {
-                datesign = DateTime.Now.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") 
+                datesign = this.DateSign.Value.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") 
             };
 
             var json = JsonConvert.SerializeObject(model);
@@ -812,6 +823,9 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                       <condition attribute='bsd_discountid' operator='eq' value='{discount_id}'/>
                                     </filter>
+                                    <link-entity name='bsd_discounttransaction' from='bsd_discount' to='bsd_discountid' link-type='outer' alias='aa'>
+                                        <attribute name='bsd_totaldiscountamount' alias='totaldiscountamount'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
 

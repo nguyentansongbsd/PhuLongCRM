@@ -9,20 +9,6 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
              x:Class="PhuLongCRM.Views.LeadForm">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="IndicatorText" Value="&#xf105;"/>
-                <Setter Property="IndicatorLocation" Value="Start"/>
-                <Setter Property="IndicatorFontSize" Value="16"/>
-                <Setter Property="IndicatorColor" Value="#000000"/>
-                <Setter Property="BackgroundColor" Value="#F2F2F2"/>
-                <Setter Property="BorderColor" Value="Transparent"/>
-                <Setter Property="Padding" Value="5"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,60">
@@ -30,7 +16,7 @@
                     <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander" BorderColor="Transparent">
                         <telerikPrimitives:RadExpander.Header>
                             <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                <Label Text="{x:Static lang:Language.thong_tin_co_ban}" FontSize="15" FontAttributes="Bold" TextColor="Black" Margin="0,5"/>
+                                <Label Text="{x:Static lang:Language.thong_tin_co_ban}" Style="{StaticResource ExpanderHeadingText}"/>
                             </telerikPrimitives:ExpanderHeader>
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
@@ -52,7 +38,7 @@
                                 <controls:MainEntry Text="{Binding singleLead.lastname}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_ho_ten}"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}"/>
-                                <controls:PhoneEntryControl Text="{Binding singleLead.mobilephone}" Keyboard="Numeric" FontSize="15" Placeholder="+84-033XXXXXXX" Unfocused="mobilephone_text_Unfocused"/>
+                                <controls:PhoneEntryControl Text="{Binding singleLead.mobilephone}" Keyboard="Numeric" FontSize="15"  Placeholder="+84-033XXXXXXX" Unfocused="mobilephone_text_Unfocused"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.so_dien_thoai_cong_ty}"/>
                                 <controls:PhoneEntryControl Text="{Binding singleLead.telephone1}" Keyboard="Numeric" FontSize="15"  Placeholder="+84-033XXXXXXX" Unfocused="telephone1_text_Unfocused"/>
@@ -70,13 +56,22 @@
                                 <controls:MainEntry x:Name="jobtitle_text" Text="{Binding singleLead.jobtitle}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_chuc_vu}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.email}"/>
-                                <controls:MainEntry x:Name="emailaddress1_text" Keyboard="Email" Text="{Binding singleLead.emailaddress1}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_email}" Margin="0,0,0,5"/>
+                                <controls:MainEntry x:Name="emailaddress1_text" Keyboard="Email" Text="{Binding singleLead.emailaddress1}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_email}" Margin="0,0,0,5" Unfocused="emailaddress1_text_Unfocused"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.gioi_tinh}"/>
                                 <controls:LookUp x:Name="lookUpGioiTinh" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
 
+                                <!--<controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"  ShowTime="False"/>-->
+
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
-                                <controls:DatePickerBoderControl Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"  ShowTime="False"/>
+                                <controls:DatePickerBorder x:Name="birthday" DateSelected="DatePickerBorder_DateSelected"/>
+
+                                <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}"/>
+                                <controls:LookUp x:Name="lookUpHasGuardian" Placeholder="{x:Static lang:Language.chon_gia_tri}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding HasGuardian}" ItemsSource="{Binding HasGuardians}" SelectedItemChange="lookUpHasGuardian_SelectedItemChange"/>
+
+                                <controls:FormLabelRequired x:Name="lbGuardian" Text="{x:Static lang:Language.nguoi_bao_ho}" IsVisible="false"/>
+                                <controls:LookUp x:Name="lookUpGuardian" Placeholder="{x:Static lang:Language.chon_nguoi_bao_ho}" BottomModal="{Reference LookUpModal}" NameDisplay="bsd_fullname" SelectedItem="{Binding Guardian}" ItemsSource="{Binding Guardians}" IsVisible="false" SelectedItemChange="lookUpGuardian_SelectedItemChange"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.loai_the_id}"/>
                                 <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="{x:Static lang:Language.chon_loai_the_id}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}" SelectedItemChange="TypeIdCard_ItemChange"/>
@@ -85,7 +80,7 @@
                                 <controls:MainEntry x:Name="lb_soID" Text="{Binding singleLead.bsd_identitycardnumberid}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_id}" Margin="0,0,0,5" Unfocused="MainEntry_Unfocused" />
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}"/>
-                                <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleLead.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False"/>
+                                <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleLead.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False" Date_Selected="datePickerNgayCap_Date_Selected"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap}"/>
                                 <controls:MainEntry Text="{Binding singleLead.bsd_placeofissue}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_noi_cap}" Margin="0,0,0,5"/>
@@ -102,7 +97,7 @@
                     <telerikPrimitives:RadExpander IsExpanded="True" AutomationId="masterCardExpander" BorderColor="Transparent">
                         <telerikPrimitives:RadExpander.Header>
                             <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                <Label Text="{x:Static lang:Language.thong_tin_cong_ty}" FontSize="15" FontAttributes="Bold" TextColor="Black" Margin="0,5"/>
+                                <Label Text="{x:Static lang:Language.thong_tin_cong_ty}" Style="{StaticResource ExpanderHeadingText}"/>
                             </telerikPrimitives:ExpanderHeader>
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
@@ -113,11 +108,11 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.so_gpkd}"/>
                                 <controls:MainEntry x:Name="so_gpkd" Text="{Binding singleLead.bsd_registrationcode}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_gpkd}" Margin="0,0,0,5" Unfocused="so_gpkd_Unfocused"/>
 
-                                <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.trang_web}" FontSize="15" />
-                                <controls:MainEntry x:Name="websiteurl_text" Text="{Binding singleLead.websiteurl}" Placeholder="{x:Static lang:Language.nhap_website_cong_ty}" FontSize="15"/>
-
                                 <controls:FormLabel VerticalOptions="Center" HorizontalOptions="Start" Text="{x:Static lang:Language.dia_chi_cong_ty}" FontSize="15" />
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_cong_ty}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address3}" CenterModal="{Reference centerModal3}"/>
+
+                                <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.trang_web}" FontSize="15" />
+                                <controls:MainEntry x:Name="websiteurl_text" Text="{Binding singleLead.websiteurl}" Placeholder="{x:Static lang:Language.nhap_website_cong_ty}" FontSize="15"/>
 
                                 <controls:FormLabel VerticalOptions="Center" Text="{x:Static lang:Language.mo_ta}" FontSize="15"/>
                                 <controls:MainEditor x:Name="description_text" Text="{Binding singleLead.description}" Placeholder="{x:Static lang:Language.nhap_mo_ta}" FontSize="15" HeightRequest="100"/>

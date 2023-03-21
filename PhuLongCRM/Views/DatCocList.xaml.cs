@@ -24,7 +24,17 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new DatCocListViewModel();
             NeedToRefresh = false;
             LoadingHelper.Show();
+            this.PropertyChanged += DatCocList_PropertyChanged;
             Init();
+        }
+
+        private void DatCocList_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.dat_coc_title;
+            FiltersProject.Placeholder = Language.du_an;
+            FiltersStatus.Placeholder = Language.tinh_trang;
+            viewModel.FiltersStatus.Clear();
+            viewModel.LoadStatus();
         }
 
         protected async override void OnAppearing()

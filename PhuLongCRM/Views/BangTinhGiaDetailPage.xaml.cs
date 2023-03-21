@@ -63,6 +63,7 @@ namespace PhuLongCRM.Views
                 viewModel.ListDiscountInternel.Clear();
                 viewModel.ListDiscountExchange.Clear();
                 viewModel.InstallmentList.Clear();
+                viewModel.ListSpecialDiscount.Clear();
                 viewModel.ShowInstallmentList = false;
                 viewModel.NumberInstallment = 0;
                 
@@ -149,7 +150,7 @@ namespace PhuLongCRM.Views
             var checkFul = await viewModel.CheckFUL();
             if (viewModel.Reservation.statuscode == 100000000)// (hủy đặt cọc)
             {
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_dat_coc, "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeSolid", "\uf05e", null, CancelDeposit));
             }
             if (viewModel.Reservation.statuscode == 3 && checkFul == true)// show khi statuscode == 3(Deposited) (tạo ful)
             {
@@ -173,9 +174,9 @@ namespace PhuLongCRM.Views
                 }
                 if (!viewModel.Reservation.bsd_quotationprinteddate.HasValue)
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, ConfirmSigning));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.xac_nhan_in, "FontAwesomeSolid", "\uf02f", null, Confirm_Quotation));
                 }
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeRegular", "\uf273", null, CancelQuotes));
+                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.huy_bang_tinh_gia, "FontAwesomeRegular", "\uf273", null, CancelDeposit));//CancelQuotes
                 if (viewModel.InstallmentList.Count > 0 && viewModel.Reservation.bsd_quotationprinteddate != null)
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.ky_bang_tinh_gia, "FontAwesomeRegular", "\uf274", null, SignQuotationClicked));
@@ -282,6 +283,25 @@ namespace PhuLongCRM.Views
                 {
                     if (OnCompleted == true)
                     {
+                        if (viewModel.Reservation.statuscode == 3 || viewModel.Reservation.statuscode == 861450000)
+                        {
+                            newPage.Forfeiture_recommend = DecaimalToString(viewModel.Reservation.paymentscheme_optionforfeiture);
+                        }
+                        else if (viewModel.Reservation.contract_statuscode == "100000001"
+                        || viewModel.Reservation.contract_statuscode == "100000007"
+                        || viewModel.Reservation.contract_statuscode == "100000000"
+                        || viewModel.Reservation.contract_statuscode == "100000008")
+                        {
+                            newPage.Forfeiture_recommend = DecaimalToString(viewModel.Reservation.paymentscheme_daforfeiture);
+                        }
+                        else if (viewModel.Reservation.contract_statuscode == "100000010"
+                        || viewModel.Reservation.contract_statuscode == "100000009"
+                        || viewModel.Reservation.contract_statuscode == "100000002"
+                        || viewModel.Reservation.contract_statuscode == "100000003"
+                        || viewModel.Reservation.contract_statuscode == "100000005")
+                        {
+                            newPage.Forfeiture_recommend = DecaimalToString(viewModel.Reservation.paymentscheme_spforfeiture);
+                        }
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
@@ -299,37 +319,46 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
-                if (await viewModel.DeactiveInstallment())
+                bool confirm = await DisplayAlert(Language.xoa_lich_thanh_toan, Language.ban_co_muon_xoa_lich_thanh_toan_nay_khong, Language.co, Language.khong);
+                if (confirm)
                 {
-                    NeedToRefresh = true;
-                    NeedToRefreshInstallment = true;
-                    OnAppearing();
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.da_xoa_lich_thanh_toan);
-                }
-                else
-                {
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.xoa_lich_thanh_toan_that_bai_vui_long_thu_lai);
+                    if (await viewModel.DeactiveInstallment())
+                    {
+                        NeedToRefresh = true;
+                        NeedToRefreshInstallment = true;
+                        OnAppearing();
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.da_xoa_lich_thanh_toan);
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.xoa_lich_thanh_toan_that_bai_vui_long_thu_lai);
+                    }
                 }
             }
+            LoadingHelper.Hide();
         }
 
-        private async void ConfirmSigning(object sender, EventArgs e)
+        private void Confirm_Quotation(object sender, EventArgs e)
         {
-            LoadingHelper.Show();
             if (viewModel.Reservation.bsd_quotationprinteddate.HasValue)
             {
                 ToastMessageHelper.ShortMessage(Language.da_xac_nhan_in);
-                LoadingHelper.Hide();
                 return;
             }
             if (viewModel.InstallmentList.Count == 0)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_tao_lich_thanh_toan);
-                LoadingHelper.Hide();
                 return;
             }
+
+            ConfigQuota_CenterPopup.ShowCenterPopup();
+        }
+
+        private async void ConfirmSigning(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
             bool isSuccess = await viewModel.ConfirmSinging();
             if (isSuccess)
             {
@@ -337,13 +366,20 @@ namespace PhuLongCRM.Views
                 NeedToRefreshInstallment = true;
                 if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
                 OnAppearing();
+                ConfigQuota_CenterPopup.CloseContent();
                 ToastMessageHelper.ShortMessage(Language.xac_nhan_in_thanh_cong);
+                LoadingHelper.Hide();
             }
             else
             {
+                LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.xac_nhan_in_that_bai);
             }
-            LoadingHelper.Hide();
+        }
+
+        private void Cancel_ConfirmSigning(object sender, EventArgs e)
+        {
+            ConfigQuota_CenterPopup.CloseContent();
         }
 
         private async void ConfirmReservation(object sender, EventArgs e)
@@ -430,7 +466,7 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void CompletedReservation(object sender, EventArgs e)
+        private async void CompletedReservation(object sender, EventArgs e) //note
         {
             LoadingHelper.Show();
             if (viewModel.Reservation.quoteid != Guid.Empty)
@@ -441,6 +477,9 @@ namespace PhuLongCRM.Views
                 {
                     NeedToRefresh = true;
                     OnAppearing();
+                    if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
+                    if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
+                    if (QueueList.NeedToRefresh.HasValue) QueueList.NeedToRefresh = true;
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.phieu_dat_coc_da_duoc_ky);
                 }
@@ -452,15 +491,38 @@ namespace PhuLongCRM.Views
             }
         }
 
-        private async void SignQuotationClicked(object sender, EventArgs e)
+        private void SignQuotationClicked(object sender, EventArgs e)
         {
-            LoadingHelper.Show();
             if (viewModel.InstallmentList.Count == 0)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_tao_lich_thanh_toan);
-                LoadingHelper.Hide();
                 return;
             }
+
+            DateSign_CenterPopup.ShowCenterPopup();
+        }
+
+        private async void Confirm_SignQuotation(object sender, EventArgs e)
+        {
+            if (!viewModel.DateSign.HasValue)
+            {
+                ToastMessageHelper.ShortMessage(Language.vui_long_chon_ngay);
+                return;
+            }
+
+            if (viewModel.DateSign.Value < viewModel.Reservation.bsd_quotationprinteddate)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_duoc_chon_khong_duoc_nho_hon_ngay_in_phieu_tinh_gia_vui_long_kiem_tra_lai_thong_tin);
+                return;
+            }
+
+            if (viewModel.DateSign.Value > DateTime.Now)
+            {
+                ToastMessageHelper.ShortMessage(Language.ngay_duoc_chon_khong_duoc_thuoc_tuong_lai_vui_long_kiem_tra_lai_thong_tin);
+                return;
+            }
+
+            LoadingHelper.Show();
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
                 var res = await viewModel.SignQuotation();
@@ -474,9 +536,12 @@ namespace PhuLongCRM.Views
                     if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
                     if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
                     if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
+                    if (UnitInfo.NeedToRefresh.HasValue) UnitInfo.NeedToRefresh = true;
+                    if (DirectSaleDetailTest.NeedToRefreshDirectSale.HasValue) DirectSaleDetailTest.NeedToRefreshDirectSale = true;
                     if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
-                    this.Title = Language.dat_coc_title;
-                    InitContract(true);
+                    //this.Title = Language.dat_coc_title;
+                    //InitContract(true);
+                    DateSign_CenterPopup.CloseContent();
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.bang_tinh_gia_da_duoc_ky);
                 }
@@ -491,8 +556,8 @@ namespace PhuLongCRM.Views
         private async void CancelQuotes(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string options = await DisplayActionSheet(Language.huy_bang_tinh_gia, Language.dong, Language.xac_nhan);
-            if (options == Language.xac_nhan)
+            bool confirm = await DisplayAlert(Language.huy_bang_tinh_gia, Language.ban_co_muon_huy_bang_tinh_gia_nay_khong, Language.co, Language.khong);
+            if (confirm)
             {
                 viewModel.Reservation.statecode = 3;
                 viewModel.Reservation.statuscode = 6;
@@ -560,12 +625,12 @@ namespace PhuLongCRM.Views
                 AccountDetailPage newPage = new AccountDetailPage(viewModel.Reservation.salescompany_accountid);
                 newPage.OnCompleted = async (OnCompleted) =>
                 {
-                    if (OnCompleted == true)
+                    if (OnCompleted == 1)
                     {
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(OnCompleted == 3 || OnCompleted == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -579,12 +644,12 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             ContactDetailPage contactDetailPage = new ContactDetailPage(viewModel.Reservation.collaborator_id);
             contactDetailPage.OnCompleted = async (isSuccess) => {
-                if (isSuccess)
+                if (isSuccess == 1)
                 {
                     await Navigation.PushAsync(contactDetailPage);
                     LoadingHelper.Hide();
                 }
-                else
+                else if(isSuccess == 3 || isSuccess == 2)
                 {
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -595,17 +660,17 @@ namespace PhuLongCRM.Views
 
         private void CustomerReferral_Tapped(object sender, EventArgs e)
         {
-            LoadingHelper.Show();
             if (viewModel.CustomerReferral?.Title == "3")
             {
+                LoadingHelper.Show();
                 ContactDetailPage contactDetailPage = new ContactDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
                 contactDetailPage.OnCompleted = async (isSuccess) => {
-                    if (isSuccess)
+                    if (isSuccess == 1)
                     {
                         await Navigation.PushAsync(contactDetailPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(isSuccess == 3 || isSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -614,14 +679,15 @@ namespace PhuLongCRM.Views
             }
             else if (viewModel.CustomerReferral?.Title == "2")
             {
+                LoadingHelper.Show();
                 AccountDetailPage accountDetailPage = new AccountDetailPage(Guid.Parse(viewModel.CustomerReferral.Val));
                 accountDetailPage.OnCompleted = async (isSuccess) => {
-                    if (isSuccess)
+                    if (isSuccess == 1)
                     {
                         await Navigation.PushAsync(accountDetailPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(isSuccess == 3 || isSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -640,12 +706,12 @@ namespace PhuLongCRM.Views
                     AccountDetailPage newPage = new AccountDetailPage(viewModel.Reservation.purchaser_accountid);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -657,12 +723,12 @@ namespace PhuLongCRM.Views
                     ContactDetailPage newPage = new ContactDetailPage(viewModel.Reservation.purchaser_contactid);
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -676,26 +742,32 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Reservation.quoteid != Guid.Empty)
             {
-                LoadingHelper.Show();
-                if (await viewModel.CancelDeposit())
+                //bool confirm = await DisplayAlert(Language.huy_dat_coc, Language.ban_co_muon_huy_dat_coc_nay_khong, Language.co, Language.khong);
+                bool confirm = await DisplayAlert(Language.huy_bang_tinh_gia, Language.ban_co_muon_huy_bang_tinh_gia_nay_khong, Language.co, Language.khong);
+                if (confirm)
                 {
-                    NeedToRefresh = true;
-                    OnAppearing();
-                    if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
-                    if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
-                    if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
-                    if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
-                    if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
-                    if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
-                    if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.da_huy_dat_coc);
+                    LoadingHelper.Show();
+                    if (await viewModel.CancelDeposit())
+                    {
+                        NeedToRefresh = true;
+                        OnAppearing();
+                        if (DirectSaleDetail.NeedToRefreshDirectSale.HasValue) DirectSaleDetail.NeedToRefreshDirectSale = true;
+                        if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
+                        if (DatCocList.NeedToRefresh.HasValue) DatCocList.NeedToRefresh = true;
+                        if (QueuesDetialPage.NeedToRefreshDC.HasValue) QueuesDetialPage.NeedToRefreshDC = true;
+                        if (QueuesDetialPage.NeedToRefresh.HasValue) QueuesDetialPage.NeedToRefresh = true;
+                        if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
+                        if (UnitInfo.NeedToRefreshReservation.HasValue) UnitInfo.NeedToRefreshReservation = true;
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.da_huy_bang_tinh_gia);
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.huy_bang_tinh_gia_that_bai_vui_long_thu_lai);
+                    }
                 }
-                else
-                {
-                    LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.huy_dat_coc_that_bai_vui_long_thu_lai);
-                }
+                LoadingHelper.Hide();
             }
         }
 
@@ -842,6 +914,18 @@ namespace PhuLongCRM.Views
                     TabChiTiet.IsVisible = false;
                     TabLich.IsVisible = true;
                 }
+            }
+        }
+        private string DecaimalToString(decimal total)
+        {
+            if (total > 0 && total.ToString().Length > 6)
+            {
+                var format = total.ToString();
+                return format.Split(',')[0];
+            }
+            else
+            {
+                return "0";
             }
         }
     }

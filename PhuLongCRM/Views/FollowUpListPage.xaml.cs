@@ -11,10 +11,12 @@ namespace PhuLongCRM.Views
     public partial class FollowUpListPage : ContentPage
     {
         public FollowUpListPageViewModel viewModel;
+        public static bool? NeedToRefresh = null;
         public FollowUpListPage()
         {
             InitializeComponent();
             this.BindingContext = viewModel = new FollowUpListPageViewModel();
+            NeedToRefresh = false;
             LoadingHelper.Show();
             Init();
         }
@@ -23,6 +25,17 @@ namespace PhuLongCRM.Views
         {
             await viewModel.LoadData();
             LoadingHelper.Hide();
+        }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedToRefresh == true)
+            {
+                LoadingHelper.Show();
+                await viewModel.LoadOnRefreshCommandAsync();
+                NeedToRefresh = false;
+                LoadingHelper.Hide();
+            }
         }
 
         private void listView_ItemTapped(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)

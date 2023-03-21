@@ -19,7 +19,13 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = viewModel = new DanhBaViewModel();
+            this.PropertyChanged += DanhBa_PropertyChanged;
             Init();
+        }
+
+        private void DanhBa_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.danh_ba;
         }
 
         public async void Init()
@@ -40,55 +46,6 @@ namespace PhuLongCRM.Views
             viewModel.LoadContacts().GetAwaiter();
             LoadingHelper.Hide();
         }
-
-        //public async Task LoadContacts()
-        //{
-        //    PermissionStatus RequestContactsRead = await Permissions.CheckStatusAsync<Permissions.ContactsRead>();
-        //    if (!Plugin.ContactService.CrossContactService.IsSupported)
-        //    {
-        //        ToastMessageHelper.ShortMessage(":( Permission not granted to contact.");
-        //        await Navigation.PopAsync();
-        //        return;
-        //    }
-        //    if (RequestContactsRead != PermissionStatus.Granted)
-        //    {
-        //        RequestContactsRead = await Permissions.RequestAsync<Permissions.ContactsRead>();
-        //    }   
-        //    if(RequestContactsRead == PermissionStatus.Granted)
-        //    {
-        //        await viewModel.LoadLeadConvert();
-        //        LoadingHelper.Show();
-        //        var contacts = (await Plugin.ContactService.CrossContactService.Current.GetContactListAsync()).Where(x => x.Name != null);
-        //        var aaaaa = contacts.Count();
-        //        foreach (var tmp in contacts.OrderBy(x => x.Name))
-        //        {
-        //            var numbers = tmp.Numbers;
-        //            foreach (var n in numbers)
-        //            {
-        //                var sdt = n.Replace("-", "").Replace(" ", "").Replace("(", "").Replace(")", "");
-
-        //                var item = new Models.DanhBaItemModel
-        //                {
-        //                    Name = tmp.Name,
-        //                    numberFormated = sdt,
-        //                    IsSelected = false
-        //                };
-        //                if (viewModel.LeadConvert.Where(x => x.mobilephone.Contains(sdt) == true).ToList().Count <= 0)
-        //                {
-        //                    item.IsConvertToLead = false;
-        //                    totalConactActive++;
-        //                }
-        //                else
-        //                {
-        //                    item.IsConvertToLead = true;
-        //                }
-        //                viewModel.Contacts.Add(item);
-        //            }
-        //        }
-        //        viewModel.total = viewModel.Contacts.Count();
-        //    }    
-        //    LoadingHelper.Hide();
-        //}
 
         private void checkAll_IsCheckedChanged(object sender, Telerik.XamarinForms.Primitives.CheckBox.IsCheckedChangedEventArgs e)
         {
@@ -179,7 +136,7 @@ namespace PhuLongCRM.Views
 
                 if (!re.IsSuccess)
                 {
-                    ToastMessageHelper.ShortMessage(Language.da_co_loi_xay_ra_vui_long_thu_lai_sau);
+                    ToastMessageHelper.ShortMessage(re.ErrorResponse.error.message);
                     LoadingHelper.Hide();
                     return;
                 }
@@ -203,9 +160,14 @@ namespace PhuLongCRM.Views
             data["leadid"] = leadFormModel.leadid;
             data["subject"] = leadFormModel.bsd_topic_label;
             data["lastname"] = leadFormModel.lastname;
-            data["bsd_topic@odata.bind"] = "/bsd_topics(B564BDFC-50E2-EC11-BB3D-00224859CF8A)"; //Khách hàng tiềm năng APP
+            data["bsd_topic@odata.bind"] = $"/bsd_topics({Config.OrgConfig.Lead_Topic})";
             data["leadsourcecode"] = "10"; //Orther
             data["telephone1"] = "+84";
+            //data["bsd_PermanentCountry@odata.bind"] = "/bsd_countries(" + Config.OrgConfig.PermanentCountry + ")";
+            //data["bsd_PermanentProvince@odata.bind"] = "/new_provinces(" + Config.OrgConfig.PermanentProvice + ")";
+            //data["bsd_PermanentDistrict@odata.bind"] = "/new_districts(" + Config.OrgConfig.PermanentDistrict + ")";
+            //data["bsd_permanenthousenumber"] = $"{Config.OrgConfig.PermanentHouseNumber}";
+            //data["bsd_permanentaddress1"] = $"{Config.OrgConfig.PermanentAddress}";
 
             if (leadFormModel.mobilephone.StartsWith("+84"))
             {

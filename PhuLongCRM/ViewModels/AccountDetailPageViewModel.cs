@@ -1,4 +1,5 @@
-﻿using PhuLongCRM.Controls;
+﻿using PhuLongCRM.Config;
+using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
@@ -7,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -68,6 +72,19 @@ namespace PhuLongCRM.ViewModels
 
         public string CodeAccount = LookUpMultipleTabs.CodeAccount;
 
+        public bool IsCurrentRecordOfUser { get; set; }
+
+        private List<OptionSet> _provinces;
+        public List<OptionSet> Provinces { get => _provinces; set { _provinces = value; OnPropertyChanged(nameof(Provinces)); } }
+
+        private List<OptionSet> ProvincesForDetele { get; set; } = new List<OptionSet>();
+        private List<OptionSet> ProjectsForDetele { get; set; } = new List<OptionSet>();
+
+        private List<OptionSet> _projects;
+        public List<OptionSet> Projects { get => _projects; set { _projects = value; OnPropertyChanged(nameof(Projects)); } }
+
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
         public AccountDetailPageViewModel()
         {
             BusinessTypeOptions = new ObservableCollection<OptionSet>();
@@ -107,7 +124,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_permanentaddress1' />
                                 <attribute name='bsd_groupgstregisttationnumber' />
                                 <attribute name='statuscode' />
-                                <attribute name='ownerid' />
+                                <attribute name='ownerid' alias='owner_id'/>
                                 <attribute name='createdon' />
                                 <attribute name='address1_composite' alias='bsd_address' />
                                 <attribute name='bsd_companycode' />
@@ -122,12 +139,14 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_businesstype' />
                                 <attribute name='bsd_customercode' />
                                 <attribute name='bsd_imageqrcode' />
+                                <attribute name='bsd_employee' alias='employee_id'/>
                                 <order attribute='createdon' descending='true' />
                                     <link-entity name='contact' from='contactid' to='primarycontactid' visible='false' link-type='outer' alias='contacts'>
                                         <attribute name='bsd_fullname' alias='primarycontactname'/>
                                         <attribute name='mobilephone' alias='primarycontacttelephohne'/>
                                         <attribute name='bsd_contactaddress' alias='primarycontactaddress'/>
                                         <attribute name='bsd_permanentaddress1' alias='primarycontactpermanentaddress'/>
+                                        <attribute name='bsd_employee' alias='contact_employee_id'/>
                                     </link-entity>
                                     <filter type='and'>
                                       <condition attribute='accountid' operator='eq' value='" + accountid + @"' />
@@ -161,16 +180,16 @@ namespace PhuLongCRM.ViewModels
             singleAccount.bsd_permanentaddress1 = LoadAddress(tmp.bsd_permanentaddress1);
             PrimaryContact = new ContactFormModel()
             {
-                contactid = tmp._primarycontactid_value
-                ,
-                bsd_fullname = tmp.primarycontactname
-                ,
-                mobilephone = tmp.primarycontacttelephohne
-                ,
-                bsd_contactaddress = LoadAddress(tmp.primarycontactaddress)
-                ,
-                bsd_permanentaddress1 = LoadAddress(tmp.primarycontactpermanentaddress)
+                contactid = tmp._primarycontactid_value,
+                bsd_fullname = tmp.primarycontactname,
+                mobilephone = tmp.primarycontacttelephohne,
+                bsd_contactaddress = LoadAddress(tmp.primarycontactaddress),
+                bsd_permanentaddress1 = LoadAddress(tmp.primarycontactpermanentaddress),
+                employee_id = tmp.contact_employee_id
             };
+            this.IsCurrentRecordOfUser = (singleAccount.owner_id == UserLogged.Id || singleAccount.employee_id == UserLogged.Id) ? true : false;
+            if (singleAccount.bsd_issuedon.HasValue)
+                singleAccount.bsd_issuedon = singleAccount.bsd_issuedon.Value.ToLocalTime();
         }
 
         public void GetTypeById(string loai)
@@ -211,6 +230,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='statuscode' />
                                 <attribute name='bsd_queuenumber' />
                                 <attribute name='bsd_queueforproject' />
+                                <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                     <condition attribute='parentaccountid' operator='eq' uitype='account' value='{accountid}' />
@@ -358,6 +378,18 @@ namespace PhuLongCRM.ViewModels
             if (Cares == null)
                 Cares = new ObservableCollection<ActivityListModel>();
             if (singleAccount == null || singleAccount.accountid == Guid.Empty) return;
+            string attribute = string.Empty;
+            string value = string.Empty;
+            if (singleAccount.employee_id != Guid.Empty)
+            {
+                attribute = "bsd_employee";
+                value = singleAccount.employee_id.ToString();
+            }
+            else
+            {
+                attribute = "ownerid";
+                value = singleAccount.owner_id.ToString();
+            }
             string fetch = $@"<fetch version='1.0' count='5' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='activitypointer'>
                                     <attribute name='subject' />
@@ -373,9 +405,9 @@ namespace PhuLongCRM.ViewModels
                                             <value>4201</value>
                                         </condition>
 	                                    <filter type='or'>
-                                            <condition entityname='meet' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='task' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='phonecall' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='meet' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='task' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='phonecall' attribute='{attribute}' operator='eq' value='{value}' />
                                         </filter>
                                         <condition attribute='regardingobjectid' operator='eq' value='{singleAccount.accountid}' />
                                     </filter>
@@ -505,6 +537,147 @@ namespace PhuLongCRM.ViewModels
                 return true;
             else
                 return false;
+        }
+        public async Task LoadProvince()
+        {
+            if (Provinces == null)
+                Provinces = new List<OptionSet>();
+            if (singleAccount == null || singleAccount.accountid == Guid.Empty) return;
+
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='new_province'>
+                                <attribute name='new_name' alias='Label' />   
+                                <attribute name='new_provinceid' alias='Val' />   
+                                <link-entity name='bsd_account_new_province' from='new_provinceid' to='new_provinceid' intersect='true'>
+                                  <filter>
+                                    <condition attribute='accountid' operator='eq' value='{singleAccount.accountid}' />
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("new_provinces", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                List<OptionSet> list = new List<OptionSet>();
+                foreach (var item in result.value)
+                {
+                    list.Add(item);
+                    ProvincesForDetele.Add(item);
+                }
+                Provinces = list;
+            }
+        }
+        public async Task<bool> updateNhuCauDiaDiem()
+        {
+            bool res = true;
+            if (Provinces != null && Provinces.Count > 0)
+            {
+                foreach (var item in Provinces)
+                {
+                    string path = $"/accounts({singleAccount.accountid})/bsd_account_new_province/$ref";
+                    IDictionary<string, object> content = new Dictionary<string, object>();
+                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
+                    CrmApiResponse result = await CrmHelper.PostData(path, content);
+                    if (!result.IsSuccess)
+                        res = false;
+                    ProvincesForDetele.Remove(item);
+                }
+                if (ProvincesForDetele.Count > 0)
+                {
+                    foreach (var item in ProvincesForDetele)
+                    {
+                        var res_delete = await Delete_NhuCau(item.Val, "bsd_account_new_province");
+                        if (!res_delete)
+                            res = false;
+                    }
+                }
+            }
+            return res;
+        }
+        public async Task<Boolean> Delete_NhuCau(string id, string entity)
+        {
+            string Token = UserLogged.AccessToken;
+            var request = $"{OrgConfig.ApiUrl}/accounts({singleAccount.accountid})/{entity}(" + id + ")/$ref";
+
+            using (HttpClientHandler ClientHandler = new HttpClientHandler())
+            using (HttpClient Client = new HttpClient(ClientHandler))
+            {
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                using (HttpRequestMessage RequestMessage = new HttpRequestMessage(new HttpMethod("DELETE"), request))
+                {
+                    using (HttpResponseMessage ResponseMessage = await Client.SendAsync(RequestMessage))
+                    {
+                        string result = await ResponseMessage.Content.ReadAsStringAsync();
+
+                        if (ResponseMessage.StatusCode == HttpStatusCode.NoContent)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        public async Task LoadProject()
+        {
+            if (Projects == null)
+                Projects = new List<OptionSet>();
+            if (singleAccount == null || singleAccount.accountid == Guid.Empty) return;
+
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                    <entity name='bsd_project'>
+                                    <attribute name='bsd_projectid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <link-entity name='bsd_account_bsd_project' from='bsd_projectid' to='bsd_projectid' intersect='true'>
+                                      <filter>
+                                        <condition attribute='accountid' operator='eq' value='{singleAccount.accountid}' />
+                                      </filter>
+                                    </link-entity>
+                                    </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                List<OptionSet> list = new List<OptionSet>();
+                foreach (var item in result.value)
+                {
+                    list.Add(item);
+                    ProjectsForDetele.Add(item);
+                }
+                Projects = list;
+            }
+        }
+        public async Task<bool> updateNhuCauDuAn()
+        {
+            bool res = true;
+            if (Projects != null && Projects.Count > 0)
+            {
+                foreach (var item in Projects)
+                {
+                    string path = $"/accounts({singleAccount.accountid})/bsd_account_bsd_project/$ref";
+                    IDictionary<string, object> content = new Dictionary<string, object>();
+                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/bsd_projects(" + item.Val + ")";
+                    CrmApiResponse result = await CrmHelper.PostData(path, content);
+                    if (!result.IsSuccess)
+                        res = false;
+                    ProjectsForDetele.Remove(item);
+                }
+                if (ProjectsForDetele.Count > 0)
+                {
+                    foreach (var item in ProjectsForDetele)
+                    {
+                        var res_delete = await Delete_NhuCau(item.Val, "bsd_account_bsd_project");
+                        if (!res_delete)
+                            res = false;
+                    }
+                }
+            }
+            return res;
         }
     }
 }

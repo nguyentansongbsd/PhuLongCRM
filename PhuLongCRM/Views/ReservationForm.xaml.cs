@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PhuLongCRM.Resources;
 using Xamarin.Forms.Internals;
+using PhuLongCRM.Settings;
 
 namespace PhuLongCRM.Views
 {
@@ -28,6 +29,12 @@ namespace PhuLongCRM.Views
             centerModalPromotions.Body.BindingContext = viewModel;
             centerModalCoOwner.Body.BindingContext = viewModel;
             viewModel.QuoteId = quoteId;
+
+            if (UserLogged.AgentID != Guid.Empty)
+            {
+               viewModel.SalesAgent = new OptionSet { Val = UserLogged.AgentID.ToString(), Label = UserLogged.AgentName };
+                entryNhanVienDaiLy.IsEnabled = true;
+            }
             InitUpdate();
         }
 
@@ -68,6 +75,7 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
+            //await viewModel.CreateReservationDraft();
             await viewModel.LoadUnitInfor();
             if (viewModel.UnitInfor != null)
             {
@@ -390,6 +398,13 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.ShortMessage(Language.dieu_kien_ban_giao_khong_phu_hop_voi_unit_type);
                 //Điều kiện bàn giao đã chọn không phù hợp với Loại sản phẩm đang thực hiện giao dịch. Vui lòng kiểm tra lại thông tin hoặc chọn điều kiện bàn giao khác.
+                viewModel.HandoverCondition = null;
+                return;
+            }
+            // Hiện thông báo khi chọn ĐKBG nhỏ hơn mức tối thiểu trong Dự án => task 1020
+            if (viewModel.HandoverCondition.typeHandoverConditionMinimumId > viewModel.Project_minimumtypehandovercondition)
+            {
+                ToastMessageHelper.ShortMessage(Language.dieu_kien_ban_giao_khong_hop_le_vui_long_kiem_tra_lai_thong_tin);
                 viewModel.HandoverCondition = null;
                 return;
             }
@@ -1096,6 +1111,11 @@ namespace PhuLongCRM.Views
                                 if (apiResponseQuoteProduct.IsSuccess == false)
                                 {
                                     ToastMessageHelper.LongMessage(apiResponseQuoteProduct.ErrorResponse.error.message);
+                                    await viewModel.DeleteQuote();
+                                    // set lại id = null khi thất bại để chạy vào create
+                                    viewModel.quotedetailid = Guid.Empty;
+                                    viewModel.QuoteId = Guid.Empty;
+                                    viewModel.Quote.quoteid = Guid.Empty;
                                     LoadingHelper.Hide();
                                     return;
                                 }
@@ -1112,6 +1132,11 @@ namespace PhuLongCRM.Views
                             else
                             {
                                 ToastMessageHelper.LongMessage(apiResponse.ErrorResponse.error.message);
+                                await viewModel.DeleteQuote();
+                                // set lại id = null khi thất bại để chạy vào create
+                                viewModel.quotedetailid = Guid.Empty;
+                                viewModel.QuoteId = Guid.Empty;
+                                viewModel.Quote.quoteid = Guid.Empty;
                                 LoadingHelper.Hide();
                             }
                         }
@@ -1125,12 +1150,16 @@ namespace PhuLongCRM.Views
                             viewModel.Quote.quoteid = Guid.Empty;
                             LoadingHelper.Hide();
                         }
-
                     }
                     else
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.LongMessage(responseQuoteProduct.ErrorResponse.error.message);
+                        await viewModel.DeleteQuote();
+                        // set lại id = null khi thất bại để chạy vào create
+                        viewModel.quotedetailid = Guid.Empty;
+                        viewModel.QuoteId = Guid.Empty;
+                        viewModel.Quote.quoteid = Guid.Empty;
                     }
                 }
                 else

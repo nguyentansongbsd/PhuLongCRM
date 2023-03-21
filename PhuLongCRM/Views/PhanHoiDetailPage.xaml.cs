@@ -89,7 +89,9 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.ListCase != null && viewModel.ListCase.Count <= 0)
             {
+                LoadingHelper.Show();
                 await viewModel.LoadListCase(Id);
+                LoadingHelper.Hide();
             }
         }
 
@@ -177,6 +179,7 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            LoadingHelper.Show();
             if (await viewModel.UpdateCaseResolution())
             {
                 await viewModel.LoadCase(viewModel.Case.incidentid);
@@ -194,6 +197,7 @@ namespace PhuLongCRM.Views
 
         private async void MoLaiPhanHoi_Clicked(object sender, EventArgs e)
         {
+            LoadingHelper.Show();
             viewModel.Case.statecode = 0;
             viewModel.Case.statuscode = 1;
             if (await viewModel.UpdateCase())
@@ -220,12 +224,12 @@ namespace PhuLongCRM.Views
                     AccountDetailPage newPage = new AccountDetailPage(Guid.Parse(viewModel.Case.accountId));
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -237,12 +241,12 @@ namespace PhuLongCRM.Views
                     ContactDetailPage newPage = new ContactDetailPage(Guid.Parse(viewModel.Case.contactId));
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);

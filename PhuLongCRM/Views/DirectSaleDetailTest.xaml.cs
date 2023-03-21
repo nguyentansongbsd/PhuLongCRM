@@ -1,9 +1,11 @@
 ﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
+using Firebase.Database.Query;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ToolbarItem = Xamarin.Forms.ToolbarItem;
 
 namespace PhuLongCRM.Views
 {
@@ -34,24 +37,39 @@ namespace PhuLongCRM.Views
             this.BindingContext = viewModel = new DirectSaleDetailTestViewModel();
             NeedToRefreshDirectSale = false;
             viewModel.Filter = filter;
+            if (viewModel.Filter.isOwner)
+            {
+                menu_item.IconImageSource = new FontImageSource() { Glyph = "\uf4fc", FontFamily = "FontAwesomeSolid",Size = 18,Color= Color.White };
+
+                //menu_item.Text = "\uf4fc";
+            }
+            else
+            {
+                menu_item.IconImageSource = new FontImageSource() { Glyph = "\uf007", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
+                //menu_item.Text = "\uf007";
+            }
             viewModel.CreateFilterXml();
             Init();
         }
+
         public async void Init()
         {
-            await viewModel.LoadTotalDirectSale();
+           // await viewModel.LoadTotalDirectSale();
+            await viewModel.LoadTotalDirectSale2();
             if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
             {
                 var rd = stackBlocks.Children[0] as RadBorder;
                 var lb = rd.Content as Label;
                 VisualStateManager.GoToState(rd, "Selected");
                 VisualStateManager.GoToState(lb, "Selected");
-                NumberUnitInBlock(viewModel.Blocks[0]);
+                viewModel.Block = viewModel.Blocks[0];
                 if (viewModel.Block.Floors.Count != 0)
                 {
                     var floor = viewModel.Block.Floors[0];
                     floor.iShow = true;
                     await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                    AddToolTip();
+                    SetRealTimeData();
                     OnCompleted?.Invoke(0);
                 }
                 else
@@ -65,6 +83,7 @@ namespace PhuLongCRM.Views
                 return;
             }
         }
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
@@ -77,10 +96,51 @@ namespace PhuLongCRM.Views
                 NeedToRefreshDirectSale = false;
             }
         }
-        public async void Block_Tapped(object sender, EventArgs e)
+
+        public void SetRealTimeData()
+        {
+            bool temp = false;
+            //int _currentNumQuese = 0;
+            var condition = RealTimeHelper.firebaseClient.Child("test").Child("DirectSaleNew").AsObservable<ResponseRealtime>()
+                .Subscribe(async (dbevent) =>
+                {
+                    try
+                    {
+                        if (dbevent.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && dbevent.Object != null && temp == true)
+                        {
+                            try
+                            {
+                                var item = dbevent.Object as ResponseRealtime;
+                                viewModel.Block.Floors.Where(x => x.bsd_floorid == Guid.Parse(item.FloorId)).ToList().ForEach(x =>
+                                {
+                                    var _unit = x.Units.SingleOrDefault(y => y.productid.ToString().ToLower() == item.UnitId.ToLower());
+                                    if (_unit != null)
+                                    {
+                                        _unit.statuscode = int.Parse(item.StatusNew);
+                                        _unit.NumQueses++;
+                                        viewModel.SetNumStatus(item.StatusNew, item.StatusOld ,Guid.Parse(item.FloorId));
+                                        viewModel.ChangeStatusUnitPopup(item);
+                                    }
+                                });
+                            }
+                            catch (Exception ex)
+                            {
+                                ToastMessageHelper.LongMessage(ex.Message);
+                            }
+                        }
+                        temp = true;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                });
+        }
+
+        public void Block_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            await Task.Delay(1);
             var blockChoosed = sender as RadBorder;
             if (blockChoosed != null)
             {
@@ -102,18 +162,11 @@ namespace PhuLongCRM.Views
                     }
                 }
                 var item = (Block)(blockChoosed.GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-                NumberUnitInBlock(item);
+                viewModel.Block = item;
             }
             LoadingHelper.Hide();
         }
-        public async void NumberUnitInBlock(Block block)
-        {
-            if (block != null && block != viewModel.Block)
-            {
-                viewModel.Block = block;
-                await viewModel.LoadFloor();
-            }
-        }
+
         private async void ItemFloor_Tapped(object sender, EventArgs e)
         {
             var item = sender as Grid;
@@ -133,58 +186,25 @@ namespace PhuLongCRM.Views
             }
             //(((RadBorder)((StackLayout)item.Parent).Parent).Parent as ViewCell).ForceUpdateSize();
         }
+
         private async void UnitItem_Tapped(object sender, EventArgs e)
         {
             var unitId = (Guid)((sender as RadBorder).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             await ShowUnit(unitId);
             PopupUnit.IsVisible = true;
         }
+
         private async Task ShowUnit(Guid unitId)
         {
             await LoadUnit(unitId);
             CreatePopupUnit(unitId);
         }
+
         private async Task LoadUnit(Guid unitId)
         {
             LoadingHelper.Show();
             await viewModel.LoadUnitById(unitId);
             LoadingHelper.Hide();
-        }
-        private void NumberUnit_Tapped(object sender, EventArgs e)
-        {
-            var item = (string)((sender as Label).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item == "1")
-                PopupHover.ShowHover(Language.chuan_bi);
-            else if (item == "2")
-                PopupHover.ShowHover(Language.san_sang);
-            else if (item == "3")
-                PopupHover.ShowHover(Language.dat_cho);
-            else if (item == "4")
-                PopupHover.ShowHover(Language.giu_cho);
-            else if (item == "5")
-                PopupHover.ShowHover(Language.dat_coc);
-            else if (item == "6")
-                PopupHover.ShowHover(Language.dong_y_chuyen_coc);
-            else if (item == "7")
-                PopupHover.ShowHover(Language.da_du_tien_coc);
-            else if (item == "8")
-                PopupHover.ShowHover(Language.hoan_tat_dat_coc);
-            else if (item == "9")
-                PopupHover.ShowHover(Language.thanh_toan_dot_1);
-            else if (item == "10")
-                PopupHover.ShowHover(Language.da_ky_ttdc_hddc);
-            else if (item == "11")
-                PopupHover.ShowHover(Language.du_dieu_dien);
-            else if (item == "12")
-                PopupHover.ShowHover(Language.da_ban);
-        }
-
-        private async void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        {
-            if (e == null) return;
-            var index = e.ItemIndex;
-            if (index + 1 == viewModel.Block.Floors.Count)
-                await viewModel.LoadFloor();
         }
 
         private async void ScrollView_Scrolled(System.Object sender, Xamarin.Forms.ScrolledEventArgs e)
@@ -205,7 +225,8 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             UnitInfo unitInfo = new UnitInfo(viewModel.Unit.productid);
-            unitInfo.OnCompleted = async (IsSuccess) => {
+            unitInfo.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(unitInfo);
@@ -218,11 +239,13 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void BangTinhGia_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             ReservationForm reservationForm = new ReservationForm(viewModel.Unit.productid, null, null, null, null);
-            reservationForm.CheckReservation = async (isSuccess) => {
+            reservationForm.CheckReservation = async (isSuccess) =>
+            {
                 if (isSuccess == 0)
                 {
                     await Navigation.PushAsync(reservationForm);
@@ -240,12 +263,14 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
-            queuesDetialPage.OnCompleted = async (IsSuccess) => {
+            queuesDetialPage.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Navigation.PushAsync(queuesDetialPage);
@@ -258,11 +283,41 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void GiuCho_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            QueueForm queue = new QueueForm(viewModel.Unit.productid, true);
-            queue.OnCompleted = async (IsSuccess) => {
+            //QueueForm queue = new QueueForm(viewModel.Unit.productid, true);
+            //queue.OnCompleted = async (IsSuccess) =>
+            //{
+            //    if (IsSuccess)
+            //    {
+            //        await Shell.Current.Navigation.PushAsync(queue);
+            //        LoadingHelper.Hide();
+            //    }
+            //    else
+            //    {
+            //        LoadingHelper.Hide();
+            //        // hiện câu thông báo bên queue form
+            //    }
+            //};
+            QueueUnitModel queueUnit = new QueueUnitModel
+            {
+                unit_id = viewModel.Unit.productid,
+                unit_name = viewModel.Unit.name,
+                project_id = viewModel.Unit._bsd_projectcode_value,
+                project_name = viewModel.Unit.project_name,
+                phaseslaunch_id = viewModel.Unit._bsd_phaseslaunchid_value,
+                phaseslaunch_name = viewModel.Unit.phaseslaunch_name,
+                bsd_queuesperunit = viewModel.Unit.project_queuesperunit,
+                bsd_unitspersalesman = viewModel.Unit.project_unitspersalesman,
+                bsd_queueunitdaysaleman = viewModel.Unit.project_queueunitdaysaleman,
+                bsd_bookingfee = viewModel.Unit.project_bookingfee,
+                bsd_queuingfee = viewModel.Unit.bsd_queuingfee,
+            };
+            QueueForm2 queue = new QueueForm2(queueUnit);
+            queue.OnCompleted = async (IsSuccess) =>
+            {
                 if (IsSuccess)
                 {
                     await Shell.Current.Navigation.PushAsync(queue);
@@ -275,6 +330,7 @@ namespace PhuLongCRM.Views
                 }
             };
         }
+
         private void CreatePopupUnit(Guid unit_id)
         {
             if (grid == null)
@@ -419,7 +475,7 @@ namespace PhuLongCRM.Views
                 Grid.SetColumnSpan(gridhuong, 5);
 
                 // btn xem thong tin
-                RadBorder radBorderUnitInf = new RadBorder { CornerRadius = 10, BorderColor = Color.FromHex("#2196F3"), BorderThickness = 1, BackgroundColor = Color.White, Padding = 8, HorizontalOptions = LayoutOptions.Fill,Margin = new Thickness(0,5) };
+                RadBorder radBorderUnitInf = new RadBorder { CornerRadius = 10, BorderColor = Color.FromHex("#2196F3"), BorderThickness = 1, BackgroundColor = Color.White, Padding = 8, HorizontalOptions = LayoutOptions.Fill, Margin = new Thickness(0, 5) };
                 TapGestureRecognizer tapUnitInf = new TapGestureRecognizer();
                 tapUnitInf.Tapped += UnitInfor_Clicked;
                 radBorderUnitInf.GestureRecognizers.Add(tapUnitInf);
@@ -489,7 +545,7 @@ namespace PhuLongCRM.Views
                 btnQueue.IsVisible = false;
                 viewModel.IsShowBtnBangTinhGia = false;
             }
-            gridBtn.IsVisible = !viewModel.Unit.bsd_vippriority;
+           
             btnQuote.IsVisible = viewModel.IsShowBtnBangTinhGia;
 
             //set button
@@ -500,8 +556,11 @@ namespace PhuLongCRM.Views
             else if (btnQueue.IsVisible == true && btnQuote.IsVisible == true)
             {
                 gridBtn.IsVisible = true;
+                Grid.SetColumnSpan(btnQueue, 1);
+                Grid.SetColumnSpan(btnQuote, 1);
                 Grid.SetColumn(btnQueue, 0);
                 Grid.SetColumn(btnQuote, 1);
+                
             }
             else if (btnQueue.IsVisible == true && btnQuote.IsVisible == false)
             {
@@ -519,28 +578,117 @@ namespace PhuLongCRM.Views
             if (viewModel.Unit.bsd_vippriority)
             {
                 Grid.SetColumn(labelName, 3);
+                Grid.SetColumnSpan(labelName, 1);
             }
             else
             {
                 Grid.SetColumn(labelName, 1);
                 Grid.SetColumnSpan(labelName, 3);
             }
+            gridBtn.IsVisible = viewModel.Unit.bsd_vippriority ? false : true;
         }
 
         private async void PopupUnit_Close(object sender, EventArgs e)
         {
-            if (RefreshDirectSale == true)
+            try
             {
-                if (viewModel.Block != null && viewModel.Block.Floors != null && viewModel.Block.Floors.Count != 0)
+                if (RefreshDirectSale == true)
                 {
-                    LoadingHelper.Show();
-                    var floor = viewModel.Block.Floors.SingleOrDefault(x => x.bsd_floorid == viewModel.Unit.floorid);
-                    floor.Units.Clear();
-                    await viewModel.LoadUnitByFloor(floor.bsd_floorid);
-                    LoadingHelper.Hide();
+                    if (viewModel.Block != null && viewModel.Block.Floors != null && viewModel.Block.Floors.Count != 0)
+                    {
+                        LoadingHelper.Show();
+                        var floor = viewModel.Block.Floors.SingleOrDefault(x => x.bsd_floorid == viewModel.Unit.floorid);
+                        floor.Units.Clear();
+                        await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                        await viewModel.UpdateTotalDirectSale(floor);
+                        LoadingHelper.Hide();
+                    }
+                    RefreshDirectSale = false;
                 }
-                RefreshDirectSale = false;
-            }    
+            }catch(Exception ex)
+            {
+
+            }
+        }
+
+        private void CloseToolTips_Tapped(object sender, EventArgs e)
+        {
+            foreach (var c in gridStatus.Children)
+            {
+                if (TooltipEffect.GetHasTooltip(c))
+                {
+                    TooltipEffect.SetHasTooltip(c, false);
+                    TooltipEffect.SetHasTooltip(c, true);
+                }
+            }
+        }
+
+        public void AddToolTip()
+        {
+            foreach (var c in gridStatus.Children)
+            {
+                ListToolTip.ToolTips.Add(c);
+            }
+        }
+
+        private async void Owner_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            try
+            {
+                if (viewModel.Filter.isOwner)
+                {
+                    viewModel.Filter.Employee = null;
+                    viewModel.Filter.isOwner = false;
+                    //menu_item.Text = "\uf007";
+                    menu_item.IconImageSource = new FontImageSource() { Glyph = "\uf007", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
+                }
+                else
+                {
+                    viewModel.Filter.Employee = UserLogged.Id.ToString();
+                    viewModel.Filter.isOwner = true;
+                    //menu_item.Text = "\uf4fc";
+                    menu_item.IconImageSource = new FontImageSource() { Glyph = "\uf4fc", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
+                }
+                viewModel.Blocks = new ObservableCollection<Block>();
+                NeedToRefreshDirectSale = false;
+                viewModel.CreateFilterXml();
+                await viewModel.LoadTotalDirectSale2();
+
+                if (viewModel.Blocks != null && viewModel.Blocks.Count != 0)
+                {
+                    viewModel.Block = viewModel.Blocks[0];
+                    if (viewModel.Block.Floors.Count != 0)
+                    {
+                        var floor = viewModel.Block.Floors[0];
+                        floor.iShow = true;
+                        await viewModel.LoadUnitByFloor(floor.bsd_floorid);
+                        AddToolTip();
+                        SetRealTimeData();
+                    }
+                    BindableLayout.SetItemsSource(stackBlocks, viewModel.Blocks);
+                    var rd = stackBlocks.Children[0] as RadBorder;
+                    var lb = rd.Content as Label;
+                    VisualStateManager.GoToState(rd, "Selected");
+                    VisualStateManager.GoToState(lb, "Selected");
+                    gridStatus.IsVisible = true;
+                    line_blue.IsVisible = true;
+                    lb_khong_co_du_lieu.IsVisible = false;
+                }
+                else
+                {
+                    BindableLayout.SetItemsSource(stackBlocks, viewModel.Blocks);
+                    viewModel.Block = new Block();
+                    gridStatus.IsVisible = false;
+                    line_blue.IsVisible = false;
+                    lb_khong_co_du_lieu.IsVisible = true;
+                }    
+                LoadingHelper.Hide();
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
     public class QueuesControl : BsdListView
@@ -560,6 +708,7 @@ namespace PhuLongCRM.Views
             await viewModel.LoadData();
             CreateItemTemplate();
         }
+
         public void CreateItemTemplate()
         {
             if (dataTemplate == null)
@@ -573,8 +722,6 @@ namespace PhuLongCRM.Views
                         new RowDefinition{Height = GridLength.Auto },
                         new RowDefinition{Height = GridLength.Auto },
                         new RowDefinition{Height = GridLength.Auto },
-                        new RowDefinition{Height = GridLength.Auto },
-                        new RowDefinition{Height = GridLength.Auto },
                     }
                     ,
                         ColumnDefinitions =
@@ -582,7 +729,7 @@ namespace PhuLongCRM.Views
                         new ColumnDefinition{ Width = GridLength.Auto},
                         new ColumnDefinition{ Width = new GridLength(1,GridUnitType.Star)},
                     },
-                        Margin = new Thickness(0,1,0,0),
+                        Margin = new Thickness(0, 1, 0, 0),
                         Padding = 10,
                         BackgroundColor = Color.White
                     };
@@ -593,7 +740,7 @@ namespace PhuLongCRM.Views
                     grid.GestureRecognizers.Add(tapped);
 
                     //status
-                    RadBorder radBorder = new RadBorder{CornerRadius = 5,VerticalOptions =LayoutOptions.Start};
+                    RadBorder radBorder = new RadBorder { CornerRadius = 5, VerticalOptions = LayoutOptions.Start };
                     radBorder.SetBinding(RadBorder.BackgroundColorProperty, "statuscode_color");
                     Label label = new Label();
                     label.SetBinding(Label.TextProperty, "statuscode_format");
@@ -607,7 +754,7 @@ namespace PhuLongCRM.Views
                     Grid.SetRow(radBorder, 0);
 
                     //ten
-                    Label labelName = new Label { FontSize = 15, TextColor = (Color)Application.Current.Resources["NavigationPrimary"], FontAttributes = FontAttributes.Bold, VerticalOptions=LayoutOptions.Center };
+                    Label labelName = new Label { FontSize = 15, TextColor = (Color)Application.Current.Resources["NavigationPrimary"], FontAttributes = FontAttributes.Bold, VerticalOptions = LayoutOptions.Center };
 
                     labelName.SetBinding(Label.TextProperty, new MultiBinding
                     {
@@ -632,22 +779,6 @@ namespace PhuLongCRM.Views
                     Grid.SetRow(fieldKH, 1);
                     Grid.SetColumnSpan(fieldKH, 2);
 
-                    //du an
-                    StackLayout stackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-                    FieldListViewItem fieldProject = new FieldListViewItem { TitleTextColor = Color.FromHex("#444444"), Title = Language.du_an, TextColor = Color.FromHex("#444444") };
-                    fieldProject.SetBinding(FieldListViewItem.TextProperty, "project_name");
-                    stackLayout.Children.Add(fieldProject);
-                    // thien chi
-                    Label labelThienChi = new Label { FontSize = 15, TextColor = Color.FromHex("#444444")};
-                    labelThienChi.SetBinding(Label.TextProperty, new Binding() { Source = Language.thien_chi, StringFormat = "- {0}" });
-                    labelThienChi.SetBinding(Label.IsVisibleProperty, new Binding("bsd_queueforproject"));
-                    stackLayout.Children.Add(labelThienChi);
-
-                    grid.Children.Add(stackLayout);
-                    Grid.SetColumn(stackLayout, 0);
-                    Grid.SetRow(stackLayout, 2);
-                    Grid.SetColumnSpan(stackLayout, 2);
-
                     // thoi gian het han
                     FieldListViewItem fieldDate = new FieldListViewItem { TitleTextColor = Color.FromHex("#444444"), Title = Language.thoi_gian_het_han, TextColor = Color.FromHex("#444444") };
                     fieldDate.SetBinding(FieldListViewItem.TextProperty, new Binding("bsd_queuingexpired") { StringFormat = "{0:dd/MM/yyyy - HH:mm}" });
@@ -663,13 +794,6 @@ namespace PhuLongCRM.Views
                     Grid.SetColumn(fieldPaid, 0);
                     Grid.SetRow(fieldPaid, 4);
                     Grid.SetColumnSpan(fieldPaid, 2);
-                    //da_thanh_toan_phi_giu_cho
-                    FieldListViewItem fieldPaid2 = new FieldListViewItem { TitleTextColor = Color.FromHex("#444444"), Title = Language.da_thanh_toan_phi_giu_cho, TextColor = Color.Red, FontAttributes=FontAttributes.Bold };
-                    fieldPaid2.SetBinding(FieldListViewItem.TextProperty, "bsd_collectedqueuingfee_format");
-                    grid.Children.Add(fieldPaid2);
-                    Grid.SetColumn(fieldPaid2, 0);
-                    Grid.SetRow(fieldPaid2, 5);
-                    Grid.SetColumnSpan(fieldPaid2, 2);
 
                     return new ViewCell { View = grid };
                 });
@@ -683,7 +807,8 @@ namespace PhuLongCRM.Views
             if (item == null) return;
             LoadingHelper.Show();
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(item.opportunityid);
-            queuesDetialPage.OnCompleted = async (isSuccess) => {
+            queuesDetialPage.OnCompleted = async (isSuccess) =>
+            {
                 if (isSuccess)
                 {
                     await Navigation.PushAsync(queuesDetialPage);

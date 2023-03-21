@@ -15,7 +15,19 @@ namespace PhuLongCRM.Views
         {
             InitializeComponent();
             this.BindingContext = this;
+            this.PropertyChanged += LichLamViec_PropertyChanged;
             Init();
+        }
+
+        private void LichLamViec_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.lich_lam_viec;
+            if(data != null)
+            {
+                data.Clear();
+                data = new List<OptionSet>() { new OptionSet("1", Language.lich_lam_viec_theo_thang), new OptionSet("2", Language.lich_lam_viec_theo_tuan), new OptionSet("3", Language.lich_lam_viec_theo_ngay), };
+                listView.ItemsSource = data;
+            }    
         }
 
         public async void Init()

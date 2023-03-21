@@ -105,5 +105,51 @@ namespace PhuLongCRM.Settings
             get => AppSettings.GetValueOrDefault(nameof(UserCRM), string.Empty);
             set => AppSettings.AddOrUpdateValue(nameof(UserCRM), value);
         }
+        public static string DateLoginFailed
+        {
+            get => AppSettings.GetValueOrDefault(nameof(DateLoginFailed), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(DateLoginFailed), value);
+        }
+        public static int NumberLogin
+        {
+            get => AppSettings.GetValueOrDefault(nameof(NumberLogin), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(NumberLogin), value);
+        }
+        public static int LoginLimit
+        {
+            get => AppSettings.GetValueOrDefault(nameof(LoginLimit), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(LoginLimit), value);
+        }
+        public static int TimeOut
+        {
+            get => AppSettings.GetValueOrDefault(nameof(TimeOut), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(TimeOut), value);
+        }
+        public static string Currency
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Currency), "vi"); //en
+            set => AppSettings.AddOrUpdateValue(nameof(Currency), value);
+        }
+        public static bool Notification
+        {
+            get => AppSettings.GetValueOrDefault(nameof(Notification), true);
+            set => AppSettings.AddOrUpdateValue(nameof(Notification), value);
+        }
+        public static bool IsTimeOut
+        {
+            get => AppSettings.GetValueOrDefault(nameof(IsTimeOut), false);
+            set => AppSettings.AddOrUpdateValue(nameof(IsTimeOut), value);
+        }
+        public static Guid AgentID
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AgentID), Guid.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(AgentID), value);
+        }
+
+        public static string AgentName
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AgentName), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(AgentName), value);
+        }
     }
 }

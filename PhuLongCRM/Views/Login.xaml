@@ -12,7 +12,8 @@
         <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,20">
                 <StackLayout Margin="20,0" Spacing="10" VerticalOptions="Center" >
-                    <Image Source="phulong_contact_logo.png" Margin="0,15" />
+                    <Image Source="logoPL_noBG.png" Margin="0,15" />
+                    <Label x:Name="lblforsales" Text="{x:Static lang:Language.danh_cho_ban_hang}" FontSize="15" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
                     <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="White" Padding="0" HeightRequest="65">
                         <Grid Margin="10,5" RowDefinitions="Auto,Auto" RowSpacing="0" VerticalOptions="Center">
                             <Label x:Name="lblUserName" Text="{x:Static lang:Language.ten_dang_nhap}" FontSize="14" TextColor="#4EABF5"/>
@@ -55,14 +56,52 @@
                             <ffimageloadding:CachedImage Source="ic_english.png" Aspect="AspectFill" HeightRequest="20" WidthRequest="30"/>
                         </telerikPrimitives:RadBorder>
                     </StackLayout>
-                    <Label x:Name="lbfogotPassword" Text="{x:Static lang:Language.quen_mat_khau}" TextColor="#444444" FontSize="15" HorizontalTextAlignment="Center" FontAttributes="Bold" Margin="0,10">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ForgotPassword_Tapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
+                    <StackLayout Margin="0,10" HorizontalOptions="Center" Orientation="Horizontal">
+                        <Label x:Name="lbfogotPassword" Text="{x:Static lang:Language.quen_mat_khau}" TextColor="#444444" FontSize="15" HorizontalTextAlignment="Center" FontAttributes="Bold">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ForgotPassword_Tapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label x:Name="lb_lienhe" Text="{x:Static lang:Language.lien_he}" TextColor="#444444" FontSize="15" HorizontalTextAlignment="Center" FontAttributes="Bold" IsVisible="true">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="LienHe_Tapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
                 </StackLayout>
             </ScrollView>
             <Label Text="{Binding VerApp}" FontSize="15" TextColor="#444444" HorizontalOptions="End" Margin="0,0,20,20" AbsoluteLayout.LayoutBounds="0,1,1,40" AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional"/>
+
+            <controls:CenterPopup x:Name="Admin_CenterPopup" Title="{x:Static lang:Language.lien_he}">
+                <controls:CenterPopup.Body>
+                    <Grid RowSpacing="10" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                        <controls:FormLabel x:Name="admin_name" Text="{x:Static lang:Language.ho_ten}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0"/>
+                        <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                            <Label Text="{Binding Admin.fullname}" FontSize="14" TextColor="#2196F3" HorizontalOptions="Start"/>
+                        </telerikPrimitives:RadBorder>
+
+                        <controls:FormLabel x:Name="admin_sdt" Text="{x:Static lang:Language.so_dien_thoai}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="1"/>
+                        <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="1" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                            <Label Text="{Binding Admin.mobilephone}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
+                        </telerikPrimitives:RadBorder>
+
+                        <controls:FormLabel x:Name="admin_email" Text="{x:Static lang:Language.email}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="2"/>
+                        <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="2" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                            <Label Text="{Binding Admin.internalemailaddress}" FontSize="14" TextColor="#444444" HorizontalOptions="Start"/>
+                        </telerikPrimitives:RadBorder>
+                    </Grid>
+                </controls:CenterPopup.Body>
+            </controls:CenterPopup>
+            
+            <Grid x:Name="TimeOut_Popup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#90000000" IsVisible="false" Padding="50">
+                <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="15" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" Padding="20">
+                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="15">
+                        <Label Grid.Row="0" Text="&#xf06a;" TextColor="Red" FontSize="35" FontFamily="FontAwesomeSolid" HorizontalOptions="Center" />
+                        <Label Grid.Row="1" Text="{x:Static lang:Language.phien_dang_nhap_da_het_han_vui_long_dang_nhap_lai}" TextColor="#444444" FontSize="14"/>
+                        <Button Clicked="CloseTimeOut_Clicked" Grid.Row="2" Text="{x:Static lang:Language.dong}" BackgroundColor="#2196F3" TextColor="White" HeightRequest="40" CornerRadius="10" FontSize="15"/>
+                    </Grid>
+                </telerikPrimitives:RadBorder>
+            </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

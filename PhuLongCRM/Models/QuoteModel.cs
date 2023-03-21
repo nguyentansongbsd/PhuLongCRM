@@ -14,6 +14,7 @@ namespace PhuLongCRM.Models
         public string paymentscheme_name { get; set; }
 
         public decimal bsd_constructionarea { get; set; }
+
         private string _bsd_constructionarea_format;
         public string bsd_constructionarea_format { get=> _bsd_constructionarea_format; set { _bsd_constructionarea_format = value;OnPropertyChanged(nameof(bsd_constructionarea_format)); } }
         public decimal bsd_netusablearea { get; set; }
@@ -85,6 +86,7 @@ namespace PhuLongCRM.Models
 
         private string _project_name;
         public string project_name { get => _project_name; set { _project_name = value; OnPropertyChanged(nameof(project_name)); } }
+        public decimal project_minimumtypehandovercondition { get; set; }
 
         private string _phaseslaunch_name;
         public string phaseslaunch_name { get => _phaseslaunch_name; set { _phaseslaunch_name = value; OnPropertyChanged(nameof(phaseslaunch_name)); } }

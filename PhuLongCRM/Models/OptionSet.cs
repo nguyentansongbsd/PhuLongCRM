@@ -27,5 +27,16 @@ namespace PhuLongCRM.Models
             Label = label;
             Selected = selected;
         }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is OptionSet)) return false;
+            var optionSet = (OptionSet)obj;
+            return this.Val == optionSet.Val;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Val.GetHashCode();
+        }
     }
 }

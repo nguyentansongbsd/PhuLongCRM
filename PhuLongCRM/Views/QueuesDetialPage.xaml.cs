@@ -107,6 +107,12 @@ namespace PhuLongCRM.Views
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
                 }
+                if (viewModel.Queue.statuscode == 100000000 && viewModel.Queue.bsd_queueforproject == true
+                    && viewModel.Queue.bsd_queuingfee == viewModel.Queue.bsd_queuingfeepaid
+                    && viewModel.Queue.bsd_queuingexpired > DateTime.Now)
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.rap_can, "FontAwesomeSolid", "\uf56e", null, MatchUnit));
+                }
 
                 viewModel.ShowBtnBangTinhGia = await viewModel.CheckReserve();
                 if (viewModel.QueueProject == Language.co)
@@ -127,6 +133,31 @@ namespace PhuLongCRM.Views
                     floatingButtonGroup.IsVisible = false;
             }
         }
+
+        private async void MatchUnit(object sender, EventArgs e)
+        {
+            bool isSuccess = await viewModel.CreateTaskMatchUnit();
+            if (isSuccess)
+            {
+                if (Dashboard.NeedToRefreshTask.HasValue) Dashboard.NeedToRefreshTask = true;
+                if (ActivityList.NeedToRefreshTask.HasValue) ActivityList.NeedToRefreshTask = true;
+                if (LichLamViecTheoThang.NeedToRefresh.HasValue) LichLamViecTheoThang.NeedToRefresh = true;
+                if (LichLamViecTheoTuan.NeedToRefresh.HasValue) LichLamViecTheoTuan.NeedToRefresh = true;
+                if (LichLamViecTheoNgay.NeedToRefresh.HasValue) LichLamViecTheoNgay.NeedToRefresh = true;
+                if (ContactDetailPage.NeedToRefreshActivity.HasValue) ContactDetailPage.NeedToRefreshActivity = true;
+                if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
+                if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
+                if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
+                ToastMessageHelper.ShortMessage(Language.tao_cong_viec_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+            }
+        }
+
         private void GoToProject_Tapped(object sender, EventArgs e)
         {
             LoadingHelper.Show();
@@ -175,12 +206,12 @@ namespace PhuLongCRM.Views
             AccountDetailPage accountDetail = new AccountDetailPage(viewModel.Queue._bsd_salesagentcompany_value);
             accountDetail.OnCompleted = async (IsSuccess) =>
             {
-                if (IsSuccess)
+                if (IsSuccess == 1)
                 {
                     await Navigation.PushAsync(accountDetail);
                     LoadingHelper.Hide();
                 }
-                else
+                else if(IsSuccess == 3 || IsSuccess == 2)
                 {
                     LoadingHelper.Hide();
                     ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -195,12 +226,12 @@ namespace PhuLongCRM.Views
                 ContactDetailPage newpage = new ContactDetailPage(viewModel.Queue.collaborator_id);
                 newpage.OnCompleted = async (IsSuccess) =>
                 {
-                    if (IsSuccess)
+                    if (IsSuccess == 1)
                     {
                         await Navigation.PushAsync(newpage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(IsSuccess == 3 || IsSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -216,12 +247,12 @@ namespace PhuLongCRM.Views
                 ContactDetailPage newpage = new ContactDetailPage(viewModel.Queue.customerreferral_id);
                 newpage.OnCompleted = async (IsSuccess) =>
                 {
-                    if (IsSuccess)
+                    if (IsSuccess == 1)
                     {
                         await Navigation.PushAsync(newpage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(IsSuccess == 3 || IsSuccess == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -391,12 +422,12 @@ namespace PhuLongCRM.Views
                     ContactDetailPage newPage = new ContactDetailPage(Guid.Parse(viewModel.Customer.Val));
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -408,12 +439,12 @@ namespace PhuLongCRM.Views
                     AccountDetailPage newPage = new AccountDetailPage(Guid.Parse(viewModel.Customer.Val));
                     newPage.OnCompleted = async (OnCompleted) =>
                     {
-                        if (OnCompleted == true)
+                        if (OnCompleted == 1)
                         {
                             await Navigation.PushAsync(newPage);
                             LoadingHelper.Hide();
                         }
-                        else
+                        else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
                             ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -511,7 +542,7 @@ namespace PhuLongCRM.Views
         }
         private async void HuyGC(object sender, EventArgs e)
         {
-            bool confirm = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_huy_giu_cho_nay_khong, Language.dong_y, Language.huy);
+            bool confirm = await DisplayAlert(Language.xac_nhan, Language.ban_co_muon_huy_giu_cho_nay_khong, Language.co, Language.khong);
             if (confirm == false) return;
 
             string url_action = "";
@@ -617,6 +648,40 @@ namespace PhuLongCRM.Views
                     LoadingHelper.Hide();
                 }
             }    
+        }
+
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            viewModel.IsRefreshing = true;
+            await viewModel.LoadQueue();
+            SetButtons();
+            if (viewModel.BangTinhGiaList != null && viewModel.BangTinhGiaList.Count > 0)
+            {
+                viewModel.PageBangTinhGia = 0;
+                viewModel.BangTinhGiaList.Clear();
+                await viewModel.LoadDanhSachBangTinhGia();
+            }
+            if (viewModel.DatCocList != null && viewModel.DatCocList.Count > 0)
+            {
+                viewModel.PageDatCoc = 0;
+                viewModel.DatCocList.Clear();
+                await viewModel.LoadDanhSachDatCoc();
+            }
+            if (viewModel.HopDongList != null && viewModel.HopDongList.Count > 0)
+            {
+                viewModel.PageHopDong = 0;
+                viewModel.HopDongList.Clear();
+                await viewModel.LoadDanhSachHopDong();
+            }
+            if (viewModel.list_thongtincase != null && viewModel.list_thongtincase.Count > 0)
+            {
+                viewModel.PageCase = 0;
+                viewModel.list_thongtincase.Clear();
+                await viewModel.LoadCaseForQueue();
+            }
+            viewModel.IsRefreshing = false;
+            LoadingHelper.Hide();
         }
     }
 }

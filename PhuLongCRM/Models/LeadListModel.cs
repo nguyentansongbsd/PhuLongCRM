@@ -24,7 +24,7 @@ namespace PhuLongCRM.Models
                 }
                 else if (mobilephone != null && mobilephone.StartsWith("84"))
                 {
-                    return mobilephone.Replace("84", "+84-");
+                    return "+84-" + mobilephone.Substring(2);
                 }
                 else
                 {

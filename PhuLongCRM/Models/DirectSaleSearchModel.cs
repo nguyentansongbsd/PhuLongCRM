@@ -27,7 +27,11 @@ namespace PhuLongCRM.Models
         public string Area { get; set; }
         [JsonProperty("Price", NullValueHandling = NullValueHandling.Ignore)]
         public string Price { get; set; }
-        public DirectSaleSearchModel(string projectId, string phasesLanchId = null, bool? isEvent = null, string unitCode = null, string directions = null, string views = null, string unitStatuses = null, string netArea = null, string price = null)
+        public bool isOwner { get; set; }
+
+        [JsonProperty("Employee", NullValueHandling = NullValueHandling.Ignore)]
+        public string Employee { get; set; }
+        public DirectSaleSearchModel(string projectId, string phasesLanchId = null, bool? isEvent = null, string unitCode = null, string directions = null, string views = null, string unitStatuses = null, string netArea = null, string price = null, bool isOwner = false, string employee = null)
         {
             Project = projectId;
             Phase = phasesLanchId;
@@ -38,6 +42,8 @@ namespace PhuLongCRM.Models
             stsUnit = unitStatuses;
             Area = netArea;
             Price = price;
+            Employee = employee;
+            this.isOwner = isOwner;
         }
     }
 }

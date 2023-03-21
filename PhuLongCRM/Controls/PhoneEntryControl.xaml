@@ -6,6 +6,6 @@
     xmlns:controls="clr-namespace:PhuLongCRM.Controls"
     x:Class="PhuLongCRM.Controls.PhoneEntryControl">
     <controls:MainEntry.Behaviors>
-        <behavior:MaskedBehavior Mask="+XX-XXXXXXXXXX"/>
+        <behavior:MaskedBehavior Mask="+84-XXXXXXXXXX"/>
     </controls:MainEntry.Behaviors>
 </controls:MainEntry>

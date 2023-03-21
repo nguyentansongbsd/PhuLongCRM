@@ -14,16 +14,19 @@ namespace PhuLongCRM.ViewModels
         public string KeySort { get; set; }
         public bool Create_on_sort { get; set; } = true;
         public bool Rating_sort { get; set; } = true;
-        public bool Status_sort { get; set; } = true;
+        public bool Allocation_sort { get; set; } = false;
+        public string FillterStatus { get; set; }
         public LeadsContentViewViewModel()
         {                   
             PreLoadData = new Command(() =>
             {
+                string filter_sts = string.Empty;
                 string filter_name = string.Empty;
                 string filter_phone = string.Empty;
                 string filter_subject = string.Empty;
                 string filter_customercode = string.Empty;
                 string sort = string.Empty;
+                string filter_allocation = string.Empty;
                 if (!string.IsNullOrWhiteSpace(Keyword))
                 {
                     filter_name = $@"<condition attribute='lastname' operator='like' value='%25{Keyword}%25' />";
@@ -31,6 +34,20 @@ namespace PhuLongCRM.ViewModels
                     filter_subject = $@"<condition entityname='Topic' attribute='bsd_name' operator='like' value='%25{Keyword}%25' />";
                     filter_customercode = $@"<condition attribute='bsd_customercode' operator='like' value='%25{Keyword}%25' />";
                 }
+                //else
+                //{
+                //    filter_sts = $@"<condition attribute='statuscode' operator='in'>
+                //                    <value>3</value>
+                //                    <value>4</value>
+                //                    <value>5</value>
+                //                    <value>7</value>
+                //                    <value>6</value>
+                //                  </condition>";
+                //}
+                if(!string.IsNullOrWhiteSpace(FillterStatus))
+                {
+                    filter_sts = FillterStatus;
+                }    
                 if (!string.IsNullOrWhiteSpace(KeySort))
                 {
                     if (KeySort == "1")
@@ -49,10 +66,10 @@ namespace PhuLongCRM.ViewModels
                     }
                     else if (KeySort == "3")
                     {
-                        if (Status_sort)
-                            sort = $"<order attribute='statuscode' descending='true' />";
+                        if (Allocation_sort)
+                            filter_allocation = $"<condition attribute='bsd_allocation' operator='eq' value='1' />";
                         else
-                            sort = $"<order attribute='statuscode' descending='false' />";
+                            filter_allocation = $"<condition attribute='bsd_allocation' operator='eq' value='0' />";
                     }
                     else
                         sort = "<order attribute='createdon' descending='true' />";
@@ -75,6 +92,8 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_customercode' />
                         {sort}
                         <filter type='and'>
+                            {filter_sts}
+                            {filter_allocation}
                              <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
                              <filter type='or'>
                                  '" + filter_name + @"'

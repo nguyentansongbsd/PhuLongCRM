@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
+using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using Stormlion.PhotoBrowser;
 using System;
@@ -64,6 +65,25 @@ namespace PhuLongCRM.ViewModels
 
         private AddressModel _addressCopy;
         public AddressModel AddressCopy { get => _addressCopy; set { _addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
+
+        private OptionSet _typeIdCard;
+        public OptionSet TypeIdCard { get => _typeIdCard; set { _typeIdCard = value; OnPropertyChanged(nameof(TypeIdCard)); } }
+
+        private List<OptionSet> _typeIdCardss;
+        public List<OptionSet> TypeIdCards { get => _typeIdCardss; set { _typeIdCardss = value; OnPropertyChanged(nameof(TypeIdCards)); } }
+
+        private ContactListModel _guardian;
+        public ContactListModel Guardian { get => _guardian; set { _guardian = value; OnPropertyChanged(nameof(Guardian)); } }
+
+        private List<ContactListModel> _guardians;
+        public List<ContactListModel> Guardians { get => _guardians; set { _guardians = value; OnPropertyChanged(nameof(Guardians)); } }
+
+        private OptionSet _hasGuardian;
+        public OptionSet HasGuardian { get => _hasGuardian; set { _hasGuardian = value; OnPropertyChanged(nameof(HasGuardian)); } }
+
+        private List<OptionSet> _hasGuardians;
+        public List<OptionSet> HasGuardians { get => _hasGuardians; set { _hasGuardians = value; OnPropertyChanged(nameof(HasGuardians)); } }
+
         public ContactFormViewModel()
         {
             singleContact = new ContactFormModel();
@@ -74,6 +94,9 @@ namespace PhuLongCRM.ViewModels
             LocalizationOptions = new ObservableCollection<OptionSet>();
 
             ContactTypes = ContactTypeData.ContactTypes();
+            HasGuardians = new List<OptionSet>() { new OptionSet("1", Language.co), new OptionSet("0", Language.khong) };
+            Guardians = new List<ContactListModel>();
+            HasGuardian = new OptionSet("0", Language.khong);
         }
 
         public async Task LoadOneContact(String id)
@@ -116,7 +139,9 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_identitycard' />
                                 <attribute name='bsd_identitycarddategrant' />
                                 <attribute name='bsd_placeofissueidentitycard' />
+                                <attribute name='bsd_typeofidcardlead' />
                                 <attribute name='bsd_customercode' />
+                                <attribute name='bsd_haveprotector' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
                                           <attribute name='bsd_name' alias='parentcustomerid_label' />
@@ -145,6 +170,11 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='new_name'  alias='bsd_permanentdistrict_label'/>
                                         <attribute name='bsd_nameen'  alias='bsd_permanentdistrict_en'/>
                                     </link-entity>
+                                    <link-entity name='contact' from='contactid' to='bsd_protecter' link-type='outer'>
+                                        <attribute name='contactid' alias='protecter_id'/>
+                                        <attribute name='bsd_fullname' alias='protecter_name'/>
+                                        <attribute name='birthdate' alias='protecter_birthdate' />
+                                    </link-entity>
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                      <condition attribute='contactid' operator='eq' value='" + id + @"' />
@@ -168,6 +198,15 @@ namespace PhuLongCRM.ViewModels
                 IsOfficial = false;
             else
                 IsOfficial = true;
+
+            if (!string.IsNullOrWhiteSpace(singleContact.bsd_typeofidcardlead))
+            {
+                TypeIdCard = TypeIdCardData.GetTypeIdCardById(singleContact.bsd_typeofidcardlead);
+            }
+            if (singleContact.protecter_id != Guid.Empty)
+            {
+                Guardian = new ContactListModel { contactid = singleContact.protecter_id, bsd_fullname = singleContact.protecter_name, birthdate = singleContact.protecter_birthdate };
+            }
 
             Address1 = new AddressModel
             {
@@ -198,43 +237,26 @@ namespace PhuLongCRM.ViewModels
                 address = singleContact.bsd_permanentaddress1,
                 lineaddress = singleContact.bsd_permanentaddress
             };
-            await GetImageCMND();        
+            await GetImageCMND();
         }
 
-        public async Task<Boolean> updateContact(ContactFormModel contact)
+        public async Task<CrmApiResponse> updateContact(ContactFormModel contact)
         {
             string path = "/contacts(" + contact.contactid + ")";
             var content = await this.getContent(contact);
 
             CrmApiResponse result = await CrmHelper.PatchData(path, content);
-
-            if (result.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return result;
         }
 
-        public async Task<Guid> createContact(ContactFormModel contact)
+        public async Task<CrmApiResponse> createContact(ContactFormModel contact)
         {
             string path = "/contacts";
             contact.contactid = Guid.NewGuid();
             var content = await this.getContent(contact);
 
             CrmApiResponse result = await CrmHelper.PostData(path, content);
-
-            if (result.IsSuccess)
-            {
-                return contact.contactid;
-            }
-            else
-            {
-                return new Guid();
-            }
-
+            return result;
         }
 
         public async Task<Boolean> DeletLookup(string fieldName, Guid contactId)
@@ -250,9 +272,12 @@ namespace PhuLongCRM.ViewModels
             data["lastname"] = contact.bsd_fullname;
             data["firstname"] = "";
             data["bsd_fullname"] = contact.bsd_fullname;
-            data["emailaddress1"] = contact.emailaddress1;
+            if (!string.IsNullOrWhiteSpace(contact.emailaddress1))
+            {
+                data["emailaddress1"] = contact.emailaddress1.Trim();
+            }
             data["birthdate"] = contact.birthdate.HasValue ? (DateTime.Parse(contact.birthdate.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
-            data["mobilephone"] = contact.mobilephone;//.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
+            data["mobilephone"] = contact.mobilephone.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
             data["gendercode"] = contact.gendercode;
             if (checkCMND != contact.bsd_identitycardnumber)
             {
@@ -268,11 +293,12 @@ namespace PhuLongCRM.ViewModels
             data["bsd_issuedonpassport"] = contact.bsd_issuedonpassport.HasValue ? (DateTime.Parse(contact.bsd_issuedonpassport.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
             data["bsd_placeofissuepassport"] = contact.bsd_placeofissuepassport;
             data["bsd_jobtitlevn"] = contact.bsd_jobtitlevn;
-            data["telephone1"] = string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1;//!string.IsNullOrWhiteSpace(contact.telephone1) && contact.telephone1.Contains("-") ? contact.telephone1.Replace("+", "").Replace("-", "") : string.IsNullOrWhiteSpace(contact.telephone1)? "+84": contact.telephone1
+            data["telephone1"] = string.IsNullOrWhiteSpace(contact.telephone1) ? "+84" : !string.IsNullOrWhiteSpace(contact.telephone1) && contact.telephone1.Contains("-") ? contact.telephone1.Replace("+", "").Replace("-", "") : contact.telephone1;
             data["statuscode"] = this.CustomerStatusReason?.Val;
             data["bsd_identitycard"] = contact.bsd_identitycard;
             data["bsd_identitycarddategrant"] = contact.bsd_identitycarddategrant.HasValue ? (DateTime.Parse(contact.bsd_identitycarddategrant.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null;
             data["bsd_placeofissueidentitycard"] = contact.bsd_placeofissueidentitycard;
+            data["bsd_typeofidcardlead"] = this.TypeIdCard?.Val;
             //  data["bsd_housenumberstreet"] = contact.bsd_housenumberstreet;
             //  data["bsd_contactaddress"] = contact.bsd_contactaddress;
             //  data["bsd_diachi"] = contact.bsd_diachi;
@@ -381,6 +407,22 @@ namespace PhuLongCRM.ViewModels
             {
                 data["ownerid@odata.bind"] = "/systemusers(" + UserLogged.ManagerId + ")";
             }
+            if (HasGuardian != null && HasGuardian.Val == "1")
+            {
+                data["bsd_haveprotector"] = true;
+            }
+            else
+            {
+                data["bsd_haveprotector"] = false;
+            }
+            if (Guardian != null)
+            {
+                data["bsd_protecter@odata.bind"] = "/contacts(" + Guardian.contactid + ")";
+            }
+            else
+            {
+                await DeletLookup("bsd_protecter", contact.contactid);
+            }
 
             return data;
         }
@@ -430,13 +472,13 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<bool> CheckPassport(string bsd_passport, string contactid)
+        public async Task<bool> CheckCCCD(string identitycard, string contactid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='contact'>
                                     <attribute name='fullname' />
                                     <filter type='and'>
-                                        <condition attribute='bsd_passport' operator='eq' value='" + bsd_passport + @"' />
+                                        <condition attribute='bsd_identitycard' operator='eq' value='" + identitycard + @"' />
                                         <condition attribute='contactid' operator='ne' value='" + contactid + @"' />
                                     </filter>
                                   </entity>
@@ -452,13 +494,13 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<bool> CheckCCCD(string idcard, string contactid)
+        public async Task<bool> CheckPassport(string bsd_passport, string contactid)
         {
             string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='contact'>
                                     <attribute name='fullname' />
                                     <filter type='and'>
-                                        <condition attribute='bsd_idcard' operator='eq' value='" + idcard + @"' />
+                                        <condition attribute='bsd_passport' operator='eq' value='" + bsd_passport + @"' />
                                         <condition attribute='contactid' operator='ne' value='" + contactid + @"' />
                                     </filter>
                                   </entity>
@@ -579,6 +621,31 @@ namespace PhuLongCRM.ViewModels
                     }
                 }
             }
+        }
+        public async Task LoadContactForLookup()
+        {
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='bsd_fullname' />
+                    <attribute name='birthdate' />
+                    <attribute name='contactid' />
+                    <order attribute='createdon' descending='true' />
+                    <filter type='and'>
+                        <condition entityname='mandatorysecondary' attribute='bsd_contact' operator='null' />
+                        <condition attribute='parentcustomerid' operator='null' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                        <condition attribute='statuscode' operator='in'>
+                            <value>100000000</value>
+                            <value>1</value>
+                        </condition>
+                    </filter>
+                    <link-entity name='bsd_mandatorysecondary' from='bsd_contact' to='contactid' link-type='outer' alias='mandatorysecondary' />
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactListModel>>("contacts", fetch);
+            if (result == null)
+                return;
+            Guardians = result.value;
         }
     }
 }

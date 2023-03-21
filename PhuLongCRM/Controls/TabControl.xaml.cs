@@ -23,6 +23,7 @@ namespace PhuLongCRM.Controls
             TabControl control = (TabControl)bindable;
             control.SetUpTab();
         }
+
         public string ListTab
         {
             get { return (string)GetValue(ListTabProperty); }
@@ -39,6 +40,12 @@ namespace PhuLongCRM.Controls
         public TabControl()
         {
             InitializeComponent();
+            PropertyChanged += TabControl_PropertyChanged;
+        }
+
+        private void TabControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            RefreshLanguage();
         }
 
         private void SetUpTab()
@@ -122,6 +129,25 @@ namespace PhuLongCRM.Controls
                 return value;
             else
                 return key;
+        }
+        private void RefreshLanguage()
+        {
+            if (ListTab != null)
+            {
+                var tabs = ListTab.Split(',').ToList();
+                if (tabs != null && tabs.Count > 0)
+                {
+                    for (int i = 0; i < this.Children.Count - 1; i++) //-1 do có boxview ở cuối
+                    {
+                        var item = Children[i] as RadBorder;
+                        if (item != null)
+                        {
+                            var lb = item.Content as Label;
+                            lb.Text = GetStringByKey(tabs[i]);
+                        }
+                    }
+                }
+            }
         }
     }
 }

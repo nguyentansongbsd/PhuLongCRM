@@ -93,10 +93,25 @@ namespace PhuLongCRM.ViewModels
 
         private AddressModel _addressCopy;
         public AddressModel AddressCopy { get => _addressCopy; set { _addressCopy = value; OnPropertyChanged(nameof(AddressCopy)); } }
+
+        private ContactListModel _guardian;
+        public ContactListModel Guardian { get => _guardian; set { _guardian = value; OnPropertyChanged(nameof(Guardian)); } }
+
+        private List<ContactListModel> _guardians;
+        public List<ContactListModel> Guardians { get => _guardians; set { _guardians = value; OnPropertyChanged(nameof(Guardians)); } }
+
+        private OptionSet _hasGuardian;
+        public OptionSet HasGuardian { get => _hasGuardian; set { _hasGuardian = value; OnPropertyChanged(nameof(HasGuardian)); } }
+
+        private List<OptionSet> _hasGuardians;
+        public List<OptionSet> HasGuardians { get => _hasGuardians; set { _hasGuardians = value; OnPropertyChanged(nameof(HasGuardians)); } }
         public LeadFormViewModel()
         {
             singleLead = new LeadFormModel();
             this.Genders = new List<OptionSet>() { new OptionSet("1",Language.nam), new OptionSet("2", Language.nu), new OptionSet("100000000",Language.khac) };
+            this.HasGuardians = new List<OptionSet>() { new OptionSet("1", Language.co), new OptionSet("0", Language.khong) };
+            Guardians = new List<ContactListModel>();
+            HasGuardian = new OptionSet("0", Language.khong);
         }
 
         public async Task LoadOneLead()
@@ -144,6 +159,7 @@ namespace PhuLongCRM.ViewModels
                             <attribute name='bsd_housenumberstreet' />
                             <attribute name='bsd_contactaddress' />
                             <attribute name='fullname' />
+                            <attribute name='bsd_hasguardian' />
                             <order attribute='createdon' descending='true' />
                             <filter type='and'>
                                 <condition attribute='leadid' operator='eq' value='{LeadId}' />
@@ -154,6 +170,11 @@ namespace PhuLongCRM.ViewModels
                             <link-entity name='bsd_topic' from='bsd_topicid' to='bsd_topic' visible='false' link-type='outer' alias='a_533be24fba81e911a83b000d3a07be23'>
                                 <attribute name='bsd_name' alias='bsd_topic_label' />
                                 <attribute name='bsd_topicid' alias='_bsd_topic_value'/>
+                            </link-entity>
+                            <link-entity name='contact' from='contactid' to='bsd_guardian' link-type='outer'>
+                                <attribute name='contactid' alias='guardian_id' />
+                                <attribute name='bsd_fullname' alias='guardian_name' />
+                                <attribute name='birthdate' alias='guardian_birthdate' />
                             </link-entity>
                           </entity>
                         </fetch>";
@@ -172,8 +193,15 @@ namespace PhuLongCRM.ViewModels
                 tmp.bsd_dategrant = tmp.bsd_dategrant.Value.ToLocalTime();
             if (tmp.new_birthday.HasValue)
                 tmp.new_birthday = tmp.new_birthday.Value.ToLocalTime();
+            if (tmp.guardian_birthdate.HasValue)
+                tmp.guardian_birthdate = tmp.guardian_birthdate.Value.ToLocalTime();
             tmp.lastname = tmp.fullname;
-            this.singleLead = tmp;
+            this.singleLead = tmp;  
+
+            if(singleLead.guardian_id != Guid.Empty)
+            {
+                Guardian = new ContactListModel { contactid = singleLead.guardian_id,bsd_fullname=singleLead.guardian_name, birthdate = singleLead.guardian_birthdate};
+            }    
 
             string fetch2 = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                           <entity name='lead'>
@@ -238,87 +266,79 @@ namespace PhuLongCRM.ViewModels
             }
             var tmp2 = result2.value.FirstOrDefault();
 
-            if (tmp2.bsd_accountcountry_id != Guid.Empty)
-            {
-                singleLead.bsd_accountcountry_id = tmp2.bsd_accountcountry_id;
-                singleLead.bsd_accountcountry_name = tmp2.bsd_accountcountry_name;
-                singleLead.bsd_accountcountry_name_en = tmp2.bsd_accountcountry_name_en;
-                singleLead.bsd_accountdistrict_id = tmp2.bsd_accountdistrict_id;
-                singleLead.bsd_accountdistrict_name = tmp2.bsd_accountdistrict_name;
-                singleLead.bsd_accountdistrict_name_en = tmp2.bsd_accountdistrict_name_en;
-                singleLead.bsd_accountprovince_id = tmp2.bsd_accountprovince_id;
-                singleLead.bsd_accountprovince_name = tmp2.bsd_accountprovince_name;
-                singleLead.bsd_accountprovince_name_en = tmp2.bsd_accountprovince_name_en;
+            singleLead.bsd_accountcountry_id = tmp2.bsd_accountcountry_id;
+            singleLead.bsd_accountcountry_name = tmp2.bsd_accountcountry_name;
+            singleLead.bsd_accountcountry_name_en = tmp2.bsd_accountcountry_name_en;
+            singleLead.bsd_accountdistrict_id = tmp2.bsd_accountdistrict_id;
+            singleLead.bsd_accountdistrict_name = tmp2.bsd_accountdistrict_name;
+            singleLead.bsd_accountdistrict_name_en = tmp2.bsd_accountdistrict_name_en;
+            singleLead.bsd_accountprovince_id = tmp2.bsd_accountprovince_id;
+            singleLead.bsd_accountprovince_name = tmp2.bsd_accountprovince_name;
+            singleLead.bsd_accountprovince_name_en = tmp2.bsd_accountprovince_name_en;
 
-                Address3 = new AddressModel
-                {
-                    country_id = singleLead.bsd_accountcountry_id,
-                    country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountcountry_name_en : singleLead.bsd_accountcountry_name,
-                    country_name_en = singleLead.bsd_accountcountry_name_en,
-                    province_id = singleLead.bsd_accountprovince_id,
-                    province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountprovince_name_en : singleLead.bsd_accountprovince_name,
-                    province_name_en = singleLead.bsd_accountprovince_name_en,
-                    district_id = singleLead.bsd_accountdistrict_id,
-                    district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountdistrict_name_en : singleLead.bsd_accountdistrict_name,
-                    district_name_en = singleLead.bsd_accountdistrict_name_en,
-                    lineaddress = singleLead.bsd_account_housenumberstreetwardvn,
-                    address = singleLead.bsd_accountaddressvn
-                };
-            }
-            if (tmp2.bsd_permanentcountry_id != Guid.Empty)
+            Address3 = new AddressModel
             {
-                singleLead.bsd_permanentcountry_id = tmp2.bsd_permanentcountry_id;
-                singleLead.bsd_permanentcountry_name = tmp2.bsd_permanentcountry_name;
-                singleLead.bsd_permanentcountry_name_en = tmp2.bsd_permanentcountry_name_en;
-                singleLead.bsd_permanentdistrict_id = tmp2.bsd_permanentdistrict_id;
-                singleLead.bsd_permanentdistrict_name = tmp2.bsd_permanentdistrict_name;
-                singleLead.bsd_permanentdistrict_name_en = tmp2.bsd_permanentdistrict_name_en;
-                singleLead.bsd_permanentprovince_id = tmp2.bsd_permanentprovince_id;
-                singleLead.bsd_permanentprovince_name = tmp2.bsd_permanentprovince_name;
-                singleLead.bsd_permanentprovince_name_en = tmp2.bsd_permanentprovince_name_en;
+                country_id = singleLead.bsd_accountcountry_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountcountry_name_en : singleLead.bsd_accountcountry_name,
+                country_name_en = singleLead.bsd_accountcountry_name_en,
+                province_id = singleLead.bsd_accountprovince_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountprovince_name_en : singleLead.bsd_accountprovince_name,
+                province_name_en = singleLead.bsd_accountprovince_name_en,
+                district_id = singleLead.bsd_accountdistrict_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_accountdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_accountdistrict_name_en : singleLead.bsd_accountdistrict_name,
+                district_name_en = singleLead.bsd_accountdistrict_name_en,
+                lineaddress = singleLead.bsd_account_housenumberstreetwardvn,
+                address = singleLead.bsd_accountaddressvn
+            };
+            singleLead.bsd_permanentcountry_id = tmp2.bsd_permanentcountry_id;
+            singleLead.bsd_permanentcountry_name = tmp2.bsd_permanentcountry_name;
+            singleLead.bsd_permanentcountry_name_en = tmp2.bsd_permanentcountry_name_en;
+            singleLead.bsd_permanentdistrict_id = tmp2.bsd_permanentdistrict_id;
+            singleLead.bsd_permanentdistrict_name = tmp2.bsd_permanentdistrict_name;
+            singleLead.bsd_permanentdistrict_name_en = tmp2.bsd_permanentdistrict_name_en;
+            singleLead.bsd_permanentprovince_id = tmp2.bsd_permanentprovince_id;
+            singleLead.bsd_permanentprovince_name = tmp2.bsd_permanentprovince_name;
+            singleLead.bsd_permanentprovince_name_en = tmp2.bsd_permanentprovince_name_en;
 
-                Address2 = new AddressModel
-                {
-                    country_id = singleLead.bsd_permanentcountry_id,
-                    country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentcountry_name_en : singleLead.bsd_permanentcountry_name,
-                    country_name_en = singleLead.bsd_permanentcountry_name_en,
-                    province_id = singleLead.bsd_permanentprovince_id,
-                    province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentprovince_name_en : singleLead.bsd_permanentprovince_name,
-                    province_name_en = singleLead.bsd_permanentprovince_name_en,
-                    district_id = singleLead.bsd_permanentdistrict_id,
-                    district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentdistrict_name_en : singleLead.bsd_permanentdistrict_name,
-                    district_name_en = singleLead.bsd_permanentdistrict_name_en,
-                    lineaddress = singleLead.bsd_permanentaddress,
-                    address = singleLead.bsd_permanentaddress1
-                };
-            }
-            if (tmp2.bsd_permanentcountry_id != Guid.Empty)
+            Address2 = new AddressModel
             {
-                singleLead.bsd_country_id = tmp2.bsd_country_id;
-                singleLead.bsd_country_name = tmp2.bsd_country_name;
-                singleLead.bsd_country_name_en = tmp2.bsd_country_name_en;
-                singleLead.bsd_district_id = tmp2.bsd_district_id;
-                singleLead.bsd_district_name = tmp2.bsd_district_name;
-                singleLead.bsd_district_name_en = tmp2.bsd_district_name_en;
-                singleLead.bsd_province_id = tmp2.bsd_province_id;
-                singleLead.bsd_province_name = tmp2.bsd_province_name;
-                singleLead.bsd_province_name_en = tmp2.bsd_province_name_en;
+                country_id = singleLead.bsd_permanentcountry_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentcountry_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentcountry_name_en : singleLead.bsd_permanentcountry_name,
+                country_name_en = singleLead.bsd_permanentcountry_name_en,
+                province_id = singleLead.bsd_permanentprovince_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentprovince_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentprovince_name_en : singleLead.bsd_permanentprovince_name,
+                province_name_en = singleLead.bsd_permanentprovince_name_en,
+                district_id = singleLead.bsd_permanentdistrict_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_permanentdistrict_name_en) && UserLogged.Language == "en" ? singleLead.bsd_permanentdistrict_name_en : singleLead.bsd_permanentdistrict_name,
+                district_name_en = singleLead.bsd_permanentdistrict_name_en,
+                lineaddress = singleLead.bsd_permanentaddress,
+                address = singleLead.bsd_permanentaddress1
+            };
 
-                Address1 = new AddressModel
-                {
-                    country_id = singleLead.bsd_country_id,
-                    country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_country_name_en) && UserLogged.Language == "en" ? singleLead.bsd_country_name_en : singleLead.bsd_country_name,
-                    country_name_en = singleLead.bsd_country_name_en,
-                    province_id = singleLead.bsd_province_id,
-                    province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_province_name_en) && UserLogged.Language == "en" ? singleLead.bsd_province_name_en : singleLead.bsd_province_name,
-                    province_name_en = singleLead.bsd_province_name_en,
-                    district_id = singleLead.bsd_district_id,
-                    district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_district_name_en) && UserLogged.Language == "en" ? singleLead.bsd_district_name_en : singleLead.bsd_district_name,
-                    district_name_en = singleLead.bsd_district_name_en,
-                    lineaddress = singleLead.bsd_housenumberstreet,
-                    address = singleLead.bsd_contactaddress
-                };
-            }
+            singleLead.bsd_country_id = tmp2.bsd_country_id;
+            singleLead.bsd_country_name = tmp2.bsd_country_name;
+            singleLead.bsd_country_name_en = tmp2.bsd_country_name_en;
+            singleLead.bsd_district_id = tmp2.bsd_district_id;
+            singleLead.bsd_district_name = tmp2.bsd_district_name;
+            singleLead.bsd_district_name_en = tmp2.bsd_district_name_en;
+            singleLead.bsd_province_id = tmp2.bsd_province_id;
+            singleLead.bsd_province_name = tmp2.bsd_province_name;
+            singleLead.bsd_province_name_en = tmp2.bsd_province_name_en;
+
+            Address1 = new AddressModel
+            {
+                country_id = singleLead.bsd_country_id,
+                country_name = !string.IsNullOrWhiteSpace(singleLead.bsd_country_name_en) && UserLogged.Language == "en" ? singleLead.bsd_country_name_en : singleLead.bsd_country_name,
+                country_name_en = singleLead.bsd_country_name_en,
+                province_id = singleLead.bsd_province_id,
+                province_name = !string.IsNullOrWhiteSpace(singleLead.bsd_province_name_en) && UserLogged.Language == "en" ? singleLead.bsd_province_name_en : singleLead.bsd_province_name,
+                province_name_en = singleLead.bsd_province_name_en,
+                district_id = singleLead.bsd_district_id,
+                district_name = !string.IsNullOrWhiteSpace(singleLead.bsd_district_name_en) && UserLogged.Language == "en" ? singleLead.bsd_district_name_en : singleLead.bsd_district_name,
+                district_name_en = singleLead.bsd_district_name_en,
+                lineaddress = singleLead.bsd_housenumberstreet,
+                address = singleLead.bsd_contactaddress
+            };
         }
 
         public async Task<bool> updateLead()
@@ -382,12 +402,12 @@ namespace PhuLongCRM.ViewModels
             data["bsd_placeofissue"] = singleLead.bsd_placeofissue;
             data["bsd_registrationcode"] = singleLead.bsd_registrationcode;
 
-            data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone : null;
-            data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1)? singleLead.telephone1 : "+84";
+            data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone.Replace("+","").Replace("-","") : null;
+            data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1) ? singleLead.telephone1 : "+84";
 
             if (singleLead.new_birthday.HasValue)
             {
-                data["new_birthday"] = singleLead.new_birthday.Value.ToUniversalTime();
+                data["new_birthday"] = singleLead.new_birthday.Value.ToLocalTime();
             }
             else
             {
@@ -396,7 +416,7 @@ namespace PhuLongCRM.ViewModels
 
             if (singleLead.bsd_dategrant.HasValue)
             {
-                data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToUniversalTime();
+                data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToLocalTime();
             }
             else
             {
@@ -584,7 +604,7 @@ namespace PhuLongCRM.ViewModels
             {
                 data["bsd_District@odata.bind"] = "/new_districts(" + Address1.district_id + ")"; /////Lookup Field
             }
-            if (Address1 != null )
+            if (Address1 != null)
             {
                 if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
                 {
@@ -603,7 +623,23 @@ namespace PhuLongCRM.ViewModels
                 data["bsd_housenumber"] = null;
                 data["bsd_contactaddress"] = null;
                 data["bsd_diachi"] = null;
-            }    
+            }
+            if (HasGuardian != null && HasGuardian.Val == "1")
+            {
+                data["bsd_hasguardian"] = true;
+            }
+            else
+            {
+                data["bsd_hasguardian"] = false;
+            }
+            if (Guardian != null)
+            {
+                data["bsd_guardian@odata.bind"] = "/contacts(" + Guardian.contactid + ")";
+            }
+            else
+            {
+                await DeletLookup("bsd_guardian", singleLead.leadid);
+            }
             return data;
         }
 
@@ -660,6 +696,106 @@ namespace PhuLongCRM.ViewModels
             {
                 list_campaign_lookup.Add(x);
             }
+        }
+
+        public async Task<bool> CheckIsValidPhone(string phoneNum)
+        {
+            string conditionLead = string.Empty;
+            if (this.LeadId != Guid.Empty)
+            {
+                conditionLead = $"<condition attribute='leadid' operator='ne' value='{this.LeadId}'/>";
+            }
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                          <entity name='lead'>
+                            <attribute name='mobilephone' alias='Label'/>
+                            <order attribute='createdon' descending='true' />
+                            <filter type='and'>
+                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                <condition attribute='mobilephone' operator='like' value='%25{phoneNum}%25'/>
+                                {conditionLead}
+                            </filter>
+                          </entity>
+                        </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetch);
+            if (result == null || result.value.Count == 0)
+                return false;
+            else
+                return true;
+        }
+
+        public async Task<bool> CheckIsValidEmail(string email)
+        {
+            string conditionLead = string.Empty;
+            if (this.LeadId != Guid.Empty)
+            {
+                conditionLead = $"<condition attribute='leadid' operator='ne' value='{this.LeadId}'/>";
+            }
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                          <entity name='lead'>
+                            <attribute name='emailaddress1' alias='Label'/>
+                            <order attribute='createdon' descending='true' />
+                            <filter type='and'>
+                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                <condition attribute='emailaddress1' operator='eq' value='{email}' />
+                                {conditionLead}
+                            </filter>
+                          </entity>
+                        </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetch);
+            if (result == null || result.value.Count == 0)
+                return false;
+            else
+                return true;
+        }
+
+        public async Task<bool> CheckIsValidID(string identityCardNumberId)
+        {
+            string conditionLead = string.Empty;
+            if (this.LeadId != Guid.Empty)
+            {
+                conditionLead = $"<condition attribute='leadid' operator='ne' value='{this.LeadId}'/>";
+            }
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                          <entity name='lead'>
+                            <attribute name='bsd_identitycardnumberid' alias='Label'/>
+                            <order attribute='createdon' descending='true' />
+                            <filter type='and'>
+                                <condition attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                <condition attribute='bsd_identitycardnumberid' operator='eq' value='{identityCardNumberId}' />
+                                {conditionLead}
+                            </filter>
+                          </entity>
+                        </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("leads", fetch);
+            if (result == null || result.value.Count == 0)
+                return false;
+            else
+                return true;
+        }
+        public async Task LoadContactForLookup()
+        {
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                  <entity name='contact'>
+                    <attribute name='bsd_fullname' />
+                    <attribute name='birthdate' />
+                    <attribute name='contactid' />
+                    <order attribute='createdon' descending='true' />
+                    <filter type='and'>
+                        <condition entityname='mandatorysecondary' attribute='bsd_contact' operator='null' />
+                        <condition attribute='parentcustomerid' operator='null' />
+                        <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                        <condition attribute='statuscode' operator='in'>
+                            <value>100000000</value>
+                            <value>1</value>
+                        </condition>
+                    </filter>
+                    <link-entity name='bsd_mandatorysecondary' from='bsd_contact' to='contactid' link-type='outer' alias='mandatorysecondary' />
+                  </entity>
+                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactListModel>>("contacts", fetch);
+            if (result == null)
+                return;
+            Guardians = result.value;
         }
     }
 }

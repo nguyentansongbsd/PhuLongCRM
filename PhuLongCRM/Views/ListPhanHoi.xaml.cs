@@ -26,8 +26,15 @@ namespace PhuLongCRM.Views
             BindingContext = viewModel = new ListPhanHoiViewModel();
             LoadingHelper.Show();
             NeedToRefresh = false;
+            PropertyChanged += ListPhanHoi_PropertyChanged;
             Init();
         }
+
+        private void ListPhanHoi_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.phan_hoi_title;
+        }
+
         public async void Init()
         {
             await viewModel.LoadData();

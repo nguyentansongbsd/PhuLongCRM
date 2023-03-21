@@ -6,117 +6,187 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
 {
     public class DirectSaleDetailTestViewModel : BaseViewModel
     {
-        private string FilterXml;
-        private int Size = 3;
-
-        private Unit _unit;
-        public Unit Unit { get => _unit; set { _unit = value; OnPropertyChanged(nameof(Unit)); } }
-        public List<DirectSaleModel> Data { get; set; }
-
-        public DirectSaleSearchModel Filter { get; set; }
+        private ObservableCollection<Block> _blocks;
+        public ObservableCollection<Block> Blocks { get => _blocks; set { _blocks = value; OnPropertyChanged(nameof(Blocks)); } }
 
         private Block _block;
         public Block Block { get => _block; set { _block = value; OnPropertyChanged(nameof(Block)); } }
 
-        private ObservableCollection<Block> _blocks;
-        public ObservableCollection<Block> Blocks { get => _blocks; set { _blocks = value; OnPropertyChanged(nameof(Blocks)); } }
+        private Unit _unit;
+        public Unit Unit { get => _unit; set { _unit = value; OnPropertyChanged(nameof(Unit)); } }
 
         private bool _isShowBtnBangTinhGia;
         public bool IsShowBtnBangTinhGia { get => _isShowBtnBangTinhGia; set { _isShowBtnBangTinhGia = value; OnPropertyChanged(nameof(IsShowBtnBangTinhGia)); } }
+
+        public DirectSaleSearchModel Filter { get; set; }
+
+        private string FilterXml;
 
         public DirectSaleDetailTestViewModel()
         {
             Blocks = new ObservableCollection<Block>();
         }
-        public async Task LoadTotalDirectSale()
-        {
-            string json = JsonConvert.SerializeObject(Filter);
-            var input = new
-            {
-                input = json
-            };
-            string body = JsonConvert.SerializeObject(input);
-            CrmApiResponse result = await CrmHelper.PostData("/bsd_Action_DirectSale_GetTotalQty", body);
-            if (result.IsSuccess == false && result.Content == null) return;
 
-            string content = result.Content;
-            ResponseAction responseActions = JsonConvert.DeserializeObject<ResponseAction>(content);
-            Data = JsonConvert.DeserializeObject<List<DirectSaleModel>>(responseActions.output);
-
-            foreach (DirectSaleModel model in Data)
-            {
-                Block block = new Block();
-                block.bsd_blockid = Guid.Parse(model.ID);
-                block.bsd_name = model.name;
-                block.TotalUnitInBlock = int.Parse(model.sumQty);
-                var arrStatus = model.stringQty.Split(',');
-                block.NumChuanBiInBlock = int.Parse(arrStatus[0]);
-                block.NumSanSangInBlock = int.Parse(arrStatus[1]);
-                block.NumBookingInBlock = int.Parse(arrStatus[2]);
-                block.NumGiuChoInBlock = int.Parse(arrStatus[3]);
-                block.NumDatCocInBlock = int.Parse(arrStatus[4]);
-                block.NumDongYChuyenCoInBlock = int.Parse(arrStatus[5]);
-                block.NumDaDuTienCocInBlock = int.Parse(arrStatus[6]);
-                block.NumOptionInBlock = int.Parse(arrStatus[7]);
-                block.NumThanhToanDot1InBlock = int.Parse(arrStatus[8]);
-                block.NumSignedDAInBlock = int.Parse(arrStatus[9]);
-                block.NumQualifiedInBlock = int.Parse(arrStatus[10]);
-                block.NumDaBanInBlock = int.Parse(arrStatus[11]);
-                block.page = -1;
-                Blocks.Add(block);
-            }
-        }
-        public async Task LoadFloor()
+        public void SetNumStatus(string UnitStatusNew, string UnitStatusOld,Guid floorId)
         {
-            if (Block != null && Block.Floors != null)
+            try
             {
-                var data = Data.SingleOrDefault(x => x.ID == Block.bsd_blockid.ToString());
-                //Block.page += 1;
-                //var list = data.listFloor.Skip(Block.page * Size).Take(Size);
-                if (Block.Floors.Count == data.listFloor.Count)
-                    return;
-                foreach (var item in data.listFloor)
+                var floor = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId);
+
+                switch (UnitStatusOld)
                 {
-                    Floor floor = new Floor();
-                    floor.bsd_floorid = Guid.Parse(item.ID);
-                    floor.bsd_name = item.name;
-                    var arrStatusInFloor = item.stringQty.Split(',');
-                    floor.NumChuanBiInFloor = int.Parse(arrStatusInFloor[0]);
-                    floor.NumSanSangInFloor = int.Parse(arrStatusInFloor[1]);
-                    floor.NumBookingInFloor = int.Parse(arrStatusInFloor[2]);
-                    floor.NumGiuChoInFloor = int.Parse(arrStatusInFloor[3]);
-                    floor.NumDatCocInFloor = int.Parse(arrStatusInFloor[4]);
-                    floor.NumDongYChuyenCoInFloor = int.Parse(arrStatusInFloor[5]);
-                    floor.NumDaDuTienCocInFloor = int.Parse(arrStatusInFloor[6]);
-                    floor.NumOptionInFloor = int.Parse(arrStatusInFloor[7]);
-                    floor.NumThanhToanDot1InFloor = int.Parse(arrStatusInFloor[8]);
-                    floor.NumSignedDAInFloor = int.Parse(arrStatusInFloor[9]);
-                    floor.NumQualifiedInFloor = int.Parse(arrStatusInFloor[10]);
-                    floor.NumDaBanInFloor = int.Parse(arrStatusInFloor[11]);
-                    floor.TotalUnitInFloor = int.Parse(item.sumQty);
-                    Block.Floors.Add(floor);
+                    case "1":
+                        this.Block.NumChuanBiInBlock--;
+                        floor.NumChuanBiInFloor--;
+                        break;
+                    case "100000000":
+                        this.Block.NumSanSangInBlock--;
+                        floor.NumSanSangInFloor--;
+                        break;
+                    case "100000007":
+                        this.Block.NumBookingInBlock--;
+                        floor.NumBookingInFloor--;
+                        break;
+                    case "100000004":
+                        this.Block.NumGiuChoInBlock--;
+                        floor.NumGiuChoInFloor--;
+                        break;
+                    case "100000006":
+                        this.Block.NumDatCocInBlock--;
+                        floor.NumDatCocInFloor--;
+                        break;
+                    case "100000005":
+                        this.Block.NumDongYChuyenCoInBlock--;
+                        floor.NumDongYChuyenCoInFloor--;
+                        break;
+                    case "100000003":
+                        this.Block.NumDaDuTienCocInBlock--;
+                        floor.NumDaDuTienCocInFloor--;
+                        break;
+                    case "100000010":
+                        this.Block.NumOptionInBlock--;
+                        floor.NumOptionInFloor--;
+                        break;
+                    case "100000001":
+                        this.Block.NumThanhToanDot1InBlock--;
+                        floor.NumThanhToanDot1InFloor--;
+                        break;
+                    case "100000009":
+                        this.Block.NumSignedDAInBlock--;
+                        floor.NumSignedDAInFloor--;
+                        break;
+                    case "100000008":
+                        this.Block.NumQualifiedInBlock--;
+                        floor.NumQualifiedInFloor--;
+                        break;
+                    case "100000002":
+                        this.Block.NumDaBanInBlock--;
+                        floor.NumDaBanInFloor--;
+                        break;
+                    default:
+                        break;
+                }
+                switch (UnitStatusNew)
+                {
+                    case "1":
+                        this.Block.NumChuanBiInBlock++;
+                        floor.NumChuanBiInFloor++;
+                        break;
+                    case "100000000":
+                        this.Block.NumSanSangInBlock++;
+                        floor.NumSanSangInFloor++;
+                        break;
+                    case "100000007":
+                        this.Block.NumBookingInBlock++;
+                        floor.NumBookingInFloor++;
+                        break;
+                    case "100000004":
+                        this.Block.NumGiuChoInBlock++;
+                        floor.NumGiuChoInFloor++;
+                        break;
+                    case "100000006":
+                        this.Block.NumDatCocInBlock++;
+                        floor.NumDatCocInFloor++;
+                        break;
+                    case "100000005":
+                        this.Block.NumDongYChuyenCoInBlock++;
+                        floor.NumDongYChuyenCoInFloor++;
+                        break;
+                    case "100000003":
+                        this.Block.NumDaDuTienCocInBlock++;
+                        floor.NumDaDuTienCocInFloor++;
+                        break;
+                    case "100000010":
+                        this.Block.NumOptionInBlock++;
+                        floor.NumOptionInFloor++;
+                        break;
+                    case "100000001":
+                        this.Block.NumThanhToanDot1InBlock++;
+                        floor.NumThanhToanDot1InFloor++;
+                        break;
+                    case "100000009":
+                        this.Block.NumSignedDAInBlock++;
+                        floor.NumSignedDAInFloor++;
+                        break;
+                    case "100000008":
+                        this.Block.NumQualifiedInBlock++;
+                        floor.NumQualifiedInFloor++;
+                        break;
+                    case "100000002":
+                        this.Block.NumDaBanInBlock++;
+                        floor.NumDaBanInFloor++;
+                        break;
+                    default:
+                        break;
                 }
             }
+            catch(Exception ex)
+            {
+
+            }
+            
         }
+
+        public void ChangeStatusUnitPopup(ResponseRealtime item)
+        {
+            if (this.Unit != null && this.Unit.productid == Guid.Parse(item.UnitId))
+            {
+                this.Unit.statuscode = int.Parse(item.StatusNew);
+            }
+        }
+
         public async Task LoadUnitByFloor(Guid floorId)
         {
-            string now_date = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
-            string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? @"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
-                                          <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
-                                            <filter type='and'>
-                                              <condition attribute='bsd_eventid' operator='not-null' />
-                                            </filter>
-                                          </link-entity>
-                                        </link-entity>" : "";
+            string linkentityOwner = Filter.isOwner ? $@"<link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='giucho' />
+                                                        <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='outer' alias='hopdong' />
+                                                        <link-entity name='quote' from='bsd_unitno' to='productid' link-type='outer' alias='btg' />" : "";
+
+            string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
+                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
+                                                                                        <attribute name='bsd_eventid' alias='event_id'/>
+                                                                                        <filter type='and'>
+                                                                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
+                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                                                                        </filter>
+                                                                                    </link-entity>
+                                                                                </link-entity>" 
+                                                                                : $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='as'>
+                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='at'>
+                                                                                        <attribute name='bsd_eventid' alias='event_id'/>
+                                                                                        <filter type='and'>
+                                                                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
+                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                                                                        </filter>
+                                                                                    </link-entity>
+                                                                                </link-entity>";
 
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='product'>
@@ -128,50 +198,51 @@ namespace PhuLongCRM.ViewModels
                                 <order attribute='name' descending='false' />
                                 <filter type='and'>
                                     <condition attribute='statuscode' operator='ne' value='0' />
-                                    <condition attribute='bsd_projectcode' operator='eq' uitype='bsd_project' value='{Filter.Project}'/>
                                     <condition attribute='bsd_floor' operator='eq' uitype='bsd_floor' value='{floorId}' />
                                     {FilterXml}
                                 </filter>
                                 <link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='ag' >
                                     <attribute name='statuscode' alias='queses_statuscode'/>
+                                    <attribute name='bsd_employee' alias='queue_employee_id'/>
                                 </link-entity>
-                                        <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='asmn'>
-                                          <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='atmn'>
-                                            <attribute name='bsd_eventid' alias='event_id'/>
-                                            <filter type='and'>
-                                              <condition attribute='statuscode' operator='eq' value='100000000' />
-                                              <condition attribute='bsd_enddate' operator='on-or-after' value='{now_date}' />
-                                            </filter>
-                                          </link-entity>
-                                        </link-entity>
-                                {isEvent}
+                            {linkentityOwner}
+                            {isEvent}
                               </entity>
                             </fetch>";
-
-            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Unit>>("products", fetchXml);
-            if (result == null || result.value.Any() == false) return;
-
-            List<Unit> unitsResult = result.value.GroupBy(x => new
+            try
             {
-                productid = x.productid
-            }).Select(y => y.First()).ToList();
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<Unit>>("products", fetchXml);
+                if (result == null || result.value.Any() == false) return;
 
-            var units = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units;
-            foreach (var item in unitsResult)
+                List<Unit> unitsResult = result.value.GroupBy(x => new
+                {
+                    productid = x.productid
+                }).Select(y => y.First()).ToList();
+
+                var units = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units;
+                foreach (var item in unitsResult)
+                {
+                    // dem unit co nhung trang thai giu cho la: queuing, waiting
+                    item.NumQueses = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002")).ToList().Count();
+                    item.NumQueueEmployee = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002") && x.queue_employee_id == UserLogged.Id).ToList().Count();
+                    units.Add(item);
+                }
+            }catch(Exception ex)
             {
-                // dem unit co nhung trang thai giu cho la: queuing, waiting
-                item.NumQueses = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002")).ToList().Count();
-                units.Add(item);
+
             }
         }
+
         public void CreateFilterXml()
         {
-            //string StatusReason_Condition = StatusReason == null ? "" : "<condition attribute='statuscode' operator='eq' value='" + StatusReason.Val + @"' />";
+            string Project = $"<condition attribute='bsd_projectcode' operator='eq' value='{Filter.Project}' />";
             string PhasesLaunch_Condition = (!string.IsNullOrWhiteSpace(Filter.Phase))
-                ? @"<condition attribute='bsd_phaseslaunchid' operator='eq' uitype='bsd_phaseslaunch' value='" + Filter.Phase + @"' />"
-                : "";
-            
-            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit) ? $"<condition attribute='name' operator='like' value='%25" + Filter.Unit + "%25'/>" : null;
+               ? $"<condition attribute='bsd_phaseslaunchid' operator='eq' value='{Filter.Phase}'/>"
+               : null;
+
+            string UnitCode_Condition = !string.IsNullOrEmpty(Filter.Unit)
+                ? $"<condition attribute='name' operator='like' value='%25{Filter.Unit}%25'/>"
+                : null;
 
             string Direction_Condition = string.Empty;
             if (!string.IsNullOrWhiteSpace(Filter.Direction))
@@ -267,16 +338,60 @@ namespace PhuLongCRM.ViewModels
                 }
             }
 
-            FilterXml = $@"{PhasesLaunch_Condition}
-                                    {UnitCode_Condition}
-                                    {UnitStatus_Condition}
-                                    {Direction_Condition}
-                                    {View_Condition}
-                                    {minNetArea_Condition}
-                                    {maxNetArea_Condition}
-                                    {minPrice_Condition}
-                                    {maxPrice_Condition}";
+            string isOwner = Filter.isOwner ? $@"<filter type='or'>
+                                                    <filter type='and'>
+                                                        <condition entityname='giucho' attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                                        <condition entityname='giucho' attribute='statuscode' operator='in'>
+                                                            <value>100000000</value>
+                                                            <value>100000002</value>
+                                                        </condition>
+                                                    </filter>
+
+                                                    <filter type='and'>
+                                                        <condition entityname='btg' attribute='statuscode' operator='in'>
+                                                            <value>861450002</value>
+                                                            <value>861450000</value>
+                                                            <value>100000006</value>
+                                                            <value>3</value>
+                                                            <value>100000007</value>
+                                                            <value>100000000</value>
+                                                            <value>4</value>
+                                                        </condition>
+                                                        <condition entityname='btg' attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                                    </filter>
+
+                                                    <filter type='and'>
+                                                        <condition entityname='hopdong' attribute='bsd_employee' operator='eq' value='{UserLogged.Id}'/>
+                                                        <condition entityname='hopdong' attribute='statuscode' operator='in'>
+                                                            <value>100000001</value>
+                                                            <value>100000009</value>
+                                                            <value>100000003</value>
+                                                            <value>100001</value>
+                                                            <value>100000004</value>
+                                                            <value>100000011</value>
+                                                            <value>100000012</value>
+                                                            <value>100000007</value>
+                                                            <value>100000005</value>
+                                                            <value>100000002</value>
+                                                            <value>100000008</value>
+                                                            <value>100000010</value>
+                                                        </condition>
+                                                    </filter>
+	                                            </filter>" : "";
+
+            FilterXml = $@"{Project}
+                           {PhasesLaunch_Condition}
+                           {UnitCode_Condition}
+                           {UnitStatus_Condition}
+                           {Direction_Condition}
+                           {View_Condition}
+                           {minNetArea_Condition}
+                           {maxNetArea_Condition}
+                           {minPrice_Condition}
+                           {maxPrice_Condition}
+                           {isOwner}";
         }
+
         public async Task LoadUnitById(Guid unitId)
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -294,14 +409,16 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_blocknumber' alias='blockid'/>
                                     <attribute name='bsd_phaseslaunchid' alias='_bsd_phaseslaunchid_value' />
                                     <attribute name='bsd_vippriority' />
+                                    <attribute name='bsd_queuingfee' />
                                     <order attribute='bsd_constructionarea' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='productid' operator='eq' uitype='product' value='{unitId}' />
-                                    </filter>
+                                     </filter>
                                     <link-entity name='bsd_unittype' from='bsd_unittypeid' to='bsd_unittype' visible='false' link-type='outer' alias='a_493690ec6ce2e811a94e000d3a1bc2d1'>
                                       <attribute name='bsd_name'  alias='bsd_unittype_name'/>
                                     </link-entity>
                                     <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
+                                        <attribute name='bsd_name' alias='phaseslaunch_name' />
                                       <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
                                         <attribute name='bsd_eventid' alias='event_id' />
                                         <filter type='and'>
@@ -309,6 +426,13 @@ namespace PhuLongCRM.ViewModels
                                             <condition attribute='bsd_eventid' operator='not-null' />
                                         </filter>
                                       </link-entity>
+                                    </link-entity>
+                                    <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectcode' visible='false' link-type='outer' alias='a_a77d98e66ce2e811a94e000d3a1bc2d1'>
+                                        <attribute name='bsd_name' alias='project_name' />
+                                        <attribute name='bsd_queuesperunit' alias='project_queuesperunit' />
+                                        <attribute name='bsd_unitspersalesman' alias='project_unitspersalesman' />
+                                        <attribute name='bsd_queueunitdaysaleman' alias='project_queueunitdaysaleman'/>
+                                        <attribute name='bsd_bookingfee' alias='project_bookingfee' />
                                     </link-entity>
                                   </entity>
                                 </fetch>";
@@ -318,6 +442,7 @@ namespace PhuLongCRM.ViewModels
             Unit = result.value.FirstOrDefault();
             await CheckShowBtnBangTinhGia(unitId);
         }
+
         public async Task CheckShowBtnBangTinhGia(Guid unitId)
         {
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>
@@ -360,5 +485,243 @@ namespace PhuLongCRM.ViewModels
                 }
             }
         }
+
+        public async Task UpdateTotalDirectSale(Floor floor)
+        {
+            try
+            {
+                CreateFilterXml();
+                string linkentityOwner = Filter.isOwner ? $@"<link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='giucho' />
+                                                        <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='outer' alias='hopdong' />
+                                                        <link-entity name='quote' from='bsd_unitno' to='productid' link-type='outer' alias='btg' />" : "";
+
+                string groupbyOwner = Filter.isOwner ? $@"<attribute name='name' groupby='true' alias='group_unit_id'/>" : "";
+
+                string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
+                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
+                                                                                        <filter type='and'>
+                                                                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
+                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                                                                        </filter>
+                                                                                    </link-entity>
+                                                                                </link-entity>" : "";
+
+                string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                    <entity name='product'>
+                                        <attribute name='statuscode' groupby='true' alias='group_sts'/>
+                                        <attribute name='productid' aggregate='count' alias='count'/>
+                                        <attribute name='bsd_blocknumber' groupby='true' alias='group_block_id'/>
+                                        <attribute name='bsd_floor' groupby='true' alias='group_floor_id'/>
+                                        {groupbyOwner}
+                                        <filter type='and'>
+                                            {FilterXml}
+                                        </filter>
+	                                    <link-entity name='bsd_block' from='bsd_blockid' to='bsd_blocknumber' link-type='inner' alias='aa'>
+                                            <attribute name='bsd_name' groupby='true' alias='group_block_name'/>
+                                        </link-entity>
+                                        <link-entity name='bsd_floor' from='bsd_floorid' to='bsd_floor' link-type='inner' alias='ab'>
+                                            <attribute name='bsd_floor' groupby='true' alias='group_floor_name'/>
+                                        </link-entity>
+                                        {linkentityOwner}
+                                        {isEvent}
+                                    </entity>
+                                </fetch>";
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DirectSaleFetchModel>>("products", fetchXml);
+                if (result == null || result.value.Any() == false) return;
+
+                var data = result.value;
+
+                if (Filter.isOwner)
+                {
+                    foreach (var item in data)
+                    {
+                        item.count = 1;
+                    }
+                }
+
+                var blocks = from item in data group item by item.group_block_name into g orderby g.Key select g;
+                if (blocks != null && blocks.ToList().Count > 0)
+                {
+                    var block = blocks.SingleOrDefault(x => x.Key == Block.bsd_name.Replace("Block ", ""));
+
+                    if (block != null)
+                    {
+                        Block.NumChuanBiInBlock = (from item in block group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumSanSangInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumBookingInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumGiuChoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumDatCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumDongYChuyenCoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumDaDuTienCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumOptionInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumThanhToanDot1InBlock = (from item in block group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumSignedDAInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumQualifiedInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
+                        Block.NumDaBanInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
+
+                        var floors = from item in block group item by item.group_floor_name into g orderby g.Key select g;
+                        var f = floors.SingleOrDefault(x => x.Key == floor.bsd_name);
+                        if (f != null)
+                        {
+                            floor.NumChuanBiInFloor = (from item in f group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumSanSangInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumBookingInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumGiuChoInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumDatCocInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumDongYChuyenCoInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumDaDuTienCocInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumOptionInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumThanhToanDot1InFloor = (from item in f group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumSignedDAInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumQualifiedInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
+                            floor.NumDaBanInFloor = (from item in f group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        public async Task LoadTotalDirectSale2()
+        {
+            try
+            {
+                CreateFilterXml();
+                string linkentityOwner = Filter.isOwner ? $@"<link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='giucho' />
+                                                        <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='outer' alias='hopdong' />
+                                                        <link-entity name='quote' from='bsd_unitno' to='productid' link-type='outer' alias='btg' />" : "";
+
+                string groupbyOwner = Filter.isOwner ? $@"<attribute name='name' groupby='true' alias='group_unit_id'/>" : "";
+
+                string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
+                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
+                                                                                        <filter type='and'>
+                                                                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
+                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                                                                        </filter>
+                                                                                    </link-entity>
+                                                                                </link-entity>" : "";
+
+                string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                    <entity name='product'>
+                                        <attribute name='statuscode' groupby='true' alias='group_sts'/>
+                                        <attribute name='productid' aggregate='count' alias='count'/>
+                                        <attribute name='bsd_blocknumber' groupby='true' alias='group_block_id'/>
+                                        <attribute name='bsd_floor' groupby='true' alias='group_floor_id'/>
+                                        {groupbyOwner}
+                                        <filter type='and'>
+                                            {FilterXml}
+                                        </filter>
+	                                    <link-entity name='bsd_block' from='bsd_blockid' to='bsd_blocknumber' link-type='inner' alias='aa'>
+                                            <attribute name='bsd_name' groupby='true' alias='group_block_name'/>
+                                        </link-entity>
+                                        <link-entity name='bsd_floor' from='bsd_floorid' to='bsd_floor' link-type='inner' alias='ab'>
+                                            <attribute name='bsd_floor' groupby='true' alias='group_floor_name'/>
+<attribute name='bsd_floornumber' groupby='true' alias='group_floor_number'/>
+                                        </link-entity>
+                                        {linkentityOwner}
+                                        {isEvent}
+                                    </entity>
+                                </fetch>";
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DirectSaleFetchModel>>("products", fetchXml);
+                if (result == null || result.value.Any() == false) return;
+
+                var data = result.value;
+
+                if (Filter.isOwner)
+                {
+                    foreach (var item in data)
+                    {
+                        item.count = 1;
+                    }
+                }
+
+                var blocks = from item in data group item by item.group_block_name into g orderby g.Key select g;
+                foreach (var block in blocks)
+                {
+                    Block b = new Block();
+                    b.bsd_blockid = Guid.Parse(block.FirstOrDefault().group_block_id);
+                    b.bsd_name = "Block " + block.Key;
+                    b.TotalUnitInBlock = block.Sum(u => u.count);
+
+                    b.NumChuanBiInBlock = (from item in block group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumSanSangInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumBookingInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumGiuChoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumDatCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumDongYChuyenCoInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumDaDuTienCocInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumOptionInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumThanhToanDot1InBlock = (from item in block group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumSignedDAInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumQualifiedInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
+                    b.NumDaBanInBlock = (from item in block group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
+
+                    var floors = from item in block group item by item.group_floor_name into g orderby g.Key select g;
+                    foreach (var floor in floors)
+                    {
+                        Floor f = new Floor();
+                        f.bsd_floorid = Guid.Parse(floor.FirstOrDefault().group_floor_id);
+                        f.bsd_name = floor.Key;
+                        f.TotalUnitInFloor = floor.Sum(u => u.count);
+                        f.floor_number = int.Parse(floor.FirstOrDefault().group_floor_number);
+
+                        f.NumChuanBiInFloor = (from item in floor group item by item.group_sts into g where g.Key == "1" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumSanSangInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000000" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumBookingInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000007" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumGiuChoInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000004" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumDatCocInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000006" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumDongYChuyenCoInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000005" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumDaDuTienCocInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000003" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumOptionInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000010" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumThanhToanDot1InFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000001" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumSignedDAInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000009" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumQualifiedInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000008" select g.Sum(u => u.count)).FirstOrDefault();
+                        f.NumDaBanInFloor = (from item in floor group item by item.group_sts into g where g.Key == "100000002" select g.Sum(u => u.count)).FirstOrDefault();
+                        b.Floors.Add(f);
+                    }
+                    if(b.Floors != null && b.Floors.Count > 0)
+                    {
+                        var f = b.Floors.OrderBy(x => x.floor_number).ToList();
+                        b.Floors.Clear();
+                        foreach (var item in f)
+                        {
+                            b.Floors.Add(item);
+                        }
+                    }    
+                    Blocks.Add(b);
+                }
+            }catch(Exception ex)
+            {
+
+            }
+        }
+    }
+    public class DirectSaleFetchModel
+    {
+        public string group_sts { get; set; }
+        public string group_block_id { get; set; }
+        public string group_block_name { get; set; }
+        public string group_floor_id { get; set; }
+        public string group_floor_name { get; set; }
+        public string group_floor_number { get; set; }
+        public int count { get; set; }
+        public string group_unit_id { get; set; }
+    }
+
+    public class ResponseRealtime
+    {
+        public string ProjectId { get; set; }
+        public string BlockId { get; set; }
+        public string FloorId { get; set; }
+        public string UnitId { get; set; }
+        public string StatusNew { get; set; }
+        public string StatusOld { get; set; }
+
     }
 }

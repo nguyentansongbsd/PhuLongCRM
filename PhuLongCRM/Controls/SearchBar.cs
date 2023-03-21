@@ -13,6 +13,12 @@ namespace PhuLongCRM.Controls
             TextColor = Color.FromHex("#444444");
             FontFamily = "Segoe";
             BackgroundColor = Color.White;
+            PropertyChanged += SearchBar_PropertyChanged;
+        }
+
+        private void SearchBar_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+           this.Placeholder = Language.tim_kiem;
         }
     }
 }

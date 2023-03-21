@@ -2,9 +2,11 @@
 using PhuLongCRM.Helpers;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,9 +19,24 @@ namespace PhuLongCRM.Views
         public Action<bool> CheckPhanHoi;
         public PhanHoiFormViewModel viewModel;
 
-        public PhanHoiForm()
+        public PhanHoiForm(bool fromfeedback = false, bool fromRequest = false)
         {
             InitializeComponent();
+            this.BindingContext = viewModel = new PhanHoiFormViewModel();
+            if (fromfeedback)
+            {
+                multiTabsCustomer.IsEnabled = false;
+                viewModel.Customer = new OptionSet {Val = UserLogged.ContactId.ToString(), Label = UserLogged.ContactName, Title = "2" };
+                viewModel.fromFeedback = fromfeedback;
+
+                if (fromRequest)
+                {
+                    viewModel.CaseType = CaseTypeData.GetCaseById("3");
+                    lookupCaseType.IsEnabled = false;
+                    viewModel.singlePhanHoi.title += "Chuyển đổi thiết bị đăng nhập";
+                    viewModel.singlePhanHoi.description += "Chuyển đổi thiết bị để đăng nhập employee: " + UserLogged.User;
+                }
+            }
             Init();
         }
         public PhanHoiForm(Guid incidentid)
@@ -32,7 +49,6 @@ namespace PhuLongCRM.Views
 
         public async void Init()
         {
-            this.BindingContext = viewModel = new PhanHoiFormViewModel();
             viewModel.TabsDoiTuong = new List<string>() { Language.giu_cho_btn, Language.bang_tinh_gia_btn, Language.hop_dong };
             SerPreOpen();
         }
@@ -57,7 +73,7 @@ namespace PhuLongCRM.Views
             lookupCaseType.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                viewModel.CaseTypes = CaseTypeData.CasesData();
+                viewModel.CaseTypes = CaseTypeData.CasesData().Where(x=>x.Val != "0").ToList();
                 LoadingHelper.Hide();
             };
 
@@ -71,7 +87,7 @@ namespace PhuLongCRM.Views
             lookupCaseOrigin.PreOpenAsync = async () =>
             {
                 LoadingHelper.Show();
-                viewModel.CaseOrigins = CaseOriginData.Origins();
+                viewModel.CaseOrigins = CaseOriginData.Origins().Where(x => x.Val != "0").ToList();
                 LoadingHelper.Hide();
             };
 
@@ -163,11 +179,22 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.Customer == null)
+            if (viewModel.fromFeedback == false)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_khach_hang);
-                return;
+                if (viewModel.Customer == null)
+                {
+                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_khach_hang);
+                    return;
+                }
             }
+            else
+            {
+                if (viewModel.Customer == null)
+                {
+                    ToastMessageHelper.ShortMessage(Language.nhan_vien_chua_co_contact);
+                    return;
+                }
+            }    
 
             LoadingHelper.Show();
             if (viewModel.singlePhanHoi.incidentid == Guid.Empty)

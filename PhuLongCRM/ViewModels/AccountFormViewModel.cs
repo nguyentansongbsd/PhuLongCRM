@@ -221,6 +221,8 @@ namespace PhuLongCRM.ViewModels
                 IsOfficial = false;
             else
                 IsOfficial = true;
+            if (singleAccount.bsd_issuedon.HasValue)
+                singleAccount.bsd_issuedon = singleAccount.bsd_issuedon.Value.ToLocalTime();
 
             Address1 = new AddressModel
             {
@@ -310,17 +312,24 @@ namespace PhuLongCRM.ViewModels
             //}
             data["bsd_businesstype"] = this.BusinessType.Val;
             data["bsd_operationscope"] = this.OperationScope?.Val;
-            if (singleAccount.bsd_localization != null)
+            if (Localization == null)
             {
-                data["bsd_localization"] = int.Parse(singleAccount.bsd_localization);
+                data["bsd_localization"] = 100000000;
+            }
+            else
+            {
+                if (singleAccount.bsd_localization != null)
+                {
+                    data["bsd_localization"] = int.Parse(singleAccount.bsd_localization);
+                }
             }
             data["emailaddress1"] = singleAccount.emailaddress1;
             data["bsd_email2"] = singleAccount.bsd_email2;
             data["websiteurl"] = singleAccount.websiteurl;
             data["fax"] = singleAccount.fax;
-            data["telephone1"] = singleAccount.telephone1;//.Contains("-") ? singleAccount.telephone1.Replace("+", "").Replace("-", "") : singleAccount.telephone1;
+            data["telephone1"] = !string.IsNullOrWhiteSpace(singleAccount.telephone1) && singleAccount.telephone1.Contains("-") ? singleAccount.telephone1.Replace("+", "").Replace("-", "") : singleAccount.telephone1;
             data["bsd_registrationcode"] = singleAccount.bsd_registrationcode;
-            data["bsd_issuedon"] = singleAccount.bsd_issuedon.HasValue ? (DateTime.Parse(singleAccount.bsd_issuedon.ToString()).ToLocalTime()).ToString("yyyy-MM-dd\"T\"HH:mm:ss\"Z\"") : null;
+            data["bsd_issuedon"] = singleAccount.bsd_issuedon.HasValue ? (DateTime.Parse(singleAccount.bsd_issuedon.ToString()).ToLocalTime()).ToString("yyyy-MM-dd") : null; /*(DateTime.Parse(singleAccount.bsd_issuedon.ToString()).ToLocalTime()).ToString("yyyy-MM-dd\"T\"HH:mm:ss\"Z\"") : null;*/
             data["bsd_placeofissue"] = singleAccount.bsd_placeofissue;
             data["statuscode"] = this.CustomerStatusReason?.Val;
             data["bsd_vatregistrationnumber"] = singleAccount.bsd_vatregistrationnumber;
@@ -358,6 +367,17 @@ namespace PhuLongCRM.ViewModels
                     data["bsd_permanentaddress1"] = Address2.address; //bsd_permanentaddress1 ad2
                 if (!string.IsNullOrWhiteSpace(Address2.address_en))
                     data["bsd_diachithuongtru"] = Address2.address_en; //bsd_diachithuongtru ad2 en
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress))
+                    data["bsd_permanenthousenumberstreetwardvn"] = Address1.lineaddress; //bsd_permanenthousenumberstreetwardvn l2
+                if (!string.IsNullOrWhiteSpace(Address1.lineaddress_en))
+                    data["bsd_permanenthousenumberstreetward"] = Address1.lineaddress_en;
+                if (!string.IsNullOrWhiteSpace(Address1.address))
+                    data["bsd_permanentaddress1"] = Address1.address; //bsd_permanentaddress1 ad2
+                if (!string.IsNullOrWhiteSpace(Address1.address_en))
+                    data["bsd_diachithuongtru"] = Address1.address_en; //bsd_diachithuongtru ad2 en
             }
 
             if (singleAccount._primarycontactid_value == null)
@@ -397,7 +417,7 @@ namespace PhuLongCRM.ViewModels
 
             if (Address2 == null || Address2.country_id == Guid.Empty)
             {
-                await DeletLookup("bsd_PermanentNation", singleAccount.accountid);
+                await DeletLookup("bsd_PermanentNation", singleAccount.accountid); /////Lookup Field _bsd_permanentnation_value
             }
             else
             {

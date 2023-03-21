@@ -47,8 +47,25 @@
 	<key>NSContactsUsageDescription</key>
 	<string>PhuLongCRM cần quyền truy cập vào danh bạ để lấy số điện thoại</string>
 	<key>CFBundleVersion</key>
-	<string>38</string>
+	<string>78</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>phulongcrm</string>
+			</array>
+		</dict>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>No</string>
 </dict>
 </plist>

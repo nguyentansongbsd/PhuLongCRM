@@ -5,80 +5,9 @@
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             ios:Page.UseSafeArea="true"
-             xmlns:converter ="clr-namespace:PhuLongCRM.Converters"                    
+             ios:Page.UseSafeArea="true"              
              x:Class="PhuLongCRM.Views.QueueForm"
              x:Name="this">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!--header-->
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="IndicatorText" Value="&#xf105;"/>
-                <Setter Property="IndicatorLocation" Value="End"/>
-                <Setter Property="IndicatorFontSize" Value="18"/>
-                <Setter Property="IndicatorColor" Value="#939393"/>
-                <Setter Property="BackgroundColor" Value="#F1F1F1"/>
-                <Setter Property="BorderColor" Value="#F1F1F1"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Padding" Value="17,8"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-            </Style>
-            <Style x:Key="ExpanderHeadingText" TargetType="Label">
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="VerticalTextAlignment" Value="Center" />
-                <Setter Property="TextColor" Value="#444444"/>
-            </Style>
-            <converter:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
-            <converter:DecimalFormatConverter x:Key="DecimalFormatConverter" />
-            <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />
-            <converter:QueueStatusConverter x:Key="QueueStatusConverter" />
-            <!--centermodal-->
-            <Style x:Key="rabBorder_Tab" TargetType="telerikPrimitives:RadBorder">
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup>
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BorderColor" Value="#939393"/>
-                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter Property="BorderColor" Value="#2196F3"/>
-                                    <Setter Property="BorderThickness" Value="0,0,0,2"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-            <Style x:Key="Lb_Tab" TargetType="Label">
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="HorizontalTextAlignment" Value="Center"/>
-                <Setter Property="Padding" Value="0,10"/>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup>
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="TextColor" Value="#939393"/>
-                                    <Setter Property="FontAttributes" Value="None"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter Property="TextColor" Value="#2196F3"/>
-                                    <Setter Property="FontAttributes" Value="Bold"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="0,10,0,60">
@@ -122,8 +51,7 @@
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
                             <StackLayout BackgroundColor="White" Padding="10">
-
-                                <controls:FormLabel Text="{x:Static lang:Language.so_thu_tu}" FontSize="15" Margin="0,10,0,0" IsVisible="{Binding isUpdate}"/>
+                                <!--<controls:FormLabel Text="{x:Static lang:Language.so_thu_tu}" FontSize="15" Margin="0,10,0,0" IsVisible="{Binding isUpdate}"/>
                                 <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1" IsVisible="{Binding isUpdate}">
                                     <Label Text="{Binding QueueFormModel.bsd_ordernumber}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
                                 </telerikPrimitives:RadBorder>
@@ -151,24 +79,13 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.tinh_trang}" FontSize="15" Margin="0,10,0,0" IsVisible="{Binding isUpdate}"/>
                                 <telerikPrimitives:RadBorder BorderColor="#f1f1f1" CornerRadius="5" BorderThickness="1" HeightRequest="40" BackgroundColor="#f1f1f1" IsVisible="{Binding isUpdate}">
                                     <Label Text="{Binding QueueFormModel.statuscode_format}" TextColor="#444444" FontSize="15" VerticalOptions="Center" Padding="5,0,5,0"/>
-                                </telerikPrimitives:RadBorder>
+                                </telerikPrimitives:RadBorder>-->
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.tieu_de}"/>
                                 <controls:MainEntry x:Name="topic" Placeholder="{x:Static lang:Language.nhap_tieu_de_cua_giu_cho}" Text="{Binding QueueFormModel.name}" FontSize="15" />
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.khach_hang}" Margin="0,10,0,0"/>
-                                <controls:LookUpMultipleTabs x:Name="Lookup_KhachHang" Placeholder="{x:Static lang:Language.chon_khach_hang}" ShowAccount="True" ShowContact="True" ShowLead="False" LoadNewLead="True" ShowAddButton="True" SelectedItem="{Binding Customer}" CenterModal="{x:Reference centerModal}" Root="{x:Reference this}"/>
-                                <!--<Grid>
-                                    <controls:MainEntry Text="{Binding QueueFormModel.customer_name}" Placeholder="Chọn khách hàng" FontSize="15"/>
-                                    <StackLayout>
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="KhachHangTiemNang_Tapped"/>
-                                        </StackLayout.GestureRecognizers>
-                                    </StackLayout>
-                                </Grid>-->
-
-                                <!--<controls:FormLabel Text="Ngân sách" FontSize="15" Margin="0,10,0,0"/>
-                                <controls:MainEntry Placeholder="Nhập ngân sách" Text="{Binding QueueFormModel.budgetamount, StringFormat='{0:#,##0}'}" FontSize="15"/>-->
+                                <controls:LookUpMultipleTabs x:Name="Lookup_KhachHang" Placeholder="{x:Static lang:Language.chon_khach_hang}" ShowAccount="True" ShowContact="True" ShowLead="False" LoadNewLead="True" ShowAddButton="False" SelectedItem="{Binding Customer}" CenterModal="{x:Reference centerModal}" Root="{x:Reference this}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.mo_ta}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_mo_ta}" Text="{Binding QueueFormModel.description}" FontSize="15" />

@@ -15,6 +15,9 @@ namespace PhuLongCRM.ViewModels
         private string _phone;
         public string Phone { get => _phone; set { _phone = value; OnPropertyChanged(nameof(Phone)); } }
 
+        private string _email;
+        public string Email { get => _email; set { _email = value; OnPropertyChanged(nameof(Email)); } }
+
         private string _newPassword;
         public string NewPassword { get => _newPassword; set { _newPassword = value; OnPropertyChanged(nameof(NewPassword)); } }
 
@@ -22,6 +25,9 @@ namespace PhuLongCRM.ViewModels
         public string ConfirmPassword { get => _confiemPassword; set { _confiemPassword = value; OnPropertyChanged(nameof(ConfirmPassword)); } }
 
         public EmployeeModel Employee { get; set; }
+
+        private bool _sendToEmail;
+        public bool SendToEmail { get => _sendToEmail; set { _sendToEmail = value; OnPropertyChanged(nameof(SendToEmail)); } }
 
         public ForgotPassWordPageViewModel()
         {
@@ -37,6 +43,10 @@ namespace PhuLongCRM.ViewModels
                     <filter type='and'>
                       <condition attribute='bsd_name' operator='eq' value='{UserName}' />
                     </filter>
+                    <link-entity name='contact' from='contactid' to='bsd_contact' visible='false' link-type='outer' alias='a_d839fe53e057ec118f8f000d3ac949ac'>
+                      <attribute name='mobilephone' alias='contact_phone'/>
+                      <attribute name='emailaddress1' alias='contact_email'/>
+                    </link-entity>
                   </entity>
                 </fetch>";
 

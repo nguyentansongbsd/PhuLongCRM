@@ -215,5 +215,10 @@ namespace PhuLongCRM.Models
 
         private string _call_to;
         public string call_to { get => _call_to; set { _call_to = value; OnPropertyChanged(nameof(call_to)); } }
+
+        public Guid contact_employee_id { get; set; }
+        public Guid account_employee_id { get; set; }
+        public Guid lead_employee_id { get; set; }
+        public Guid bsd_employee { get; set; }
     }
 }

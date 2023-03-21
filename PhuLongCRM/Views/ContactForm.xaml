@@ -13,23 +13,6 @@
             x:Class="PhuLongCRM.Views.ContactForm">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="IndicatorText" Value="&#xf105;"/>
-                <Setter Property="IndicatorLocation" Value="End"/>
-                <Setter Property="IndicatorFontSize" Value="18"/>
-                <Setter Property="IndicatorColor" Value="#939393"/>
-                <Setter Property="BackgroundColor" Value="#F2F2F2"/>
-                <Setter Property="BorderColor" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Padding" Value="17,8"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-            </Style>
-            <Style x:Key="ExpanderHeadingText" TargetType="Label">
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="VerticalTextAlignment" Value="Center" />
-                <Setter Property="TextColor" Value="#444444"/>
-            </Style>
             <converter:NullToHideConverter x:Key="NullToHideConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -76,6 +59,12 @@
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_sinh}" Margin="0,10,0,0"/>
                                 <controls:DatePickerBoderControl Date="{Binding singleContact.birthdate}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}" ShowTime="False"/>
 
+                                <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}"/>
+                                <controls:LookUp x:Name="lookUpHasGuardian" Placeholder="{x:Static lang:Language.chon_gia_tri}" BottomModal="{Reference BottomModal}" NameDisplay="Label" SelectedItem="{Binding HasGuardian}" ItemsSource="{Binding HasGuardians}" SelectedItemChange="lookUpHasGuardian_SelectedItemChange"/>
+
+                                <controls:FormLabelRequired x:Name="lbGuardian" Text="{x:Static lang:Language.nguoi_bao_ho}" IsVisible="false"/>
+                                <controls:LookUp x:Name="lookUpGuardian" Placeholder="{x:Static lang:Language.chon_nguoi_bao_ho}" BottomModal="{Reference BottomModal}" NameDisplay="bsd_fullname" SelectedItem="{Binding Guardian}" ItemsSource="{Binding Guardians}" IsVisible="false" SelectedItemChange="lookUpGuardian_SelectedItemChange"/>
+                                
                                 <controls:FormLabel Text="{x:Static lang:Language.email}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_email}" Text="{Binding singleContact.emailaddress1}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
@@ -90,10 +79,10 @@
                                 <!--<controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_dien_thoai_kinh_doanh}" Text="{Binding singleContact.telephone1}" FontSize="15" Keyboard="Numeric" IsEnabled="{Binding IsOfficial}"/>-->
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_lien_lac}" Margin="0,10,0,0"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference CenterModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" RequiredAddress="True"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.dia_chi_thuong_tru}" Margin="0,10,0,0"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference CenterModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" RequiredAddress="True"/>
                             </StackLayout>
                         </telerikPrimitives:RadExpander.Content>
                     </telerikPrimitives:RadExpander>
@@ -101,7 +90,7 @@
                     <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
                         <telerikPrimitives:RadExpander.Header>
                             <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_cmnd_ho_chieu}"/>
+                                <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.thong_tin_id}"/>
                             </telerikPrimitives:ExpanderHeader>
                         </telerikPrimitives:RadExpander.Header>
                         <telerikPrimitives:RadExpander.Content>
@@ -128,29 +117,41 @@
                                     </telerikPrimitives:RadBorder>
                                 </Grid>
 
-                                <controls:FormLabelRequired Text="{x:Static lang:Language.so_the_can_cuoc}" Margin="0,10,0,0"/>
+                                <controls:FormLabel Text="{x:Static lang:Language.loai_the_id}"/>
+                                <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="{x:Static lang:Language.chon_loai_the_id}" BottomModal="{Reference BottomModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}" SelectedItemChange="TypeIdCard_ItemChange"/>
+
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.so_the_can_cuoc}" Margin="0,10,0,0"/>
+                                    <Label x:Name="lb_cccd"  Text="*" TextColor="Red" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16"/>
+                                </Grid>
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_the_can_cuoc}" Text="{Binding singleContact.bsd_identitycard}" FontSize="15" Keyboard="Numeric" Unfocused="CCCD_Unfocused" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap_the_can_cuoc}" Margin="0,10,0,0"/>
-                                <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_identitycarddategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap_the_can_cuoc}" ShowTime="False"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_identitycarddategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap_the_can_cuoc}" ShowTime="False" Date_Selected="datePickerNgayCapCCCD_Date_Selected"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap_the_can_cuoc}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Text="{Binding singleContact.bsd_placeofissueidentitycard}" Placeholder="{x:Static lang:Language.nhap_noi_cap_the_can_cuoc}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.so_cmnd}" Margin="0,10,0,0"/>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.so_cmnd}" Margin="0,10,0,0"/>
+                                    <Label x:Name="lb_cmnd"  Text="*" TextColor="Red" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16"/>
+                                </Grid>
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_cmnd}" Text="{Binding singleContact.bsd_identitycardnumber}" FontSize="15" Keyboard="Numeric" Unfocused="CMND_Unfocused" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" Margin="0,10,0,0"/>
-                                <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleContact.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False"/>
+                                <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleContact.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False" Date_Selected="datePickerNgayCap_Date_Selected"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Text="{Binding singleContact.bsd_placeofissue}" Placeholder="{x:Static lang:Language.nhap_noi_cap}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.so_ho_chieu}" Margin="0,10,0,0"/>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.so_ho_chieu}" Margin="0,10,0,0"/>
+                                    <Label x:Name="lb_ho_chieu"  Text="*" TextColor="Red" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16"/>
+                                </Grid>
                                 <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_ho_chieu}" Text="{Binding singleContact.bsd_passport}" FontSize="15" Unfocused="PassPort_Unfocused" IsEnabled="{Binding IsOfficial}"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_cap_ho_chieu}" Margin="0,10,0,0"/>
-                                <controls:DatePickerBoderControl x:Name="datePickerNgayCapHoChieu" Date="{Binding singleContact.bsd_issuedonpassport}" Placeholder="{x:Static lang:Language.chon_ngay_cap_ho_chieu}" ShowTime="False"/>
+                                <controls:DatePickerBoderControl x:Name="datePickerNgayCapHoChieu" Date="{Binding singleContact.bsd_issuedonpassport}" Placeholder="{x:Static lang:Language.chon_ngay_cap_ho_chieu}" ShowTime="False" Date_Selected="datePickerNgayCapHoChieu_Date_Selected"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.noi_cap_ho_chieu}" FontSize="15" Margin="0,10,0,0"/>
                                 <controls:MainEntry Text="{Binding singleContact.bsd_placeofissuepassport}" Placeholder="{x:Static lang:Language.nhap_noi_cap_ho_chieu}" FontSize="15" IsEnabled="{Binding IsOfficial}"/>

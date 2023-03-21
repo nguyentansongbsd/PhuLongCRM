@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Firebase.Database;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
@@ -14,6 +16,7 @@ namespace PhuLongCRM.ViewModels
 {
     public class DashboardViewModel : BaseViewModel
     {
+        FirebaseClient firebase = new Firebase.Database.FirebaseClient("https://phulonguat-default-rtdb.firebaseio.com/");
         public ObservableCollection<ActivitiModel> Activities { get; set; } = new ObservableCollection<ActivitiModel>();
 
         public ObservableCollection<ChartModel> DataMonthQueue { get; set; } = new ObservableCollection<ChartModel>();
@@ -81,12 +84,33 @@ namespace PhuLongCRM.ViewModels
         private string _totalPaidCommission;
         public string TotalPaidCommission { get => _totalPaidCommission; set { _totalPaidCommission = value; OnPropertyChanged(nameof(TotalPaidCommission)); } }
 
+        private List<NewsModel> _promotions;
+        public List<NewsModel> Promotions { get => _promotions; set { _promotions = value; OnPropertyChanged(nameof(Promotions)); } }
+
+        private List<NewsModel> _news;
+        public List<NewsModel> News { get => _news; set { _news = value; OnPropertyChanged(nameof(News)); } }
+
         public ICommand RefreshCommand => new Command(async () =>
         {
             IsRefreshing = true;
             await RefreshDashboard();
             IsRefreshing = false;
         });
+
+        private int _numTask;
+        public int NumTask { get => _numTask; set { _numTask = value; OnPropertyChanged(nameof(NumTask)); } }
+
+        private int _numPhoneCall;
+        public int NumPhoneCall { get => _numPhoneCall; set { _numPhoneCall = value; OnPropertyChanged(nameof(NumPhoneCall)); } }
+
+        private int _numMeet;
+        public int NumMeet { get => _numMeet; set { _numMeet = value; OnPropertyChanged(nameof(NumMeet)); } }
+
+        private int _numNotification;
+        public int NumNotification { get => _numNotification; set { _numNotification = value; OnPropertyChanged(nameof(NumNotification)); } }
+
+        private PromotionModel _promotionItem;
+        public PromotionModel PromotionItem { get => _promotionItem; set { _promotionItem = value; OnPropertyChanged(nameof(PromotionItem)); } }
 
         public DashboardViewModel()
         {
@@ -408,21 +432,16 @@ namespace PhuLongCRM.ViewModels
                         numKHKhongChuyenDoi += item.count;
                 }
             }
-            if (numKHMoi == 0)
-                numKHMoi = 1;
-            if (numKHDaChuyenDoi == 0)
-                numKHDaChuyenDoi = 1;
-            if (numKHKhongChuyenDoi == 0)
-                numKHKhongChuyenDoi = 1;
 
-            LeadsChart.Add(new ChartModel() { Category = Language.khach_hang_moi, Value = numKHMoi });
-            LeadsChart.Add(new ChartModel() { Category = Language.da_chuyen_doi, Value = numKHDaChuyenDoi });
-            LeadsChart.Add(new ChartModel() { Category = Language.khong_chuyen_doi, Value = numKHKhongChuyenDoi });
+            LeadsChart.Add(new ChartModel() { Category = Language.khach_hang_moi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHMoi });
+            LeadsChart.Add(new ChartModel() { Category = Language.da_chuyen_doi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHDaChuyenDoi });
+            LeadsChart.Add(new ChartModel() { Category = Language.khong_chuyen_doi, Value = (numKHMoi == 0 && numKHDaChuyenDoi == 0 && numKHKhongChuyenDoi == 0) ? 1 : numKHKhongChuyenDoi });
+
         }
 
-        public async Task LoadTasks()
+        public async Task LoadTasks(int activityCount)
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='{activityCount}' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='task'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -476,7 +495,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadMettings()
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='3' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='appointment'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -566,9 +585,9 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task LoadPhoneCalls()
+        public async Task LoadPhoneCalls(int activityCount)
         {
-            string fetchXml = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' count='{activityCount}' page='1' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='phonecall'>
                                     <attribute name='subject' />
                                     <attribute name='activityid' />
@@ -634,6 +653,125 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
+        public async Task LoadActivityCount()
+        {
+            string fetchXml_phone = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='phonecall'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_phone = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("phonecalls", fetchXml_phone);
+            if (result_phone != null || result_phone.value.Count != 0)
+                NumPhoneCall = result_phone.value.FirstOrDefault().count;
+
+            string fetchXml_task = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='task'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='eq' value='0' />
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_task = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("tasks", fetchXml_task);
+            if (result_task != null || result_task.value.Count != 0)
+                NumTask = result_task.value.FirstOrDefault().count;
+
+            string fetchXml_meet = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+                                  <entity name='appointment'>
+                                    <attribute name='activityid' aggregate='count' alias='count'/>
+                                    <filter type='and'>
+                                      <condition attribute='statecode' operator='in'>
+                                            <value>0</value>
+                                            <value>3</value>
+                                        </condition>
+                                      <condition attribute='scheduledstart' operator='today' />
+                                      <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result_meet = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("appointments", fetchXml_meet);
+            if (result_meet != null || result_meet.value.Count != 0)
+                NumMeet = result_meet.value.FirstOrDefault().count;
+        }
+        public async Task Load3Activity()
+        {
+            await LoadMettings();
+            if (Activities.Count < 3)
+            {
+                await LoadPhoneCalls(3 - Activities.Count);
+                if (Activities.Count < 3)
+                {
+                    await LoadTasks(3 - Activities.Count);
+                }
+            }
+
+        }
+        public async Task LoadNews()
+        {
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='bsd_news'>
+                                    <attribute name='bsd_newsid' />
+                                    <attribute name='bsd_name' />
+                                    <attribute name='createdon' />
+                                    <attribute name='bsd_url' />
+                                    <attribute name='bsd_priority' />
+                                    <attribute name='bsd_type' />
+                                    <attribute name='bsd_thumnail' />
+                                    <attribute name='bsd_image' />
+                                    <order attribute='bsd_name' descending='false' />
+                                    <link-entity name='bsd_promotion' from='bsd_promotionid' to='bsd_promotion' link-type='outer' alias='ac'>
+                                        <attribute name='bsd_name' alias='promotion_name'/>
+                                        <attribute name='bsd_startdate' alias='promotion_startdate'/>
+                                        <attribute name='bsd_enddate' alias='promotion_enddate'/>
+                                        <attribute name='bsd_promotionid' alias='promotion_id'/>
+                                        <attribute name='bsd_values' alias='promotion_values'/>                                 
+                                        <attribute name='bsd_description' alias='promotion_description'/>
+                                            <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer'>
+                                                <attribute name='bsd_name' alias='promotion_project_name'/>
+                                                <attribute name='bsd_projectid' alias='promotion_project_id'/>
+                                            </link-entity>
+                                            <link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaselaunch' link-type='outer' alias='aa'>
+                                                <attribute name='bsd_name' alias='promotion_phaseslaunch_name'/>
+                                            </link-entity>
+                                    </link-entity>
+                                    <link-entity name='bsd_project' from='bsd_projectid' to='bsd_project' link-type='outer' alias='ab'>
+                                        <attribute name='bsd_projectid' alias='project_id'/>
+                                        <attribute name='bsd_name' alias='project_name'/>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<NewsModel>>("bsd_newses", fetchXml);
+            if (result != null || result.value.Count > 0)
+            {
+                List<NewsModel> news = new List<NewsModel>();
+                List<NewsModel> promotions = new List<NewsModel>();
+                foreach (var item in result.value)
+                {
+                    if (item.bsd_type == "0")
+                    {
+                        news.Add(item);
+                        await GetImages(item);
+                    }
+                    else if (item.bsd_type == "1")
+                    {
+                        promotions.Add(item);
+                    }
+                }
+                news = news.OrderBy(x => x.bsd_priority).ToList();
+                promotions = promotions.OrderBy(x => x.bsd_priority).ToList();
+
+                News = news;
+                Promotions = promotions;
+            }
+        }
+
         public async Task RefreshDashboard()
         {
             this.Activities.Clear();
@@ -649,18 +787,77 @@ namespace PhuLongCRM.ViewModels
             this.numKHMoi = 0;
             this.numKHDaChuyenDoi = 0;
             this.numKHKhongChuyenDoi = 0;
+            this.NumNotification = 0;
 
             await Task.WhenAll(
-                 this.LoadTasks(),
-                 this.LoadMettings(),
-                 this.LoadPhoneCalls(),
+                 this.Load3Activity(),
                  this.LoadQueueFourMonths(),
                  this.LoadQuoteFourMonths(),
                  this.LoadOptionEntryFourMonths(),
                  this.LoadUnitFourMonths(),
                  this.LoadLeads(),
-                 this.LoadCommissionTransactions()
-                );
+                 this.LoadCommissionTransactions(),
+                 LoadActivityCount(),
+                 LoadNews()
+                 //CountNumNotification()
+                ); ;
+        }
+        public async Task CountNumNotification()
+        {
+            if (UserLogged.Notification == true)
+            {
+                var collection = firebase
+                .Child("Notifications")
+                .AsObservable<NotificaModel>()
+                .Subscribe(async (dbevent) =>
+                {
+                    if (dbevent.EventType != Firebase.Database.Streaming.FirebaseEventType.Delete)
+                    {
+                        if (dbevent.Object.IsRead == false)
+                        {
+                            NumNotification++;
+                        }
+                    }
+                });
+            }
+        }
+        public async Task TimeOutLogin()
+        {
+            if (UserLogged.TimeOut > 0)
+            {
+                Thread t = new Thread(async () =>
+            {
+                int time = UserLogged.TimeOut * 60000;
+                await Task.Delay(time);
+                UserLogged.IsTimeOut = true;
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await App.Current.MainPage.Navigation.PopToRootAsync();
+                    await Shell.Current.GoToAsync("//LoginPage");
+                });
+            });
+                t.Start();
+            }
+        }
+        private async Task GetImages(NewsModel data)
+        {
+            var result = await LoadFiles<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ProjectID}/items/{data.bsd_image}/driveItem/thumbnails");
+            if (result != null)
+            {
+                data.image = result.value.SingleOrDefault().large.url;
+            }
+        }
+        private async static Task<T> LoadFiles<T>(string url) where T : class
+        {
+            var result = await CrmHelper.RetrieveImagesSharePoint<T>(url);
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
     public class CountChartModel

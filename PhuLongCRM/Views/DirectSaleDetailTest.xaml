@@ -3,8 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PhuLongCRM.Views.DirectSaleDetailTest"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources" 
-             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" xmlns:controls="clr-namespace:PhuLongCRM.Controls" xmlns:converter="clr-namespace:PhuLongCRM.Converters"
+             xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" 
+             xmlns:controls="clr-namespace:PhuLongCRM.Controls" xmlns:converter="clr-namespace:PhuLongCRM.Converters"
              Title="{x:Static lang:Language.gio_hang}">
+    <!--<Shell.TitleView>
+        <StackLayout Margin="10" Orientation="Horizontal" Spacing="0">
+            <Label Text="{x:Static lang:Language.gio_hang}" FontAttributes="Bold" TextColor="White" FontSize="20" VerticalTextAlignment="Center"/>
+            <Label x:Name="menu_item" Text="&#xf007;" FontFamily="FontAwesomeSolid" FontSize="20" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Padding="{OnPlatform Android='2',iOS='2,2,50,2'}" TextColor="White" Grid.Column="0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Owner_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </Shell.TitleView>-->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="menu_item" Clicked="Owner_Tapped">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xf007;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label" x:Key="statusCodeUnit">
@@ -24,17 +43,25 @@
                 <Setter Property="WidthRequest" Value="30"/>
             </Style>
             <converter:CustomIndicatorConverter x:Key="customIndicatorConverter" />
-            <converter:DecimalToVndConverter x:Key="DecimalToVndConverter"/>
-            <converter:NullToHideConverter x:Key="NullToHideConverter"/>
             <converter:UnitItemWidthConverter x:Key="UnitItemWidthConverter"/>
             <converter:BackgroundUnitConverter x:Key="BackgroundUnitConverter"/>
             <converter:HidePriceOnDirectSaleConverter x:Key="HidePriceOnDirectSaleConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="menu_item" Clicked="Owner_Clicked" IconImageSource="https://img.icons8.com/fluency-systems-regular/96/000000/user.png">
+            --><!--<ToolbarItem.IconImageSource>
+                <FontImageSource x:Name="menu_icon" Glyph="&#xf007;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
+            </ToolbarItem.IconImageSource>--><!--
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>-->
     <ContentPage.Content>
         <AbsoluteLayout>
             <Grid RowDefinitions="Auto,Auto,*" RowSpacing="0" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" BackgroundColor="{StaticResource NavigationPrimary}" Padding="0,0,0,1">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseToolTips_Tapped"/>
+                </Grid.GestureRecognizers>
+                <ScrollView x:Name="line_blue" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" BackgroundColor="{StaticResource NavigationPrimary}" Padding="0,0,0,1">
                     <StackLayout x:Name="stackBlocks" BindableLayout.ItemsSource="{Binding Blocks}" HorizontalOptions="Fill" Spacing="10" Orientation="Horizontal" Padding="10" BackgroundColor="White">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
@@ -56,67 +83,80 @@
                     </StackLayout>
                 </ScrollView>
 
-                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*,*,*" Margin="20" RowSpacing="15" ColumnSpacing="20">
-                    <Label x:Name="test" Grid.Row="0" Grid.Column="0" Text="{Binding Block.NumChuanBiInBlock}" BackgroundColor="#F1C50D" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="1"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Block.NumSanSangInBlock}" BackgroundColor="#2FCC71" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="2"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Block.NumBookingInBlock}" BackgroundColor="#00CED1" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="3"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="0" Grid.Column="3" Text="{Binding Block.NumGiuChoInBlock}" BackgroundColor="#04A8F4" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="4"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Block.NumDatCocInBlock}" BackgroundColor="#14A184" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="5"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Block.NumDongYChuyenCoInBlock}" BackgroundColor="#8F44AD" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="6"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Block.NumDaDuTienCocInBlock}" BackgroundColor="#e67e22" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="7"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding Block.NumOptionInBlock}" BackgroundColor="#808080" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="8"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="2" Grid.Column="0" Text="{Binding Block.NumThanhToanDot1InBlock}" BackgroundColor="#808080" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="9"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Block.NumSignedDAInBlock}" BackgroundColor="#A0DB8E" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="10"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="2" Grid.Column="2" Text="{Binding Block.NumQualifiedInBlock}" BackgroundColor="#6897BB" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="11"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Row="2" Grid.Column="3" Text="{Binding Block.NumDaBanInBlock}" BackgroundColor="#BF3A2B" Style="{StaticResource statusCodeUnit}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="NumberUnit_Tapped" CommandParameter="12"/>
-                        </Label.GestureRecognizers>
-                    </Label>
+                <Label x:Name="lb_khong_co_du_lieu" Text="{x:Static lang:Language.khong_co_san_pham}" Grid.Row="1" TextColor="#444444" HorizontalOptions="Center" FontSize="15" Padding="10" IsVisible="false"/>
+                <Grid x:Name="gridStatus" Grid.Row="1" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*,*,*" Margin="20" RowSpacing="15" ColumnSpacing="20" >
+                    <Label x:Name="test" Grid.Row="0" Grid.Column="0" Text="{Binding Block.NumChuanBiInBlock}" BackgroundColor="#F1C50D" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="BottomRight"
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.chuan_bi}"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Block.NumSanSangInBlock}" BackgroundColor="#2FCC71" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.san_sang}"/>
+                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Block.NumBookingInBlock}" BackgroundColor="#00CED1" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.dat_cho}"/>
+                    <Label Grid.Row="0" Grid.Column="3" Text="{Binding Block.NumGiuChoInBlock}" BackgroundColor="#04A8F4" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.giu_cho}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Block.NumDatCocInBlock}" BackgroundColor="#14A184" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.dat_coc}"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Block.NumDongYChuyenCoInBlock}" BackgroundColor="#8F44AD" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.dong_y_chuyen_coc}"/>
+                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Block.NumDaDuTienCocInBlock}" BackgroundColor="#e67e22" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.da_du_tien_coc}"/>
+                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding Block.NumOptionInBlock}" BackgroundColor="#808080" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.hoan_tat_dat_coc}"/>
+                    <Label Grid.Row="2" Grid.Column="0" Text="{Binding Block.NumThanhToanDot1InBlock}" BackgroundColor="#808080" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.thanh_toan_dot_1}"/>
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Block.NumSignedDAInBlock}" BackgroundColor="#A0DB8E" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.da_ky_ttdc_hddc}"/>
+                    <Label Grid.Row="2" Grid.Column="2" Text="{Binding Block.NumQualifiedInBlock}" BackgroundColor="#6897BB" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.du_dieu_dien}"/>
+                    <Label Grid.Row="2" Grid.Column="3" Text="{Binding Block.NumDaBanInBlock}" BackgroundColor="#BF3A2B" Style="{StaticResource statusCodeUnit}"
+                           effects:TooltipEffect.Position="Bottom" 
+                                           effects:TooltipEffect.BackgroundColor="#90000000" 
+                                           effects:TooltipEffect.TextColor="White"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.da_ban}"/>
                 </Grid>
 
                 <ScrollView x:Name="stackFloors" Grid.Row="2" Scrolled="ScrollView_Scrolled">
@@ -167,12 +207,25 @@
                                                                 <Label Grid.Column="1" Text="*" TextColor="White" FontSize="23" FontFamily="FontRobotoBold" IsVisible="{Binding has_event}" HorizontalTextAlignment="Center"/>
                                                             </Grid>
                                                             <Label FontFamily="FontRobotoMedium" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center">
-                                                                <Label.Text>
+                                                                <!--<Label.Text>
                                                                     <MultiBinding StringFormat="{}{0}: {1}">
                                                                         <Binding Source="{x:Static lang:Language.danh_sach_giu_cho}" />
                                                                         <Binding Path="NumQueses" />
                                                                     </MultiBinding>
-                                                                </Label.Text>
+                                                                </Label.Text>-->
+                                                                <Label.FormattedText>
+                                                                    <FormattedString>
+                                                                        <FormattedString.Spans>
+                                                                            <Span Text="{x:Static lang:Language.danh_sach_giu_cho}" />
+                                                                            <Span Text=": "/>
+                                                                            <Span Text="{Binding NumQueses}"/>
+                                                                            <Span Text=" / "/>
+                                                                            <Span Text="&#xf007; " FontFamily="FontAwesomeSolid" FontSize="15"/>
+                                                                            <Span Text=": "/>
+                                                                            <Span Text="{Binding NumQueueEmployee}"/>
+                                                                        </FormattedString.Spans>
+                                                                    </FormattedString>
+                                                                </Label.FormattedText>
                                                             </Label>
                                                             <Label Text="{Binding price_format,StringFormat='{0} đ'}" IsVisible="{Binding _bsd_phaseslaunchid_value, Converter={StaticResource HidePriceOnDirectSaleConverter}}" TextColor="White" FontFamily="FontRobotoBold" FontSize="20" HorizontalTextAlignment="Center" />
                                                         </StackLayout>
@@ -186,6 +239,7 @@
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                 </ScrollView>
+
                 <!--<ListView x:Name="listFloor" Grid.Row="2" ItemsSource="{Binding Block.Floors}" BackgroundColor="White" ItemAppearing="ListView_ItemAppearing" HasUnevenRows="True" SelectionMode="None" SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>

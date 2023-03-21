@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using PhuLongCRM.Settings;
 using Xamarin.Forms;
 
@@ -20,9 +21,16 @@ namespace PhuLongCRM.Converters
                 }
                 else
                 {
-                    byte[] bytes = System.Convert.FromBase64String(value.ToString());
-                    image = ImageSource.FromStream(() => new MemoryStream(bytes));
-                    return image;
+                    if (IsBase64String(value.ToString()))
+                    {
+                        byte[] bytes = System.Convert.FromBase64String(value.ToString());
+                        image = ImageSource.FromStream(() => new MemoryStream(bytes));
+                        return image;
+                    }
+                    else
+                    {
+                        return $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={value.ToString()}";
+                    }
                 }
             }
             else
@@ -31,6 +39,12 @@ namespace PhuLongCRM.Converters
                 return $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={name}";
             }
             
+        }
+
+        public bool IsBase64String(string base64)
+        {
+            base64 = base64.Trim();
+            return (base64.Length % 4 == 0) && Regex.IsMatch(base64, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

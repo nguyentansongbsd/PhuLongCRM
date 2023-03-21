@@ -39,11 +39,12 @@ namespace PhuLongCRM.Views
 
         protected override async void OnAppearing()
         {
-            base.OnAppearing();
+            base.OnAppearing(); 
             if (LeadsContentView != null && NeedToRefreshLead == true)
             {
                 LoadingHelper.Show();
                 await LeadsContentView.viewModel.LoadOnRefreshCommandAsync();
+                RefreshLanguage();
                 NeedToRefreshLead = false;
                 LoadingHelper.Hide();
             }
@@ -52,6 +53,7 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 await ContactsContentview.viewModel.LoadOnRefreshCommandAsync();
+                RefreshLanguage();
                 NeedToRefreshContact = false;
                 LoadingHelper.Hide();
             }
@@ -60,6 +62,7 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Show();
                 await AccountsContentView.viewModel.LoadOnRefreshCommandAsync();
+                RefreshLanguage();
                 NeedToRefreshAccount = false;
                 LoadingHelper.Hide();
             }
@@ -68,20 +71,21 @@ namespace PhuLongCRM.Views
         private async void NewCustomer_Clicked(object sender, EventArgs e)
         {
             LoadingHelper.Show();
-            string[] options = new string[] { Language.khach_hang_tiem_nang_option, Language.khach_hang_ca_nhan_option, Language.khach_hang_doanh_nghiep_option };
+            string[] options = new string[] { Language.khach_hang_tiem_nang_option, Language.khach_hang_doanh_nghiep_option }; //, Language.khach_hang_ca_nhan_option
             string asw = await DisplayActionSheet(Language.tao_khach_hang, Language.huy, null, options);
             if (asw == Language.khach_hang_tiem_nang_option)
             {
                 await Navigation.PushAsync(new LeadForm());
             }
-            else if (asw == Language.khach_hang_ca_nhan_option)
-            {
-                await Navigation.PushAsync(new ContactForm());
-            }
             else if (asw == Language.khach_hang_doanh_nghiep_option)
             {
                 await Navigation.PushAsync(new AccountForm());
             }
+            //else if (asw == Language.khach_hang_ca_nhan_option)
+            //{
+            //    await Navigation.PushAsync(new ContactForm());
+            //}
+
             LoadingHelper.Hide();
         }
 
@@ -143,6 +147,10 @@ namespace PhuLongCRM.Views
                     }
                 }
             }  
+        }
+        private void RefreshLanguage()
+        {
+            this.Title = Language.khach_hang_title;
         }
     }
 }

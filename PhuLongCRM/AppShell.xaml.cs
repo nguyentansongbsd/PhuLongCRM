@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PhuLongCRM.Helper;
@@ -28,17 +29,29 @@ namespace PhuLongCRM
         private string _verApp;
         public string VerApp { get => _verApp; set { _verApp = value; OnPropertyChanged(nameof(VerApp)); } }
 
+        private string _agent;
+        public string Agent { get => _agent; set { _agent = value; OnPropertyChanged(nameof(Agent)); } }
+
         private UserCRMInfoPage userCRMInfo;
 
         public AppShell()
         {
             InitializeComponent();
             UserName = UserLogged.User;
-            ContactName = string.IsNullOrWhiteSpace(UserLogged.ContactName) ? UserLogged.User : UserLogged.ContactName;
+            ContactName = string.IsNullOrWhiteSpace(UserLogged.ContactName) ? UserLogged.User.TrimStart() : UserLogged.ContactName.TrimStart(); ;
             Avartar = UserLogged.Avartar;
             NeedToRefeshUserInfo = false;
             VerApp = Config.OrgConfig.VerApp;
+            Agent = String.IsNullOrEmpty(UserLogged.AgentName) ? "Phú Long" : UserLogged.AgentName;
             this.BindingContext = this;
+            PropertyChanged += AppShell_PropertyChanged;
+        }
+
+        private void AppShell_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            LoadingHelper.Show();
+            RefreshLanguage();
+            LoadingHelper.Hide();
         }
 
         public AppShell(bool isLoginByUserCrm)
@@ -50,7 +63,7 @@ namespace PhuLongCRM
         private async void Init()
         {
             VerApp = Config.OrgConfig.VerApp;
-            this.ContactName = UserLogged.ContactName;
+            this.ContactName = UserLogged.ContactName.TrimStart(); ;
             this.UserName = UserLogged.UserCRM;
             this.Avartar = $"https://ui-avatars.com/api/?background=2196F3&rounded=false&color=ffffff&size=150&length=2&name={UserLogged.UserCRM}";
             this.BindingContext = this;
@@ -66,7 +79,7 @@ namespace PhuLongCRM
                 {
                     Avartar = UserLogged.Avartar;
                 }
-                ContactName = UserLogged.ContactName;
+                ContactName = UserLogged.ContactName.TrimStart(); ;
                 NeedToRefeshUserInfo = false;
                 LoadingHelper.Hide();
             }
@@ -119,11 +132,53 @@ namespace PhuLongCRM
             this.FlyoutIsPresented = false;
             //LoadingHelper.Hide();
         }
+        public async Task UpdateStateLogin(bool isLogin)
+        {
+            string path = $"/bsd_employees({UserLogged.Id})";
 
-        private async void Logout_Clicked(System.Object sender, System.EventArgs e)
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            if (isLogin)
+                data["bsd_statelogin"] = "Login";
+            else
+                data["bsd_statelogin"] = "Logout";
+
+            CrmApiResponse crmApiResponse = await CrmHelper.PatchData(path, data);
+            if (!crmApiResponse.IsSuccess)
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                return;
+            }
+        }
+        public void RefreshLanguage()
+        {
+            trangchu.Title = Language.trang_chu_title;
+            congviec.Title = Language.cong_viec_menu;
+            khachhang.Title = Language.khach_hang_title;
+            duan.Title = Language.du_an_title;
+            giohang.Title = Language.gio_hang;
+            giaodich.Title = Language.giao_dich_title;
+            giucho.Title = Language.giu_cho_title;
+            bangtinhgia.Title = Language.bang_tinh_gia_title;
+            datcoc.Title = Language.dat_coc_title;
+            hopdong.Title = Language.hop_dong_title;
+            chamsockhachhang.Title = Language.cham_soc_khach_hang_title;
+            hoatdong.Title = Language.hoat_dong;
+            phanhoi.Title = Language.phan_hoi_title;
+            danhsachtheodoi.Title = Language.danh_sach_theo_doi_title;
+            tinhnang.Title = Language.tinh_nang_title;
+            lichlamviec.Title = Language.lich_lam_viec;
+            dongbodanhba.Title = Language.dong_bo_danh_ba;
+            thietlap.Title = Language.thiet_lap_title;
+            danhgia.Title = Language.danh_gia;
+            //dangxuat.Text = Language.dang_xuat;
+        }
+
+        private async void Logout_Tapped(object sender, EventArgs e)
         {
             if (UserLogged.IsLoginByUserCRM)
                 DependencyService.Get<IClearCookies>().ClearAllCookies(); ;
+            await UpdateStateLogin(false);
             await Shell.Current.GoToAsync("//LoginPage");
         }
     }

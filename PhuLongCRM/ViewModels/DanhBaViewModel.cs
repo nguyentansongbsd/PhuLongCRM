@@ -6,6 +6,7 @@ using System.Windows.Input;
 using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -80,16 +81,15 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadLeadConvert()
         {
-            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name='lead'>
                         <attribute name='lastname' />
-                        <attribute name='subject' />
                         <attribute name='mobilephone'/>
-                        <attribute name='emailaddress1' />
-                        <attribute name='createdon' />
                         <attribute name='leadid' />
-                        <attribute name='leadqualitycode' />
-                        <order attribute='createdon' descending='true' />                      
+                        <order attribute='createdon' descending='true' />
+                        <filter type='and'>
+                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                        </filter>
                       </entity>
                     </fetch>";
 
@@ -102,6 +102,7 @@ namespace PhuLongCRM.ViewModels
                 LeadConvert.Add(item);
             }
         }
+
         public virtual async Task LoadOnRefreshCommandAsync()
         {
             if (Contacts != null && Contacts.Count > 0)
@@ -140,7 +141,7 @@ namespace PhuLongCRM.ViewModels
                             numberFormated = sdt,
                             IsSelected = false
                         };
-                        if (LeadConvert.Where(x => x.mobilephone.Contains(sdt) == true).ToList().Count <= 0)
+                        if (LeadConvert.Where(x => x.mobilephone.Contains(item.numberFormated) == true).ToList().Count <= 0)
                         {
                             item.IsConvertToLead = false;
                             totalConactActive++;

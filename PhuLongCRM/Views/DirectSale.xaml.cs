@@ -1,6 +1,7 @@
 ﻿using PhuLongCRM.Helper;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
+using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,14 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             InitializeComponent();
             this.BindingContext = viewModel = new DirectSaleViewModel();
+            PropertyChanged += DirectSale_PropertyChanged;
             Init();
             LoadingHelper.Hide();
+        }
+
+        private void DirectSale_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ChangLanguege();
         }
 
         public async void Init()
@@ -92,7 +99,7 @@ namespace PhuLongCRM.Views
         private async void ProjectItem_Tapped(object sender, ItemTappedEventArgs e)
         {
             LoadingHelper.Show();
-            var item = e.Item as ProjectList;
+            var item = e.Item as ProjectListModel;
             viewModel.Project = item;
             await Task.WhenAll(
                 viewModel.LoadPhasesLanch()
@@ -123,7 +130,15 @@ namespace PhuLongCRM.Views
                 string views = (viewModel.SelectedViews != null && viewModel.SelectedViews.Count != 0) ? string.Join(",", viewModel.SelectedViews) : null;
                 string unitStatus = (viewModel.SelectedUnitStatus != null && viewModel.SelectedUnitStatus.Count != 0) ? string.Join(",", viewModel.SelectedUnitStatus) : null;
 
-                DirectSaleSearchModel filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent,viewModel.UnitCode, directions,views, unitStatus,viewModel.NetArea?.Id,viewModel.Price?.Id);
+                DirectSaleSearchModel filter = null;
+                if (viewModel.isOwner)
+                {
+                    filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent, viewModel.UnitCode, directions, views, unitStatus, viewModel.NetArea?.Id, viewModel.Price?.Id, viewModel.isOwner, UserLogged.Id.ToString());
+                }
+                else
+                {
+                    filter = new DirectSaleSearchModel(viewModel.Project.bsd_projectid, viewModel.PhasesLaunch?.Val, viewModel.IsEvent, viewModel.UnitCode, directions, views, unitStatus, viewModel.NetArea?.Id, viewModel.Price?.Id, viewModel.isOwner);
+                }
 
                 //DirectSaleDetail directSaleDetail = new DirectSaleDetail(filter);//,viewModel.Blocks
                 //directSaleDetail.OnCompleted = async (Success) =>
@@ -196,7 +211,7 @@ namespace PhuLongCRM.Views
         private void Clear_Clicked(object sender, EventArgs e)
         {
             viewModel.Project = null;
-           viewModel.PhasesLaunch = null;
+            viewModel.PhasesLaunch = null;
             viewModel.IsEvent = false;
             viewModel.UnitCode = null;
             viewModel.SelectedDirections = null;
@@ -204,6 +219,30 @@ namespace PhuLongCRM.Views
             viewModel.SelectedUnitStatus = null;
             viewModel.NetArea = null;
             viewModel.Price = null;
+        }
+        private void ChangLanguege()
+        {
+            this.Title = Language.gio_hang;
+            lb_duan.Text = Language.du_an;
+            entry_duan.Placeholder = Language.chon_du_an;
+            lb_dotmoban.Text = Language.dot_mo_ban;
+            lookupPhasesLaunch.Placeholder = Language.chon_dot_mo_ban;
+            lb_sukien.Text = Language.su_kien;
+            lb_masanpham.Text = Language.ma_san_pham;
+            entry_masanpham.Placeholder = Language.ma_san_pham;
+            lb_huong.Text = Language.huong;
+            lookupMultipleDirection.Placeholder = Language.chon_huong;
+            lb_huongnhin.Text = Language.huong_nhin;
+            lookupMultipleViews.Placeholder = Language.chon_huong_nhin;
+            lb_tinhtrangsanpham.Text = Language.tinh_trang_san_pham;
+            lookupMultipleUnitStatus.Placeholder = Language.chon_tinh_trang_san_pham;
+            lb_dientichsudung.Text = Language.dien_tich_su_dung;
+            lookupNetArea.Placeholder = Language.chon_dien_tich_su_dung;
+            lb_giaban.Text = Language.gia_ban_vnd;
+            lookupPrice.Placeholder = Language.chon_gia_ban;
+            lb_thuocnhanvien.Text = Language.thuoc_nhan_vien;
+            btn_thongtinduan.Text = Language.thong_tin_du_an;
+            btn_timkiem.Text = Language.tim_kiem;
         }
     }
 }

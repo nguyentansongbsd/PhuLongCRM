@@ -4,6 +4,8 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
 using PhuLongCRM.ViewModels;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Stormlion.PhotoBrowser;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace PhuLongCRM.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ContactDetailPage : ContentPage
     {
-        public Action<bool> OnCompleted;
+        public Action<int> OnCompleted;
         public static bool? NeedToRefresh = null;
         public static bool? NeedToRefreshQueues = null;
         public static bool? NeedToRefreshActivity = null;
@@ -40,12 +42,20 @@ namespace PhuLongCRM.Views
             
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
+                await viewModel.LoadProvince();
+                await viewModel.LoadProject();
                 SetButtonFloatingButton();
+                btn_nhaucaudientich.IsVisible = false;
+                btn_tieuchichonmua.IsVisible = false;
+                btn_loaibdsquantam.IsVisible = false;
                 FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
-                OnCompleted(true);
+                if(viewModel.singleContact.employee_id == UserLogged.Id)
+                    OnCompleted?.Invoke(1);// thanh cong
+                else
+                    OnCompleted?.Invoke(2);// KH khong thuoc employee dang dang nhap
             }
             else
-                OnCompleted(false);
+                OnCompleted?.Invoke(3);// khong tim thay KH
         }
 
         protected override async void OnAppearing()
@@ -86,26 +96,47 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
-                if(viewModel.ButtonCommandList.Count > 0)
-                    viewModel.ButtonCommandList.Clear();
-
-                if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_qrcode))
+                if (viewModel.IsCurrentRecordOfUser) // bat loi khi quet QR: Record co thuoc user dang dang nhap hay khong
                 {
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
+                    if (viewModel.ButtonCommandList.Count > 0)
+                        viewModel.ButtonCommandList.Clear();
+
+                    if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_qrcode))
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
+                    }
+
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.nhu_cau_va_tieu_chi_title, "FontAwesomeSolid", "\uf073", null, NhuCauVaTieuChi));
+
+                    if (viewModel.singleContact.statuscode != "100000000")
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
+
+                    if (viewModel.singleContact.statuscode == "2")
+                    {
+                        floatingButtonGroup.IsVisible = false;
+                        changeAvt.IsVisible = false;
+                    }
+                    else
+                    {
+                        floatingButtonGroup.IsVisible = true;
+                        changeAvt.IsVisible = true;
+                    }
                 }
-
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
-                viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
-
-                if (viewModel.singleContact.statuscode != "100000000")
-                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.cap_nhat, "FontAwesomeRegular", "\uf044", null, EditContact));
-
-                if (viewModel.singleContact.statuscode == "2")
-                    floatingButtonGroup.IsVisible = false;
                 else
-                    floatingButtonGroup.IsVisible = true;
+                {
+                    floatingButtonGroup.IsVisible = false;
+                }
             }
+        }
+
+        private void NhuCauVaTieuChi(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            TieuChi_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
         }
 
         private async void NewMeet(object sender, EventArgs e)
@@ -163,11 +194,11 @@ namespace PhuLongCRM.Views
             if (Id != null && viewModel.singleContact.contactid == Guid.Empty)
             {
                 await viewModel.loadOneContact(Id);
-                if (viewModel.singleContact.gendercode != null)
+                if (viewModel.singleContact?.gendercode != null)
                 { 
                    viewModel.singleGender = ContactGender.GetGenderById(viewModel.singleContact.gendercode); 
                 }
-                if (viewModel.singleContact.bsd_localization != null)
+                if (viewModel.singleContact?.bsd_localization != null)
                 {
                     viewModel.SingleLocalization = AccountLocalization.GetLocalizationById(viewModel.singleContact.bsd_localization);
                 }
@@ -280,12 +311,13 @@ namespace PhuLongCRM.Views
 
         private void ChiTietDatCoc_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             var item = (ReservationListModel)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item == null) return;
 
             LoadingHelper.Show();
             bool isReservation = false;
-            if (item.statuscode != 100000007)
+            if (item.statuscode != 100000007 && item.statuscode != 100000000 && item.statuscode != 861450001) // Qutation,Reservatoin,Supmit
                 isReservation = true;
             BangTinhGiaDetailPage bangTinhGiaDetail = new BangTinhGiaDetailPage(item.quoteid, isReservation);
             bangTinhGiaDetail.OnCompleted = async (isSuccess) =>
@@ -305,6 +337,7 @@ namespace PhuLongCRM.Views
 
         private void ItemHopDong_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             ContractDetailPage contractDetail = new ContractDetailPage(itemId);
@@ -325,6 +358,7 @@ namespace PhuLongCRM.Views
 
         private void CaseItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             var item = (ActivityListModel)((sender as Grid).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             if (item != null && item.activityid != Guid.Empty)
             {
@@ -373,8 +407,8 @@ namespace PhuLongCRM.Views
         #endregion
 
         private async void NhanTin_Tapped(object sender, EventArgs e)
-        {           
-            string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
+        {
+            string phone = viewModel.singleContact.mobilephone.Substring(viewModel.singleContact.mobilephone.Length - 10, 10);
             if (phone != string.Empty)
             {
                 SmsMessage sms = new SmsMessage(null, phone);
@@ -399,26 +433,40 @@ namespace PhuLongCRM.Views
         }
 
         private async void GoiDien_Tapped(object sender, EventArgs e)
-        {          
-            string phone = viewModel.singleContact.mobilephone.Replace(" ", "").Replace("+84-", "").Replace("84", "");
-            if (phone != string.Empty)
+        {
+            try
             {
-                await Launcher.OpenAsync($"tel:{phone}");
-                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                //if (checkVadate == true)
-                //{
-                //    await Launcher.OpenAsync($"tel:{phone}");
-                //    LoadingHelper.Hide();
-                //}
-                //else
-                //{
-                //    LoadingHelper.Hide();
-                //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                //}
+                if (!string.IsNullOrWhiteSpace(viewModel.singleContact.mobilephone) && viewModel.singleContact.mobilephone.Length >= 12)
+                {
+                    string phone = viewModel.singleContact.mobilephone.Substring(viewModel.singleContact.mobilephone.Length - 10, 10);
+                    if (phone != string.Empty)
+                    {
+                        await Launcher.OpenAsync($"tel:{phone}");
+                        //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
+                        //if (checkVadate == true)
+                        //{
+                        //    await Launcher.OpenAsync($"tel:{phone}");
+                        //    LoadingHelper.Hide();
+                        //}
+                        //else
+                        //{
+                        //    LoadingHelper.Hide();
+                        //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                        //}
+                    }
+                    else
+                    {
+                        ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+                    }
+                }
+                else
+                {
+                    ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ToastMessageHelper.ShortMessage(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+
             }
         }
 
@@ -430,12 +478,12 @@ namespace PhuLongCRM.Views
                 AccountDetailPage newPage = new AccountDetailPage(Guid.Parse(viewModel.singleContact._parentcustomerid_value));
                 newPage.OnCompleted = async (OnCompleted) =>
                 {
-                    if (OnCompleted == true)
+                    if (OnCompleted == 1)
                     {
                         await Navigation.PushAsync(newPage);
                         LoadingHelper.Hide();
                     }
-                    else
+                    else if(OnCompleted == 3 || OnCompleted == 2)
                     {
                         LoadingHelper.Hide();
                         ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
@@ -446,6 +494,7 @@ namespace PhuLongCRM.Views
 
         private void GiuChoItem_Tapped(object sender, EventArgs e)
         {
+            if (viewModel.IsCurrentRecordOfUser == false) return;
             LoadingHelper.Show();
             var itemId = (Guid)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
             QueuesDetialPage queuesDetialPage = new QueuesDetialPage(itemId);
@@ -525,6 +574,290 @@ namespace PhuLongCRM.Views
             {
                 LoadingHelper.Hide();
                 ToastMessageHelper.ShortMessage(Language.tao_qr_code_that_bai);
+            }
+        }
+
+        private void NhuCauDienTich_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            btn_nhaucaudientich.IsVisible = true;
+        }
+        private void TieuChiChonMua_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            btn_tieuchichonmua.IsVisible = true;
+        }
+        private void LoaiBDSQuanTam_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            btn_loaibdsquantam.IsVisible = true;
+        }
+
+        private async void LoaiBDSQuanTam_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateLoaiBDSQuanTam();
+            if (result.IsSuccess)
+            {
+                btn_loaibdsquantam.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+
+        private async void btn_nhaucaudientich_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateNhuCauDienTich();
+            if (result.IsSuccess)
+            {
+                btn_nhaucaudientich.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+
+        private async void btn_tieuchichonmua_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateTieuChiChonMua();
+            if (result.IsSuccess)
+            {
+                btn_tieuchichonmua.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+
+        private async void btn_nhucaudiadiem_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateNhuCauDiaDiem();
+            if (result)
+            {
+                btn_nhucaudiadiem.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+
+        private void Province_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            btn_nhucaudiadiem.IsVisible = true;
+        }
+
+        private void Project_SelectedItemChange(object sender, LookUpChangeEvent e)
+        {
+            btn_nhucauduan.IsVisible = true;
+        }
+
+        private async void btn_nhucauduan_Clicked(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            var result = await viewModel.updateNhuCauDuAn();
+            if (result)
+            {
+                btn_nhucauduan.IsVisible = false;
+                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                LoadingHelper.Hide();
+            }
+            else
+            {
+                LoadingHelper.Hide();
+                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+            }
+        }
+        private void Protecter_Tapped(object sender, EventArgs e)
+        {
+            if (viewModel.singleContact != null && viewModel.singleContact.protecter_id != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                ContactDetailPage newPage = new ContactDetailPage(viewModel.singleContact.protecter_id);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == 1)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
+            }
+        }
+        private async void ChangeAvatar_Tapped(object sender, EventArgs e)
+        {
+            string[] options = new string[] { Language.thu_vien, Language.chup_hinh };
+            string asw = await DisplayActionSheet(Language.tuy_chon, Language.huy, null, options);
+            if (asw == Language.thu_vien)
+            {
+                await CrossMedia.Current.Initialize();
+                PermissionStatus photostatus = await PermissionHelper.RequestPhotosPermission();
+                if (photostatus == PermissionStatus.Granted)
+                {
+                    try
+                    {
+                        LoadingHelper.Show();
+                        var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions() { PhotoSize = PhotoSize.MaxWidthHeight, MaxWidthHeight = 600 });
+                        if (file != null)
+                        {
+                            viewModel.AvatarArr = System.IO.File.ReadAllBytes(file.Path);
+                            string imgBase64 = Convert.ToBase64String(viewModel.AvatarArr);
+                            var Avatar = imgBase64;
+                            if (Avatar != viewModel.singleContact.entityimage)
+                            {
+                                bool isSuccess = await viewModel.ChangeAvatar();
+                                if (isSuccess)
+                                {
+                                    viewModel.singleContact.avatar = Avatar;
+                                    ToastMessageHelper.ShortMessage(Language.doi_hinh_dai_dien_thanh_cong);
+                                    LoadingHelper.Hide();
+                                }
+                                else
+                                {
+                                    LoadingHelper.Hide();
+                                    ToastMessageHelper.ShortMessage(Language.doi_hinh_dai_dien_that_bai);
+                                }
+                            }
+                            LoadingHelper.Hide();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ToastMessageHelper.LongMessage(ex.Message);
+                        LoadingHelper.Hide();
+                    }
+                }
+                LoadingHelper.Hide();
+            }
+            else if (asw == Language.chup_hinh)
+            {
+                await CrossMedia.Current.Initialize();
+                PermissionStatus camerastatus = await PermissionHelper.RequestCameraPermission();
+                if (camerastatus == PermissionStatus.Granted)
+                {
+                    LoadingHelper.Show();
+                    string fileName = $"{Guid.NewGuid()}.jpg";
+                    var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                    {
+                        Name = fileName,
+                        SaveToAlbum = false,
+                        PhotoSize = PhotoSize.MaxWidthHeight,
+                        MaxWidthHeight = 600
+                    });
+                    if (file != null)
+                    {
+                        viewModel.AvatarArr = System.IO.File.ReadAllBytes(file.Path);
+                        var Avatar = Convert.ToBase64String(viewModel.AvatarArr);
+                        if (Avatar != viewModel.singleContact.entityimage)
+                        {
+                            bool isSuccess = await viewModel.ChangeAvatar();
+                            if (isSuccess)
+                            {
+                                viewModel.singleContact.avatar = Avatar;
+                                if (AppShell.NeedToRefeshUserInfo.HasValue) AppShell.NeedToRefeshUserInfo = true;
+                                ToastMessageHelper.ShortMessage(Language.doi_hinh_dai_dien_thanh_cong);
+                                LoadingHelper.Hide();
+                            }
+                            else
+                            {
+                                LoadingHelper.Hide();
+                                ToastMessageHelper.ShortMessage(Language.doi_hinh_dai_dien_that_bai);
+                            }
+                        }
+                    }
+                }
+                LoadingHelper.Hide();
+            }
+        }
+
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            viewModel.IsRefreshing = true;
+                await viewModel.loadOneContact(viewModel.singleContact.contactid.ToString());
+                if (viewModel.singleContact?.gendercode != null)
+                {
+                    viewModel.singleGender = ContactGender.GetGenderById(viewModel.singleContact.gendercode);
+                }
+                if (viewModel.singleContact?.bsd_localization != null)
+                {
+                    viewModel.SingleLocalization = AccountLocalization.GetLocalizationById(viewModel.singleContact.bsd_localization);
+                }
+                else
+                {
+                    viewModel.SingleLocalization = null;
+                }
+            
+            if (viewModel.list_danhsachdatcho != null && viewModel.list_danhsachdatcho.Count > 0)
+            {
+                viewModel.list_danhsachdatcho.Clear();
+                viewModel.PageDanhSachDatCho = 1;
+                await viewModel.LoadQueuesForContactForm(viewModel.singleContact.contactid.ToString());
+            }
+            if (viewModel.list_danhsachdatcoc != null && viewModel.list_danhsachdatcoc.Count > 0)
+            {
+                viewModel.list_danhsachdatcoc.Clear();
+                viewModel.PageDanhSachDatCoc = 1;
+                await viewModel.LoadReservationForContactForm(viewModel.singleContact.contactid.ToString());
+            }
+            if (viewModel.list_danhsachhopdong != null && viewModel.list_danhsachhopdong.Count > 0)
+            {
+                viewModel.list_danhsachhopdong.Clear();
+                viewModel.PageDanhSachHopDong = 1;
+                await viewModel.LoadOptoinEntryForContactForm(viewModel.singleContact.contactid.ToString());
+            }
+            if (viewModel.Cares != null && viewModel.Cares.Count > 0)
+            {
+                viewModel.Cares.Clear();
+                viewModel.PageCase = 1;
+                await viewModel.LoadCase();
+            }
+            viewModel.IsRefreshing = false;
+            viewModel.PhongThuy = null;
+            LoadDataPhongThuy();
+            LoadingHelper.Hide();
+        }
+
+        private void OriginatingLead_Tapped(object sender, EventArgs e)
+        {
+            if (viewModel.singleContact.leadid_originated != Guid.Empty)
+            {
+                LoadingHelper.Show();
+                LeadDetailPage newPage = new LeadDetailPage(viewModel.singleContact.leadid_originated);
+                newPage.OnCompleted = async (OnCompleted) =>
+                {
+                    if (OnCompleted == 1)
+                    {
+                        await Navigation.PushAsync(newPage);
+                        LoadingHelper.Hide();
+                    }
+                    else if (OnCompleted == 3 || OnCompleted == 2)
+                    {
+                        LoadingHelper.Hide();
+                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    }
+                };
             }
         }
     }

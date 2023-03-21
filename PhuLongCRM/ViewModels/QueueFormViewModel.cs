@@ -669,10 +669,7 @@ namespace PhuLongCRM.ViewModels
             }
 
             data["budgetamount"] = QueueFormModel.budgetamount;
-            if(QueueFormModel.bsd_units_id == Guid.Empty)
-            {
-                data["estimatedvalue"] = 0;
-            }    
+            data["estimatedvalue"] = 0;
             data["description"] = QueueFormModel.description;
 
             if (DailyOption == null || DailyOption.Id == Guid.Empty)
@@ -1002,15 +999,70 @@ namespace PhuLongCRM.ViewModels
             CrmApiResponse result = await CrmHelper.PatchData(path, data);
         }
 
-        public void test(string a)
+        /// <summary>
+        /// kiểm tra giới hạn giữ chỗ
+        /// return 0 có thể giữ chỗ,
+        /// return 1 quá giới hạn unit,
+        /// return 2 quá giới hạn giữ chỗ trên unit,
+        /// return 3 không thấy project
+        /// </summary>
+        public async Task<int> CheckLimit()
         {
-          if(a.Contains("_moblie"))
+            var project = await LoadProject();
+            if (project != null && project.bsd_projectid != Guid.Empty)
             {
-                a.Replace("_moblie",null);
-                // theem don vi tien te
+                string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' aggregate='true'>
+                                    <entity name='opportunity'>
+                                        <attribute name='bsd_units' groupby='true' alias='group'/>
+                                        <attribute name='opportunityid' aggregate='count' alias='count'/>
+                                        <filter type='and'>
+                                            <condition attribute='createdon' operator='today' />
+                                            <condition attribute='bsd_units' operator='not-null' />
+                                            <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition attribute='bsd_project' operator='eq' value='{project.bsd_projectid}' />
+                                        </filter>
+                                      </entity>
+                                    </fetch>";
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<CountChartModel>>("opportunities", fetch);
+                if (result == null || result.value.Count == 0)
+                    return 0;
+                var data = result.value;
+                if (data.Count >= project.bsd_unitspersalesman)
+                    // quá giới hạn số unit có thể giữ chỗ 
+                    return 1; // gì đó
+                var unit = data.Where(x => x.group == UnitId.ToString()).FirstOrDefault();
+                if (unit != null)
+                {
+                    if (unit.count >= project.bsd_queueunitdaysaleman)
+                        // quá giới hạn số iuwx chỗ trên unit trên nhân viên trên ngày
+                        return 2;
+                    else
+                        return 0;
+                }
+                else
+                    return 0;
             }
-          // chay book nhu binh thuong
-                
+            else
+                return 3;
+        }
+        public async Task<ProjectInfoModel> LoadProject()
+        {
+            string FetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='bsd_project'>
+                                <attribute name='bsd_projectid' />
+                                <attribute name='bsd_unitspersalesman' />
+                                <attribute name='bsd_queueunitdaysaleman' />
+                                <link-entity name='product' from='bsd_projectcode' to='bsd_projectid' link-type='inner' alias='aa'>
+                                    <filter type='and'>
+                                        <condition attribute='productid' operator='eq' value='{UnitId}' />
+                                    </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ProjectInfoModel>>("bsd_projects", FetchXml);
+            if (result == null || result.value.Any() == false) return null;
+            return result.value.FirstOrDefault();
         }
     }
 }

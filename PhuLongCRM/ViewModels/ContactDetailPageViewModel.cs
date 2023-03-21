@@ -12,6 +12,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Stormlion.PhotoBrowser;
 using System.Collections.Generic;
+using PhuLongCRM.Config;
+using System.Net;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -72,6 +74,21 @@ namespace PhuLongCRM.ViewModels
         public string CodeContac = LookUpMultipleTabs.CodeContac;
         public List<Photo> Photos { get; set; }
 
+        public bool IsCurrentRecordOfUser { get; set; }
+
+        private List<OptionSet> _provinces;
+        public List<OptionSet> Provinces { get => _provinces; set { _provinces = value; OnPropertyChanged(nameof(Provinces)); } }
+
+        private List<OptionSet> ProvincesForDetele { get; set; } = new List<OptionSet>();
+        private List<OptionSet> ProjectsForDetele { get; set; } = new List<OptionSet>();
+
+        private List<OptionSet> _projects;
+        public List<OptionSet> Projects { get => _projects; set { _projects = value; OnPropertyChanged(nameof(Projects)); } }
+        public byte[] AvatarArr { get; set; }
+
+        private bool _isRefreshing;
+        public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
+
         public ContactDetailPageViewModel()
         {
             singleContact = new ContactFormModel();
@@ -96,7 +113,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='birthdate' />
                                     <attribute name='mobilephone' />
                                     <attribute name='createdon' />
-                                    <attribute name='ownerid' />
+                                    <attribute name='ownerid' alias='owner_id'/>
                                     <attribute name='gendercode' />
                                     <attribute name='bsd_identitycardnumber' />
                                     <attribute name='statuscode' />
@@ -139,6 +156,35 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_postalcode' />
                                     <attribute name='bsd_qrcode' />
                                     <attribute name='bsd_customercode' />
+                                    <attribute name='bsd_quantam_nhapho' />
+                                    <attribute name='bsd_quantam_khuthuongmai' />
+                                    <attribute name='bsd_quantam_datnen' />
+                                    <attribute name='bsd_quantam_canho' />
+                                    <attribute name='bsd_quantam_bietthu' />
+                                    <attribute name='bsd_tieuchi_vitri' />
+                                    <attribute name='bsd_tieuchi_thietkenoithatcanho' />
+                                    <attribute name='bsd_tieuchi_tangdepcanhodep' />
+                                    <attribute name='bsd_tieuchi_phuongthucthanhtoan' />
+                                    <attribute name='bsd_tieuchi_nhieutienich' />
+                                    <attribute name='bsd_tieuchi_nhadautuuytin' />
+                                    <attribute name='bsd_tieuchi_moitruongsong' />
+                                    <attribute name='bsd_tieuchi_huongcanho' />
+                                    <attribute name='bsd_tieuchi_hethongcuuhoa' />
+                                    <attribute name='bsd_tieuchi_hethonganninh' />
+                                    <attribute name='bsd_tieuchi_giacanho' />
+                                    <attribute name='bsd_tieuchi_gantruonghoc' />
+                                    <attribute name='bsd_tieuchi_ganchosieuthi' />
+                                    <attribute name='bsd_tieuchi_ganbenhvien' />
+                                    <attribute name='bsd_tieuchi_dientichcanho' />
+                                    <attribute name='bsd_tieuchi_baidauxe' />
+                                    <attribute name='bsd_dientich_lonhon120m2' />
+                                    <attribute name='bsd_dientich_80100m2' />
+                                    <attribute name='bsd_dientich_6080m2' />
+                                    <attribute name='bsd_dientich_3060m2' />
+                                    <attribute name='bsd_dientich_100120m2' />
+                                    <attribute name='bsd_haveprotector' />
+                                    <attribute name='entityimage' />
+                                    <attribute name='bsd_employee' alias='employee_id'/>
                                     <order attribute='createdon' descending='true' />
                                     <link-entity name='account' from='accountid' to='parentcustomerid' visible='false' link-type='outer' alias='aa'>
                                           <attribute name='accountid' alias='_parentcustomerid_value' />
@@ -146,6 +192,11 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <link-entity name='lead' from='leadid' to='originatingleadid' link-type='outer'>
                                         <attribute name='leadid' alias='leadid_originated'/>
+                                        <attribute name='fullname' alias='leadname_originated'/>
+                                    </link-entity>
+                                    <link-entity name='contact' from='contactid' to='bsd_protecter' link-type='outer'>
+                                        <attribute name='contactid' alias='protecter_id'/>
+                                        <attribute name='bsd_fullname' alias='protecter_name'/>
                                     </link-entity>
                                     <filter type='and'>
                                         <condition attribute='contactid' operator='eq' value='" + id + @"' />
@@ -153,12 +204,18 @@ namespace PhuLongCRM.ViewModels
                                 </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetch);
-            if (result == null)
-            {
-                return;
-            }
+            if (result == null || result.value.Any() == false) return;
             var tmp = result.value.FirstOrDefault();
             this.singleContact = tmp;
+            this.IsCurrentRecordOfUser = (singleContact.owner_id == UserLogged.Id || singleContact.employee_id == UserLogged.Id) ? true : false;
+            if (string.IsNullOrWhiteSpace(singleContact.entityimage))
+            {
+                singleContact.avatar = singleContact.bsd_fullname;
+            }
+            else
+            {
+                singleContact.avatar = singleContact.entityimage;
+            }
             await GetImageCMND();
         }
 
@@ -232,6 +289,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='opportunityid' />
                                 <attribute name='bsd_queuenumber' />
                                 <attribute name='bsd_queueforproject' />
+                                <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='createdon' descending='true' />
                                 <filter type='and'>
                                   <condition attribute='parentcontactid' operator='eq' uitype='contact' value='{customerId}' />
@@ -305,7 +363,7 @@ namespace PhuLongCRM.ViewModels
                                                <value>100000009</value>
                                                <value>6</value>
                                            </condition>
-                                           <condition attribute='bsd_quotationsigneddate' operator='not-null' />
+                                           <condition attribute='bsd_quotationsigneddate' operator='null' />
                                        </filter>
                                      </filter>
                                 </filter>
@@ -401,6 +459,20 @@ namespace PhuLongCRM.ViewModels
             if (Cares == null)
                 Cares = new ObservableCollection<ActivityListModel>();
             if (singleContact == null || singleContact.contactid == Guid.Empty) return;
+
+            string attribute = string.Empty;
+            string value = string.Empty;
+            if (singleContact.employee_id != Guid.Empty)
+            {
+                attribute = "bsd_employee";
+                value = singleContact.employee_id.ToString();
+            }
+            else
+            {
+                attribute = "ownerid";
+                value = singleContact.owner_id.ToString();
+            }
+            
             string fetch = $@"<fetch version='1.0' count='5' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='false'>
                                 <entity name='activitypointer'>
                                     <attribute name='subject' />
@@ -416,9 +488,9 @@ namespace PhuLongCRM.ViewModels
                                             <value>4201</value>
                                         </condition>
 	                                    <filter type='or'>
-                                            <condition entityname='meet' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='task' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
-                                            <condition entityname='phonecall' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+                                            <condition entityname='meet' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='task' attribute='{attribute}' operator='eq' value='{value}' />
+                                            <condition entityname='phonecall' attribute='{attribute}' operator='eq' value='{value}' />
                                         </filter>
                                         <condition attribute='regardingobjectid' operator='eq' value='{singleContact.contactid}' />
                                     </filter>
@@ -533,6 +605,215 @@ namespace PhuLongCRM.ViewModels
             else
                 return false;
         }
+        public async Task<CrmApiResponse> updateNhuCauDienTich()
+        {
+            string path = "/contacts(" + singleContact.contactid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_dientich_3060m2"] = singleContact.bsd_dientich_3060m2;
+            content["bsd_dientich_6080m2"] = singleContact.bsd_dientich_6080m2;
+            content["bsd_dientich_80100m2"] = singleContact.bsd_dientich_80100m2;
+            content["bsd_dientich_100120m2"] = singleContact.bsd_dientich_100120m2;
+            content["bsd_dientich_lonhon120m2"] = singleContact.bsd_dientich_lonhon120m2;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task<CrmApiResponse> updateTieuChiChonMua()
+        {
+            string path = "/contacts(" + singleContact.contactid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_tieuchi_vitri"] = singleContact.bsd_tieuchi_vitri;
+            content["bsd_tieuchi_phuongthucthanhtoan"] = singleContact.bsd_tieuchi_phuongthucthanhtoan;
+            content["bsd_tieuchi_giacanho"] = singleContact.bsd_tieuchi_giacanho;
+            content["bsd_tieuchi_nhadautuuytin"] = singleContact.bsd_tieuchi_nhadautuuytin;
+            content["bsd_tieuchi_moitruongsong"] = singleContact.bsd_tieuchi_moitruongsong;
+            content["bsd_tieuchi_baidauxe"] = singleContact.bsd_tieuchi_baidauxe;
+            content["bsd_tieuchi_hethonganninh"] = singleContact.bsd_tieuchi_hethonganninh;
+            content["bsd_tieuchi_huongcanho"] = singleContact.bsd_tieuchi_huongcanho;
+            content["bsd_tieuchi_hethongcuuhoa"] = singleContact.bsd_tieuchi_hethongcuuhoa;
+            content["bsd_tieuchi_nhieutienich"] = singleContact.bsd_tieuchi_nhieutienich;
+            content["bsd_tieuchi_ganchosieuthi"] = singleContact.bsd_tieuchi_ganchosieuthi;
+            content["bsd_tieuchi_gantruonghoc"] = singleContact.bsd_tieuchi_gantruonghoc;
+            content["bsd_tieuchi_ganbenhvien"] = singleContact.bsd_tieuchi_ganbenhvien;
+            content["bsd_tieuchi_dientichcanho"] = singleContact.bsd_tieuchi_dientichcanho;
+            content["bsd_tieuchi_thietkenoithatcanho"] = singleContact.bsd_tieuchi_thietkenoithatcanho;
+            content["bsd_tieuchi_tangdepcanhodep"] = singleContact.bsd_tieuchi_tangdepcanhodep;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task<CrmApiResponse> updateLoaiBDSQuanTam()
+        {
+            string path = "/contacts(" + singleContact.contactid + ")";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["bsd_quantam_datnen"] = singleContact.bsd_quantam_datnen;
+            content["bsd_quantam_canho"] = singleContact.bsd_quantam_canho;
+            content["bsd_quantam_bietthu"] = singleContact.bsd_quantam_bietthu;
+            content["bsd_quantam_khuthuongmai"] = singleContact.bsd_quantam_khuthuongmai;
+            content["bsd_quantam_nhapho"] = singleContact.bsd_quantam_nhapho;
+
+            CrmApiResponse result = await CrmHelper.PatchData(path, content);
+            return result;
+        }
+        public async Task LoadProvince()
+        {
+            if (Provinces == null)
+                Provinces = new List<OptionSet>();
+            if (singleContact == null || singleContact.contactid == Guid.Empty) return;
+
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                              <entity name='new_province'>
+                                <attribute name='new_name' alias='Label' />   
+                                <attribute name='new_provinceid' alias='Val' />   
+                                <link-entity name='bsd_contact_new_province' from='new_provinceid' to='new_provinceid' intersect='true'>
+                                  <filter>
+                                    <condition attribute='contactid' operator='eq' value='{singleContact.contactid}' />
+                                  </filter>
+                                </link-entity>
+                              </entity>
+                            </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("new_provinces", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                List<OptionSet> list = new List<OptionSet>();
+                foreach (var item in result.value)
+                {
+                    list.Add(item);
+                    ProvincesForDetele.Add(item);
+                }
+                Provinces = list;
+            }
+        }
+        public async Task<bool> updateNhuCauDiaDiem()
+        {
+            bool res = true;
+            if (Provinces != null && Provinces.Count > 0)
+            {
+                foreach (var item in Provinces)
+                {
+                    string path = $"/contacts({singleContact.contactid})/bsd_contact_new_province/$ref";
+                    IDictionary<string, object> content = new Dictionary<string, object>();
+                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
+                    CrmApiResponse result = await CrmHelper.PostData(path, content);
+                    if (!result.IsSuccess)
+                        res = false;
+                    ProvincesForDetele.Remove(item);
+                }
+                if (ProvincesForDetele.Count > 0)
+                {
+                    foreach (var item in ProvincesForDetele)
+                    {
+                        var res_delete = await Delete_NhuCau(item.Val, "bsd_contact_new_province");
+                        if (!res_delete)
+                            res = false;
+                    }
+                }
+            }
+            return res;
+        }
+        public async Task<Boolean> Delete_NhuCau(string id, string entity)
+        {
+            string Token = UserLogged.AccessToken;
+            var request = $"{OrgConfig.ApiUrl}/contacts({singleContact.contactid})/{entity}(" + id + ")/$ref";
+
+            using (HttpClientHandler ClientHandler = new HttpClientHandler())
+            using (HttpClient Client = new HttpClient(ClientHandler))
+            {
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                using (HttpRequestMessage RequestMessage = new HttpRequestMessage(new HttpMethod("DELETE"), request))
+                {
+                    using (HttpResponseMessage ResponseMessage = await Client.SendAsync(RequestMessage))
+                    {
+                        string result = await ResponseMessage.Content.ReadAsStringAsync();
+
+                        if (ResponseMessage.StatusCode == HttpStatusCode.NoContent)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        public async Task LoadProject()
+        {
+            if (Projects == null)
+                Projects = new List<OptionSet>();
+            if (singleContact == null || singleContact.contactid == Guid.Empty) return;
+
+            string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                    <entity name='bsd_project'>
+                                    <attribute name='bsd_projectid' alias='Val'/>
+                                    <attribute name='bsd_name' alias='Label'/>
+                                    <link-entity name='bsd_contact_bsd_project' from='bsd_projectid' to='bsd_projectid' intersect='true'>
+                                      <filter>
+                                        <condition attribute='contactid' operator='eq' value='{singleContact.contactid}' />
+                                      </filter>
+                                    </link-entity>
+                                    </entity>
+                                </fetch>";
+
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<OptionSet>>("bsd_projects", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                List<OptionSet> list = new List<OptionSet>();
+                foreach (var item in result.value)
+                {
+                    list.Add(item);
+                    ProjectsForDetele.Add(item);
+                }
+                Projects = list;
+            }
+        }
+        public async Task<bool> updateNhuCauDuAn()
+        {
+            bool res = true;
+            if (Projects != null && Projects.Count > 0)
+            {
+                foreach (var item in Projects)
+                {
+                    string path = $"/contacts({singleContact.contactid})/bsd_contact_bsd_project/$ref";
+                    IDictionary<string, object> content = new Dictionary<string, object>();
+                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/bsd_projects(" + item.Val + ")";
+                    CrmApiResponse result = await CrmHelper.PostData(path, content);
+                    if (!result.IsSuccess)
+                        res = false;
+                    ProjectsForDetele.Remove(item);
+                }
+                if (ProjectsForDetele.Count > 0)
+                {
+                    foreach (var item in ProjectsForDetele)
+                    {
+                        var res_delete = await Delete_NhuCau(item.Val, "bsd_contact_bsd_project");
+                        if (!res_delete)
+                            res = false;
+                    }
+                }
+            }
+            return res;
+        }
+        public async Task<bool> ChangeAvatar()
+        {
+            string path = "/contacts(" + singleContact.contactid + ")";
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data["entityimage"] = AvatarArr;
+
+            var content = data as object;
+            CrmApiResponse apiResponse = await CrmHelper.PatchData(path, content);
+            if (apiResponse.IsSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 
     public class User
@@ -636,7 +917,4 @@ namespace PhuLongCRM.ViewModels
         public Medium medium { get; set; }
         public Small small { get; set; }
     }
-
-
-
 }

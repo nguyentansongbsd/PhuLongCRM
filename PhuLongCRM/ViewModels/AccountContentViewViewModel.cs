@@ -11,6 +11,9 @@ namespace PhuLongCRM.ViewModels
     {
         public string Keyword { get; set; }
         public string KeyFilter { get; set; }
+        public string FillterStatus { get; set; } = @"<condition attribute='bsd_businesstype' operator='contain-values'>
+                                                        <value>100000000</value>
+                                                      </condition>";
         public AccountContentViewViewModel()
         {
             PreLoadData = new Command(() =>
@@ -18,10 +21,26 @@ namespace PhuLongCRM.ViewModels
                 string filter = string.Empty;
                 if (!string.IsNullOrWhiteSpace(KeyFilter))
                 {
-                    if (KeyFilter == "1")
+                    if (KeyFilter == "-1")
+                        filter = null;
+                    else if (KeyFilter == "0")
+                        filter = @"<filter type='or'>
+                                  <condition attribute='statuscode' operator='in'>
+                                    <value>1</value>
+                                    <value>100000000</value>
+                                  </condition>
+                                </filter>";
+                    else if (KeyFilter == "1")
                         filter = "<condition attribute='statuscode' operator='eq' value='100000000' />";
                     else if (KeyFilter == "2")
                         filter = "<condition attribute='statuscode' operator='eq' value='1' />";
+                    else if (KeyFilter == "3")
+                        filter = @"<filter type='or'>
+                                      <condition attribute='statuscode' operator='in'>
+                                        <value>100000001</value>
+                                        <value>2</value>
+                                      </condition>
+                                    </filter>"; // Vo hieu luc
                     else
                         filter = string.Empty;
                 }
@@ -58,6 +77,7 @@ namespace PhuLongCRM.ViewModels
                     <filter type='and'>
                         <condition attribute='{UserLogged.UserAttribute}' operator='eq' uitype='bsd_employee' value='{UserLogged.Id}' />
                         {filter}
+                        {FillterStatus}
                        </filter>
                   </entity>
                 </fetch>";

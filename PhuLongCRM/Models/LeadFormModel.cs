@@ -199,7 +199,7 @@ namespace PhuLongCRM.Models
         public bool bsd_tieuchi_thietkenoithatcanho { get { return _bsd_tieuchi_thietkenoithatcanho; } set { _bsd_tieuchi_thietkenoithatcanho = value; OnPropertyChanged(nameof(bsd_tieuchi_thietkenoithatcanho)); } }
 
         private bool _bsd_tieuchi_tangcanhodep;
-        public bool bsd_tieuchi_tangcanhodep { get { return _bsd_tieuchi_tangcanhodep; } set { _bsd_tieuchi_tangcanhodep = value; OnPropertyChanged(nameof(bsd_tieuchi_tangcanhodep)); } }
+        public bool bsd_tieuchi_tangcanhodep { get { return _bsd_tieuchi_tangcanhodep; } set { _bsd_tieuchi_tangcanhodep = value; OnPropertyChanged(nameof(bsd_tieuchi_tangcanhodep)); } }        
 
         private bool _bsd_dientich_3060m2;
         public bool bsd_dientich_3060m2 { get { return _bsd_dientich_3060m2; } set { _bsd_dientich_3060m2 = value; OnPropertyChanged(nameof(bsd_dientich_3060m2)); } }
@@ -345,5 +345,12 @@ namespace PhuLongCRM.Models
                 }
             }
         }
+        public Guid employee_id { get; set; }
+        public Guid owner_id { get; set; }
+        public bool bsd_hasguardian { get; set; }
+        public string bsd_hasguardian_format { get { return BoolToStringData.GetStringByBool(bsd_hasguardian); } }
+        public Guid guardian_id { get; set; }
+        public string guardian_name { get; set; }
+        public DateTime? guardian_birthdate { get; set; }
     }
 }

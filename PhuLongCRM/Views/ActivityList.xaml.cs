@@ -29,7 +29,13 @@ namespace PhuLongCRM.Views
             NeedToRefreshPhoneCall = false;
             NeedToRefreshMeet = false;
             NeedToRefreshTask = false;
+            PropertyChanged += ActivityList_PropertyChanged;
             Init();
+        }
+
+        private void ActivityList_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.Title = Language.hoat_dong;
         }
 
         public async void Init()

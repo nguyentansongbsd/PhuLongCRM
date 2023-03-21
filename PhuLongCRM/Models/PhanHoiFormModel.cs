@@ -3,13 +3,17 @@ using System;
 
 namespace PhuLongCRM.Models
 {
-    public class PhanHoiFormModel
-    {
+    public class PhanHoiFormModel:BaseViewModel
+    { 
         public Guid incidentid { get; set; }
-        public string title { get; set; }
+
+        private string _title;
+        public string title { get => _title; set { _title = value; OnPropertyChanged(nameof(title)); } }
         public string caseorigincode { get; set; }
         public string casetypecode { get; set; }
-        public string description { get; set; }
+
+        private string _description;
+        public string description { get => _description; set { _description = value; OnPropertyChanged(nameof(description)); } }
 
         public string subjectId { get; set; }
         public string subjectTitle { get; set; }

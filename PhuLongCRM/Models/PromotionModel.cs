@@ -56,5 +56,9 @@ namespace PhuLongCRM.Models
                     return false;
             }
         }
+        private string _project_name;
+        public string project_name { get => _project_name; set { _project_name = value; OnPropertyChanged(nameof(project_name)); } }
+        private string _phaseslaunch_name;
+        public string phaseslaunch_name { get => _phaseslaunch_name; set { _phaseslaunch_name = value; OnPropertyChanged(nameof(phaseslaunch_name)); } }
     }
 }

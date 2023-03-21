@@ -69,8 +69,8 @@ namespace PhuLongCRM.Models
         private string _createdon;
         public string createdon { get { return _createdon; } set { _createdon = value; OnPropertyChanged(nameof(createdon)); } }
 
-        private string _ownerid;
-        public string ownerid { get { return _ownerid; } set { _ownerid = value; OnPropertyChanged(nameof(ownerid)); } }
+        private Guid _owner_id;
+        public Guid owner_id { get { return _owner_id; } set { _owner_id = value; OnPropertyChanged(nameof(owner_id)); } }
 
         private string _gendercode;
         public string gendercode { get { return _gendercode; } set { _gendercode = value; OnPropertyChanged(nameof(gendercode)); } }
@@ -96,17 +96,17 @@ namespace PhuLongCRM.Models
         private string _bsd_localization;
         public string bsd_localization { get { return _bsd_localization; } set { _bsd_localization = value; OnPropertyChanged(nameof(bsd_localization)); } }
 
-        private bool _bsd_haveprotector;
-        public bool bsd_haveprotector { get { return _bsd_haveprotector; } set { _bsd_haveprotector = value; bsd_haveprotector_lable = value ? "Có" : "Không"; OnPropertyChanged(nameof(bsd_haveprotector)); } }
+        //private bool _bsd_haveprotector;
+        //public bool bsd_haveprotector { get { return _bsd_haveprotector; } set { _bsd_haveprotector = value; bsd_haveprotector_lable = value ? "Có" : "Không"; OnPropertyChanged(nameof(bsd_haveprotector)); } }
 
-        private string _bsd_haveprotector_lable;
-        public string bsd_haveprotector_lable { get { if (_bsd_haveprotector_lable == null) { _bsd_haveprotector_lable = "Không"; }; return _bsd_haveprotector_lable; } set { _bsd_haveprotector_lable = value; OnPropertyChanged(nameof(bsd_haveprotector_lable)); } }
+        //private string _bsd_haveprotector_lable;
+        //public string bsd_haveprotector_lable { get { if (_bsd_haveprotector_lable == null) { _bsd_haveprotector_lable = "Không"; }; return _bsd_haveprotector_lable; } set { _bsd_haveprotector_lable = value; OnPropertyChanged(nameof(bsd_haveprotector_lable)); } }
 
-        private string __bsd_protecter_value;
-        public string _bsd_protecter_value { get { return __bsd_protecter_value; } set { __bsd_protecter_value = value; OnPropertyChanged(nameof(_bsd_protecter_value)); } }
+        //private string __bsd_protecter_value;
+        //public string _bsd_protecter_value { get { return __bsd_protecter_value; } set { __bsd_protecter_value = value; OnPropertyChanged(nameof(_bsd_protecter_value)); } }
 
-        private string _bsd_protecter_label;
-        public string bsd_protecter_label { get { return _bsd_protecter_label; } set { _bsd_protecter_label = value; OnPropertyChanged(nameof(bsd_protecter_label)); } }
+        //private string _bsd_protecter_label;
+        //public string bsd_protecter_label { get { return _bsd_protecter_label; } set { _bsd_protecter_label = value; OnPropertyChanged(nameof(bsd_protecter_label)); } }
 
         private DateTime? _bsd_dategrant;
         public DateTime? bsd_dategrant { get { return _bsd_dategrant; } set { _bsd_dategrant = value; OnPropertyChanged(nameof(bsd_dategrant)); } }
@@ -403,5 +403,16 @@ namespace PhuLongCRM.Models
         private string _bsd_qrcode;
         public string bsd_qrcode { get => _bsd_qrcode; set { _bsd_qrcode = value; OnPropertyChanged(nameof(bsd_qrcode)); } }
         public Guid leadid_originated { get; set; }// lead originated id
+        public string leadname_originated { get; set; }
+        public string bsd_typeofidcardlead { get; set; }
+        public bool bsd_haveprotector { get; set; }
+        public string haveprotector_format { get { return BoolToStringData.GetStringByBool(bsd_haveprotector); } }
+        public Guid protecter_id { get; set; }
+        public string protecter_name { get; set; }
+        public DateTime? protecter_birthdate { get; set; }
+
+        private string _avatar;
+        public string avatar { get { return _avatar; } set { _avatar = value; OnPropertyChanged(nameof(avatar)); } }
+        public string entityimage { get; set; }
     }
 }

@@ -10,26 +10,6 @@
              Title="{Binding Title}"
              BackgroundColor="White"
              x:Class="PhuLongCRM.Views.PhoneCallForm">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="ExpanderHeaderStyle" TargetType="telerikPrimitives:ExpanderHeader">
-                <Setter Property="IndicatorText" Value="&#xf105;"/>
-                <Setter Property="IndicatorLocation" Value="End"/>
-                <Setter Property="IndicatorFontSize" Value="18"/>
-                <Setter Property="IndicatorColor" Value="#000000"/>
-                <Setter Property="BackgroundColor" Value="#F3F3F3"/>
-                <Setter Property="BorderColor" Value="#666666"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Padding" Value="5"/>
-                <Setter Property="IndicatorFontFamily" Value="FontAwesomeSolid"/>
-            </Style>
-            <converter:DateFormatConverter x:Key="DateFormatConverter" />
-            <converter:DecimalToAreaConverter x:Key="DecimalToAreaConverter" />
-            <converter:DecimalToPercentConverter x:Key="DecimalToPercentConverter" />
-            <converter:ObjToBoolConverter x:Key="ObjToBool" />
-            <converter:DecimalToVndConverter x:Key="DecimalToVndConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,60">
@@ -50,7 +30,7 @@
                     </telerikPrimitives:RadBorder>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}" Margin="0,10,0,0"/>
-                    <controls:MainEntry Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}" Text="{Binding PhoneCellModel.phonenumber}" FontSize="15" Keyboard="Numeric"/>
+                    <controls:PhoneEntryControl Text="{Binding PhoneCellModel.phonenumber}" Unfocused="Phone_Unfocused" Keyboard="Numeric" FontSize="15" Placeholder="+84-033XXXXXXX" />      
 
                     <controls:FormLabel Text="{x:Static lang:Language.nguoi_lien_quan}" FontSize="15" Margin="0,10,0,0"/>
                     <controls:LookUpMultipleTabs x:Name="Lookup_Customer" Placeholder="{x:Static lang:Language.chon_nguoi_lien_quan}" CenterModal="{x:Reference CenterModal}" SelectedItem="{Binding Customer}" ShowAccount="True" ShowContact="True" ShowLead="True" LoadNewLead="True"/>

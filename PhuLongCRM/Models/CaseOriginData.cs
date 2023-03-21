@@ -15,8 +15,7 @@ namespace PhuLongCRM.Models
                 new OptionSet("3","Web"),
                 new OptionSet("2483","Facebook"),
                 new OptionSet("3986","Twitter"),
-                new OptionSet("700610000","IoT"),
-                new OptionSet("0","")
+                new OptionSet("700610000","IoT")
             };
         }
 

@@ -156,6 +156,11 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);
                 return;
             }
+            if (!string.IsNullOrWhiteSpace(viewModel.PhoneCellModel.phonenumber) && viewModel.PhoneCellModel.phonenumber .Length != 14)
+            {
+                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
             if (viewModel.PhoneCellModel.scheduledstart == null || viewModel.PhoneCellModel.scheduledend == null)
             {
                 ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau);
@@ -314,6 +319,21 @@ namespace PhuLongCRM.Views
             else
             {
                 viewModel.PhoneCellModel.phonenumber = string.Empty;
+            }
+        }
+
+        private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            var num = sender as PhoneEntryControl;
+            if (!string.IsNullOrWhiteSpace(num.Text))
+            {
+                string phone = num.Text;
+                phone = phone.Contains("-") ? phone.Split('-')[1] : phone;
+
+                if (phone.Length != 10)
+                {
+                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                }
             }
         }
     }
