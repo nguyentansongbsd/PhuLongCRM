@@ -14,6 +14,7 @@ namespace PhuLongCRM.Models
         public string paymentscheme_name { get; set; }
 
         public decimal bsd_constructionarea { get; set; }
+
         private string _bsd_constructionarea_format;
         public string bsd_constructionarea_format { get=> _bsd_constructionarea_format; set { _bsd_constructionarea_format = value;OnPropertyChanged(nameof(bsd_constructionarea_format)); } }
         public decimal bsd_netusablearea { get; set; }

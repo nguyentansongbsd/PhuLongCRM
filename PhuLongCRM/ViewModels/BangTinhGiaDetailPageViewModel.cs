@@ -823,6 +823,9 @@ namespace PhuLongCRM.ViewModels
                                     <filter type='and'>
                                       <condition attribute='bsd_discountid' operator='eq' value='{discount_id}'/>
                                     </filter>
+                                    <link-entity name='bsd_discounttransaction' from='bsd_discount' to='bsd_discountid' link-type='outer' alias='aa'>
+                                        <attribute name='bsd_totaldiscountamount' alias='totaldiscountamount'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
 

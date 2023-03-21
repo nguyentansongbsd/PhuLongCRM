@@ -3858,4 +3858,22 @@
 	<data name="chuyen_doi_btn" xml:space="preserve">
     <value>Chuyển đổi</value>
   </data>
+	<data name="tong_tien_chiet_khau" xml:space="preserve">
+    <value>Tổng tiền chiết khấu</value>
+  </data>
+	<data name="danh_gia" xml:space="preserve">
+    <value>Đánh giá</value>
+  </data>
+	<data name="gui_danh_gia" xml:space="preserve">
+    <value>Gửi đánh giá</value>
+  </data>
+	<data name="yeu_cau_phan_hoi" xml:space="preserve">
+    <value>Yêu cầu - Phản hồi</value>
+  </data>
+	<data name="so" xml:space="preserve">
+    <value>Số</value>
+  </data>
+	<data name="nhan_vien_chua_co_contact" xml:space="preserve">
+    <value>Nhân viên chưa có thông tin Contact.</value>
+  </data>
 </root>

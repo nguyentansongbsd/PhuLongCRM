@@ -33,13 +33,15 @@ namespace PhuLongCRM
             }
             if (UserLogged.Notification == true)
             {
-                CrossFirebasePushNotification.Current.Subscribe("all");
+                CrossFirebasePushNotification.Current.Subscribe(UserLogged.Id.ToString());
+                CrossFirebasePushNotification.Current.Subscribe(UserLogged.ManagerId.ToString());
                 //CrossFirebasePushNotification.Current.OnNotificationOpened += Current_OnNotificationOpened;
                 CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
             }
             else
             {
-                CrossFirebasePushNotification.Current.Unsubscribe("all");
+                CrossFirebasePushNotification.Current.Unsubscribe(UserLogged.Id.ToString());
+                CrossFirebasePushNotification.Current.Unsubscribe(UserLogged.ManagerId.ToString());
             }    
         }
 

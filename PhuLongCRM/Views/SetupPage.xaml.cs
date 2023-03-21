@@ -26,9 +26,17 @@ namespace PhuLongCRM.Views
                 language.SelectedItem = "Việt Nam";
 
             if (UserLogged.Currency == "en")
-                currency.SelectedItem = "English";
+            {
+                currency.SelectedItem = "English (United States)";
+                text_number.Text = "123,456,789.00";
+                text_curency.Text = "123,456,789.00 đ";
+            }
             else
-                currency.SelectedItem = "Việt Nam";
+            {
+                currency.SelectedItem = "Vietnamese (VietNam)";
+                text_number.Text = "123.456.789,00";
+                text_curency.Text = "123.456.789,00 đ";
+            }
 
             if (UserLogged.Notification == true)
                 noti.IsToggled = true;
@@ -38,6 +46,7 @@ namespace PhuLongCRM.Views
 
         private void Language_SelectedIndexChanged(object sender, EventArgs e)
         {
+        //edit o day
             var item = language.SelectedItem as string;
             if(item == "English")
             {
@@ -64,13 +73,17 @@ namespace PhuLongCRM.Views
         private void Currency_SelectedIndexChanged(object sender, EventArgs e)
         {
             var item = currency.SelectedItem as string;
-            if (item == "English")
+            if (item == "English (United States)")
             {
                 UserLogged.Currency = "en";
+                text_number.Text = "123,456,789.00";
+                text_curency.Text = "123,456,789.00 đ";
             }
             else
             {
                 UserLogged.Currency = "vi";
+                text_number.Text = "123.456.789,00";
+                text_curency.Text = "123.456.789,00 đ";
             }
             Refresh();
         }
@@ -122,6 +135,8 @@ namespace PhuLongCRM.Views
             ngonngu.Text = Language.ngon_ngu;
             tiente.Text = Language.tien_te;
             thongbao.Text = Language.thong_bao;
+            lb_number.Text = Language.so;
+            lb_curency.Text = Language.tien_te;
         }
 
         private void noti_Toggled(object sender, ToggledEventArgs e)

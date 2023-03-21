@@ -63,6 +63,8 @@ namespace PhuLongCRM.Models
 
         private ObservableCollection<OptionSet> _distcount_list;
         public ObservableCollection<OptionSet> distcount_list { get => _distcount_list; set { _distcount_list = value; OnPropertyChanged(nameof(distcount_list)); } }
+        public decimal totaldiscountamount { get; set; }
+        public string totaldiscountamount_format { get => StringFormatHelper.FormatCurrency(totaldiscountamount); }
     }
     public class DiscountType
     {

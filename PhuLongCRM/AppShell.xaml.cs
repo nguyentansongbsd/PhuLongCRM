@@ -170,6 +170,7 @@ namespace PhuLongCRM
             lichlamviec.Title = Language.lich_lam_viec;
             dongbodanhba.Title = Language.dong_bo_danh_ba;
             thietlap.Title = Language.thiet_lap_title;
+            danhgia.Title = Language.danh_gia;
             //dangxuat.Text = Language.dang_xuat;
         }
 

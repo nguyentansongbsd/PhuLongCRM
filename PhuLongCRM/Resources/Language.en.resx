@@ -3852,4 +3852,22 @@
 	<data name="chuyen_doi_btn" xml:space="preserve">
     <value>Qualify</value>
   </data>
+	<data name="tong_tien_chiet_khau" xml:space="preserve">
+    <value>Total discount amount</value>
+  </data>
+	<data name="danh_gia" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+	<data name="gui_danh_gia" xml:space="preserve">
+    <value>Send feedback</value>
+  </data>
+	<data name="yeu_cau_phan_hoi" xml:space="preserve">
+    <value>Request - Feedback</value>
+  </data>
+	<data name="so" xml:space="preserve">
+    <value>Number</value>
+  </data>
+	<data name="nhan_vien_chua_co_contact" xml:space="preserve">
+    <value>Employee don't have Contact information.</value>
+  </data>
 </root>

@@ -738,6 +738,12 @@
                                 <Label Text="{Binding Discount.value_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </telerikPrimitives:RadBorder>
                         </Grid>
+                        <Grid ColumnDefinitions="4*,6*">
+                            <controls:FormLabel Text="{x:Static lang:Language.tong_tien_chiet_khau}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
+                            <telerikPrimitives:RadBorder Grid.Column="1" Grid.Row="0" BorderColor="#f3f3f3" Padding="5" CornerRadius="5" BorderThickness="1" Margin="10,0,0,0">
+                                <Label Text="{Binding Discount.totaldiscountamount_format}" FontSize="14" TextColor="#444444" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </telerikPrimitives:RadBorder>
+                        </Grid>
                         <StackLayout IsVisible="{Binding Discount.bsd_isconditionsapplied}">
                             <Grid ColumnDefinitions="4*,6*">
                                 <controls:FormLabel Text="{x:Static lang:Language.dieu_kien_ap_dung}" Grid.Column="0" FontSize="14" TextColor="#444444" Grid.Row="0" VerticalOptions="Center"/>
