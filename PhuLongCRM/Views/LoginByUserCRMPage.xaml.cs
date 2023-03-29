@@ -52,7 +52,7 @@ namespace PhuLongCRM.Views
                 {
                     LoadingHelper.Hide();
                     await Navigation.PopAsync();
-                    ToastMessageHelper.ShortMessage("Lỗi đăng nhập");
+                    ToastMessageHelper.Message("Lỗi đăng nhập");
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     DependencyService.Get<IClearCookies>().ClearAllCookies();
-                    ToastMessageHelper.LongMessage("Vui lòng đăng nhập tài khoản kinh doanh.");
+                    ToastMessageHelper.Message("Vui lòng đăng nhập tài khoản kinh doanh.");
                     await Navigation.PopAsync();
                 }
                 
@@ -101,7 +101,7 @@ namespace PhuLongCRM.Views
             }
             else
             {
-                ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
+                ToastMessageHelper.Message(Language.khong_tim_thay_user);
                 LoadingHelper.Hide();
             }
         }

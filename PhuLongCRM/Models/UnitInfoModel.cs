@@ -86,5 +86,6 @@ namespace PhuLongCRM.Models
         public int project_unitspersalesman { get; set; }
         public int project_queueunitdaysaleman { get; set; }
         public decimal project_bookingfee { get; set; }
+        public bool bsd_bankloan { get; set; }
     }
 }

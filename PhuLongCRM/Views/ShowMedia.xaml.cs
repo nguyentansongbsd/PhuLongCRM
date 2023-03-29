@@ -43,7 +43,7 @@ namespace PhuLongCRM.Views
         {
             if (videoView.CanSeek == false)
             {
-                ToastMessageHelper.ShortMessage(Language.dang_tai_video_vui_long_doi);
+                ToastMessageHelper.Message(Language.dang_tai_video_vui_long_doi);
                 return true;
             }
             LoadingHelper.Hide();

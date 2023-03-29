@@ -5,6 +5,7 @@ using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
+using Plugin.FirebasePushNotification;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -206,12 +207,12 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(UserName))
             {
-                ToastMessageHelper.ShortMessage(Language.tai_khoan_khong_duoc_de_trong_vui_long_kiem_tra_lai_thong_tin);
+                ToastMessageHelper.Message(Language.tai_khoan_khong_duoc_de_trong_vui_long_kiem_tra_lai_thong_tin);
                 return;
             }
             if (string.IsNullOrWhiteSpace(Password))
             {
-                ToastMessageHelper.ShortMessage(Language.mat_khau_khong_duong_de_trong_vui_long_kiem_tra_lai_thong_tin);
+                ToastMessageHelper.Message(Language.mat_khau_khong_duong_de_trong_vui_long_kiem_tra_lai_thong_tin);
                 return;
             }
 
@@ -232,7 +233,7 @@ namespace PhuLongCRM.Views
                         if (employeeModel.statuscode != "1")
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.tai_khoan_khong_co_hieu_luc);
+                            ToastMessageHelper.Message(Language.tai_khoan_khong_co_hieu_luc);
                             return;
                         }
                         // lưu để cập nhật và kiểm tra
@@ -244,7 +245,7 @@ namespace PhuLongCRM.Views
                         if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24.0 && UserLogged.NumberLogin >= UserLogged.LoginLimit)
                         {
                                 LoadingHelper.Hide();
-                                ToastMessageHelper.ShortMessage(Language.tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong);
+                                ToastMessageHelper.Message(Language.tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong);
                                 return;
                         }
                         else
@@ -256,7 +257,7 @@ namespace PhuLongCRM.Views
                         if (employeeModel.bsd_name != UserName)
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
+                            ToastMessageHelper.Message(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
                             return;
                         }
 
@@ -266,7 +267,7 @@ namespace PhuLongCRM.Views
                             UserLogged.DateLoginFailed = DateTime.Now.ToString();
                             await UpdateNumberLogin();
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
+                            ToastMessageHelper.Message(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
                             return;
                         }
 
@@ -280,7 +281,7 @@ namespace PhuLongCRM.Views
                         else if (employeeModel.bsd_imeinumber != ImeiNum && employeeModel.bsd_imeinumber != imeiADmin)
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.tai_khoan_khong_the_dang_nhap_tren_thiet_bi_nay);
+                            ToastMessageHelper.Message(Language.tai_khoan_khong_the_dang_nhap_tren_thiet_bi_nay);
                             return;
                         }
 
@@ -299,6 +300,18 @@ namespace PhuLongCRM.Views
                         UserLogged.IsLogged = true;
                         UserLogged.IsLoginByUserCRM = false;
 
+                        //đăng ký thông báo nếu login thành công
+                        if (UserLogged.Notification == true)
+                        {
+                            CrossFirebasePushNotification.Current.Subscribe(UserLogged.Id.ToString());
+                            CrossFirebasePushNotification.Current.Subscribe(UserLogged.ManagerId.ToString());
+                        }
+                        else
+                        {
+                            CrossFirebasePushNotification.Current.Unsubscribe(UserLogged.Id.ToString());
+                            CrossFirebasePushNotification.Current.Unsubscribe(UserLogged.ManagerId.ToString());
+                        }
+
                         Application.Current.MainPage = new AppShell();
                         UserLogged.NumberLogin = 0;
                         UserLogged.DateLoginFailed = DateTime.Now.ToString();
@@ -308,12 +321,12 @@ namespace PhuLongCRM.Views
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
+                        ToastMessageHelper.Message(Language.ten_dang_nhap_hoac_mat_khau_khong_chinh_xac);
                     }
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage(Language.loi_ket_noi_dern_server);
+                    ToastMessageHelper.Message(Language.loi_ket_noi_dern_server);
                     LoadingHelper.Hide();
                 }    
             }
@@ -435,7 +448,7 @@ namespace PhuLongCRM.Views
             if (!crmApiResponse.IsSuccess)
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                ToastMessageHelper.Message(Language.thong_bao_that_bai);
                 return;
             }
         }
@@ -453,7 +466,7 @@ namespace PhuLongCRM.Views
             if (!crmApiResponse.IsSuccess)
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                ToastMessageHelper.Message(Language.thong_bao_that_bai);
                 return;
             }
         }

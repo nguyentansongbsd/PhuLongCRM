@@ -61,7 +61,7 @@ namespace PhuLongCRM.Views
                 else if(OnCompleted == 3 || OnCompleted == 2)
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    ToastMessageHelper.Message(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }

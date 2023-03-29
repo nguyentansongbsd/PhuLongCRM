@@ -117,7 +117,7 @@ namespace PhuLongCRM.Views
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    ToastMessageHelper.Message(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -135,12 +135,12 @@ namespace PhuLongCRM.Views
                     await viewModel.LoadCase(viewModel.Case.incidentid);
                     if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                    ToastMessageHelper.Message(Language.thong_bao_thanh_cong);
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                    ToastMessageHelper.Message(Language.thong_bao_that_bai);
                 }
             }
             else
@@ -163,19 +163,19 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.ResolutionType == null || viewModel.ResolutionType.Val == string.Empty)
             {
-                ToastMessageHelper.ShortMessage(Language.chua_chon_huong_giai_quyet);
+                ToastMessageHelper.Message(Language.chua_chon_huong_giai_quyet);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(viewModel.subject))
             {
-                ToastMessageHelper.ShortMessage(Language.chua_nhap_phuong_an);
+                ToastMessageHelper.Message(Language.chua_nhap_phuong_an);
                 return;
             }
 
             if (viewModel.BillableTime == null || viewModel.BillableTime.Val == string.Empty)
             {
-                ToastMessageHelper.ShortMessage(Language.chua_chon_thoi_gian_co_the_thanh_toan);
+                ToastMessageHelper.Message(Language.chua_chon_thoi_gian_co_the_thanh_toan);
                 return;
             }
 
@@ -185,12 +185,12 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadCase(viewModel.Case.incidentid);
                 if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.phan_hoi_da_duoc_giai_quyet);
+                ToastMessageHelper.Message(Language.phan_hoi_da_duoc_giai_quyet);
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                ToastMessageHelper.Message(Language.thong_bao_that_bai);
             }
             await centerModalUpdateCase.Hide();
         }
@@ -205,12 +205,12 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadCase(viewModel.Case.incidentid);
                 if (ListPhanHoi.NeedToRefresh.HasValue) ListPhanHoi.NeedToRefresh = true;
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.da_mo_lai_phan_hoi);
+                ToastMessageHelper.Message(Language.da_mo_lai_phan_hoi);
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                ToastMessageHelper.Message(Language.thong_bao_that_bai);
             }
         }
 
@@ -232,7 +232,7 @@ namespace PhuLongCRM.Views
                         else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                            ToastMessageHelper.Message(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }
@@ -249,7 +249,7 @@ namespace PhuLongCRM.Views
                         else if(OnCompleted == 3 || OnCompleted == 2)
                         {
                             LoadingHelper.Hide();
-                            ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                            ToastMessageHelper.Message(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                         }
                     };
                 }

@@ -110,7 +110,7 @@ namespace PhuLongCRM.Views
             var SelectedContact = this.viewModel.Contacts.Where(x => x.IsSelected == true && x.IsConvertToLead == false);
             if (SelectedContact.Any() == false)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_contact_de_chuyen_sang_khach_hang_tiem_nang);
+                ToastMessageHelper.Message(Language.vui_long_chon_contact_de_chuyen_sang_khach_hang_tiem_nang);
                 return;
             }
 
@@ -136,12 +136,12 @@ namespace PhuLongCRM.Views
 
                 if (!re.IsSuccess)
                 {
-                    ToastMessageHelper.ShortMessage(re.ErrorResponse.error.message);
+                    ToastMessageHelper.Message(re.ErrorResponse.error.message);
                     LoadingHelper.Hide();
                     return;
                 }
             }
-            ToastMessageHelper.ShortMessage(Language.chuyen_thanh_cong);
+            ToastMessageHelper.Message(Language.chuyen_thanh_cong);
             if (CustomerPage.NeedToRefreshLead.HasValue) CustomerPage.NeedToRefreshLead = true;
             this.reset();
         }

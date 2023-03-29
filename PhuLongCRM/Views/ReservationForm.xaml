@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:PhuLongCRM.Controls"
              xmlns:lang="clr-namespace:PhuLongCRM.Resources"
              Title="{x:Static lang:Language.tao_bang_tinh_gia_title}"
+             xmlns:effects="clr-namespace:PhuLongCRM.IServices" 
              x:Class="PhuLongCRM.Views.ReservationForm">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -162,7 +163,16 @@
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
 
-                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_chung}" Margin="0,10,0,0"/>
+                            <Grid ColumnDefinitions="Auto,Auto" Margin="0,10,0,0">
+                                <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_chung}"/>
+                                    <Label x:Name="tooltip_ckc" Grid.Column="1" IsVisible="false" Text="&#xf071;" FontFamily="FontAwesomeSolid" FontSize="20" VerticalOptions="Center" TextColor="#FFA500"
+                                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#FFA500" 
+                                           effects:TooltipEffect.TextColor="Black"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.da_chon_chiet_khau_chung_khong_the_chon_chiet_khau_noi_bo}">
+                                        </Label>
+                            </Grid>
                             <controls:LookUp x:Name="lookupChieuKhau" IsEnabled="{Binding IsLocked}" Placeholder="{x:Static lang:Language.chon_chiet_khau_chung}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountLists}" SelectedItem="{Binding DiscountList}" SelectedItemChange="DiscountListItem_Changed"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChilds}">
                                 <BindableLayout.ItemTemplate>
@@ -178,7 +188,15 @@
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
 
-                            <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_noi_bo}" Margin="0,10,0,0"/>
+                            <Grid ColumnDefinitions="Auto,Auto" Margin="0,10,0,0">
+                                <controls:FormLabel Text="{x:Static lang:Language.chiet_khau_noi_bo}"/>
+                                <Label x:Name="tooltip_cknb" Grid.Column="1" IsVisible="false" Text="&#xf071;" FontFamily="FontAwesomeSolid" FontSize="20" VerticalOptions="Center" TextColor="#FFA500"
+                                           effects:TooltipEffect.Position="BottomRight" 
+                                           effects:TooltipEffect.BackgroundColor="#FFA500" 
+                                           effects:TooltipEffect.TextColor="Black"
+                                           effects:TooltipEffect.HasTooltip="True"
+                                           effects:TooltipEffect.Text="{x:Static lang:Language.da_chon_chiet_khau_noi_bo_khong_the_chon_chiet_khau_chung}"/>
+                            </Grid>
                             <controls:LookUp x:Name="lookupChieuKhauNoiBo" IsEnabled="{Binding IsLocked}" Placeholder="{x:Static lang:Language.chon_chiet_khau_noi_bo}" BottomModal="{Reference lookUpModal}" NameDisplay="Label" ItemsSource="{Binding DiscountInternelLists}" SelectedItem="{Binding DiscountInternelList}" SelectedItemChange="DiscountInternelListItem_Changed"/>
                             <StackLayout Spacing="0" BindableLayout.ItemsSource="{Binding DiscountChildsInternel}">
                                 <BindableLayout.ItemTemplate>

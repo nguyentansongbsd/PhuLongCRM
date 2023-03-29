@@ -84,14 +84,17 @@
                                             </telerikPrimitives:RadBorder>
                                             <Label Grid.Column="1" Text="{Binding singleContact.bsd_fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
                                         </Grid>
-                                        <Label Grid.Row="1" Grid.Column="1" FontSize="14" TextColor="#444444">
-                                            <Label.Text>
-                                                <MultiBinding StringFormat="{}{0}: {1}">
-                                                    <Binding Source="{x:Static lang:Language.email}" />
-                                                    <Binding Path="singleContact.emailaddress1" />
-                                                </MultiBinding>
-                                            </Label.Text>
-                                        </Label>
+                                        <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="*,Auto">
+                                            <Label Grid.Column="0" FontSize="14" TextColor="#444444">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0}: {1}">
+                                                        <Binding Source="{x:Static lang:Language.email}" />
+                                                        <Binding Path="singleContact.emailaddress1" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                            <Label Grid.Column="1" Text="&#xf4c0;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="18" TextColor="#790311" IsVisible="{Binding singleContact.mortgage}"/>
+                                        </Grid>
                                         <Label Grid.Row="2" Grid.Column="1" FontSize="14" TextColor="#444444">
                                             <Label.Text>
                                                 <MultiBinding StringFormat="{}{0}: {1}">

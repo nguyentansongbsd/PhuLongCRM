@@ -90,7 +90,7 @@ namespace PhuLongCRM
             LoadingHelper.Show();
             if (!UserLogged.IsLoginByUserCRM && UserLogged.ContactId == Guid.Empty)
             {
-                ToastMessageHelper.ShortMessage(Language.chua_co_contact_khong_the_chinh_sua_thong_tin);
+                ToastMessageHelper.Message(Language.chua_co_contact_khong_the_chinh_sua_thong_tin);
                 LoadingHelper.Hide();
                 return;
             }
@@ -107,7 +107,7 @@ namespace PhuLongCRM
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
+                        ToastMessageHelper.Message(Language.khong_tim_thay_user);
                     }
                 };
             }
@@ -124,7 +124,7 @@ namespace PhuLongCRM
                     else
                     {
                         LoadingHelper.Hide();
-                        ToastMessageHelper.ShortMessage(Language.khong_tim_thay_user);
+                        ToastMessageHelper.Message(Language.khong_tim_thay_user);
                     }
                 };
             }
@@ -146,7 +146,7 @@ namespace PhuLongCRM
             if (!crmApiResponse.IsSuccess)
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                ToastMessageHelper.Message(Language.thong_bao_that_bai);
                 return;
             }
         }

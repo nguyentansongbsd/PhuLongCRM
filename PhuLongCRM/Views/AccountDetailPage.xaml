@@ -36,11 +36,12 @@
                         <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Margin="10,20,10,0" Padding="1">
                             <StackLayout>
                                 <StackLayout Padding="10,5">
-                                    <Grid ColumnDefinitions="Auto,*">
+                                    <Grid ColumnDefinitions="Auto,*,Auto">
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding singleAccount.statuscode_color}" VerticalOptions="StartAndExpand">
                                             <Label Grid.Column="0" Text="{Binding singleAccount.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="1" Text="{Binding singleAccount.bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                        <Label Grid.Column="2" Text="&#xf4c0;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="18" TextColor="#790311" IsVisible="{Binding singleAccount.mortgage}"/>
                                     </Grid>
                                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">
