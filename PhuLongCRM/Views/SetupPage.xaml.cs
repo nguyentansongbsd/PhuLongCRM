@@ -144,12 +144,14 @@ namespace PhuLongCRM.Views
             if (noti.IsToggled == true)
             {
                 UserLogged.Notification = true;
-                CrossFirebasePushNotification.Current.Subscribe("all");
+                CrossFirebasePushNotification.Current.Subscribe(UserLogged.Id.ToString());
+                CrossFirebasePushNotification.Current.Subscribe(UserLogged.ManagerId.ToString());
             }
             else
             {
                 UserLogged.Notification = false;
-                CrossFirebasePushNotification.Current.Unsubscribe("all");
+                CrossFirebasePushNotification.Current.Unsubscribe(UserLogged.Id.ToString());
+                CrossFirebasePushNotification.Current.Unsubscribe(UserLogged.ManagerId.ToString());
             }
         }
     }

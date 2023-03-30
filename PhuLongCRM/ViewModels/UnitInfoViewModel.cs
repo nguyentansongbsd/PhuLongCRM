@@ -112,6 +112,7 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='bsd_direction' />
                 <attribute name='bsd_vippriority' />
                 <attribute name='bsd_viewphulong' />
+                <attribute name='bsd_bankloan' />
                 <attribute name='bsd_phaseslaunchid' alias='bsd_phaseslaunch_id' />
                 <filter type='and'>
                   <condition attribute='productid' operator='eq' uitype='product' value='" + UnitId.ToString() + @"' />

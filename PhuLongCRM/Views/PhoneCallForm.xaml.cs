@@ -143,33 +143,33 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(viewModel.PhoneCellModel.subject))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_chu_de_cuoc_goi);
+                ToastMessageHelper.Message(Language.vui_long_nhap_chu_de_cuoc_goi);
                 return;
             }
             if (viewModel.CallTo == null)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_nhan_cuoc_goi);
+                ToastMessageHelper.Message(Language.vui_long_chon_nguoi_nhan_cuoc_goi);
                 return;
             }
             if (string.IsNullOrWhiteSpace(viewModel.PhoneCellModel.phonenumber))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_dien_thoai);
+                ToastMessageHelper.Message(Language.vui_long_nhap_so_dien_thoai);
                 return;
             }
             if (!string.IsNullOrWhiteSpace(viewModel.PhoneCellModel.phonenumber) && viewModel.PhoneCellModel.phonenumber .Length != 14)
             {
-                ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                ToastMessageHelper.Message(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 return;
             }
             if (viewModel.PhoneCellModel.scheduledstart == null || viewModel.PhoneCellModel.scheduledend == null)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau);
+                ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_ket_thuc_va_thoi_gian_bat_dau);
                 return;
             }
 
             if (DatePickerStart.IsTimeNull)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
+                ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_bat_dau);
                 return;
             }
 
@@ -177,14 +177,14 @@ namespace PhuLongCRM.Views
             {
                 if (this.compareDateTime(viewModel.PhoneCellModel.scheduledstart, viewModel.PhoneCellModel.scheduledend) != -1)
                 {
-                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
+                    ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                     return;
                 }
             }
 
             if (DatePickerEnd.IsTimeNull)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc);
+                ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_ket_thuc);
                 return;
             }
 
@@ -209,14 +209,14 @@ namespace PhuLongCRM.Views
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
                     if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage(Language.tao_cuoc_goi_thanh_cong);
+                    ToastMessageHelper.Message(Language.tao_cuoc_goi_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                    ToastMessageHelper.Message(Language.thong_bao_that_bai);
                 }
             }
             else
@@ -232,14 +232,14 @@ namespace PhuLongCRM.Views
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
                     if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
+                    ToastMessageHelper.Message(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
+                    ToastMessageHelper.Message(Language.cap_nhat_that_bai);
                 }
             }
         }
@@ -273,7 +273,7 @@ namespace PhuLongCRM.Views
                 {
                     if (this.compareDateTime(viewModel.PhoneCellModel.scheduledstart, viewModel.PhoneCellModel.scheduledend) != -1)
                     {
-                        ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
+                        ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.PhoneCellModel.scheduledstart = viewModel.PhoneCellModel.scheduledend;
                     }
                 }
@@ -288,13 +288,13 @@ namespace PhuLongCRM.Views
                 {
                     if (this.compareDateTime(viewModel.PhoneCellModel.scheduledstart, viewModel.PhoneCellModel.scheduledend) != -1)
                     {
-                        ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
+                        ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_ket_thuc_lon_hon_thoi_gian_bat_dau);
                         viewModel.PhoneCellModel.scheduledend = viewModel.PhoneCellModel.scheduledstart;
                     }
                 }
                 else
                 {
-                    ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
+                    ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_bat_dau);
                 }
             }
         }
@@ -332,7 +332,7 @@ namespace PhuLongCRM.Views
 
                 if (phone.Length != 10)
                 {
-                    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                    ToastMessageHelper.Message(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
                 }
             }
         }

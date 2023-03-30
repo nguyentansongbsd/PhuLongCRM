@@ -160,6 +160,12 @@ namespace PhuLongCRM.ViewModels
                                    <link-entity name='bsd_country' from='bsd_countryid' to='bsd_nation' link-type='outer' alias='as'>
                                         <attribute name='bsd_name' alias='country_name' />                                      
                                     </link-entity>
+                                    <link-entity name='bsd_bankingloan' from='bsd_purchaser' to='accountid' link-type='outer'>                        
+                                        <attribute name='bsd_bankingloanid' alias='bankingloan_id'/>
+                                        <filter type='and'>
+                                            <condition attribute='statuscode' operator='eq' value='100000000' />
+                                        </filter>
+                                    </link-entity>
                               </entity>
                             </fetch>"; 
             //<link-entity name='bsd_employee' from='bsd_employeeid' to='bsd_employee' visible='false' link-type='outer' alias='a_cf81d7378befeb1194ef000d3a81fcba'>

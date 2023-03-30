@@ -49,12 +49,12 @@ namespace PhuLongCRM.Views
             var res = await viewModel.UpdateRating();
             if(res)
             {
-                ToastMessageHelper.LongMessage(Language.thong_bao_thanh_cong);
+                ToastMessageHelper.Message(Language.thong_bao_thanh_cong);
                 btn_sendfeedback.IsVisible = false;
             }   
             else
             {
-                ToastMessageHelper.LongMessage(Language.thong_bao_that_bai);
+                ToastMessageHelper.Message(Language.thong_bao_that_bai);
             }
             LoadingHelper.Hide();
         }

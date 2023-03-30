@@ -9,6 +9,13 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
              x:Class="PhuLongCRM.Views.LeadForm">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="menu_forqualify" Clicked="LeadQualify_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xf007;" FontFamily="FontAwesomeRegular" Size="18" Color="White"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <AbsoluteLayout>
             <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="0,0,0,60">
@@ -58,7 +65,10 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.email}"/>
                                 <controls:MainEntry x:Name="emailaddress1_text" Keyboard="Email" Text="{Binding singleLead.emailaddress1}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_email}" Margin="0,0,0,5" Unfocused="emailaddress1_text_Unfocused"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.gioi_tinh}"/>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.gioi_tinh}"/>
+                                    <Label Text="*" TextColor="Red" IsVisible="{Binding ForQualify}" Grid.Column="1"/>
+                                </Grid>
                                 <controls:LookUp x:Name="lookUpGioiTinh" Placeholder="{x:Static lang:Language.chon_gioi_tinh}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding Gender}" ItemsSource="{Binding Genders}"/>
 
                                 <!--<controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
@@ -76,17 +86,29 @@
                                 <controls:FormLabel Text="{x:Static lang:Language.loai_the_id}"/>
                                 <controls:LookUp x:Name="lookUpLoaiTheID" Placeholder="{x:Static lang:Language.chon_loai_the_id}" BottomModal="{Reference LookUpModal}" NameDisplay="Label" SelectedItem="{Binding TypeIdCard}" ItemsSource="{Binding TypeIdCards}" SelectedItemChange="TypeIdCard_ItemChange"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.so_id}"/>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.so_id}" Grid.Column="0"/>
+                                    <Label Text="*" TextColor="Red" IsVisible="{Binding ForQualify}" Grid.Column="1"/>
+                                </Grid>
                                 <controls:MainEntry x:Name="lb_soID" Text="{Binding singleLead.bsd_identitycardnumberid}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_so_id}" Margin="0,0,0,5" Unfocused="MainEntry_Unfocused" />
 
-                                <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}"/>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.ngay_cap}" Grid.Column="0"/>
+                                    <Label Text="*" TextColor="Red" IsVisible="{Binding ForQualify}" Grid.Column="1"/>
+                                </Grid>
                                 <controls:DatePickerBoderControl x:Name="datePickerNgayCap" Date="{Binding singleLead.bsd_dategrant}" Placeholder="{x:Static lang:Language.chon_ngay_cap}" ShowTime="False" Date_Selected="datePickerNgayCap_Date_Selected"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.noi_cap}"/>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.noi_cap}" Grid.Column="0"/>
+                                    <Label Text="*" TextColor="Red" IsVisible="{Binding ForQualify}" Grid.Column="1"/>
+                                </Grid>
                                 <controls:MainEntry Text="{Binding singleLead.bsd_placeofissue}" FontSize="15"  Placeholder="{x:Static lang:Language.nhap_noi_cap}" Margin="0,0,0,5"/>
 
-                                <controls:FormLabel Text="{x:Static lang:Language.dia_chi_lien_lac}"/>
-                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference centerModal}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True"/>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.dia_chi_lien_lac}" Grid.Column="0"/>
+                                    <Label Text="*" TextColor="Red" IsVisible="{Binding ForQualify}" Grid.Column="1"/>
+                                </Grid>
+                                <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_lien_lac}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address1}" CenterModal="{Reference centerModal}" AddressCopy="{Binding AddressCopy}" RequiredAddress="True" EnableCopyAddress="True"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.dia_chi_thuong_tru}"/>
                                 <controls:LookUpAddress Placeholder="{x:Static lang:Language.chon_dia_chi_thuong_tru}" BottomModal="{Reference BottomModal}" SelectedItem="{Binding Address2}" CenterModal="{Reference centerModal2}" AddressCopy="{Binding AddressCopy}" EnableCopyAddress="True" />

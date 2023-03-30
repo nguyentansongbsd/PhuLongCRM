@@ -49,27 +49,27 @@ namespace PhuLongCRM.Views
         {
             if(string.IsNullOrWhiteSpace(viewModel.mandatorySecondary.bsd_name))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_tieu_de);
+                ToastMessageHelper.Message(Language.vui_long_nhap_tieu_de);
                 return;
             }
             if (viewModel.Contact == null || viewModel.Contact.Id == null)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_nguoi_uy_quyen);
+                ToastMessageHelper.Message(Language.vui_long_chon_nguoi_uy_quyen);
                 return;
             }
             if (viewModel.mandatorySecondary.bsd_effectivedatefrom == null || viewModel.mandatorySecondary.bsd_effectivedateto == null)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_hieu_luc);
+                ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_hieu_luc);
                 return;
             }
             if (string.IsNullOrWhiteSpace(viewModel.mandatorySecondary.bsd_descriptionsvn))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_mo_ta_vn);
+                ToastMessageHelper.Message(Language.vui_long_nhap_mo_ta_vn);
                 return;
             }
             if (string.IsNullOrWhiteSpace(viewModel.mandatorySecondary.bsd_descriptionsen))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_mo_ta_en);
+                ToastMessageHelper.Message(Language.vui_long_nhap_mo_ta_en);
                 return;
             }
             LoadingHelper.Show();
@@ -79,12 +79,12 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Hide();
                 if (AccountDetailPage.NeedToRefreshMandatory.HasValue) AccountDetailPage.NeedToRefreshMandatory = true;
                 await Navigation.PopAsync();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                ToastMessageHelper.Message(Language.thong_bao_thanh_cong);
             }
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                ToastMessageHelper.Message(Language.thong_bao_that_bai);
             }
         }
 
@@ -95,7 +95,7 @@ namespace PhuLongCRM.Views
             if (this.compareDateTime(viewModel.mandatorySecondary.bsd_effectivedatefrom, viewModel.mandatorySecondary.bsd_effectivedateto) == -1)
             {
                 viewModel.mandatorySecondary.bsd_effectivedateto = viewModel.mandatorySecondary.bsd_effectivedatefrom;
-                ToastMessageHelper.ShortMessage(Language.ngay_het_hieu_luc_phai_lon_hon_ngay_bat_dau);
+                ToastMessageHelper.Message(Language.ngay_het_hieu_luc_phai_lon_hon_ngay_bat_dau);
             }
         }
 
@@ -106,7 +106,7 @@ namespace PhuLongCRM.Views
             if (this.compareDateTime(viewModel.mandatorySecondary.bsd_effectivedatefrom,viewModel.mandatorySecondary.bsd_effectivedateto) == -1)
             {
                 viewModel.mandatorySecondary.bsd_effectivedatefrom = viewModel.mandatorySecondary.bsd_effectivedateto;
-                ToastMessageHelper.ShortMessage(Language.ngay_het_hieu_luc_phai_lon_hon_ngay_bat_dau);
+                ToastMessageHelper.Message(Language.ngay_het_hieu_luc_phai_lon_hon_ngay_bat_dau);
             }    
         }
 

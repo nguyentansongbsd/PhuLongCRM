@@ -198,6 +198,12 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='contactid' alias='protecter_id'/>
                                         <attribute name='bsd_fullname' alias='protecter_name'/>
                                     </link-entity>
+                                    <link-entity name='bsd_bankingloan' from='bsd_purchaser' to='contactid' link-type='outer'>
+                                        <attribute name='bsd_bankingloanid' alias='bankingloan_id'/>
+                                        <filter type='and'>
+                                            <condition attribute='statuscode' operator='eq' value='100000000'/>
+                                        </filter>
+                                    </link-entity>
                                     <filter type='and'>
                                         <condition attribute='contactid' operator='eq' value='" + id + @"' />
                                     </filter>

@@ -458,7 +458,7 @@ namespace PhuLongCRM.Controls
             {
                 if(string.IsNullOrWhiteSpace(LineAddress))
                 {
-                    ToastMessageHelper.ShortMessage(Language.vui_long_nhap_so_nha_duong_phuong);
+                    ToastMessageHelper.Message(Language.vui_long_nhap_so_nha_duong_phuong);
                     return;
                 }
             }

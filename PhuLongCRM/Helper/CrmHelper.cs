@@ -120,6 +120,42 @@ namespace PhuLongCRM.Helper
             return null;
         }
 
+        public static async Task<bool> DeleteImagesSharePoint(string url)
+        {
+            try
+            {
+                var client = BsdHttpClient.Instance();
+                string fileListUrl = $"{OrgConfig.GraphApiSites}{OrgConfig.SP_SiteId}/lists/{url}";
+               // var request = new HttpRequestMessage(HttpMethod.Delete, fileListUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", UserLogged.AccessTokenSharePoint);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.DeleteAsync(fileListUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                   return true;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    var loginSharePonit = await LoginHelper.getSharePointToken();
+                    if (loginSharePonit.access_token != null)
+                    {
+                        UserLogged.AccessTokenSharePoint = loginSharePonit.access_token;
+                        var api_response = await DeleteImagesSharePoint(url);
+                        return api_response;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return false;
+        }
+
         /// <summary>
         /// Set giá trị Null cho field lookup
         /// </summary>

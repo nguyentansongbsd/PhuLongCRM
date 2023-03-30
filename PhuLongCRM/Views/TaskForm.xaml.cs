@@ -105,7 +105,7 @@ namespace PhuLongCRM.Views
             {
                 if (this.compareDateTime(viewModel.TaskFormModel.scheduledstart, viewModel.TaskFormModel.scheduledend) != -1)
                 {
-                    ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
+                    ToastMessageHelper.Message(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
                 }
             }
         }
@@ -115,7 +115,7 @@ namespace PhuLongCRM.Views
             {
                 if (this.compareDateTime(viewModel.TaskFormModel.scheduledstart, viewModel.TaskFormModel.scheduledend) != -1)
                 {
-                    ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
+                    ToastMessageHelper.Message(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
                 }
             }
         }
@@ -141,19 +141,19 @@ namespace PhuLongCRM.Views
         {
             if (string.IsNullOrWhiteSpace(viewModel.TaskFormModel.subject))
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_nhap_chu_de);
+                ToastMessageHelper.Message(Language.vui_long_nhap_chu_de);
                 return;
             }
 
             if (!viewModel.TaskFormModel.scheduledstart.HasValue || dateStart.IsTimeNull)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_bat_dau);
+                ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_bat_dau);
                 return;
             }
 
             if (!viewModel.TaskFormModel.scheduledend.HasValue || dateEnd.IsTimeNull)
             {
-                ToastMessageHelper.ShortMessage(Language.vui_long_chon_thoi_gian_ket_thuc);
+                ToastMessageHelper.Message(Language.vui_long_chon_thoi_gian_ket_thuc);
                 return;
             }
 
@@ -161,7 +161,7 @@ namespace PhuLongCRM.Views
             {
                 if (this.compareDateTime(viewModel.TaskFormModel.scheduledstart, viewModel.TaskFormModel.scheduledend) != -1)
                 {
-                    ToastMessageHelper.ShortMessage(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
+                    ToastMessageHelper.Message(Language.thoi_gian_ket_thuc_phai_lon_hon_thoi_gian_bat_dau);
                     return;
                 }
             }
@@ -181,14 +181,14 @@ namespace PhuLongCRM.Views
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
                     if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage(Language.tao_cong_viec_thanh_cong);
+                    ToastMessageHelper.Message(Language.tao_cong_viec_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai);
+                    ToastMessageHelper.Message(Language.thong_bao_that_bai);
                 }
             }
             else
@@ -205,14 +205,14 @@ namespace PhuLongCRM.Views
                     if (AccountDetailPage.NeedToRefreshActivity.HasValue) AccountDetailPage.NeedToRefreshActivity = true;
                     if (LeadDetailPage.NeedToRefreshActivity.HasValue) LeadDetailPage.NeedToRefreshActivity = true;
                     if (QueuesDetialPage.NeedToRefreshActivity.HasValue) QueuesDetialPage.NeedToRefreshActivity = true;
-                    ToastMessageHelper.ShortMessage(Language.cap_nhat_thanh_cong);
+                    ToastMessageHelper.Message(Language.cap_nhat_thanh_cong);
                     await Navigation.PopAsync();
                     LoadingHelper.Hide();
                 }
                 else
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.cap_nhat_that_bai);
+                    ToastMessageHelper.Message(Language.cap_nhat_that_bai);
                 }
             }
         }

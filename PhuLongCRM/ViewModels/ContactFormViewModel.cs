@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Telerik.XamarinForms.Input.Calendar;
 using Xamarin.Forms;
 
 namespace PhuLongCRM.ViewModels
@@ -602,6 +603,7 @@ namespace PhuLongCRM.ViewModels
                     {
                         if (item.name.Contains("_front.jpg"))
                         {
+                            singleContact.front_id = item.id;
                             var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
                             if (urlVideo != null)
                             {
@@ -611,6 +613,7 @@ namespace PhuLongCRM.ViewModels
                         }
                         else if (item.name.Contains("_behind.jpg"))
                         {
+                            singleContact.behind_id = item.id;
                             var urlVideo = await CrmHelper.RetrieveImagesSharePoint<RetrieveMultipleApiResponse<GraphThumbnailsUrlModel>>($"{Config.OrgConfig.SP_ContactID}/items/{item.id}/driveItem/thumbnails");
                             if (urlVideo != null)
                             {
@@ -646,6 +649,21 @@ namespace PhuLongCRM.ViewModels
             if (result == null)
                 return;
             Guardians = result.value;
+        }
+        public async Task<bool> DeleteImageCMND(string type)
+        {
+
+            if (type == "Front")
+            {
+                var urlVideo = await CrmHelper.DeleteImagesSharePoint($"{Config.OrgConfig.SP_ContactID}/items/{singleContact.front_id}");
+                return urlVideo;
+            }
+            else if (type == "Behind")
+            {
+                var urlVideo = await CrmHelper.DeleteImagesSharePoint($"{Config.OrgConfig.SP_ContactID}/items/{singleContact.behind_id}");
+                return urlVideo;
+            }
+            return false;
         }
     }
 }
