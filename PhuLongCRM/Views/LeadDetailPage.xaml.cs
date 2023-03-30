@@ -87,6 +87,10 @@ namespace PhuLongCRM.Views
                 {
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
                 }
+                else if(!string.IsNullOrWhiteSpace(lead.bsd_qrcode))
+                {
+                    viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chia_se_qr_code, "FontAwesomeSolid", "\uf029", null, ShowQRCode));
+                }
 
                 if (lead.statuscode == "3") // qualified
                 {
@@ -127,6 +131,12 @@ namespace PhuLongCRM.Views
             }
             else
                 floatingButtonGroup.IsVisible = false;
+        }
+        private void ShowQRCode(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            QR_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
         }
         private void NhuCauVaTieuChi(object sender, EventArgs e)
         {

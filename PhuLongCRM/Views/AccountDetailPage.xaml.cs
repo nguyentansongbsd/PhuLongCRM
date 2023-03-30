@@ -117,6 +117,10 @@ namespace PhuLongCRM.Views
                     {
                         viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, GenerateQRCode));
                     }
+                    else
+                    {
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chia_se_qr_code, "FontAwesomeSolid", "\uf029", null, ShowQRCode));
+                    }
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_goi, "FontAwesomeSolid", "\uf095", null, NewPhoneCall));
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cong_viec, "FontAwesomeSolid", "\uf073", null, NewTask));
@@ -134,6 +138,12 @@ namespace PhuLongCRM.Views
                     floatingButtonGroup.IsVisible = false;
                 }
             }
+        }
+        private void ShowQRCode(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            QR_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
         }
 
         // tab thong tin

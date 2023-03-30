@@ -16,10 +16,12 @@ namespace PhuLongCRM.ViewModels
         public bool Rating_sort { get; set; } = true;
         public bool Allocation_sort { get; set; } = false;
         public string FillterStatus { get; set; }
+        public bool FillterBirtday { get; set; }
         public LeadsContentViewViewModel()
         {                   
             PreLoadData = new Command(() =>
             {
+                string birtday = string.Empty;
                 string filter_sts = string.Empty;
                 string filter_name = string.Empty;
                 string filter_phone = string.Empty;
@@ -77,6 +79,16 @@ namespace PhuLongCRM.ViewModels
                 else
                     sort = "<order attribute='createdon' descending='true' />";
 
+                if (FillterBirtday)
+                {
+                    birtday = $@"<condition attribute='new_birthday' operator='on' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                <condition attribute='statuscode' operator='eq' value='1' />";
+                }
+                else
+                {
+                    birtday = string.Empty;
+                }
+
                 EntityName = "leads";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name='lead'>
@@ -92,6 +104,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_customercode' />
                         {sort}
                         <filter type='and'>
+                            {birtday}
                             {filter_sts}
                             {filter_allocation}
                              <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />

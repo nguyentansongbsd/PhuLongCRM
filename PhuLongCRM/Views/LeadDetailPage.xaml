@@ -101,7 +101,6 @@
                                         <Label Text="{Binding Source={x:Static lang:Language.nguon_khach_hang},StringFormat='{0}:'}" Grid.Column="0" FontSize="15" TextColor="#444444" />
                                         <Label Text="{Binding LeadSource.Label}" Grid.Column="1" FontSize="15" TextColor="#444444" />
                                     </Grid>
-                                    <ffimageLoading:CachedImage x:Name="imgQrCode" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Source="{Binding singleLead.bsd_qrcode,Converter={StaticResource Base64ToImageSourceConverter}}" IsVisible="{Binding singleLead.bsd_qrcode,Converter={StaticResource NullToHideConverter}}" HeightRequest="70" WidthRequest="70" VerticalOptions="Start" HorizontalOptions="EndAndExpand"/>
                                 </Grid>
                                 <BoxView HeightRequest="1" BackgroundColor="#939393" Grid.Row="1"/>
                                 <Grid ColumnDefinitions="*,1,*" Grid.Row="2">
@@ -575,6 +574,11 @@
                     </ScrollView>
                 </controls:CenterPopup.Body>
             </controls:CenterPopup>
+            <controls:CenterPopup x:Name="QR_CenterPopup" Title="{x:Static lang:Language.chia_se_qr_code}">
+                <controls:CenterPopup.Body>
+                    <ffimageLoading:CachedImage HeightRequest="200" WidthRequest="200" Source="{Binding singleLead.bsd_qrcode,Converter={StaticResource Base64ToImageSourceConverter}}" VerticalOptions="Start" HorizontalOptions="Center"/>
+                </controls:CenterPopup.Body>
+                </controls:CenterPopup>
             <controls:BottomModal x:Name="BottomModal"/>
             <controls:CenterModal x:Name="CenterModal"/>
         </AbsoluteLayout>
