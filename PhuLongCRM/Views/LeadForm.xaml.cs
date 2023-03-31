@@ -257,7 +257,21 @@ namespace PhuLongCRM.Views
             if (isValid)
             {
                 ToastMessageHelper.Message(Language.thong_tin_id_da_ton_tai);
+                return;
             }
+            if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_placeofissue))// CMND
+            {
+                viewModel.singleLead.bsd_placeofissue = "Công An Thành phố/ Tỉnh";
+            }
+            if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_placeofissue))// CCCD
+            {
+                viewModel.singleLead.bsd_placeofissue = "Cục Cảnh sát ĐKQL cư trú và DLQG về dân cư";
+            }
+            if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_placeofissue))// Passport
+            {
+                viewModel.singleLead.bsd_placeofissue = "Phòng Quản lý xuất nhập cảnh";
+            }
+
         }
 
         private void TypeIdCard_ItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
@@ -290,6 +304,18 @@ namespace PhuLongCRM.Views
                 {
                     ToastMessageHelper.Message(Language.so_ho_chieu_khong_hop_le_gioi_han_8_ky_tu);
                     return;
+                }
+                if (viewModel.TypeIdCard?.Val == "100000000" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_placeofissue))// CMND
+                {
+                    viewModel.singleLead.bsd_placeofissue = "Công An Thành phố/ Tỉnh";
+                }
+                if (viewModel.TypeIdCard?.Val == "100000001" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_placeofissue))// CCCD
+                {
+                    viewModel.singleLead.bsd_placeofissue = "Cục Cảnh sát ĐKQL cư trú và DLQG về dân cư";
+                }
+                if (viewModel.TypeIdCard?.Val == "100000002" && !string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_identitycardnumberid) && string.IsNullOrWhiteSpace(viewModel.singleLead.bsd_placeofissue))// Passport
+                {
+                    viewModel.singleLead.bsd_placeofissue = "Phòng Quản lý xuất nhập cảnh";
                 }
             }
         }

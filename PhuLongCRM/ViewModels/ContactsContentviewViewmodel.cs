@@ -12,10 +12,12 @@ namespace PhuLongCRM.ViewModels
         public string FillterStatus { get; set; } = @"<condition attribute='bsd_type' operator='contain-values'>
                                                         <value>100000000</value>
                                                       </condition>";
+        public bool FillterBirtday { get; set; }
         public ContactsContentviewViewmodel()
         {
             PreLoadData = new Command(() =>
             {
+                string birtday = string.Empty;
                 string filter = string.Empty;
                 if (!string.IsNullOrWhiteSpace(KeyFilter))
                 {
@@ -43,6 +45,14 @@ namespace PhuLongCRM.ViewModels
                     else
                         filter = string.Empty;
                 }
+                if (FillterBirtday)
+                {
+                    birtday = $"<condition attribute='birthdate' operator='on' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />";
+                }
+                else
+                {
+                    birtday = string.Empty;
+                }
                 EntityName = "contacts";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
@@ -67,6 +77,7 @@ namespace PhuLongCRM.ViewModels
                       <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
                       {filter}
                       {FillterStatus}
+                      {birtday}
                     </filter>
                   </entity>
                 </fetch>";

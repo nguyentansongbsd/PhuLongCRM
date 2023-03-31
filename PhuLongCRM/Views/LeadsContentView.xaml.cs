@@ -224,5 +224,20 @@ namespace PhuLongCRM.Views
             }
             label_status.Text = Language.phan_bo;
         }
+        async void Birtday_Tapped(System.Object sender, System.EventArgs e)
+        {
+            viewModel.FillterBirtday = !viewModel.FillterBirtday;
+            if (viewModel.FillterBirtday)
+            {
+                filtter_birtday.TextColor = Color.FromHex("#1399D5");
+            }
+            else
+            {
+                filtter_birtday.TextColor = Color.FromHex("#444444");
+            }
+            LoadingHelper.Show();
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
+        }
     }
 }
