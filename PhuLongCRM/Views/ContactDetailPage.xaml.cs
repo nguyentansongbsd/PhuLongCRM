@@ -138,9 +138,10 @@ namespace PhuLongCRM.Views
 
         private void ShowQRCode(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            LoadingHelper.Show();
+            QR_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
         }
-
         private void NhuCauVaTieuChi(object sender, EventArgs e)
         {
             LoadingHelper.Show();

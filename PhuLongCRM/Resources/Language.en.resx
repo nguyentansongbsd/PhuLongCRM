@@ -3893,5 +3893,8 @@
   </data>
 	<data name="ho_tro_ve_ung_dung" xml:space="preserve">
     <value>Support for application</value>
+		</data>
+  <data name="chia_se_qr_code" xml:space="preserve">
+    <value>Share QR Code</value>
   </data>
 </root>

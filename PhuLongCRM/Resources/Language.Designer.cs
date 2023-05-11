@@ -988,6 +988,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chia sẻ QR.
+        /// </summary>
+        internal static string chia_se_qr_code {
+            get {
+                return ResourceManager.GetString("chia_se_qr_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chiến dịch.
         /// </summary>
         internal static string chien_dich {
