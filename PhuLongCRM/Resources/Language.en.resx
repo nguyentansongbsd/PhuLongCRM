@@ -3891,7 +3891,10 @@
   <data name="da_chon_chiet_khau_noi_bo_khong_the_chon_chiet_khau_chung" xml:space="preserve">
     <value>The internal discount has been selected, general discounts cannot be chosen.</value>
   </data>
+	<data name="ho_tro_ve_ung_dung" xml:space="preserve">
+    <value>Support for application</value>
+		</data>
   <data name="chia_se_qr_code" xml:space="preserve">
-    <value>Share QR C</value>ode
+    <value>Share QR Code</value>
   </data>
 </root>

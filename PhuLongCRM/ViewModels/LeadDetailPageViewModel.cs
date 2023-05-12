@@ -530,7 +530,15 @@ namespace PhuLongCRM.ViewModels
                     string fetchcontact = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                         <entity name='contact'>
                                             <attribute name='fullname' />
+                                             <attribute name='emailaddress1' />
+                                             <attribute name='mobilephone' />
+                                             <attribute name='bsd_identitycard' />
+                                             <attribute name='bsd_identitycardnumber' />
+                                             <attribute name='bsd_passport' />
                                             <filter type='or'>
+                                                <condition attribute='emailaddress1' operator='eq' value='{singleLead.emailaddress1}' />
+                                                <condition attribute='mobilephone' operator='eq' value='{singleLead.mobilephone}' />
+                                                <condition attribute='mobilephone' operator='eq' value='{singleLead.mobilephone_format}' />
                                                 <condition attribute='bsd_identitycard' operator='eq' value='{singleLead.bsd_identitycardnumberid}' />
                                                 <condition attribute='bsd_identitycardnumber' operator='eq' value='{singleLead.bsd_identitycardnumberid}' />
                                                 <condition attribute='bsd_passport' operator='eq' value='{singleLead.bsd_identitycardnumberid}' />
@@ -540,10 +548,21 @@ namespace PhuLongCRM.ViewModels
                     var resultcontact = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetchcontact);
                     if (resultcontact != null && resultcontact.value.Count > 0)
                     {
+                        List<string> duplicates = new List<string>();
+                        var data = resultcontact.value.FirstOrDefault();
+                        if (!string.IsNullOrWhiteSpace(data.mobilephone) && data.mobilephone == singleLead.mobilephone)
+                            duplicates.Add(Language.so_dien_thoai);
+                        if (!string.IsNullOrWhiteSpace(data.emailaddress1) && data.emailaddress1 == singleLead.emailaddress1)
+                            duplicates.Add(Language.email);
+                        if (!string.IsNullOrWhiteSpace(data.bsd_identitycard) && data.bsd_identitycard == singleLead.bsd_identitycardnumberid || 
+                            !string.IsNullOrWhiteSpace(data.bsd_identitycardnumber) && data.bsd_identitycardnumber == singleLead.bsd_identitycardnumberid ||
+                            !string.IsNullOrWhiteSpace(data.bsd_passport) && data.bsd_passport == singleLead.bsd_identitycardnumberid)
+                            duplicates.Add(Language.so_id);
+                        Duplicate = string.Join(", ", duplicates);
                         if (UserLogged.Language == "en")
-                            Duplicate = Language.so_id + " already exists.";
+                            Duplicate += " already exists.";
                         else
-                            Duplicate = Language.so_id + " đã tồn tại.";
+                            Duplicate += " đã tồn tại.";
                     }
                 }
             }

@@ -928,5 +928,14 @@ namespace PhuLongCRM.Views
                 return "0";
             }
         }
+
+        private async void PTTT_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            await viewModel.LoadPTTT();
+            if(viewModel.PaymentScheme != null)
+                PTTT_CenterPopup.ShowCenterPopup();
+            LoadingHelper.Hide();
+        }
     }
 }

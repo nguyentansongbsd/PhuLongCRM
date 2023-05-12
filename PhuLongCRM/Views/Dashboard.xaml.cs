@@ -443,12 +443,11 @@ namespace PhuLongCRM.Views
             // await viewModel.CountNumNotification();
             if (viewModel.NumNotification > 0)
             {
-                menu_notification.IconImageSource = new FontImageSource() { Glyph = "\uf0e0", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.Red };
-
+              //  menu_notification.IconImageSource = new FontImageSource() { Glyph = "\uf0e0", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.Red };
             }
             else
             {
-                menu_notification.IconImageSource = new FontImageSource() { Glyph = "\uf2b6", FontFamily = "FontAwesomeRegular", Size = 18, Color = Color.White };
+               // menu_notification.IconImageSource = new FontImageSource() { Glyph = "\uf2b6", FontFamily = "FontAwesomeRegular", Size = 18, Color = Color.White };
             }
         }
     }
