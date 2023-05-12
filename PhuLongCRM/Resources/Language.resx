@@ -3897,6 +3897,9 @@
   <data name="da_chon_chiet_khau_noi_bo_khong_the_chon_chiet_khau_chung" xml:space="preserve">
     <value>Đã chọn chiết khấu nội bộ, không thể chọn chiết khấu chung.</value>
   </data>
+	<data name="ho_tro_ve_ung_dung" xml:space="preserve">
+    <value>Hỗ trợ về ứng dụng</value>
+	</data>
   <data name="chia_se_qr_code" xml:space="preserve">
     <value>Chia sẻ QR</value>
   </data>

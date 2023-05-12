@@ -63,14 +63,20 @@ namespace PhuLongCRM.Views
             TimeOut_Popup.IsVisible = false;
             if (UserLogged.Language == "vi")
             {
-                flagVN.BorderColor = Color.FromHex("#2196F3");
-                flagEN.BorderColor = Color.FromHex("#eeeeee");
+                flagVN.BackgroundColor = Color.FromHex("#2196F3");
+                flagEN.BackgroundColor = Color.FromHex("#FFFFFF");
+
+                labelflagVN.TextColor = Color.White;
+                labelflagEN.TextColor = Color.FromHex("#444444");
             }
 
             else if (UserLogged.Language == "en")
             {
-                flagVN.BorderColor = Color.FromHex("#eeeeee");
-                flagEN.BorderColor = Color.FromHex("#2196F3");
+                flagVN.BackgroundColor = Color.FromHex("#FFFFFF");
+                flagEN.BackgroundColor = Color.FromHex("#2196F3");
+
+                labelflagEN.TextColor = Color.White;
+                labelflagVN.TextColor = Color.FromHex("#444444");
             }
         }
 
@@ -188,15 +194,23 @@ namespace PhuLongCRM.Views
             Language.Culture = cultureInfo;
             if (code == "vi")
             {
-                flagVN.BorderColor = Color.FromHex("#2196F3");
-                flagEN.BorderColor = Color.FromHex("#eeeeee");
+                flagVN.BackgroundColor = Color.FromHex("#2196F3");
+                flagEN.BackgroundColor = Color.FromHex("#FFFFFF");
+
+                labelflagVN.TextColor = Color.White;
+                labelflagEN.TextColor = Color.FromHex("#444444");
+
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("vi-VN");
             }
                 
             else if (code == "en")
             {
-                flagVN.BorderColor = Color.FromHex("#eeeeee");
-                flagEN.BorderColor = Color.FromHex("#2196F3");
+                flagVN.BackgroundColor = Color.FromHex("#FFFFFF");
+                flagEN.BackgroundColor = Color.FromHex("#2196F3");
+
+                labelflagEN.TextColor = Color.White;
+                labelflagVN.TextColor = Color.FromHex("#444444");
+
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             }
             ChangedLanguage();
@@ -429,9 +443,9 @@ namespace PhuLongCRM.Views
             btnLogin.Text = Language.dang_nhap;
             btnLoginUserCRM.Text = Language.dang_nhap_voi_user_crm;
             Admin_CenterPopup.Title = Language.lien_he;
-            admin_name.Text = Language.ho_ten;
-            admin_sdt.Text = Language.so_dien_thoai;
-            admin_email.Text = Language.email;
+            //admin_name.Text = Language.ho_ten;
+            //admin_sdt.Text = Language.so_dien_thoai;
+            //admin_email.Text = Language.email;
             lb_lienhe.Text = Language.lien_he;
         }
         //ghi nhận số lần login khi thành công hoặc thất bại, nếu login thành công cập nhâtj state login

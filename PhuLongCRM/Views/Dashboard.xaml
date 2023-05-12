@@ -39,11 +39,11 @@
                 <FontImageSource Glyph="&#xf029;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
-        <ToolbarItem x:Name="menu_notification">
+        <!--<ToolbarItem x:Name="menu_notification">
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="&#xf2b6;" FontFamily="FontAwesomeRegular" Size="18"/>
             </ToolbarItem.IconImageSource>
-        </ToolbarItem>
+        </ToolbarItem>-->
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>

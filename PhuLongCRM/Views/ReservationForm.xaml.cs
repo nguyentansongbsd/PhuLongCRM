@@ -462,42 +462,42 @@ namespace PhuLongCRM.Views
                 await viewModel.LoadDiscountChildsPaymentSchemes(id.ToString());
 
                 // load cac chiet khau co hieu luc
-                if(viewModel.DiscountChilds != null && viewModel.DiscountChilds.Count > 0)
-                {
-                    foreach(var item in viewModel.DiscountChilds)
-                    {
-                        if(item.paymentscheme_id == viewModel.PaymentScheme.bsd_paymentschemeid)
-                        {
-                            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
-                                item.ItemColor = "#444444";
-                            item.IsEnableChecked = true;
-                        }
-                        else
-                        {
-                            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
-                                item.ItemColor = "#808080";
-                            item.IsEnableChecked = false;
-                        }
-                    }
-                }
-                if (viewModel.DiscountChildsInternel != null && viewModel.DiscountChildsInternel.Count > 0)
-                {
-                    foreach (var item in viewModel.DiscountChildsInternel)
-                    {
-                        if (item.paymentscheme_id == viewModel.PaymentScheme.bsd_paymentschemeid)
-                        {
-                            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
-                                item.ItemColor = "#444444";
-                            item.IsEnableChecked = true;
-                        }
-                        else
-                        {
-                            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
-                                item.ItemColor = "#808080";
-                            item.IsEnableChecked = false;
-                        }
-                    }
-                }
+                //if(viewModel.DiscountChilds != null && viewModel.DiscountChilds.Count > 0)
+                //{
+                //    foreach(var item in viewModel.DiscountChilds)
+                //    {
+                //        if(item.paymentscheme_id == viewModel.PaymentScheme.bsd_paymentschemeid)
+                //        {
+                //            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
+                //                item.ItemColor = "#444444";
+                //            item.IsEnableChecked = true;
+                //        }
+                //        else
+                //        {
+                //            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
+                //                item.ItemColor = "#808080";
+                //            item.IsEnableChecked = false;
+                //        }
+                //    }
+                //}
+                //if (viewModel.DiscountChildsInternel != null && viewModel.DiscountChildsInternel.Count > 0)
+                //{
+                //    foreach (var item in viewModel.DiscountChildsInternel)
+                //    {
+                //        if (item.paymentscheme_id == viewModel.PaymentScheme.bsd_paymentschemeid)
+                //        {
+                //            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
+                //                item.ItemColor = "#444444";
+                //            item.IsEnableChecked = true;
+                //        }
+                //        else
+                //        {
+                //            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
+                //                item.ItemColor = "#808080";
+                //            item.IsEnableChecked = false;
+                //        }
+                //    }
+                //}
             }
             LoadingHelper.Hide();
         }
@@ -595,7 +595,7 @@ namespace PhuLongCRM.Views
                 return;
             }
             var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item.IsExpired == true || item.IsNotApplied == true || item.IsEnableChecked == false) return;
+            if (item.IsExpired == true || item.IsNotApplied == true) return;// || item.IsEnableChecked == false) return;
 
             item.Selected = !item.Selected;
             if (item.Selected)
@@ -656,7 +656,7 @@ namespace PhuLongCRM.Views
                 return;
             }
             var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item.IsExpired == true || item.IsNotApplied == true || item.IsEnableChecked == false) return;
+            if (item.IsExpired == true || item.IsNotApplied == true) return;// || item.IsEnableChecked == false) return;
 
             item.Selected = !item.Selected;
             if (item.Selected == true)
@@ -711,24 +711,24 @@ namespace PhuLongCRM.Views
             itemPromotion.Selected = !itemPromotion.Selected;
             LoadingHelper.Hide();
             // load cac chiet khau co hieu luc
-            if (viewModel.DiscountChildsExchanges != null && viewModel.DiscountChildsExchanges.Count > 0)
-            {
-                foreach (var item in viewModel.DiscountChildsExchanges)
-                {
-                    if (itemPromotion.Val == item.promotion_id.ToString())
-                    {
-                        if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
-                            item.ItemColor = "#444444";
-                        item.IsEnableChecked = true;
-                    }
-                    else
-                    {
-                        if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
-                            item.ItemColor = "#808080";
-                        item.IsEnableChecked = false;
-                    }
-                }
-            }
+            //if (viewModel.DiscountChildsExchanges != null && viewModel.DiscountChildsExchanges.Count > 0)
+            //{
+            //    foreach (var item in viewModel.DiscountChildsExchanges)
+            //    {
+            //        if (itemPromotion.Val == item.promotion_id.ToString())
+            //        {
+            //            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
+            //                item.ItemColor = "#444444";
+            //            item.IsEnableChecked = true;
+            //        }
+            //        else
+            //        {
+            //            if (item.ItemColor != "#ff0000" && item.ItemColor != "#009a81")
+            //                item.ItemColor = "#808080";
+            //            item.IsEnableChecked = false;
+            //        }
+            //    }
+            //}
         }
 
         private async void SaveSelectedPromotion_CLicked(object sender, EventArgs e)
@@ -887,7 +887,7 @@ namespace PhuLongCRM.Views
                 return;
             }
             var item = (DiscountChildOptionSet)((sender as StackLayout).GestureRecognizers[0] as TapGestureRecognizer).CommandParameter;
-            if (item.IsExpired == true || item.IsNotApplied == true || item.IsEnableChecked == false) return;
+            if (item.IsExpired == true || item.IsNotApplied == true) return; // || item.IsEnableChecked == false) return;
 
             item.Selected = !item.Selected;
         }
