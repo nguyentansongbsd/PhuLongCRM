@@ -132,7 +132,7 @@ namespace PhuLongCRM.Settings
         }
         public static bool Notification
         {
-            get => AppSettings.GetValueOrDefault(nameof(Notification), true);
+            get => AppSettings.GetValueOrDefault(nameof(Notification), false);
             set => AppSettings.AddOrUpdateValue(nameof(Notification), value);
         }
         public static bool IsTimeOut

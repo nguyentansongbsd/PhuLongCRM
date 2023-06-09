@@ -3876,4 +3876,31 @@
 	<data name="nhan_vien_chua_co_contact" xml:space="preserve">
     <value>Nhân viên chưa có thông tin Contact.</value>
   </data>
+  <data name="xoa_hinh_anh" xml:space="preserve">
+    <value>Xoá hình ảnh</value>
+  </data>
+  <data name="nhan_vien_chua_co_email" xml:space="preserve">
+    <value>Nhân viên chưa có email.</value>
+  </data>
+  <data name="vui_long_nhap_id" xml:space="preserve">
+    <value>Vui lòng nhập ID.</value>
+  </data>
+  <data name="vui_long_chon_ngay_cap" xml:space="preserve">
+    <value>Vui lòng chọn ngày cấp.</value>
+  </data>
+  <data name="vui_long_nhap_noi_cap" xml:space="preserve">
+    <value>Vui lòng nhập nơi cấp.</value>
+  </data>
+  <data name="da_chon_chiet_khau_chung_khong_the_chon_chiet_khau_noi_bo" xml:space="preserve">
+    <value>Đã chọn chiết khấu chung, không thể chọn chiết khấu nội bộ.</value>
+  </data>
+  <data name="da_chon_chiet_khau_noi_bo_khong_the_chon_chiet_khau_chung" xml:space="preserve">
+    <value>Đã chọn chiết khấu nội bộ, không thể chọn chiết khấu chung.</value>
+  </data>
+	<data name="ho_tro_ve_ung_dung" xml:space="preserve">
+    <value>Hỗ trợ về ứng dụng</value>
+	</data>
+  <data name="chia_se_qr_code" xml:space="preserve">
+    <value>Chia sẻ QR</value>
+  </data>
 </root>

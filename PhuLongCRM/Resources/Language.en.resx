@@ -3313,7 +3313,7 @@
 		<value>Inactive</value>
 	</data>
 	<data name="vui_long_chon_loai_the_id" xml:space="preserve">
-		<value>Please choose type id card</value>
+		<value>Please choose type id card.</value>
 	</data>
 	<data name="tuy_chon_khong_chuyen_doi" xml:space="preserve">
 		<value>Options of disqualify</value>
@@ -3869,5 +3869,32 @@
   </data>
 	<data name="nhan_vien_chua_co_contact" xml:space="preserve">
     <value>Employee don't have Contact information.</value>
+  </data>
+  <data name="xoa_hinh_anh" xml:space="preserve">
+    <value>Delete image</value>
+  </data>
+  <data name="nhan_vien_chua_co_email" xml:space="preserve">
+    <value>Employee without email information.</value>
+  </data>
+  <data name="vui_long_nhap_id" xml:space="preserve">
+    <value>Please enter ID.</value>
+  </data>
+  <data name="vui_long_chon_ngay_cap" xml:space="preserve">
+    <value>Please choose issued.</value>
+  </data>
+  <data name="vui_long_nhap_noi_cap" xml:space="preserve">
+    <value>Please enter issued.</value>
+  </data>
+  <data name="da_chon_chiet_khau_chung_khong_the_chon_chiet_khau_noi_bo" xml:space="preserve">
+    <value>The general discount has been selected, internal discounts cannot be chosen.</value>
+  </data>
+  <data name="da_chon_chiet_khau_noi_bo_khong_the_chon_chiet_khau_chung" xml:space="preserve">
+    <value>The internal discount has been selected, general discounts cannot be chosen.</value>
+  </data>
+	<data name="ho_tro_ve_ung_dung" xml:space="preserve">
+    <value>Support for application</value>
+		</data>
+  <data name="chia_se_qr_code" xml:space="preserve">
+    <value>Share QR Code</value>
   </data>
 </root>

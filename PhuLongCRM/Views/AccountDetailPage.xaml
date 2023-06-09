@@ -36,11 +36,12 @@
                         <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Margin="10,20,10,0" Padding="1">
                             <StackLayout>
                                 <StackLayout Padding="10,5">
-                                    <Grid ColumnDefinitions="Auto,*">
+                                    <Grid ColumnDefinitions="Auto,*,Auto">
                                         <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding singleAccount.statuscode_color}" VerticalOptions="StartAndExpand">
                                             <Label Grid.Column="0" Text="{Binding singleAccount.statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                         </telerikPrimitives:RadBorder>
                                         <Label Grid.Column="1" Text="{Binding singleAccount.bsd_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                        <Label Grid.Column="2" Text="&#xf4c0;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="18" TextColor="#790311" IsVisible="{Binding singleAccount.mortgage}"/>
                                     </Grid>
                                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
                                         <Grid ColumnDefinitions="Auto,*" Grid.Row="0" Grid.Column="0">
@@ -67,7 +68,6 @@
                                                 </MultiBinding>
                                             </Label.Text>
                                         </Label>
-                                        <ffimageloading:CachedImage x:Name="imgQrCode" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Source="{Binding singleAccount.bsd_imageqrcode,Converter={StaticResource Base64ToImageSourceConverter}}" IsVisible="{Binding singleAccount.bsd_imageqrcode,Converter={StaticResource NullToHideConverter}}" HeightRequest="70" WidthRequest="70" VerticalOptions="Start" HorizontalOptions="EndAndExpand"/>
                                     </Grid>
 
                                     <Label FontSize="15" TextColor="#444444" VerticalTextAlignment="Center">
@@ -533,6 +533,11 @@
 
             <views:ActivityPopupContentView x:Name="ActivityPopup" HidePopupActivity="ActivityPopup_HidePopupActivity"/>
             <controls:CenterModal x:Name="CenterModal"/>
+            <controls:CenterPopup x:Name="QR_CenterPopup" Title="{x:Static lang:Language.chia_se_qr_code}">
+                <controls:CenterPopup.Body>
+                    <ffimageloading:CachedImage Source="{Binding singleAccount.bsd_imageqrcode,Converter={StaticResource Base64ToImageSourceConverter}}" HeightRequest="200" WidthRequest="200" VerticalOptions="Start" HorizontalOptions="Center"/>
+                </controls:CenterPopup.Body>
+                </controls:CenterPopup>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

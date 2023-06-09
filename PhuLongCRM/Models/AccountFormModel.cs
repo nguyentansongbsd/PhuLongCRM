@@ -210,6 +210,17 @@ namespace PhuLongCRM.Models
         }
 
         public Guid owner_id { get; set; }
+        public Guid bankingloan_id { get; set; }
+        public bool mortgage
+        {
+            get
+            {
+                if (bankingloan_id != Guid.Empty)
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 }
 

@@ -84,14 +84,14 @@
                                             </telerikPrimitives:RadBorder>
                                             <Label Grid.Column="1" Text="{Binding singleContact.bsd_fullname}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
                                         </Grid>
-                                        <Label Grid.Row="1" Grid.Column="1" FontSize="14" TextColor="#444444">
-                                            <Label.Text>
-                                                <MultiBinding StringFormat="{}{0}: {1}">
-                                                    <Binding Source="{x:Static lang:Language.email}" />
-                                                    <Binding Path="singleContact.emailaddress1" />
-                                                </MultiBinding>
-                                            </Label.Text>
-                                        </Label>
+                                            <Label Grid.Column="1" Grid.Row="1" FontSize="14" TextColor="#444444">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0}: {1}">
+                                                        <Binding Source="{x:Static lang:Language.email}" />
+                                                        <Binding Path="singleContact.emailaddress1" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
                                         <Label Grid.Row="2" Grid.Column="1" FontSize="14" TextColor="#444444">
                                             <Label.Text>
                                                 <MultiBinding StringFormat="{}{0}: {1}">
@@ -113,7 +113,8 @@
                                         <Label Text="{Binding singleContact.bsd_contactaddress}" Grid.Column="1" FontSize="15" TextColor="#444444"/>
                                     </Grid>-->
 
-                                        <ffimageloading:CachedImage x:Name="imgQrCode" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" HeightRequest="60" WidthRequest="60" Margin="5"  Source="{Binding singleContact.bsd_qrcode,Converter={StaticResource Base64ToImageSourceConverter}}" IsVisible="{Binding singleContact.bsd_qrcode,Converter={StaticResource NullToBool}}" LoadingPlaceholder="image_placeholder.jpg" VerticalOptions="Start" HorizontalOptions="Center"/>
+                                        <!--<ffimageloading:CachedImage x:Name="imgQrCode" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" HeightRequest="60" WidthRequest="60" Margin="5"  Source="{Binding singleContact.bsd_qrcode,Converter={StaticResource Base64ToImageSourceConverter}}" IsVisible="{Binding singleContact.bsd_qrcode,Converter={StaticResource NullToBool}}" LoadingPlaceholder="image_placeholder.jpg" VerticalOptions="Start" HorizontalOptions="Center"/>-->
+                                        <Label Grid.Column="2" Grid.Row="0" Text="&#xf4c0;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="18" TextColor="#790311" IsVisible="{Binding singleContact.mortgage}"/>
                                     </Grid>
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
@@ -740,6 +741,12 @@
                             </telerikPrimitives:RadExpander>
                         </StackLayout>
                     </ScrollView>
+                </controls:CenterPopup.Body>
+                </controls:CenterPopup>
+
+            <controls:CenterPopup x:Name="QR_CenterPopup" Title="{x:Static lang:Language.chia_se_qr_code}">
+                <controls:CenterPopup.Body>
+                    <ffimageloading:CachedImage Margin="5" HeightRequest="200" WidthRequest="200" Source="{Binding singleContact.bsd_qrcode,Converter={StaticResource Base64ToImageSourceConverter}}" LoadingPlaceholder="image_placeholder.jpg" VerticalOptions="Start" HorizontalOptions="Center"/>
                 </controls:CenterPopup.Body>
                 </controls:CenterPopup>
 

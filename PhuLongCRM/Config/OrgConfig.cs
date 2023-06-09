@@ -6,13 +6,12 @@ namespace PhuLongCRM.Config
 {
     public class OrgConfig
     {
-        public const string VerApp = "PL.CRM.UAT - VerDemo - Ver 1.6.7";
-        //public const string VerApp = "PL.CRM - Version 4.1";
+        //public const string VerApp = "PL.CRM.UAT - VerDemo - Ver 1.7";
+        public const string VerApp = "PhuLong - Version 1.0";
         //public const string VerApp = "PL.CRM - UAT - Ver 1.2";
-        //public const string VerApp = "PL.CRM.UAT - Test 1.0.0";
 
-        public const string ApiUrl = "https://phulongtmp.api.crm5.dynamics.com/api/data/v9.1";
-        public const string Resource = "https://phulongtmp.crm5.dynamics.com/";
+        public const string ApiUrl = "https://phulong.api.crm5.dynamics.com/api/data/v9.1";
+        public const string Resource = "https://phulong.crm5.dynamics.com/";
         public const string ClientId = "1b53e0dd-04fb-495c-a8d0-3f26ebb84468"; //
         public const string ClientSecret = "SII7Q~z5TqyjVoBBIKNuSxDJabQhuFE_~i5HI"; //
 
@@ -21,7 +20,7 @@ namespace PhuLongCRM.Config
         public const string ClientId_ForUserCRM = "a7544a58-b7bb-4553-9548-d56d1cfbec55";
         public const string ClientSecret_ForUserCRM = "1kO7Q~FQ_o6uhrthjqlaUWiSY-bkpViYBDBPu";
         public const string Redirect_Uri = "https://crm.phulong.com/";
-        public const string Scope = "offline_access https://phulongtmp.crm5.dynamics.com/.default";
+        public const string Scope = "offline_access https://phulong.crm5.dynamics.com/.default";
 
         //sharepoint
         public const string GraphApiSites = "https://graph.microsoft.com/v1.0/sites/";

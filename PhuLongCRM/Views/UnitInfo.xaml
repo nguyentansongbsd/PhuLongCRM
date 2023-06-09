@@ -81,7 +81,10 @@
                                             </StackLayout.GestureRecognizers>
                                         </StackLayout>
                                     </Grid>
-                                    <Label Text="{Binding UnitInfo.price_format,StringFormat='{0} đ'}" FontSize="16" FontAttributes="Bold" TextColor="#790311" IsVisible="{Binding UnitInfo.bsd_phaseslaunch_id, Converter={StaticResource HidePriceOnDirectSaleConverter}}"/>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0" Text="{Binding UnitInfo.price_format,StringFormat='{0} đ'}" FontSize="16" FontAttributes="Bold" TextColor="#790311" IsVisible="{Binding UnitInfo.bsd_phaseslaunch_id, Converter={StaticResource HidePriceOnDirectSaleConverter}}"/>
+                                        <Label Grid.Column="1" Text="&#xf4c0;" FontFamily="FontAwesomeSolid" VerticalOptions="Center" FontSize="18" TextColor="#790311" IsVisible="{Binding UnitInfo.bsd_bankloan}"/>
+                                    </Grid>
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>
@@ -91,6 +94,7 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
+                                    
                                     <Label FontSize="15" TextColor="#444444">
                                         <Label.FormattedText>
                                             <FormattedString>

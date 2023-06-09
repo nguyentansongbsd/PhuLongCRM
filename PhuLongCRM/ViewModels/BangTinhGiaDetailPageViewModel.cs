@@ -64,6 +64,9 @@ namespace PhuLongCRM.ViewModels
         private bool _isRefreshing;
         public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
 
+        private PaymentSchemeModel _paymentScheme;
+        public PaymentSchemeModel PaymentScheme { get => _paymentScheme; set { _paymentScheme = value; OnPropertyChanged(nameof(PaymentScheme)); } }
+
         public ICommand RefreshCommand => new Command(async () =>
         {
             IsRefreshing = true;
@@ -947,6 +950,35 @@ namespace PhuLongCRM.ViewModels
             {
                 Reservation.bsd_followuplist_format = Language.co;
                 return false;
+            }
+        }
+
+        public async Task LoadPTTT()
+        {
+            if (Reservation.paymentscheme_id != Guid.Empty)
+            {
+                string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                        <entity name='bsd_paymentscheme'>
+                                            <attribute name='bsd_name' />
+                                            <attribute name='bsd_paymentschemecode' />
+                                            <attribute name='bsd_paymentschemeid' />
+                                            <attribute name='bsd_applyforbankloan' />
+                                            <attribute name='bsd_spforfeiture' />
+                                            <attribute name='bsd_daforfeiture' />
+                                            <attribute name='bsd_optionforfeiture' />
+                                            <order attribute='bsd_name' descending='false' />
+                                            <filter type='and'>
+                                                <condition attribute='bsd_paymentschemeid' operator='eq' value='{Reservation.paymentscheme_id}' />
+                                            </filter>
+                                        </entity>
+                                    </fetch>";
+
+                var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PaymentSchemeModel>>("bsd_paymentschemes", fetchXml);
+                if (result == null || result.value.Count == 0)
+                {
+                    return;
+                }
+                PaymentScheme = result.value.FirstOrDefault();
             }
         }
 

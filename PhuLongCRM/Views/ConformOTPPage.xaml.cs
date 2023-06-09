@@ -100,13 +100,13 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    ToastMessageHelper.LongMessage("Lỗi. Không thể lưu dữ liệu vào Firebase.");
+                    ToastMessageHelper.Message("Lỗi. Không thể lưu dữ liệu vào Firebase.");
                     return false;
                 }
             }
             catch (FirebaseException ex)
             {
-                ToastMessageHelper.LongMessage(ex.Message);
+                ToastMessageHelper.Message(ex.Message);
                 return false;
             }
         }
@@ -155,7 +155,7 @@ namespace PhuLongCRM.Views
             else
             {
                 LoadingHelper.Hide();
-                ToastMessageHelper.ShortMessage(Language.ma_xac_thuc_khong_dung);
+                ToastMessageHelper.Message(Language.ma_xac_thuc_khong_dung);
             }
         }
 
@@ -364,12 +364,12 @@ namespace PhuLongCRM.Views
         {
             if (e.Error != null)
             {
-                ToastMessageHelper.ShortMessage(Language.thong_bao_that_bai + e.Error.Message);
+                ToastMessageHelper.Message(Language.thong_bao_that_bai + e.Error.Message);
                 LoadingHelper.Hide();
             }
             else
             {
-                ToastMessageHelper.ShortMessage(Language.thong_bao_thanh_cong);
+                ToastMessageHelper.Message(Language.thong_bao_thanh_cong);
                 LoadingHelper.Hide();
             }
         }

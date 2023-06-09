@@ -105,6 +105,10 @@ namespace PhuLongCRM.ViewModels
 
         private List<OptionSet> _hasGuardians;
         public List<OptionSet> HasGuardians { get => _hasGuardians; set { _hasGuardians = value; OnPropertyChanged(nameof(HasGuardians)); } }
+
+        private bool _forQualify;
+        public bool ForQualify { get => _forQualify; set { _forQualify = value; OnPropertyChanged(nameof(ForQualify)); } }
+
         public LeadFormViewModel()
         {
             singleLead = new LeadFormModel();

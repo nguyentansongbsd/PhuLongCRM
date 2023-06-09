@@ -36,7 +36,7 @@ namespace PhuLongCRM
                 CrossFirebasePushNotification.Current.Subscribe(UserLogged.Id.ToString());
                 CrossFirebasePushNotification.Current.Subscribe(UserLogged.ManagerId.ToString());
                 //CrossFirebasePushNotification.Current.OnNotificationOpened += Current_OnNotificationOpened;
-                CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
+                //CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
             }
             else
             {
@@ -51,10 +51,10 @@ namespace PhuLongCRM
         //   App.Current.MainPage.DisplayAlert("Notification", $"Data: {e.Data["type"]}", "OK");
         //}
 
-        private void Current_OnTokenRefresh(object source, FirebasePushNotificationTokenEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
-        }
+        //private void Current_OnTokenRefresh(object source, FirebasePushNotificationTokenEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
+        //}
 
         protected override async void OnStart()
         {

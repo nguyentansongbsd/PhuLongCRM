@@ -414,5 +414,18 @@ namespace PhuLongCRM.Models
         private string _avatar;
         public string avatar { get { return _avatar; } set { _avatar = value; OnPropertyChanged(nameof(avatar)); } }
         public string entityimage { get; set; }
+        public string front_id { get; set; }
+        public string behind_id { get; set; }
+        public Guid bankingloan_id { get; set; }
+        public bool mortgage
+        {
+            get
+            {
+                if (bankingloan_id != Guid.Empty)
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 }

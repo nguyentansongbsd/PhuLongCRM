@@ -60,7 +60,7 @@ namespace PhuLongCRM.Views
                 else if(OnCompleted == 3)
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    ToastMessageHelper.Message(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -223,6 +223,21 @@ namespace PhuLongCRM.Views
                 label_rating.Text = Language.danh_gia_z_a;
             }
             label_status.Text = Language.phan_bo;
+        }
+        async void Birtday_Tapped(System.Object sender, System.EventArgs e)
+        {
+            viewModel.FillterBirtday = !viewModel.FillterBirtday;
+            if (viewModel.FillterBirtday)
+            {
+                filtter_birtday.TextColor = Color.FromHex("#1399D5");
+            }
+            else
+            {
+                filtter_birtday.TextColor = Color.FromHex("#444444");
+            }
+            LoadingHelper.Show();
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
         }
     }
 }

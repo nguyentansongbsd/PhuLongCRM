@@ -116,7 +116,7 @@ namespace PhuLongCRM.ViewModels
             PermissionStatus RequestContactsRead = await Permissions.CheckStatusAsync<Permissions.ContactsRead>();
             if (!Plugin.ContactService.CrossContactService.IsSupported)
             {
-                ToastMessageHelper.ShortMessage(":( Permission not granted to contact.");
+                ToastMessageHelper.Message(":( Permission not granted to contact.");
                 return;
             }
             if (RequestContactsRead != PermissionStatus.Granted)

@@ -58,10 +58,10 @@ namespace PhuLongCRM.Views
                     await Navigation.PushAsync(newPage);
                     LoadingHelper.Hide();
                 }
-                else if(OnCompleted == 3 || OnCompleted == 2)
+                else if (OnCompleted == 3 || OnCompleted == 2)
                 {
                     LoadingHelper.Hide();
-                    ToastMessageHelper.ShortMessage(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                    ToastMessageHelper.Message(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
                 }
             };
         }
@@ -155,9 +155,9 @@ namespace PhuLongCRM.Views
                 lb_nguoiDaiDien.TextColor = Color.FromHex("#444444");
                 rb_nguoiUyQuyen.BackgroundColor = Color.White;
                 lb_nguoiUyQuyen.TextColor = Color.FromHex("#444444");
-                
+
             }
-            else if (sts== "100000003") // Nguoi dai dien
+            else if (sts == "100000003") // Nguoi dai dien
             {
                 rb_khachHang.BackgroundColor = Color.White;
                 lb_khachHang.TextColor = Color.FromHex("#444444");
@@ -194,6 +194,22 @@ namespace PhuLongCRM.Views
             label_inactive.Text = Language.vo_hieu_luc;
             label_official.Text = Language.chinh_thuc;
             label_potential.Text = Language.tiem_nang_sts;
+        }
+
+        async void Birtday_Tapped(System.Object sender, System.EventArgs e)
+        {
+            viewModel.FillterBirtday = !viewModel.FillterBirtday;
+            if (viewModel.FillterBirtday)
+            {
+                filtter_birtday.TextColor = Color.FromHex("#1399D5");
+            }
+            else
+            {
+                filtter_birtday.TextColor = Color.FromHex("#444444");
+            }
+            LoadingHelper.Show();
+            await viewModel.LoadOnRefreshCommandAsync();
+            LoadingHelper.Hide();
         }
     }
 }

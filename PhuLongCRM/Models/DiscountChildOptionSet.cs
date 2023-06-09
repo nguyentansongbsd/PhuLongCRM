@@ -47,7 +47,9 @@ namespace PhuLongCRM.Models
         public DateTime? bsd_enddate { get; set; }
         public DateTime createdon { get; set; }
         public int bsd_method { get; set; }
-        public bool IsEnableChecked { get; set; }
+
+        private bool _isEnableChecked;
+        public bool IsEnableChecked { get => _isEnableChecked; set { _isEnableChecked = value; OnPropertyChanged(nameof(IsEnableChecked)); } }
 
         private string _itemColor = "#444444";
         public string ItemColor { get => _itemColor; set { _itemColor = value; OnPropertyChanged(nameof(ItemColor)); } }
@@ -85,5 +87,7 @@ namespace PhuLongCRM.Models
                 return false;
             }
         }
+        public Guid paymentscheme_id { get; set; }
+        public Guid promotion_id { get; set; }
     }
 }

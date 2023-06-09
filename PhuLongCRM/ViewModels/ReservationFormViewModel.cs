@@ -801,6 +801,9 @@ namespace PhuLongCRM.ViewModels
                                         <condition attribute='bsd_discountpromotionid' operator='eq' value='{this.DiscountExchangeList.Val}' uitype='bsd_bsd_discount_bsd_discountpromotion' />
                                       </filter>
                                     </link-entity>
+                                    <link-entity name='bsd_promotion' from='bsd_promotionid' to='bsd_promotions' link-type='outer'>
+                                        <attribute name='bsd_promotionid' alias='promotion_id'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
                 result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
@@ -828,6 +831,9 @@ namespace PhuLongCRM.ViewModels
                                       <condition attribute='statuscode' operator='eq' value='100000000'/>
                                       <condition attribute='bsd_phaseslaunch' operator='eq' value='{this.PhasesLaunchId}'/>
                                     </filter>
+                                    <link-entity name='bsd_promotion' from='bsd_promotionid' to='bsd_promotions' link-type='outer'>
+                                        <attribute name='bsd_promotionid' alias='promotion_id'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
             var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml2);
@@ -889,6 +895,9 @@ namespace PhuLongCRM.ViewModels
                                         </filter>
                                       </link-entity>
                                     </link-entity>
+                                    <link-entity name='bsd_paymentscheme' from='bsd_paymentschemeid' to='bsd_paymentscheme' link-type='outer'>
+                                        <attribute name='bsd_paymentschemeid' alias='paymentscheme_id'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
                 result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
@@ -916,6 +925,9 @@ namespace PhuLongCRM.ViewModels
                                       <condition attribute='statuscode' operator='eq' value='100000000'/>
                                       <condition attribute='bsd_phaseslaunch' operator='eq' value='{this.PhasesLaunchId}'/>
                                     </filter>
+                                    <link-entity name='bsd_paymentscheme' from='bsd_paymentschemeid' to='bsd_paymentscheme' link-type='outer'>
+                                        <attribute name='bsd_paymentschemeid' alias='paymentscheme_id'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
 
@@ -958,6 +970,9 @@ namespace PhuLongCRM.ViewModels
                                         <condition attribute='bsd_interneldiscountid' operator='eq' value='{this.DiscountInternelList.Val}' uitype='bsd_bsd_interneldiscount_bsd_discount' />
                                       </filter>
                                     </link-entity>
+                                    <link-entity name='bsd_paymentscheme' from='bsd_paymentschemeid' to='bsd_paymentscheme' link-type='outer'>
+                                        <attribute name='bsd_paymentschemeid' alias='paymentscheme_id'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
                 result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml);
@@ -985,6 +1000,9 @@ namespace PhuLongCRM.ViewModels
                                       <condition attribute='statuscode' operator='eq' value='100000000'/>
                                       <condition attribute='bsd_phaseslaunch' operator='eq' value='{this.PhasesLaunchId}'/>
                                     </filter>
+                                    <link-entity name='bsd_paymentscheme' from='bsd_paymentschemeid' to='bsd_paymentscheme' link-type='outer'>
+                                        <attribute name='bsd_paymentschemeid' alias='paymentscheme_id'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
             var result2 = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<DiscountChildOptionSet>>("bsd_discounts", fetchXml2);
