@@ -77,5 +77,6 @@ namespace PhuLongCRM.Models
                     return null;
             }
         }
+        public DateTime new_birthday { get; set; }
     }
 }

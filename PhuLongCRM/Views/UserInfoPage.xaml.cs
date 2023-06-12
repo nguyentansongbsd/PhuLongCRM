@@ -162,6 +162,10 @@ namespace PhuLongCRM.Views
             {
                 ToastMessageHelper.Message(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
             }
+            if (!PhoneNumberFormatVNHelper.CheckValidate(phone))
+            {
+                ToastMessageHelper.Message(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+            }
         }
 
         private async void SaveUserInfor_Clicked(object sender, EventArgs e)
@@ -187,6 +191,11 @@ namespace PhuLongCRM.Views
             if (phone.Length != 10)
             {
                 ToastMessageHelper.Message(Language.so_dien_thoai_khong_hop_le_gom_10_ky_tu);
+                return;
+            }
+            if (!PhoneNumberFormatVNHelper.CheckValidate(phone))
+            {
+                ToastMessageHelper.Message(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
                 return;
             }
 

@@ -699,35 +699,38 @@ namespace PhuLongCRM.Views
                     lb_cccd.IsVisible = false;
                     lb_cmnd.IsVisible = true;
                     lb_ho_chieu.IsVisible = false;
-                    if(!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissue))
-                    {
-                        viewModel.singleContact.bsd_placeofissueidentitycard = ""; //can cuoc
-                        viewModel.singleContact.bsd_placeofissue = "Công An Thành phố/ Tỉnh"; //cmnd
-                        viewModel.singleContact.bsd_placeofissuepassport = ""; //pp
-                    }
+                    viewModel.singleContact.bsd_placeofissue = "Công An Thành phố/ Tỉnh"; //cmnd
+                    //if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissue))
+                    //{
+                    //    viewModel.singleContact.bsd_placeofissueidentitycard = ""; //can cuoc
+                    //    viewModel.singleContact.bsd_placeofissue = "Công An Thành phố/ Tỉnh"; //cmnd
+                    //    viewModel.singleContact.bsd_placeofissuepassport = ""; //pp
+                    //}
                 }else if (viewModel.TypeIdCard?.Val == "100000001")// CCCD
                 {
                     lb_cccd.IsVisible = true;
                     lb_cmnd.IsVisible = false;
                     lb_ho_chieu.IsVisible = false;
-                    if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissueidentitycard))
-                    {
-                        viewModel.singleContact.bsd_placeofissueidentitycard = "Cục Cảnh sát ĐKQL cư trú và DLQG về dân cư"; //can cuoc
-                        viewModel.singleContact.bsd_placeofissue = ""; //cmnd
-                        viewModel.singleContact.bsd_placeofissuepassport = ""; //pp
-                    }
+                    //if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissueidentitycard))
+                    //{
+                    //    viewModel.singleContact.bsd_placeofissueidentitycard = "Cục Cảnh sát ĐKQL cư trú và DLQG về dân cư"; //can cuoc
+                    //    viewModel.singleContact.bsd_placeofissue = ""; //cmnd
+                    //    viewModel.singleContact.bsd_placeofissuepassport = ""; //pp
+                    //}
+                    viewModel.singleContact.bsd_placeofissueidentitycard = "Cục Cảnh sát ĐKQL cư trú và DLQG về dân cư";
                 }
                 else if (viewModel.TypeIdCard?.Val == "100000002")// Passport
                 {
                     lb_cccd.IsVisible = false;
                     lb_cmnd.IsVisible = false;
                     lb_ho_chieu.IsVisible = true;
-                    if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissuepassport))
-                    {
-                        viewModel.singleContact.bsd_placeofissueidentitycard = ""; //can cuoc
-                        viewModel.singleContact.bsd_placeofissue = ""; //cmnd
-                        viewModel.singleContact.bsd_placeofissuepassport = "Phòng Quản lý xuất nhập cảnh"; //pp
-                    }
+                    viewModel.singleContact.bsd_placeofissuepassport = "Phòng Quản lý xuất nhập cảnh";
+                    //if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissuepassport))
+                    //{
+                    //    viewModel.singleContact.bsd_placeofissueidentitycard = ""; //can cuoc
+                    //    viewModel.singleContact.bsd_placeofissue = ""; //cmnd
+                    //    viewModel.singleContact.bsd_placeofissuepassport = "Phòng Quản lý xuất nhập cảnh"; //pp
+                    //}
                 }
             }
         }
