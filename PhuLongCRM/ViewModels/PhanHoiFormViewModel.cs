@@ -216,7 +216,7 @@ namespace PhuLongCRM.ViewModels
 
             if (!string.IsNullOrWhiteSpace(singlePhanHoi.subjectId))
             {
-                this.Subject = CaseSubjectData.GetCaseSubjectById(singlePhanHoi.subjectId);
+                this.Subject = CaseSubjectData.GetCaseSubjectById(singlePhanHoi.subjectId) != null ? CaseSubjectData.GetCaseSubjectById(singlePhanHoi.subjectId) : new OptionSet(singlePhanHoi.subjectId, singlePhanHoi.subjectTitle);
             }
             if (!string.IsNullOrWhiteSpace(singlePhanHoi.parentCaseId))
             {
@@ -260,7 +260,7 @@ namespace PhuLongCRM.ViewModels
             this.Subjects = result.value;
             foreach(var item in Subjects)
             {
-                item.Label = CaseSubjectData.GetCaseSubjectById(item.Val).Label;
+                item.Label = CaseSubjectData.GetCaseSubjectById(item.Val) != null ? CaseSubjectData.GetCaseSubjectById(item.Val).Label : item.Label;
             }
         }
 

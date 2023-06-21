@@ -969,148 +969,38 @@
             <controls:CenterPopup x:Name="PTTT_CenterPopup" Title="{Binding PaymentScheme.bsd_name}">
                 <controls:CenterPopup.Body>
                     <ScrollView>
-                        <StackLayout>
-                            <telerikPrimitives:RadBorder CornerRadius="5" Padding="10,8" BorderThickness="1" BorderColor="{x:StaticResource NavigationPrimary}">
-                                <StackLayout>
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.account_education_os},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                        <Label Grid.Column="1" Text="{Binding PaymentScheme.bsd_constructionarea_format}" TextColor="#444444" FontSize="15" FontAttributes="Bold"/>
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto,*">
-                                        <Label Grid.Column="0" Text="{Binding Source={x:Static lang:Language.dien_tich_su_dung},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                        <Label Grid.Column="1" Text="{Binding PaymentScheme.bsd_netusablearea_format}" TextColor="#444444" FontSize="15" FontAttributes="Bold"/>
-                                    </Grid>
-                                </StackLayout>
-                            </telerikPrimitives:RadBorder>
-
-                            <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
-                                <telerikPrimitives:RadExpander.Header>
-                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{Static lang:Language.thong_tin_gia_title}"/>
-                                    </telerikPrimitives:ExpanderHeader>
-                                </telerikPrimitives:RadExpander.Header>
-                                <telerikPrimitives:RadExpander.Content>
-                                    <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="{x:Static lang:Language.gia_goc}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_detailamount_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.chiet_khau},StringFormat='( - ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_discount_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dkbg},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_packagesellingamount_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="{x:Static lang:Language.gia_ban_truoc_thue}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_totalamountlessfreight_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.gia_tri_qsdd},StringFormat='( - ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_landvaluededuction_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.thue},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.totaltax_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='( + ) {0}'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_freightamount_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.tong_tien}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.totalamount_format, StringFormat='{0} đ'}" FontAttributes="Bold" Grid.Column="1" FontSize="15" TextColor="Red" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                    </StackLayout>
-                                </telerikPrimitives:RadExpander.Content>
-                            </telerikPrimitives:RadExpander>
-                            <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
-                                <telerikPrimitives:RadExpander.Header>
-                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.phi_quan_ly_title}"/>
-                                    </telerikPrimitives:ExpanderHeader>
-                                </telerikPrimitives:RadExpander.Header>
-                                <telerikPrimitives:RadExpander.Content>
-                                    <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
-                                            <controls:FormLabel Text="{x:Static lang:Language.so_thang_dong_phi}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_numberofmonthspaidmf}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                        <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
-                                            <controls:FormLabel Text="{x:Static lang:Language.phi_quan_ly}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10"/>
-                                            <controls:FormLabelValue Text="{Binding Reservation.bsd_managementfee_format, StringFormat='{0} đ'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="25,10" HorizontalTextAlignment="End"/>
-                                        </Grid>
-                                    </StackLayout>
-                                </telerikPrimitives:RadExpander.Content>
-                            </telerikPrimitives:RadExpander>
-                            <telerikPrimitives:RadExpander IsExpanded="True" BorderColor="Transparent">
-                                <telerikPrimitives:RadExpander.Header>
-                                    <telerikPrimitives:ExpanderHeader Style="{StaticResource ExpanderHeaderStyle}">
-                                        <Label Style="{StaticResource ExpanderHeadingText}" Text="{x:Static lang:Language.dot_thanh_toan}"/>
-                                    </telerikPrimitives:ExpanderHeader>
-                                </telerikPrimitives:RadExpander.Header>
-                                <telerikPrimitives:RadExpander.Content>
-                                    <StackLayout BindableLayout.ItemsSource="{Binding InstallmentList}" BackgroundColor="White" Spacing="1">
-                                        <BindableLayout.EmptyViewTemplate>
-                                            <DataTemplate>
-                                                <Label Text="{x:Static lang:Language.khong_co_du_lieu}" TextColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White" Padding="0,15"/>
-                                            </DataTemplate>
-                                        </BindableLayout.EmptyViewTemplate>
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid ColumnDefinitions="Auto,*" Padding="20,0" BackgroundColor="White">
-                                                    <Grid WidthRequest="25" >
-                                                        <BoxView WidthRequest="1" HorizontalOptions="Center" Grid.Column="0" BackgroundColor="Gray"/>
-                                                        <Label Text="{Binding bsd_icon_format}" TextColor="{Binding bsd_icon_color}" FontSize="17" FontFamily="FontAwesomeSolid" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" BackgroundColor="White" Padding="2"/>
-                                                    </Grid>
-                                                    <telerikPrimitives:RadBorder BorderThickness="1" CornerRadius="10" BorderColor="Gray" Grid.Column="1" Margin="10,10,0,10">
-                                                        <StackLayout Padding="10">
-                                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto">
-                                                                <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="Center">
-                                                                    <Label Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
-                                                                </telerikPrimitives:RadBorder>
-                                                                <Label Grid.Column="1" Text="{Binding bsd_name_format}" TextColor="{StaticResource NavigationPrimary}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center"/>
-                                                            </Grid>
-                                                            <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding hide_duedate}">
-                                                                <Label Text="{Binding Source={x:Static lang:Language.ngay_den_han},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                                <Label Text="{Binding bsd_duedate,StringFormat='{0:dd/MM/yyyy}'}" TextColor="#444444" FontSize="15" Grid.Column="1" FontAttributes="Bold"/>
-                                                            </Grid>
-                                                            <Grid ColumnDefinitions="Auto,*">
-                                                                <Label Text="{Binding Source={x:Static lang:Language.tien_dot},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                                <Label Text="{Binding bsd_amountofthisphase_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" Grid.Column="1" FontAttributes="Bold"/>
-                                                            </Grid>
-                                                            <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding bsd_depositamount_hide}" >
-                                                                <Label Text="{Binding Source={x:Static lang:Language.tien_dat_coc},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                                <Label Text="{Binding bsd_depositamount_format, StringFormat='{0} đ'}" TextColor="Red" FontSize="15" Grid.Column="1" FontAttributes="Bold"/>
-                                                            </Grid>
-                                                            <Grid ColumnDefinitions="Auto,*">
-                                                                <Label Text="{Binding Source={x:Static lang:Language.da_thanh_toan},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="0"/>
-                                                                <Label Text="{Binding bsd_amountwaspaid_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                                            </Grid>
-                                                            <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_maintenanceamount_hide}" >
-                                                                <Label Grid.Column="0" Text="&#xf192;" TextColor="#b2b2b2" VerticalOptions="Center" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
-                                                                <Label Text="{Binding Source={x:Static lang:Language.phi_bao_tri},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                                                <Label Text="{Binding bsd_maintenanceamount_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
-                                                            </Grid>
-                                                            <Grid ColumnDefinitions="Auto,Auto,*" IsVisible="{Binding bsd_managementamount_hide}" >
-                                                                <Label Grid.Column="0" Text="&#xf192;" VerticalOptions="Center" TextColor="#b2b2b2" FontFamily="FontAwesomeSolid" FontSize="11" Margin="5,0,0,0"/>
-                                                                <Label Text="{Binding Source={x:Static lang:Language.phi_quan_ly},StringFormat='{0}: '}" TextColor="#444444" FontSize="15" Grid.Column="1"/>
-                                                                <Label Text="{Binding bsd_managementamount_format, StringFormat='{0} đ'}" TextColor="#444444" FontSize="15" Grid.Column="2"/>
-                                                            </Grid>
-                                                        </StackLayout>
-                                                    </telerikPrimitives:RadBorder>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </StackLayout>
-                                </telerikPrimitives:RadExpander.Content>
-                            </telerikPrimitives:RadExpander>
-
-                            <Grid ColumnDefinitions="*,*">
-                                <Button Grid.Column="0" Text="{x:Static lang:Language.huy}" Clicked="Cancel_ConfirmSigning"  CornerRadius="5" TextColor="{x:StaticResource NavigationPrimary}" HeightRequest="40" FontAttributes="Bold"  BorderColor="{x:StaticResource NavigationPrimary}" BorderWidth="1" BackgroundColor="White"/>
-                                <Button Grid.Column="1" Text="{x:Static lang:Language.xac_nhan}" Clicked="ConfirmSigning"  CornerRadius="5" TextColor="White" HeightRequest="40" FontAttributes="Bold"  BorderColor="{x:StaticResource NavigationPrimary}" BorderWidth="1" BackgroundColor="{x:StaticResource NavigationPrimary}"/>
+                        <StackLayout Spacing="1" BackgroundColor="#F1F1F1">
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                <controls:FormLabel Text ="{Binding Source={x:Static lang:Language.ma},StringFormat='{0} (System)'}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                <controls:FormLabelValue Text="{Binding PaymentScheme.bsd_paymentschemecodenew}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                <controls:FormLabel Text="{x:Static lang:Language.ma}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                <controls:FormLabelValue Text="{Binding PaymentScheme.bsd_paymentschemecode}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                <controls:FormLabel Text="{x:Static lang:Language.ten}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                <controls:FormLabelValue Text="{Binding PaymentScheme.bsd_name}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                <controls:FormLabel Text="{x:Static lang:Language.du_an}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                <controls:FormLabelValue Text="{Binding Reservation.project_name}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                <controls:FormLabel Text="{x:Static lang:Language.dot_mo_ban}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                <controls:FormLabelValue Text="{Binding Reservation.phaseslaunch_name}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                <controls:FormLabel Text="{x:Static lang:Language.loai}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                <controls:FormLabelValue Text="{Binding PaymentScheme.bsd_type_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
+                                <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_bat_dau}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                <controls:FormLabelValue Text="{Binding PaymentScheme.bsd_startdate, StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
+                                <controls:FormLabel Text="{x:Static lang:Language.thoi_gian_ket_thuc}" Grid.Column="0" FontSize="15" TextColor="#444444" Padding="25,10,0,10" VerticalOptions="Start"/>
+                                <controls:FormLabelValue Text="{Binding PaymentScheme.bsd_enddate, StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Padding="0,10,25,10" HorizontalTextAlignment="End"/>
                             </Grid>
                         </StackLayout>
                     </ScrollView>

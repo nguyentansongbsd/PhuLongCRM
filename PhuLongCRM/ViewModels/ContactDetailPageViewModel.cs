@@ -694,7 +694,7 @@ namespace PhuLongCRM.ViewModels
         public async Task<bool> updateNhuCauDiaDiem()
         {
             bool res = true;
-            if (Provinces != null && Provinces.Count > 0)
+            if (Provinces != null)
             {
                 foreach (var item in Provinces)
                 {
@@ -778,7 +778,7 @@ namespace PhuLongCRM.ViewModels
         public async Task<bool> updateNhuCauDuAn()
         {
             bool res = true;
-            if (Projects != null && Projects.Count > 0)
+            if (Projects != null)
             {
                 foreach (var item in Projects)
                 {

@@ -118,9 +118,11 @@ namespace PhuLongCRM.ViewModels
                                     </link-entity>
                                     <link-entity name='account' from='accountid' to='customerid' link-type='outer' alias='ad'>
                                        <attribute name='name' alias='account_name'/>
+                                       <attribute name='accountid' alias='account_id'/>
                                     </link-entity>
                                     <link-entity name='contact' from='contactid' to='customerid' link-type='outer' alias='ae'>
                                       <attribute name='bsd_fullname' alias='contact_name'/>
+                                      <attribute name='contactid' alias='contact_id'/>
                                     </link-entity>
                                     <link-entity name='bsd_taxcode' from='bsd_taxcodeid' to='bsd_taxcode' link-type='outer' alias='ag'>
                                       <attribute name='bsd_taxcodeid' alias='taxcode_id'/>

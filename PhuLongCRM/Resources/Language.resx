@@ -3903,4 +3903,10 @@
   <data name="chia_se_qr_code" xml:space="preserve">
     <value>Chia sẻ QR</value>
   </data>
+	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_bat_buoc_nhap" xml:space="preserve">
+    <value>Các field cần thiết khi chuyển đổi khách hàng đã bắt buộc nhập.</value>
+  </data>
+	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat" xml:space="preserve">
+    <value>Các field cần thiết khi chuyển đổi khách hàng đã được tắt.</value>
+  </data>
 </root>

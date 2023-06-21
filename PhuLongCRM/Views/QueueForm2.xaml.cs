@@ -219,7 +219,7 @@ namespace PhuLongCRM.Views
                 if (!string.IsNullOrWhiteSpace(viewModel.Error_message))
                     ToastMessageHelper.Message(viewModel.Error_message);
                 else
-                    ToastMessageHelper.Message(Language.thong_bao_that_bai);
+                    ToastMessageHelper.Message(created);
             }
         }
         private void lookUpDaiLy_SelectedItemChange(object sender, LookUpChangeEvent e)

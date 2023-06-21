@@ -467,6 +467,9 @@ namespace PhuLongCRM.ViewModels
                                           <attribute name='leadid' alias='lead_id'/>
                                           <attribute name='lastname' alias='lead_name'/>
                                     </link-entity>
+                                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+                                        <attribute name='name' alias='queue_name'/>
+                                    </link-entity>
                                   </entity>
                                 </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ActivitiModel>>("tasks", fetchXml);
@@ -487,6 +490,10 @@ namespace PhuLongCRM.ViewModels
                 if (!string.IsNullOrWhiteSpace(item.lead_name))
                 {
                     item.customer = item.lead_name;
+                }
+                if (!string.IsNullOrWhiteSpace(item.queue_name))
+                {
+                    item.customer = item.queue_name;
                 }
 
                 this.Activities.Add(item);
@@ -523,6 +530,9 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='lead' from='leadid' to='regardingobjectid' visible='false' link-type='outer' alias='a_0a67d7c87cd1eb11bacc000d3a80021e'>
                                           <attribute name='leadid' alias='lead_id'/>
                                           <attribute name='lastname' alias='lead_name'/>
+                                    </link-entity>
+                                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+                                        <attribute name='name' alias='queue_name'/>
                                     </link-entity>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
                                         <filter type='and'>
@@ -613,6 +623,9 @@ namespace PhuLongCRM.ViewModels
                                           <attribute name='leadid' alias='lead_id'/>
                                           <attribute name='lastname' alias='lead_name'/>
                                     </link-entity>
+                                    <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+                                        <attribute name='name' alias='queue_name'/>
+                                    </link-entity>
                                     <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
                                         <filter type='and'>
                                             <condition attribute='participationtypemask' operator='eq' value='2' />
@@ -647,6 +660,10 @@ namespace PhuLongCRM.ViewModels
                 if (!string.IsNullOrWhiteSpace(item.callto_lead_name))
                 {
                     item.customer = item.callto_lead_name;
+                }
+                if (!string.IsNullOrWhiteSpace(item.queue_name))
+                {
+                    item.customer = item.queue_name;
                 }
 
                 this.Activities.Add(item);

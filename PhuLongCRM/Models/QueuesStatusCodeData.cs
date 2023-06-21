@@ -27,7 +27,7 @@ namespace PhuLongCRM.Models
             {
                 new QueuesStatusCodeModel("1",Language.nhap,"#808080"), // Draft
                 new QueuesStatusCodeModel("2",Language.dang_cho,"#808080"), // On hold
-                new QueuesStatusCodeModel("3",Language.thanh_cong,"#808080"), // Won
+                new QueuesStatusCodeModel("3",Language.thanh_cong,"#C50147"), // Won
                 new QueuesStatusCodeModel("4",Language.da_huy,"#808080"),
                 new QueuesStatusCodeModel("5",Language.het_hang,"#808080"), //Out-Sold
                 new QueuesStatusCodeModel("100000000",Language.giu_cho,"#00CF79"),

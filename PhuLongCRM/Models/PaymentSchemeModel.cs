@@ -15,5 +15,9 @@ namespace PhuLongCRM.Models
         public string bsd_daforfeiture_format { get => StringFormatHelper.FormatPercent(bsd_daforfeiture); }
         public decimal bsd_spforfeiture { get; set; }
         public string bsd_spforfeiture_format { get => StringFormatHelper.FormatPercent(bsd_spforfeiture); }
+        public string bsd_paymentschemecodenew { get; set; }
+        public string bsd_paymentschemecode { get; set; }
+        public string bsd_type { get; set; }
+        public string bsd_type_format { get => PaymentSchemeTypeData.GetPaymentSchemeTypeById(bsd_type)?.Label; }
     }
 }

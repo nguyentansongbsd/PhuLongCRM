@@ -3,6 +3,7 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
+using System.Threading.Tasks;
 using Telerik.XamarinForms.Primitives;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -198,6 +199,10 @@ namespace PhuLongCRM.Views
             label_inactive.Text = Language.vo_hieu_luc;
             label_official.Text = Language.chinh_thuc;
             label_potential.Text = Language.tiem_nang_sts;
+        }
+        public async Task Refresh()
+        {
+           await viewModel.LoadOnRefreshCommandAsync();
         }
     }
 }

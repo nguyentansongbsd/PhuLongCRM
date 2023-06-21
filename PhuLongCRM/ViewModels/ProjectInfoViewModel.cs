@@ -194,21 +194,31 @@ namespace PhuLongCRM.ViewModels
                                 <filter type='and'>
                                   <condition attribute='statuscode' operator='eq' value='100000000' />
                                   <condition attribute='bsd_project' operator='eq' uitype='bsd_project' value='{ProjectId}' />
+                                  <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}'/>
+                                  <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}' />
                                 </filter>
                               </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<EventModel>>("bsd_events", fetchXml);
-            if (result == null || result.value.Any() == false) return;
-
-            var data = result.value;
-            foreach (var item in data)
+            if (result == null || result.value.Any() == false)
             {
-                if (item.bsd_startdate < DateTime.Now && item.bsd_enddate > DateTime.Now)
-                {
-                    IsHasEvent = true;
-                    return;
-                }
+                IsHasEvent = false;
+            }   
+            else
+            {
+                IsHasEvent = true;
             }
+            return;
+
+            //var data = result.value;
+            //foreach (var item in data)
+            //{
+            //    if (item.bsd_startdate < DateTime.Today.ToUniversalTime() && item.bsd_enddate > DateTime.Today.ToUniversalTime())
+            //    {
+            //        IsHasEvent = true;
+            //        return;
+            //    }
+            //}
         }
 
         public async Task LoadThongKe()
@@ -406,6 +416,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_queuingfeepaid' />
                                 <order attribute='bsd_bookingtime' descending='false' />
                                 <filter type='and'>
+                                    <condition attribute='bsd_queueforproject' operator='eq' value='1' />
                                     <condition attribute='bsd_project' operator='eq' value='{ProjectId}' />
                                     <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}'/>
                                   <condition attribute='statuscode' operator='in'>

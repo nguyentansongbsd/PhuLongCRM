@@ -356,25 +356,39 @@ namespace PhuLongCRM.Views
         #endregion
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
-            string phone = string.IsNullOrWhiteSpace(viewModel.singleAccount.telephone1) ? viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10) : null;
-            if (phone != string.Empty)
+            try
             {
-                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                //if (checkVadate == true)
-                //{
-                //    SmsMessage sms = new SmsMessage(null, phone);
-                //    await Sms.ComposeAsync(sms);
-                //}
-                //else
-                //{
-                //    ToastMessageHelper.Message(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                //}
-                SmsMessage sms = new SmsMessage(null, phone);
-                await Sms.ComposeAsync(sms);
+                if (!string.IsNullOrWhiteSpace(viewModel.singleAccount.telephone1) && viewModel.singleAccount.telephone1.Length >= 12)
+                {
+                    string phone = viewModel.singleAccount.telephone1.Substring(viewModel.singleAccount.telephone1.Length - 10, 10);
+                    if (phone != string.Empty)
+                    {
+                        //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
+                        //if (checkVadate == true)
+                        //{
+                        //    SmsMessage sms = new SmsMessage(null, phone);
+                        //    await Sms.ComposeAsync(sms);
+                        //}
+                        //else
+                        //{
+                        //    ToastMessageHelper.Message(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
+                        //}
+                        SmsMessage sms = new SmsMessage(null, phone);
+                        await Sms.ComposeAsync(sms);
+                    }
+                    else
+                    {
+                        ToastMessageHelper.Message(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+                    }
+                }
+                else
+                {
+                    ToastMessageHelper.Message(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ToastMessageHelper.Message(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+
             }
         }
 

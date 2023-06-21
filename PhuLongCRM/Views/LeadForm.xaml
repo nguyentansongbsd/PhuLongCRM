@@ -12,7 +12,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="menu_forqualify" Clicked="LeadQualify_Clicked">
             <ToolbarItem.IconImageSource>
-                <FontImageSource Glyph="&#xf007;" FontFamily="FontAwesomeRegular" Size="18" Color="White"/>
+                <FontImageSource Glyph="&#xf0ca;" FontFamily="FontAwesomeSolid" Size="18" Color="White"/>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
@@ -74,7 +74,10 @@
                                 <!--<controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
                                 <controls:DatePickerBoderControl Date="{Binding singleLead.new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}"  ShowTime="False"/>-->
 
-                                <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}"/>
+                                    <Label Text="*" TextColor="Red" IsVisible="{Binding ForQualify}" Grid.Column="1"/>
+                                </Grid>
                                 <controls:DatePickerBorder x:Name="birthday" DateSelected="DatePickerBorder_DateSelected"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}"/>

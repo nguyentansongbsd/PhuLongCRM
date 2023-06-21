@@ -14,7 +14,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshAccount = null;
         private LeadsContentView LeadsContentView;
         private ContactsContentview ContactsContentview;
-        private AccountsContentView AccountsContentView;
+        public static AccountsContentView AccountsContentView;
         public CustomerPage()
         {
             LoadingHelper.Show();
@@ -39,7 +39,6 @@ namespace PhuLongCRM.Views
 
         protected override async void OnAppearing()
         {
-            base.OnAppearing(); 
             if (LeadsContentView != null && NeedToRefreshLead == true)
             {
                 LoadingHelper.Show();
@@ -66,6 +65,7 @@ namespace PhuLongCRM.Views
                 NeedToRefreshAccount = false;
                 LoadingHelper.Hide();
             }
+            base.OnAppearing();
         }
 
         private async void NewCustomer_Clicked(object sender, EventArgs e)
