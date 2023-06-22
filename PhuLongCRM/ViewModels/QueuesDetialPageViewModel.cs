@@ -479,7 +479,7 @@ namespace PhuLongCRM.ViewModels
             string path = "/products(" + Queue._bsd_units_value + ")";
             CrmApiResponse result = await CrmHelper.PatchData(path, data);
         }
-        public async Task LoadCaseForQueue()
+        public async Task LoadCaseOfQueue()
         {
             if (list_thongtincase != null && Queue != null && Queue.opportunityid != Guid.Empty)
             {
@@ -590,5 +590,111 @@ namespace PhuLongCRM.ViewModels
                 return false;
             }
         }
+        //public async Task LoadCaseOfQueue()
+        //{
+        //    if (list_thongtincase != null && Queue != null && Queue.opportunityid != Guid.Empty)
+        //    {
+        //        string fetch = $@"<fetch version='1.0' count='5' page='{PageCase}' output-format='xml-platform' mapping='logical' distinct='false'>
+        //                        <entity name='activitypointer'>
+        //                            <attribute name='subject' />
+        //                            <attribute name='statecode' />
+        //                            <attribute name='activityid' />
+        //                            <attribute name='scheduledstart' />
+        //                            <attribute name='scheduledend' /> 
+        //                            <attribute name='activitytypecode' /> 
+        //                            <order attribute='modifiedon' descending='true' />
+        //                            <filter type='and'>
+        //                                <condition attribute='activitytypecode' operator='in'>
+        //                                    <value>4212</value>
+        //                                    <value>4210</value>
+        //                                    <value>4201</value>
+        //                                </condition>
+	       //                             <filter type='or'>
+        //                                    <condition entityname='meet' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+        //                                    <condition entityname='task' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+        //                                    <condition entityname='phonecall' attribute='{UserLogged.UserAttribute}' operator='eq' value='{UserLogged.Id}' />
+        //                                </filter>
+        //                                <condition attribute='regardingobjectid' operator='eq' value='{Queue.opportunityid}' />
+        //                            </filter>
+        //                            <link-entity name='appointment' from='activityid' to='activityid' alias='meet' link-type='outer'>
+        //                                <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
+        //                                    <attribute name='bsd_name' alias='accounts_bsd_name'/>
+        //                                </link-entity>
+        //                                <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
+        //                                    <attribute name='fullname' alias='contact_bsd_fullname'/>
+        //                                </link-entity>
+        //                                <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
+        //                                    <attribute name='fullname' alias='lead_fullname'/>
+        //                                </link-entity>
+        //                                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+        //                                    <attribute name='name' alias='queue_name'/>
+        //                                </link-entity>
+        //                            </link-entity>
+        //                            <link-entity name='task' from='activityid' to='activityid' alias='task' link-type='outer'>
+        //                                <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
+        //                                    <attribute name='bsd_name' alias='accounts_bsd_name'/>
+        //                                </link-entity>
+        //                                <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
+        //                                    <attribute name='fullname' alias='contact_bsd_fullname'/>
+        //                                </link-entity>
+        //                                <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
+        //                                    <attribute name='fullname' alias='lead_fullname'/>
+        //                                </link-entity>
+        //                                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+        //                                    <attribute name='name' alias='queue_name'/>
+        //                                </link-entity>
+        //                            </link-entity>
+        //                            <link-entity name='phonecall' from='activityid' to='activityid' alias='phonecall' link-type='outer'>
+        //                                <link-entity name='account' from='accountid' to='regardingobjectid' link-type='outer' alias='ae'>
+        //                                    <attribute name='bsd_name' alias='accounts_bsd_name'/>
+        //                                </link-entity>
+        //                                <link-entity name='contact' from='contactid' to='regardingobjectid' link-type='outer' alias='af'>
+        //                                    <attribute name='fullname' alias='contact_bsd_fullname'/>
+        //                                </link-entity>
+        //                                <link-entity name='lead' from='leadid' to='regardingobjectid' link-type='outer' alias='ag'>
+        //                                    <attribute name='fullname' alias='lead_fullname'/>
+        //                                </link-entity>
+        //                                <link-entity name='opportunity' from='opportunityid' to='regardingobjectid' link-type='outer' alias= 'aaff'>
+        //                                    <attribute name='name' alias='queue_name'/>
+        //                                </link-entity>
+        //                                <link-entity name='activityparty' from='activityid' to='activityid' link-type='outer' alias='aee'>
+        //                                    <filter type='and'>
+        //                                        <condition attribute='participationtypemask' operator='eq' value='2' />
+        //                                    </filter>
+        //                                    <link-entity name='contact' from='contactid' to='partyid' link-type='outer' alias='aff'>
+        //                                        <attribute name='fullname' alias='callto_contact_name'/>
+        //                                    </link-entity>
+        //                                    <link-entity name='account' from='accountid' to='partyid' link-type='outer' alias='agg'>
+        //                                        <attribute name='bsd_name' alias='callto_account_name'/>
+        //                                    </link-entity>
+        //                                    <link-entity name='lead' from='leadid' to='partyid' link-type='outer' alias='ahh'>
+        //                                        <attribute name='fullname' alias='callto_lead_name'/>
+        //                                    </link-entity>
+        //                                </link-entity>
+        //                            </link-entity>
+        //                        </entity>
+        //                    </fetch>";
+
+        //        var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<HoatDongListModel>>("activitypointers", fetch);
+        //        if (result != null && result.value.Count > 0)
+        //        {
+        //            var data = result.value;
+        //            foreach (var x in data)
+        //            {
+        //                list_thongtincase.Add(x);
+        //            }
+        //            //foreach (var item in result.value)
+        //            //{
+        //            //    if (item.activitytypecode == "appointment")
+        //            //        item.customer = await MeetCustomerHelper.MeetCustomer(item.activityid);
+        //            //    else if (item.activitytypecode == "task")
+        //            //        item.customer = item.regarding_name;
+        //            //    else if (item.activitytypecode == "phonecall")
+        //            //        item.customer = item.regarding_name;
+
+        //            //}
+        //        }
+        //    }
+        //}
     }
 }

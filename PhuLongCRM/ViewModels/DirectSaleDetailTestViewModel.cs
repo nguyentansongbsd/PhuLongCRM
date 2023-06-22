@@ -167,26 +167,28 @@ namespace PhuLongCRM.ViewModels
                                                         <link-entity name='salesorder' from='salesorderid' to='bsd_optionentry' link-type='outer' alias='hopdong' />
                                                         <link-entity name='quote' from='bsd_unitno' to='productid' link-type='outer' alias='btg' />" : "";
 
-            string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
-                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
-                                                                                        <attribute name='bsd_eventid' alias='event_id'/>
-                                                                                        <filter type='and'>
-                                                                                            <condition attribute='statuscode' operator='eq' value='100000000' />
-                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
-                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
-                                                                                        </filter>
-                                                                                    </link-entity>
+            string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner'>
+                                                                                    <attribute name='bsd_name' alias='phaseslaunch_name' />
+                                                                                  <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner'>
+                                                                                    <attribute name='bsd_eventid' alias='event_id' />
+                                                                                    <filter type='and'>
+                                                                                        <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                                                        <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}'/>
+                                                                                        <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}' />
+                                                                                    </filter>
+                                                                                  </link-entity>
                                                                                 </link-entity>" 
-                                                                                : $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='as'>
-                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='at'>
-                                                                                        <attribute name='bsd_eventid' alias='event_id'/>
+                                                                                : $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='outer' alias='ac'>
+                                                                                        <attribute name='bsd_name' alias='phaseslaunch_name' />
+                                                                                      <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='outer' alias='ad'>
+                                                                                        <attribute name='bsd_eventid' alias='event_id' />
                                                                                         <filter type='and'>
                                                                                             <condition attribute='statuscode' operator='eq' value='100000000' />
-                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
-                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}'/>
+                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}' />
                                                                                         </filter>
-                                                                                    </link-entity>
-                                                                                </link-entity>";
+                                                                                      </link-entity>
+                                                                                    </link-entity>";
 
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                               <entity name='product'>
@@ -423,7 +425,8 @@ namespace PhuLongCRM.ViewModels
                                         <attribute name='bsd_eventid' alias='event_id' />
                                         <filter type='and'>
                                             <condition attribute='statuscode' operator='eq' value='100000000' />
-                                            <condition attribute='bsd_eventid' operator='not-null' />
+                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}'/>
+                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}' />
                                         </filter>
                                       </link-entity>
                                     </link-entity>
@@ -455,35 +458,41 @@ namespace PhuLongCRM.ViewModels
                                   </filter>
                                 </link-entity>
                                 <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='an' >
-                                   <attribute name='bsd_startdate' alias='startdate_event' />
-                                   <attribute name='bsd_enddate' alias='enddate_event'/>
-                                   <attribute name='statuscode' alias='statuscode_event'/>
+                                  <filter type='and'>
+                                      <condition attribute='statuscode' operator='eq' value='100000000' />
+                                      <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}'/>
+                                      <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}' />
+                                    </filter>
                                 </link-entity>
                               </entity>
                             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<PhasesLanchModel>>("bsd_phaseslaunchs", fetchXml);
-            if (result == null || result.value.Any() == false) return;
+            if (result == null || result.value.Any() == false)
+                IsShowBtnBangTinhGia = false;
+            else
+                IsShowBtnBangTinhGia = true;
+            //return;
 
-            var data = result.value;
-            foreach (var item in data)
-            {
-                if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
-                {
-                    if (Unit?.statuscode == 100000000 || Unit?.statuscode == 100000004)
-                    {
-                        IsShowBtnBangTinhGia = true;
-                    }
-                    else
-                    {
-                        IsShowBtnBangTinhGia = false;
-                    }
-                    return;
-                }
-                else
-                {
-                    IsShowBtnBangTinhGia = false;
-                }
-            }
+            //var data = result.value;
+            //foreach (var item in data)
+            //{
+            //    if (item.startdate_event < DateTime.Now && item.enddate_event > DateTime.Now && item.statuscode_event == "100000000")
+            //    {
+            //        if (Unit?.statuscode == 100000000 || Unit?.statuscode == 100000004)
+            //        {
+            //            IsShowBtnBangTinhGia = true;
+            //        }
+            //        else
+            //        {
+            //            IsShowBtnBangTinhGia = false;
+            //        }
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        IsShowBtnBangTinhGia = false;
+            //    }
+            //}
         }
 
         public async Task UpdateTotalDirectSale(Floor floor)
@@ -497,15 +506,16 @@ namespace PhuLongCRM.ViewModels
 
                 string groupbyOwner = Filter.isOwner ? $@"<attribute name='name' groupby='true' alias='group_unit_id'/>" : "";
 
-                string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
-                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
-                                                                                        <filter type='and'>
-                                                                                            <condition attribute='statuscode' operator='eq' value='100000000' />
-                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
-                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
-                                                                                        </filter>
-                                                                                    </link-entity>
-                                                                                </link-entity>" : "";
+                string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner'>
+                                                                                  <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner'>
+                                                                                    <filter type='and'>
+                                                                                        <condition attribute='statuscode' operator='eq' value='100000000' />
+                                                                                        <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}'/>
+                                                                                        <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}' />
+                                                                                    </filter>
+                                                                                  </link-entity>
+                                                                                </link-entity>" 
+                                                                                : "";
 
                 string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                     <entity name='product'>
@@ -597,15 +607,16 @@ namespace PhuLongCRM.ViewModels
 
                 string groupbyOwner = Filter.isOwner ? $@"<attribute name='name' groupby='true' alias='group_unit_id'/>" : "";
 
-                string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner' alias='as'>
-                                                                                    <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner' alias='at'>
+                string isEvent = (Filter.Event.HasValue && Filter.Event.Value) ? $@"<link-entity name='bsd_phaseslaunch' from='bsd_phaseslaunchid' to='bsd_phaseslaunchid' link-type='inner'>
+                                                                                      <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner'>
                                                                                         <filter type='and'>
                                                                                             <condition attribute='statuscode' operator='eq' value='100000000' />
-                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}'/>
-                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                                                                                            <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}'/>
+                                                                                            <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}' />
                                                                                         </filter>
-                                                                                    </link-entity>
-                                                                                </link-entity>" : "";
+                                                                                      </link-entity>
+                                                                                    </link-entity>"
+                                                                                : "";
 
                 string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                     <entity name='product'>
@@ -622,7 +633,7 @@ namespace PhuLongCRM.ViewModels
                                         </link-entity>
                                         <link-entity name='bsd_floor' from='bsd_floorid' to='bsd_floor' link-type='inner' alias='ab'>
                                             <attribute name='bsd_floor' groupby='true' alias='group_floor_name'/>
-<attribute name='bsd_floornumber' groupby='true' alias='group_floor_number'/>
+                                            <attribute name='bsd_floornumber' groupby='true' alias='group_floor_number'/>
                                         </link-entity>
                                         {linkentityOwner}
                                         {isEvent}

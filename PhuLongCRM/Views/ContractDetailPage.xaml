@@ -28,7 +28,11 @@
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>
-                                <Label Grid.Column="1" Text="{Binding Contract.customer_name}" TextColor="#4BA8F1" FontAttributes="Bold" FontSize="15"/>
+                                <Label Grid.Column="1" Text="{Binding Contract.customer_name}" TextColor="#4BA8F1" FontAttributes="Bold" FontSize="15">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Customer_Tapped" NumberOfTapsRequired="1"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Label Grid.Column="0" Text="{x:Binding Source={x:Static lang:Language.ma_hop_dong},StringFormat='{0}: '}" FontSize="15" TextColor="#444444"/>

@@ -966,6 +966,11 @@ namespace PhuLongCRM.ViewModels
                                             <attribute name='bsd_spforfeiture' />
                                             <attribute name='bsd_daforfeiture' />
                                             <attribute name='bsd_optionforfeiture' />
+                                            <attribute name='bsd_startdate' />
+                                            <attribute name='bsd_enddate' />
+                                            <attribute name='bsd_paymentschemecodenew' />
+                                            <attribute name='bsd_paymentschemecode' />
+                                            <attribute name='bsd_type' />
                                             <order attribute='bsd_name' descending='false' />
                                             <filter type='and'>
                                                 <condition attribute='bsd_paymentschemeid' operator='eq' value='{Reservation.paymentscheme_id}' />

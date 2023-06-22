@@ -3897,4 +3897,10 @@
   <data name="chia_se_qr_code" xml:space="preserve">
     <value>Share QR Code</value>
   </data>
+	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_bat_buoc_nhap" xml:space="preserve">
+    <value>The fields for lead qualify are required.</value>
+  </data>
+	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat" xml:space="preserve">
+    <value>The fields for lead qualify are turn off.</value>
+  </data>
 </root>

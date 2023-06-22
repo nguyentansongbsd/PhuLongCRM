@@ -520,6 +520,24 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Các field cần thiết khi chuyển đổi khách hàng đã bắt buộc nhập..
+        /// </summary>
+        internal static string cac_field_can_khi_chuyen_doi_khach_hang_da_bat_buoc_nhap {
+            get {
+                return ResourceManager.GetString("cac_field_can_khi_chuyen_doi_khach_hang_da_bat_buoc_nhap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Các field cần thiết khi chuyển đổi khách hàng đã được tắt..
+        /// </summary>
+        internal static string cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat {
+            get {
+                return ResourceManager.GetString("cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cài đặt.
         /// </summary>
         internal static string cai_dat {

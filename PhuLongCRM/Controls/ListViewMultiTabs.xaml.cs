@@ -116,7 +116,7 @@ namespace PhuLongCRM.Controls
                     grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                     FieldListViewItem lb_sdt = new FieldListViewItem();
                     lb_sdt.Title = Language.so_dien_thoai;
-                    lb_sdt.SetBinding(FieldListViewItem.TextProperty, "SDT");
+                    lb_sdt.SetBinding(FieldListViewItem.TextProperty, "SDT_format");
                     grid.Children.Add(lb_sdt);
                     Grid.SetColumn(lb_sdt, 0);
                     Grid.SetRow(lb_sdt, 1);

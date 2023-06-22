@@ -107,7 +107,7 @@ namespace PhuLongCRM.Views
                     }
                     else
                     {
-                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_qr_code, "FontAwesomeSolid", "\uf029", null, ShowQRCode));
+                        viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.chia_se_qr_code, "FontAwesomeSolid", "\uf029", null, ShowQRCode));
                     }
 
                     viewModel.ButtonCommandList.Add(new FloatButtonItem(Language.tao_cuoc_hop, "FontAwesomeRegular", "\uf274", null, NewMeet));

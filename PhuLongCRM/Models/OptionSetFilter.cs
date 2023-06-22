@@ -9,6 +9,28 @@ namespace PhuLongCRM.Models
     {
         public string CustomerCode { get; set; }
         public string SDT { get; set; }
+        public string SDT_format
+        {
+            get
+            {
+                if (SDT != null && SDT.Contains("-"))
+                {
+                    return SDT.Split('-')[1].StartsWith("84") ? SDT.Replace("84", "+84-") : SDT;
+                }
+                else if (SDT != null && SDT.Contains("+84"))
+                {
+                    return SDT.Replace("+84", "+84-");
+                }
+                else if (SDT != null && SDT.StartsWith("84"))
+                {
+                    return "+84-" + SDT.Substring(2); /* SDT.Replace("84", "+84-");*/
+                }
+                else
+                {
+                    return SDT;
+                }
+            }
+        }
         public string CMND { get; set; }
         public string CCCD { get; set; }
         public string HC { get; set; }

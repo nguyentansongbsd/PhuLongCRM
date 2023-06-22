@@ -81,7 +81,8 @@ namespace PhuLongCRM.ViewModels
 
                 if (FillterBirtday)
                 {
-                    birtday = $@"<condition attribute='new_birthday' operator='on' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}' />
+                    //<condition attribute='new_birthday' operator='on' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today)}' />
+                    birtday = $@"
                                 <condition attribute='statuscode' operator='eq' value='1' />";
                 }
                 else
@@ -99,6 +100,7 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='mobilephone'/>
                         <attribute name='emailaddress1' />
                         <attribute name='createdon' />
+                        <attribute name='new_birthday' />
                         <attribute name='leadid' />
                         <attribute name='leadqualitycode' />
                         <attribute name='bsd_customercode' />

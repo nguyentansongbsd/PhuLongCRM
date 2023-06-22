@@ -88,7 +88,7 @@ namespace PhuLongCRM.Views
                 LoadingHelper.Show();
                 viewModel.PageCase = 1;
                 viewModel.list_thongtincase.Clear();
-                await viewModel.LoadCaseForQueue();
+                await viewModel.LoadCaseOfQueue();
                 ActivityPopup.Refresh();
                 NeedToRefreshActivity = false;
                 LoadingHelper.Hide();
@@ -498,7 +498,7 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             viewModel.PageCase++;
-            await viewModel.LoadCaseForQueue();
+            await viewModel.LoadCaseOfQueue();
             LoadingHelper.Hide();
         }
         private async void NewMeet(object sender, EventArgs e)
@@ -642,7 +642,7 @@ namespace PhuLongCRM.Views
                             viewModel.LoadDanhSachBangTinhGia(),
                             viewModel.LoadDanhSachDatCoc(),
                             viewModel.LoadDanhSachHopDong(),
-                            viewModel.LoadCaseForQueue()
+                            viewModel.LoadCaseOfQueue()
                             );
                     }
                     LoadingHelper.Hide();
@@ -658,27 +658,27 @@ namespace PhuLongCRM.Views
             SetButtons();
             if (viewModel.BangTinhGiaList != null && viewModel.BangTinhGiaList.Count > 0)
             {
-                viewModel.PageBangTinhGia = 0;
+                viewModel.PageBangTinhGia = 1;
                 viewModel.BangTinhGiaList.Clear();
                 await viewModel.LoadDanhSachBangTinhGia();
             }
             if (viewModel.DatCocList != null && viewModel.DatCocList.Count > 0)
             {
-                viewModel.PageDatCoc = 0;
+                viewModel.PageDatCoc = 1;
                 viewModel.DatCocList.Clear();
                 await viewModel.LoadDanhSachDatCoc();
             }
             if (viewModel.HopDongList != null && viewModel.HopDongList.Count > 0)
             {
-                viewModel.PageHopDong = 0;
+                viewModel.PageHopDong = 1;
                 viewModel.HopDongList.Clear();
                 await viewModel.LoadDanhSachHopDong();
             }
             if (viewModel.list_thongtincase != null && viewModel.list_thongtincase.Count > 0)
             {
-                viewModel.PageCase = 0;
+                viewModel.PageCase = 1;
                 viewModel.list_thongtincase.Clear();
-                await viewModel.LoadCaseForQueue();
+                await viewModel.LoadCaseOfQueue();
             }
             viewModel.IsRefreshing = false;
             LoadingHelper.Hide();

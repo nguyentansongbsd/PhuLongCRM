@@ -440,6 +440,12 @@ namespace PhuLongCRM.Views
                     return;
                 }
 
+                if (viewModel.ForQualify && viewModel.singleLead.new_birthday == null)
+                {
+                    ToastMessageHelper.Message(Language.vui_long_chon_ngay_sinh);
+                    return;
+                }
+
                 if (viewModel.HasGuardian != null && viewModel.HasGuardian.Val == "1")
                 {
                     if (viewModel.Guardian == null || viewModel.Guardian.contactid == Guid.Empty)
@@ -687,10 +693,16 @@ namespace PhuLongCRM.Views
         void LeadQualify_Clicked(System.Object sender, System.EventArgs e)
         {
             viewModel.ForQualify = !viewModel.ForQualify;
-            if(viewModel.ForQualify)
-                menu_forqualify.IconImageSource = new FontImageSource() { Glyph = "\uf4fc", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
+            if (viewModel.ForQualify)
+            {
+                menu_forqualify.IconImageSource = new FontImageSource() { Glyph = "\uf0ae", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
+                ToastMessageHelper.Message(Language.cac_field_can_khi_chuyen_doi_khach_hang_da_bat_buoc_nhap);
+            }
             else
-                menu_forqualify.IconImageSource = new FontImageSource() { Glyph = "\uf007", FontFamily = "FontAwesomeRegular", Size = 18, Color = Color.White };
+            {
+                menu_forqualify.IconImageSource = new FontImageSource() { Glyph = "\uf0ca", FontFamily = "FontAwesomeSolid", Size = 18, Color = Color.White };
+                ToastMessageHelper.Message(Language.cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat);
+            }
         }
     }
 }

@@ -100,7 +100,7 @@ namespace PhuLongCRM.ViewModels
             var data = result.value.FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(data.subjectId))
             {
-                data.subjectTitle = CaseSubjectData.GetCaseSubjectById(data.subjectId).Label;
+                data.subjectTitle = CaseSubjectData.GetCaseSubjectById(data.subjectId) != null ? CaseSubjectData.GetCaseSubjectById(data.subjectId).Label : data.subjectTitle;
             }
             
             this.Case = data;

@@ -262,20 +262,13 @@ namespace PhuLongCRM.ViewModels
             PrimaryContact = new LookUp{ Name = singleAccount.primarycontactname, Id = singleAccount._primarycontactid_value, Detail = "Contact" };
         }    
 
-        public async Task<bool> createAccount()
+        public async Task<CrmApiResponse> createAccount()
         {
             string path = "/accounts";
             singleAccount.accountid = Guid.NewGuid();
             var content = await this.getContent();
             CrmApiResponse result = await CrmHelper.PostData(path, content);
-            if (result.IsSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return result;
         }
 
         public async Task<Boolean> updateAccount( )

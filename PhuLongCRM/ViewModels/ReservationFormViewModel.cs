@@ -1497,6 +1497,11 @@ namespace PhuLongCRM.ViewModels
                 {
                     var content = await GetContentCoOwer(item);
                     apiResponse = await CrmHelper.PostData(path, content);
+                    // fix tạm
+                    if(!apiResponse.IsSuccess && string.IsNullOrWhiteSpace(apiResponse.Content))
+                    {
+                        apiResponse = await CrmHelper.PatchData(path, content);
+                    }    
                 }
             }
 

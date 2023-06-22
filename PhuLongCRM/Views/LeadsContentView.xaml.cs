@@ -3,6 +3,7 @@ using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.ViewModels;
 using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -237,6 +238,19 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Show();
             await viewModel.LoadOnRefreshCommandAsync();
+            if(viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<LeadListModel> list = new List<LeadListModel>();
+                foreach(var item in viewModel.Data)
+                {
+                    if(item.new_birthday.Day == DateTime.Today.Day && item.new_birthday.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }    
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }    
             LoadingHelper.Hide();
         }
     }

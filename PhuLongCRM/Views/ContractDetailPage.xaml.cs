@@ -389,5 +389,48 @@ namespace PhuLongCRM.Views
             Interest_CenterPopup.ShowCenterPopup();
             LoadingHelper.Hide();
         }
+
+        private void Customer_Tapped(object sender, EventArgs e)
+        {
+            LoadingHelper.Show();
+            if ( viewModel.Contract.account_id != Guid.Empty || viewModel.Contract.contact_id != Guid.Empty)
+            {
+                if (viewModel.Contract.account_id != Guid.Empty)
+                {
+                    AccountDetailPage newPage = new AccountDetailPage(viewModel.Contract.account_id);
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == 1)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else if (OnCompleted == 3 || OnCompleted == 2)
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.Message(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
+                }
+                else if (viewModel.Contract.contact_id != Guid.Empty)
+                {
+                    ContactDetailPage newPage = new ContactDetailPage(viewModel.Contract.contact_id);
+                    newPage.OnCompleted = async (OnCompleted) =>
+                    {
+                        if (OnCompleted == 1)
+                        {
+                            await Navigation.PushAsync(newPage);
+                            LoadingHelper.Hide();
+                        }
+                        else if (OnCompleted == 3 || OnCompleted == 2)
+                        {
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.Message(Language.khong_tim_thay_thong_tin_vui_long_thu_lai);
+                        }
+                    };
+                }
+            }
+            LoadingHelper.Hide();
+        }
     }
 }
