@@ -69,6 +69,19 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<ContactListModel> list = new List<ContactListModel>();
+                foreach (var item in viewModel.Data)
+                {
+                    if (item.birthdate?.Day == DateTime.Today.Day && item.birthdate?.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             LoadingHelper.Hide();
         }
 
@@ -139,6 +152,19 @@ namespace PhuLongCRM.Views
                 label_inactive.TextColor = Color.FromHex("1399D5");
             }
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<ContactListModel> list = new List<ContactListModel>();
+                foreach (var value in viewModel.Data)
+                {
+                    if (value.birthdate?.Day == DateTime.Today.Day && value.birthdate?.Month == DateTime.Today.Month)
+                    {
+                        list.Add(value);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             FilterView.IsVisible = false;
             LoadingHelper.Hide();
         }
@@ -179,6 +205,19 @@ namespace PhuLongCRM.Views
                                                 <value>{sts}</value>
                                               </condition>";
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<ContactListModel> list = new List<ContactListModel>();
+                foreach (var item in viewModel.Data)
+                {
+                    if (item.birthdate?.Day == DateTime.Today.Day && item.birthdate?.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             LoadingHelper.Hide();
         }
         private void RefreshLanguege()
@@ -209,6 +248,19 @@ namespace PhuLongCRM.Views
             }
             LoadingHelper.Show();
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<ContactListModel> list = new List<ContactListModel>();
+                foreach (var item in viewModel.Data)
+                {
+                    if (item.birthdate?.Day == DateTime.Today.Day && item.birthdate?.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             LoadingHelper.Hide();
         }
     }

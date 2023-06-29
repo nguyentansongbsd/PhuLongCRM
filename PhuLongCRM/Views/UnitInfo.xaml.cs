@@ -410,7 +410,7 @@ namespace PhuLongCRM.Views
             }
             else if (item.SharePointType == SharePointType.Video)
             {
-                ShowMedia showMedia = new ShowMedia(Config.OrgConfig.SP_ProjectID, item.MediaSourceId);
+                ShowMedia showMedia = new ShowMedia(Config.OrgConfig.SP_UnitID, item.MediaSourceId);
                 showMedia.OnCompleted = async (isSuccess) =>
                 {
                     if (isSuccess)

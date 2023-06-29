@@ -418,28 +418,23 @@ namespace PhuLongCRM.Views
 
         private async void NhanTin_Tapped(object sender, EventArgs e)
         {
-            string phone = viewModel.singleContact.mobilephone.Substring(viewModel.singleContact.mobilephone.Length - 10, 10);
-            if (phone != string.Empty)
+            if (!string.IsNullOrWhiteSpace(viewModel.singleContact.mobilephone) && viewModel.singleContact.mobilephone.Length >= 12)
             {
-                SmsMessage sms = new SmsMessage(null, phone);
-                await Sms.ComposeAsync(sms);
-                //var checkVadate = PhoneNumberFormatVNHelper.CheckValidate(phone);
-                //if (checkVadate == true)
-                //{
-                //    SmsMessage sms = new SmsMessage(null, phone);
-                //    await Sms.ComposeAsync(sms);
-                //    LoadingHelper.Hide();
-                //}
-                //else
-                //{
-                //    LoadingHelper.Hide();
-                //    ToastMessageHelper.ShortMessage(Language.so_dien_thoai_sai_dinh_dang_vui_long_kiem_tra_lai);
-                //}
+                string phone = viewModel.singleContact.mobilephone.Substring(viewModel.singleContact.mobilephone.Length - 10, 10);
+                if (phone != string.Empty)
+                {
+                    SmsMessage sms = new SmsMessage(null, phone);
+                    await Sms.ComposeAsync(sms);
+                }
+                else
+                {
+                    ToastMessageHelper.Message(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
+                }
             }
             else
             {
                 ToastMessageHelper.Message(Language.khach_hang_khong_co_so_dien_thoai_vui_long_kiem_tra_lai);
-            }
+            }        
         }
 
         private async void GoiDien_Tapped(object sender, EventArgs e)

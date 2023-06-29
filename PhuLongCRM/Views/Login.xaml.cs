@@ -379,7 +379,7 @@ namespace PhuLongCRM.Views
                     </link-entity>
                     <link-entity name='contact' from='contactid' to='bsd_contact' visible='false' link-type='outer' alias='a_5b790f4631f4eb1194ef000d3a801090'>
                       <attribute name='contactid' alias='contact_id'/>
-                      <attribute name='bsd_fullname' alias='contact_name'/>
+                      <attribute name='fullname' alias='contact_name'/>
                     </link-entity>
                     <link-entity name='account' from='accountid' to='bsd_agents' link-type='outer' alias='aa'>
                         <attribute name='bsd_name' alias='agent_name'/>
@@ -387,6 +387,8 @@ namespace PhuLongCRM.Views
                     </link-entity>
                   </entity>
                 </fetch>";
+            //fullname
+            // đổi field do không lấy được tên contact bsd_fullname
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<EmployeeModel>>("bsd_employees", fetchXml);
             if (result == null || result.value.Count == 0)

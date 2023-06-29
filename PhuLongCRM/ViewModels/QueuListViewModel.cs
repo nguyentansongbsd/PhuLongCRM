@@ -119,6 +119,7 @@ namespace PhuLongCRM.ViewModels
                             </filter>
                         <condition attribute='statuscode' operator='in'>
                             <value>4</value>
+                            <value>3</value>
                             <value>100000004</value>
                             <value>100000003</value>
                             <value>100000000</value>
@@ -155,7 +156,7 @@ namespace PhuLongCRM.ViewModels
             if (FiltersStatus != null && FiltersStatus.Count == 0)
             {
                 FiltersStatus.Add(new OptionSet("-1", Language.tat_ca));
-                var list = QueuesStatusCodeData.GetQueuesByIds("100000000,100000002,100000008,4,100000004,100000003");
+                var list = QueuesStatusCodeData.GetQueuesByIds("100000000,100000002,100000004,3,100000003,100000008,4,100000009,100000010");
                 foreach (var item in list)
                 {
                     FiltersStatus.Add(new OptionSet(item.Id, item.Name));
