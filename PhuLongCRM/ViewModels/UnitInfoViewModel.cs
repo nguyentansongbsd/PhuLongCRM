@@ -86,7 +86,7 @@ namespace PhuLongCRM.ViewModels
 
         public async Task LoadUnit()
         {
-            string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
               <entity name='product'>
                 <attribute name='productid' />
                 <attribute name='bsd_units' />
@@ -115,7 +115,7 @@ namespace PhuLongCRM.ViewModels
                 <attribute name='bsd_bankloan' />
                 <attribute name='bsd_phaseslaunchid' alias='bsd_phaseslaunch_id' />
                 <filter type='and'>
-                  <condition attribute='productid' operator='eq' uitype='product' value='" + UnitId.ToString() + @"' />
+                  <condition attribute='productid' operator='eq' uitype='product' value='{UnitId}' />
                 </filter>
                 <link-entity name='bsd_project' from='bsd_projectid' to='bsd_projectcode' visible='false' link-type='outer' alias='a_a77d98e66ce2e811a94e000d3a1bc2d1'>
                   <attribute name='bsd_name' alias='bsd_project_name' />
@@ -141,7 +141,8 @@ namespace PhuLongCRM.ViewModels
                     <attribute name='bsd_eventid' alias='event_id' />
                     <filter type='and'>
                         <condition attribute='statuscode' operator='eq' value='100000000' />
-                        <condition attribute='bsd_eventid' operator='not-null' />
+                        <condition attribute='bsd_startdate' operator='on-or-before' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}'/>
+                        <condition attribute='bsd_enddate' operator='on-or-after' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today.ToUniversalTime())}' />
                     </filter>
                   </link-entity>
                 </link-entity>
@@ -383,8 +384,8 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_name' />
                                     <link-entity name='bsd_event' from='bsd_phaselaunch' to='bsd_phaseslaunchid' link-type='inner'>
                                       <filter type='and'>
-                                        <condition attribute='bsd_enddate' operator='on-or-after' value='{DateTime.Now.ToString("yyyy-MM-dd")}' />
-                                        <condition attribute='bsd_startdate' operator='on-or-before' value='{DateTime.Now.ToString("yyyy-MM-dd")}' />
+                                        <condition attribute='bsd_enddate' operator='on-or-after' value='{DateTime.Today.ToUniversalTime().ToString("yyyy-MM-dd")}' />
+                                        <condition attribute='bsd_startdate' operator='on-or-before' value='{DateTime.Today.ToUniversalTime().ToString("yyyy-MM-dd")}' />
                                         <condition attribute='statuscode' operator='eq' value='100000000' />
                                       </filter>
                                     </link-entity>

@@ -70,6 +70,19 @@ namespace PhuLongCRM.Views
         {
             LoadingHelper.Show();
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<LeadListModel> list = new List<LeadListModel>();
+                foreach (var item in viewModel.Data)
+                {
+                    if (item.new_birthday.Day == DateTime.Today.Day && item.new_birthday.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             LoadingHelper.Hide();
         }
 
@@ -145,6 +158,19 @@ namespace PhuLongCRM.Views
                 }
             }
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<LeadListModel> list = new List<LeadListModel>();
+                foreach (var i in viewModel.Data)
+                {
+                    if (i.new_birthday.Day == DateTime.Today.Day && i.new_birthday.Month == DateTime.Today.Month)
+                    {
+                        list.Add(i);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             SortView.IsVisible = false;
             LoadingHelper.Hide();
         }
@@ -162,6 +188,19 @@ namespace PhuLongCRM.Views
                                             <value>1</value>
                                           </condition>";
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<LeadListModel> list = new List<LeadListModel>();
+                foreach (var item in viewModel.Data)
+                {
+                    if (item.new_birthday.Day == DateTime.Today.Day && item.new_birthday.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             LoadingHelper.Hide();
         }
         private async void DaChuyenDoi_Tapped(object sender, EventArgs e)
@@ -177,6 +216,19 @@ namespace PhuLongCRM.Views
                                             <value>3</value>
                                           </condition>";
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<LeadListModel> list = new List<LeadListModel>();
+                foreach (var item in viewModel.Data)
+                {
+                    if (item.new_birthday.Day == DateTime.Today.Day && item.new_birthday.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             LoadingHelper.Hide();
         }
         private async void KhongChuyenDoi_Tapped(object sender, EventArgs e)
@@ -196,6 +248,19 @@ namespace PhuLongCRM.Views
                                             <value>6</value>
                                           </condition>";
             await viewModel.LoadOnRefreshCommandAsync();
+            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
+            {
+                List<LeadListModel> list = new List<LeadListModel>();
+                foreach (var item in viewModel.Data)
+                {
+                    if (item.new_birthday.Day == DateTime.Today.Day && item.new_birthday.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                viewModel.Data.Clear();
+                viewModel.Data.AddRange(list);
+            }
             LoadingHelper.Hide();
         }
         private void RefreshLanguege()

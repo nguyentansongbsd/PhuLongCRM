@@ -14,7 +14,7 @@ namespace PhuLongCRM.Views
         public static bool? NeedToRefreshAccount = null;
         private LeadsContentView LeadsContentView;
         private ContactsContentview ContactsContentview;
-        public static AccountsContentView AccountsContentView;
+        private AccountsContentView AccountsContentView;
         public CustomerPage()
         {
             LoadingHelper.Show();
