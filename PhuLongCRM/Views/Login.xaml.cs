@@ -258,9 +258,9 @@ namespace PhuLongCRM.Views
 
                         if (!string.IsNullOrWhiteSpace(UserLogged.DateLoginFailed) && (DateTime.Now - DateTime.Parse(UserLogged.DateLoginFailed)).TotalHours <= 24.0 && UserLogged.NumberLogin >= UserLogged.LoginLimit)
                         {
-                                LoadingHelper.Hide();
-                                ToastMessageHelper.Message(Language.tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong);
-                                return;
+                            LoadingHelper.Hide();
+                            ToastMessageHelper.Message(Language.tai_khoan_cua_ban_da_bi_khoa_vui_long_lien_he_quan_tri_he_thong);
+                            return;
                         }
                         else
                         {
@@ -290,7 +290,7 @@ namespace PhuLongCRM.Views
 
                         if (string.IsNullOrWhiteSpace(employeeModel.bsd_imeinumber))
                         {
-                            await UpdateImei(employeeModel.bsd_employeeid.ToString()) ;
+                            await UpdateImei(employeeModel.bsd_employeeid.ToString());
                         }
                         else if (employeeModel.bsd_imeinumber != ImeiNum && employeeModel.bsd_imeinumber != imeiADmin)
                         {
