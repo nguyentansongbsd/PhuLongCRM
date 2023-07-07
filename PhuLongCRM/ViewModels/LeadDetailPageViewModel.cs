@@ -210,6 +210,9 @@ namespace PhuLongCRM.ViewModels
             singleLead = data;
             if (!string.IsNullOrWhiteSpace(singleLead.new_gender))
                 singleGender = ContactGender.GetGenderById(singleLead.new_gender);
+            else
+                singleGender = new OptionSet();
+
             if (!string.IsNullOrWhiteSpace(singleLead.leadsourcecode))
                 LeadSource = LeadSourcesData.GetLeadSourceById(singleLead.leadsourcecode);
             if (!string.IsNullOrWhiteSpace(singleLead.industrycode))
