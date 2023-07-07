@@ -42,6 +42,7 @@ namespace PhuLongCRM.Views
         public PhanHoiForm(Guid incidentid)
         {
             InitializeComponent();
+            this.BindingContext = viewModel = new PhanHoiFormViewModel();
             Init();
             viewModel.IncidentId = incidentid;
             InitUpdate();

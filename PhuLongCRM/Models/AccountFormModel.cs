@@ -221,6 +221,7 @@ namespace PhuLongCRM.Models
                     return false;
             }
         }
+        public string statecode { get; set; }
     }
 }
 

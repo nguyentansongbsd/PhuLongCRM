@@ -139,6 +139,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='bsd_businesstype' />
                                 <attribute name='bsd_customercode' />
                                 <attribute name='bsd_imageqrcode' />
+                                <attribute name='statecode' />
                                 <attribute name='bsd_employee' alias='employee_id'/>
                                 <order attribute='createdon' descending='true' />
                                     <link-entity name='contact' from='contactid' to='primarycontactid' visible='false' link-type='outer' alias='contacts'>

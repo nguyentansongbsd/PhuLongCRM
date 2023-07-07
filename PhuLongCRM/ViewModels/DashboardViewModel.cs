@@ -700,7 +700,7 @@ namespace PhuLongCRM.ViewModels
             if (result_task != null || result_task.value.Count != 0)
                 NumTask = result_task.value.FirstOrDefault().count;
 
-            string fetchXml_meet = $@"<fetch version='1.0' count='5' page='1' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
+            string fetchXml_meet = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>
                                   <entity name='appointment'>
                                     <attribute name='activityid' aggregate='count' alias='count'/>
                                     <filter type='and'>
