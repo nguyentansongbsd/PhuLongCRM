@@ -6,15 +6,15 @@ namespace PhuLongCRM.Config
 {
     public class OrgConfig
     {
-        public const string VerApp = "PL.CRM.UAT - VerDemo - Ver 1.6.9";
-        //public const string VerApp = "PL.CRM - Version 4.1";
-        //public const string VerApp = "PL.CRM - UAT - Ver 1.2";phulongdev
-
       //  public const string ApiUrl = "https://phulongdev.api.crm5.dynamics.com/api/data/v9.1";
       //  public const string Resource = "https://phulongdev.crm5.dynamics.com/";
 
         //public const string ApiUrl = "https://phulongtmp.api.crm5.dynamics.com/api/data/v9.1";
         //public const string Resource = "https://phulongtmp.crm5.dynamics.com/";
+      
+        //public const string VerApp = "PL.CRM.UAT - VerDemo - Ver 1.7";
+        public const string VerApp = "PhuLong - Version 1.2";
+        //public const string VerApp = "PL.CRM - UAT - Ver 1.2";
 
         public const string ApiUrl = "https://phulong.api.crm5.dynamics.com/api/data/v9.1";
         public const string Resource = "https://phulong.crm5.dynamics.com/";
