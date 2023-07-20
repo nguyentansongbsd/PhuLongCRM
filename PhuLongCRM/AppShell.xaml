@@ -69,11 +69,11 @@
             <Grid BackgroundColor="#e8f5fe" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,-20">
                 
             </Grid>
-            <controls:ExtendedFrame Grid.Row="0" Grid.RowSpan="2" Padding="4" CornerRadius="15" HorizontalOptions="End"  VerticalOptions="Center" Grid.Column="0">
+            <controls:ExtendedFrame Grid.Row="0" Grid.RowSpan="2" Padding="4" CornerRadius="15" HorizontalOptions="Center"  VerticalOptions="Center" Grid.Column="0">
                 <ffimageloading:CachedImage Source="{Binding Avartar,Converter={StaticResource Base64ToImageSource}}" LoadingPlaceholder="user.png" HeightRequest="75" WidthRequest="75" DownsampleWidth="500"/>
             </controls:ExtendedFrame>
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" Grid.Column="1" Grid.Row="0" VerticalOptions="End" RowSpacing="2" Padding="0,0,10,2">
-                <Label Text="{Binding ContactName}" Grid.Row="0" Grid.Column="0" TextColor="White" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation"/>
+                <Label Text="{Binding ContactName}" Grid.Row="0" Grid.Column="0" TextColor="White" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Start"/>
                 <Label Text="&#xf044;" FontFamily="FontAwesomeRegular" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="16" VerticalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UserInfor_Tapped"/>

@@ -520,7 +520,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Các field cần thiết khi chuyển đổi khách hàng đã bắt buộc nhập..
+        ///   Looks up a localized string similar to Bật chế độ thông tin khách hàng cần chuyển đổi..
         /// </summary>
         internal static string cac_field_can_khi_chuyen_doi_khach_hang_da_bat_buoc_nhap {
             get {
@@ -529,7 +529,7 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Các field cần thiết khi chuyển đổi khách hàng đã được tắt..
+        ///   Looks up a localized string similar to Tắt chế độ thông tin khách hàng cần chuyển đổi..
         /// </summary>
         internal static string cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat {
             get {

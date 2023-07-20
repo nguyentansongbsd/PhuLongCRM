@@ -406,12 +406,12 @@ namespace PhuLongCRM.ViewModels
             data["bsd_placeofissue"] = singleLead.bsd_placeofissue;
             data["bsd_registrationcode"] = singleLead.bsd_registrationcode;
 
-            data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone.Replace("+","").Replace("-","") : null;
+            data["mobilephone"] = !string.IsNullOrWhiteSpace(singleLead.mobilephone) ? singleLead.mobilephone.Replace("+", "").Replace("-", "") : null;
             data["telephone1"] = !string.IsNullOrWhiteSpace(singleLead.telephone1) ? singleLead.telephone1 : "+84";
 
             if (singleLead.new_birthday.HasValue)
             {
-                data["new_birthday"] = singleLead.new_birthday.Value.ToLocalTime();
+                data["new_birthday"] = singleLead.new_birthday.Value.ToUniversalTime();
             }
             else
             {
@@ -420,7 +420,7 @@ namespace PhuLongCRM.ViewModels
 
             if (singleLead.bsd_dategrant.HasValue)
             {
-                data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToLocalTime();
+                data["bsd_dategrant"] = singleLead.bsd_dategrant.Value.ToUniversalTime();
             }
             else
             {
@@ -438,7 +438,7 @@ namespace PhuLongCRM.ViewModels
 
             data["sic"] = singleLead.sic;
             data["donotsendmm"] = singleLead.donotsendmm.ToString();
-            data["lastusedincampaign"] = singleLead.lastusedincampaign.HasValue ? (DateTime.Parse(singleLead.lastusedincampaign.ToString()).ToLocalTime()).ToString("yyyy-MM-dd\"T\"HH:mm:ss\"Z\"") : null;
+            data["lastusedincampaign"] = singleLead.lastusedincampaign.HasValue ? (DateTime.Parse(singleLead.lastusedincampaign.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd\"T\"HH:mm:ss\"Z\"") : null;
 
             if (this.Topic == null)
             {
@@ -644,6 +644,11 @@ namespace PhuLongCRM.ViewModels
             {
                 await DeletLookup("bsd_guardian", singleLead.leadid);
             }
+            // fix loi unsave
+            //data["exchangerate"] = 1;
+            //data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)"; //processid
+
+            data["bsd_hienthids"] = $"<tr><td colspan=\"2\"><div id=\"myList\" style=\"display: inline; height: 200px; overflow: auto; \"></div></td></tr>";
             return data;
         }
 

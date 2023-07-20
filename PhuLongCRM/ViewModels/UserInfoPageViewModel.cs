@@ -61,6 +61,7 @@ namespace PhuLongCRM.ViewModels
             string fetchXml = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                                   <entity name='contact'>
                                     <attribute name='bsd_fullname' />
+                                    <attribute name='fullname' />
                                     <attribute name='mobilephone' />
                                     <attribute name='bsd_identitycardnumber' />
                                     <attribute name='gendercode' />

@@ -204,6 +204,7 @@ namespace PhuLongCRM.ViewModels
                                     {FilterXml}
                                 </filter>
                                 <link-entity name='opportunity' from='bsd_units' to='productid' link-type='outer' alias='ag' >
+                                    <attribute name='opportunityid' alias='queseid'/>
                                     <attribute name='statuscode' alias='queses_statuscode'/>
                                     <attribute name='bsd_employee' alias='queue_employee_id'/>
                                 </link-entity>
@@ -221,12 +222,17 @@ namespace PhuLongCRM.ViewModels
                     productid = x.productid
                 }).Select(y => y.First()).ToList();
 
+                List<Unit> queuesResult = result.value.GroupBy(x => new
+                {
+                    queseid = x.queseid
+                }).Select(y => y.First()).ToList();
+
                 var units = Block.Floors.SingleOrDefault(x => x.bsd_floorid == floorId).Units;
                 foreach (var item in unitsResult)
                 {
                     // dem unit co nhung trang thai giu cho la: queuing, waiting
-                    item.NumQueses = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002")).ToList().Count();
-                    item.NumQueueEmployee = result.value.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002") && x.queue_employee_id == UserLogged.Id).ToList().Count();
+                    item.NumQueses = queuesResult.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002")).ToList().Count();
+                    item.NumQueueEmployee = queuesResult.Where(x => x.productid == item.productid && (x.queses_statuscode == "100000000" || x.queses_statuscode == "100000002") && x.queue_employee_id == UserLogged.Id).ToList().Count();
                     units.Add(item);
                 }
             }catch(Exception ex)

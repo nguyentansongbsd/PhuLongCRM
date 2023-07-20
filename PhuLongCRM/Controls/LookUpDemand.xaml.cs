@@ -123,6 +123,9 @@ namespace PhuLongCRM.Controls
                                 <attribute name='new_name' alias='Label' />   
                                 <attribute name='new_provinceid' alias='Val' />
                                 <order attribute='bsd_priority' descending='false' />
+                                <filter type='and'>                       
+                                    <condition attribute='new_name' operator='like' value='%25key%25' />
+                                </filter>
                               </entity>
                             </fetch>";
             string entity = "new_provinces";
@@ -155,6 +158,9 @@ namespace PhuLongCRM.Controls
                                 <attribute name='bsd_name' alias='Label' />   
                                 <attribute name='bsd_projectid' alias='Val' />
                                 <order attribute='bsd_name' descending='false' />
+                                <filter type='and'>                       
+                                    <condition attribute='bsd_name' operator='like' value='%25key%25' />
+                                </filter>
                               </entity>
                             </fetch>";
             string entity = "bsd_projects";

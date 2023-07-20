@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using PhuLongCRM.Models;
 using PhuLongCRM.Settings;
 using Xamarin.Forms;
@@ -81,6 +83,24 @@ namespace PhuLongCRM.ViewModels
                   </entity>
                 </fetch>";
             });
+        }
+        public override async Task LoadOnRefreshCommandAsync()
+        {
+            await base.LoadOnRefreshCommandAsync();
+            if (Data != null && Data.Count > 0 && FillterBirtday)
+            {
+                List<ContactListModel> list = new List<ContactListModel>();
+                foreach (var item in Data)
+                {
+                    if (item.birthdate?.Day == DateTime.Today.Day && item.birthdate?.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                Data.Clear();
+                Data.AddRange(list);
+            }
+            //  return null;
         }
     }
 }

@@ -82,8 +82,7 @@ namespace PhuLongCRM.ViewModels
                 if (FillterBirtday)
                 {
                     //<condition attribute='new_birthday' operator='on' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today)}' />
-                    birtday = $@"
-                                <condition attribute='statuscode' operator='eq' value='1' />";
+                  //  birtday = $@"<condition attribute='statuscode' operator='eq' value='1' />";
                 }
                 else
                 {
@@ -106,7 +105,6 @@ namespace PhuLongCRM.ViewModels
                         <attribute name='bsd_customercode' />
                         {sort}
                         <filter type='and'>
-                            {birtday}
                             {filter_sts}
                             {filter_allocation}
                              <condition attribute='{UserLogged.UserAttribute}' operator='eq' value='" + UserLogged.Id + @"' />
@@ -123,6 +121,24 @@ namespace PhuLongCRM.ViewModels
                       </entity>
                     </fetch>";
             });
+        }
+        public override async Task LoadOnRefreshCommandAsync()
+        {
+            await base.LoadOnRefreshCommandAsync();
+            if (Data != null && Data.Count > 0 && FillterBirtday)
+            {
+                List<LeadListModel> list = new List<LeadListModel>();
+                foreach (var item in Data)
+                {
+                    if (item.new_birthday.Day == DateTime.Today.Day && item.new_birthday.Month == DateTime.Today.Month)
+                    {
+                        list.Add(item);
+                    }
+                }
+                Data.Clear();
+                Data.AddRange(list);
+            }
+          //  return null;
         }
     }
 }

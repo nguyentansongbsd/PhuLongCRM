@@ -3904,9 +3904,9 @@
     <value>Chia sẻ QR</value>
   </data>
 	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_bat_buoc_nhap" xml:space="preserve">
-    <value>Các field cần thiết khi chuyển đổi khách hàng đã bắt buộc nhập.</value>
+    <value>Bật chế độ thông tin khách hàng cần chuyển đổi.</value>
   </data>
 	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat" xml:space="preserve">
-    <value>Các field cần thiết khi chuyển đổi khách hàng đã được tắt.</value>
+    <value>Tắt chế độ thông tin khách hàng cần chuyển đổi.</value>
   </data>
 </root>

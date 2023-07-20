@@ -216,7 +216,10 @@ namespace PhuLongCRM.Views
             LoadingHelper.Show();
             if (viewModel.singleLead != null && viewModel.singleLead.bsd_hasguardian == false)
             {
-                if (string.IsNullOrWhiteSpace(viewModel.singleLead?.bsd_contactaddress))
+                if (string.IsNullOrWhiteSpace(viewModel.singleLead?.bsd_contactaddress)  
+                    || viewModel.singleLead?.bsd_country_id == Guid.Empty
+                    || viewModel.singleLead?.bsd_province_id == Guid.Empty
+                    || viewModel.singleLead?.bsd_district_id == Guid.Empty)
                 {
                     ToastMessageHelper.Message(Language.vui_long_dien_day_du_thong_tin_dia_chi_lien_lac);
                     LoadingHelper.Hide();

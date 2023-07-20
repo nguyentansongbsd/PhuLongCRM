@@ -3898,9 +3898,9 @@
     <value>Share QR Code</value>
   </data>
 	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_bat_buoc_nhap" xml:space="preserve">
-    <value>The fields for lead qualify are required.</value>
+    <value>Enable customer information mode for lead qualify.</value>
   </data>
 	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat" xml:space="preserve">
-    <value>The fields for lead qualify are turn off.</value>
+    <value>Turn off customer information mode for lead qualify.</value>
   </data>
 </root>
