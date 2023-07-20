@@ -37,7 +37,7 @@
                     </Grid>
                     
                     <controls:FormLabelRequired Text="{x:Static lang:Language.ho_ten}" Margin="0,20,0,0"/>
-                    <controls:MainEntry Text="{Binding ContactModel.bsd_fullname}" IsEnabled="False" ShowClearButton="False"/>
+                    <controls:MainEntry Text="{Binding ContactModel.fullname}" IsEnabled="False" ShowClearButton="False"/>
 
                     <controls:FormLabelRequired Text="{x:Static lang:Language.tai_khoan}" />
                     <controls:MainEntry Text="{Binding UserName}" IsEnabled="False" ShowClearButton="False"/>

@@ -50,5 +50,6 @@ namespace PhuLongCRM.Models
         private int _numQueueEmployee;
         public int NumQueueEmployee { get => _numQueueEmployee; set { _numQueueEmployee = value; OnPropertyChanged(nameof(NumQueueEmployee)); } }
         public decimal bsd_queuingfee { get; set; }
+
     }
 }
