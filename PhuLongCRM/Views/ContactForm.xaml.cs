@@ -158,7 +158,7 @@ namespace PhuLongCRM.Views
                 ToastMessageHelper.Message(Language.vui_long_chon_quoc_tich);
                 return;
             }
-            if (viewModel.singleContact.birthdate == null)
+            if (viewModel.singleContact.bsd_new_birthday == null)
             {
                 ToastMessageHelper.Message(Language.vui_long_chon_ngay_sinh);
                 return;
@@ -177,7 +177,7 @@ namespace PhuLongCRM.Views
                 }
                 else
                 {
-                    if (viewModel.Guardian.birthdate.HasValue && CalculateYear(viewModel.Guardian.birthdate.Value) < 18)
+                    if (viewModel.Guardian.bsd_new_birthday.HasValue && CalculateYear(viewModel.Guardian.bsd_new_birthday.Value) < 18)
                     {
                         ToastMessageHelper.Message(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
                         return;
@@ -186,7 +186,7 @@ namespace PhuLongCRM.Views
             }
             else
             {
-                if (viewModel.singleContact.birthdate != null && CalculateYear(viewModel.singleContact.birthdate.Value) < 18)
+                if (viewModel.singleContact.bsd_new_birthday != null && CalculateYear(viewModel.singleContact.bsd_new_birthday.Value) < 18)
                 {
                     ToastMessageHelper.Message(Language.khach_hang_phai_tu_18_tuoi);
                     return;
@@ -752,7 +752,7 @@ namespace PhuLongCRM.Views
         {
             if (viewModel.Guardian != null && viewModel.Guardian.contactid != Guid.Empty)
             {
-                if (viewModel.Guardian.birthdate.HasValue && CalculateYear(viewModel.Guardian.birthdate.Value) < 18)
+                if (viewModel.Guardian.bsd_new_birthday.HasValue && CalculateYear(viewModel.Guardian.bsd_new_birthday.Value) < 18)
                 {
                     ToastMessageHelper.Message(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
                     return;

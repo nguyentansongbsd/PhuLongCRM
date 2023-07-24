@@ -412,7 +412,7 @@
                                                                 <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                                     <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                                 </telerikPrimitives:RadBorder>
-                                                                <Label Grid.Column="1" Text="{Binding ordernumber}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                                <Label Grid.Column="1" Text="{Binding unit_name}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                             </Grid>
                                                             <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer_name}" Grid.Row="1"/>
                                                             <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding project_name}" Grid.Row="2"/>

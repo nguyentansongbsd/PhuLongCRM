@@ -991,7 +991,7 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.CoOwner.bsd_coownerid == Guid.Empty && viewModel.CoOwnerList.Any(x => x.contact_id == Guid.Parse(viewModel.CustomerCoOwner?.Val) || x.account_id == Guid.Parse(viewModel.CustomerCoOwner?.Val)))
+            if (viewModel.CoOwner.selected == false && viewModel.CoOwnerList.Any(x => x.contact_id == Guid.Parse(viewModel.CustomerCoOwner?.Val) || x.account_id == Guid.Parse(viewModel.CustomerCoOwner?.Val)))
             {
                 ToastMessageHelper.Message(Language.khach_hang_da_duoc_chon);
                 return;
@@ -1013,71 +1013,90 @@ namespace PhuLongCRM.Views
             viewModel.CoOwner.bsd_relationshipId = viewModel.Relationship.Val;
             viewModel.CoOwner.bsd_relationship = viewModel.Relationship.Label;
 
-            if (viewModel.CoOwner.bsd_coownerid == Guid.Empty)
+            if (viewModel.CoOwner.selected == false)
             {
-                viewModel.CoOwner.bsd_coownerid = Guid.NewGuid();
+                viewModel.CoOwner.selected = true; //Guid.NewGuid();
 
                 viewModel.CoOwnerList.Add(viewModel.CoOwner);
-                if (viewModel.QuoteId != Guid.Empty)
-                {
-                    bool IsSuccess = await viewModel.AddCoOwer();
-                    if (IsSuccess)
-                    {
-                        if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
-                        ToastMessageHelper.Message(Language.them_dong_so_huu_thanh_cong);
-                        LoadingHelper.Hide();
-                    }
-                    else
-                    {
-                        LoadingHelper.Hide();
-                        ToastMessageHelper.Message(Language.thong_bao_that_bai);
-                    }
-                }
                 await centerModalCoOwner.Hide();
                 LoadingHelper.Hide();
+                //if (viewModel.QuoteId != Guid.Empty)
+                //{
+                //    bool IsSuccess = await viewModel.AddCoOwer();
+                //    if (IsSuccess)
+                //    {
+                //        if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
+                //        ToastMessageHelper.Message(Language.them_dong_so_huu_thanh_cong);
+                //        LoadingHelper.Hide();
+                //    }
+                //    else
+                //    {
+                //        LoadingHelper.Hide();
+                //        ToastMessageHelper.Message(Language.thong_bao_that_bai);
+                //    }
+                //}              
             }
             else
             {
-                if (viewModel.QuoteId == Guid.Empty)
+                List<CoOwnerFormModel> coOwnerList = new List<CoOwnerFormModel>();
+                foreach (var item in viewModel.CoOwnerList)
                 {
-                    List<CoOwnerFormModel> coOwnerList = new List<CoOwnerFormModel>();
-                    foreach (var item in viewModel.CoOwnerList)
+                    if (viewModel.CoOwner.bsd_coownerid == item.bsd_coownerid)
                     {
-                        if (viewModel.CoOwner.bsd_coownerid == item.bsd_coownerid)
-                        {
-                            item.bsd_name = viewModel.CoOwner.bsd_name;
-                            item.contact_id = viewModel.CoOwner.contact_id;
-                            item.contact_name = viewModel.CoOwner.contact_name;
-                            item.account_id = viewModel.CoOwner.account_id;
-                            item.account_name = viewModel.CoOwner.account_name;
-                            item.bsd_relationshipId = viewModel.CoOwner.bsd_relationshipId;
-                            item.bsd_relationship = viewModel.CoOwner.bsd_relationship;
-                        }
-                        coOwnerList.Add(item);
+                        item.bsd_name = viewModel.CoOwner.bsd_name;
+                        item.contact_id = viewModel.CoOwner.contact_id;
+                        item.contact_name = viewModel.CoOwner.contact_name;
+                        item.account_id = viewModel.CoOwner.account_id;
+                        item.account_name = viewModel.CoOwner.account_name;
+                        item.bsd_relationshipId = viewModel.CoOwner.bsd_relationshipId;
+                        item.bsd_relationship = viewModel.CoOwner.bsd_relationship;
                     }
-                    viewModel.CoOwnerList.Clear();
-                    coOwnerList.ForEach(x => viewModel.CoOwnerList.Add(x));
-                    await centerModalCoOwner.Hide();
-                    LoadingHelper.Hide();
+                    coOwnerList.Add(item);
                 }
-                else
-                {
-                    CrmApiResponse response = await viewModel.UpdateCoOwner();
-                    if (response.IsSuccess)
-                    {
-                        viewModel.CoOwnerList.Clear();
-                        await viewModel.LoadCoOwners();
-                        await centerModalCoOwner.Hide();
-                        if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
-                        ToastMessageHelper.Message(Language.cap_nhat_dong_so_huu_thanh_cong);
-                        LoadingHelper.Hide();
-                    }
-                    else
-                    {
-                        LoadingHelper.Hide();
-                        ToastMessageHelper.Message(response.ErrorResponse.error.message);
-                    }
-                }
+                viewModel.CoOwnerList.Clear();
+                coOwnerList.ForEach(x => viewModel.CoOwnerList.Add(x));
+                await centerModalCoOwner.Hide();
+                LoadingHelper.Hide();
+                //if (viewModel.QuoteId == Guid.Empty)
+                //{
+                //    List<CoOwnerFormModel> coOwnerList = new List<CoOwnerFormModel>();
+                //    foreach (var item in viewModel.CoOwnerList)
+                //    {
+                //        if (viewModel.CoOwner.bsd_coownerid == item.bsd_coownerid)
+                //        {
+                //            item.bsd_name = viewModel.CoOwner.bsd_name;
+                //            item.contact_id = viewModel.CoOwner.contact_id;
+                //            item.contact_name = viewModel.CoOwner.contact_name;
+                //            item.account_id = viewModel.CoOwner.account_id;
+                //            item.account_name = viewModel.CoOwner.account_name;
+                //            item.bsd_relationshipId = viewModel.CoOwner.bsd_relationshipId;
+                //            item.bsd_relationship = viewModel.CoOwner.bsd_relationship;
+                //        }
+                //        coOwnerList.Add(item);
+                //    }
+                //    viewModel.CoOwnerList.Clear();
+                //    coOwnerList.ForEach(x => viewModel.CoOwnerList.Add(x));
+                //    await centerModalCoOwner.Hide();
+                //    LoadingHelper.Hide();
+                //}
+                //else
+                //{
+                //    CrmApiResponse response = await viewModel.UpdateCoOwner();
+                //    if (response.IsSuccess)
+                //    {
+                //        viewModel.CoOwnerList.Clear();
+                //        await viewModel.LoadCoOwners();
+                //        await centerModalCoOwner.Hide();
+                //        if (BangTinhGiaDetailPage.NeedToRefresh.HasValue) BangTinhGiaDetailPage.NeedToRefresh = true;
+                //        ToastMessageHelper.Message(Language.cap_nhat_dong_so_huu_thanh_cong);
+                //        LoadingHelper.Hide();
+                //    }
+                //    else
+                //    {
+                //        LoadingHelper.Hide();
+                //        ToastMessageHelper.Message(response.ErrorResponse.error.message);
+                //    }
+                //}
             }
         }
         #endregion
@@ -1187,12 +1206,12 @@ namespace PhuLongCRM.Views
                 CrmApiResponse response = await viewModel.CreateQuote();
                 if (response.IsSuccess)
                 {
+                    viewModel.QuoteId = viewModel.Quote.quoteid;
                     await Task.WhenAll(
                             viewModel.AddCoOwer(),
                             viewModel.AddPromotion(viewModel.SelectedPromotionIds),
                             viewModel.AddHandoverCondition()
                             );
-                    viewModel.QuoteId = viewModel.Quote.quoteid;
                     CrmApiResponse responseQuoteProduct = await viewModel.CreateQuoteProduct();
                     if (responseQuoteProduct.IsSuccess)
                     {
@@ -1267,6 +1286,16 @@ namespace PhuLongCRM.Views
             }
             else
             {
+                var UpdateCoOwner = await viewModel.UpdateCoOwner();
+                if (!UpdateCoOwner)
+                {
+                    ToastMessageHelper.Message(Language.cap_nhat_that_bai);
+                    LoadingHelper.Hide();
+                    return;
+                }
+                else
+                    ToastMessageHelper.Message(Language.cap_nhat_dong_so_huu_thanh_cong);
+
                 if (viewModel.IsHadLichThanhToan)
                 {
                     CrmApiResponse apiResponse = await viewModel.UpdateQuote_HasLichThanhToan();

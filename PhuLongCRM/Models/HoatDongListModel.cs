@@ -176,6 +176,26 @@ namespace PhuLongCRM.Models
         public string callto_lead_name { get; set; }
 
         public string _customer;
-        public string customer { get => _customer; set { _customer = value; OnPropertyChanged(nameof(customer)); } }
+        public string customer { get => _customer; set { _customer = value; OnPropertyChanged(nameof(customer)); } } //queue_name
+        public bool isTaskRegarding
+        {
+            get
+            {
+                if (activitytypecode == "task")
+                    return true;
+                else
+                    return false;
+            }
+        }
+        public bool isNotTaskRegarding
+        {
+            get
+            {
+                if (activitytypecode != "task")
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 }

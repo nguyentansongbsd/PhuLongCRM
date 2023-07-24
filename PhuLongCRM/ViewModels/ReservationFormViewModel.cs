@@ -1415,6 +1415,7 @@ namespace PhuLongCRM.ViewModels
             foreach (var item in result.value)
             {
                 item.bsd_relationship = RelationshipCoOwnerData.GetRelationshipById(item.bsd_relationshipId).Label;
+                item.selected = true;
                 this.CoOwnerList.Add(item);
             }
         }
@@ -1486,25 +1487,11 @@ namespace PhuLongCRM.ViewModels
             if (this.CoOwnerList == null || this.CoOwnerList.Count == 0) return false;
             string path = "/bsd_coowners";
             CrmApiResponse apiResponse = new CrmApiResponse();
-            if (this.QuoteId != Guid.Empty)
+            foreach (var item in this.CoOwnerList)
             {
-                var content = await GetContentCoOwer(this.CoOwner);
+                var content = await GetContentCoOwer(item);
                 apiResponse = await CrmHelper.PostData(path, content);
             }
-            else
-            {
-                foreach (var item in this.CoOwnerList)
-                {
-                    var content = await GetContentCoOwer(item);
-                    apiResponse = await CrmHelper.PostData(path, content);
-                    // fix tạm
-                    if(!apiResponse.IsSuccess && string.IsNullOrWhiteSpace(apiResponse.Content))
-                    {
-                        apiResponse = await CrmHelper.PatchData(path, content);
-                    }    
-                }
-            }
-
             if (apiResponse.IsSuccess)
             {
                 return true;
@@ -1515,24 +1502,49 @@ namespace PhuLongCRM.ViewModels
             }
         }
 
-        public async Task<CrmApiResponse> UpdateCoOwner()
+        public async Task<bool> UpdateCoOwner()
         {
+            if (this.CoOwnerList == null || this.CoOwnerList.Count == 0) return false;
             CrmApiResponse apiResponse = new CrmApiResponse();
-            if (this.CoOwnerList == null || this.CoOwnerList.Count == 0)
+            foreach (var item in this.CoOwnerList)
             {
-                apiResponse.IsSuccess = false;
-                return apiResponse;
+                if(item.bsd_coownerid == Guid.Empty)
+                {
+                    string path = "/bsd_coowners";
+                    var content = await GetContentCoOwer(item);
+                    apiResponse = await CrmHelper.PostData(path, content);
+                }
+                else
+                {
+                    string path = $"/bsd_coowners({item.bsd_coownerid})";
+                    var content = await GetContentCoOwerUpdate(item);
+                    apiResponse = await CrmHelper.PatchData(path, content);
+                }
             }
-            string path = $"/bsd_coowners({this.CoOwnerList[0].bsd_coownerid})";
-            var content = await GetContentCoOwer(this.CoOwner);
-            apiResponse = await CrmHelper.PatchData(path, content);
-            return apiResponse;
+            if (apiResponse.IsSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            //CrmApiResponse apiResponse = new CrmApiResponse();
+            //if (this.CoOwnerList == null || this.CoOwnerList.Count == 0)
+            //{
+            //    apiResponse.IsSuccess = false;
+            //    return apiResponse;
+            //}
+            //string path = $"/bsd_coowners({this.CoOwnerList[0].bsd_coownerid})";
+            //var content = await GetContentCoOwer(this.CoOwner);
+            //apiResponse = await CrmHelper.PatchData(path, content);
+            //return apiResponse;
         }
 
         private async Task<object> GetContentCoOwer(CoOwnerFormModel coOwner)
         {
             Dictionary<string, object> data = new Dictionary<string, object>();
-            data["bsd_coownerid"] = coOwner.bsd_coownerid;
+            data["bsd_coownerid"] = Guid.NewGuid();
             data["bsd_name"] = coOwner.bsd_name;
             data["bsd_relationship"] = coOwner.bsd_relationshipId;
             data["bsd_reservation@odata.bind"] = $"quotes({this.Quote.quoteid})";
@@ -1540,15 +1552,33 @@ namespace PhuLongCRM.ViewModels
             data["bsd_project@odata.bind"] = $"/bsd_projects({this.Quote.project_id})";
             data["bsd_units@odata.bind"] = $"/products({this.Quote.unit_id})";
 
-            if (this.CustomerCoOwner.Title == "2")
+            if (coOwner.contact_id != Guid.Empty)
             {
                 data["bsd_customer_contact@odata.bind"] = $"/contacts({coOwner.contact_id})";
-                await CrmHelper.SetNullLookupField("bsd_coowners", coOwner.bsd_coownerid, "bsd_customer_contact");
+                await CrmHelper.SetNullLookupField("bsd_coowners", coOwner.bsd_coownerid, "bsd_customer_account");
             }
-            else
+            else if (coOwner.account_id != Guid.Empty)
             {
                 data["bsd_customer_account@odata.bind"] = $"/accounts({coOwner.account_id})";
+                await CrmHelper.SetNullLookupField("bsd_coowners", coOwner.bsd_coownerid, "bsd_customer_contact");
+            }
+            return data;
+        }
+
+        private async Task<object> GetContentCoOwerUpdate(CoOwnerFormModel coOwner)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();           
+            data["bsd_name"] = coOwner.bsd_name;
+            data["bsd_relationship"] = coOwner.bsd_relationshipId;
+            if (coOwner.contact_id != Guid.Empty)
+            {
+                data["bsd_customer_contact@odata.bind"] = $"/contacts({coOwner.contact_id})";
                 await CrmHelper.SetNullLookupField("bsd_coowners", coOwner.bsd_coownerid, "bsd_customer_account");
+            }
+            else if (coOwner.account_id != Guid.Empty)
+            {
+                data["bsd_customer_account@odata.bind"] = $"/accounts({coOwner.account_id})";
+                await CrmHelper.SetNullLookupField("bsd_coowners", coOwner.bsd_coownerid, "bsd_customer_contact");
             }
             return data;
         }

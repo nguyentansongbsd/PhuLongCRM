@@ -15,14 +15,14 @@ namespace PhuLongCRM.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListViewDemand : Grid
     {
-        private ListViewDemandViewModel viewModel;
+        public ListViewDemandViewModel viewModel;
         public Action<OptionSet> ItemTapped { get; set; }
         public ListViewDemand(string fetch, string entity, List<OptionSet> itemselected = null)
         {
             InitializeComponent();
             this.BindingContext = viewModel = new ListViewDemandViewModel(fetch, entity);
             if (itemselected != null && itemselected.Count > 0)
-                viewModel.ItemSelecteds = itemselected;
+                viewModel.ItemSelecteds.AddRange(itemselected);
             this.SetUpDataTemplate();
             this.LoadData();
         }

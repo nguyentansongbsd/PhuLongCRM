@@ -67,7 +67,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='gendercode' />
                                     <attribute name='emailaddress1' />
                                     <attribute name='createdon' />
-                                    <attribute name='birthdate' />
+                                    <attribute name='bsd_new_birthday' />
                                     <attribute name='contactid' />
                                     <attribute name='bsd_postalcode' />
                                     <attribute name='bsd_housenumberstreet' />
@@ -197,7 +197,7 @@ namespace PhuLongCRM.ViewModels
             //data["bsd_fullname"] = this.ContactModel.bsd_fullname;
             data["emailaddress1"] = this.ContactModel.emailaddress1;
             data["mobilephone"] = PhoneNumber.Contains("+") ? PhoneNumber.Replace("+","").Replace("-",""): PhoneNumber;
-            data["birthdate"] = (DateTime.Parse(this.ContactModel.birthdate.ToString()).ToLocalTime()).ToString("yyyy-MM-dd");
+            data["bsd_new_birthday"] = (DateTime.Parse(this.ContactModel.bsd_new_birthday.ToString()).ToLocalTime()).ToString("yyyy-MM-dd");
             data["gendercode"] = this.Gender?.Val;
             data["bsd_postalcode"] = this.ContactModel.bsd_postalcode;
 

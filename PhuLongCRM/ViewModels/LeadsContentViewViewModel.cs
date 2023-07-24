@@ -21,7 +21,6 @@ namespace PhuLongCRM.ViewModels
         {                   
             PreLoadData = new Command(() =>
             {
-                string birtday = string.Empty;
                 string filter_sts = string.Empty;
                 string filter_name = string.Empty;
                 string filter_phone = string.Empty;
@@ -77,17 +76,7 @@ namespace PhuLongCRM.ViewModels
                         sort = "<order attribute='createdon' descending='true' />";
                 }
                 else
-                    sort = "<order attribute='createdon' descending='true' />";
-
-                if (FillterBirtday)
-                {
-                    //<condition attribute='new_birthday' operator='on' value='{string.Format("{0:yyyy-MM-dd}", DateTime.Today)}' />
-                  //  birtday = $@"<condition attribute='statuscode' operator='eq' value='1' />";
-                }
-                else
-                {
-                    birtday = string.Empty;
-                }
+                    sort = "<order attribute='createdon' descending='true' />";               
 
                 EntityName = "leads";
                 FetchXml = $@"<fetch version='1.0' count='15' page='{Page}' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -130,7 +119,8 @@ namespace PhuLongCRM.ViewModels
                 List<LeadListModel> list = new List<LeadListModel>();
                 foreach (var item in Data)
                 {
-                    if (item.new_birthday.Day == DateTime.Today.Day && item.new_birthday.Month == DateTime.Today.Month)
+                    var birthday = item.new_birthday.ToLocalTime();
+                    if (birthday.Day == DateTime.Today.Day && birthday.Month == DateTime.Today.Month)
                     {
                         list.Add(item);
                     }

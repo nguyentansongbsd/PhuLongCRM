@@ -21,6 +21,7 @@ namespace PhuLongCRM.Models
 
         public Guid reservation_id { get; set; }
         public string reservation_name { get; set; }
+        public bool selected { get; set; }
     }
 
 }

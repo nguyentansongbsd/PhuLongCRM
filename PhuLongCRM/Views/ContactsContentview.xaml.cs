@@ -74,7 +74,7 @@ namespace PhuLongCRM.Views
                 List<ContactListModel> list = new List<ContactListModel>();
                 foreach (var item in viewModel.Data)
                 {
-                    if (item.birthdate?.Day == DateTime.Today.Day && item.birthdate?.Month == DateTime.Today.Month)
+                    if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
                     {
                         list.Add(item);
                     }
@@ -157,7 +157,7 @@ namespace PhuLongCRM.Views
                 List<ContactListModel> list = new List<ContactListModel>();
                 foreach (var value in viewModel.Data)
                 {
-                    if (value.birthdate?.Day == DateTime.Today.Day && value.birthdate?.Month == DateTime.Today.Month)
+                    if (value.bsd_new_birthday?.Day == DateTime.Today.Day && value.bsd_new_birthday?.Month == DateTime.Today.Month)
                     {
                         list.Add(value);
                     }
@@ -210,7 +210,7 @@ namespace PhuLongCRM.Views
                 List<ContactListModel> list = new List<ContactListModel>();
                 foreach (var item in viewModel.Data)
                 {
-                    if (item.birthdate?.Day == DateTime.Today.Day && item.birthdate?.Month == DateTime.Today.Month)
+                    if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
                     {
                         list.Add(item);
                     }
@@ -253,7 +253,7 @@ namespace PhuLongCRM.Views
                 List<ContactListModel> list = new List<ContactListModel>();
                 foreach (var item in viewModel.Data)
                 {
-                    if (item.birthdate?.Day == DateTime.Today.Day && item.birthdate?.Month == DateTime.Today.Month)
+                    if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
                     {
                         list.Add(item);
                     }
