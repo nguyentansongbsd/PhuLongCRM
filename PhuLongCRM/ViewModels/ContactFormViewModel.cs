@@ -113,7 +113,7 @@ namespace PhuLongCRM.ViewModels
                                 <attribute name='gendercode' />
                                 <attribute name='emailaddress1' />
                                 <attribute name='createdon' />
-                                <attribute name='birthdate' />
+                                <attribute name='bsd_new_birthday' />
                                 <attribute name='address1_composite' />
                                 <attribute name='bsd_fullname' />
                                 <attribute name='contactid' />
@@ -174,7 +174,7 @@ namespace PhuLongCRM.ViewModels
                                     <link-entity name='contact' from='contactid' to='bsd_protecter' link-type='outer'>
                                         <attribute name='contactid' alias='protecter_id'/>
                                         <attribute name='bsd_fullname' alias='protecter_name'/>
-                                        <attribute name='birthdate' alias='protecter_birthdate' />
+                                        <attribute name='bsd_new_birthday' alias='protecter_birthdate' />
                                     </link-entity>
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
@@ -206,7 +206,7 @@ namespace PhuLongCRM.ViewModels
             }
             if (singleContact.protecter_id != Guid.Empty)
             {
-                Guardian = new ContactListModel { contactid = singleContact.protecter_id, bsd_fullname = singleContact.protecter_name, birthdate = singleContact.protecter_birthdate };
+                Guardian = new ContactListModel { contactid = singleContact.protecter_id, bsd_fullname = singleContact.protecter_name, bsd_new_birthday = singleContact.protecter_birthdate };
             }
 
             Address1 = new AddressModel
@@ -277,7 +277,7 @@ namespace PhuLongCRM.ViewModels
             {
                 data["emailaddress1"] = contact.emailaddress1.Trim();
             }
-            data["birthdate"] = contact.birthdate.HasValue ? (DateTime.Parse(contact.birthdate.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
+            data["bsd_new_birthday"] = contact.bsd_new_birthday.HasValue ? (DateTime.Parse(contact.bsd_new_birthday.ToString()).ToUniversalTime()).ToString("yyyy-MM-dd") : null;
             data["mobilephone"] = contact.mobilephone.Contains("-") ? contact.mobilephone.Replace("+","").Replace("-",""): contact.mobilephone;
             data["gendercode"] = contact.gendercode;
             if (checkCMND != contact.bsd_identitycardnumber)
@@ -630,7 +630,7 @@ namespace PhuLongCRM.ViewModels
             string fetch = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                   <entity name='contact'>
                     <attribute name='bsd_fullname' />
-                    <attribute name='birthdate' />
+                    <attribute name='bsd_new_birthday' />
                     <attribute name='contactid' />
                     <order attribute='createdon' descending='true' />
                     <filter type='and'>

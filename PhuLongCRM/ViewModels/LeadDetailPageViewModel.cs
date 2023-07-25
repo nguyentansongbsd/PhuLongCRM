@@ -68,8 +68,6 @@ namespace PhuLongCRM.ViewModels
         private List<OptionSet> _provinces;
         public List<OptionSet> Provinces { get => _provinces; set { _provinces = value; OnPropertyChanged(nameof(Provinces)); } }
 
-        private List<OptionSet> ProvincesForDetele { get; set; } = new List<OptionSet>();
-
         private bool _isRefreshing;
         public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }       
 
@@ -645,38 +643,43 @@ namespace PhuLongCRM.ViewModels
                 foreach (var item in result.value)
                 {
                     list.Add(item);
-                    ProvincesForDetele.Add(item);
                 }
                 Provinces = list;
             }
         }
-        public async Task<bool> updateNhuCauDiaDiem()
+
+        public async Task<bool> themNhuCauDiaDiem(OptionSet item)
         {
-            bool res = true;
-            if (Provinces != null)
-            {
-                foreach (var item in Provinces)
-                {
-                    string path = $"/leads({singleLead.leadid})/bsd_lead_new_province/$ref";
-                    IDictionary<string, object> content = new Dictionary<string, object>();
-                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
-                    CrmApiResponse result = await CrmHelper.PostData(path, content);
-                    if (!result.IsSuccess)
-                        res = false;
-                    ProvincesForDetele.Remove(item);
-                }
-                if (ProvincesForDetele.Count > 0)
-                {
-                    foreach (var item in ProvincesForDetele)
-                    {
-                        var res_delete = await Delete_NhuCau(item.Val, "bsd_lead_new_province");
-                        if (!res_delete)
-                            res = false;
-                    }
-                }
-            }
-            return res;
+            string path = $"/leads({singleLead.leadid})/bsd_lead_new_province/$ref";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
+            CrmApiResponse result = await CrmHelper.PostData(path, content);
+            return result.IsSuccess;
+
         }
+        public async Task<bool> xoaNhuCauDiaDiem(OptionSet item)
+        {
+            var result = await Delete_NhuCau(item.Val, "bsd_lead_new_province");
+            return result;
+        }
+
+        //public async Task<bool> updateNhuCauDiaDiem()
+        //{
+        //    bool res = true;
+        //    if (Provinces != null)
+        //    {
+        //        foreach (var item in Provinces)
+        //        {
+        //            string path = $"/leads({singleLead.leadid})/bsd_lead_new_province/$ref";
+        //            IDictionary<string, object> content = new Dictionary<string, object>();
+        //            content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
+        //            CrmApiResponse result = await CrmHelper.PostData(path, content);
+        //            if (!result.IsSuccess)
+        //                res = false;
+        //        }
+        //    }
+        //    return res;
+        //}
         public async Task<Boolean> Delete_NhuCau(string id, string entity)
         {
             string Token = UserLogged.AccessToken;

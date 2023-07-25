@@ -190,7 +190,7 @@
                                             </Grid>
                                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                                 <controls:FormLabel Text="{x:Static lang:Language.ngay_sinh}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                                <controls:FormLabelValue Text="{Binding singleContact.birthdate,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
+                                                <controls:FormLabelValue Text="{Binding singleContact.bsd_new_birthday,StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                             </Grid>
                                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White">
                                                 <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
@@ -422,7 +422,7 @@
                                                                 <telerikPrimitives:RadBorder CornerRadius="5" BackgroundColor="{Binding statuscode_color}" VerticalOptions="StartAndExpand">
                                                                     <Label Grid.Column="0" Text="{Binding statuscode_format}" FontSize="14" TextColor="White" FontAttributes="Bold" Margin="5"/>
                                                                 </telerikPrimitives:RadBorder>
-                                                                <Label Grid.Column="1" Text="{Binding ordernumber}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                                                <Label Grid.Column="1" Text="{Binding unit_name}" TextColor="{StaticResource NavigationPrimary}" FontSize="16" FontAttributes="Bold" MaxLines="1" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                                             </Grid>
                                                             <controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer_name}"/>
                                                             <controls:FieldListViewItem Title="{x:Static lang:Language.du_an}" Text="{Binding project_name}"/>
@@ -717,9 +717,6 @@
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout BackgroundColor="#eeeeee" Spacing="1">
                                         <controls:LookUpDemand Placeholder="{x:Static lang:Language.them_tinh_thanh}" ShowProvince="True" CenterModal="{x:Reference CenterModal}" SelectedIds="{Binding Provinces}" SelectedItemChange="Province_SelectedItemChange"/>
-                                        <Grid BackgroundColor="White">
-                                            <Button x:Name="btn_nhucaudiadiem" IsVisible="false" Clicked="btn_nhucaudiadiem_Clicked" Text="{x:Static lang:Language.luu}" TextColor="#1399D5" TextTransform="None" HeightRequest="35" BackgroundColor="White" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5" HorizontalOptions="Center" Margin="10,5"/>
-                                        </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>
@@ -733,9 +730,6 @@
                                 <telerikPrimitives:RadExpander.Content>
                                     <StackLayout BackgroundColor="#eeeeee" Spacing="1">
                                         <controls:LookUpDemand Placeholder="{x:Static lang:Language.them_du_an}" ShowProvince="False" CenterModal="{x:Reference CenterModal}" SelectedIds="{Binding Projects}" SelectedItemChange="Project_SelectedItemChange"/>
-                                        <Grid BackgroundColor="White">
-                                            <Button x:Name="btn_nhucauduan" Clicked="btn_nhucauduan_Clicked" IsVisible="false" Text="{x:Static lang:Language.luu}" TextColor="#1399D5" TextTransform="None" HeightRequest="35" BackgroundColor="White" BorderColor="#1399D5" BorderWidth="1" CornerRadius="5" HorizontalOptions="Center" Margin="10,5"/>
-                                        </Grid>
                                     </StackLayout>
                                 </telerikPrimitives:RadExpander.Content>
                             </telerikPrimitives:RadExpander>

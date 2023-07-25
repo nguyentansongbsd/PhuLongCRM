@@ -199,13 +199,13 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            if (viewModel.ContactModel.birthdate == null)
+            if (viewModel.ContactModel.bsd_new_birthday == null)
             {
                 ToastMessageHelper.Message(Language.vui_long_chon_ngay_sinh);
                 return;
             }
 
-            if (DateTime.Now.Year - DateTime.Parse(viewModel.ContactModel.birthdate.ToString()).Year < 18)
+            if (DateTime.Now.Year - DateTime.Parse(viewModel.ContactModel.bsd_new_birthday.ToString()).Year < 18)
             {
                 ToastMessageHelper.Message(Language.nguoi_dung_phai_tu_18_tuoi);
                 return;

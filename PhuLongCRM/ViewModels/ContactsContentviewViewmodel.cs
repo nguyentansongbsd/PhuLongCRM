@@ -60,7 +60,7 @@ namespace PhuLongCRM.ViewModels
                   <entity name='contact'>
                     <attribute name='bsd_fullname' />
                     <attribute name='mobilephone' />
-                    <attribute name='birthdate' />
+                    <attribute name='bsd_new_birthday' />
                     <attribute name='emailaddress1' />
                     <attribute name='bsd_contactaddress' />
                     <attribute name='createdon' />
@@ -92,7 +92,7 @@ namespace PhuLongCRM.ViewModels
                 List<ContactListModel> list = new List<ContactListModel>();
                 foreach (var item in Data)
                 {
-                    if (item.birthdate?.Day == DateTime.Today.Day && item.birthdate?.Month == DateTime.Today.Month)
+                    if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
                     {
                         list.Add(item);
                     }

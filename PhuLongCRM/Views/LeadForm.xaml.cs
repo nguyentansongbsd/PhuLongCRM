@@ -455,7 +455,7 @@ namespace PhuLongCRM.Views
                     }
                     else
                     {
-                        if (viewModel.Guardian.birthdate.HasValue && CalculateYear(viewModel.Guardian.birthdate.Value) < 18)
+                        if (viewModel.Guardian.bsd_new_birthday.HasValue && CalculateYear(viewModel.Guardian.bsd_new_birthday.Value) < 18)
                         {
                             ToastMessageHelper.Message(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
                             return;
@@ -657,7 +657,7 @@ namespace PhuLongCRM.Views
         {
             if(viewModel.Guardian != null && viewModel.Guardian.contactid != Guid.Empty)
             {
-                if (viewModel.Guardian.birthdate.HasValue && CalculateYear(viewModel.Guardian.birthdate.Value) < 18)
+                if (viewModel.Guardian.bsd_new_birthday.HasValue && CalculateYear(viewModel.Guardian.bsd_new_birthday.Value) < 18)
                 {
                     ToastMessageHelper.Message(Language.khach_hang_chua_du_dieu_kien_lam_nguoi_bao_ho_vui_long_kiem_tra_lai);
                     return;

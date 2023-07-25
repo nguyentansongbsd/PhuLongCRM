@@ -57,7 +57,7 @@
                                 <controls:LookUp x:Name="Lookup_LocalizationOptions" Placeholder="{x:Static lang:Language.chon_quoc_tich}" ItemsSource="{Binding LocalizationOptions}" SelectedItem="{Binding singleLocalization}" BottomModal="{x:Reference BottomModal}" NameDisplay="Label"/>
 
                                 <controls:FormLabelRequired Text="{x:Static lang:Language.ngay_sinh}" Margin="0,10,0,0"/>
-                                <controls:DatePickerBoderControl Date="{Binding singleContact.birthdate}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}" ShowTime="False"/>
+                                <controls:DatePickerBoderControl Date="{Binding singleContact.bsd_new_birthday}" Placeholder="{x:Static lang:Language.chon_ngay_sinh}" ShowTime="False"/>
 
                                 <controls:FormLabel Text="{x:Static lang:Language.co_nguoi_bao_ho}"/>
                                 <controls:LookUp x:Name="lookUpHasGuardian" Placeholder="{x:Static lang:Language.chon_gia_tri}" BottomModal="{Reference BottomModal}" NameDisplay="Label" SelectedItem="{Binding HasGuardian}" ItemsSource="{Binding HasGuardians}" SelectedItemChange="lookUpHasGuardian_SelectedItemChange"/>

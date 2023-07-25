@@ -30,14 +30,25 @@ namespace PhuLongCRM.Models
         private string _jobtitle;
         public string jobtitle { get { return _jobtitle; } set { _jobtitle = value; OnPropertyChanged(nameof(jobtitle)); } }
 
-        private DateTime? _birthdate;
-        public DateTime? birthdate
+        //private DateTime? _birthdate;
+        //public DateTime? birthdate
+        //{
+        //    get { return _birthdate; }
+        //    set
+        //    {
+        //        if (value.HasValue) { _birthdate = value.Value.ToLocalTime(); } else { _birthdate = null; }
+        //        OnPropertyChanged(nameof(birthdate));
+        //    }
+        //}
+
+        private DateTime? _bsd_new_birthday;
+        public DateTime? bsd_new_birthday
         {
-            get { return _birthdate; }
+            get { return _bsd_new_birthday; }
             set
             {
-                if (value.HasValue) { _birthdate = value.Value.ToLocalTime(); } else { _birthdate = null; }
-                OnPropertyChanged(nameof(birthdate));
+                if (value.HasValue) { _bsd_new_birthday = value.Value.ToLocalTime(); } else { _bsd_new_birthday = null; }
+                OnPropertyChanged(nameof(bsd_new_birthday));
             }
         }
 

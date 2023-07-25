@@ -9,6 +9,7 @@ namespace PhuLongCRM.Config
       //  public const string ApiUrl = "https://phulongdev.api.crm5.dynamics.com/api/data/v9.1";
       //  public const string Resource = "https://phulongdev.crm5.dynamics.com/";
 
+
         //public const string ApiUrl = "https://phulongtmp.api.crm5.dynamics.com/api/data/v9.1";
         //public const string Resource = "https://phulongtmp.crm5.dynamics.com/";
       

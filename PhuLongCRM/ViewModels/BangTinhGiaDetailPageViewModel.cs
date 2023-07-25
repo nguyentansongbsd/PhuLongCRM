@@ -983,7 +983,10 @@ namespace PhuLongCRM.ViewModels
                 {
                     return;
                 }
-                PaymentScheme = result.value.FirstOrDefault();
+                var data = result.value.FirstOrDefault();
+                data.bsd_startdate = data.bsd_startdate.ToLocalTime();
+                data.bsd_enddate = data.bsd_enddate.ToLocalTime();
+                PaymentScheme = data;
             }
         }
 

@@ -79,9 +79,6 @@ namespace PhuLongCRM.ViewModels
         private List<OptionSet> _provinces;
         public List<OptionSet> Provinces { get => _provinces; set { _provinces = value; OnPropertyChanged(nameof(Provinces)); } }
 
-        private List<OptionSet> ProvincesForDetele { get; set; } = new List<OptionSet>();
-        private List<OptionSet> ProjectsForDetele { get; set; } = new List<OptionSet>();
-
         private List<OptionSet> _projects;
         public List<OptionSet> Projects { get => _projects; set { _projects = value; OnPropertyChanged(nameof(Projects)); } }
         public byte[] AvatarArr { get; set; }
@@ -110,7 +107,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='lastname' />
                                     <attribute name='emailaddress1' />
                                     <attribute name='jobtitle' />
-                                    <attribute name='birthdate' />
+                                    <attribute name='bsd_new_birthday' />
                                     <attribute name='mobilephone' />
                                     <attribute name='createdon' />
                                     <attribute name='ownerid' alias='owner_id'/>
@@ -563,7 +560,7 @@ namespace PhuLongCRM.ViewModels
                 if (singleContact != null && singleContact.gendercode != null && singleGender != null)
                 {
                     PhongThuy.gioi_tinh = Int32.Parse(singleContact.gendercode);
-                    PhongThuy.nam_sinh = singleContact.birthdate.HasValue ? singleContact.birthdate.Value.Year : 0;
+                    PhongThuy.nam_sinh = singleContact.bsd_new_birthday.HasValue ? singleContact.bsd_new_birthday.Value.Year : 0;
                     if (PhongThuy.huong_tot != null && PhongThuy.huong_tot != null)
                     {
                         string[] huongtot = PhongThuy.huong_tot.Split('\n');
@@ -686,38 +683,53 @@ namespace PhuLongCRM.ViewModels
                 foreach (var item in result.value)
                 {
                     list.Add(item);
-                    ProvincesForDetele.Add(item);
                 }
                 Provinces = list;
             }
         }
-        public async Task<bool> updateNhuCauDiaDiem()
+        //public async Task<bool> updateNhuCauDiaDiem()
+        //{
+        //    bool res = true;
+        //    if (Provinces != null)
+        //    {
+        //        foreach (var item in Provinces)
+        //        {
+        //            string path = $"/contacts({singleContact.contactid})/bsd_contact_new_province/$ref";
+        //            IDictionary<string, object> content = new Dictionary<string, object>();
+        //            content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
+        //            CrmApiResponse result = await CrmHelper.PostData(path, content);
+        //            if (!result.IsSuccess)
+        //                res = false;
+        //            ProvincesForDetele.Remove(item);
+        //        }
+        //        if (ProvincesForDetele.Count > 0)
+        //        {
+        //            foreach (var item in ProvincesForDetele)
+        //            {
+        //                var res_delete = await Delete_NhuCau(item.Val, "bsd_contact_new_province");
+        //                if (!res_delete)
+        //                    res = false;
+        //            }
+        //        }
+        //    }
+        //    return res;
+        //}
+
+        public async Task<bool> themNhuCauDiaDiem(OptionSet item)
         {
-            bool res = true;
-            if (Provinces != null)
-            {
-                foreach (var item in Provinces)
-                {
-                    string path = $"/contacts({singleContact.contactid})/bsd_contact_new_province/$ref";
-                    IDictionary<string, object> content = new Dictionary<string, object>();
-                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
-                    CrmApiResponse result = await CrmHelper.PostData(path, content);
-                    if (!result.IsSuccess)
-                        res = false;
-                    ProvincesForDetele.Remove(item);
-                }
-                if (ProvincesForDetele.Count > 0)
-                {
-                    foreach (var item in ProvincesForDetele)
-                    {
-                        var res_delete = await Delete_NhuCau(item.Val, "bsd_contact_new_province");
-                        if (!res_delete)
-                            res = false;
-                    }
-                }
-            }
-            return res;
+            string path = $"/contacts({singleContact.contactid})/bsd_contact_new_province/$ref";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["@odata.id"] = $"{OrgConfig.ApiUrl}/new_provinces(" + item.Val + ")";
+            CrmApiResponse result = await CrmHelper.PostData(path, content);
+            return result.IsSuccess;
+            
         }
+        public async Task<bool> xoaNhuCauDiaDiem(OptionSet item)
+        {
+            var result = await Delete_NhuCau(item.Val, "bsd_contact_new_province");
+            return result;
+        }
+
         public async Task<Boolean> Delete_NhuCau(string id, string entity)
         {
             string Token = UserLogged.AccessToken;
@@ -770,37 +782,23 @@ namespace PhuLongCRM.ViewModels
                 foreach (var item in result.value)
                 {
                     list.Add(item);
-                    ProjectsForDetele.Add(item);
                 }
                 Projects = list;
             }
         }
-        public async Task<bool> updateNhuCauDuAn()
+        public async Task<bool> themNhuCauDuAn(OptionSet item)
         {
-            bool res = true;
-            if (Projects != null)
-            {
-                foreach (var item in Projects)
-                {
-                    string path = $"/contacts({singleContact.contactid})/bsd_contact_bsd_project/$ref";
-                    IDictionary<string, object> content = new Dictionary<string, object>();
-                    content["@odata.id"] = $"{OrgConfig.ApiUrl}/bsd_projects(" + item.Val + ")";
-                    CrmApiResponse result = await CrmHelper.PostData(path, content);
-                    if (!result.IsSuccess)
-                        res = false;
-                    ProjectsForDetele.Remove(item);
-                }
-                if (ProjectsForDetele.Count > 0)
-                {
-                    foreach (var item in ProjectsForDetele)
-                    {
-                        var res_delete = await Delete_NhuCau(item.Val, "bsd_contact_bsd_project");
-                        if (!res_delete)
-                            res = false;
-                    }
-                }
-            }
-            return res;
+            string path = $"/contacts({singleContact.contactid})/bsd_contact_bsd_project/$ref";
+            IDictionary<string, object> content = new Dictionary<string, object>();
+            content["@odata.id"] = $"{OrgConfig.ApiUrl}/bsd_projects(" + item.Val + ")";
+            CrmApiResponse result = await CrmHelper.PostData(path, content);
+            return result.IsSuccess;
+
+        }
+        public async Task<bool> xoaNhuCauDuAn(OptionSet item)
+        {
+            var result = await Delete_NhuCau(item.Val, "bsd_contact_bsd_project");
+            return result;
         }
         public async Task<bool> ChangeAvatar()
         {

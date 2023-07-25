@@ -28,7 +28,10 @@
                                         <Label Grid.Column="1" Text="{Binding subject}" TextColor="#1C78C2" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                                     </Grid>
                                     <Grid ColumnDefinitions="Auto,*">
-                                        <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="Gray" FontSize="15" Grid.Column="0"/>
+                                        <Grid>
+                                            <Label Text="{Binding Source={x:Static lang:Language.khach_hang},StringFormat='{0}: '}" TextColor="Gray" FontSize="15" Grid.Column="0" IsVisible="{Binding isNotTaskRegarding}"/>
+                                            <Label Text="{Binding Source={x:Static lang:Language.nguoi_lien_quan},StringFormat='{0}: '}" TextColor="Gray" FontSize="15" Grid.Column="0" IsVisible="{Binding isTaskRegarding}"/>
+                                        </Grid>
                                         <Label Text="{Binding customer}" TextColor="Black" FontSize="15" Grid.Column="1"/>
                                     </Grid>
                                     <!--<controls:FieldListViewItem Title="{x:Static lang:Language.khach_hang}" Text="{Binding customer}"/>-->

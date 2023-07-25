@@ -29,13 +29,13 @@ namespace PhuLongCRM.Models
                 }
             }
         }
-        public DateTime? birthdate { get; set; }
+        public DateTime? bsd_new_birthday { get; set; }
         public string birthdate_format
         {
             get
             {
-                if (birthdate.HasValue)
-                    return this.birthdate.Value.ToString("dd/MM/yyyy");
+                if (bsd_new_birthday.HasValue)
+                    return this.bsd_new_birthday.Value.ToString("dd/MM/yyyy");
                 return "";
             }
         }

@@ -204,7 +204,7 @@ namespace PhuLongCRM.ViewModels
 
             if(singleLead.guardian_id != Guid.Empty)
             {
-                Guardian = new ContactListModel { contactid = singleLead.guardian_id,bsd_fullname=singleLead.guardian_name, birthdate = singleLead.guardian_birthdate};
+                Guardian = new ContactListModel { contactid = singleLead.guardian_id,bsd_fullname=singleLead.guardian_name, bsd_new_birthday = singleLead.guardian_birthdate};
             }    
 
             string fetch2 = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -648,7 +648,7 @@ namespace PhuLongCRM.ViewModels
             //data["exchangerate"] = 1;
             //data["transactioncurrencyid@odata.bind"] = $"/transactioncurrencies(2366fb85-b881-e911-a83b-000d3a07be23)"; //processid
 
-            data["bsd_hienthids"] = $"<tr><td colspan=\"2\"><div id=\"myList\" style=\"display: inline; height: 200px; overflow: auto; \"></div></td></tr>";
+            data["bsd_hienthids"] = "<tr><td colspan=\"2\"><div id=\"myList\" style=\"display: inline; height: 200px; overflow: auto;\"></div></td></tr>";
             return data;
         }
 

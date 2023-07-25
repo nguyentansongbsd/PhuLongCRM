@@ -73,7 +73,7 @@
                 <ffimageloading:CachedImage Source="{Binding Avartar,Converter={StaticResource Base64ToImageSource}}" LoadingPlaceholder="user.png" HeightRequest="75" WidthRequest="75" DownsampleWidth="500"/>
             </controls:ExtendedFrame>
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" Grid.Column="1" Grid.Row="0" VerticalOptions="End" RowSpacing="2" Padding="0,0,10,2">
-                <Label Text="{Binding ContactName}" Grid.Row="0" Grid.Column="0" TextColor="White" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Start"/>
+                <Label Text="{Binding ContactName}" Grid.Row="0" Grid.Column="0" TextColor="White" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Start" MaxLines="2" LineBreakMode="TailTruncation"/>
                 <Label Text="&#xf044;" FontFamily="FontAwesomeRegular" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="16" VerticalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="UserInfor_Tapped"/>
@@ -83,9 +83,9 @@
             </Grid>
             <Grid VerticalOptions="Start" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,*">
                 <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="LightGreen" Grid.Column="0" Grid.Row="0" VerticalOptions="Start">
-                    <Label Text="{x:Static lang:Language.dai_ly_appshell}" FontSize="14" TextColor="White" Margin="6,3"/>
+                    <Label Text="{x:Static lang:Language.dai_ly_appshell}" FontSize="10" TextColor="White" Margin="6,3"/>
                 </telerikPrimitives:RadBorder>
-                <Label Text="{Binding Agent}" Grid.Column="1" Grid.Row="0" FontSize="14" TextColor="#444444" VerticalOptions="Center"/>
+                <Label Text="{Binding Agent}" Grid.Column="1" Grid.Row="0" FontSize="10" TextColor="#444444" VerticalOptions="Center"/>
             </Grid>
         </Grid>
         <!--<StackLayout BackgroundColor="White" HeightRequest="120">
