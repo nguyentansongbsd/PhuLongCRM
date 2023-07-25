@@ -83,7 +83,7 @@ namespace PhuLongCRM.Views
                 NeedToRefreshDC = false;
                 LoadingHelper.Hide();
             }
-            if (NeedToRefreshActivity == true)
+            if (viewModel.list_thongtincase != null && NeedToRefreshActivity == true)
             {
                 LoadingHelper.Show();
                 viewModel.PageCase = 1;
