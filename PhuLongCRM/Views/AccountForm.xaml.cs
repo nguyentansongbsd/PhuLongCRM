@@ -297,6 +297,7 @@ namespace PhuLongCRM.Views
                     {
                         if (QueueForm.NeedToRefresh.HasValue) QueueForm.NeedToRefresh = true;
                         if (CustomerPage.NeedToRefreshAccount.HasValue) CustomerPage.NeedToRefreshAccount = true;
+                        await Task.Delay(3000);
                       //  if(CustomerPage.AccountsContentView != null) await CustomerPage.AccountsContentView.viewModel.LoadOnRefreshCommandAsync();
                       //  Console.WriteLine(CustomerPage.AccountsContentView.viewModel.Data.ToString());
                         ToastMessageHelper.Message(Language.tao_khach_hang_doanh_nghiep_thanh_cong);
