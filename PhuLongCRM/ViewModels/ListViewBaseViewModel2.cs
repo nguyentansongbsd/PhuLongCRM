@@ -116,6 +116,7 @@ namespace PhuLongCRM.ViewModels
             }
             var items = await LoadItems();
             this.Data.AddRange(items);
+            System.Diagnostics.Debug.WriteLine("List view có: " + items.Count);
             OnPropertyChanged(nameof(IsEmptyList));
         }
 
@@ -125,7 +126,8 @@ namespace PhuLongCRM.ViewModels
             var items = new List<TEntity>();
 
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<TEntity>>(EntityName, FetchXml);
-
+            System.Diagnostics.Debug.WriteLine("result có: " + result.value.Count);
+            System.Diagnostics.Debug.WriteLine("Fetch: " + FetchXml);
             if (result != null)
             {
                 var list = (List<TEntity>)result.value;

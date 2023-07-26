@@ -301,7 +301,6 @@ namespace PhuLongCRM.Views
                       //  Console.WriteLine(CustomerPage.AccountsContentView.viewModel.Data.ToString());
                         ToastMessageHelper.Message(Language.tao_khach_hang_doanh_nghiep_thanh_cong);
                         await Navigation.PopAsync();
-                        LoadingHelper.Hide();
                     }
                     else
                     {
