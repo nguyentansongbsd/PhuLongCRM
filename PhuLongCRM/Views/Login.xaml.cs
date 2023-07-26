@@ -77,7 +77,7 @@ namespace PhuLongCRM.Views
 
                 labelflagEN.TextColor = Color.White;
                 labelflagVN.TextColor = Color.FromHex("#444444");
-            }
+            }           
         }
 
         protected override bool OnBackButtonPressed()
@@ -232,10 +232,10 @@ namespace PhuLongCRM.Views
 
             try
             {
-                LoadingHelper.Show();
+                LoadingHelper.Show();              
                 var response = await LoginHelper.Login();
                 if (response.IsSuccessStatusCode)
-                {
+                {                  
                     var body = await response.Content.ReadAsStringAsync();
                     GetTokenResponse tokenData = JsonConvert.DeserializeObject<GetTokenResponse>(body);
                     UserLogged.AccessToken = tokenData.access_token;
@@ -571,6 +571,6 @@ namespace PhuLongCRM.Views
         {
             UserLogged.IsTimeOut = false;
             TimeOut_Popup.IsVisible = false;
-        }
+        }    
     }
 }
