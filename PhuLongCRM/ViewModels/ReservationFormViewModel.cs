@@ -1955,10 +1955,13 @@ namespace PhuLongCRM.ViewModels
             if (result.IsSuccess == false) return;
             var idQuote = result.Content.Split(',')[2].Split('\'')[1];
         }
-
-
-
-
+        public async Task<CrmApiResponse> UpdateDiscountTransaction()
+        {
+            string path = "/quotes(" + this.Quote.quoteid + ")/Microsoft.Dynamics.CRM.bsd_Action_DiscountTranSactionUpdateCurrency";
+            var content = new { };
+            CrmApiResponse result = await CrmHelper.PostData(path, content);
+            return result;
+        }
 
     }
 }

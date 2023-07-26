@@ -92,10 +92,15 @@ namespace PhuLongCRM.ViewModels
                 List<ContactListModel> list = new List<ContactListModel>();
                 foreach (var item in Data)
                 {
-                    if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
+                    var birthday = item.bsd_new_birthday?.ToLocalTime();
+                    if (birthday?.Day == DateTime.Today.Day && birthday?.Month == DateTime.Today.Month)
                     {
                         list.Add(item);
                     }
+                    //if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
+                    //{
+                    //    list.Add(item);
+                    //}
                 }
                 Data.Clear();
                 Data.AddRange(list);

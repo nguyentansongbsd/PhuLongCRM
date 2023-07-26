@@ -1235,6 +1235,8 @@ namespace PhuLongCRM.Views
                                     LoadingHelper.Hide();
                                     return;
                                 }
+                                //update discount transaction khi tạo thành công
+                                await viewModel.UpdateDiscountTransaction();
                                 if (QueuesDetialPage.NeedToRefreshBTG.HasValue) QueuesDetialPage.NeedToRefreshBTG = true;
                                 if (ReservationList.NeedToRefreshReservationList.HasValue) ReservationList.NeedToRefreshReservationList = true;
                                 if (UnitInfo.NeedToRefreshQuotation.HasValue) UnitInfo.NeedToRefreshQuotation = true;
@@ -1290,8 +1292,6 @@ namespace PhuLongCRM.Views
                 if (!UpdateCoOwner)
                 {
                     ToastMessageHelper.Message(Language.cap_nhat_that_bai);
-                    LoadingHelper.Hide();
-                    return;
                 }
                 else
                     ToastMessageHelper.Message(Language.cap_nhat_dong_so_huu_thanh_cong);

@@ -68,20 +68,7 @@ namespace PhuLongCRM.Views
         private async void SearchBar_SearchButtonPressed(System.Object sender, System.EventArgs e)
         {
             LoadingHelper.Show();
-            await viewModel.LoadOnRefreshCommandAsync();
-            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
-            {
-                List<ContactListModel> list = new List<ContactListModel>();
-                foreach (var item in viewModel.Data)
-                {
-                    if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
-                    {
-                        list.Add(item);
-                    }
-                }
-                viewModel.Data.Clear();
-                viewModel.Data.AddRange(list);
-            }
+            await viewModel.LoadOnRefreshCommandAsync();           
             LoadingHelper.Hide();
         }
 
@@ -151,20 +138,7 @@ namespace PhuLongCRM.Views
                 label_All.TextColor = Color.FromHex("444444");
                 label_inactive.TextColor = Color.FromHex("1399D5");
             }
-            await viewModel.LoadOnRefreshCommandAsync();
-            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
-            {
-                List<ContactListModel> list = new List<ContactListModel>();
-                foreach (var value in viewModel.Data)
-                {
-                    if (value.bsd_new_birthday?.Day == DateTime.Today.Day && value.bsd_new_birthday?.Month == DateTime.Today.Month)
-                    {
-                        list.Add(value);
-                    }
-                }
-                viewModel.Data.Clear();
-                viewModel.Data.AddRange(list);
-            }
+            await viewModel.LoadOnRefreshCommandAsync();           
             FilterView.IsVisible = false;
             LoadingHelper.Hide();
         }
@@ -204,20 +178,7 @@ namespace PhuLongCRM.Views
             viewModel.FillterStatus = $@"<condition attribute='bsd_type' operator='contain-values'>
                                                 <value>{sts}</value>
                                               </condition>";
-            await viewModel.LoadOnRefreshCommandAsync();
-            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
-            {
-                List<ContactListModel> list = new List<ContactListModel>();
-                foreach (var item in viewModel.Data)
-                {
-                    if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
-                    {
-                        list.Add(item);
-                    }
-                }
-                viewModel.Data.Clear();
-                viewModel.Data.AddRange(list);
-            }
+            await viewModel.LoadOnRefreshCommandAsync();         
             LoadingHelper.Hide();
         }
         private void RefreshLanguege()
@@ -247,20 +208,7 @@ namespace PhuLongCRM.Views
                 filtter_birtday.TextColor = Color.FromHex("#444444");
             }
             LoadingHelper.Show();
-            await viewModel.LoadOnRefreshCommandAsync();
-            if (viewModel.Data != null && viewModel.Data.Count > 0 && viewModel.FillterBirtday)
-            {
-                List<ContactListModel> list = new List<ContactListModel>();
-                foreach (var item in viewModel.Data)
-                {
-                    if (item.bsd_new_birthday?.Day == DateTime.Today.Day && item.bsd_new_birthday?.Month == DateTime.Today.Month)
-                    {
-                        list.Add(item);
-                    }
-                }
-                viewModel.Data.Clear();
-                viewModel.Data.AddRange(list);
-            }
+            await viewModel.LoadOnRefreshCommandAsync();         
             LoadingHelper.Hide();
         }
     }
