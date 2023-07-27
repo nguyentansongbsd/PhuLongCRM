@@ -148,6 +148,11 @@ namespace PhuLongCRM.Views
                 return;
             }
 
+            if (!await viewModel.CheckPhoneNumber(viewModel.singleContact.mobilephone, id))
+            {
+                ToastMessageHelper.Message(Language.thong_tin_so_dien_thoai_da_ton_tai);
+            }
+
             if (viewModel.singleGender == null || viewModel.singleGender.Val == null)
             {
                 ToastMessageHelper.Message(Language.vui_long_chon_gioi_tinh);
@@ -203,7 +208,6 @@ namespace PhuLongCRM.Views
                 if (!await viewModel.CheckEmail(viewModel.singleContact.emailaddress1, id))
                 {
                     ToastMessageHelper.Message(Language.email_da_duoc_su_dung);
-                    return;
                 }
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.telephone1) && viewModel.singleContact.telephone1 != "+84")
@@ -570,9 +574,9 @@ namespace PhuLongCRM.Views
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissue))
             {
-                viewModel.singleContact.bsd_placeofissueidentitycard = ""; //can cuoc
+                //viewModel.singleContact.bsd_placeofissueidentitycard = ""; //can cuoc
                 viewModel.singleContact.bsd_placeofissue = "Công An Thành phố/ Tỉnh"; //cmnd
-                viewModel.singleContact.bsd_placeofissuepassport = ""; //pp
+               // viewModel.singleContact.bsd_placeofissuepassport = ""; //pp
             }
         }
         private void Phone_Unfocused(System.Object sender, Xamarin.Forms.FocusEventArgs e)
@@ -603,8 +607,8 @@ namespace PhuLongCRM.Views
             else if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissueidentitycard))
             {
                 viewModel.singleContact.bsd_placeofissueidentitycard = "Cục Cảnh sát ĐKQL cư trú và DLQG về dân cư"; //can cuoc
-                viewModel.singleContact.bsd_placeofissue = ""; //cmnd
-                viewModel.singleContact.bsd_placeofissuepassport = ""; //pp
+               // viewModel.singleContact.bsd_placeofissue = ""; //cmnd
+                //viewModel.singleContact.bsd_placeofissuepassport = ""; //pp
             }
         }
         private void PassPort_Unfocused(object sender, FocusEventArgs e)
@@ -617,8 +621,8 @@ namespace PhuLongCRM.Views
             }
             if (!string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport) && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_placeofissuepassport))
             {
-                viewModel.singleContact.bsd_placeofissueidentitycard = ""; //can cuoc
-                viewModel.singleContact.bsd_placeofissue = ""; //cmnd
+               // viewModel.singleContact.bsd_placeofissueidentitycard = ""; //can cuoc
+              //  viewModel.singleContact.bsd_placeofissue = ""; //cmnd
                 viewModel.singleContact.bsd_placeofissuepassport = "Phòng Quản lý xuất nhập cảnh"; //pp
             }
         }
@@ -657,16 +661,15 @@ namespace PhuLongCRM.Views
         }
         private void TypeIdCard_ItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
         {
+            if(viewModel.TypeIdCard == null)
+            {
+                ToastMessageHelper.Message(Language.vui_long_chon_loai_the_id);
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_passport)
                 && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycardnumber)
                 && string.IsNullOrWhiteSpace(viewModel.singleContact.bsd_identitycard)) return;
-
-            if (viewModel.TypeIdCard == null)
-            {
-                viewModel.singleContact.bsd_passport = null;
-                viewModel.singleContact.bsd_identitycardnumber = null;
-                viewModel.singleContact.bsd_identitycard = null;
-            }
 
             if (viewModel.TypeIdCard != null)
             {

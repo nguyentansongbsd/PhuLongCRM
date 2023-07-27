@@ -1,5 +1,6 @@
 ﻿using PhuLongCRM.Controls;
 using PhuLongCRM.Helper;
+using PhuLongCRM.IServices;
 using PhuLongCRM.Models;
 using PhuLongCRM.Resources;
 using PhuLongCRM.Settings;
@@ -42,14 +43,23 @@ namespace PhuLongCRM.Views
             
             if (viewModel.singleContact.contactid != Guid.Empty)
             {
-                await viewModel.LoadProvince();
-                await viewModel.LoadProject();
+                await Task.WhenAll( 
+                    viewModel.LoadProvince(),
+                    viewModel.LoadProject(),
+                    viewModel.LoadDuplicate()
+                );
                 SetButtonFloatingButton();
                 btn_nhaucaudientich.IsVisible = false;
                 btn_tieuchichonmua.IsVisible = false;
                 btn_loaibdsquantam.IsVisible = false;
                 FromCustomer = new OptionSet { Val= viewModel.singleContact.contactid.ToString(), Label= viewModel.singleContact.bsd_fullname, Title= viewModel.CodeContac };
-                if(viewModel.singleContact.employee_id == UserLogged.Id)
+
+                if (!string.IsNullOrWhiteSpace(viewModel.Duplicate))
+                    TooltipEffect.SetText(lb_duplicate, viewModel.Duplicate);
+                else
+                    lb_duplicate.IsVisible = false;
+
+                if (viewModel.singleContact.employee_id == UserLogged.Id)
                     OnCompleted?.Invoke(1);// thanh cong
                 else
                     OnCompleted?.Invoke(2);// KH khong thuoc employee dang dang nhap

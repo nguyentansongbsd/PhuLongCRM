@@ -14,6 +14,7 @@ using Stormlion.PhotoBrowser;
 using System.Collections.Generic;
 using PhuLongCRM.Config;
 using System.Net;
+using PhuLongCRM.Resources;
 
 namespace PhuLongCRM.ViewModels
 {
@@ -86,6 +87,7 @@ namespace PhuLongCRM.ViewModels
         private bool _isRefreshing;
         public bool IsRefreshing { get => _isRefreshing; set { _isRefreshing = value; OnPropertyChanged(nameof(IsRefreshing)); } }
 
+        public string Duplicate { get; set; }
         public ContactDetailPageViewModel()
         {
             singleContact = new ContactFormModel();
@@ -817,6 +819,70 @@ namespace PhuLongCRM.ViewModels
                 return false;
             }
 
+        }
+
+        public async Task LoadDuplicate()
+        {
+            if (singleContact != null)
+            {
+                string fetchcontact = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                        <entity name='contact'>
+                                            <attribute name='contactid' />
+                                            <attribute name='fullname' />
+                                             <attribute name='emailaddress1' />
+                                             <attribute name='mobilephone' />
+                                             <attribute name='bsd_identitycard' />
+                                             <attribute name='bsd_identitycardnumber' />
+                                             <attribute name='bsd_passport' />
+                                            <filter type='or'>
+                                                <filter type='and'>
+                                                    <filter type='or'>
+                                                        <condition attribute='mobilephone' operator='eq' value='{singleContact.mobilephone}' />
+                                                        <condition attribute='mobilephone' operator='eq' value='{singleContact.mobilephone_format}' />
+                                                    </filter>
+                                                    <condition attribute='contactid' operator='ne' value='{singleContact.contactid}'/>
+                                                </filter>
+                                                <filter type='and'>
+                                                    <condition attribute='emailaddress1' operator='eq' value='{singleContact.emailaddress1}' />
+                                                    <condition attribute='contactid' operator='ne' value='{singleContact.contactid}'/>
+                                                </filter>
+                                                <filter type='and'>
+                                                    <condition attribute='bsd_identitycard' operator='eq' value='{singleContact.bsd_identitycard}' />
+                                                    <condition attribute='contactid' operator='ne' value='{singleContact.contactid}'/>
+                                                </filter>
+                                                <filter type='and'>
+                                                    <condition attribute='bsd_identitycardnumber' operator='eq' value='{singleContact.bsd_identitycardnumber}' />
+                                                    <condition attribute='contactid' operator='ne' value='{singleContact.contactid}'/>
+                                                </filter>
+                                                <filter type='and'>
+                                                    <condition attribute='bsd_passport' operator='eq' value='{singleContact.bsd_passport}' />
+                                                    <condition attribute='contactid' operator='ne' value='{singleContact.contactid}'/>
+                                                </filter>
+                                            </filter>
+                                        </entity>
+                                    </fetch>";
+                var resultcontact = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetchcontact);
+                if (resultcontact != null && resultcontact.value.Count > 0)
+                {
+                    List<string> duplicates = new List<string>();
+                    var data = resultcontact.value.FirstOrDefault();
+                    if (!string.IsNullOrWhiteSpace(data.mobilephone) && data.mobilephone == singleContact.mobilephone)
+                        duplicates.Add(Language.so_dien_thoai);
+                    if (!string.IsNullOrWhiteSpace(data.emailaddress1) && data.emailaddress1 == singleContact.emailaddress1)
+                        duplicates.Add(Language.email);
+                    if (!string.IsNullOrWhiteSpace(data.bsd_identitycard) && data.bsd_identitycard == singleContact.bsd_identitycard)
+                        duplicates.Add(Language.so_the_can_cuoc);
+                    if (!string.IsNullOrWhiteSpace(data.bsd_identitycardnumber) && data.bsd_identitycardnumber == singleContact.bsd_identitycardnumber)
+                        duplicates.Add(Language.so_cmnd);
+                    if (!string.IsNullOrWhiteSpace(data.bsd_passport) && data.bsd_passport == singleContact.bsd_passport)
+                        duplicates.Add(Language.so_ho_chieu);
+                    Duplicate = string.Join(", ", duplicates);
+                    if (UserLogged.Language == "en")
+                        Duplicate += " already exists.";
+                    else
+                        Duplicate += " đã tồn tại.";
+                }
+            }
         }
     }
 
