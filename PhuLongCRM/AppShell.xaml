@@ -47,7 +47,7 @@
         </DataTemplate>
     </Shell.ItemTemplate>
     <Shell.FlyoutHeader>
-        <Grid RowDefinitions="80,30" ColumnDefinitions="3*,7*" Padding="0,5,0,5">
+        <Grid RowDefinitions="*,Auto" ColumnDefinitions="3*,7*" Padding="0,0,0,20" HeightRequest="{OnPlatform iOS=100}" >
             <Grid.Background>
                 <LinearGradientBrush EndPoint="1,0">
                     <GradientStop Color="#57AFE2"
@@ -83,11 +83,11 @@
                     </Label>
                 </Grid>
             </Grid>
-            <Grid VerticalOptions="Start" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,*">
-                <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="LightGreen" Grid.Column="0" Grid.Row="0" VerticalOptions="Start">
-                    <Label Text="{x:Static lang:Language.dai_ly_appshell}" FontSize="10" TextColor="White" Margin="6,3"/>
+            <Grid VerticalOptions="End" HorizontalOptions="Start" Grid.Row="1" Grid.Column="1" RowDefinitions="Auto" ColumnDefinitions="Auto,*" >
+                <telerikPrimitives:RadBorder CornerRadius="10" BackgroundColor="LightGreen" Grid.Column="0" Grid.Row="0" VerticalOptions="Center" Margin="0,4" >
+                    <Label Text="{x:Static lang:Language.dai_ly_appshell}" FontSize="12" TextColor="White" Margin="6,3"/>
                 </telerikPrimitives:RadBorder>
-                <Label Text="{Binding Agent}" Grid.Column="1" Grid.Row="0" FontSize="10" TextColor="#444444" MaxLines="2" VerticalOptions="Center"/>
+                <Label Text="{Binding Agent}" Grid.Column="1" Grid.Row="0" FontSize="12" TextColor="#444444" VerticalOptions="Center" />
             </Grid>
         </Grid>
         <!--<StackLayout BackgroundColor="White" HeightRequest="120">
