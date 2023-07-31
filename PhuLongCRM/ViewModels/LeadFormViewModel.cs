@@ -522,6 +522,13 @@ namespace PhuLongCRM.ViewModels
                     data["bsd_accountaddressen"] = Address3.address;
                 }
             }
+            else
+            {
+                data["bsd_account_housenumberstreetwardvn"] = null;
+                data["bsd_account_housenumberstreetwarden"] = null;
+                data["bsd_accountaddressvn"] = null;
+                data["bsd_accountaddressen"] = null;
+            }
 
             ////bsd_permanentcountry
             ////bsd_permanentprovince

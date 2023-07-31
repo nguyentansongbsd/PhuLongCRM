@@ -538,6 +538,31 @@ namespace PhuLongCRM.ViewModels
                 return true;
             }
         }
+        public async Task<bool> CheckPhoneNumber(string mobilephone, string contactid)
+        {
+            if(mobilephone.Contains("-") || mobilephone.Contains("+"))
+            {
+                mobilephone = mobilephone.Replace("-", "").Replace("+", "");
+            }    
+            string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                                  <entity name='contact'>
+                                    <attribute name='fullname' />
+                                    <filter type='and'>
+                                        <condition attribute='mobilephone' operator='eq' value='" + mobilephone + @"' />
+                                        <condition attribute='contactid' operator='ne' value='" + contactid + @"' />
+                                    </filter>
+                                  </entity>
+                                </fetch>";
+            var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<ContactFormModel>>("contacts", fetch);
+            if (result != null && result.value.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public async Task PostCMND()
         {
             GetTokenResponse getTokenResponse = await LoginHelper.getSharePointToken();

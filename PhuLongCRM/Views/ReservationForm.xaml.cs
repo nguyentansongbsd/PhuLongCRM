@@ -58,6 +58,12 @@ namespace PhuLongCRM.Views
                 viewModel.SalesAgent = saleAgentCompany;
                 lookupDaiLySanGiaoDich.IsEnabled = false;
             }
+            if (UserLogged.AgentID != Guid.Empty)
+            {
+                OptionSet agent = new OptionSet { Val = UserLogged.AgentID.ToString(), Label = UserLogged.AgentName };
+                viewModel.SalesAgent = agent;
+                lookupDaiLySanGiaoDich.IsEnabled = false;
+            }
             if (!string.IsNullOrWhiteSpace(nameOfStaffAgent))
             {
                 viewModel.Quote.bsd_nameofstaffagent = nameOfStaffAgent;
@@ -1104,12 +1110,12 @@ namespace PhuLongCRM.Views
         private void Buyer_SelectedItemChange(System.Object sender, PhuLongCRM.Models.LookUpChangeEvent e)
         {
             LoadingHelper.Show();
-            if (viewModel.SalesAgent != null && (viewModel.SalesAgent.Val == viewModel.Buyer?.Val))
+            if (viewModel.SalesAgent != null && viewModel.Buyer != null && (viewModel.SalesAgent.Val == viewModel.Buyer?.Val))
             {
                 ToastMessageHelper.Message(Language.nguoi_mua_khong_duoc_trung_voi_dai_ly_san_giao_dich_vui_long_chon_lai);
                 viewModel.Buyer = null;
             }
-            if (viewModel.CoOwnerList.Any(x => x.contact_id == Guid.Parse(viewModel.Buyer?.Val)) || viewModel.CoOwnerList.Any(x => x.account_id == Guid.Parse(viewModel.Buyer?.Val)))
+            if (viewModel.Buyer != null && viewModel.CoOwnerList != null && viewModel.CoOwnerList.Any(x => x.contact_id == Guid.Parse(viewModel.Buyer?.Val)) || viewModel.Buyer != null && viewModel.CoOwnerList != null && viewModel.CoOwnerList.Any(x => x.account_id == Guid.Parse(viewModel.Buyer?.Val)))
             {
                 ToastMessageHelper.Message(Language.khach_hang_coower_va_khach_hang_khong_duoc_trung);
                 viewModel.Buyer = null;

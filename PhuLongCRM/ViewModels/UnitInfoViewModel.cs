@@ -150,7 +150,13 @@ namespace PhuLongCRM.ViewModels
             </fetch>";
             var result = await CrmHelper.RetrieveMultiple<RetrieveMultipleApiResponse<UnitInfoModel>>("products", fetchXml);
             if (result == null || result.value.Count == 0) return;
-            UnitInfo = result.value.FirstOrDefault();
+            var data = result.value.FirstOrDefault();
+            if (data.bsd_estimatehandoverdate != null)
+            {
+                data.bsd_estimatehandoverdate = data.bsd_estimatehandoverdate.ToLocalTime();
+            }               
+            
+            UnitInfo = data;
             await LoadAllCollection();
         }
 
