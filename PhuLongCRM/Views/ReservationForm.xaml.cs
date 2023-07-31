@@ -58,6 +58,12 @@ namespace PhuLongCRM.Views
                 viewModel.SalesAgent = saleAgentCompany;
                 lookupDaiLySanGiaoDich.IsEnabled = false;
             }
+            if (UserLogged.AgentID != Guid.Empty)
+            {
+                OptionSet agent = new OptionSet { Val = UserLogged.AgentID.ToString(), Label = UserLogged.AgentName };
+                viewModel.SalesAgent = agent;
+                lookupDaiLySanGiaoDich.IsEnabled = false;
+            }
             if (!string.IsNullOrWhiteSpace(nameOfStaffAgent))
             {
                 viewModel.Quote.bsd_nameofstaffagent = nameOfStaffAgent;

@@ -303,11 +303,11 @@ namespace PhuLongCRM.Views
                         UserLogged.Avartar = employeeModel.bsd_avatar;
                         UserLogged.Password = employeeModel.bsd_password;
                         UserLogged.ContactId = employeeModel.contact_id;
-                        UserLogged.ContactName = employeeModel.contact_name;
+                        UserLogged.ContactName = !string.IsNullOrWhiteSpace(employeeModel.contact_nickname) ? employeeModel.contact_nickname : employeeModel.contact_name;
                         UserLogged.ManagerId = employeeModel.manager_id;
                         UserLogged.ManagerName = employeeModel.manager_name;
                         UserLogged.AgentID = employeeModel.agent_id;
-                        UserLogged.AgentName = employeeModel.agent_name;
+                        UserLogged.AgentName = !string.IsNullOrWhiteSpace(employeeModel.agent_shortname) ? employeeModel.agent_shortname : employeeModel.agent_name;
                         UserLogged.TimeOut = employeeModel.bsd_timeoutminute.HasValue ? employeeModel.bsd_timeoutminute.Value : 0;
                         isTimeOut = employeeModel.bsd_timeoutminute.HasValue ? true : false;
                         UserLogged.IsSaveInforUser = checkboxRememberAcc.IsChecked;
@@ -380,10 +380,12 @@ namespace PhuLongCRM.Views
                     <link-entity name='contact' from='contactid' to='bsd_contact' visible='false' link-type='outer' alias='a_5b790f4631f4eb1194ef000d3a801090'>
                       <attribute name='contactid' alias='contact_id'/>
                       <attribute name='fullname' alias='contact_name'/>
+                      <attribute name='nickname' alias='contact_nickname'/>
                     </link-entity>
                     <link-entity name='account' from='accountid' to='bsd_agents' link-type='outer' alias='aa'>
                         <attribute name='bsd_name' alias='agent_name'/>
                         <attribute name='accountid' alias='agent_id'/>
+                        <attribute name='bsd_shortname' alias='agent_shortname'/>
                     </link-entity>
                   </entity>
                 </fetch>";
