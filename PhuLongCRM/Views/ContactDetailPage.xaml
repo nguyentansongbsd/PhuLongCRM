@@ -225,7 +225,7 @@
                                             </Grid>
                                             <Grid ColumnDefinitions="Auto,*" BackgroundColor="White" >
                                                 <controls:FormLabel Text="{x:Static lang:Language.sdt_kinh_doanh}" Grid.Column="0" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_ThongTin}"/>
-                                                <controls:FormLabelValue Text="{Binding singleContact.telephone1}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
+                                                <controls:FormLabelValue Text="{Binding singleContact.telephone1_format}" Grid.Column="1" FontSize="15" TextColor="#444444" Style="{StaticResource Lb_Title_Content}"/>
                                             </Grid>
                                             <Grid RowDefinitions="Auto,1,Auto" ColumnDefinitions="Auto,*" BackgroundColor="White">
                                                 <controls:FormLabel Text="{Binding Source={x:Static lang:Language.dia_chi_lien_lac},StringFormat='{0}: '}" Grid.Column="0" Grid.Row="0" FontSize="15" TextColor="#444444" VerticalOptions="Start" Padding="25,10,0,10"/>

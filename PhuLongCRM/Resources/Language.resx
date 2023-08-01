@@ -3909,4 +3909,10 @@
 	<data name="cac_field_can_khi_chuyen_doi_khach_hang_da_duoc_tat" xml:space="preserve">
     <value>Tắt chế độ thông tin khách hàng cần chuyển đổi.</value>
   </data>
+	<data name="nick_name" xml:space="preserve">
+    <value>Nick name</value>
+  </data>
+	<data name="nhap_nick_name" xml:space="preserve">
+    <value>Nhập nick name</value>
+  </data>
 </root>
