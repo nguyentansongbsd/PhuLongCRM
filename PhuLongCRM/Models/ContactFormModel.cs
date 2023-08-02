@@ -438,5 +438,7 @@ namespace PhuLongCRM.Models
                     return false;
             }
         }
+        private string _nickname;
+        public string nickname { get { return _nickname; } set { _nickname = value; OnPropertyChanged(nameof(nickname)); } }
     }
 }

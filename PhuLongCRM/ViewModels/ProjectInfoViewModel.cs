@@ -174,6 +174,8 @@ namespace PhuLongCRM.ViewModels
             {
                 data.bsd_projectslogo = data.bsd_name;
             }
+            if (data.bsd_estimatehandoverdate.HasValue)
+                data.bsd_estimatehandoverdate = data.bsd_estimatehandoverdate.Value.ToLocalTime();
             Project = data;
             
             this.StatusCode = ProjectStatusCodeData.GetProjectStatusCodeById(Project.statuscode);

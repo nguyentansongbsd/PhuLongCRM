@@ -72,6 +72,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_postalcode' />
                                     <attribute name='bsd_housenumberstreet' />
                                     <attribute name='bsd_contactaddress' />
+                                    <attribute name='bsd_nickname' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='contactid' operator='eq' value='{UserLogged.ContactId}'/>
@@ -200,6 +201,7 @@ namespace PhuLongCRM.ViewModels
             data["bsd_new_birthday"] = (DateTime.Parse(this.ContactModel.bsd_new_birthday.ToString()).ToLocalTime()).ToString("yyyy-MM-dd");
             data["gendercode"] = this.Gender?.Val;
             data["bsd_postalcode"] = this.ContactModel.bsd_postalcode;
+            data["nickname"] = this.ContactModel.nickname;
 
             if (AddressContact != null && !string.IsNullOrWhiteSpace(AddressContact.lineaddress))
             {

@@ -7137,6 +7137,15 @@ namespace PhuLongCRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nhập nick name.
+        /// </summary>
+        internal static string nhap_nick_name {
+            get {
+                return ResourceManager.GetString("nhap_nick_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nhập nơi cấp.
         /// </summary>
         internal static string nhap_noi_cap {
@@ -7448,6 +7457,15 @@ namespace PhuLongCRM.Resources {
         internal static string nhu_cau_ve_du_an {
             get {
                 return ResourceManager.GetString("nhu_cau_ve_du_an", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nick name.
+        /// </summary>
+        internal static string nick_name {
+            get {
+                return ResourceManager.GetString("nick_name", resourceCulture);
             }
         }
         
