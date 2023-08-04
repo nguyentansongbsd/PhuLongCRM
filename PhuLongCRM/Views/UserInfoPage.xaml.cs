@@ -230,7 +230,8 @@ namespace PhuLongCRM.Views
             {
                 if (viewModel.ContactModel.bsd_fullname != UserLogged.ContactName)
                 {
-                    UserLogged.ContactName = viewModel.ContactModel.bsd_fullname;
+                 //   UserLogged.ContactName = viewModel.ContactModel.bsd_fullname;
+                    UserLogged.ContactName = !string.IsNullOrWhiteSpace(viewModel.ContactModel.nickname) ? viewModel.ContactModel.nickname : viewModel.ContactModel.bsd_fullname;
                 }
                 if (AppShell.NeedToRefeshUserInfo.HasValue) AppShell.NeedToRefeshUserInfo = true;
                 ToastMessageHelper.Message(Language.cap_nhat_thanh_cong);

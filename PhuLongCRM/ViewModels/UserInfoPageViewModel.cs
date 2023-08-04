@@ -72,7 +72,7 @@ namespace PhuLongCRM.ViewModels
                                     <attribute name='bsd_postalcode' />
                                     <attribute name='bsd_housenumberstreet' />
                                     <attribute name='bsd_contactaddress' />
-                                    <attribute name='bsd_nickname' />
+                                    <attribute name='nickname' />
                                     <order attribute='createdon' descending='true' />
                                     <filter type='and'>
                                       <condition attribute='contactid' operator='eq' value='{UserLogged.ContactId}'/>
