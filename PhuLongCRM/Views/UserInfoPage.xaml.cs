@@ -205,11 +205,11 @@ namespace PhuLongCRM.Views
                 return;
             }
 
-            //if (DateTime.Now.Year - DateTime.Parse(viewModel.ContactModel.bsd_new_birthday.ToString()).Year < 18)
-            //{
-            //    ToastMessageHelper.Message(Language.nguoi_dung_phai_tu_18_tuoi);
-            //    return;
-            //}
+            if (DateTime.Now.Year - DateTime.Parse(viewModel.ContactModel.bsd_new_birthday.ToString()).Year < 18)
+            {
+                ToastMessageHelper.Message(Language.nguoi_dung_phai_tu_18_tuoi);
+                return;
+            }
 
             if (viewModel.Gender == null)
             {
