@@ -42,12 +42,12 @@
                     <controls:FormLabelRequired Text="{x:Static lang:Language.tai_khoan}" />
                     <controls:MainEntry Text="{Binding UserName}" IsEnabled="False" ShowClearButton="False"/>
 
+                    <controls:FormLabel Text="{x:Static lang:Language.nick_name}"/>
+                    <controls:MainEntry Text="{Binding ContactModel.nickname}" Placeholder="{x:Static lang:Language.nhap_nick_name}"/>
+
                     <controls:FormLabel Text="{x:Static lang:Language.email}"/>
                     <controls:MainEntry Text="{Binding ContactModel.emailaddress1}" Placeholder="{x:Static lang:Language.nhap_email}" Unfocused="Email_Unfocused"/>
 
-                    <controls:FormLabel Text="{x:Static lang:Language.nick_name}"/>
-                    <controls:MainEntry Text="{Binding ContactModel.nickname}" Placeholder="{x:Static lang:Language.nhap_nick_name}"/>
-                    
                     <controls:FormLabelRequired Text="{x:Static lang:Language.so_dien_thoai}"/>
                     <controls:PhoneEntryControl Text="{Binding PhoneNumber}" Keyboard="Numeric" Unfocused="PhoneNum_Unfocused" FontSize="15" Placeholder="+84-033XXXXXXX"/>
                     <!--<controls:MainEntry Text="{Binding PhoneNumber}" Keyboard="Numeric" Unfocused="PhoneNum_Unfocused" Placeholder="{x:Static lang:Language.nhap_so_dien_thoai}"/>-->
