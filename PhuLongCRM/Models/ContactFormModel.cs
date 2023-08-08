@@ -440,5 +440,28 @@ namespace PhuLongCRM.Models
         }
         private string _nickname;
         public string nickname { get { return _nickname; } set { _nickname = value; OnPropertyChanged(nameof(nickname)); } }
+
+        public string telephone1_format
+        {
+            get
+            {
+                if (telephone1 != null && telephone1.Contains("-"))
+                {
+                    return telephone1.Split('-')[1].StartsWith("84") ? telephone1.Replace("84", "+84-") : telephone1;
+                }
+                else if (telephone1 != null && telephone1.Contains("+84"))
+                {
+                    return telephone1.Replace("+84", "+84-");
+                }
+                else if (telephone1 != null && telephone1.StartsWith("84"))
+                {
+                    return telephone1.Replace("84", "+84-");
+                }
+                else
+                {
+                    return telephone1;
+                }
+            }
+        }
     }
 }
